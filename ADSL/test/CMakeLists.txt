@@ -4,5 +4,5 @@ add_subdirectory("common")
 
 set(INCLUDE_PATH "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test")
 
-set(ADSL_TEST_LIBS ADSL ADSLTestCommon)
+set(ADSL_TEST_LIBS ADSL ADSLTestCommon ShutdownManagerTestLib)
 discover_unit_tests("${INCLUDE_PATH}" "${ADSL_TEST_LIBS}")

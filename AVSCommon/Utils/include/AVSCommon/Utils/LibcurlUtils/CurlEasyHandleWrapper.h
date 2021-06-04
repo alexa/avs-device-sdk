@@ -275,6 +275,27 @@ public:
      */
     CURLcode pause(int mask);
 
+    /**
+     * Static function to set the network interface to be used for the curl
+     * connection.
+     *
+     * Network interface provided will be used in preference over the value
+     * in provided in config. Set emtpy string to reset to default.
+     *
+     * @note The network interace set shall applied only to newly instantiated
+     * @c CurlEasyHandleWrapper objects.
+     *
+     * @param value The interface name as defined in CURLOPT_INTERFACE.
+     */
+    static void setInterfaceName(const std::string& interfaceName);
+
+    /**
+     * Static function to get the network interface.
+     *
+     * @returns the current network interface, otherwise an empty string.
+     */
+    static std::string getInterfaceName();
+
     CurlEasyHandleWrapperOptionsSettingAdapter& curlOptionsSetter();
 
 private:
@@ -333,6 +354,9 @@ private:
     avsCommon::utils::logger::LogStringFormatter m_logFormatter;
 #endif
 
+    /// Initializes the @c m_interfaceName  from config.
+    static void initializeNetworkInterfaceNameLocked();
+
     /// The associated libcurl easy handle
     CURL* m_handle;
     /// A list of headers needed to be added at the HTTP level
@@ -345,7 +369,12 @@ private:
     curl_httppost* m_lastPost;
     /// Name for this handle.
     std::string m_id;
-
+    /// Synchronizes access to the @c m_interfaceName
+    static std::mutex m_interfaceNameMutex;
+    /// Indicates the initialization of @c m_interfaceName
+    static bool m_isInterfaceNameInitialized;
+    /// Interface name to be used for curl
+    static std::string m_interfaceName;
     /// If no id is provided by the user, we will generate it from this counter.
     static std::atomic<uint64_t> m_idGenerator;
 

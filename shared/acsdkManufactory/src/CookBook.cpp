@@ -109,6 +109,119 @@ std::string CookBook::getLoggerTag() {
     return TAG;
 }
 
+void CookBook::deleteFunctionForUniqueRecipe(void* cachedValue) {
+    // No-op. Unique pointers should not get cached, so they do not need to be deleted.
+
+    // Sanity check
+    if (cachedValue) {
+        ACSDK_CRITICAL(LX(__func__).m("Unexpected cached value in unique pointer recipe. Possible memory leak."));
+    }
+}
+
+void* CookBook::produceFromInstanceRecipe(
+    std::shared_ptr<AbstractRecipe> recipe,
+    RuntimeManufactory& runtimeManufactory,
+    void* cachedValue) {
+    if (cachedValue) {
+        return cachedValue;
+    }
+
+    auto instanceRecipe = reinterpret_cast<InstanceRecipe*>(recipe.get());
+    auto instance = new std::shared_ptr<void>(instanceRecipe->getInstance());
+
+    return instance;
+}
+
+void CookBook::deleteFunctionForInstanceRecipe(void* cachedValue) {
+    auto objectToDelete = static_cast<std::shared_ptr<void>*>(cachedValue);
+    delete objectToDelete;
+}
+
+////////// CookBook::FactoryRecipe
+
+CookBook::FactoryRecipe::FactoryRecipe(
+    Factory factory,
+    CachedInstanceLifecycle lifecycle,
+    std::vector<TypeIndex> dependencies,
+    ProduceInstanceFunction produceFunction,
+    DeleteInstanceFunction deleteFunction) {
+    this->m_objectLifecycle = lifecycle;
+    this->m_dependencies = dependencies;
+    this->m_produceFunction = produceFunction;
+    this->m_deleteFunction = deleteFunction;
+    this->m_recipeType = FACTORY;
+    m_factory = factory;
+}
+
+bool CookBook::FactoryRecipe::isEquivalent(const std::shared_ptr<AbstractRecipe>& recipe) const {
+    if (!recipe || (recipe->getRecipeType() != getRecipeType()) || (recipe->getLifecycle() != getLifecycle())) {
+        return false;
+    }
+
+    auto factoryRecipe = reinterpret_cast<FactoryRecipe*>(recipe.get());
+    return factoryRecipe->m_dependencies == this->m_dependencies && factoryRecipe->m_factory == m_factory;
+}
+
+CookBook::FactoryRecipe::Factory CookBook::FactoryRecipe::getFactory() const {
+    return m_factory;
+}
+
+////////// CookBook::FunctionRecipe
+
+CookBook::FunctionRecipe::FunctionRecipe(
+    Function function,
+    CachedInstanceLifecycle lifecycle,
+    std::vector<TypeIndex> dependencies,
+    ProduceInstanceFunction produceFunction,
+    DeleteInstanceFunction deleteFunction,
+    DeleteRecipeFunction deleteRecipeFunction) {
+    this->m_objectLifecycle = lifecycle;
+    this->m_dependencies = dependencies;
+    this->m_produceFunction = produceFunction;
+    this->m_deleteFunction = deleteFunction;
+    this->m_recipeType = FUNCTION;
+    m_function = function;
+    m_deleteRecipeFunction = deleteRecipeFunction;
+}
+
+bool CookBook::FunctionRecipe::isEquivalent(const std::shared_ptr<AbstractRecipe>& recipe) const {
+    return false;
+}
+
+CookBook::FunctionRecipe::Function CookBook::FunctionRecipe::getFunction() const {
+    return m_function;
+}
+
+CookBook::FunctionRecipe::~FunctionRecipe() {
+    m_deleteRecipeFunction(m_function);
+}
+
+////////// CookBook::InstanceRecipe
+
+CookBook::InstanceRecipe::InstanceRecipe(
+    std::shared_ptr<void> instance,
+    ProduceInstanceFunction produceFunction,
+    DeleteInstanceFunction deleteFunction) {
+    this->m_objectLifecycle = INSTANCE;
+    this->m_produceFunction = produceFunction;
+    this->m_deleteFunction = deleteFunction;
+    this->m_recipeType = ADD_INSTANCE;
+    m_instance = instance;
+}
+
+bool CookBook::InstanceRecipe::isEquivalent(const std::shared_ptr<AbstractRecipe>& recipe) const {
+    if (!recipe || (recipe->getRecipeType() != getRecipeType()) || (recipe->getLifecycle() != getLifecycle())) {
+        return false;
+    }
+
+    auto instanceRecipe = reinterpret_cast<InstanceRecipe*>(recipe.get());
+    return instanceRecipe->m_dependencies == this->m_dependencies && instanceRecipe->m_instance == m_instance;
+}
+
+std::shared_ptr<void> CookBook::InstanceRecipe::getInstance() const {
+    return m_instance;
+}
+
 ////////// CookBook::GetWrapperCollection
 
 void CookBook::GetWrapperCollection::append(const std::shared_ptr<GetWrapperCollection>& collection) {

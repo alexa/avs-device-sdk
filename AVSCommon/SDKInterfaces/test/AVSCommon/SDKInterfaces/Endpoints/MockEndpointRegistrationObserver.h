@@ -40,6 +40,18 @@ public:
     MOCK_METHOD2(
         onEndpointDeregistration,
         void(const EndpointIdentifier& endpointId, const DeregistrationResult result));
+    MOCK_METHOD3(
+        onEndpointUpdate,
+        void(
+            const EndpointIdentifier& endpointId,
+            const avs::AVSDiscoveryEndpointAttributes& attributes,
+            const UpdateResult result));
+    MOCK_METHOD3(
+        onPendingEndpointRegistrationOrUpdate,
+        void(
+            const EndpointIdentifier& endpointId,
+            const avs::AVSDiscoveryEndpointAttributes& attributes,
+            const std::vector<avs::CapabilityConfiguration>& capabilities));
     /// @}
 };
 

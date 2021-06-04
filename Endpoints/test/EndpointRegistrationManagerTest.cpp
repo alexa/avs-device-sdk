@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/MockCapabilitiesDelegate.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandler.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
+#include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 #include <Endpoints/EndpointRegistrationManager.h>
 
@@ -52,6 +53,9 @@ using RegistrationResult = EndpointRegistrationManager::RegistrationResult;
 
 // Alias for the deregistration result.
 using DeregistrationResult = EndpointRegistrationManager::DeregistrationResult;
+
+// Alias for the update result.
+using UpdateResult = EndpointRegistrationManager::UpdateResult;
 
 /**
  * Test class that initializes the endpoint registration manager and mock their dependencies.
@@ -154,6 +158,7 @@ TEST_F(EndpointRegistrationManagerTest, test_shutdownResolvesPendingPromises) {
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(_, _, _)).Times(2);
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _)).Times(2).WillRepeatedly(Return(true));
     EXPECT_CALL(*m_registrationObserver, onEndpointDeregistration(endpointIdToDelete, _)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(_, _, _)).Times(2);
     EXPECT_CALL(*m_capabilitiesDelegate, deleteEndpoint(_, _))
         .WillOnce(Invoke([&](const avsCommon::avs::AVSDiscoveryEndpointAttributes& endpointAttributes,
                              const std::vector<avsCommon::avs::CapabilityConfiguration>& capabilities) {
@@ -215,6 +220,7 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointSucceeds) {
 
     // Expect that the observer will be notified that the endpoint was registered.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::SUCCESS,
@@ -249,6 +255,7 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointSucceeds) {
     auto addResult = m_manager->registerEndpoint(endpoint);
 
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::SUCCESS,
         CapabilitiesDelegateObserverInterface::Error::SUCCESS,
@@ -271,9 +278,74 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointSucceeds) {
 }
 
 /*
- * Test modifying the default endpoint fails.
+ * Test updating an endpoint happy path.
  */
-TEST_F(EndpointRegistrationManagerTest, test_modifyDefaultEndpointFails) {
+TEST_F(EndpointRegistrationManagerTest, test_updateEndpointSucceeds) {
+    // Configure endpoint object expectations.
+    auto endpoint = std::make_shared<MockEndpoint>();
+    EndpointIdentifier endpointId = "EndpointId";
+    CapabilityConfiguration configuration1{"Type", "InterfaceName_1", "1.0"};
+    CapabilityConfiguration configuration2{"Type", "InterfaceName_2", "1.0"};
+    std::vector<CapabilityConfiguration> configurations{{configuration1, configuration2}};
+    std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> capabilities;
+    std::shared_ptr<DirectiveHandlerInterface> handler1 = std::make_shared<MockDirectiveHandler>();
+    std::shared_ptr<DirectiveHandlerInterface> handler2 = std::make_shared<MockDirectiveHandler>();
+    capabilities[configuration1] = handler1;
+    capabilities[configuration2] = handler2;
+    validateEndpointConfiguration(endpoint, endpointId, configurations, capabilities);
+
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName_1", "2.0"};
+    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
+
+    CapabilityConfiguration addedConfiguration{"Type", "InterfaceName_3", "1.0"};
+    std::shared_ptr<DirectiveHandlerInterface> addedHandler = std::make_shared<MockDirectiveHandler>();
+    CapabilityConfiguration removedConfiguration{"Type", "InterfaceName_2", "1.0"};
+
+    EndpointModificationData updatedData(
+        endpointId,
+        avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(),
+        updatedConfigurations,
+        {std::make_pair(addedConfiguration, addedHandler)},
+        {removedConfiguration},
+        {});
+
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler1)).WillOnce(Return(true));
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler2)).WillOnce(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _)).WillRepeatedly(Return(true));
+    // Add an endpoint so we can test update
+    auto addResult = m_manager->registerEndpoint(endpoint);
+
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+    m_capabilitiesObserver->onCapabilitiesStateChange(
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
+    ASSERT_EQ(addResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
+    EXPECT_EQ(addResult.get(), RegistrationResult::SUCCEEDED);
+
+    // Test update.
+    // updateEndpoint add addedConfiguration with addedHandler and remove configurations2
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(addedHandler)).WillOnce(Return(true));
+    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler2)).WillOnce(Return(true));
+    EXPECT_CALL(*endpoint, update(_)).WillOnce(Return(true));
+    auto updateResult = m_manager->updateEndpoint(endpointId, std::make_shared<EndpointModificationData>(updatedData));
+    EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, UpdateResult::SUCCEEDED));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+    m_capabilitiesObserver->onCapabilitiesStateChange(
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
+    ASSERT_EQ(updateResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
+    EXPECT_EQ(updateResult.get(), UpdateResult::SUCCEEDED);
+}
+
+/*
+ * Test registering the existing endpoint fails.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_registerExsitingEndpointFails) {
     // Configure endpoint object expectations.
     auto defaultEndpoint = std::make_shared<MockEndpoint>();
     CapabilityConfiguration configuration{"Type", "InterfaceName", "1.0"};
@@ -296,6 +368,7 @@ TEST_F(EndpointRegistrationManagerTest, test_modifyDefaultEndpointFails) {
     EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(DEFAULT_ENDPOINT_ID, _, RegistrationResult::SUCCEEDED));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(DEFAULT_ENDPOINT_ID, _, _));
 
     // Check that register default endpoint was enqueued.
     auto result = m_manager->registerEndpoint(defaultEndpoint);
@@ -312,7 +385,7 @@ TEST_F(EndpointRegistrationManagerTest, test_modifyDefaultEndpointFails) {
     // Check that updating the endpoint was enqueued.
     auto updateResult = m_manager->registerEndpoint(updatedDefaultEndpoint);
     ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
-    ASSERT_EQ(updateResult.get(), RegistrationResult::CONFIGURATION_ERROR);
+    ASSERT_EQ(updateResult.get(), RegistrationResult::ALREADY_REGISTERED);
 }
 
 /*
@@ -351,6 +424,7 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhenCapabilityRegis
     // Expect that the observer will be notified that the endpoint was registered.
     EXPECT_CALL(
         *m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::CONFIGURATION_ERROR));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
@@ -368,6 +442,18 @@ TEST_F(EndpointRegistrationManagerTest, test_registerNullEndpointFailsImmediatel
     auto result = m_manager->registerEndpoint(nullptr);
     ASSERT_EQ(result.wait_for(std::chrono::milliseconds(0)), std::future_status::ready);
     EXPECT_EQ(result.get(), RegistrationResult::CONFIGURATION_ERROR);
+}
+
+/*
+ * Test updating an endpoint fails immediately if the endpoint is not registered.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_updateEndpointThatDoesNotExistFailsImmediately) {
+    // Configure endpoint object expectations.
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        "endpointId", avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), {}, {}, {}, {}));
+    auto result = m_manager->updateEndpoint("endpointId", updatedData);
+    ASSERT_EQ(result.wait_for(std::chrono::milliseconds(0)), std::future_status::ready);
+    EXPECT_EQ(result.get(), UpdateResult::NOT_REGISTERED);
 }
 
 /*
@@ -392,6 +478,7 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhileRegistrationIn
 
     // Expect observer and capabilities delegate calls.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(_, _, _)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(_, _, _)).Times(1);
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
         .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
                              const std::vector<CapabilityConfiguration>& capabilities) {
@@ -406,7 +493,7 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhileRegistrationIn
     // Check that the redundant registration fails.
     auto resultDuplicated = m_manager->registerEndpoint(endpoint);
     ASSERT_EQ(resultDuplicated.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
-    EXPECT_EQ(resultDuplicated.get(), RegistrationResult::REGISTRATION_IN_PROGRESS);
+    EXPECT_EQ(resultDuplicated.get(), RegistrationResult::PENDING_REGISTRATION);
 
     ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
 }
@@ -426,6 +513,7 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhileDeregistration
 
     // Expect observer and capabilities delegate calls.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, deleteEndpoint(_, configurations))
         .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
@@ -458,6 +546,61 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhileDeregistration
 }
 
 /*
+ * Test registering an endpoint fails while update for the endpoint is in-progress updating.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhileUpdateInProgressFails) {
+    avsCommon::utils::WaitEvent e;
+
+    // Configure endpoint object expectations.
+    auto endpoint = std::make_shared<MockEndpoint>();
+    EndpointIdentifier endpointId = "EndpointId";
+    CapabilityConfiguration configuration{"Type", "InterfaceName", "1.0"};
+    std::vector<CapabilityConfiguration> configurations{{configuration}};
+    validateEndpointConfiguration(endpoint, endpointId, configurations);
+
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
+    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), updatedConfigurations, {}, {}, {}));
+
+    // Expect observer and capabilities delegate calls.
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*endpoint, update(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
+        .WillOnce(Return(true))
+        .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
+                             const std::vector<CapabilityConfiguration>& capabilities) {
+            e.wakeUp();
+            return true;
+        }));
+
+    // Check that register endpoint succeeded.
+    auto result = m_manager->registerEndpoint(endpoint);
+    m_capabilitiesObserver->onCapabilitiesStateChange(
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
+
+    ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
+    ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
+
+    // Check that update endpoint enqueued.
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
+    EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
+
+    // Check that the registration fails.
+    auto resultDuplicated = m_manager->registerEndpoint(endpoint);
+    ASSERT_EQ(resultDuplicated.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
+    EXPECT_EQ(resultDuplicated.get(), RegistrationResult::PENDING_UPDATE);
+
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+}
+
+/*
  * Test deregistering an endpoint fails while deregistration for the endpoint is in-progress.
  */
 TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileDeregistrationInProgressFails) {
@@ -470,6 +613,7 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileDeregistrati
 
     // Expect observer and capabilities delegate calls.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, deleteEndpoint(_, _))
         .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
@@ -513,6 +657,7 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileRegistration
     validateEndpointConfiguration(endpoint, endpointId);
 
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(_, _, _));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(_, _, _));
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
         .WillOnce(Invoke(
             [&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
@@ -527,9 +672,197 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileRegistration
     /// Test.
     auto resultDuplicated = m_manager->deregisterEndpoint(endpointId);
     EXPECT_EQ(resultDuplicated.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
-    EXPECT_EQ(resultDuplicated.get(), DeregistrationResult::REGISTRATION_IN_PROGRESS);
+    EXPECT_EQ(resultDuplicated.get(), DeregistrationResult::PENDING_REGISTRATION);
 
     e.wait(std::chrono::seconds(MY_WAIT_TIMEOUT));
+}
+
+/*
+ * Test deregistration an endpoint fails while update for the endpoint is in-progress.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileUpdateInProgressFails) {
+    avsCommon::utils::WaitEvent e;
+
+    // Configure endpoint object expectations.
+    auto endpoint = std::make_shared<MockEndpoint>();
+    EndpointIdentifier endpointId = "EndpointId";
+    validateEndpointConfiguration(endpoint, endpointId);
+
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
+    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), updatedConfigurations, {}, {}, {}));
+
+    // Expect observer and capabilities delegate calls.
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*endpoint, update(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
+        .WillOnce(Return(true))
+        .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
+                             const std::vector<CapabilityConfiguration>& capabilities) {
+            e.wakeUp();
+            return true;
+        }));
+
+    // Check that register endpoint succeeded.
+    auto result = m_manager->registerEndpoint(endpoint);
+    m_capabilitiesObserver->onCapabilitiesStateChange(
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
+    ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
+    ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
+
+    // Check that update endpoint enqueued.
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
+    EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
+
+    // Check that the deregistration fails.
+    auto resultDuplicated = m_manager->deregisterEndpoint(endpointId);
+    ASSERT_EQ(resultDuplicated.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
+    EXPECT_EQ(resultDuplicated.get(), DeregistrationResult::PENDING_UPDATE);
+
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+}
+
+/*
+ * Test update an endpoint fails while registration for the endpoint is in-progress.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_updateEndpointWhileRegistrationInProgressFails) {
+    avsCommon::utils::WaitEvent e;
+
+    // Configure endpoint object expectations.
+    auto endpoint = std::make_shared<MockEndpoint>();
+    EndpointIdentifier endpointId = "EndpointId";
+    validateEndpointConfiguration(endpoint, endpointId);
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
+    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), updatedConfigurations, {}, {}, {}));
+
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(_, _, _));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(_, _, _));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
+        .WillOnce(Invoke(
+            [&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
+                const std::vector<CapabilityConfiguration>& capabilities) -> bool {
+                e.wakeUp();
+                return true;
+            }));
+
+    auto addResult = m_manager->registerEndpoint(endpoint);
+    ASSERT_EQ(addResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
+
+    /// Test.
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
+    EXPECT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
+    EXPECT_EQ(updateResult.get(), UpdateResult::PENDING_REGISTRATION);
+
+    e.wait(std::chrono::seconds(MY_WAIT_TIMEOUT));
+}
+
+/*
+ * Test update an endpoint fails while deregistration for the endpoint is in-progress.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_updateEndpointWhileDeregistrationInProgressFails) {
+    avsCommon::utils::WaitEvent e;
+
+    // Configure endpoint object expectations.
+    auto endpoint = std::make_shared<MockEndpoint>();
+    EndpointIdentifier endpointId = "EndpointId";
+    validateEndpointConfiguration(endpoint, endpointId);
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
+    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), updatedConfigurations, {}, {}, {}));
+
+    // Expect observer and capabilities delegate calls.
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _)).WillOnce(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, deleteEndpoint(_, _))
+        .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
+                             const std::vector<CapabilityConfiguration>& capabilities) {
+            e.wakeUp();
+            return true;
+        }));
+
+    // Check that register endpoint succeeded.
+    auto result = m_manager->registerEndpoint(endpoint);
+    m_capabilitiesObserver->onCapabilitiesStateChange(
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
+    ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
+    ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
+
+    // Check that deregister endpoint enqueued.
+    auto deregisterResult = m_manager->deregisterEndpoint(endpointId);
+    EXPECT_CALL(*m_registrationObserver, onEndpointDeregistration(endpointId, _)).Times(1);
+    ASSERT_EQ(deregisterResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
+
+    // Check that the update endpoint fails.
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
+    ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
+    EXPECT_EQ(updateResult.get(), UpdateResult::PENDING_DEREGISTRATION);
+
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+}
+
+/*
+ * Test update an endpoint fails while update for the endpoint is in-progress.
+ */
+TEST_F(EndpointRegistrationManagerTest, test_updateEndpointWhileUpdateInProgressFails) {
+    avsCommon::utils::WaitEvent e;
+
+    // Configure endpoint object expectations.
+    auto endpoint = std::make_shared<MockEndpoint>();
+    EndpointIdentifier endpointId = "EndpointId";
+    validateEndpointConfiguration(endpoint, endpointId);
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
+    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), updatedConfigurations, {}, {}, {}));
+
+    // Expect observer and capabilities delegate calls.
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*endpoint, update(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
+        .WillOnce(Return(true))
+        .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
+                             const std::vector<CapabilityConfiguration>& capabilities) {
+            e.wakeUp();
+            return true;
+        }));
+
+    // Check that register endpoint succeeded.
+    auto result = m_manager->registerEndpoint(endpoint);
+    m_capabilitiesObserver->onCapabilitiesStateChange(
+        CapabilitiesDelegateObserverInterface::State::SUCCESS,
+        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+        {endpointId},
+        {});
+    ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
+    ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
+
+    // Check that update endpoint enqueued.
+    auto deleteResult = m_manager->updateEndpoint(endpointId, updatedData);
+    EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    ASSERT_EQ(deleteResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
+
+    // Check that the redundant update fails.
+    auto resultDuplicated = m_manager->updateEndpoint(endpointId, updatedData);
+    ASSERT_EQ(resultDuplicated.wait_for(std::chrono::milliseconds::zero()), std::future_status::ready);
+    EXPECT_EQ(resultDuplicated.get(), UpdateResult::PENDING_UPDATE);
+
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
 }
 
 /*
@@ -579,105 +912,73 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWithInvalidCapabili
 }
 
 /*
- * Test registering an existing endpoint happy path.
- */
-TEST_F(EndpointRegistrationManagerTest, test_registerExistingEndpointSucceeds) {
-    // Configure endpoint object expectations.
-    auto endpoint = std::make_shared<MockEndpoint>();
-    EndpointIdentifier endpointId = "EndpointId";
-    CapabilityConfiguration configuration{"Type", "InterfaceName", "1.0"};
-    std::vector<CapabilityConfiguration> configurations{{configuration}};
-    std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> capabilities;
-    std::shared_ptr<DirectiveHandlerInterface> handler = std::make_shared<MockDirectiveHandler>();
-    capabilities[configuration] = handler;
-    validateEndpointConfiguration(endpoint, endpointId, configurations, capabilities);
-
-    auto updatedEndpoint = std::make_shared<MockEndpoint>();
-    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
-    std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
-    std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> updatedCapabilities;
-    std::shared_ptr<DirectiveHandlerInterface> updatedHandler = std::make_shared<MockDirectiveHandler>();
-    updatedCapabilities[updatedConfiguration] = updatedHandler;
-    validateEndpointConfiguration(updatedEndpoint, endpointId, updatedConfigurations, updatedCapabilities);
-
-    // Expect directive sequencer and capabilities delegate calls for adding original endpoint.
-    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler)).WillOnce(Return(true));
-    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
-
-    // Expect directive sequencer and capabilities delegate calls for updating the endpoint.
-    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler)).WillOnce(Return(true));
-    EXPECT_CALL(*m_sequencer, addDirectiveHandler(updatedHandler)).WillOnce(Return(true));
-    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, updatedConfigurations)).WillOnce(Return(true));
-
-    // Expect that the observer will be notified that the endpoint was registered twice: adding it, then updating.
-    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(2);
-
-    // Check that register endpoint was enqueued.
-    auto result = m_manager->registerEndpoint(endpoint);
-    ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
-
-    m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesDelegateObserverInterface::State::SUCCESS,
-        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
-        {endpointId},
-        {});
-    ASSERT_EQ(result.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
-    EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
-
-    // Check that updating the endpoint was enqueued.
-    auto updateResult = m_manager->registerEndpoint(updatedEndpoint);
-    ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
-
-    m_capabilitiesObserver->onCapabilitiesStateChange(
-        CapabilitiesDelegateObserverInterface::State::SUCCESS,
-        CapabilitiesDelegateObserverInterface::Error::SUCCESS,
-        {endpointId},
-        {});
-    ASSERT_EQ(updateResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
-    EXPECT_EQ(updateResult.get(), RegistrationResult::SUCCEEDED);
-}
-
-/*
- * Test registering an existing endpoint. If it fails (due to capability registration failure), the original endpoint
- * should be restored and registering the endpoint should fail.
+ * Test updating an existing endpoint. If it fails (due to capability registration failure), the original endpoint
+ * should be restored and updating the endpoint should fail.
  */
 TEST_F(
     EndpointRegistrationManagerTest,
-    test_revertWhenRegisterExistingEndpointFailsDueToCapabilityRegistrationEndWithFatalFailure) {
+    test_revertWhenUpdateExistingEndpointFailsDueToCapabilityUpdateEndWithFatalFailure) {
+    avsCommon::utils::WaitEvent e;
     // Configure endpoint object expectations.
     auto endpoint = std::make_shared<MockEndpoint>();
     EndpointIdentifier endpointId = "EndpointId";
-    CapabilityConfiguration configuration{"Type", "InterfaceName", "1.0"};
-    std::vector<CapabilityConfiguration> configurations{{configuration}};
+    CapabilityConfiguration configuration1{"Type", "InterfaceName_1", "1.0"};
+    CapabilityConfiguration configuration2{"Type", "InterfaceName_2", "1.0"};
+    std::vector<CapabilityConfiguration> configurations{{configuration1, configuration2}};
     std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> capabilities;
-    std::shared_ptr<DirectiveHandlerInterface> handler = std::make_shared<MockDirectiveHandler>();
-    capabilities[configuration] = handler;
+    std::shared_ptr<DirectiveHandlerInterface> handler1 = std::make_shared<MockDirectiveHandler>();
+    std::shared_ptr<DirectiveHandlerInterface> handler2 = std::make_shared<MockDirectiveHandler>();
+    capabilities[configuration1] = handler1;
+    capabilities[configuration2] = handler2;
     validateEndpointConfiguration(endpoint, endpointId, configurations, capabilities);
 
-    auto updatedEndpoint = std::make_shared<MockEndpoint>();
-    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
+    CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName_1", "2.0"};
     std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
-    std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> updatedCapabilities;
-    std::shared_ptr<DirectiveHandlerInterface> updatedHandler = std::make_shared<MockDirectiveHandler>();
-    updatedCapabilities[updatedConfiguration] = updatedHandler;
-    validateEndpointConfiguration(updatedEndpoint, endpointId, updatedConfigurations, updatedCapabilities);
 
-    // Expect directive sequencer and capabilities delegate calls for adding and then restoring original endpoint.
-    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler)).Times(2).WillRepeatedly(Return(true));
-    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
+    CapabilityConfiguration addedConfiguration{"Type", "InterfaceName_3", "1.0"};
+    std::shared_ptr<DirectiveHandlerInterface> addedHandler = std::make_shared<MockDirectiveHandler>();
+    CapabilityConfiguration removedConfiguration{"Type", "InterfaceName_2", "1.0"};
+
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId,
+        avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(),
+        updatedConfigurations,
+        {std::make_pair(addedConfiguration, addedHandler)},
+        {removedConfiguration},
+        {}));
+
+    // Expect directive sequencer and capabilities delegate calls for adding, updating and then restoring original
+    // endpoint.
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler1)).Times(2).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler2)).Times(2).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(addedHandler)).WillOnce(Return(true));
+    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler2)).WillOnce(Return(true));
+    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler1)).WillOnce(Return(true));
+    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(addedHandler)).WillOnce(Return(true));
 
     // Expect directive sequencer and capabilities delegate calls for updating the endpoint.
-    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler)).WillOnce(Return(true));
-    EXPECT_CALL(*m_sequencer, addDirectiveHandler(updatedHandler)).WillOnce(Return(true));
-    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, updatedConfigurations)).WillOnce(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _))
+        .WillOnce(Return(true))
+        .WillOnce(Invoke([&](const AVSDiscoveryEndpointAttributes& endpointAttributes,
+                             const std::vector<CapabilityConfiguration>& capabilities) {
+            e.wakeUp();
+            return true;
+        }));
+    EXPECT_CALL(*endpoint, update(_)).WillOnce(Return(true));
 
-    // Expect directive sequencer and capabilities delegate calls after updating the endpoint fails.
-    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(updatedHandler)).WillOnce(Return(true));
+    std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> updatedCapabilities;
+    updatedCapabilities[addedConfiguration] = addedHandler;
+    updatedCapabilities[updatedConfiguration] = handler1;
+    EXPECT_CALL(*endpoint, getCapabilities())
+        .Times(4)
+        .WillOnce(Return(capabilities))
+        .WillOnce(Return(capabilities))
+        .WillOnce(Return(updatedCapabilities))
+        .WillOnce(Return(capabilities));
 
     // Expect that the observer will be notified that the endpoint was registered twice: adding it, then updating.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
-    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::CONFIGURATION_ERROR))
-        .Times(1);
+    EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, UpdateResult::CONFIGURATION_ERROR)).Times(1);
 
     // Check that register endpoint was enqueued.
     auto result = m_manager->registerEndpoint(endpoint);
@@ -692,7 +993,7 @@ TEST_F(
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
     // Check that updating the endpoint was enqueued.
-    auto updateResult = m_manager->registerEndpoint(updatedEndpoint);
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
     ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     // Fail the update.
@@ -702,14 +1003,15 @@ TEST_F(
         {endpointId},
         {});
     ASSERT_EQ(updateResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
-    EXPECT_EQ(updateResult.get(), RegistrationResult::CONFIGURATION_ERROR);
+    EXPECT_EQ(updateResult.get(), UpdateResult::CONFIGURATION_ERROR);
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
 }
 
 /*
- * Test registering an existing endpoint. If it fails (due to directive handler failure), the original endpoint should
- * be restored and registering the endpoint should fail.
+ * Test updating an existing endpoint. If it fails (due to endpoint update failure), the original endpoint
+ * should be restored and updating the endpoint should fail.
  */
-TEST_F(EndpointRegistrationManagerTest, test_revertWhenRegisterExistingEndpointFailsDueToDirectiveHandlerFailure) {
+TEST_F(EndpointRegistrationManagerTest, test_revertWhenUpdateExistingEndpointFailsDueToUpdateEndpointFail) {
     // Configure endpoint object expectations.
     auto endpoint = std::make_shared<MockEndpoint>();
     EndpointIdentifier endpointId = "EndpointId";
@@ -720,27 +1022,20 @@ TEST_F(EndpointRegistrationManagerTest, test_revertWhenRegisterExistingEndpointF
     capabilities[configuration] = handler;
     validateEndpointConfiguration(endpoint, endpointId, configurations, capabilities);
 
-    auto updatedEndpoint = std::make_shared<MockEndpoint>();
     CapabilityConfiguration updatedConfiguration{"Type", "InterfaceName", "2.0"};
     std::vector<CapabilityConfiguration> updatedConfigurations{{updatedConfiguration}};
-    std::unordered_map<CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> updatedCapabilities;
-    std::shared_ptr<DirectiveHandlerInterface> updatedHandler = std::make_shared<MockDirectiveHandler>();
-    updatedCapabilities[updatedConfiguration] = updatedHandler;
-    validateEndpointConfiguration(updatedEndpoint, endpointId, updatedConfigurations, updatedCapabilities);
+    auto updatedData = std::make_shared<EndpointModificationData>(EndpointModificationData(
+        endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(), updatedConfigurations, {}, {}, {}));
 
     // Expect directive sequencer and capabilities delegate calls for adding and then restoring original endpoint.
-    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler)).Times(2).WillRepeatedly(Return(true));
-    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
-
-    // Expect directive sequencer and capabilities delegate calls for updating the endpoint.
-    EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler)).WillOnce(Return(true));
-    EXPECT_CALL(*m_sequencer, addDirectiveHandler(updatedHandler)).WillOnce(Return(false));
-    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, updatedConfigurations)).Times(0);
+    EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler)).Times(1).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*endpoint, update(updatedData)).WillOnce(Return(false));
 
     // Expect that the observer will be notified that the endpoint was registered twice: adding it, then updating.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
-    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::CONFIGURATION_ERROR))
-        .Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, UpdateResult::CONFIGURATION_ERROR)).Times(1);
 
     // Check that register endpoint was enqueued.
     auto result = m_manager->registerEndpoint(endpoint);
@@ -755,9 +1050,9 @@ TEST_F(EndpointRegistrationManagerTest, test_revertWhenRegisterExistingEndpointF
     EXPECT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
     // Check that updating the endpoint failed.
-    auto updateResult = m_manager->registerEndpoint(updatedEndpoint);
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
     ASSERT_EQ(updateResult.wait_for(MY_WAIT_TIMEOUT), std::future_status::ready);
-    EXPECT_EQ(updateResult.get(), RegistrationResult::CONFIGURATION_ERROR);
+    EXPECT_EQ(updateResult.get(), UpdateResult::CONFIGURATION_ERROR);
 }
 
 /*
@@ -841,6 +1136,7 @@ TEST_F(EndpointRegistrationManagerTest, test_revertWhenDeregisterEndpointFailsDu
 
     // Expect that the observer will be notified that the endpoint was registered twice: adding it, then updating.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED)).Times(1);
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
     EXPECT_CALL(
         *m_registrationObserver, onEndpointDeregistration(endpointId, DeregistrationResult::CONFIGURATION_ERROR))
         .Times(1);

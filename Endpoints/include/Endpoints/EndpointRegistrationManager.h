@@ -47,6 +47,7 @@ public:
     /// @{
     using EndpointIdentifier = avsCommon::sdkInterfaces::endpoints::EndpointIdentifier;
     using EndpointInterface = avsCommon::sdkInterfaces::endpoints::EndpointInterface;
+    using EndpointModificationData = avsCommon::sdkInterfaces::endpoints::EndpointModificationData;
     using EndpointRegistrationObserverInterface =
         avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface;
     /// @}
@@ -77,6 +78,9 @@ public:
     /// @name @c EndpointRegistrationManagerInterface methods.
     /// @{
     std::future<RegistrationResult> registerEndpoint(std::shared_ptr<EndpointInterface> endpoint) override;
+    std::future<UpdateResult> updateEndpoint(
+        const EndpointIdentifier& endpointId,
+        const std::shared_ptr<EndpointModificationData>& endpointModificationData) override;
     std::future<DeregistrationResult> deregisterEndpoint(const EndpointIdentifier& endpointId) override;
     void addObserver(std::shared_ptr<EndpointRegistrationObserverInterface> observer) override;
     void removeObserver(const std::shared_ptr<EndpointRegistrationObserverInterface>& observer) override;
@@ -88,6 +92,9 @@ private:
 
     /// Alias for pending deregistrations.
     using PendingDeregistration = std::pair<std::shared_ptr<EndpointInterface>, std::promise<DeregistrationResult>>;
+
+    /// Alias for pending updates.
+    using PendingUpdate = std::pair<std::shared_ptr<EndpointInterface>, std::promise<UpdateResult>>;
 
     /**
      * Class used to observe changes to the capabilities registration.
@@ -101,8 +108,10 @@ private:
          */
         void setCallback(
             std::function<void(
-                const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
-                const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints)> callback);
+                const std::pair<CapabilitiesDelegateObserverInterface::State, std::vector<EndpointIdentifier>>&
+                    addedOrUpdatedEndpoints,
+                const std::pair<CapabilitiesDelegateObserverInterface::State, std::vector<EndpointIdentifier>>&
+                    deletedEndpoints)> callback);
 
         /// @name CapabilitiesDelegateObserverInterface methods.
         /// @{
@@ -115,8 +124,10 @@ private:
     private:
         // The function callback.
         std::function<void(
-            const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
-            const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints)>
+            const std::pair<CapabilitiesDelegateObserverInterface::State, std::vector<EndpointIdentifier>>&
+                addedOrUpdatedEndpoints,
+            const std::pair<CapabilitiesDelegateObserverInterface::State, std::vector<EndpointIdentifier>>&
+                deletedEndpoints)>
             m_callback;
     };
 
@@ -140,6 +151,16 @@ private:
     void executeRegisterEndpoint(const std::shared_ptr<EndpointInterface>& endpoint);
 
     /**
+     * Execute the endpoint update.
+     *
+     * @param endpoint A pointer to the endpoint to be updated.
+     * @param endpointModificationData A pointer to @c EndpointModificationData used to update the endpoint.
+     */
+    void executeUpdateEndpoint(
+        const std::shared_ptr<EndpointInterface>& endpoint,
+        const std::shared_ptr<EndpointModificationData>& endpointModificationData);
+
+    /**
      * Execute the endpoint deregistration.
      *
      * @param endpoint A pointer to the endpoint to be registered.
@@ -155,6 +176,21 @@ private:
      */
     bool addCapabilities(
         const std::shared_ptr<EndpointInterface>& endpoint,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>>* handlersAdded);
+
+    /**
+     * Adds capability directive handler to an endpoint.
+     *
+     * @param endpoint The endpoint whose capabilities need to be added.
+     * @param capability The capability need to be added.
+     * @param[out] handlersAdded The out-parameter where the resulting handlers added will be stored.
+     * @return Whether adding capabilities succeeded.
+     */
+    bool addCapability(
+        const std::shared_ptr<EndpointInterface>& endpoint,
+        const std::pair<
+            avsCommon::avs::CapabilityConfiguration,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>> capability,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>>* handlersAdded);
 
     /**
@@ -179,6 +215,21 @@ private:
     /**
      * Removes capability directive handlers from an endpoint.
      *
+     * @param endpoint The endpoint whose capabilities need to be removed.
+     * @param capability The capability need to be removed.
+     * @param[out] handlersRemoved The out-parameter where the resulting handlers removed will be stored.
+     * @return Whether removing capabilities succeeded.
+     */
+    bool removeCapability(
+        const std::shared_ptr<EndpointInterface>& endpoint,
+        const std::pair<
+            avsCommon::avs::CapabilityConfiguration,
+            std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>> capability,
+        std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>>* handlersRemoved);
+
+    /**
+     * Removes capability directive handlers from an endpoint.
+     *
      * @param endpoint The endpoint whose capabilities need to be added.
      * @return Whether removing capabilities succeeded.
      */
@@ -188,34 +239,34 @@ private:
      * Updates registered endpoints (m_endpoints) with newly added/updated endpoints.
      * @note If registration failed, the previous endpoint (if it existed) will be restored.
      *
-     * @param addedOrUpdatedEndpoints A pair consisting of the RegistrationResult for the new endpoints
+     * @param addedOrUpdatedEndpoints A pair consisting of the CapabilitiesDelegate state for the new endpoints
      * as well as a vector of the newly added or updated @c EndpointIdentifiers.
      */
     void updateAddedOrUpdatedEndpoints(
-        const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints);
+        const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints);
 
     /**
      * Updates registered endpoints (m_endpoints) by removing the newly deleted endpoints.
      * @note If deregistration failed, the previous endpoint (if it existed) will be restored.
      *
-     * @param deletedEndpoints A pair consisting of the DeregistrationResult for the new endpoints
+     * @param deletedEndpoints A pair consisting of the CapabilitiesDelegate state for the new endpoints
      * as well as a vector of the newly deleted @c EndpointIdentifiers.
      */
     void removeDeletedEndpoints(
-        const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints);
+        const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& deletedEndpoints);
 
     /**
      * Function used to process changes to the capabilities registration status.
      *
-     * @param addedOrUpdatedEndpoints A pair consisting of the RegistrationResult for the new endpoints
+     * @param addedOrUpdatedEndpoints A pair consisting of the CapabilitiesDelegate state for the new endpoints
      * as well as a vector of the newly added or updated @c EndpointIdentifiers.
      * @param deletedEndpoints A pair consisting of the DeregistrationResult for the new endpoints
      * as well as a vector of the newly deleted @c EndpointIdentifiers.
      * @param result The registration result.
      */
     void onCapabilityRegistrationStatusChanged(
-        const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
-        const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints);
+        const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
+        const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& deletedEndpoints);
 
     /// Mutex to synchronize access to observers.
     mutable std::mutex m_observersMutex;
@@ -240,6 +291,9 @@ private:
 
     /// A list of ongoing deregistration.
     std::unordered_map<EndpointIdentifier, PendingDeregistration> m_pendingDeregistrations;
+
+    /// A list of ongoing updates
+    std::unordered_map<EndpointIdentifier, PendingUpdate> m_pendingUpdates;
 
     /// The @c EndpointIdentifier of the default endpoint. Once registered, it cannot be modified
     /// or deleted.

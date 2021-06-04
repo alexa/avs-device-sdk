@@ -16,6 +16,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_ENDPOINTS_ENDPOINTREGISTRATIONOBSERVERINTERFACE_H_
 
 #include "AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h"
+#include "AVSCommon/AVS/CapabilityConfiguration.h"
 #include "AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h"
 
 namespace alexaClientSDK {
@@ -38,11 +39,34 @@ public:
         CONFIGURATION_ERROR,
         /// Registration failed due to internal error.
         INTERNAL_ERROR,
-        /// Registration failed because the endpoint is currently being updated.
-        REGISTRATION_IN_PROGRESS,
+        /// Registration failed because the endpoint is being registered.
+        PENDING_REGISTRATION,
         /// Registration failed because the endpoint is being deregistered.
-        PENDING_DEREGISTRATION
+        PENDING_DEREGISTRATION,
+        /// Registration failed because the endpoint is being updated.
+        PENDING_UPDATE,
+        /// Registration failed because the endpoint has already been registered
+        ALREADY_REGISTERED
+    };
 
+    /**
+     * Enumeration of possible update results.
+     */
+    enum class UpdateResult {
+        /// Update Succeeded.
+        SUCCEEDED,
+        /// Update failed due to some configuration error.
+        CONFIGURATION_ERROR,
+        /// Update failed due to internal error.
+        INTERNAL_ERROR,
+        /// Update failed due to the endpoint not being registered yet.
+        NOT_REGISTERED,
+        /// Update failed because the endpoint is being updated.
+        PENDING_UPDATE,
+        /// Update failed because the endpoint is being registered.
+        PENDING_REGISTRATION,
+        /// Update failed because the endpoint is being deregistered.
+        PENDING_DEREGISTRATION
     };
 
     /**
@@ -57,9 +81,11 @@ public:
         INTERNAL_ERROR,
         /// Deregistration failed due to some configuration error.
         CONFIGURATION_ERROR,
-        /// Deregistration failed because the endpoint is currently being updated.
-        REGISTRATION_IN_PROGRESS,
-        /// Deregistration is pending.
+        /// Deregistration failed because the endpoint is being updated.
+        PENDING_UPDATE,
+        /// Deregistration failed because the endpoint is being registered.
+        PENDING_REGISTRATION,
+        /// Deregistration failed because the endpoint is being deregistered.
         PENDING_DEREGISTRATION
     };
 
@@ -81,12 +107,37 @@ public:
         const RegistrationResult result) = 0;
 
     /**
+     * Notifies observer that an existing endpoint update has been processed.
+     *
+     * @param endpointId The endpoint identifier.
+     * @param attributes The endpoint attributes.
+     * @param result The final registration result.
+     */
+    virtual void onEndpointUpdate(
+        const EndpointIdentifier& endpointId,
+        const avs::AVSDiscoveryEndpointAttributes& attributes,
+        const UpdateResult result) = 0;
+
+    /**
      * Notifies observer that an endpoint deregistration has been processed.
      *
      * @param endpointId The endpoint identifier.
      * @param result The final deregistration result.
      */
     virtual void onEndpointDeregistration(const EndpointIdentifier& endpointId, const DeregistrationResult result) = 0;
+
+    /**
+     * Notifies observer that an endpoint registration or update has been started.
+     *
+     * @param endpointId The endpoint identifier.
+     * @param attributes The endpoint attributes.
+     * @param capabilities The endpoint capabilities.
+     */
+    virtual void onPendingEndpointRegistrationOrUpdate(
+        const EndpointIdentifier& endpointId,
+        const avs::AVSDiscoveryEndpointAttributes& attributes,
+        const std::vector<avs::CapabilityConfiguration>& capabilities) {
+    }
 };
 
 /**
@@ -109,11 +160,17 @@ inline std::ostream& operator<<(
         case EndpointRegistrationObserverInterface::RegistrationResult::INTERNAL_ERROR:
             stream << "INTERNAL_ERROR";
             break;
-        case EndpointRegistrationObserverInterface::RegistrationResult::REGISTRATION_IN_PROGRESS:
-            stream << "REGISTRATION_IN_PROGRESS";
+        case EndpointRegistrationObserverInterface::RegistrationResult::PENDING_REGISTRATION:
+            stream << "PENDING_REGISTRATION";
             break;
         case EndpointRegistrationObserverInterface::RegistrationResult::PENDING_DEREGISTRATION:
             stream << "PENDING_DEREGISTRATION";
+            break;
+        case EndpointRegistrationObserverInterface::RegistrationResult::PENDING_UPDATE:
+            stream << "PENDING_UPDATE";
+            break;
+        case EndpointRegistrationObserverInterface::RegistrationResult::ALREADY_REGISTERED:
+            stream << "ALREADY_REGISTERED";
             break;
         default:
             stream << "UNKNOWN";
@@ -145,12 +202,53 @@ inline std::ostream& operator<<(
         case EndpointRegistrationObserverInterface::DeregistrationResult::INTERNAL_ERROR:
             stream << "INTERNAL_ERROR";
             break;
-        case EndpointRegistrationObserverInterface::DeregistrationResult::REGISTRATION_IN_PROGRESS:
-            stream << "REGISTRATION_IN_PROGRESS";
+        case EndpointRegistrationObserverInterface::DeregistrationResult::PENDING_REGISTRATION:
+            stream << "PENDING_REGISTRATION";
             break;
         case EndpointRegistrationObserverInterface::DeregistrationResult::PENDING_DEREGISTRATION:
             stream << "PENDING_DEREGISTRATION";
             break;
+        case EndpointRegistrationObserverInterface::DeregistrationResult::PENDING_UPDATE:
+            stream << "PENDING_UPDATE";
+            break;
+        default:
+            stream << "UNKNOWN";
+            break;
+    }
+    return stream;
+}
+
+/**
+ * Write an @c UpdateResult value to an @c ostream as a string.
+ *
+ * @param stream The stream to write the value to.
+ * @param deregistrationResult The @c DeregistrationResult value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(
+    std::ostream& stream,
+    const EndpointRegistrationObserverInterface::UpdateResult& updateResult) {
+    switch (updateResult) {
+        case EndpointRegistrationObserverInterface::UpdateResult::SUCCEEDED:
+            stream << "SUCCEEDED";
+            break;
+        case EndpointRegistrationObserverInterface::UpdateResult::NOT_REGISTERED:
+            stream << "NOT_REGISTERED";
+            break;
+        case EndpointRegistrationObserverInterface::UpdateResult::CONFIGURATION_ERROR:
+            stream << "CONFIGURATION_ERROR";
+            break;
+        case EndpointRegistrationObserverInterface::UpdateResult::INTERNAL_ERROR:
+            stream << "INTERNAL_ERROR";
+            break;
+        case EndpointRegistrationObserverInterface::UpdateResult::PENDING_REGISTRATION:
+            stream << "PENDING_REGISTRATION";
+            break;
+        case EndpointRegistrationObserverInterface::UpdateResult::PENDING_DEREGISTRATION:
+            stream << "PENDING_DEREGISTRATION";
+            break;
+        case EndpointRegistrationObserverInterface::UpdateResult::PENDING_UPDATE:
+            stream << "PENDING_UPDATE";
         default:
             stream << "UNKNOWN";
             break;

@@ -24,9 +24,13 @@
 #include <ACL/Transport/MessageRouter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
+#ifdef ACSDK_ACS_UTILS
+#include <acsdkFFSAuthDelegate/FFSAuthRequesterInterface.h>
+#else
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
+#endif
 #include <ContextManager/ContextManager.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include "Integration/ConnectionStatusObserver.h"
 #include "Integration/SDKTestContext.h"
@@ -83,9 +87,15 @@ public:
      *
      * @return The instance of @c CustomerDataManager to use for the test.
      */
-    std::shared_ptr<registrationManager::CustomerDataManager> getCustomerDataManager() const;
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> getCustomerDataManager() const;
 
 private:
+#ifdef ACSDK_ACS_UTILS
+    class AuthRequester : public acsdkffsAuthDelegate::FFSAuthRequesterInterface {
+    public:
+        void onRequestFFS() override;
+    }
+#else
     /**
      * Implementation of @c CBLAuthRequesterInterface used to detect the case where the user
      * still needs to authorize access to @c AVS.
@@ -98,7 +108,7 @@ private:
         void onCheckingForAuthorization() override;
         /// @}
     };
-
+#endif
     /**
      * Constructor.
      *
@@ -114,7 +124,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// Object to manage customer specific data.
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> m_customerDataManager;
 };
 
 }  // namespace test

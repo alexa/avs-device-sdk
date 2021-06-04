@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h"
 
@@ -40,6 +41,7 @@ using DoNotDisturbComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>,
     acsdkManufactory::Import<acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,

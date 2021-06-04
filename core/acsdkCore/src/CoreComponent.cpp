@@ -18,8 +18,10 @@
 #include <acsdkShared/SharedComponent.h>
 #include <acsdkSystemClockMonitor/SystemClockNotifier.h>
 #include <acsdkSystemClockMonitor/SystemClockMonitor.h>
+#include <ADSL/ADSLComponent.h>
 #include <AFML/FocusManagementComponent.h>
 #include <AVSCommon/AVS/ExceptionEncounteredSender.h>
+#include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSGatewayManager/AVSGatewayManager.h>
 #include <AVSGatewayManager/Storage/AVSGatewayManagerStorage.h>
@@ -31,6 +33,7 @@
 #include <ContextManager/ContextManager.h>
 #include <Endpoints/DefaultEndpointBuilder.h>
 #include <InterruptModel/InterruptModel.h>
+#include <RegistrationManager/RegistrationManagerComponent.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 #include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
@@ -49,6 +52,7 @@ using namespace acsdkPostConnectOperationProviderRegistrar;
 using namespace acsdkPostConnectOperationProviderRegistrarInterfaces;
 using namespace acsdkSystemClockMonitor;
 using namespace acsdkSystemClockMonitorInterfaces;
+using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::endpoints;
@@ -76,6 +80,7 @@ static const std::string TAG("CoreComponent");
 CoreComponent getComponent() {
     return ComponentAccumulator<>()
         .addComponent(acsdkShared::getComponent())
+        .addComponent(adsl::getComponent())
         .addComponent(afml::getComponent())
         .addRetainedFactory(AlexaEventProcessedNotifier::createAlexaEventProcessedNotifierInterface)
         .addRetainedFactory(AlexaInterfaceMessageSender::createAlexaInterfaceMessageSender)
@@ -86,13 +91,13 @@ CoreComponent getComponent() {
         .addUniqueFactory(AVSGatewayManagerStorage::createAVSGatewayManagerStorageInterface)
         .addRetainedFactory(avsCommon::avs::ExceptionEncounteredSender::createExceptionEncounteredSenderInterface)
         .addRequiredFactory(CapabilitiesDelegate::createCapabilitiesDelegateInterface)
-        .addRetainedFactory(CustomerDataManager::createCustomerDataManager)
         .addRetainedFactory(DefaultEndpointBuilder::createDefaultEndpointBuilderInterface)
         .addRetainedFactory(DefaultEndpointBuilder::createDefaultEndpointCapabilitiesRegistrarInterface)
         .addRetainedFactory(ContextManager::createContextManagerInterface)
         .addRetainedFactory(DeviceInfo::createFromConfiguration)
         .addRetainedFactory(InterruptModel::createInterruptModel)
         .addRetainedFactory(PostConnectOperationProviderRegistrar::createPostConnectOperationProviderRegistrarInterface)
+        .addComponent(registrationManager::getComponent())
         .addRetainedFactory(SQLiteMiscStorage::createMiscStorageInterface)
         .addUniqueFactory(SQLiteCapabilitiesDelegateStorage::createCapabilitiesDelegateStorageInterface)
         .addRequiredFactory(SynchronizeStateSenderFactory::createPostConnectOperationProviderInterface)

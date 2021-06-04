@@ -35,9 +35,11 @@ static const std::string TAG(Timer::getTag());
 
 Timer::Timer(std::shared_ptr<sdkInterfaces::timing::TimerDelegateFactoryInterface> timerDelegateFactory) {
     if (!timerDelegateFactory) {
+        ACSDK_WARN(
+            LX(__func__).d("reason", "nullTimerDelegateFactory").m("Falling back to default TimerDelegateFactory"));
         timerDelegateFactory = std::make_shared<TimerDelegateFactory>();
         if (!timerDelegateFactory) {
-            ACSDK_ERROR(LX(__func__).d("reason", "nullTimerDelegateFactory"));
+            ACSDK_ERROR(LX(__func__).d("reason", "nullDefaultTimerDelegateFactory"));
             return;
         }
     }

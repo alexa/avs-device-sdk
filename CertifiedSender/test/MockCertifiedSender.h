@@ -24,7 +24,7 @@
 #include "AVSCommon/SDKInterfaces/MockMessageSender.h"
 
 #include <CertifiedSender/CertifiedSender.h>
-#include <RegistrationManager/CustomerDataHandler.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include <MockMessageStorage.h>
 
@@ -67,7 +67,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockAVSConnectionManager> m_mockAVSConnectionManager;
 
     /// Contains an instance of @c CustomerDataManager used by the certified sender.
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> m_customerDataManager;
 };
 
 }  // namespace test

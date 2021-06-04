@@ -20,6 +20,7 @@
 
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestSourceInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Power/PowerResource.h>
 
 #include "ACL/Transport/ExchangeHandler.h"
@@ -47,13 +48,15 @@ public:
      * @param authToken The token to use to authorize the request.
      * @param messageConsumer Object to send decoded messages to.
      * @param attachmentManager Object with which to get attachments to write to.
+     * @param metricRecorder Object with which metrics are logged.
      * @return The new DownchannelHandler or nullptr if the operation failed.
      */
     static std::shared_ptr<DownchannelHandler> create(
         std::shared_ptr<ExchangeHandlerContextInterface> context,
         const std::string& authToken,
         std::shared_ptr<MessageConsumerInterface> messageConsumer,
-        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager);
+        std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
 private:
     /**
@@ -61,8 +64,12 @@ private:
      *
      * @param context The ExchangeContext in which this MessageRequest handler will operate.
      * @param authToken The token to use to authorize the request.
+     * @param metricRecorder The pointer to the recorder used to log metrics.
      */
-    DownchannelHandler(std::shared_ptr<ExchangeHandlerContextInterface> context, const std::string& authToken);
+    DownchannelHandler(
+        std::shared_ptr<ExchangeHandlerContextInterface> context,
+        const std::string& authToken,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /// @name HTTP2RequestSourceInterface methods
     /// @{
@@ -80,6 +87,9 @@ private:
 
     /// The power resource to prevent device from going to LPM.
     std::shared_ptr<avsCommon::utils::power::PowerResource> m_powerResource;
+
+    /// The recorder used to log metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 };
 
 }  // namespace acl

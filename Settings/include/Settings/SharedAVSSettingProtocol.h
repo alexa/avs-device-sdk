@@ -23,6 +23,7 @@
 #include <utility>
 
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "Settings/SetSettingResult.h"
@@ -50,6 +51,7 @@ public:
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
      * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
+     * @param metricRecorder The @c MetricRecorderInterface to record metrics.
      * @param isDefaultCloudAuthoritative Indicates if the default value for the setting should be cloud
      * authoritative or not.  If it is, for the first time when the setting is created, the default value of the
      * setting will be sent to AVS using a report event.  If it is not cloud authoritative, then the default value of
@@ -61,6 +63,7 @@ public:
         std::shared_ptr<SettingEventSenderInterface> eventSender,
         std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
         bool isDefaultCloudAuthoritative = false);
 
     /// @name SettingProtocolInterface methods.
@@ -121,6 +124,7 @@ private:
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
      * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
+     * @param metricRecorder The @c MetricRecorderInterface to record metrics.
      * @param isDefaultCloudAuthoritative Indicates if the default value for the setting should be cloud
      * authoritative or not.  If it is, for the first time when the setting is created, the default value of the
      * setting will be sent to AVS using a report event.  If it is not cloud authoritative, then the default value of
@@ -131,6 +135,7 @@ private:
         std::shared_ptr<SettingEventSenderInterface> eventSender,
         std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
         bool isDefaultCloudAuthoritative);
 
     /**
@@ -158,6 +163,8 @@ private:
 
     /// The change request to be applied. This value is null if there is no task scheduled to process the request.
     std::unique_ptr<Request> m_pendingRequest;
+
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The mutex used to serialize access to @c m_pendingRequest
     std::mutex m_requestLock;

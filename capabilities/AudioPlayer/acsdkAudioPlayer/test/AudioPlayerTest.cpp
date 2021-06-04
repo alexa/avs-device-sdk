@@ -391,7 +391,7 @@ static const std::string MESSAGE_METADATA_KEY = "metadata";
 /// JSON key for "string" type field in metadata section of StreamMetadataExtracted event.
 static const std::string MESSAGE_METADATA_STRING_KEY = "StringKey";
 
-/// JSON key for "string" type field in metadata section of StreamMetadataExtracted event.  On whitelist
+/// JSON key for "string" type field in metadata section of StreamMetadataExtracted event.  On allowlist
 static const std::string MESSAGE_METADATA_STRING_KEY_WL = "Title";
 
 /// JSON value for "string" type field in metadata section of StreamMetadataExtracted event.
@@ -2170,7 +2170,7 @@ TEST_F(AudioPlayerTest, testTimer_onBufferRefilled) {
  * Build a vector of tags and pass to Observer (onTags).
  * Observer will use the vector of tags and build a valid JSON object
  * "StreamMetadataExtracted Event". This JSON object is verified in verifyTags.
- * Verify that metadata not on whitelist is removed, and not sent
+ * Verify that metadata not on allowlist is removed, and not sent
  */
 
 TEST_F(AudioPlayerTest, test_onTags_filteredOut) {
@@ -2241,7 +2241,7 @@ TEST_F(AudioPlayerTest, test_onTags_filteredOut) {
  * Build a vector of tags and pass to Observer (onTags).
  * Observer will use the vector of tags and build a valid JSON object
  * "StreamMetadataExtracted Event". This JSON object is verified in verifyTags.
- * Send data on whitelist
+ * Send data on allowlist
  */
 
 TEST_F(AudioPlayerTest, test_onTags_filteredIn) {
@@ -2312,7 +2312,7 @@ TEST_F(AudioPlayerTest, test_onTags_filteredIn) {
  * Build a vector of tags and pass to Observer (onTags).
  * Observer will use the vector of tags and build a valid JSON object
  * "StreamMetadataExtracted Event". This JSON object is verified in verifyTags.
- * Send data on whitelist
+ * Send data on allowlist
  * make sure event not sent too fast
  */
 
@@ -2441,7 +2441,7 @@ TEST_F(AudioPlayerTest, test_onTags_filteredIn_rateCheck) {
  * Build a vector of tags and pass to Observer (onTags).
  * Observer will use the vector of tags and build a valid JSON object
  * "StreamMetadataExtracted Event". This JSON object is verified in verifyTags.
- * Send data on whitelist
+ * Send data on allowlist
  * make sure duplicate not sent
  */
 

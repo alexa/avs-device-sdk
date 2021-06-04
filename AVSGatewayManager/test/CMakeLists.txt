@@ -4,6 +4,7 @@ set(INCLUDE_PATH
 
 set(LIBS
         "AVSGatewayManager"
+        "RegistrationManagerTestUtils"
         "SDKInterfacesTests")
 
 discover_unit_tests("${INCLUDE_PATH}" "${LIBS}")

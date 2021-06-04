@@ -16,6 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_POWERRESOURCEMANAGERINTERFACE_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_SDKINTERFACES_INCLUDE_AVSCOMMON_SDKINTERFACES_POWERRESOURCEMANAGERINTERFACE_H_
 
+#include <bitset>
 #include <chrono>
 #include <memory>
 #include <ostream>
@@ -46,22 +47,75 @@ public:
      * levels we defined in this enumaration.
      */
     enum class PowerResourceLevel {
-        // A STANDBY level means hardware components are in standby mode, they are suitable
-        // for background activities.
-        // STANDBY_LOW usually means all the hardware components work in the lowest standby power levels
+        /// A STANDBY level means hardware components are in standby mode, they are suitable
+        /// for background activities.
+        /// STANDBY_LOW usually means all the hardware components work in the lowest standby power levels
         STANDBY_LOW = 0,
-        // STANDBY_MED usually means all the hardware components work in the medium standby power levels
+        /// STANDBY_MED usually means all the hardware components work in the medium standby power levels
         STANDBY_MED,
-        // STANDBY_HIGH usually means all the hardware components work in the highest standby power levels
+        /// STANDBY_HIGH usually means all the hardware components work in the highest standby power levels
         STANDBY_HIGH,
-        // An ACTIVE level means hardware components are in active mode, they are suitable
-        // for foreground activities.
-        // ACTIVE_LOW usually means all the hardware components work in the lowest active power levels
+        /// An ACTIVE level means hardware components are in active mode, they are suitable
+        /// for foreground activities.
+        /// ACTIVE_LOW usually means all the hardware components work in the lowest active power levels
         ACTIVE_LOW,
-        // ACTIVE_LOW usually means all the hardware components work in the medium active power levels
+        /// ACTIVE_LOW usually means all the hardware components work in the medium active power levels
         ACTIVE_MED,
-        // ACTIVE_HIGH usually means all the hardware components work in the highest active power levels
+        /// ACTIVE_HIGH usually means all the hardware components work in the highest active power levels
         ACTIVE_HIGH
+    };
+
+    /**
+     * Power resource type index. These indices represent a bit position for each
+     * of the different power resource types that are likely to be used on a given
+     * system. These can be used in combination with std::bitset by using the
+     * [] operator.
+     */
+    enum PowerResourceTypeIndex {
+        /// CPU capacity is limited or improved under the CPU resource type.
+        TYPE_CPU = 0,
+        ///  DDR latency/bandwidth are limited or improved under the DDR resource type.
+        TYPE_DDR,
+        /// Disk I/O performance is limited or improved under the storage resource type.
+        TYPE_STORAGE,
+        /// Network latency is limited or improved under the network resource type.
+        TYPE_NETWORK,
+        /// A reserved type that allows platforms to reserve custom PowerResourceTypeFlags.
+        TYPE_RESERVED_ONE,
+        /// A reserved type that allows platforms to reserve custom PowerResourceTypeFlags.
+        TYPE_RESERVED_TWO,
+        /// Number of power resource types. This must always be the last enum member.
+        NUM_OF_TYPES
+    };
+
+    /**
+     * Alias for the bitset of partial states in low power mode.
+     */
+    using PartialStateBitSet = std::bitset<PowerResourceTypeIndex::NUM_OF_TYPES>;
+
+    /**
+     * Power resource type flags. Each hardware device might have multiple
+     * power resource types that they must support. This interface describes some of
+     * the commonly-used resource types that consumers of this interface may choose to implement.
+     * These resource types are presented in a bitwise format to allow combinations of resource
+     * types to be added as well. The resource types can be used to set a particular value
+     * or to perform a bitwise comparison.
+     */
+    enum PowerResourceTypeFlag {
+        /// The default flag value which corresponds to all power resource types.
+        TYPE_ALL_FLAG = 0,
+        /// Flag value which represents the CPU resource type.
+        TYPE_CPU_FLAG = 1 << PowerResourceTypeIndex::TYPE_CPU,
+        /// Flag value which represents the DDR resource type.
+        TYPE_DDR_FLAG = 1 << PowerResourceTypeIndex::TYPE_DDR,
+        /// Flag value which represents the storage resource type.
+        TYPE_STORAGE_FLAG = 1 << PowerResourceTypeIndex::TYPE_STORAGE,
+        /// Flag value which represents the network resource type.
+        TYPE_NETWORK_FLAG = 1 << PowerResourceTypeIndex::TYPE_NETWORK,
+        /// Flag value which represents the first reserved resource type.
+        TYPE_RESERVED_ONE_FLAG = 1 << PowerResourceTypeIndex::TYPE_RESERVED_ONE,
+        /// Flag value which represents the second reserved resource type.
+        TYPE_RESERVED_TWO_FLAG = 1 << PowerResourceTypeIndex::TYPE_RESERVED_TWO
     };
 
     /**
@@ -96,6 +150,23 @@ public:
      * @return time since last system resume, if implemented by power manager, zero otherwise.
      */
     virtual std::chrono::milliseconds getTimeSinceLastResumeMS();
+
+    /**
+     * Acquires the time since latest partial low power mode state change.
+     * This API should only be called after a power resource has been acquired.
+     * @param component component name.
+     * @param partialState the partial low power mode state (PowerResourceTypeFlags) to check.
+     * The state type is determined based on the bits that are passed in. For example, if
+     * TYPE_CPU is passed in then the time since the most recent CPU low power mode state will
+     * be returned. The default behavior of this partial state, TYPE_ALL, returns the most recent low
+     * power mode state value. If more than one partial state is passed in, e.g. TYPE_CPU|TYPE_DDR,
+     * this API will return the time from the most recent change of the types given.
+     * @return time since last partial system resume - zero indicates that either the platform doesn't
+     * support the partial state or that the device was never in partial low power mode.
+     */
+    virtual std::chrono::milliseconds getTimeSinceLastPartialMS(
+        const std::string& component,
+        PartialStateBitSet partialState = PowerResourceTypeFlag::TYPE_ALL_FLAG);
 
     /**
      * New APIs to support refcount and acquire with timeout.
@@ -167,7 +238,19 @@ public:
  * @return Return default value of 0 milliseconds in the form of std::chrono::milliseconds.
  */
 inline std::chrono::milliseconds PowerResourceManagerInterface::getTimeSinceLastResumeMS() {
-    return std::chrono::milliseconds(0);
+    return std::chrono::milliseconds::zero();
+}
+
+/**
+ * Provides the default @c PowerResourceManagerInterface time since last partial in MS.
+ * @param component component name.
+ * @param partialState the partial low power mode state (PowerResourceTypeFlags) to check.
+ * @return Return default value of 0 milliseconds in the form of std::chrono::milliseconds.
+ */
+inline std::chrono::milliseconds PowerResourceManagerInterface::getTimeSinceLastPartialMS(
+    const std::string& component,
+    PartialStateBitSet partialState) {
+    return std::chrono::milliseconds::zero();
 }
 
 /**

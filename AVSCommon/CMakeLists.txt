@@ -140,8 +140,10 @@ endif ()
 
 target_link_libraries(AVSCommon
     ${CURL_LIBRARIES}
+    acsdkApplicationAudioPipelineFactoryInterfaces
     acsdkEqualizerInterfaces
-    acsdkApplicationAudioPipelineFactoryInterfaces)
+    acsdkInteractionModelInterfaces
+    )
 
 # install target
 LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/AVS/include")

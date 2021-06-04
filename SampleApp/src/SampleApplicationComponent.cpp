@@ -24,6 +24,7 @@
 #endif
 
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
+#include <RegistrationManager/CustomerDataManagerFactory.h>
 
 #include "SampleApp/LocaleAssetsManager.h"
 #include "SampleApp/SampleApplicationComponent.h"
@@ -102,7 +103,7 @@ SampleApplicationComponent getComponent(
         .addUniqueFactory(avsCommon::utils::libcurlUtils::HttpPost::createHttpPostInterface)
         .addRetainedFactory(avsCommon::utils::timing::MultiTimer::createMultiTimer)
         .addRetainedFactory(contextManager::ContextManager::createContextManagerInterface)
-        .addRetainedFactory(registrationManager::CustomerDataManager::createCustomerDataManager);
+        .addRetainedFactory(registrationManager::CustomerDataManagerFactory::createCustomerDataManagerInterface);
 }
 
 }  // namespace acsdkSampleApplication

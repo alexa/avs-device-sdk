@@ -22,7 +22,7 @@
 #include <AVSCommon/SDKInterfaces/MockAVSGatewayAssigner.h>
 #include <AVSCommon/SDKInterfaces/MockAVSGatewayObserver.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace avsGatewayManager {
@@ -97,7 +97,7 @@ protected:
     void createAVSGatewayManager();
 
     /// The @c CustomerDataManager.
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<registrationManager::MockCustomerDataManager> m_customerDataManager;
 
     /// The mock @c AVSGatewayAssigner.
     std::shared_ptr<MockAVSGatewayAssigner> m_mockAVSGatewayAssigner;
@@ -116,7 +116,7 @@ void AVSGatewayManagerTest::SetUp() {
     m_mockAVSGatewayManagerStorage = std::make_shared<NiceMock<MockAVSGatewayManagerStorage>>();
     m_mockAVSGatewayAssigner = std::make_shared<NiceMock<MockAVSGatewayAssigner>>();
     m_mockAVSGatewayObserver = std::make_shared<NiceMock<MockAVSGatewayObserver>>();
-    m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    m_customerDataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
 }
 
 void AVSGatewayManagerTest::TearDown() {

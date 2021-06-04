@@ -1,7 +1,7 @@
 Name: ${PROJECT_NAME}
 Description: ${PROJECT_BRIEF}
 Version: ${PROJECT_VERSION}
-Requires: ${PKG_CONFIG_REQUIRES}
+Requires.private: ${PKG_CONFIG_REQUIRES}
 prefix=${CMAKE_INSTALL_PREFIX}
 includedir=${PKG_CONFIG_INCLUDEDIR}
 libdir=${PKG_CONFIG_LIBDIR}

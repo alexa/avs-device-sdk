@@ -12,10 +12,11 @@ if (BUILD_TESTING)
         "${AVSCommon_SOURCE_DIR}/AVS/test"
         "${AVSCommon_SOURCE_DIR}/Utils/include"
         "${AVSCommon_SOURCE_DIR}/SDKInterfaces/test"
+        "${AVSCommon_SOURCE_DIR}/Utils/test"
         "${CertifiedSender_SOURCE_DIR}/test")
 
     set(TEST_FOLDER "${DeviceSettings_SOURCE_DIR}/test")
 
-    discover_unit_tests("${INCLUDE_PATH}" "DeviceSettings;DeviceSettingsTests" "${TEST_FOLDER}")
+    discover_unit_tests("${INCLUDE_PATH}" "DeviceSettings;DeviceSettingsTests;RegistrationManagerTestUtils" "${TEST_FOLDER}")
 
 endif()

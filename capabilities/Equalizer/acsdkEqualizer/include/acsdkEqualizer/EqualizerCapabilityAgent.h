@@ -32,7 +32,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include <acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h>
 #include <acsdkEqualizerInterfaces/EqualizerControllerListenerInterface.h>
@@ -74,7 +74,7 @@ public:
         std::shared_ptr<acsdkEqualizer::EqualizerController> equalizerController,
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<acsdkEqualizerInterfaces::EqualizerStorageInterface> equalizerStorage,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);
@@ -129,7 +129,7 @@ private:
         std::shared_ptr<acsdkEqualizer::EqualizerController> equalizerController,
         std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
         std::shared_ptr<acsdkEqualizerInterfaces::EqualizerStorageInterface> equalizerStorage,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender);

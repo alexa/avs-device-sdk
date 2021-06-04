@@ -17,20 +17,12 @@
 #include <cctype>
 #include <csignal>
 
-#include <acsdkAlerts/Storage/SQLiteAlertStorage.h>
-#include <acsdkBluetooth/BasicDeviceConnectionRule.h>
-#include <acsdkBluetooth/SQLiteBluetoothStorage.h>
-#include <acsdkEqualizerImplementations/MiscDBEqualizerStorage.h>
 #include <acsdkManufactory/Manufactory.h>
-#include <acsdkNotifications/SQLiteNotificationsStorage.h>
-#include <ACL/Transport/HTTP2TransportFactory.h>
-#include <Audio/AudioFactory.h>
 #include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/AVS/Initialization/InitializationParametersBuilder.h>
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceConnectionRuleInterface.h>
-#include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/ProtocolTracerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Timing/TimerDelegateFactoryInterface.h>
@@ -50,7 +42,7 @@
 #include <SampleApp/KeywordObserver.h>
 #include <SampleApp/LocaleAssetsManager.h>
 #include <SampleApp/PlatformSpecificValues.h>
-#include <Settings/Storage/SQLiteDeviceSettingStorage.h>
+#include <SpeechEncoder/SpeechEncoder.h>
 #include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 
 #ifdef ENABLE_REVOKE_AUTH
@@ -99,10 +91,6 @@
 #ifdef ANDROID_LOGGER
 #include <AndroidUtilities/AndroidLogger.h>
 #endif
-#endif
-
-#ifdef BLUETOOTH_BLUEZ
-#include <BlueZ/BlueZBluetoothDeviceManager.h>
 #endif
 
 #ifdef POWER_CONTROLLER
@@ -181,29 +169,40 @@ using ApplicationMediaInterfaces = alexaClientSDK::avsCommon::sdkInterfaces::App
  * manufactory integration is finished.
  */
 using PreviewAlexaClientManufactory = Manufactory<
+    acsdkManufactory::
+        Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+    acsdkManufactory::
+        Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+    acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+        avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
     std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
+    std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
     std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
     std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
+    std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>,
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
     std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
     std::shared_ptr<afml::interruptModel::InterruptModel>,
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
+    std::shared_ptr<avsCommon::avs::DialogUXStateAggregator>,
     std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface>,
-    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>,
-    acsdkManufactory::
-        Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
@@ -212,24 +211,24 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
-    std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
-    acsdkManufactory::Annotated<
-        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
-        avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
-    std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>,
-    std::shared_ptr<avsCommon::utils::DeviceInfo>,
+    std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
+    std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
     std::shared_ptr<capabilityAgents::alexa::AlexaInterfaceMessageSender>,
     std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
     std::shared_ptr<captions::CaptionManagerInterface>,
     std::shared_ptr<certifiedSender::CertifiedSender>,
-    std::shared_ptr<registrationManager::CustomerDataManager>,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
+    std::shared_ptr<registrationManager::RegistrationManagerInterface>,
+    std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
     std::shared_ptr<sampleApp::UIManager>,
     std::shared_ptr<settings::DeviceSettingsManager>,
-    std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>;
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
+    std::shared_ptr<speechencoder::SpeechEncoder>>;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("PreviewAlexaClient");
@@ -897,11 +896,6 @@ bool PreviewAlexaClient::initialize(
     auto messageStorage = alexaClientSDK::certifiedSender::SQLiteMessageStorage::create(config);
 
     /*
-     * Creating notifications storage object to be used for storing notification indicators.
-     */
-    auto notificationsStorage = alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage::create(config);
-
-    /*
      * Create sample locale asset manager.
      */
     auto localeAssetsManager = manufactory->get<std::shared_ptr<LocaleAssetsManagerInterface>>();
@@ -923,7 +917,7 @@ bool PreviewAlexaClient::initialize(
      * Creating customerDataManager which will be used by the registrationManager and all classes that extend
      * CustomerDataHandler
      */
-    auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManager>>();
+    auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>();
     if (!customerDataManager) {
         ACSDK_CRITICAL(LX("Failed to get CustomerDataManager!"));
         return false;
@@ -1126,7 +1120,6 @@ bool PreviewAlexaClient::initialize(
         commsSpeaker,
         sharedDataStream,
 #endif
-        std::move(notificationsStorage),
         {userInterfaceManager},
         {userInterfaceManager},
         displayCardsSupported,
@@ -1354,7 +1347,7 @@ bool PreviewAlexaClient::initialize(
     }
 
     authDelegate->addAuthObserver(m_userInputManager);
-    client->getRegistrationManager()->addObserver(m_userInputManager);
+    client->addRegistrationObserver(m_userInputManager);
     m_capabilitiesDelegate->addCapabilitiesObserver(m_userInputManager);
 
     client->connect();

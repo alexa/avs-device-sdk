@@ -46,7 +46,7 @@ std::function<std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterf
     const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>&,
     const std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>&,
     const std::shared_ptr<certifiedSender::CertifiedSender>&,
-    const std::shared_ptr<registrationManager::CustomerDataManager>&,
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>&,
     const std::shared_ptr<settings::DeviceSettingsManager>&,
     const std::shared_ptr<storage::AlertStorageInterface>&)>
 getCreateAlertsCapabilityAgent(bool startAlertSchedulingOnInitialization) {
@@ -70,7 +70,7 @@ getCreateAlertsCapabilityAgent(bool startAlertSchedulingOnInitialization) {
             const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
             const std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>& systemClockMonitor,
             const std::shared_ptr<certifiedSender::CertifiedSender>& certifiedSender,
-            const std::shared_ptr<registrationManager::CustomerDataManager>& dataManager,
+            const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& dataManager,
             const std::shared_ptr<settings::DeviceSettingsManager>& settingsManager,
             const std::shared_ptr<storage::AlertStorageInterface>& alertStorage)
             -> std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface> {

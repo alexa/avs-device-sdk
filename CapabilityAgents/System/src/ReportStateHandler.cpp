@@ -107,7 +107,7 @@ static bool initializeDataBase(storage::MiscStorageInterface& storage) {
 }
 
 std::unique_ptr<ReportStateHandler> ReportStateHandler::create(
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -220,7 +220,7 @@ bool ReportStateHandler::handleReportState(const AVSDirective& info) {
 }
 
 ReportStateHandler::ReportStateHandler(
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
     std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> storage,

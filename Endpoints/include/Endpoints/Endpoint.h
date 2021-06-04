@@ -63,6 +63,8 @@ public:
         avsCommon::avs::CapabilityConfiguration,
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>>
     getCapabilities() const override;
+    bool update(const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointModificationData>&
+                    endpointModificationData) override;
     /// @}
 
     /**
@@ -77,12 +79,28 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface> directiveHandler);
 
     /**
+     * Removes the capability configuration from the endpoint.
+     *
+     * @param capabilityConfiguration The capability agent configuration.
+     * @return True if successful, else false.
+     */
+    bool removeCapability(const avsCommon::avs::CapabilityConfiguration& capabilityConfiguration);
+
+    /**
      * This method is used to add capability configurations for interfaces that don't have any associated directive.
      *
      * @param capabilityConfiguration
      * @return @c true if successful; @c false otherwise.
      */
     bool addCapabilityConfiguration(const avsCommon::avs::CapabilityConfiguration& capabilityConfiguration);
+
+    /**
+     * Validate the updated endpoint attributes.
+     *
+     * @param updatedAttributes The updated endpoint attributes.
+     * @return @c true if valid; @c false otherwise.
+     */
+    bool validateEndpointAttributes(const EndpointAttributes& updatedAttributes);
 
     /**
      * This method can be used to add other objects that require shutdown during endpoint destruction.
@@ -93,11 +111,11 @@ public:
         const std::list<std::shared_ptr<avsCommon::utils::RequiresShutdown>>& requireShutdownObjects);
 
 private:
-    /// Mutex used to synchronize members access.
+    /// Mutex used to synchronize members(m_capabilities and m_attributes) access.
     mutable std::mutex m_mutex;
 
     /// The endpoint attributes.
-    const EndpointAttributes m_attributes;
+    EndpointAttributes m_attributes;
 
     /// The map of capabilities and the handlers for their directives.
     std::unordered_map<

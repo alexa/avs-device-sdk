@@ -20,7 +20,7 @@
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/Timing/TimeUtils.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 
 #include "acsdkAlerts/AlertScheduler.h"
@@ -319,7 +319,7 @@ void AlertSchedulerTest::SetUp() {
     settings::DeviceSettingManagerSettingConfigurations configurations;
 
     m_settingsManager = std::make_shared<settings::DeviceSettingsManager>(
-        std::make_shared<registrationManager::CustomerDataManager>(), configurations);
+        std::make_shared<registrationManager::MockCustomerDataManager>(), configurations);
 }
 
 /**

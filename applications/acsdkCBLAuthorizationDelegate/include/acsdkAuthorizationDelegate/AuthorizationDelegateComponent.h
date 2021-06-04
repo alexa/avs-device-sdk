@@ -25,7 +25,7 @@
 #include <AVSCommon/Utils/LibcurlUtils/HttpPostInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkAuthorizationDelegate {
@@ -39,7 +39,7 @@ using AuthorizationDelegateComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode>>,
     acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>>;
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>>;
 
 /**
  * Get the @c Manufactory component for creating an instance of AVSConnectionMangerInterface.

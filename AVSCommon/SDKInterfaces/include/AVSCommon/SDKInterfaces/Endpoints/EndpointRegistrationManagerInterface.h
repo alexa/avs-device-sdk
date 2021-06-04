@@ -20,9 +20,9 @@
 #include <memory>
 #include <string>
 
-#include "AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h"
 #include "AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h"
 #include "AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h"
+#include "AVSCommon/SDKInterfaces/Endpoints/EndpointModificationData.h"
 #include "AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationObserverInterface.h"
 
 namespace alexaClientSDK {
@@ -41,6 +41,7 @@ public:
     /// Aliases.
     using RegistrationResult = EndpointRegistrationObserverInterface::RegistrationResult;
     using DeregistrationResult = EndpointRegistrationObserverInterface::DeregistrationResult;
+    using UpdateResult = EndpointRegistrationObserverInterface::UpdateResult;
 
     /**
      * Destructor
@@ -50,8 +51,7 @@ public:
     /**
      * Registers an endpoint.
      *
-     * @note endpointIds are unique. If an endpoint is registered with the same endpointId as a pre-existing
-     * endpoint, the pre-existing endpoint will be replaced with the new one.
+     * @note endpointIds are unique. An endpoint is not allowed to be registered with an existing endpointId.
      *
      * @param endpoint A pointer to the @c EndpointInterface to be registered.
      * @return A future that is set to @c true when the endpoint has been registered and enabled, or that is set to
@@ -60,6 +60,23 @@ public:
      * whenever the operation succeeds or fails.
      */
     virtual std::future<RegistrationResult> registerEndpoint(std::shared_ptr<EndpointInterface> endpoint) = 0;
+
+    /**
+     * Update an existing endpoint.
+     *
+     * @param endpointId  The @c EndpointIdentifier of the endpoint to be updated.
+     * @param endpointModificationData A pointer to the @c EndpointModificationData used to update the endpoint.
+     * @return A future that is set to @c true when the endpoint has been updated, or that is set to
+     * @c false if the operation failed.
+     * @note This operation is asynchronous. You can also use @c EndpointRegistrationObserverInterface to get notified
+     * whenever the operation succeeds or fails.
+     * @warning If the default endpoint fails to update due to the invalid @c endpointModificationData, the desync of
+     * capabilities between AVS and the device would happen. Applications should treat failure to update the default
+     * endpoint as a critical error.
+     */
+    virtual std::future<UpdateResult> updateEndpoint(
+        const EndpointIdentifier& endpointId,
+        const std::shared_ptr<EndpointModificationData>& endpointModificationData) = 0;
 
     /**
      * Deregisters an endpoint.

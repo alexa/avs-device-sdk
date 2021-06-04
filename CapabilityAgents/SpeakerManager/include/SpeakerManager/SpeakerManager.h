@@ -436,9 +436,10 @@ private:
      * @tparam Args The argument types for the task to execute.
      * @param task A callable type representing a task.
      * @param args The arguments to call the task with.
+     * @return A bool indicating success.
      */
     template <typename Task, typename... Args>
-    void retryAndApplySettings(Task task, Args&&... args);
+    bool retryAndApplySettings(Task task, Args&&... args);
 
     /// The metric recorder.
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;

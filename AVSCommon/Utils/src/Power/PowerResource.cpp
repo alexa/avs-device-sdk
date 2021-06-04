@@ -43,7 +43,18 @@ std::shared_ptr<PowerResource> PowerResource::create(
         return nullptr;
     }
 
-    return std::shared_ptr<PowerResource>(new PowerResource(identifier, powerManager, level, refCounted));
+    // Identifier name with PREFIX for calling @c PowerResourceManagerInterface.
+    // This will make ACSDK created power resources easy to identify.
+    auto prefixedIdentifier = std::string(PREFIX) + identifier;
+    auto powerResourceId = powerManager->create(prefixedIdentifier, refCounted, level);
+
+    if (!powerResourceId) {
+        ACSDK_ERROR(LX(__func__).d("reason", "createFailed").d("method", "PowerResourceManagerInterface::create"));
+        return nullptr;
+    }
+
+    return std::shared_ptr<PowerResource>(
+        new PowerResource(identifier, powerManager, level, refCounted, powerResourceId));
 }
 
 PowerResource::~PowerResource() {
@@ -67,18 +78,15 @@ PowerResource::PowerResource(
     const std::string& identifier,
     std::shared_ptr<PowerResourceManagerInterface> powerManager,
     PowerResourceManagerInterface::PowerResourceLevel level,
-    bool refCounted) :
+    bool refCounted,
+    std::shared_ptr<sdkInterfaces::PowerResourceManagerInterface::PowerResourceId> powerResourceId) :
         m_identifier{identifier},
-        m_prefixedIdentifier{std::string(PREFIX) + m_identifier},
         m_isRefCounted{refCounted},
+        m_powerResourceId{powerResourceId},
         m_refCount{0},
         m_level{level},
         m_isFrozen{false},
         m_powerManager{powerManager} {
-    m_powerResourceId = m_powerManager->create(m_prefixedIdentifier, m_isRefCounted, m_level);
-    if (!m_powerResourceId) {
-        ACSDK_ERROR(LX(__func__).d("reason", "createFailed").d("method", "PowerResourceManagerInterface::create"));
-    }
 }
 
 bool PowerResource::isRefCounted() const {

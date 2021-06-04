@@ -16,6 +16,7 @@
 #ifndef ACSDKBLUETOOTH_BLUETOOTH_H_
 #define ACSDKBLUETOOTH_BLUETOOTH_H_
 
+#include <atomic>
 #include <deque>
 #include <functional>
 #include <map>
@@ -61,7 +62,7 @@
 #include <AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include "acsdkBluetooth/BluetoothEventState.h"
 #include "acsdkBluetooth/BluetoothMediaInputTransformer.h"
@@ -150,6 +151,9 @@ public:
      * An enum that represents how the Bluetooth class expects to lose focus.
      */
     enum class FocusTransitionState {
+        /// No focus transition in progress,
+        NONE,
+
         /// Focus in Bluetooth class is lost because it explicitly released focus.
         INTERNAL,
 
@@ -227,7 +231,7 @@ public:
         std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface> bluetoothStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> deviceManager,
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
             audioPipelineFactory,
         acsdkManufactory::Annotated<
@@ -329,7 +333,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> deviceManager,
         std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceConnectionRuleInterface>>
             enabledConnectionRules,
         std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> bluetoothChannelVolumeInterface,
@@ -1039,6 +1043,9 @@ private:
     /// The object to notify of Bluetooth device connections or disconnections.
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface> m_bluetoothNotifier;
 
+    /// counter to track the number of pending focus requests/releases
+    std::atomic<uint8_t> m_pendingFocusTransitions;
+
     /// An executor used for serializing requests on the Bluetooth agent's own thread of execution.
     avsCommon::utils::threading::Executor m_executor;
 };
@@ -1085,6 +1092,8 @@ inline std::ostream& operator<<(std::ostream& stream, const Bluetooth::Streaming
  */
 inline std::string focusTransitionStateToString(Bluetooth::FocusTransitionState state) {
     switch (state) {
+        case Bluetooth::FocusTransitionState::NONE:
+            return "NONE";
         case Bluetooth::FocusTransitionState::INTERNAL:
             return "INTERNAL";
         case Bluetooth::FocusTransitionState::PENDING_INTERNAL:

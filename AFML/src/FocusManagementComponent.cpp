@@ -18,11 +18,13 @@
 #include "AFML/AudioActivityTracker.h"
 #include "AFML/FocusManagementComponent.h"
 #include "AFML/FocusManager.h"
+#include "AFML/VisualActivityTracker.h"
 
 namespace alexaClientSDK {
 namespace afml {
 
 using AudioFocusAnnotation = avsCommon::sdkInterfaces::AudioFocusAnnotation;
+using VisualFocusAnnotation = avsCommon::sdkInterfaces::VisualFocusAnnotation;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("FocusManagementComponent");
@@ -36,6 +38,9 @@ static const std::string TAG("FocusManagementComponent");
 
 /// Key for audio channel array configurations in configuration node.
 static const std::string AUDIO_CHANNEL_CONFIG_KEY = "audioChannels";
+
+/// Key for visual channel array configurations in configuration node.
+static const std::string VISUAL_CHANNEL_CONFIG_KEY = "visualChannels";
 
 acsdkManufactory::Annotated<AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>
 createAudioFocusManager(
@@ -61,10 +66,36 @@ createAudioFocusManager(
         focusManager);
 }
 
+acsdkManufactory::Annotated<VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>
+createVisualFocusManager(
+    acsdkManufactory::Annotated<VisualFocusAnnotation, ActivityTrackerInterface> annotatedActivityTracker,
+    std::shared_ptr<interruptModel::InterruptModel> interruptModel) {
+    // Read visualChannels configuration from config file
+    std::vector<afml::FocusManager::ChannelConfiguration> visualVirtualChannelConfiguration;
+    if (!afml::FocusManager::ChannelConfiguration::readChannelConfiguration(
+            VISUAL_CHANNEL_CONFIG_KEY, &visualVirtualChannelConfiguration)) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToReadVisualChannelConfiguration"));
+        return nullptr;
+    }
+
+    std::shared_ptr<afml::ActivityTrackerInterface> activityTracker = annotatedActivityTracker;
+
+    auto focusManager = std::make_shared<afml::FocusManager>(
+        afml::FocusManager::getDefaultVisualChannels(),
+        activityTracker,
+        visualVirtualChannelConfiguration,
+        interruptModel);
+
+    return acsdkManufactory::Annotated<VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>(
+        focusManager);
+}
+
 FocusManagementComponent getComponent() {
     return acsdkManufactory::ComponentAccumulator<>()
         .addRetainedFactory(AudioActivityTracker::createAudioActivityTrackerInterface)
-        .addRequiredFactory(createAudioFocusManager);
+        .addRetainedFactory(VisualActivityTracker::createVisualActivityTrackerInterface)
+        .addRequiredFactory(createAudioFocusManager)
+        .addRetainedFactory(createVisualFocusManager);
 }
 
 }  // namespace afml

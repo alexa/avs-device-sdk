@@ -34,8 +34,17 @@ namespace acsdkNotifications {
 class SQLiteNotificationsStorage : public acsdkNotificationsInterfaces::NotificationsStorageInterface {
 public:
     /**
-     * Factory method for creating a storage object for Notifications based on an
-     * SQLite database.
+     * Factory method for creating a storage object for Notifications based on an SQLite database.
+     *
+     * @param configurationRoot The global config object.
+     * @return Pointer to the NotificationsStorageInterface object, nullptr if there's an error creating it.
+     */
+    static std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface>
+    createNotificationsStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
+
+    /**
+     * Factory method for creating a storage object for Notifications based on an SQLite database.
      *
      * @param configurationRoot The global config object.
      * @return Pointer to the SQLiteMessagetStorge object, nullptr if there's an

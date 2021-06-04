@@ -24,6 +24,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <acsdkManufactory/Annotated.h>
 #include <ADSL/DirectiveSequencer.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AFML/FocusManager.h>
@@ -33,9 +34,11 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
-#include <InteractionModel/InteractionModelCapabilityAgent.h>
+#include <acsdkInteractionModel/InteractionModelCapabilityAgent.h>
+#include <acsdkInteractionModel/InteractionModelNotifier.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 
 #include "Integration/ACLTestContext.h"
@@ -62,10 +65,12 @@ using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::endpoints;
+using namespace avsCommon::sdkInterfaces::endpoints::test;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::sds;
-using namespace capabilityAgents::interactionModel;
+using namespace acsdkInteractionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace contextManager;
 using namespace sdkInterfaces;
@@ -312,6 +317,15 @@ protected:
         m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
 
+        auto registrar = std::make_shared<NiceMock<MockEndpointCapabilitiesRegistrar>>();
+        m_endpointCapabilitiesRegistrar =
+            acsdkManufactory::Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface>(registrar);
+        EXPECT_CALL(
+            *(registrar.get()),
+            withCapability(A<const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>&>(), _))
+            .WillRepeatedly(ReturnRef(
+                *std::make_shared<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>()));
+
         DirectiveHandlerConfiguration config;
         auto audioBlockingPolicy = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, true);
         config[SET_MUTE_PAIR] = audioBlockingPolicy;
@@ -359,11 +373,15 @@ protected:
 
         ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_directiveHandler));
 
-        m_interactionModelCA =
-            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        m_interactionModelNotifier = InteractionModelNotifier::createInteractionModelNotifierInterface();
+        m_interactionModelCA = InteractionModelCapabilityAgent::create(
+            m_directiveSequencer,
+            m_exceptionEncounteredSender,
+            m_interactionModelNotifier,
+            m_endpointCapabilitiesRegistrar);
         ASSERT_NE(nullptr, m_interactionModelCA);
         ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
-        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
+        m_interactionModelNotifier->addObserver(m_dialogUXStateAggregator);
     }
 
     /**
@@ -522,7 +540,10 @@ protected:
     std::shared_ptr<MessageInterpreter> m_messageInterpreter;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
+    std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface> m_interactionModelNotifier;
     std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
+    acsdkManufactory::Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface>
+        m_endpointCapabilitiesRegistrar;
     std::shared_ptr<avsCommon::avs::DialogUXStateAggregator> m_dialogUXStateAggregator;
     std::shared_ptr<FocusManager> m_focusManager;
     std::shared_ptr<TestClient> m_testClient;

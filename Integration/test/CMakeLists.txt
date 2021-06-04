@@ -9,7 +9,8 @@ set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR}"
      "${AIP_SOURCE_DIR}/include"
      "${SpeechSynthesizer_SOURCE_DIR}/include"
-     "${InteractionModel_SOURCE_DIR}/include"
+     "${acsdkInteractionModel_SOURCE_DIR}/include"
+     "${acsdkInteractionModel_SOURCE_DIR}/privateInclude"
      "${AVSSystem_SOURCE_DIR}/include"
      "${GST_INCLUDE_DIRS}"
      "${AVSCommon_INCLUDE_DIRS}"
@@ -34,11 +35,13 @@ set(LINK_PATH ACL
         KWD
         PlaybackController
         SpeechSynthesizer
-        InteractionModel
         UtilsCommonTestLib
         SDKInterfacesTests
         acsdkAlerts
-        acsdkAudioPlayer)
+        acsdkAudioPlayer
+        acsdkInteractionModel
+        acsdkManufactory
+        acsdkShutdownManager)
 
 if(KITTAI_KEY_WORD_DETECTOR)
     SET(LINK_PATH ${LINK_PATH} KITTAI)

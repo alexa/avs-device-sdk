@@ -20,6 +20,7 @@
 #include <gtest/gtest.h>
 
 #include <AVSCommon/SDKInterfaces/MockAVSConnectionManager.h>
+#include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 #include <Settings/SharedAVSSettingProtocol.h>
 #include <Settings/SettingEventMetadata.h>
@@ -34,8 +35,9 @@ namespace test {
 
 using namespace testing;
 using namespace storage::test;
-using namespace avsCommon::utils;
 using namespace avsCommon::sdkInterfaces::test;
+using namespace avsCommon::utils;
+using namespace avsCommon::utils::metrics::test;
 
 /// A dummy setting metadata.
 const SettingEventMetadata METADATA = {"namespace", "ChangedName", "ReportName", "setting"};
@@ -102,6 +104,9 @@ protected:
     /// Pointer to a mock protocol.
     std::unique_ptr<SharedAVSSettingProtocol> m_protocol;
 
+    /// Mock Metric Recorder.
+    std::shared_ptr<MockMetricRecorder> m_metricRecorder;
+
     /// Mock callbacks.
     StrictMock<MockCallbacks> m_callbacksMock;
 
@@ -113,7 +118,9 @@ void SharedAVSSettingProtocolTest::SetUp() {
     m_senderMock = std::make_shared<StrictMock<MockSettingEventSender>>();
     m_storageMock = std::make_shared<StrictMock<MockDeviceSettingStorage>>();
     m_mockConnectionManager = std::make_shared<NiceMock<MockAVSConnectionManager>>();
-    m_protocol = SharedAVSSettingProtocol::create(METADATA, m_senderMock, m_storageMock, m_mockConnectionManager);
+    m_metricRecorder = std::make_shared<NiceMock<MockMetricRecorder>>();
+    m_protocol = SharedAVSSettingProtocol::create(
+        METADATA, m_senderMock, m_storageMock, m_mockConnectionManager, m_metricRecorder);
 }
 
 void SharedAVSSettingProtocolTest::modifySetting(std::string value, bool isLocal) {
@@ -230,12 +237,14 @@ void SharedAVSSettingProtocolTest::testMultipleChanges(bool isLocal) {
 
 /// Test create with null event sender.
 TEST_F(SharedAVSSettingProtocolTest, test_nullEventSender) {
-    ASSERT_FALSE(SharedAVSSettingProtocol::create(METADATA, nullptr, m_storageMock, m_mockConnectionManager));
+    ASSERT_FALSE(
+        SharedAVSSettingProtocol::create(METADATA, nullptr, m_storageMock, m_mockConnectionManager, m_metricRecorder));
 }
 
 /// Test create with null storage.
 TEST_F(SharedAVSSettingProtocolTest, test_nullStorage) {
-    ASSERT_FALSE(SharedAVSSettingProtocol::create(METADATA, m_senderMock, nullptr, m_mockConnectionManager));
+    ASSERT_FALSE(
+        SharedAVSSettingProtocol::create(METADATA, m_senderMock, nullptr, m_mockConnectionManager, m_metricRecorder));
 }
 
 /// Test restore when value is not available in the database.
@@ -285,8 +294,8 @@ TEST_F(SharedAVSSettingProtocolTest, test_restoreValueNotAvailableCloudAuthorita
         return retPromise.get_future();
     }));
 
-    auto protocol =
-        SharedAVSSettingProtocol::create(METADATA, m_senderMock, m_storageMock, m_mockConnectionManager, true);
+    auto protocol = SharedAVSSettingProtocol::create(
+        METADATA, m_senderMock, m_storageMock, m_mockConnectionManager, m_metricRecorder, true);
 
     protocol->restoreValue(
         std::bind(&MockCallbacks::applyDbChange, &m_callbacksMock, std::placeholders::_1),

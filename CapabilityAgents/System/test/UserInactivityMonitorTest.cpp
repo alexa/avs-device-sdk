@@ -20,9 +20,11 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 #include <AVSCommon/AVS/MessageRequest.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
+#include <AVSCommon/SDKInterfaces/MockDirectiveSequencer.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockUserInactivityMonitorObserver.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -108,11 +110,17 @@ protected:
     std::shared_ptr<StrictMock<MockMessageSender>> m_mockMessageSender;
     /// Mocked Exception Encountered Sender. Note that we make it a strict mock to ensure we test the flow completely.
     std::shared_ptr<StrictMock<MockExceptionEncounteredSender>> m_mockExceptionEncounteredSender;
+    /// Mocked ShutdownNotifier.
+    std::shared_ptr<StrictMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>> m_mockShutdownNotifier;
+    /// Mocked DirectiveSequencer.
+    std::shared_ptr<StrictMock<MockDirectiveSequencer>> m_mockDirectiveSequencer;
 };
 
 void UserInactivityMonitorTest::SetUp() {
     m_mockMessageSender = std::make_shared<StrictMock<MockMessageSender>>();
     m_mockExceptionEncounteredSender = std::make_shared<StrictMock<MockExceptionEncounteredSender>>();
+    m_mockShutdownNotifier = std::make_shared<StrictMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>>();
+    m_mockDirectiveSequencer = std::make_shared<StrictMock<MockDirectiveSequencer>>();
 }
 
 /**
@@ -137,6 +145,41 @@ TEST_F(UserInactivityMonitorTest, test_createWithError) {
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(m_mockMessageSender, nullptr));
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(nullptr, m_mockExceptionEncounteredSender));
     ASSERT_EQ(nullptr, UserInactivityMonitor::create(nullptr, nullptr));
+}
+
+/**
+ * This case tests if possible @c nullptr parameters passed to @c
+ * UserInactivityMonitor::createUserInactivityMonitorInterface are handled properly.
+ */
+TEST_F(UserInactivityMonitorTest, test_createUserInactivityMonitorInterfaceWithError) {
+    ASSERT_EQ(
+        nullptr,
+        UserInactivityMonitor::createUserInactivityMonitorInterface(
+            nullptr, m_mockExceptionEncounteredSender, m_mockShutdownNotifier, m_mockDirectiveSequencer));
+    ASSERT_EQ(
+        nullptr,
+        UserInactivityMonitor::createUserInactivityMonitorInterface(
+            m_mockMessageSender, nullptr, m_mockShutdownNotifier, m_mockDirectiveSequencer));
+    ASSERT_EQ(
+        nullptr,
+        UserInactivityMonitor::createUserInactivityMonitorInterface(
+            m_mockMessageSender, m_mockExceptionEncounteredSender, nullptr, m_mockDirectiveSequencer));
+    ASSERT_EQ(
+        nullptr,
+        UserInactivityMonitor::createUserInactivityMonitorInterface(
+            m_mockMessageSender, m_mockExceptionEncounteredSender, m_mockShutdownNotifier, nullptr));
+}
+
+/**
+ * This case tests that the factory method registers the new instance with ShutdownNotifier and DirectiveSequencer.
+ */
+TEST_F(UserInactivityMonitorTest, test_createUserInactivityMonitorInterface) {
+    EXPECT_CALL(*(m_mockShutdownNotifier.get()), addObserver(_));
+    EXPECT_CALL(*(m_mockDirectiveSequencer.get()), addDirectiveHandler(_));
+    ASSERT_NE(
+        nullptr,
+        UserInactivityMonitor::createUserInactivityMonitorInterface(
+            m_mockMessageSender, m_mockExceptionEncounteredSender, m_mockShutdownNotifier, m_mockDirectiveSequencer));
 }
 
 /**

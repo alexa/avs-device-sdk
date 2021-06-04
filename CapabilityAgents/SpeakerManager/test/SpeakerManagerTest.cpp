@@ -592,23 +592,28 @@ TEST_F(SpeakerManagerTest, test_removeNullObserver) {
 }
 
 /*
- * Test retryLogic for SetVolume on speaker type AVS_SPEAKER_VOLUME. Returning false once for speaker->setVolume()
+ * Test retry logic for SetVolume on speaker type AVS_SPEAKER_VOLUME. Returning false once for speaker->setVolume()
  * triggers retry and when successful returns the future of value true.
  */
 TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForSetVolume) {
-    auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
-
+    auto channelVolumeInterface = std::make_shared<NiceMock<MockChannelVolumeInterface>>();
+    channelVolumeInterface->DelegateToReal();
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
-    SpeakerManagerInterface::NotificationProperties properties;
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
 
+    auto retryTimes = 0;
+    EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).WillRepeatedly(InvokeWithoutArgs([&retryTimes] {
+        return retryTimes++ > 0;
+    }));
+
+    SpeakerManagerInterface::NotificationProperties properties;
     std::future<bool> future =
         m_speakerManager->setVolume(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, AVS_SET_VOLUME_MIN, properties);
     ASSERT_TRUE(future.get());
 }
 
 /*
- * Test retryLogic for AdjustVolume on speakers of type AVS_SPEAKER_VOLUME. Return false once for the second speaker
+ * Test retry logic for AdjustVolume on speakers of type AVS_SPEAKER_VOLUME. Return false once for the second speaker
  * during adjustVolume() to trigger a retry. The delta should not be applied again to the first speaker during retry.
  */
 TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForAdjustVolume) {
@@ -626,10 +631,7 @@ TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForAdjustVolume) {
 
     auto retryTimes = 0;
     EXPECT_CALL(*channelVolumeInterface2, setUnduckedVolume(_)).WillRepeatedly(InvokeWithoutArgs([&retryTimes] {
-        if (retryTimes++ < 1) {
-            return false;
-        }
-        return true;
+        return retryTimes++ > 0;
     }));
 
     // Expect volumeChanged event.
@@ -652,14 +654,19 @@ TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForAdjustVolume) {
 }
 
 /*
- * Test retryLogic for SetMute on speaker type AVS_SPEAKER_VOLUME. Returning false once for speaker->setMute()
+ * Test retry logic for SetMute on speaker type AVS_SPEAKER_VOLUME. Returning false once for speaker->setMute()
  * triggers retry and when successful returns the future of value true.
  */
 TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForSetMute) {
-    auto channelVolumeInterfaceVec = createChannelVolumeInterfaces();
-
+    auto channelVolumeInterface = std::make_shared<NiceMock<MockChannelVolumeInterface>>();
+    channelVolumeInterface->DelegateToReal();
     m_speakerManager = SpeakerManager::create(
-        channelVolumeInterfaceVec, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
+
+    auto retryTimes = 0;
+    EXPECT_CALL(*channelVolumeInterface, setMute(_)).WillRepeatedly(InvokeWithoutArgs([&retryTimes] {
+        return retryTimes++ > 0;
+    }));
 
     EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(Exactly(1));
     SpeakerManagerInterface::NotificationProperties properties;
@@ -667,6 +674,45 @@ TEST_F(SpeakerManagerTest, test_retryAndApplySettingsForSetMute) {
     std::future<bool> future =
         m_speakerManager->setMute(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, MUTE, properties);
     ASSERT_TRUE(future.get());
+}
+
+/*
+ * Test retryAndApplySettings() failure for setVolume, adjustVolume and setMute on speaker type AVS_SPEAKER_VOLUME.
+ * Repeatedly returning false for adjustVolume() and setMute() to trigger retries. After retrying maximum times,
+ * returning the future of false.
+ */
+TEST_F(SpeakerManagerTest, test_retryAndApplySettingsFails) {
+    auto channelVolumeInterface = std::make_shared<NiceMock<MockChannelVolumeInterface>>();
+    channelVolumeInterface->DelegateToReal();
+    m_speakerManager = SpeakerManager::create(
+        {channelVolumeInterface}, m_mockContextManager, m_mockMessageSender, m_mockExceptionSender, m_metricRecorder);
+
+    EXPECT_CALL(*channelVolumeInterface, setUnduckedVolume(_)).WillRepeatedly(Return(false));
+    EXPECT_CALL(*channelVolumeInterface, setMute(_)).WillRepeatedly(Return(false));
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_)).Times(0);
+
+    std::future<bool> setVolumeResult = m_speakerManager->setVolume(
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
+        AVS_SET_VOLUME_MIN,
+        SpeakerManagerInterface::NotificationProperties());
+    ASSERT_FALSE(setVolumeResult.get());
+
+    std::future<bool> adjustVolumeResult = m_speakerManager->adjustVolume(
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME,
+        VALID_VOLUME_ADJUSTMENT,
+        SpeakerManagerInterface::NotificationProperties());
+    ASSERT_FALSE(adjustVolumeResult.get());
+
+    std::future<bool> setMuteResult = m_speakerManager->setMute(
+        ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, MUTE, SpeakerManagerInterface::NotificationProperties());
+    ASSERT_FALSE(setMuteResult.get());
+
+    SpeakerInterface::SpeakerSettings speakerSettings;
+    std::future<bool> settingsFuture =
+        m_speakerManager->getSpeakerSettings(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, &speakerSettings);
+    ASSERT_TRUE(settingsFuture.get());
+    ASSERT_EQ(speakerSettings.volume, DEFAULT_SETTINGS.volume);
+    ASSERT_EQ(speakerSettings.mute, DEFAULT_SETTINGS.mute);
 }
 
 #ifdef ENABLE_MAXVOLUME_SETTING

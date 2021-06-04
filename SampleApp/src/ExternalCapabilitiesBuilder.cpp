@@ -60,7 +60,8 @@ ExternalCapabilitiesBuilder::ExternalCapabilitiesBuilder(std::shared_ptr<avsComm
 
 ExternalCapabilitiesBuilder& ExternalCapabilitiesBuilder::withVisualFocusManager(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> focusManager) {
-    // ExternalCapabilitiesBuilder doesn't need the focusManager to build any object.
+    ACSDK_DEBUG5(LX(__func__));
+    m_visualFocusManager = std::move(focusManager);
     return *this;
 }
 
@@ -105,12 +106,12 @@ ExternalCapabilitiesBuilder::buildCapabilities(
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
     std::shared_ptr<alexaClientSDK::certifiedSender::CertifiedSender> certifiedSender,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
-    std::shared_ptr<alexaClientSDK::registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<alexaClientSDK::registrationManager::CustomerDataManagerInterface> dataManager,
     std::shared_ptr<alexaClientSDK::capabilityAgents::system::ReportStateHandler> stateReportHandler,
     std::shared_ptr<alexaClientSDK::capabilityAgents::aip::AudioInputProcessor> audioInputProcessor,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-    std::shared_ptr<alexaClientSDK::capabilityAgents::system::UserInactivityMonitor> userInactivityMonitor,
+    std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
     std::shared_ptr<alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
@@ -147,6 +148,7 @@ ExternalCapabilitiesBuilder::buildCapabilities(
             messageSender,
             contextManager,
             audioFocusManager,
+            m_visualFocusManager,
             exceptionSender,
             audioFactory->communications(),
             avsGatewayURL,

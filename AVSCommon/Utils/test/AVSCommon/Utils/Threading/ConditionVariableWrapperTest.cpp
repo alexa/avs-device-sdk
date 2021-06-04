@@ -31,6 +31,7 @@
 #include <AVSCommon/Utils/Power/PowerResource.h>
 #include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 #include <AVSCommon/Utils/WaitEvent.h>
+#include <AVSCommon/Utils/Timing/StopTaskTimer.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -41,8 +42,11 @@ namespace test {
 using namespace ::testing;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
+using namespace avsCommon::sdkInterfaces::timing;
+using namespace avsCommon::utils;
 using namespace avsCommon::utils::error;
 using namespace avsCommon::utils::power;
+using namespace avsCommon::utils::timing;
 
 /// PowerResource Component name for thread.
 static std::string TEST_THREAD_ID = "test-thread";
@@ -1003,6 +1007,46 @@ TEST_F(ConditionVariableWrapperPowerTest, testTimer_waitUntil_ThreadPowerResourc
     t1.join();
 
     EXPECT_FALSE(waitingThreadPR->isFrozen());
+    EXPECT_TRUE(m_waitReturn);
+}
+
+/// Test the race condition that notifyAll is called at the same time the Timer fires.
+/// This is difficult to time correctly, so a modified TimerDelegate object is used.
+TEST_F(ConditionVariableWrapperPowerTest, testTimer_timerTriggersWithPredicate_ReturnsTrue) {
+    auto primitivesProvider = avs::initialization::SDKPrimitivesProvider::getInstance();
+    primitivesProvider->withTimerDelegateFactory(std::make_shared<timing::test::StopTaskTimerDelegateFactory>());
+    ASSERT_TRUE(primitivesProvider->initialize());
+
+    std::shared_ptr<ConditionVariableWrapper> cv = std::make_shared<ConditionVariableWrapper>();
+    int elapsedMs = 0;
+
+    std::shared_ptr<PowerResource> waitingThreadPR;
+    auto testPredicate = [this, &elapsedMs, cv, &waitingThreadPR] {
+        waitingThreadPR = PowerMonitor::getInstance()->getThreadPowerResourceOrCreate(TEST_THREAD_ID);
+        std::unique_lock<std::mutex> lock(m_mutex);
+        auto start = std::chrono::steady_clock::now();
+        m_waitReturn = cv->waitUntil(lock, start + LONG_TIMEOUT, [this] {
+            m_enteredWaiting.wakeUp();
+            return m_exitCondition;
+        });
+        auto stop = std::chrono::steady_clock::now();
+
+        elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
+    };
+
+    std::thread t1(testPredicate);
+    EXPECT_TRUE(m_enteredWaiting.wait(LONG_TIMEOUT));
+
+    {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        m_exitCondition = true;
+    }
+
+    cv->notifyAll();
+    t1.join();
+    primitivesProvider->terminate();
+
+    EXPECT_LE(elapsedMs, TIMEOUT_TOLERANCE.count());
     EXPECT_TRUE(m_waitReturn);
 }
 

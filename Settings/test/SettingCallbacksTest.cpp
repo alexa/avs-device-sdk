@@ -18,7 +18,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/SettingsManager.h>
 #include <Settings/SettingCallbacks.h>
@@ -112,7 +112,7 @@ protected:
 };
 
 void SettingCallbacksTest::SetUp() {
-    auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    auto customerDataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
     DeviceSettingManagerSettingConfigurations settingConfigs;
 
     m_manager = std::make_shared<DeviceSettingsManager>(customerDataManager, settingConfigs);

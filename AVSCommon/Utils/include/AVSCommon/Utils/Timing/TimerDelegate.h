@@ -45,6 +45,9 @@ public:
     /// Constructor.
     TimerDelegate();
 
+    /// Destructor.
+    ~TimerDelegate() override;
+
 private:
     /**
      * Main timer loop.
@@ -78,7 +81,7 @@ private:
     mutable std::mutex m_callMutex;
 
     /// Flag which indicates that a @c Timer is active.
-    bool m_running;
+    std::atomic<bool> m_running;
 
     /**
      * Flag which requests that the active @c Timer be stopped.  @c m_waitMutex must be locked when modifying this

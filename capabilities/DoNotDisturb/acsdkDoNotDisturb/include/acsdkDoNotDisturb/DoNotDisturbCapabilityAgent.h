@@ -32,6 +32,7 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <Settings/DeviceSettingsManager.h>
@@ -76,6 +77,7 @@ public:
      * @param endpointCapabilitiesRegistrar The object with which to register this AudioPlayer's capabilities for the
      * default endpoint.
      * @param connectionManager The object to notify this CA of connection status changes.
+     * @param metricRecorder The @c MetricRecorderInterface instance to record metrics.
      * @return A new instance of @c DoNotDisturbCapabilityAgent on success, @c nullptr otherwise.
      */
     static std::shared_ptr<DoNotDisturbCapabilityAgent> createDoNotDisturbCapabilityAgent(
@@ -89,7 +91,8 @@ public:
             alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>&
             endpointCapabilitiesRegistrar,
         const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AVSConnectionManagerInterface>&
-            connectionManager);
+            connectionManager,
+        const std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /**
      * Factory method to create a capability agent instance.
@@ -184,7 +187,9 @@ private:
         const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
             exceptionSender,
         const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AVSConnectionManagerInterface>&
-            connectionManager = nullptr);
+            connectionManager = nullptr,
+        const std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder =
+            nullptr);
 
     /**
      * Method to initialize the new instance of the capability agent.
@@ -192,7 +197,9 @@ private:
      * @param settingsStorage The storage interface that will be used to store device settings.
      * @return True on success, false otherwise.
      */
-    bool initialize(std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage);
+    bool initialize(
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /**
      * Sends a DND event to the AVS.

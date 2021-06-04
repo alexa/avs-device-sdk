@@ -48,6 +48,7 @@
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <MockCertifiedSender.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 
 #include "acsdkExternalMediaPlayer/ExternalMediaPlayer.h"
 #include "acsdkExternalMediaPlayer/ExternalMediaAdapterHandler.h"
@@ -461,18 +462,9 @@ public:
     MOCK_METHOD1(
         notifyObserversInReverse,
         bool(std::function<void(const std::shared_ptr<acsdkStartupManagerInterfaces::RequiresStartupInterface>&)>));
-};
-
-class MockShutdownNotifier : public acsdkShutdownManagerInterfaces::ShutdownNotifierInterface {
-public:
-    MOCK_METHOD1(addObserver, void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>& observer));
-    MOCK_METHOD1(removeObserver, void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>& observer));
     MOCK_METHOD1(
-        notifyObservers,
-        void(std::function<void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>&)>));
-    MOCK_METHOD1(
-        notifyObserversInReverse,
-        bool(std::function<void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>&)>));
+        setAddObserverFunction,
+        void(std::function<void(const std::shared_ptr<acsdkStartupManagerInterfaces::RequiresStartupInterface>&)>));
 };
 
 class MockRenderPlayerInfoCardsProviderRegistrar : public RenderPlayerInfoCardsProviderRegistrarInterface {
@@ -1031,7 +1023,7 @@ void ExternalMediaPlayerTest::SetUp() {
     m_mockEndpointCapabilitiesRegistrar =
         std::make_shared<NiceMock<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>>();
     m_startupNotifier = std::make_shared<NiceMock<MockStartupNotifier>>();
-    m_shutdownNotifier = std::make_shared<NiceMock<MockShutdownNotifier>>();
+    m_shutdownNotifier = std::make_shared<NiceMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>>();
     m_renderPlayerInfoCardsProviderRegistrar = std::make_shared<NiceMock<MockRenderPlayerInfoCardsProviderRegistrar>>();
     m_mockAudioPipelineFactory =
         std::make_shared<acsdkApplicationAudioPipelineFactoryInterfaces::test::MockApplicationAudioPipelineFactory>();

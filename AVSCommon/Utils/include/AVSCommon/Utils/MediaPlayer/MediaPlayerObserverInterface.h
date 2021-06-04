@@ -236,6 +236,9 @@ inline std::ostream& operator<<(std::ostream& stream, const MediaPlayerState& st
     if (state.mediaPlayerProtection.hasValue()) {
         stream << "," << state.mediaPlayerProtection.value();
     }
+    if (state.playlistType.hasValue()) {
+        stream << "," << state.playlistType.value();
+    }
     return stream;
 }
 

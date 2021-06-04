@@ -122,18 +122,17 @@ private:
      * @param powerManager A pointer to the underlying @c PowerResourceManagerInterface.
      * @param level The level to create this resource with.
      * @param refCounted Whether refcounting is enabled.
+     * @param powerResourceId The identifier returned from the @c PowerResourceManagerInterface.
      */
     PowerResource(
         const std::string& identifier,
         std::shared_ptr<sdkInterfaces::PowerResourceManagerInterface> powerManager,
         sdkInterfaces::PowerResourceManagerInterface::PowerResourceLevel level,
-        bool refCounted);
+        bool refCounted,
+        std::shared_ptr<sdkInterfaces::PowerResourceManagerInterface::PowerResourceId> powerResourceId);
 
     /// Identifier name.
     const std::string m_identifier;
-
-    /// Identifier name with PREFIX for calling @c PowerResourceManagerInterface.
-    const std::string m_prefixedIdentifier;
 
     /// Whether this resource is refCounted.
     const bool m_isRefCounted;

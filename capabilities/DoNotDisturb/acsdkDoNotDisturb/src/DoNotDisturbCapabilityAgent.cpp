@@ -79,7 +79,8 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
     const acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
-    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager) {
+    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
     ACSDK_DEBUG5(LX(__func__));
 
     if (!exceptionSender || !messageSender || !settingsStorage || !shutdownNotifier || !endpointCapabilitiesRegistrar ||
@@ -94,7 +95,7 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
         return nullptr;
     }
 
-    auto dndCA = create(messageSender, settingsStorage, exceptionSender, connectionManager);
+    auto dndCA = create(messageSender, settingsStorage, exceptionSender, connectionManager, metricRecorder);
     if (!dndCA) {
         ACSDK_ERROR(LX("createDoNotDisturbCapabilityAgentFailed").m("null DoNotDisturb CapabilityAgent"));
         return nullptr;
@@ -140,11 +141,12 @@ std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::create
     const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
     const std::shared_ptr<settings::storage::DeviceSettingStorageInterface>& settingsStorage,
     const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
-    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager) {
+    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
     auto dndCA = std::shared_ptr<DoNotDisturbCapabilityAgent>(
         new DoNotDisturbCapabilityAgent(exceptionSender, messageSender, connectionManager));
 
-    if (!dndCA->initialize(settingsStorage)) {
+    if (!dndCA->initialize(settingsStorage, metricRecorder)) {
         ACSDK_ERROR(LX("createFailed").d("reason", "Initialization failed"));
         return nullptr;
     }
@@ -175,9 +177,10 @@ settings::SettingEventMetadata DoNotDisturbCapabilityAgent::getDoNotDisturbEvent
 }
 
 bool DoNotDisturbCapabilityAgent::initialize(
-    std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage) {
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingsStorage,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
     auto metadata = getDoNotDisturbEventsMetadata();
-    auto protocol = DNDSettingProtocol::create(metadata, shared_from_this(), settingsStorage);
+    auto protocol = DNDSettingProtocol::create(metadata, shared_from_this(), settingsStorage, metricRecorder);
     m_dndModeSetting = settings::Setting<bool>::create(false, std::move(protocol));
     return m_dndModeSetting != nullptr;
 }
@@ -340,14 +343,18 @@ std::shared_future<bool> DoNotDisturbCapabilityAgent::sendChangedEvent(const std
         m_hasOfflineChanges = false;
     }
 
+    // Avoid a race condition where doShutdown() resets the m_dndModeSetting pointer
+    // while the lambda executes, causing a segfault if m_dndModeSetting is dereferenced.
+    auto dndModeSetting = m_dndModeSetting;
+
     // Sequentialize event processing so that no directive or another event would be handled while we sending this event
-    m_executor.submit([this, value]() {
+    m_executor.submit([this, value, dndModeSetting]() {
         MessageRequestObserverInterface::Status status = sendDNDEvent(EVENT_DONOTDISTURBCHANGED.name, value).get();
         bool isSucceeded = MessageRequestObserverInterface::Status::SUCCESS == status ||
                            MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT == status;
 
         if (!isSucceeded) {
-            sendDNDEvent(EVENT_REPORTDONOTDISTURB.name, m_dndModeSetting->get() ? "true" : "false");
+            sendDNDEvent(EVENT_REPORTDONOTDISTURB.name, dndModeSetting->get() ? "true" : "false");
         }
     });
     promise.set_value(true);

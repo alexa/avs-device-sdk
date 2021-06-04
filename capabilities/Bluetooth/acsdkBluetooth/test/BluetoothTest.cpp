@@ -50,7 +50,7 @@
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/Optional.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 
 #include "acsdkBluetooth/BasicDeviceConnectionRule.h"
 #include "acsdkBluetooth/Bluetooth.h"
@@ -402,7 +402,7 @@ public:
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> m_eventBus;
 
     /// Object that will track the CustomerDataHandler.
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<NiceMock<registrationManager::MockCustomerDataManager>> m_customerDataManager;
 
     /// @c BluetoothHostController to create @c MockBluetoothDeviceManager
     std::shared_ptr<MockBluetoothHostController> m_mockBluetoothHostController;
@@ -534,7 +534,7 @@ void BluetoothTest::SetUp() {
     m_mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
     m_mockBluetoothDeviceObserver = std::make_shared<NiceMock<acsdkBluetoothInterfaces::test::MockBluetoothDeviceObserver>>();
     m_mockBluetoothMediaPlayer = MockMediaPlayer::create();
-    m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    m_customerDataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
 
     m_bluetoothNotifier->addObserver(m_mockBluetoothDeviceObserver);
 

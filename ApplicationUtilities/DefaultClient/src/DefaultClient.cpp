@@ -14,6 +14,7 @@
  */
 
 #include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterConstants.h>
+#include <acsdkNotifications/NotificationRenderer.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
@@ -36,10 +37,6 @@
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
 #include <acsdkBluetooth/Bluetooth.h>
 #include <acsdkBluetooth/DeviceConnectionRulesAdapter.h>
-
-#ifdef ENABLE_OPUS
-#include <SpeechEncoder/OpusEncoderContext.h>
-#endif
 
 #ifdef ENABLE_PCC
 #include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
@@ -72,9 +69,6 @@ using namespace alexaClientSDK::avsCommon::utils;
 /// String to identify log entries originating from this file.
 static const std::string TAG("DefaultClient");
 
-/// Key for visual channel array configurations in configuration node.
-static const std::string VISUAL_CHANNEL_CONFIG_KEY = "visualChannels";
-
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -103,7 +97,6 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
     std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -135,7 +128,6 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             commsSpeaker,
             sharedDataStream,
 #endif
-            notificationsStorage,
             alexaDialogStateObservers,
             connectionObservers,
             isGuiSupported,
@@ -152,7 +144,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
 
 std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
     const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
         externalMusicProviderMediaPlayers,
     const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
@@ -311,7 +303,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         std::move(alertStorage),
         std::move(bluetoothDeviceManager),
         std::move(bluetoothStorage),
-        bluetoothConnectionRulesProvider);
+        bluetoothConnectionRulesProvider,
+        std::move(notificationsStorage));
     auto manufactory = DefaultClientManufactory::create(component);
 
     auto speakerManager = manufactory->get<std::shared_ptr<SpeakerManagerInterface>>();
@@ -349,7 +342,6 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         commsSpeaker,
         sharedDataStream,
 #endif
-        notificationsStorage,
         alexaDialogStateObservers,
         connectionObservers,
         isGuiSupported,
@@ -382,7 +374,6 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
     std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
         alexaDialogStateObservers,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -405,7 +396,7 @@ bool DefaultClient::initialize(
         ACSDK_DEBUG7(LX(__func__).m("metrics disabled"));
     }
 
-    auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManager>>();
+    auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>();
     if (!customerDataManager) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAttachmentManager"));
         return false;
@@ -464,6 +455,13 @@ bool DefaultClient::initialize(
     auto audioFactory = manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>>();
     if (!audioFactory) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioFactory"));
+        return false;
+    }
+
+    auto userInactivityMonitor =
+        manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface>>();
+    if (!userInactivityMonitor) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullUserInactivityMonitorInterface"));
         return false;
     }
 
@@ -620,7 +618,48 @@ bool DefaultClient::initialize(
 #endif
     }
 
-    m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>(metricRecorder);
+    m_dialogUXStateAggregator = manufactory->get<std::shared_ptr<DialogUXStateAggregator>>();
+    if (!m_dialogUXStateAggregator) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDialogUXStateAggregator"));
+        return false;
+    }
+
+    m_notificationsNotifier =
+        manufactory->get<std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface>>();
+    if (!m_notificationsNotifier) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateNotificationsCapabilityAgent"));
+    }
+
+    m_directiveSequencer = manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>>();
+    if (!m_directiveSequencer) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDirectiveSequencer"));
+        return false;
+    }
+
+    m_registrationManager = manufactory->get<std::shared_ptr<registrationManager::RegistrationManagerInterface>>();
+    if (!m_registrationManager) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateRegistrationManager"));
+        return false;
+    }
+
+    m_registrationNotifier = manufactory->get<std::shared_ptr<registrationManager::RegistrationNotifierInterface>>();
+    if (!m_registrationNotifier) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateRegistrationNotifier"));
+        return false;
+    }
+
+    m_interactionModelNotifier =
+        manufactory->get<std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>>();
+    if (!m_interactionModelNotifier) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateInteractionModelNotifier"));
+        return false;
+    }
+
+    m_deviceSetup = manufactory->get<std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>>();
+    if (!m_deviceSetup) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDeviceSetupCapabilityAgent"));
+        return false;
+    }
 
     m_softwareReporterCapabilityAgent =
         capabilityAgents::softwareComponentReporter::SoftwareComponentReporterCapabilityAgent::create();
@@ -643,19 +682,6 @@ bool DefaultClient::initialize(
     }
 
     /*
-     * Creating the Directive Sequencer - This is the component that deals with
-     * the sequencing and ordering of
-     * directives sent from AVS and forwarding them along to the appropriate
-     * Capability Agent that deals with
-     * directives in that Namespace/Name.
-     */
-    m_directiveSequencer = adsl::DirectiveSequencer::create(m_exceptionSender, metricRecorder);
-    if (!m_directiveSequencer) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateDirectiveSequencer"));
-        return false;
-    }
-
-    /*
      * Creating the Message Interpreter - This component takes care of converting
      * ACL messages to Directives for the
      * Directive Sequencer to process. This essentially "glues" together the ACL
@@ -665,14 +691,6 @@ bool DefaultClient::initialize(
         m_exceptionSender, m_directiveSequencer, attachmentManager, metricRecorder);
 
     m_connectionManager->addMessageObserver(messageInterpreter);
-
-    /*
-     * Creating the Registration Manager - This component is responsible for
-     * implementing any customer registration
-     * operation such as login and logout
-     */
-    m_registrationManager = std::make_shared<registrationManager::RegistrationManager>(
-        m_directiveSequencer, m_connectionManager, customerDataManager);
 
     // Create endpoint related objects.
     m_capabilitiesDelegate->setMessageSender(m_connectionManager);
@@ -686,18 +704,6 @@ bool DefaultClient::initialize(
     }
     localeAssetsManager->setEndpointRegistrationManager(m_endpointRegistrationManager);
 
-    /*
-     * Creating the User Inactivity Monitor - This component is responsibly for
-     * updating AVS of user inactivity as
-     * described in the System Interface of AVS.
-     */
-    m_userInactivityMonitor =
-        capabilityAgents::system::UserInactivityMonitor::create(m_connectionManager, m_exceptionSender);
-    if (!m_userInactivityMonitor) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateUserInactivityMonitor"));
-        return false;
-    }
-
     auto wakeWordConfirmationSetting =
         m_deviceSettingsManager->getSetting<settings::DeviceSettingsIndex::WAKEWORD_CONFIRMATION>();
     auto speechConfirmationSetting =
@@ -706,11 +712,10 @@ bool DefaultClient::initialize(
     auto capabilityChangeNotifier = std::make_shared<avsCommon::avs::CapabilityChangeNotifier>();
     capabilityChangeNotifier->addObserver(localeAssetsManager);
 
-/*
- * Creating the Audio Input Processor - This component is the Capability Agent
- * that implements the SpeechRecognizer interface of AVS.
- */
-#ifdef ENABLE_OPUS
+    /*
+     * Creating the Audio Input Processor - This component is the Capability Agent
+     * that implements the SpeechRecognizer interface of AVS.
+     */
     m_audioInputProcessor = capabilityAgents::aip::AudioInputProcessor::create(
         m_directiveSequencer,
         m_connectionManager,
@@ -718,39 +723,18 @@ bool DefaultClient::initialize(
         m_audioFocusManager,
         m_dialogUXStateAggregator,
         m_exceptionSender,
-        m_userInactivityMonitor,
+        userInactivityMonitor,
         manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>>(),
         localeAssetsManager,
         wakeWordConfirmationSetting,
         speechConfirmationSetting,
         capabilityChangeNotifier,
         wakeWordsSetting,
-        std::make_shared<speechencoder::SpeechEncoder>(std::make_shared<speechencoder::OpusEncoderContext>()),
+        manufactory->get<std::shared_ptr<speechencoder::SpeechEncoder>>(),
         firstInteractionAudioProvider,
         powerResourceManager,
         metricRecorder,
         manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>>());
-#else
-    m_audioInputProcessor = capabilityAgents::aip::AudioInputProcessor::create(
-        m_directiveSequencer,
-        m_connectionManager,
-        m_contextManager,
-        m_audioFocusManager,
-        m_dialogUXStateAggregator,
-        m_exceptionSender,
-        m_userInactivityMonitor,
-        manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>>(),
-        localeAssetsManager,
-        wakeWordConfirmationSetting,
-        speechConfirmationSetting,
-        capabilityChangeNotifier,
-        wakeWordsSetting,
-        nullptr,
-        firstInteractionAudioProvider,
-        powerResourceManager,
-        metricRecorder,
-        manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>>());
-#endif
 
     if (!m_audioInputProcessor) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAudioInputProcessor"));
@@ -832,43 +816,6 @@ bool DefaultClient::initialize(
         m_speakerManager->addChannelVolumeInterface(channelVolumeInterface);
     }
 
-    addConnectionObserver(m_dialogUXStateAggregator);
-
-    m_notificationsRenderer =
-        acsdkNotifications::NotificationRenderer::create(audioPipelineFactory, m_audioFocusManager);
-    if (!m_notificationsRenderer) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateNotificationsRenderer"));
-        return false;
-    }
-
-    /*
-     * Creating the Notifications Capability Agent - This component is the
-     * Capability Agent that implements the
-     * Notifications interface of AVS.
-     */
-    m_notificationsCapabilityAgent = acsdkNotifications::NotificationsCapabilityAgent::create(
-        notificationsStorage,
-        m_notificationsRenderer,
-        m_contextManager,
-        m_exceptionSender,
-        audioFactory->notifications(),
-        customerDataManager,
-        metricRecorder);
-    if (!m_notificationsCapabilityAgent) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateNotificationsCapabilityAgent"));
-        return false;
-    }
-
-    m_interactionCapabilityAgent = capabilityAgents::interactionModel::InteractionModelCapabilityAgent::create(
-        m_directiveSequencer, m_exceptionSender);
-    if (!m_interactionCapabilityAgent) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateInteractionModelCapabilityAgent"));
-        return false;
-    }
-    // Listen to when Request Processing Started (RPS) directive is received
-    // to enter the THINKING mode (Interaction Model 1.1).
-    m_interactionCapabilityAgent->addObserver(m_dialogUXStateAggregator);
-
 #ifdef ENABLE_PCC
     /*
      * Creating the PhoneCallController - This component is the Capability Agent
@@ -902,40 +849,8 @@ bool DefaultClient::initialize(
 #endif
 
     if (isGuiSupported) {
-        /*
-         * Creating the Visual Activity Tracker - This component is responsibly for
-         * reporting the visual channel focus
-         * information to AVS.
-         */
-        m_visualActivityTracker = afml::VisualActivityTracker::create(m_contextManager);
-
-        // Read visualVirtualChannels from config file
-        std::vector<afml::FocusManager::ChannelConfiguration> visualVirtualChannelConfiguration;
-        if (!afml::FocusManager::ChannelConfiguration::readChannelConfiguration(
-                VISUAL_CHANNEL_CONFIG_KEY, &visualVirtualChannelConfiguration)) {
-            ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToReadVisualChannels"));
-            return false;
-        }
-
-        auto interruptModel = manufactory->get<std::shared_ptr<afml::interruptModel::InterruptModel>>();
-
-        /*
-         * Creating the Visual Focus Manager - This component deals with the
-         * management of visual focus across various
-         * components. It handles granting access to Channels as well as pushing
-         * different "Channels" to foreground,
-         * background, or no focus based on which other Channels are active and the
-         * priorities of those Channels. Each
-         * Capability Agent will require the Focus Manager in order to request
-         * access to the Channel it wishes to play
-         * on.
-         */
-        m_visualFocusManager = std::make_shared<afml::FocusManager>(
-            afml::FocusManager::getDefaultVisualChannels(),
-            m_visualActivityTracker,
-            visualVirtualChannelConfiguration,
-            interruptModel);
-
+        m_visualFocusManager = manufactory->get<
+            acsdkManufactory::Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, FocusManagerInterface>>();
         auto renderPlayerInfoCardsProviderRegistrar =
             manufactory
                 ->get<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>>();
@@ -1136,11 +1051,7 @@ bool DefaultClient::initialize(
 
     if (isGuiSupported) {
         m_defaultEndpointBuilder->withCapability(m_templateRuntime, m_templateRuntime);
-        m_defaultEndpointBuilder->withCapabilityConfiguration(m_visualActivityTracker);
     }
-
-    m_defaultEndpointBuilder->withCapability(m_notificationsCapabilityAgent, m_notificationsCapabilityAgent);
-    m_defaultEndpointBuilder->withCapability(m_interactionCapabilityAgent, m_interactionCapabilityAgent);
 
     if (m_equalizerCapabilityAgent) {
         m_defaultEndpointBuilder->withCapability(m_equalizerCapabilityAgent, m_equalizerCapabilityAgent);
@@ -1150,11 +1061,10 @@ bool DefaultClient::initialize(
     m_defaultEndpointBuilder->withCapabilityConfiguration(systemCapabilityProvider);
     if (!m_directiveSequencer->addDirectiveHandler(std::move(localeHandler)) ||
         !m_directiveSequencer->addDirectiveHandler(std::move(timezoneHandler)) ||
-        !m_directiveSequencer->addDirectiveHandler(reportStateHandler) ||
 #ifdef ENABLE_REVOKE_AUTH
         !m_directiveSequencer->addDirectiveHandler(m_revokeAuthorizationHandler) ||
 #endif
-        !m_directiveSequencer->addDirectiveHandler(m_userInactivityMonitor)) {
+        !m_directiveSequencer->addDirectiveHandler(reportStateHandler)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToRegisterSystemDirectiveHandler"));
         return false;
     }
@@ -1163,10 +1073,6 @@ bool DefaultClient::initialize(
         externalCapabilitiesBuilder->withSettingsStorage(deviceSettingStorage);
         externalCapabilitiesBuilder->withInternetConnectionMonitor(m_internetConnectionMonitor);
         externalCapabilitiesBuilder->withDialogUXStateAggregator(m_dialogUXStateAggregator);
-        if (isGuiSupported) {
-            externalCapabilitiesBuilder->withVisualFocusManager(m_visualFocusManager);
-        }
-
         auto concreteExternalMediaPlayer =
             manufactory->get<std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>>();
         auto externalCapabilities = externalCapabilitiesBuilder->buildCapabilities(
@@ -1181,7 +1087,7 @@ bool DefaultClient::initialize(
             m_audioInputProcessor,
             m_speakerManager,
             m_directiveSequencer,
-            m_userInactivityMonitor,
+            userInactivityMonitor,
             m_contextManager,
             m_avsGatewayManager,
             ringtoneMediaPlayer,
@@ -1375,12 +1281,12 @@ void DefaultClient::TemplateRuntimeDisplayCardCleared() {
 
 void DefaultClient::addNotificationsObserver(
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsObserverInterface> observer) {
-    m_notificationsCapabilityAgent->addObserver(observer);
+    m_notificationsNotifier->addObserver(observer);
 }
 
 void DefaultClient::removeNotificationsObserver(
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsObserverInterface> observer) {
-    m_notificationsCapabilityAgent->removeObserver(observer);
+    m_notificationsNotifier->removeObserver(observer);
 }
 
 void DefaultClient::addExternalMediaPlayerObserver(
@@ -1450,8 +1356,18 @@ std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> DefaultClient
     return m_playbackRouter;
 }
 
-std::shared_ptr<registrationManager::RegistrationManager> DefaultClient::getRegistrationManager() {
+std::shared_ptr<registrationManager::RegistrationManagerInterface> DefaultClient::getRegistrationManager() {
     return m_registrationManager;
+}
+
+void DefaultClient::addRegistrationObserver(
+    const std::shared_ptr<registrationManager::RegistrationObserverInterface>& observer) {
+    m_registrationNotifier->addObserver(observer);
+}
+
+void DefaultClient::removeRegistrationObserver(
+    const std::shared_ptr<registrationManager::RegistrationObserverInterface>& observer) {
+    m_registrationNotifier->removeObserver(observer);
 }
 
 std::shared_ptr<acsdkEqualizer::EqualizerController> DefaultClient::getEqualizerController() {
@@ -1599,6 +1515,16 @@ std::future<bool> DefaultClient::notifyOfTapToTalkEnd() {
     return m_audioInputProcessor->stopCapture();
 }
 
+void DefaultClient::addEndpointRegistrationManagerObserver(
+    const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface>& observer) {
+    m_endpointRegistrationManager->addObserver(observer);
+};
+
+void DefaultClient::removeEndpointRegistrationManagerObserver(
+    const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface>& observer) {
+    m_endpointRegistrationManager->removeObserver(observer);
+};
+
 void DefaultClient::addAudioInputProcessorObserver(
     const std::shared_ptr<avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface>& observer) {
     m_audioInputProcessor->addObserver(observer);
@@ -1640,6 +1566,19 @@ std::future<alexaClientSDK::endpoints::EndpointRegistrationManager::Registration
         ACSDK_ERROR(LX("registerEndpointFailed").d("reason", "invalid EndpointRegistrationManager"));
         std::promise<alexaClientSDK::endpoints::EndpointRegistrationManager::RegistrationResult> promise;
         promise.set_value(alexaClientSDK::endpoints::EndpointRegistrationManager::RegistrationResult::INTERNAL_ERROR);
+        return promise.get_future();
+    }
+}
+
+std::future<alexaClientSDK::endpoints::EndpointRegistrationManager::UpdateResult> DefaultClient::updateEndpoint(
+    const EndpointIdentifier& endpointId,
+    const std::shared_ptr<EndpointModificationData>& endpointModificationData) {
+    if (m_endpointRegistrationManager) {
+        return m_endpointRegistrationManager->updateEndpoint(endpointId, endpointModificationData);
+    } else {
+        ACSDK_ERROR(LX("updateEndpointFailed").d("reason", "invalid EndpointRegistrationManager"));
+        std::promise<alexaClientSDK::endpoints::EndpointRegistrationManager::UpdateResult> promise;
+        promise.set_value(alexaClientSDK::endpoints::EndpointRegistrationManager::UpdateResult::INTERNAL_ERROR);
         return promise.get_future();
     }
 }
@@ -1731,6 +1670,10 @@ std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> Defaul
     return m_shutdownManager;
 }
 
+std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface> DefaultClient::getDeviceSetup() {
+    return m_deviceSetup;
+}
+
 DefaultClient::~DefaultClient() {
     while (!m_shutdownObjects.empty()) {
         if (m_shutdownObjects.back()) {
@@ -1739,10 +1682,6 @@ DefaultClient::~DefaultClient() {
         m_shutdownObjects.pop_back();
     }
 
-    if (m_directiveSequencer) {
-        ACSDK_DEBUG5(LX("DirectiveSequencerShutdown"));
-        m_directiveSequencer->shutdown();
-    }
     if (m_templateRuntime) {
         ACSDK_DEBUG5(LX("TemplateRuntimeShutdown"));
         m_templateRuntime->shutdown();
@@ -1760,30 +1699,9 @@ DefaultClient::~DefaultClient() {
         ACSDK_DEBUG5(LX("SoftwareInfoShutdown"));
         m_softwareInfoSender->shutdown();
     }
-    if (m_messageRouter) {
-        ACSDK_DEBUG5(LX("MessageRouterShutdown."));
-        m_messageRouter->shutdown();
-    }
     if (m_certifiedSender) {
         ACSDK_DEBUG5(LX("CertifiedSenderShutdown."));
         m_certifiedSender->shutdown();
-    }
-    if (m_visualActivityTracker) {
-        ACSDK_DEBUG5(LX("VisualActivityTrackerShutdown."));
-        m_visualActivityTracker->shutdown();
-    }
-    if (m_notificationsCapabilityAgent) {
-        ACSDK_DEBUG5(LX("NotificationsShutdown."));
-        m_notificationsCapabilityAgent->shutdown();
-    }
-    if (m_notificationsRenderer) {
-        ACSDK_DEBUG5(LX("NotificationsRendererShutdown."));
-        m_notificationsRenderer->shutdown();
-    }
-
-    if (m_userInactivityMonitor) {
-        ACSDK_DEBUG5(LX("UserInactivityMonitorShutdown."));
-        m_userInactivityMonitor->shutdown();
     }
 
     if (m_apiGatewayCapabilityAgent) {

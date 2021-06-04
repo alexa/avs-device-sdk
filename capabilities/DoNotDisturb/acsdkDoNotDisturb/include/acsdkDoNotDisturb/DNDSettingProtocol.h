@@ -20,6 +20,7 @@
 #include <string>
 #include <utility>
 
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <Settings/SetSettingResult.h>
 #include <Settings/SettingEventMetadata.h>
@@ -45,12 +46,14 @@ public:
      * @param metadata The setting metadata used to generate a unique database key.
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
+     * @param metricRecorder The @c MetricRecorderInterface instance to record metrics.
      * @return A pointer to the new @c DNDSettingProtocol object if it succeeds; @c nullptr otherwise.
      */
     static std::unique_ptr<DNDSettingProtocol> create(
         const settings::SettingEventMetadata& metadata,
         std::shared_ptr<settings::SettingEventSenderInterface> eventSender,
-        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage);
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /// @name SettingProtocolInterface methods.
     /// @{
@@ -80,11 +83,13 @@ private:
      * @param settingKey The setting key used to access the setting storage.
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
+     * @param metricRecorder The @c MetricRecorderInterface instance to record metrics.
      */
     DNDSettingProtocol(
         const std::string& settingKey,
         std::shared_ptr<settings::SettingEventSenderInterface> eventSender,
-        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage);
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /// The setting key used to access the setting storage.
     const std::string m_key;
@@ -94,6 +99,9 @@ private:
 
     /// The setting storage object.
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface> m_storage;
+
+    /// The @c MetricRecorderInterface instance to record metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// Executor used to handle events in sequence.
     avsCommon::utils::threading::Executor m_executor;

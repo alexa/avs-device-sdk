@@ -37,7 +37,7 @@
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 
 #include <acsdkAlerts/Storage/AlertStorageInterface.h>
@@ -68,7 +68,7 @@ using AlertsComponent = acsdkManufactory::Component<
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<certifiedSender::CertifiedSender>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>,
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<settings::DeviceSettingsManager>>,
     acsdkManufactory::Import<std::shared_ptr<storage::AlertStorageInterface>>>;
 

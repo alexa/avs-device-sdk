@@ -65,7 +65,7 @@ std::shared_ptr<AuthDelegateInterface> ACLTestContext::getAuthDelegate() const {
     return m_authDelegateTestContext->getAuthDelegate();
 }
 
-std::shared_ptr<CustomerDataManager> ACLTestContext::getCustomerDataManager() const {
+std::shared_ptr<CustomerDataManagerInterface> ACLTestContext::getCustomerDataManager() const {
     return m_authDelegateTestContext->getCustomerDataManager();
 }
 

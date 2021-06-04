@@ -26,6 +26,7 @@
 #include <gtest/gtest.h>
 
 #include <ACL/AVSConnectionManager.h>
+#include <acsdkManufactory/Annotated.h>
 #include <ADSL/DirectiveSequencer.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AFML/Channel.h>
@@ -41,6 +42,7 @@
 #include <AVSCommon/SDKInterfaces/DirectiveHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
@@ -51,11 +53,12 @@
 #else
 #include "Integration/TestMediaPlayer.h"
 #endif
+#include <acsdkInteractionModel/InteractionModelCapabilityAgent.h>
+#include <acsdkInteractionModel/InteractionModelNotifier.h>
 #include <Settings/MockSetting.h>
 #include <Settings/SpeechConfirmationSettingType.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
-#include <InteractionModel/InteractionModelCapabilityAgent.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/ObservableMessageRequest.h"
@@ -84,9 +87,12 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace alexaClientSDK::avsCommon::avs::attachment;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace capabilityAgents::aip;
-using namespace capabilityAgents::interactionModel;
+using namespace acsdkInteractionModel;
 using namespace capabilityAgents::system;
 using namespace sdkInterfaces;
+using namespace sdkInterfaces::endpoints;
+using namespace sdkInterfaces::endpoints::test;
+using namespace sdkInterfaces::test;
 using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::metrics::test;
@@ -94,6 +100,7 @@ using namespace afml;
 using namespace contextManager;
 using namespace settings;
 using namespace settings::test;
+using namespace testing;
 
 // This is a 16 bit 16 kHz little endian linear PCM audio file of "Tell me a Joke" to be recognized.
 static const std::string JOKE_AUDIO_FILE = "/recognize_joke_test.wav";
@@ -402,7 +409,16 @@ protected:
         ASSERT_TRUE(m_context);
 
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
-        m_metricRecorder = std::make_shared<testing::NiceMock<MockMetricRecorder>>();
+        m_metricRecorder = std::make_shared<NiceMock<MockMetricRecorder>>();
+
+        auto registrar = std::make_shared<NiceMock<MockEndpointCapabilitiesRegistrar>>();
+        m_endpointCapabilitiesRegistrar =
+            acsdkManufactory::Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface>(registrar);
+        EXPECT_CALL(
+            *(registrar.get()),
+            withCapability(A<const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>&>(), _))
+            .WillRepeatedly(ReturnRef(
+                *std::make_shared<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>()));
 
         DirectiveHandlerConfiguration handlerConfig;
         handlerConfig[SET_MUTE_PAIR] = BlockingPolicy(BlockingPolicy::MEDIUM_AUDIO, false);
@@ -487,11 +503,15 @@ protected:
             systemSoundMediaPlayer,
             std::make_shared<applicationUtilities::resources::audio::SystemSoundAudioFactory>());
 
-        m_interactionModelCA =
-            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        m_interactionModelNotifier = InteractionModelNotifier::createInteractionModelNotifierInterface();
+        m_interactionModelCA = InteractionModelCapabilityAgent::create(
+            m_directiveSequencer,
+            m_exceptionEncounteredSender,
+            m_interactionModelNotifier,
+            m_endpointCapabilitiesRegistrar);
         ASSERT_NE(nullptr, m_interactionModelCA);
         ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
-        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
+        m_interactionModelNotifier->addObserver(m_dialogUXStateAggregator);
 
         m_AudioInputProcessor = AudioInputProcessor::create(
             m_directiveSequencer,
@@ -630,7 +650,10 @@ protected:
     std::shared_ptr<TestClient> m_testClient;
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
     std::shared_ptr<AudioInputProcessor> m_AudioInputProcessor;
+    std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface> m_interactionModelNotifier;
     std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
+    acsdkManufactory::Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface>
+        m_endpointCapabilitiesRegistrar;
     std::shared_ptr<AipStateObserver> m_StateObserver;
     std::shared_ptr<tapToTalkButton> m_tapToTalkButton;
     std::shared_ptr<holdToTalkButton> m_holdToTalkButton;

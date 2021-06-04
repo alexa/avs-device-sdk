@@ -22,6 +22,7 @@
 #include <mutex>
 #include <thread>
 
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
@@ -39,8 +40,23 @@ namespace adsl {
 class DirectiveSequencer : public avsCommon::sdkInterfaces::DirectiveSequencerInterface {
 public:
     /**
+     * Create a DirectiveSequencerInterface.
+     *
+     * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
+     * ExceptionEncountered messages to AVS for directives that are not handled.
+     * @param shutdownNotifier The object with which to register for a notification when it is time to shut down.
+     * @param metricRecorder The metric recorder.
+     * @return Returns a new DirectiveSequencer, or nullptr if the operation failed.
+     */
+    static std::shared_ptr<DirectiveSequencerInterface> createDirectiveSequencerInterface(
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> shutdownNotifier,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+
+    /**
      * Create a DirectiveSequencer.
      *
+     * @deprecated Use createDirectiveSequencerInterface.
      * @param exceptionSender An instance of the @c ExceptionEncounteredSenderInterface used to send
      * ExceptionEncountered messages to AVS for directives that are not handled.
      * @param metricRecorder The metric recorder.

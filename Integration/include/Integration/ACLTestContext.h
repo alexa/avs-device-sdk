@@ -24,7 +24,7 @@
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
 #include <ContextManager/ContextManager.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 #include "Integration/ConnectionStatusObserver.h"
@@ -79,7 +79,7 @@ public:
      *
      * @return The instance of @c CustomerDataManager to use for the test.
      */
-    std::shared_ptr<registrationManager::CustomerDataManager> getCustomerDataManager() const;
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> getCustomerDataManager() const;
 
     /**
      * Get the instance of @c AttachmentManager to use for the test.

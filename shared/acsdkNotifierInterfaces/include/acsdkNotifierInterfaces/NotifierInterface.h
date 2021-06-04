@@ -64,6 +64,18 @@ public:
      * will miss out).
      */
     virtual bool notifyObserversInReverse(std::function<void(const std::shared_ptr<ObserverType>&)> notify) = 0;
+
+    /**
+     * Set the function to be called after an observer is added (for example, to notify the newly-added observer
+     * of the current state).
+     *
+     * @warn Use caution when setting this function. The function MUST be reentrant, or else you run the risk
+     * of deadlock. When an observer adds itself to a @c NotifierInterface, this function will be called in the
+     * same context.
+     *
+     * @param postAddFunc The function to call after an observer is added.
+     */
+    virtual void setAddObserverFunction(std::function<void(const std::shared_ptr<ObserverType>&)> postAddFunc) = 0;
 };
 
 }  // namespace acsdkNotifierInterfaces

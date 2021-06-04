@@ -358,7 +358,10 @@ bool ProgressTimer::updateTargetLocked() {
         }
 
         // To handle reporting progress periodically, simply step the target by the interval.
-        m_target += m_interval;
+        // but during a seek, many intervals may pass, so only send 1 update
+        do {
+            m_target += m_interval;
+        } while (m_progress > m_target);
         ACSDK_DEBUG9(LX("newTarget").d("target", m_target.count()));
         return true;
     }
@@ -393,7 +396,10 @@ bool ProgressTimer::updateTargetLocked() {
         m_target = m_interval * count;
     } else {
         // Target already past the start delay.  Just keep incrementing it.
-        m_target += m_interval;
+        // but during a seek, many intervals may pass, so only send 1 update
+        do {
+            m_target += m_interval;
+        } while (m_progress > m_target);
     }
 
     ACSDK_DEBUG9(LX("newTarget").d("target", m_target.count()));

@@ -48,7 +48,7 @@ static const std::string DEFAULT_AVS_GATEWAY = "https://alexa.na.gateway.devices
 std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGatewayManager::
     createAVSGatewayManagerInterface(
         std::unique_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
@@ -75,7 +75,7 @@ std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGateway
 
 std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
     const ConfigurationNode& configurationRoot) {
     ACSDK_DEBUG5(LX(__func__));
     if (!avsGatewayManagerStorage) {
@@ -107,7 +107,7 @@ std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
 
 AVSGatewayManager::AVSGatewayManager(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
     const std::string& defaultAVSGateway) :
         CustomerDataHandler{customerDataManager},
         m_avsGatewayStorage{avsGatewayManagerStorage},

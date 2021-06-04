@@ -7,6 +7,7 @@ add_library(AVSSystem SHARED
     "${CMAKE_CURRENT_LIST_DIR}/SoftwareInfoSendRequest.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/StateReportGenerator.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/SystemCapabilityProvider.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/SystemComponent.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/TimeZoneHandler.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/UserInactivityMonitor.cpp")
 
@@ -29,7 +30,9 @@ target_link_libraries(AVSSystem
     SQLiteStorage
     RegistrationManager
     DeviceSettings
-    acsdkNotifier)
+    acsdkManufactory
+    acsdkNotifier
+    acsdkShutdownManagerInterfaces)
 
 # install target
 asdk_install()

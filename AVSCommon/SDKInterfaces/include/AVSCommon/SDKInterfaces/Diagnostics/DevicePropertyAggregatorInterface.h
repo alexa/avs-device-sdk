@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/RangeController/RangeControllerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
 #include <AVSCommon/Utils/Optional.h>
@@ -47,7 +48,8 @@ class DevicePropertyAggregatorInterface
         , public avsCommon::sdkInterfaces::ContextRequesterInterface
         , public acsdkNotificationsInterfaces::NotificationsObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
-        , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface {
+        , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
+        , public avsCommon::sdkInterfaces::rangeController::RangeControllerObserverInterface {
 public:
     /// Property Key to get Device Context. The Property Value is the json string containing the device context.
     static constexpr const char* DEVICE_CONTEXT = "DeviceContext";
@@ -94,9 +96,17 @@ public:
     /// "[en-US]".
     static constexpr const char* LOCALE = "Locale";
 
+    /// Property Key for Wake Workds. The Property Value is a string representing the wake words configured on the
+    /// device. Ex: "[ALEXA]"
+    static constexpr const char* WAKE_WORDS = "WakeWords";
+
     /// Property Key for Registration status. The Property Value is a string representing the registration status. Ex:
     /// "true".
     static constexpr const char* REGISTRATION_STATUS = "RegistrationStatus";
+
+    /// Property Key for Range Controller status. The Property Value is a string representing the range value of an
+    /// instance. Ex: Instance FanSpeed: "7".
+    static constexpr const char* RANGE_CONTROLLER_STATUS = "RangeControllerStatus";
 
     /**
      * Gets the property for the given property key.

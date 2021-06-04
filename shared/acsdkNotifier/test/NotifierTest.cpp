@@ -98,6 +98,27 @@ TEST_F(NotifierTest, test_duplicateAdditions) {
 }
 
 /**
+ * Verify addObserverFunc is called on adding an observer when it is set.
+ */
+TEST_F(NotifierTest, test_setAddObserverFunction) {
+    TestNotifier notifier;
+    auto observer0 = std::make_shared<MockTestObserver>();
+
+    bool result = false;
+    std::function<void(const std::shared_ptr<TestObserverInterface>&)> addObserverFunction =
+        [&result](const std::shared_ptr<TestObserverInterface>&) { result = true; };
+
+    notifier.addObserver(observer0);
+    ASSERT_EQ(result, false);
+
+    notifier.setAddObserverFunction(addObserverFunction);
+
+    auto observer1 = std::make_shared<MockTestObserver>();
+    notifier.addObserver(observer1);
+    ASSERT_EQ(result, true);
+}
+
+/**
  * Verify removal of observers.
  */
 TEST_F(NotifierTest, test_removingObservers) {

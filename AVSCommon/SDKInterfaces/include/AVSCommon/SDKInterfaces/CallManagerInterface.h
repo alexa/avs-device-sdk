@@ -19,6 +19,7 @@
 #include <memory>
 #include <string>
 
+#include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/CallStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>

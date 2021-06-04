@@ -495,6 +495,7 @@ private:
      *     channel), @c AudioPlayer will pause playback until it regains @c FOREGROUND focus.
      * @li If focus changes to @c FOREGROUND while paused, @c AudioPlayer will resume playing.
      * @li If focus changes to @c NONE, all playback will be stopped.
+     * @li If focus changes to @c NONE, all playback will be stopped.
      *
      * @param newFocus The focus state to change to.
      * @param behavior The mixing behavior to change to.
@@ -669,6 +670,11 @@ private:
      * This function pauses/resumes/stops  playback of the current song via local control
      */
     void executeLocalOperation(PlaybackOperation op, std::promise<bool> success);
+
+    /**
+     * This function processes timeout of a local operation
+     */
+    void executeLocalOperationTimedout();
 
     /**
      * This function seeks into the current song.
@@ -949,6 +955,24 @@ private:
     std::string getTrackProtectionName(const avsCommon::utils::mediaPlayer::MediaPlayerState& mediaPlayerState) const;
 
     /**
+     * Return displayable track playlist type from the media player state
+     *
+     * @param state media player state
+     *
+     * @return playlist type
+     */
+    std::string getPlaylistType(const avsCommon::utils::mediaPlayer::MediaPlayerState& mediaPlayerState) const;
+
+    /**
+     * Return displayable track playlist type
+     *
+     * @param mediaPlayaerState media player state
+     *
+     * @return playlist type
+     */
+    std::string getPlaylistType(const std::string& playlistType) const;
+
+    /**
      * Re-package the cached device context for AudioPlayer to a format compatible with
      * events.
      *
@@ -965,6 +989,14 @@ private:
      * @returns External Activity equivelent
      */
     avsCommon::avs::PlayerActivity activityFromState(AudioPlayerState state) const;
+
+    /**
+     * Get hash of the domain name of the passed url
+     *
+     * @param url url to parse
+     * @returns hash of the domain if succeeds, empty string otherwise.
+     */
+    std::string getDomainNameHash(const std::string& url) const;
 
     /// This is used to safely access the time utilities.
     avsCommon::utils::timing::TimeUtils m_timeUtils;
@@ -1077,6 +1109,11 @@ private:
      * mediaprotection on playback started or on error.
      */
     avsCommon::utils::mediaPlayer::MediaPlayerState::MediaPlayerProtection m_currentMediaPlayerProtection;
+
+    /**
+     * Current PlaylistType information fetched from MediaPlayerState
+     */
+    std::string m_currentPlaylistType;
     /// @}
 
     /**

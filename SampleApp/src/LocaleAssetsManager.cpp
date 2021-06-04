@@ -68,10 +68,7 @@ std::shared_ptr<LocaleAssetsManagerInterface> LocaleAssetsManager::createLocaleA
         ACSDK_ERROR(LX("createLocaleAssetsManagerInterfaceFailed").d("reason", "initialize failed"));
         return nullptr;
     }
-
-    if (manager) {
-        shutdownNotifier->addObserver(manager);
-    }
+    shutdownNotifier->addObserver(manager);
 
     return manager;
 }

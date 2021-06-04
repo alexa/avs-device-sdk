@@ -13,11 +13,13 @@
  * permissions and limitations under the License.
  */
 
-#include <AVSCommon/SDKInterfaces/RevokeAuthorizationObserverInterface.h>
-#include <RegistrationManager/RegistrationManager.h>
-
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_REVOKEAUTHORIZATIONOBSERVER_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_INCLUDE_SAMPLEAPP_REVOKEAUTHORIZATIONOBSERVER_H_
+
+#include <memory>
+
+#include <AVSCommon/SDKInterfaces/RevokeAuthorizationObserverInterface.h>
+#include <RegistrationManager/RegistrationManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace sampleApp {
@@ -32,7 +34,7 @@ public:
      *
      * @param manager The registration manager providing logout functionality.
      */
-    RevokeAuthorizationObserver(std::shared_ptr<registrationManager::RegistrationManager> manager);
+    RevokeAuthorizationObserver(std::shared_ptr<registrationManager::RegistrationManagerInterface> manager);
 
     /// @name RevokeAuthorizationObserverInterface Functions
     /// @{
@@ -41,7 +43,7 @@ public:
 
 private:
     /// The registration manager used to logout.
-    std::shared_ptr<registrationManager::RegistrationManager> m_manager;
+    std::shared_ptr<registrationManager::RegistrationManagerInterface> m_manager;
 };
 
 }  // namespace sampleApp

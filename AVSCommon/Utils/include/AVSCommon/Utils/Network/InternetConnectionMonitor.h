@@ -105,13 +105,6 @@ private:
      */
     void updateConnectionStatus(bool connected);
 
-    /**
-     * Notify observers of connection status.
-     *
-     * @note This should only be called while holding a lock to ensure synchronicity.
-     */
-    void notifyObserversLocked();
-
     /// The set of connection observers.
     std::unordered_set<std::shared_ptr<sdkInterfaces::InternetConnectionObserverInterface>> m_observers;
 

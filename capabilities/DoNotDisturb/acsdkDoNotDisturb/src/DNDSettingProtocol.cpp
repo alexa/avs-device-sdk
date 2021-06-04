@@ -16,6 +16,9 @@
 #include <functional>
 
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 
 #include "acsdkDoNotDisturb/DNDSettingProtocol.h"
 
@@ -33,15 +36,66 @@ namespace alexaClientSDK {
 namespace capabilityAgents {
 namespace doNotDisturb {
 
+using namespace avsCommon::utils::metrics;
 using namespace settings;
 
 /// String to designate invalid value for the DND setting. NOTE: Valid values are "true" and "false".
 static const std::string INVALID_VALUE = "";
 
+/// The metrics source string.
+static const std::string METRIC_SOURCE_PREFIX = "SETTINGS-";
+
+/// The local change metric string.
+static const std::string LOCAL_CHANGE_METRIC = "LOCAL_CHANGE";
+
+/// The local change failed metric string.
+static const std::string LOCAL_CHANGE_FAILED_METRIC = "LOCAL_CHANGE_FAILED";
+
+/// The AVS change metric string.
+static const std::string AVS_CHANGE_METRIC = "AVS_CHANGE";
+
+/// The local change failed metric string.
+static const std::string AVS_CHANGE_FAILED_METRIC = "AVS_CHANGE_FAILED";
+
+/// The setting key metric string.
+static const std::string SETTING_KEY = "SETTING_KEY";
+
+/**
+ * Submits a counter metric with the passed in event name
+ * @note: This function returns immediately if metricRecorder is null.
+ *
+ * @param metricRecorder The @c MetricRecorder instance used to record the metric.
+ * @param eventName The event name string.
+ * @param count The count to increment the datapoint with.
+ */
+static void submitMetric(
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+    const std::string& eventName,
+    const std::string& settingsKey,
+    uint64_t count) {
+    if (!metricRecorder) {
+        return;
+    }
+
+    auto metricEvent = MetricEventBuilder{}
+                           .setActivityName(METRIC_SOURCE_PREFIX + eventName)
+                           .addDataPoint(DataPointCounterBuilder{}.setName(eventName).increment(count).build())
+                           .addDataPoint(DataPointStringBuilder{}.setName(SETTING_KEY).setValue(settingsKey).build())
+                           .build();
+
+    if (!metricEvent) {
+        ACSDK_ERROR(LX("submitMetricFailed").d("reason", "invalid metric event"));
+        return;
+    }
+
+    recordMetric(metricRecorder, metricEvent);
+}
+
 std::unique_ptr<DNDSettingProtocol> DNDSettingProtocol::create(
     const SettingEventMetadata& metadata,
     std::shared_ptr<SettingEventSenderInterface> eventSender,
-    std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage) {
+    std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
     ACSDK_DEBUG5(LX(__func__).d("settingName", metadata.settingName));
 
     if (!eventSender) {
@@ -56,7 +110,8 @@ std::unique_ptr<DNDSettingProtocol> DNDSettingProtocol::create(
 
     std::string settingKey = metadata.eventNamespace + "::" + metadata.settingName;
 
-    return std::unique_ptr<DNDSettingProtocol>(new DNDSettingProtocol(settingKey, eventSender, settingStorage));
+    return std::unique_ptr<DNDSettingProtocol>(
+        new DNDSettingProtocol(settingKey, eventSender, settingStorage, metricRecorder));
 }
 
 SetSettingResult DNDSettingProtocol::localChange(
@@ -83,6 +138,7 @@ SetSettingResult DNDSettingProtocol::localChange(
         if (!ok) {
             ACSDK_ERROR(LX("localChangeFailed").d("reason", "cannotApplyChange"));
             notifyObservers(SettingNotifications::LOCAL_CHANGE_FAILED);
+            submitMetric(m_metricRecorder, LOCAL_CHANGE_FAILED_METRIC, m_key, 1);
             return;
         }
 
@@ -90,10 +146,13 @@ SetSettingResult DNDSettingProtocol::localChange(
             ACSDK_ERROR(LX("localChangeFailed").d("reason", "cannotUpdateDatabase"));
             revertChange();
             notifyObservers(SettingNotifications::LOCAL_CHANGE_FAILED);
+            submitMetric(m_metricRecorder, LOCAL_CHANGE_FAILED_METRIC, m_key, 1);
             return;
         }
 
         notifyObservers(SettingNotifications::LOCAL_CHANGE);
+        submitMetric(m_metricRecorder, LOCAL_CHANGE_METRIC, m_key, 1);
+        submitMetric(m_metricRecorder, LOCAL_CHANGE_FAILED_METRIC, m_key, 0);
 
         this->m_eventSender->sendChangedEvent(value).get();
 
@@ -138,13 +197,18 @@ bool DNDSettingProtocol::avsChange(
         if (!ok) {
             ACSDK_ERROR(LX("avsChangeFailed").d("reason", "cannotApplyChange"));
             notifyObservers(SettingNotifications::AVS_CHANGE_FAILED);
+            submitMetric(m_metricRecorder, AVS_CHANGE_FAILED_METRIC, m_key, 1);
         } else if (!this->m_storage->storeSetting(m_key, value, SettingStatus::AVS_CHANGE_IN_PROGRESS)) {
             ACSDK_ERROR(LX("avsChangeFailed").d("reason", "cannotUpdateDatabaseValue"));
             notifyObservers(SettingNotifications::AVS_CHANGE_FAILED);
             value = revertChange();
+            submitMetric(m_metricRecorder, AVS_CHANGE_FAILED_METRIC, m_key, 1);
         } else {
             notifyObservers(SettingNotifications::AVS_CHANGE);
+            submitMetric(m_metricRecorder, AVS_CHANGE_FAILED_METRIC, m_key, 0);
         }
+
+        submitMetric(m_metricRecorder, AVS_CHANGE_METRIC, m_key, 1);
 
         /// We need to sent the report for failure or success case.
         this->m_eventSender->sendReportEvent(value);
@@ -197,10 +261,12 @@ bool DNDSettingProtocol::clearData() {
 DNDSettingProtocol::DNDSettingProtocol(
     const std::string& key,
     std::shared_ptr<SettingEventSenderInterface> eventSender,
-    std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage) :
+    std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) :
         m_key{key},
         m_eventSender{eventSender},
-        m_storage{settingStorage} {
+        m_storage{settingStorage},
+        m_metricRecorder{metricRecorder} {
 }
 
 }  // namespace doNotDisturb

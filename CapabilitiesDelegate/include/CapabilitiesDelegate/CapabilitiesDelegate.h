@@ -39,7 +39,7 @@
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace capabilitiesDelegate {
@@ -83,7 +83,7 @@ public:
     static std::shared_ptr<CapabilitiesDelegateInterface> createCapabilitiesDelegateInterface(
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         std::unique_ptr<storage::CapabilitiesDelegateStorageInterface> storage,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
             providerRegistrar,
@@ -103,7 +103,7 @@ public:
     static std::shared_ptr<CapabilitiesDelegate> create(
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& storage,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager);
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager);
 
     /// @name CapabilitiesDelegateInterface method overrides.
     /// @{
@@ -181,7 +181,7 @@ private:
     CapabilitiesDelegate(
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& storage,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager);
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager);
 
     /**
      * Perform initialization after construction but before returning the

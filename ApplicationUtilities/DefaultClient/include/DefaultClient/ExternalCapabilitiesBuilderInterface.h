@@ -35,16 +35,16 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/PlaybackRouterInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <CertifiedSender/CertifiedSender.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
 #include <SoftwareComponentReporter/SoftwareComponentReporterCapabilityAgent.h>
 #include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <System/ReportStateHandler.h>
-#include <System/UserInactivityMonitor.h>
 #include <TemplateRuntime/TemplateRuntime.h>
 
 namespace alexaClientSDK {
@@ -170,12 +170,12 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<certifiedSender::CertifiedSender> certifiedSender,
         std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<capabilityAgents::system::ReportStateHandler> stateReportHandler,
         std::shared_ptr<capabilityAgents::aip::AudioInputProcessor> audioInputProcessor,
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-        std::shared_ptr<capabilityAgents::system::UserInactivityMonitor> userInactivityMonitor,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,

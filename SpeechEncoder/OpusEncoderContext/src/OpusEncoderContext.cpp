@@ -64,6 +64,10 @@ inline uint16_t Reverse16(uint16_t value) {
     return (((value & 0x00FF) << 8) | ((value & 0xFF00) >> 8));
 }
 
+std::shared_ptr<EncoderContext> OpusEncoderContext::createEncoderContext() {
+    return std::make_shared<OpusEncoderContext>();
+}
+
 OpusEncoderContext::~OpusEncoderContext() {
     close();
 }

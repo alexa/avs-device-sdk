@@ -45,6 +45,7 @@ public:
     void removeObserver(const std::shared_ptr<ObserverType>& observer) override;
     void notifyObservers(std::function<void(const std::shared_ptr<ObserverType>&)> notify) override;
     bool notifyObserversInReverse(std::function<void(const std::shared_ptr<ObserverType>&)> notify) override;
+    void setAddObserverFunction(std::function<void(const std::shared_ptr<ObserverType>&)> addObserverFunc) override;
     /// @}
 
 private:
@@ -65,6 +66,9 @@ private:
     /// The set of observers.  Note that a vector is used here to allow for the addition
     /// or removal of observers while calls to notifyObservers() are in progress.
     std::vector<std::shared_ptr<ObserverType>> m_observers;
+
+    /// If set, this function will be called after an observer is added.
+    std::function<void(const std::shared_ptr<ObserverType>&)> m_addObserverFunc;
 };
 
 template <typename ObserverType>
@@ -80,6 +84,10 @@ inline void Notifier<ObserverType>::addObserver(const std::shared_ptr<ObserverTy
         }
     }
     m_observers.push_back(observer);
+
+    if (m_addObserverFunc) {
+        m_addObserverFunc(observer);
+    }
 }
 
 template <typename ObserverType>
@@ -129,6 +137,13 @@ inline bool Notifier<ObserverType>::notifyObserversInReverse(
         cleanupLocked(nullptr);
     }
     return result;
+}
+
+template <typename ObserverType>
+inline void Notifier<ObserverType>::setAddObserverFunction(
+    std::function<void(const std::shared_ptr<ObserverType>&)> addObserverFunc) {
+    std::lock_guard<std::recursive_mutex> guard(m_mutex);
+    m_addObserverFunc = addObserverFunc;
 }
 
 template <typename ObserverType>

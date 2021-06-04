@@ -6,5 +6,5 @@ set(INCLUDE_PATH
 	"${AVSCommon_INCLUDE_DIRS}"
 	"${Diagnostics_INCLUDE_DIRS}")
 
-discover_unit_tests("${INCLUDE_PATH}" "Diagnostics;UtilsCommonTestLib;SDKInterfacesTests;DeviceSettings")
+discover_unit_tests("${INCLUDE_PATH}" "Diagnostics;UtilsCommonTestLib;SDKInterfacesTests;DeviceSettings;RegistrationManagerTestUtils")
 

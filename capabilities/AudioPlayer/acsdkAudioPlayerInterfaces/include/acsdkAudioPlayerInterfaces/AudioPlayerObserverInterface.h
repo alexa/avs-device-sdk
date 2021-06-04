@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKAUDIOPLAYERINTERFACES_AUDIOPLAYEROBSERVERINTERFACE_H_
-#define ACSDKAUDIOPLAYERINTERFACES_AUDIOPLAYEROBSERVERINTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYERINTERFACES_INCLUDE_ACSDKAUDIOPLAYERINTERFACES_AUDIOPLAYEROBSERVERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYERINTERFACES_INCLUDE_ACSDKAUDIOPLAYERINTERFACES_AUDIOPLAYEROBSERVERINTERFACE_H_
 
 #include <chrono>
 #include <string>
@@ -48,6 +48,9 @@ public:
 
         /// Track protection name of the @c AudioItem
         std::string trackProtectionName;
+
+        /// Track Playlist Type of the @c AudioItem
+        std::string trackPlaylistType;
 
         /// The start offset in millisecond for the @c AudioItem in @c Play directive
         std::chrono::milliseconds startOffset;
@@ -86,4 +89,4 @@ inline void AudioPlayerObserverInterface::onSeekActivity(const SeekStatus seekSt
 }  // namespace acsdkAudioPlayerInterfaces
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKAUDIOPLAYERINTERFACES_AUDIOPLAYEROBSERVERINTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYERINTERFACES_INCLUDE_ACSDKAUDIOPLAYERINTERFACES_AUDIOPLAYEROBSERVERINTERFACE_H_

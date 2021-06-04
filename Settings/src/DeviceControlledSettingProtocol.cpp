@@ -34,8 +34,10 @@ std::unique_ptr<DeviceControlledSettingProtocol> DeviceControlledSettingProtocol
     const SettingEventMetadata& metadata,
     std::shared_ptr<SettingEventSenderInterface> eventSender,
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager) {
-    auto sharedProtocol = SharedAVSSettingProtocol::create(metadata, eventSender, settingStorage, connectionManager);
+    std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) {
+    auto sharedProtocol =
+        SharedAVSSettingProtocol::create(metadata, eventSender, settingStorage, connectionManager, metricRecorder);
     if (!sharedProtocol) {
         ACSDK_ERROR(LX("createFailed").d("reason", "cannotCreateProtocolImplementation"));
         return nullptr;

@@ -19,7 +19,7 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Power/PowerMonitor.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include <queue>
 
@@ -106,7 +106,7 @@ std::shared_ptr<CertifiedSender> CertifiedSender::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageStorageInterface> storage,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) {
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager) {
     auto certifiedSender =
         std::shared_ptr<CertifiedSender>(new CertifiedSender(messageSender, connection, storage, dataManager));
 
@@ -124,7 +124,7 @@ CertifiedSender::CertifiedSender(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<AVSConnectionManagerInterface> connection,
     std::shared_ptr<MessageStorageInterface> storage,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
     int queueSizeWarnLimit,
     int queueSizeHardLimit) :
         RequiresShutdown("CertifiedSender"),

@@ -220,20 +220,24 @@ void InternetConnectionMonitor::testConnection() {
     updateConnectionStatus(found);
 }
 
-void InternetConnectionMonitor::notifyObserversLocked() {
-    ACSDK_DEBUG5(LX(__func__));
-    for (auto& observer : m_observers) {
-        observer->onConnectionStatusChanged(m_connected);
-    }
-}
-
 void InternetConnectionMonitor::updateConnectionStatus(bool connected) {
     ACSDK_DEBUG5(LX(__func__).d("connected", connected));
 
-    std::lock_guard<std::mutex> lock{m_mutex};
-    if (m_connected != connected) {
-        m_connected = connected;
-        notifyObserversLocked();
+    bool notifyObservers = false;
+    std::unordered_set<std::shared_ptr<sdkInterfaces::InternetConnectionObserverInterface>> observersCopy;
+    {
+        std::lock_guard<std::mutex> lock{m_mutex};
+        if (m_connected != connected) {
+            // make a copy of observers behind a mutex to avoid a deadlock when calling each observer
+            m_connected = connected;
+            observersCopy = m_observers;
+            notifyObservers = true;
+        }
+    }
+    if (notifyObservers) {
+        for (auto& observer : observersCopy) {
+            observer->onConnectionStatusChanged(connected);
+        }
     }
 }
 

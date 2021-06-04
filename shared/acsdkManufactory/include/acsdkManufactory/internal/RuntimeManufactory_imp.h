@@ -17,7 +17,7 @@
 #define ACSDKMANUFACTORY_INTERNAL_RUNTIMEMANUFACTORY_IMP_H_
 
 #include "acsdkManufactory/internal/CookBook.h"
-#include "acsdkManufactory/internal/PointerCache.h"
+#include "acsdkManufactory/internal/SharedPointerCache.h"
 #include "acsdkManufactory/internal/RuntimeManufactory.h"
 #include "acsdkManufactory/internal/TypeIndex.h"
 
@@ -43,35 +43,45 @@ inline std::unique_ptr<Type> RuntimeManufactory::innerGet(std::unique_ptr<Type>*
 template <typename Type>
 inline std::shared_ptr<Type> RuntimeManufactory::innerGet(std::shared_ptr<Type>*) {
     using ResultType = std::shared_ptr<Type>;
+    ResultType ret;
 
     auto resultTypeIndex = getTypeIndex<ResultType>();
 
     auto it = m_values.find(resultTypeIndex);
     if (m_values.end() == it || !it->second) {
-        std::shared_ptr<PointerCache<ResultType>> cache(std::move(m_cookBook->createPointerCache<ResultType>()));
+        std::shared_ptr<AbstractPointerCache> cache(std::move(m_cookBook->createPointerCache<ResultType>()));
         m_values[resultTypeIndex] = cache;
-        return cache->get(*this);
+        ret = *static_cast<ResultType*>(cache->get(*this));
+        cache->cleanup();
     } else {
-        auto cache = static_cast<PointerCache<ResultType>*>(it->second.get());
-        return cache->get(*this);
+        auto cache = static_cast<AbstractPointerCache*>(it->second.get());
+        ret = *static_cast<ResultType*>(cache->get(*this));
+        cache->cleanup();
     }
+
+    return ret;
 }
 
 template <typename Annotation, typename Type>
 inline Annotated<Annotation, Type> RuntimeManufactory::innerGet(Annotated<Annotation, Type>*) {
     using ResultType = Annotated<Annotation, Type>;
+    ResultType ret;
 
     auto resultTypeIndex = getTypeIndex<ResultType>();
 
     auto it = m_values.find(resultTypeIndex);
     if (m_values.end() == it || !it->second) {
-        std::shared_ptr<PointerCache<ResultType>> cache(std::move(m_cookBook->createPointerCache<ResultType>()));
+        std::shared_ptr<AbstractPointerCache> cache(std::move(m_cookBook->createPointerCache<ResultType>()));
         m_values[resultTypeIndex] = cache;
-        return cache->get(*this);
+        ret = *static_cast<std::shared_ptr<Type>*>(cache->get(*this));
+        cache->cleanup();
     } else {
-        auto cache = static_cast<PointerCache<ResultType>*>(it->second.get());
-        return cache->get(*this);
+        auto cache = static_cast<AbstractPointerCache*>(it->second.get());
+        ret = *static_cast<std::shared_ptr<Type>*>(cache->get(*this));
+        cache->cleanup();
     }
+
+    return ret;
 }
 
 }  // namespace internal

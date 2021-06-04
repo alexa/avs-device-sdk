@@ -96,6 +96,53 @@ public:
     ~Reader();
 
     /**
+     * This function is passed in a read call to allow reading directly from the raw buffer. This allows
+     * you to avoid an intermediate copy while using a reader. It is passed into a @c Reader below in
+     * with a read call and no reference to the lambda will be saved after the read function has returned.
+     * Implementations are not required to be thread safe, callbacks will return before the next one is
+     * called.
+     *
+     * Since nWords is bound by nWords in the read function it is assumed that the caller will consume
+     * the entire buffer in every callback.
+     *
+     * @note This function can be called multiple times per call to read depending on the implementation
+     * of @c SharedDataStream and how much data was requested and it is up to the caller to handle multiple
+     * calls and the offsets into the caller's buffer.
+     * @param buf The pointer to read from. Note that this pointer is only valid for this read and
+     *      there are no guarantees on it after the read is complete.
+     * @param nWords The number of @c wordSize words that are safe to read from buf.
+     * @return true if all words consumed, false otherwise. Returning false will cause the read function to fail
+     *      and not consume any words from the Reader.
+     */
+    using OutputFunction = std::function<bool(void* buf, size_t nWords)>;
+
+    /**
+     * This function consumes data from the stream and passes it into the read function to avoid intermediate
+     * copies of the data.
+     *
+     * @param function The read function that will take a read pointer and the number of words that it's expected to
+     * handle. The read function's parameter nWords will be equal to or less than maxWordsCanRead.  This may be called
+     *      twice on account of the circular buffer however the sum of nWords in both calls will be less than
+     *      @c maxWordsCanRead.
+     * @param maxWordsCanRead The maximum number of @c wordSize words to copy.
+     * @param timeout The maximum time to wait (if @c policy is @c BLOCKING) for data.  If this parameter is zero,
+     *     there is no timeout and blocking reads will wait forever.  If @c policy is @c NONBLOCKING, this parameter
+     *     is ignored.  In the case of a timeout @c function will not be called.
+     * @return The number of @c wordSize words copied if data was consumed, or zero if the stream has closed, or a
+     *     negative @c Error code if the stream is still open, but no data could be consumed.
+     *
+     * @note A stream is closed for the @c Reader if @c Reader::close() has been called on it, or if @c Writer::close()
+     *     has been called and the @c Reader has consumed all remaining data left in the stream when the @c Writer
+     *     closed.  In the special case of a new stream, where no @c Writer has been created, the stream is not
+     *     considered to be closed for the @c Reader; attempts to @c read() will either block or return @c WOULDBLOCK,
+     *     depending on the @c Policy.
+     */
+    ssize_t read(
+        OutputFunction function,
+        size_t maxWordsCanRead,
+        std::chrono::milliseconds timeout = std::chrono::milliseconds(0));
+
+    /**
      * This function consumes data from the stream and copies it to the provided buffer.
      *
      * @param buf A buffer to copy the consumed data to.  This buffer must be large enough to hold @c nWords
@@ -248,6 +295,25 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
         return Error::INVALID;
     }
 
+    auto buf8 = static_cast<uint8_t*>(buf);
+    auto wordSize = getWordSize();
+    return read(
+        [&buf8, wordSize](void* readBuf, size_t wordsToRead) {
+            memcpy(buf8, readBuf, wordsToRead * wordSize);
+            buf8 += wordsToRead * wordSize;
+            return true;
+        },
+        nWords,
+        timeout);
+}
+
+template <typename T>
+ssize_t SharedDataStream<T>::Reader::read(OutputFunction function, size_t nWords, std::chrono::milliseconds timeout) {
+    if (nullptr == function) {
+        logger::acsdkError(logger::LogEntry(TAG, "readFailed").d("reason", "nullFunction"));
+        return Error::INVALID;
+    }
+
     if (0 == nWords) {
         logger::acsdkError(logger::LogEntry(TAG, "readFailed").d("reason", "invalidNumWords").d("numWords", nWords));
         return Error::INVALID;
@@ -318,13 +384,14 @@ ssize_t SharedDataStream<T>::Reader::read(void* buf, size_t nWords, std::chrono:
     size_t afterWrap = nWords - beforeWrap;
 
     // Copy the two segments.
-    auto buf8 = static_cast<uint8_t*>(buf);
-    memcpy(buf8, m_bufferLayout->getData(*m_readerCursor), beforeWrap * getWordSize());
-    if (afterWrap > 0) {
-        memcpy(
-            buf8 + (beforeWrap * getWordSize()),
-            m_bufferLayout->getData(*m_readerCursor + beforeWrap),
-            afterWrap * getWordSize());
+    if (!function(m_bufferLayout->getData(*m_readerCursor), beforeWrap)) {
+        // We haven't changed the read pointer yet, just error out.
+        return Error::INVALID;
+    }
+
+    if (afterWrap > 0 && !function(m_bufferLayout->getData(*m_readerCursor + beforeWrap), afterWrap)) {
+        // By API if either of these calls fail the entire read fails and no data is consumed.
+        return Error::INVALID;
     }
 
     // Advance the read cursor.

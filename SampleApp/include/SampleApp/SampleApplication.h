@@ -187,10 +187,12 @@ private:
      *
      * @param peripheralEndpointBuilder The reference to peripheral endpoint's @c EndpointBuilder used for adding
      * controllers.
+     * @param diagnostics Diagnostics interface which provides suite of APIs for diagnostic insight into SDK.
      * @return Returns @c true if successful in adding all the four controllers otherwise @c false.
      */
     bool addControllersToPeripheralEndpoint(
-        std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> peripheralEndpointBuilder);
+        std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> peripheralEndpointBuilder,
+        std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics);
 #endif
     /// Object with which to trigger shutdown operations.
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> m_shutdownManager;

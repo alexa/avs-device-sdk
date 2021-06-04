@@ -107,7 +107,7 @@ std::shared_ptr<EqualizerCapabilityAgent> EqualizerCapabilityAgent::create(
     std::shared_ptr<acsdkEqualizer::EqualizerController> equalizerController,
     std::shared_ptr<CapabilitiesDelegateInterface> capabilitiesDelegate,
     std::shared_ptr<EqualizerStorageInterface> equalizerStorage,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<MessageSenderInterface> messageSender) {
@@ -201,7 +201,7 @@ EqualizerCapabilityAgent::EqualizerCapabilityAgent(
     std::shared_ptr<acsdkEqualizer::EqualizerController> equalizerController,
     std::shared_ptr<CapabilitiesDelegateInterface> capabilitiesDelegate,
     std::shared_ptr<EqualizerStorageInterface> equalizerStorage,
-    std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<MessageSenderInterface> messageSender) :

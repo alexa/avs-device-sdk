@@ -21,13 +21,15 @@
 #include <memory>
 #include <string>
 
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
-#include <AVSCommon/Utils/Timing/Timer.h>
-#include <AVSCommon/Utils/RequiresShutdown.h>
-#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
+#include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorObserverInterface.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
+#include <AVSCommon/Utils/Timing/Timer.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -40,7 +42,30 @@ class UserInactivityMonitor
         , public avsCommon::utils::RequiresShutdown {
 public:
     /**
+     * Create an instance of @c UserInactivityMonitorInterface.
+     *
+     * @param messageSender The @c MessageSenderInterface for sending events.
+     * @param exceptionEncounteredSender The interface that sends exceptions.
+     * @param shutdownNotifier The @c ShutdownNotifierInterface that will notify this instance when it is time to
+     * shut down.
+     * @param directiveSequencer The @c DirectiveSequencerInterface with which to register this instance as a
+     * directive handler.
+     * @param sendPeriod The period of send events in seconds.
+     * @return @c nullptr if the inputs are not defined, else a new instance of @c UserInactivityMonitor.
+     */
+    static std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface>
+    createUserInactivityMonitorInterface(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
+            exceptionEncounteredSender,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>& directiveSequencer,
+        const std::chrono::milliseconds& sendPeriod = std::chrono::hours(1));
+
+    /**
      * Create an instance of @c UserInactivityMonitor.
+     *
+     * @deprecated Use createUserInactivityMonitorInterface.
      *
      * @param messageSender The @c MessageSenderInterface for sending events.
      * @param exceptionEncounteredSender The interface that sends exceptions.
@@ -61,7 +86,7 @@ public:
     void cancelDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     /// @}
 
-    /// @name UserActivityNotifierInterface functions
+    /// @name UserInactivityMonitorInterface functions
     /// @{
     void onUserActive() override;
     std::chrono::seconds timeSinceUserActivity() override;

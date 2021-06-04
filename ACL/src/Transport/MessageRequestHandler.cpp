@@ -86,6 +86,9 @@ static const std::string ERROR_INTERNAL = "INTERNAL_ERROR";
 /// Send completed
 static const std::string SEND_COMPLETED = "SEND_COMPLETED";
 
+/// Metric identifier for message send error.
+static const std::string MESSAGE_SEND_ERROR = "ERROR.MESSAGE_SEND_FAILED";
+
 // Key value separator for HTTP headers
 static const std::string HTTP_KEY_VALUE_SEPARATOR = ": ";
 
@@ -107,6 +110,10 @@ static void collectSendDataResultMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
     int count,
     const std::string& readStatus) {
+    if (!metricRecorder) {
+        return;
+    }
+
     recordMetric(
         metricRecorder,
         MetricEventBuilder{}
@@ -114,6 +121,48 @@ static void collectSendDataResultMetric(
             .addDataPoint(DataPointCounterBuilder{}.setName(SEND_DATA_ERROR).increment(count).build())
             .addDataPoint(DataPointStringBuilder{}.setName(READ_STATUS_TAG).setValue(readStatus).build())
             .build());
+}
+
+/**
+ * Capture metric for cases where there are internal message send errors or timeouts.
+ *
+ * @param metricRecorder The metric recorder object.
+ * @param status The @c MessageRequestObserverInterface::Status of the message.
+ */
+static void submitMessageSendErrorMetric(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    MessageRequestObserverInterface::Status status) {
+    if (!metricRecorder) {
+        return;
+    }
+
+    std::stringstream ss;
+    switch (status) {
+        case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
+        case MessageRequestObserverInterface::Status::TIMEDOUT:
+        case MessageRequestObserverInterface::Status::BAD_REQUEST:
+        case MessageRequestObserverInterface::Status::INVALID_AUTH:
+        case MessageRequestObserverInterface::Status::THROTTLED:
+        case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
+        case MessageRequestObserverInterface::Status::REFUSED:
+        case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
+            ss << status;
+            break;
+        default:
+            return;
+    }
+
+    auto metricEvent = MetricEventBuilder{}
+                           .setActivityName(ACL_METRIC_SOURCE_PREFIX + MESSAGE_SEND_ERROR)
+                           .addDataPoint(DataPointCounterBuilder{}.setName(ss.str()).increment(1).build())
+                           .build();
+
+    if (!metricEvent) {
+        ACSDK_ERROR(LX("submitErrorMetricFailed").d("reason", "invalid metric event"));
+        return;
+    }
+
+    recordMetric(metricRecorder, metricEvent);
 }
 
 MessageRequestHandler::~MessageRequestHandler() {
@@ -402,6 +451,8 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
     }
 
     m_messageRequest->sendCompleted(m_resultStatus);
+
+    submitMessageSendErrorMetric(m_metricRecorder, m_resultStatus);
 }
 
 }  // namespace acl

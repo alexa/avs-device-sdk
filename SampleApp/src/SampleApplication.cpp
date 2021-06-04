@@ -841,7 +841,7 @@ bool SampleApplication::initialize(
         std::shared_ptr<avsCommon::utils::DeviceInfo>,
         std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
-        std::shared_ptr<registrationManager::CustomerDataManager>,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
         std::shared_ptr<UIManager>>::create(sampleAppComponent);
 
     m_sdkInit = manufactory->get<std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>>();
@@ -1061,7 +1061,7 @@ bool SampleApplication::initialize(
      * Creating customerDataManager which will be used by the registrationManager and all classes that extend
      * CustomerDataHandler
      */
-    auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManager>>();
+    auto customerDataManager = manufactory->get<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>();
     if (!customerDataManager) {
         ACSDK_CRITICAL(LX("Failed to get CustomerDataManager!"));
         return false;
@@ -1472,7 +1472,7 @@ bool SampleApplication::initialize(
             PERIPHERAL_ENDPOINT_ADDITIONAL_ATTRIBUTE_CUSTOM_IDENTIFIER)
         .withDisplayCategory(PERIPHERAL_ENDPOINT_DISPLAYCATEGORY);
 
-    if (!addControllersToPeripheralEndpoint(peripheralEndpointBuilder)) {
+    if (!addControllersToPeripheralEndpoint(peripheralEndpointBuilder, diagnostics)) {
         ACSDK_CRITICAL(LX("Failed to add controllers to peripheral endpoint!"));
         return false;
     }
@@ -1512,6 +1512,7 @@ bool SampleApplication::initialize(
         pathToInputFolder);
     if (!m_keywordDetector) {
         ACSDK_CRITICAL(LX("Failed to create keyword detector!"));
+        return false;
     }
 
     // If wake word is enabled, then creating the interaction manager with a wake word audio provider.
@@ -1609,7 +1610,7 @@ bool SampleApplication::initialize(
     }
 
     authDelegate->addAuthObserver(m_userInputManager);
-    client->getRegistrationManager()->addObserver(m_userInputManager);
+    client->addRegistrationObserver(m_userInputManager);
     m_capabilitiesDelegate->addCapabilitiesObserver(m_userInputManager);
 
     client->connect();
@@ -1771,7 +1772,8 @@ bool SampleApplication::addControllersToDefaultEndpoint(
 }
 
 bool SampleApplication::addControllersToPeripheralEndpoint(
-    std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> peripheralEndpointBuilder) {
+    std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> peripheralEndpointBuilder,
+    std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     if (!peripheralEndpointBuilder) {
         ACSDK_CRITICAL(LX("addControllersToPeripheralEndpointFailed").m("invalidPeripheralEndpointBuilder"));
         return false;
@@ -1860,6 +1862,13 @@ bool SampleApplication::addControllersToPeripheralEndpoint(
         true,
         true,
         false);
+
+    if (diagnostics) {
+        auto deviceProperties = diagnostics->getDevicePropertyAggregator();
+        if (deviceProperties) {
+            m_peripheralEndpointRangeHandler->addObserver(deviceProperties);
+        }
+    }
 #endif
 
 #ifdef MODE_CONTROLLER

@@ -65,7 +65,7 @@ static std::vector<EndpointIdentifier> getEndpointIdentifiers(
 std::shared_ptr<CapabilitiesDelegateInterface> CapabilitiesDelegate::createCapabilitiesDelegateInterface(
     const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
     std::unique_ptr<storage::CapabilitiesDelegateStorageInterface> storage,
-    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
     const std::shared_ptr<
         acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
         providerRegistrar,
@@ -100,7 +100,7 @@ std::shared_ptr<CapabilitiesDelegateInterface> CapabilitiesDelegate::createCapab
 std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& capabilitiesDelegateStorage,
-    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager) {
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager) {
     if (!authDelegate) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
     } else if (!capabilitiesDelegateStorage) {
@@ -124,7 +124,7 @@ std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
 CapabilitiesDelegate::CapabilitiesDelegate(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& capabilitiesDelegateStorage,
-    const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager) :
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager) :
         RequiresShutdown{"CapabilitiesDelegate"},
         CustomerDataHandler{customerDataManager},
         m_capabilitiesState{CapabilitiesDelegateObserverInterface::State::UNINITIALIZED},

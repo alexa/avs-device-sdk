@@ -10,7 +10,7 @@ SET(LIBRARIES
         AVSCommon
         AVSCommonTestLib
         DeviceSettingsTests
-        RegistrationManager
+        RegistrationManagerTestUtils
         UtilsCommonTestLib
         ShutdownManagerTestLib
         SDKInterfacesTests)

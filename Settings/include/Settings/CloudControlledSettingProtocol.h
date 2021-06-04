@@ -16,6 +16,7 @@
 #include <memory>
 
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 
 #include "Settings/SetSettingResult.h"
 #include "Settings/SettingEventMetadata.h"
@@ -42,13 +43,15 @@ public:
      * @param eventSender Object used to send events to AVS in order to report changes from the device.
      * @param settingStorage The setting storage object.
      * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
+     * @param metricRecorder An @c MetricRecorderInterface instance to log metrics.
      * @return A pointer to the new @c CloudControlledSettingProtocol object if it succeeds; @c nullptr otherwise.
      */
     static std::unique_ptr<CloudControlledSettingProtocol> create(
         const SettingEventMetadata& metadata,
         std::shared_ptr<SettingEventSenderInterface> eventSender,
         std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /**
      * Destructor.

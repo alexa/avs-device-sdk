@@ -234,7 +234,6 @@ void GuiRenderer::renderPlayerInfoCard(
             }
         } else {
             ConsolePrinter::simplePrint("ERROR: PlayerInfo JSON payload has unexpected controls field");
-            return;
         }
     }
     buffer += RENDER_FOOTER;

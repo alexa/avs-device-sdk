@@ -26,6 +26,7 @@
 #include <CapabilitiesDelegate/PostConnectCapabilitiesPublisher.h>
 #include <CapabilitiesDelegate/Storage/CapabilitiesDelegateStorageInterface.h>
 #include <CapabilitiesDelegate/Utils/DiscoveryUtils.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 
 #include "MockAuthDelegate.h"
 #include "MockCapabilitiesDelegateObserver.h"
@@ -142,7 +143,7 @@ protected:
     std::shared_ptr<MockCapabilitiesDelegateObserver> m_mockCapabilitiesDelegateObserver;
 
     /// The data manager required to build the base object
-    std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
+    std::shared_ptr<registrationManager::MockCustomerDataManager> m_dataManager;
 
     /// The mock @c MessageSenderInterface used in the tests.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockMessageSender> m_mockMessageSender;
@@ -155,7 +156,7 @@ void CapabilitiesDelegateTest::SetUp() {
     m_mockCapabilitiesStorage = std::make_shared<StrictMock<MockCapabilitiesDelegateStorage>>();
     m_mockAuthDelegate = std::make_shared<StrictMock<MockAuthDelegate>>();
     m_mockCapabilitiesDelegateObserver = std::make_shared<StrictMock<MockCapabilitiesDelegateObserver>>();
-    m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    m_dataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
     m_mockMessageSender = std::make_shared<StrictMock<avsCommon::sdkInterfaces::test::MockMessageSender>>();
 
     /// Expect calls to storage.

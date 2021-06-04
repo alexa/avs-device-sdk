@@ -50,3 +50,8 @@ else()
     set(ACSDKBLUETOOTHIMPLEMENTATIONS_LIB acsdkNullBluetoothImplementation)
 endif()
 
+if (OPUS)
+    UseDefaultIfNotSet(ACSDKSPEECHENCODER_LIB acsdkOpusSpeechEncoder)
+else()
+    UseDefaultIfNotSet(ACSDKSPEECHENCODER_LIB acsdkNullSpeechEncoder)
+endif()

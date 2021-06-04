@@ -349,6 +349,40 @@ TEST_F(DiscoveryEventSenderTest, test_sendsDiscoveryEvents) {
 }
 
 /**
+ * Test Happy Path, if AddOrUpdateReport event and DeleteReport event get sent out without wait
+ * for EventProcessed.
+ */
+TEST_F(DiscoveryEventSenderTest, test_sendsDiscoveryEventsNotWaitForEventProcessed) {
+    auto discoveryEventSender =
+        DiscoveryEventSender::create(TEST_ADD_OR_UPDATE_ENDPOINTS, TEST_DELETE_ENDPOINTS, m_mockAuthDelegate, false);
+    discoveryEventSender->addDiscoveryStatusObserver(m_mockDiscoveryStatusObserver);
+    validateCallsToAuthDelegate(discoveryEventSender);
+
+    auto sendAddOrUpdateReport = [](std::shared_ptr<MessageRequest> request) {
+        EventData eventData;
+        ASSERT_TRUE(parseEventJson(request->getJsonContent(), &eventData));
+        validateDiscoveryEvent(eventData, ADD_OR_UPDATE_REPORT_NAME, EXPECTED_ADD_OR_UPDATE_ENDPOINT_IDS);
+        request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+    };
+
+    auto sendDeleteReport = [](std::shared_ptr<MessageRequest> request) {
+        EventData eventData;
+        ASSERT_TRUE(parseEventJson(request->getJsonContent(), &eventData));
+        validateDiscoveryEvent(eventData, DELETE_REPORT_NAME, EXPECTED_DELETE_ENDPOINT_IDS);
+        request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+    };
+
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .WillOnce(Invoke(sendAddOrUpdateReport))
+        .WillOnce(Invoke(sendDeleteReport));
+    EXPECT_CALL(
+        *m_mockDiscoveryStatusObserver, onDiscoveryCompleted(TEST_ADD_OR_UPDATE_ENDPOINTS, TEST_DELETE_ENDPOINTS))
+        .WillOnce(Return());
+
+    ASSERT_TRUE(discoveryEventSender->sendDiscoveryEvents(m_mockMessageSender));
+}
+
+/**
  * Test sendDiscoveryEvents fails with null message sender.
  */
 TEST_F(DiscoveryEventSenderTest, test_sendDiscoveryEventsFailsWithNullMessageSender) {

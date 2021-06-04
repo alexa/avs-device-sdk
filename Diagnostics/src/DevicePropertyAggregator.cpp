@@ -42,7 +42,8 @@ static const std::chrono::seconds TIMEOUT{2};
 /// The list of Synchronous Properties that need to be retrieved before returning all device properties.
 static const std::set<std::string> listOfSynchronousProperties = {
     DevicePropertyAggregator::DevicePropertyAggregatorInterface::DO_NOT_DISTURB,
-    DevicePropertyAggregator::DevicePropertyAggregatorInterface::LOCALE};
+    DevicePropertyAggregator::DevicePropertyAggregatorInterface::LOCALE,
+    DevicePropertyAggregator::DevicePropertyAggregatorInterface::WAKE_WORDS};
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -147,6 +148,13 @@ void DevicePropertyAggregator::initializeAsyncPropertyMap() {
 std::unordered_map<std::string, std::string> DevicePropertyAggregator::getAllDeviceProperties() {
     auto future = m_executor.submit([this]() {
         auto allPropertyMap = getSyncDeviceProperties();
+
+        /// get device context.
+        auto deviceContext = getDeviceContextJson();
+        if (deviceContext.hasValue()) {
+            allPropertyMap[DEVICE_CONTEXT] = deviceContext.value();
+        }
+
         allPropertyMap.insert(m_asyncPropertyMap.begin(), m_asyncPropertyMap.end());
         return allPropertyMap;
     });
@@ -206,15 +214,22 @@ Optional<std::string> DevicePropertyAggregator::getDeviceSetting(const std::stri
             ss << std::boolalpha << doNotDisturbSetting.second;
             maybePropertyValue = ss.str();
         }
-    }
-    if (DevicePropertyAggregator::LOCALE == propertyKey) {
+    } else if (DevicePropertyAggregator::LOCALE == propertyKey) {
         auto localeSetting = m_deviceSettingsManager->getValue<settings::DeviceSettingsIndex::LOCALE>();
         if (localeSetting.first) {
             auto localeSettingString = settings::toSettingString<settings::DeviceLocales>(localeSetting.second).second;
             maybePropertyValue = localeSettingString;
         }
+    } else if (DevicePropertyAggregator::WAKE_WORDS == propertyKey) {
+        auto wakeWordsSetting = m_deviceSettingsManager->getValue<settings::DeviceSettingsIndex::WAKE_WORDS>();
+        if (wakeWordsSetting.first) {
+            auto wakeWordSettingString = settings::toSettingString<settings::WakeWords>(wakeWordsSetting.second).second;
+            maybePropertyValue = wakeWordSettingString;
+        }
+    } else {
+        ACSDK_ERROR(LX(__func__).d("reason", "no matching parameter"));
     }
-    ACSDK_ERROR(LX(__func__).d("reason", "no matching parameter"));
+
     return maybePropertyValue;
 }
 void DevicePropertyAggregator::onContextFailure(const ContextRequestError error) {
@@ -323,6 +338,15 @@ void DevicePropertyAggregator::updateSpeakerSettingsInPropertyMap(
             m_asyncPropertyMap[DevicePropertyAggregatorInterface::AVS_ALERTS_MUTE] = isMuteAsString;
             break;
     }
+}
+
+void DevicePropertyAggregator::onRangeChanged(const RangeState& rangeState, const AlexaStateChangeCauseType cause) {
+    ACSDK_DEBUG5(LX(__func__));
+    m_executor.submit([this, rangeState]() {
+        std::stringstream ss;
+        ss << rangeState.value;
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::RANGE_CONTROLLER_STATUS] = ss.str();
+    });
 }
 
 }  // namespace diagnostics

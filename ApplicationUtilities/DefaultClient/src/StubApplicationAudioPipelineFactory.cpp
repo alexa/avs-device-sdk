@@ -176,7 +176,7 @@ StubApplicationAudioPipelineFactory::createPooledApplicationMediaInterfaces(
         return nullptr;
     }
 
-    std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::PooledApplicationMediaInterfaces> pool;
+    auto pool = std::make_shared<acsdkApplicationAudioPipelineFactoryInterfaces::PooledApplicationMediaInterfaces>();
     for (int i = 0; i < numMediaPlayers; i++) {
         auto applicationMediaInterfaces = createApplicationMediaInterfaces(
             name, equalizerAvailable, enableLiveMode, isCaptionable, channelVolumeType, volumeCurve);

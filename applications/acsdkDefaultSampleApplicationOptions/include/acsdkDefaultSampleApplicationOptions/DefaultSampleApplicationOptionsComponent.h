@@ -26,7 +26,7 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkSampleApplication {
@@ -41,7 +41,7 @@ using SampleApplicationOptionsComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>>,
     acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>>;
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>>;
 
 /**
  * Get the @c Manufactory @c Component for the default @c SampleApplication options.

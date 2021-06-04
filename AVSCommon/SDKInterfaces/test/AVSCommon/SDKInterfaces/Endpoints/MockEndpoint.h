@@ -39,6 +39,7 @@ public:
         std::unordered_map<
             avsCommon::avs::CapabilityConfiguration,
             std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerInterface>>());
+    MOCK_METHOD1(update, bool(const std::shared_ptr<EndpointModificationData>& endpointModificationData));
     /// @}
 };
 

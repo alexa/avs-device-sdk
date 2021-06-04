@@ -37,6 +37,13 @@ namespace speechencoder {
 class SpeechEncoder {
 public:
     /**
+     * Factory method.
+     *
+     * @param encoder The backend encoder implmentation.
+     */
+    static std::shared_ptr<SpeechEncoder> createSpeechEncoder(const std::shared_ptr<EncoderContext>& encoder);
+
+    /**
      * Constructor.
      *
      * @param encoder The backend encoder implmentation.

@@ -17,8 +17,14 @@
 
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
+#ifdef ACSDK_ACS_UTILS
+#include <acsdkFFSAuthDelegate/FFSAuthDelegate.h>
+#include <acsdkFFSAuthDelegate/ACSFFSAuthDelegateStorage.h>
+#else
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
+#endif
+#include <RegistrationManager/CustomerDataManagerFactory.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 
@@ -28,7 +34,11 @@ namespace test {
 
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
+#ifdef ACSDK_ACS_UTILS
+using namespace authorization::acsffsAuthDelegate;
+#else
 using namespace authorization::cblAuthDelegate;
+#endif
 using namespace contextManager;
 using namespace registrationManager;
 using namespace ::testing;
@@ -64,7 +74,8 @@ std::shared_ptr<AuthDelegateInterface> AuthDelegateTestContext::getAuthDelegate(
     return m_authDelegate;
 }
 
-std::shared_ptr<registrationManager::CustomerDataManager> AuthDelegateTestContext::getCustomerDataManager() const {
+std::shared_ptr<registrationManager::CustomerDataManagerInterface> AuthDelegateTestContext::getCustomerDataManager()
+    const {
     return m_customerDataManager;
 }
 
@@ -83,12 +94,29 @@ AuthDelegateTestContext::AuthDelegateTestContext(const std::string& filePath, co
 
     // TODO: use configuration or parameter here to determine which kind of AuthDelegate to create.
 
-    m_customerDataManager = std::make_shared<CustomerDataManager>();
+    m_customerDataManager = registrationManager::CustomerDataManagerFactory::createCustomerDataManagerInterface();
     EXPECT_TRUE(m_customerDataManager);
     if (!m_customerDataManager) {
         return;
     }
 
+#ifdef ACSDK_ACS_UTILS
+    auto storage = ACSFFSAuthDelegateStorage::createFFSAuthDelegateStorageInterface(config);
+    EXPECT_TRUE(storage);
+    if (!storage) {
+        return;
+    }
+
+    m_authDelegate = FFSAuthDelegate::createFFSAuthDelegateInterface(
+        config,
+        m_customerDataManager,
+        std::move(storage),
+        std::make_shared<AuthRequester>(),
+        avsCommon::utils::libcurlUtils::HttpPost::create(),
+        avsCommon::utils::DeviceInfo::createFromConfiguration(config));
+
+    EXPECT_TRUE(m_authDelegate);
+#else
     auto storage = SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(config);
     EXPECT_TRUE(storage);
     if (!storage) {
@@ -104,6 +132,7 @@ AuthDelegateTestContext::AuthDelegateTestContext(const std::string& filePath, co
         avsCommon::utils::DeviceInfo::createFromConfiguration(config));
 
     EXPECT_TRUE(m_authDelegate);
+#endif
 }
 
 }  // namespace test

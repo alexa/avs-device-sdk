@@ -102,6 +102,13 @@ public:
     void onDialogUXStateChanged(DialogUXState newState) override;
     /// @}
 
+    /// @name RangeControllerObserverInterface Functions
+    /// @{
+    void onRangeChanged(
+        const avsCommon::sdkInterfaces::rangeController::RangeControllerObserverInterface::RangeState& rangeState,
+        avsCommon::sdkInterfaces::AlexaStateChangeCauseType cause) override;
+    /// @}
+
 private:
     /**
      * Constructor.

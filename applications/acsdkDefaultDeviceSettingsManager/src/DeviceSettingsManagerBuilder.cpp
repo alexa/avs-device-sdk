@@ -68,9 +68,10 @@ std::shared_ptr<settings::DeviceSettingsManager> DeviceSettingsManagerBuilder::c
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface> settingStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
     std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> localeAssetsManager,
     std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent> doNotDisturbCapabilityAgent,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
     std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface> systemTimezone) {
     if (!settingStorage || !messageSender || !connectionManager || !dataManager || !localeAssetsManager ||
         !doNotDisturbCapabilityAgent) {
@@ -84,7 +85,8 @@ std::shared_ptr<settings::DeviceSettingsManager> DeviceSettingsManagerBuilder::c
         return nullptr;
     }
 
-    DeviceSettingsManagerBuilder settingsManagerBuilder{settingStorage, messageSender, connectionManager, dataManager};
+    DeviceSettingsManagerBuilder settingsManagerBuilder{
+        settingStorage, messageSender, connectionManager, dataManager, metricRecorder};
     settingsManagerBuilder.withDoNotDisturbSetting(doNotDisturbCapabilityAgent)
         .withAlarmVolumeRampSetting()
         .withWakeWordConfirmationSetting()
@@ -107,11 +109,13 @@ DeviceSettingsManagerBuilder::DeviceSettingsManagerBuilder(
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder) :
         m_settingStorage{settingStorage},
         m_messageSender{messageSender},
         m_connectionManager{connectionManager},
         m_dataManager{dataManager},
+        m_metricRecorder{metricRecorder},
         m_foundError{false} {
     m_foundError =
         !(checkPointer(settingStorage, "settingStorage") && checkPointer(messageSender, "messageSender") &&
@@ -119,13 +123,13 @@ DeviceSettingsManagerBuilder::DeviceSettingsManagerBuilder(
 }
 
 template <size_t index>
-bool addSetting(DeviceSettingsManagerBuilder builder, DeviceSettingsManager& manager) {
+bool addSetting(const DeviceSettingsManagerBuilder& builder, DeviceSettingsManager& manager) {
     auto setting = builder.getSetting<index>();
     return addSetting<index - 1>(builder, manager) && (!setting || manager.addSetting<index>(setting));
 }
 
 template <>
-bool addSetting<0>(DeviceSettingsManagerBuilder builder, DeviceSettingsManager& manager) {
+bool addSetting<0>(const DeviceSettingsManagerBuilder& builder, DeviceSettingsManager& manager) {
     auto setting = builder.getSetting<0>();
     return !setting || manager.addSetting<0>(setting);
 }
@@ -250,7 +254,8 @@ DeviceSettingsManagerBuilder& DeviceSettingsManagerBuilder::withSynchronizedSett
     const ValueType<index>& defaultValue,
     std::function<bool(const ValueType<index>&)> applyFn) {
     auto eventSender = SettingEventSender::create(metadata, m_connectionManager);
-    auto protocol = ProtocolT::create(metadata, std::move(eventSender), m_settingStorage, m_connectionManager);
+    auto protocol =
+        ProtocolT::create(metadata, std::move(eventSender), m_settingStorage, m_connectionManager, m_metricRecorder);
     auto setting = Setting<ValueType<index>>::create(defaultValue, std::move(protocol), applyFn);
 
     if (!setting) {

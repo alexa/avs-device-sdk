@@ -19,9 +19,19 @@
 #include <memory>
 #include <unordered_set>
 
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkNotificationsInterfaces/NotificationsNotifierInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationRendererInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationRendererObserverInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationsStorageInterface.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
@@ -29,12 +39,8 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
 
-#include "NotificationIndicator.h"
-#include "NotificationsCapabilityAgentState.h"
-#include <acsdkNotificationsInterfaces/NotificationRendererInterface.h>
-#include <acsdkNotificationsInterfaces/NotificationRendererObserverInterface.h>
-#include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
-#include <acsdkNotificationsInterfaces/NotificationsStorageInterface.h>
+#include "acsdkNotifications/NotificationIndicator.h"
+#include "acsdkNotifications/NotificationsCapabilityAgentState.h"
 
 namespace alexaClientSDK {
 namespace acsdkNotifications {
@@ -61,47 +67,38 @@ public:
     /**
      * Creates a new @c NotificationsCapabilityAgent instance.
      *
-     * @param notificationsStorage The storage interface to the
-     * NotificationIndicator database.
-     * @param renderer The instance of the @c NotificationRendererInterface used
-     * to play assets associated with notifications.
-     * @param contextManager The AVS Context manager used to generate system
-     * context for events.
-     * @param exceptionSender The object to use for sending AVS Exception
-     * messages.
-     * @param notificationsAudioFactory The audio factory object to produce the
-     * default notification sound.
-     * @param observers The set of observers that will be notified of
-     * IndicatorState changes.
-     * @param dataManager A dataManager object that will track the
-     * CustomerDataHandler.
+     * @param notificationsStorage The storage interface to the NotificationIndicator database.
+     * @param renderer The instance of the @c NotificationRendererInterface used to play assets associated with
+     * notifications.
+     * @param contextManager The AVS Context manager used to generate system context for events.
+     * @param exceptionSender The object to use for sending AVS Exception messages.
+     * @param audioFactory The audio factory object to produce the default notification sound.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param shutdownNotifier The object with which to register to know when it is time to shut down.
+     * @param endpointCapabilitiesRegistrar The object with which to register this agent's capabilities with the default
+     * endpoint.
      * @param metricRecorder The metric recorder.
-     * @return A @c std::shared_ptr to the new @c NotificationsCapabilityAgent
-     * instance.
+     * @return A @c std::shared_ptr to the new instance of @c NotificationsCapabilityAgent.
      */
-    static std::shared_ptr<NotificationsCapabilityAgent> create(
-        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
-        std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface> renderer,
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
-        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
-        std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+    static std::shared_ptr<NotificationsCapabilityAgent> createNotificationsCapabilityAgent(
+        const std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface>& notificationsStorage,
+        const std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface>& renderer,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>& exceptionSender,
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& dataManager,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+            avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface> endpointCapabilitiesRegistrar,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /**
-     * Adds a NotificationsObserver to the set of observers. This observer will be
-     * notified when a SetIndicator directive arrives.
+     * Gets the @c NotificationsNotifierInterface that can relay notification changes to observers.
      *
-     * @param observer The observer to add.
+     * @return The @c NotificationsNotifierInterface that this capability agent will notify.
      */
-    void addObserver(std::shared_ptr<acsdkNotificationsInterfaces::NotificationsObserverInterface> observer);
-
-    /**
-     * Removes a NotificationsObserver from the set of observers.
-     *
-     * @param observer The observer to remove.
-     */
-    void removeObserver(std::shared_ptr<acsdkNotificationsInterfaces::NotificationsObserverInterface> observer);
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface> getNotificationsNotifierInterface();
 
     /// @name CapabilityAgent/DirectiveHandlerInterface Functions
     /// @{
@@ -163,7 +160,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
@@ -375,9 +372,10 @@ private:
     /// provideState() or executeProvideState().
     bool m_isEnabled;
 
-    /// Set of observers that may be interested in notification indicators.
-    std::unordered_set<std::shared_ptr<acsdkNotificationsInterfaces::NotificationsObserverInterface>> m_observers;
+    /// The object that relays observer callbacks to its registered observers.
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface> m_notifier;
 
+    /// The current @c NotificationsCapabilityAgentState.
     NotificationsCapabilityAgentState m_currentState;
 
     /// Set of capability configurations that will get published using the

@@ -82,7 +82,7 @@ public:
      * @param settingConfigurations The tuple holding the settings configuration.
      */
     SettingsManager(
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         SettingConfigurations settingConfigurations);
 
     /**
@@ -91,7 +91,7 @@ public:
      * @deprecated
      * @param dataManager A dataManager object that will track the CustomerDataHandler.
      */
-    SettingsManager(std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
+    SettingsManager(std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager);
 
     /**
      * SettingsManager destructor.
@@ -257,14 +257,15 @@ private:
 
 template <typename... SettingsT>
 SettingsManager<SettingsT...>::SettingsManager(
-    std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
     SettingConfigurations settingConfiguration) :
         CustomerDataHandler{dataManager},
         m_settingConfigs{settingConfiguration} {
 }
 
 template <typename... SettingsT>
-SettingsManager<SettingsT...>::SettingsManager(std::shared_ptr<registrationManager::CustomerDataManager> dataManager) :
+SettingsManager<SettingsT...>::SettingsManager(
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager) :
         CustomerDataHandler{dataManager} {
 }
 

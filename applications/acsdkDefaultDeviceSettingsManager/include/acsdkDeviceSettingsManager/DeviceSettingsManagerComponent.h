@@ -24,8 +24,9 @@
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/SettingsManagerBuilderBase.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
@@ -42,8 +43,9 @@ using DeviceSettingsManagerComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>,
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>>;
 
 /**

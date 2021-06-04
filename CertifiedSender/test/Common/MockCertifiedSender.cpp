@@ -14,6 +14,8 @@
  */
 #include "MockCertifiedSender.h"
 
+#include <RegistrationManager/MockCustomerDataManager.h>
+
 namespace alexaClientSDK {
 namespace certifiedSender {
 namespace test {
@@ -31,7 +33,7 @@ using namespace ::testing;
 MockCertifiedSender::MockCertifiedSender() {
     m_mockMessageSender = std::make_shared<NiceMock<MockMessageSender>>();
     m_mockAVSConnectionManager = std::make_shared<NiceMock<MockAVSConnectionManager>>();
-    m_customerDataManager = std::make_shared<CustomerDataManager>();
+    m_customerDataManager = std::make_shared<NiceMock<MockCustomerDataManager>>();
     m_mockMessageStorage = std::make_shared<NiceMock<MockMessageStorage>>();
 
     ON_CALL(*(m_mockMessageStorage), createDatabase()).WillByDefault(Return(true));

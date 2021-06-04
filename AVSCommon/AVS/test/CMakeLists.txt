@@ -9,3 +9,7 @@ if (BUILD_TESTING)
     add_library(AVSCommonTestLib INTERFACE)
     target_include_directories(AVSCommonTestLib INTERFACE "${AVSCommon_SOURCE_DIR}/AVS/test")
 endif()
+
+if (BUILD_MOCKS)
+    install(DIRECTORY "${AVSCommon_SOURCE_DIR}/AVS/test/AVSCommon" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}/include")
+endif()

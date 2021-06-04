@@ -36,6 +36,7 @@ public:
     MOCK_METHOD1(removeObserver, void(const std::shared_ptr<RequiresStartupInterface>& observer));
     MOCK_METHOD1(notifyObservers, void(std::function<void(const std::shared_ptr<RequiresStartupInterface>&)>));
     MOCK_METHOD1(notifyObserversInReverse, bool(std::function<void(const std::shared_ptr<RequiresStartupInterface>&)>));
+    MOCK_METHOD1(setAddObserverFunction, void(std::function<void(const std::shared_ptr<RequiresStartupInterface>&)>));
 };
 
 class MockPostConnectOperationProvider : public PostConnectOperationProviderInterface {

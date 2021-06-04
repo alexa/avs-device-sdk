@@ -69,6 +69,27 @@ static void submitMetric(const std::shared_ptr<MetricRecorderInterface>& metricR
     recordMetric(metricRecorder, metricEvent);
 }
 
+std::shared_ptr<DialogUXStateAggregator> DialogUXStateAggregator::createDialogUXStateAggregator(
+    const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+    const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager,
+    const std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>&
+        interactionModelNotifier) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!connectionManager || !interactionModelNotifier) {
+        ACSDK_ERROR(LX("createDialogUXStateAggregatorFailed")
+                        .d("isConnectionManagerNull", !connectionManager)
+                        .d("isInteractionModelNotifierNull", !interactionModelNotifier));
+        return nullptr;
+    }
+
+    auto dialogUXStateAggregator = std::make_shared<DialogUXStateAggregator>(metricRecorder);
+
+    connectionManager->addConnectionStatusObserver(dialogUXStateAggregator);
+    interactionModelNotifier->addObserver(dialogUXStateAggregator);
+
+    return dialogUXStateAggregator;
+}
+
 DialogUXStateAggregator::DialogUXStateAggregator(
     std::shared_ptr<MetricRecorderInterface> metricRecorder,
     std::chrono::milliseconds timeoutForThinkingToIdle,
@@ -247,7 +268,9 @@ void DialogUXStateAggregator::notifyObserversOfState() {
 }
 
 void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
+    ACSDK_DEBUG5(LX("transitionFromThinkingTimedOut"));
     m_executor.submit([this]() {
+        ACSDK_DEBUG5(LX("transitionFromThinkingTimedOutExecutor").d("m_currentState", m_currentState));
         if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
             ACSDK_DEBUG(LX("transitionFromThinkingTimedOut"));
             executeSetState(DialogUXStateObserverInterface::DialogUXState::IDLE);
@@ -258,7 +281,9 @@ void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
 }
 
 void DialogUXStateAggregator::transitionFromListeningTimedOut() {
+    ACSDK_DEBUG5(LX("transitionFromListeningTimedOut"));
     m_executor.submit([this]() {
+        ACSDK_DEBUG5(LX("transitionFromListeningTimedOutExecutor").d("m_currentState", m_currentState));
         if (DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
             ACSDK_DEBUG(LX("transitionFromListeningTimedOut"));
             executeSetState(DialogUXStateObserverInterface::DialogUXState::IDLE);
@@ -269,7 +294,12 @@ void DialogUXStateAggregator::transitionFromListeningTimedOut() {
 }
 
 void DialogUXStateAggregator::tryEnterIdleStateOnTimer() {
+    ACSDK_DEBUG5(LX("tryEnterIdleStateOnTimer"));
     m_executor.submit([this]() {
+        ACSDK_DEBUG5(LX("tryEnterIdleStateOnTimerExecutor")
+                         .d("m_currentState", m_currentState)
+                         .d("m_audioInputProcessorState", m_audioInputProcessorState)
+                         .d("m_speechSynthesizerState", m_speechSynthesizerState));
         if (m_currentState != sdkInterfaces::DialogUXStateObserverInterface::DialogUXState::IDLE &&
             m_audioInputProcessorState == AudioInputProcessorObserverInterface::State::IDLE &&
             (m_speechSynthesizerState == SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED ||

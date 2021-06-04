@@ -20,14 +20,12 @@
 #include <ACL/Transport/MessageRouterFactory.h>
 #include <acsdkManufactory/Manufactory.h>
 #include <ADSL/DirectiveSequencer.h>
-#include <AFML/AudioActivityTracker.h>
-#include <AFML/FocusManager.h>
-#include <AFML/VisualActivityTracker.h>
 #include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <acsdkAlerts/Storage/AlertStorageInterface.h>
 #include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkNotificationsInterfaces/NotificationsNotifierInterface.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorInterface.h>
 #include <Alexa/AlexaInterfaceCapabilityAgent.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
@@ -63,6 +61,7 @@
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
 #include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/VisualFocusAnnotation.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h>
@@ -71,12 +70,12 @@
 #include <AVSCommon/Utils/Optional.h>
 #include <acsdkBluetoothInterfaces/BluetoothStorageInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
-#include <acsdkNotifications/NotificationRenderer.h>
-#include <acsdkNotifications/NotificationsCapabilityAgent.h>
+#include <acsdkNotificationsInterfaces/NotificationsStorageInterface.h>
 #include <Captions/CaptionManagerInterface.h>
 #include <Captions/CaptionPresenterInterface.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
+#include <acsdkDeviceSetupInterfaces/DeviceSetupInterface.h>
 #include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
 #include <Endpoints/EndpointRegistrationManager.h>
 #include <acsdkEqualizer/EqualizerCapabilityAgent.h>
@@ -89,8 +88,9 @@
 #include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterHandlerInterface.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h>
 #include <acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerInterface.h>
+#include <acsdkInteractionModelInterfaces/InteractionModelNotifierInterface.h>
 #include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
-#include <InteractionModel/InteractionModelCapabilityAgent.h>
+#include <InterruptModel/InterruptModel.h>
 
 #ifdef ENABLE_PCC
 #include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
@@ -108,12 +108,15 @@
 #include <Endpoints/Endpoint.h>
 #include <PlaybackController/PlaybackController.h>
 #include <PlaybackController/PlaybackRouter.h>
-#include <RegistrationManager/RegistrationManager.h>
+#include <RegistrationManager/RegistrationManagerInterface.h>
+#include <RegistrationManager/RegistrationNotifierInterface.h>
+#include <RegistrationManager/RegistrationObserverInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
 #include <SoftwareComponentReporter/SoftwareComponentReporterCapabilityAgent.h>
 #include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <SpeakerManager/SpeakerManager.h>
+#include <SpeechEncoder/SpeechEncoder.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/SoftwareInfoSender.h>
 #include <System/UserInactivityMonitor.h>
@@ -144,10 +147,14 @@ public:
         std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
         std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
         std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
+        std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>,
+        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface>,
         std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
         std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
         std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>,
         std::shared_ptr<afml::interruptModel::InterruptModel>,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator>,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>,
@@ -159,6 +166,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
         acsdkManufactory::
             Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+        acsdkManufactory::
+            Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
@@ -168,6 +177,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
         acsdkManufactory::Annotated<
             avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
@@ -180,9 +190,13 @@ public:
         std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
         std::shared_ptr<captions::CaptionManagerInterface>,
         std::shared_ptr<certifiedSender::CertifiedSender>,
-        std::shared_ptr<registrationManager::CustomerDataManager>,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
+        std::shared_ptr<registrationManager::RegistrationManagerInterface>,
+        std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
         std::shared_ptr<settings::DeviceSettingsManager>,
-        std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>;
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
+        std::shared_ptr<speechencoder::SpeechEncoder>,
+        std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>>;
 
     using DefaultClientManufactory = acsdkManufactory::Manufactory<
         std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
@@ -192,10 +206,14 @@ public:
         std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
         std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
         std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
+        std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>,
+        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface>,
         std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
         std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
         std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockMonitorInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>,
         std::shared_ptr<afml::interruptModel::InterruptModel>,
+        std::shared_ptr<avsCommon::avs::DialogUXStateAggregator>,
         std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>,
@@ -207,6 +225,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
         acsdkManufactory::
             Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+        acsdkManufactory::
+            Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
@@ -216,6 +236,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemTimeZoneInterface>,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>,
         acsdkManufactory::Annotated<
             avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
@@ -228,9 +249,13 @@ public:
         std::shared_ptr<capabilityAgents::doNotDisturb::DoNotDisturbCapabilityAgent>,
         std::shared_ptr<captions::CaptionManagerInterface>,
         std::shared_ptr<certifiedSender::CertifiedSender>,
-        std::shared_ptr<registrationManager::CustomerDataManager>,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
+        std::shared_ptr<registrationManager::RegistrationManagerInterface>,
+        std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
         std::shared_ptr<settings::DeviceSettingsManager>,
-        std::shared_ptr<settings::storage::DeviceSettingStorageInterface>>;
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
+        std::shared_ptr<speechencoder::SpeechEncoder>,
+        std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>>;
 
     /**
      * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
@@ -254,7 +279,6 @@ public:
      * @param commsSpeaker The speaker to control volume of Comms calling audio.
      * @param sharedDataStream The stream to use which has the audio from microphone.
 #endif
-     * @param notificationsStorage The storage interface that will be used to store notification indicators.
      * @param alexaDialogStateObservers Observers that can be used to be notified of Alexa dialog related UX state
      * changes.
      * @param connectionObservers Observers that can be used to be notified of connection status changes.
@@ -289,7 +313,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
         std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -383,7 +406,7 @@ AudioInputProcessor.
      */
     static std::unique_ptr<DefaultClient> create(
         std::shared_ptr<avsCommon::utils::DeviceInfo> deviceInfo,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         const std::unordered_map<std::string, std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface>>&
             externalMusicProviderMediaPlayers,
         const std::unordered_map<std::string, std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>>&
@@ -738,7 +761,22 @@ AudioInputProcessor.
      *
      * @return shared_ptr to the RegistrationManager.
      */
-    std::shared_ptr<registrationManager::RegistrationManager> getRegistrationManager();
+    std::shared_ptr<registrationManager::RegistrationManagerInterface> getRegistrationManager();
+
+    /**
+     * Adds an @c RegistrationObserverInterface to the @c RegistrationNotifier.
+     *
+     * @param observer - The @c RegistrationObserverInterfaces to be notified of logout events.
+     */
+    void addRegistrationObserver(const std::shared_ptr<registrationManager::RegistrationObserverInterface>& observer);
+
+    /**
+     * Removes an @c RegistrationObserverInterface to the @c RegistrationNotifier.
+     *
+     * @param observer - The @c RegistrationObserverInterfaces to be notified of logout events.
+     */
+    void removeRegistrationObserver(
+        const std::shared_ptr<registrationManager::RegistrationObserverInterface>& observer);
 
 #ifdef ENABLE_REVOKE_AUTH
     /**
@@ -858,6 +896,17 @@ AudioInputProcessor.
         std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointInterface> endpoint);
 
     /**
+     * Updates an endpoint with the @c EndpointRegistrationManagerInterface.
+     *
+     * @param endpointId The @c EndpointIdentifier of the endpoint to update.
+     * @param endpointModificationData A pointer to the @c endpointModificationData to be updated.
+     * @return A future that will resolve to the @c UpdateResult for updating this endpoint.
+     */
+    std::future<endpoints::EndpointRegistrationManager::UpdateResult> updateEndpoint(
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId,
+        const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointModificationData>& endpointModificationData);
+
+    /**
      * Deregisters an endpoint with the @c EndpointRegistrationManagerInterface.
      *
      * @param endpointId The @c EndpointIdentifier of the endpoint to deregister.
@@ -876,6 +925,22 @@ AudioInputProcessor.
      * the client has been connected will fail.
      */
     std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> getDefaultEndpointBuilder();
+
+    /**
+     * Add observer for endpoint registration manager.
+     *
+     * @param observer The observer to add.
+     */
+    void addEndpointRegistrationManagerObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface>& observer);
+
+    /**
+     * Removes observer for endpoint registration manager.
+     *
+     * @param observer The observer to remove.
+     */
+    void removeEndpointRegistrationManagerObserver(
+        const std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface>& observer);
 
     /**
      * Adds an @c AudioInputProcessorObserver to be alerted on @c AudioInputProcessor related state changes.
@@ -1010,6 +1075,15 @@ AudioInputProcessor.
     capabilityAgents::aip::AudioInputProcessor::EncodingFormatResponse requestEncodingAudioFormats(
         const capabilityAgents::aip::AudioInputProcessor::EncodingFormatRequest& encodings);
 
+    /**
+     * Gets the @c DeviceSetupInterface for when it is time to send the DeviceSetupComplete event to AVS.
+     *
+     * This method is required to support legacy applications that have not transitioned to fully integrating
+     * the manufactory.
+     * @return A shared_ptr to the @c DeviceSetupInterface.
+     */
+    std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface> getDeviceSetup();
+
 private:
     /**
      * Initializes the SDK and "glues" all the components together.
@@ -1053,7 +1127,6 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> commsSpeaker,
         std::shared_ptr<alexaClientSDK::avsCommon::avs::AudioInputStream> sharedDataStream,
 #endif
-        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
             alexaDialogStateObservers,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>>
@@ -1073,13 +1146,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_audioFocusManager;
 
     /// The focus manager for visual channels.
-    std::shared_ptr<afml::FocusManager> m_visualFocusManager;
-
-    /// The visual activity tracker.
-    std::shared_ptr<afml::VisualActivityTracker> m_visualActivityTracker;
-
-    /// The message router.
-    std::shared_ptr<acl::MessageRouterInterface> m_messageRouter;
+    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_visualFocusManager;
 
     /// The connection manager.
     std::shared_ptr<acl::AVSConnectionManagerInterface> m_connectionManager;
@@ -1119,17 +1186,11 @@ private:
     /// The bluetooth notifier.
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface> m_bluetoothNotifier;
 
-    /// The interaction model capability agent.
-    std::shared_ptr<capabilityAgents::interactionModel::InteractionModelCapabilityAgent> m_interactionCapabilityAgent;
+    /// The interaction model notifier.
+    std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface> m_interactionModelNotifier;
 
-    /// The notifications renderer.
-    std::shared_ptr<acsdkNotifications::NotificationRenderer> m_notificationsRenderer;
-
-    /// The notifications capability agent.
-    std::shared_ptr<acsdkNotifications::NotificationsCapabilityAgent> m_notificationsCapabilityAgent;
-
-    /// The user inactivity monitor.
-    std::shared_ptr<capabilityAgents::system::UserInactivityMonitor> m_userInactivityMonitor;
+    /// The Notifications notifier.
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface> m_notificationsNotifier;
 
 #ifdef ENABLE_PCC
     /// The phoneCallController capability agent.
@@ -1181,7 +1242,10 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// The RegistrationManager used to control customer registration.
-    std::shared_ptr<registrationManager::RegistrationManager> m_registrationManager;
+    std::shared_ptr<registrationManager::RegistrationManagerInterface> m_registrationManager;
+
+    /// The @c RegistrationNotifier used to notify RegistrationObservers.
+    std::shared_ptr<registrationManager::RegistrationNotifierInterface> m_registrationNotifier;
 
     /// Module responsible for managing device settings.
     std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;
@@ -1226,6 +1290,9 @@ private:
 
     /// The @c ShutdownManagerInterface for shutting down the SDK.
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> m_shutdownManager;
+
+    /// The @c DeviceSetupInterface
+    std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface> m_deviceSetup;
 };
 
 }  // namespace defaultClient

@@ -46,7 +46,7 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <CertifiedSender/CertifiedSender.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/Setting.h>
 #include <Settings/SettingEventMetadata.h>
@@ -118,7 +118,7 @@ public:
         const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
         const std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>& systemClockMonitor,
         const std::shared_ptr<certifiedSender::CertifiedSender>& certifiedSender,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& dataManager,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& dataManager,
         const std::shared_ptr<settings::DeviceSettingsManager>& settingsManager,
         const std::shared_ptr<storage::AlertStorageInterface>& alertStorage,
         bool startAlertSchedulingOnInitialization = true);
@@ -157,7 +157,7 @@ public:
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
@@ -272,7 +272,7 @@ private:
         std::shared_ptr<storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alertsAudioFactory,
         std::shared_ptr<renderer::RendererInterface> alertRenderer,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<settings::AlarmVolumeRampSetting> alarmVolumeRampSetting,
         std::shared_ptr<settings::DeviceSettingsManager> settingsManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,

@@ -68,7 +68,7 @@ public:
      */
     static std::shared_ptr<AuthDelegateInterface> createAuthDelegateInterface(
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configuration,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
         const std::shared_ptr<CBLAuthDelegateStorageInterface>& storage,
         const std::shared_ptr<CBLAuthRequesterInterface>& authRequester,
         std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost,
@@ -94,7 +94,7 @@ public:
      */
     static std::unique_ptr<CBLAuthDelegate> create(
         const avsCommon::utils::configuration::ConfigurationNode& configuration,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         std::shared_ptr<CBLAuthDelegateStorageInterface> storage,
         std::shared_ptr<CBLAuthRequesterInterface> authRequester,
         std::shared_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost = nullptr,
@@ -172,7 +172,7 @@ private:
      * for passing in @c nullptr is undefined.
      */
     CBLAuthDelegate(
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         std::shared_ptr<CBLAuthDelegateStorageInterface> storage,
         std::shared_ptr<CBLAuthRequesterInterface> authRequester,
         std::shared_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost);

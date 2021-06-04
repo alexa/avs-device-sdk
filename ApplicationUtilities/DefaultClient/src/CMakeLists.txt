@@ -21,6 +21,7 @@ endif()
 
 target_link_libraries(DefaultClient
     ${ACSDKDEVICESETTINGSMANAGER_LIB}
+    ${ACSDKSPEECHENCODER_LIB}
     ACL
     acsdkApplicationAudioPipelineFactoryInterfaces
     acsdkCore
@@ -40,7 +41,6 @@ target_link_libraries(DefaultClient
     DeviceSettings
     acsdkDoNotDisturb
     Endpoints
-    InteractionModel
     InterruptModel
     acsdkNotifications
     PlaybackController
@@ -58,8 +58,11 @@ target_link_libraries(DefaultClient
     acsdkBluetoothInterfaces
     acsdkEqualizer
     acsdkExternalMediaPlayer
+    acsdkInteractionModel
     acsdkStartupManagerInterfaces
     acsdkSystemClockMonitorInterfaces
+    acsdkDeviceSetup
+    acsdkDeviceSetupInterfaces
     )
 
 if (CAPTIONS)

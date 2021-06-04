@@ -16,9 +16,12 @@
 #ifndef ACSDKNOTIFICATIONSINTERFACES_NOTIFICATIONRENDERERINTERFACE_H_
 #define ACSDKNOTIFICATIONSINTERFACES_NOTIFICATIONRENDERERINTERFACE_H_
 
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
+
+#include <AVSCommon/Utils/MediaType.h>
 
 #include "NotificationRendererObserverInterface.h"
 

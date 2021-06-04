@@ -60,14 +60,15 @@ static const auto ASYNC_RESPONSE_TIMEOUT = std::chrono::seconds(2);
 std::shared_ptr<DiscoveryEventSender> DiscoveryEventSender::create(
     const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
     const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
-    const std::shared_ptr<AuthDelegateInterface>& authDelegate) {
+    const std::shared_ptr<AuthDelegateInterface>& authDelegate,
+    const bool waitForEventProcessed) {
     if (addOrUpdateReportEndpoints.empty() && deleteReportEndpoints.empty()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "endpoint map empty"));
     } else if (!authDelegate) {
         ACSDK_ERROR(LX("createFailed").d("reason", "invalid auth delegate"));
     } else {
-        auto instance = std::shared_ptr<DiscoveryEventSender>(
-            new DiscoveryEventSender(addOrUpdateReportEndpoints, deleteReportEndpoints, authDelegate));
+        auto instance = std::shared_ptr<DiscoveryEventSender>(new DiscoveryEventSender(
+            addOrUpdateReportEndpoints, deleteReportEndpoints, authDelegate, waitForEventProcessed));
 
         return instance;
     }
@@ -77,13 +78,15 @@ std::shared_ptr<DiscoveryEventSender> DiscoveryEventSender::create(
 DiscoveryEventSender::DiscoveryEventSender(
     const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
     const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
-    const std::shared_ptr<AuthDelegateInterface>& authDelegate) :
+    const std::shared_ptr<AuthDelegateInterface>& authDelegate,
+    const bool waitForEventProcessed) :
         m_addOrUpdateReportEndpoints{addOrUpdateReportEndpoints},
         m_deleteReportEndpoints{deleteReportEndpoints},
         m_authDelegate{authDelegate},
         m_currentAuthState{AuthObserverInterface::State::UNINITIALIZED},
         m_isStopping{false},
-        m_isSendDiscoveryEventsInvoked{false} {
+        m_isSendDiscoveryEventsInvoked{false},
+        m_waitForEventProcessed{waitForEventProcessed} {
 }
 
 DiscoveryEventSender::~DiscoveryEventSender() {
@@ -196,7 +199,8 @@ MessageRequestObserverInterface::Status DiscoveryEventSender::sendDiscoveryEvent
     auto status = m_messageRequest->waitForCompletion();
 
     ACSDK_DEBUG5(LX(__func__).d("Discovery event status", status));
-    if (MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED == status && waitForEventProcessed) {
+    if (MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED == status && waitForEventProcessed &&
+        m_waitForEventProcessed) {
         ACSDK_DEBUG5(LX(__func__).m("waiting for Event Processed directive"));
         if (!m_eventProcessedWaitEvent.wait(ASYNC_RESPONSE_TIMEOUT)) {
             ACSDK_ERROR(LX("sendDiscoveryEventFailed").d("reason", "Timeout on waiting for Event Processed Directive"));

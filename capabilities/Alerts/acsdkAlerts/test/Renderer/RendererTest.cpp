@@ -18,12 +18,9 @@
 
 #include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
-#include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
-#include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
-#include <Settings/MockSetting.h>
 
 #include "acsdkAlerts/Renderer/Renderer.h"
 
@@ -34,10 +31,8 @@ namespace test {
 
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces::test;
-using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::mediaPlayer::test;
 using namespace settings::types;
-using namespace settings::test;
 using namespace testing;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 

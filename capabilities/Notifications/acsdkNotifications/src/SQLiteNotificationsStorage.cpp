@@ -69,6 +69,14 @@ static const std::string CREATE_INDICATOR_STATE_TABLE_SQL_STRING =
 static const acsdkNotificationsInterfaces::NotificationsStorageInterface::IndicatorState DEFAULT_INDICATOR_STATE =
     acsdkNotificationsInterfaces::NotificationsStorageInterface::IndicatorState::OFF;
 
+std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> SQLiteNotificationsStorage::
+    createNotificationsStorageInterface(
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot) {
+    ACSDK_DEBUG5(LX(__func__));
+
+    return create(*configurationRoot);
+}
+
 std::unique_ptr<SQLiteNotificationsStorage> SQLiteNotificationsStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
     auto notificationConfigurationRoot = configurationRoot[NOTIFICATIONS_CONFIGURATION_ROOT_KEY];

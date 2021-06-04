@@ -19,12 +19,12 @@
 
 #include <gtest/gtest.h>
 
-#include <RegistrationManager/CustomerDataManager.h>
 #include <AVSCommon/AVS/AbstractAVSConnectionManager.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/Utils/PromiseFuturePair.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 
 #include "CertifiedSender/CertifiedSender.h"
 
@@ -87,7 +87,7 @@ protected:
         (*configuration) << CONFIGURATION;
         ASSERT_TRUE(avsCommon::avs::initialization::AlexaClientSDKInit::initialize({configuration}));
 
-        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+        m_customerDataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
         m_mockMessageSender = std::make_shared<avsCommon::sdkInterfaces::test::MockMessageSender>();
         m_connection = std::make_shared<MockConnection>();
         m_storage = std::make_shared<MockMessageStorage>();
@@ -116,7 +116,7 @@ protected:
     std::shared_ptr<MockConnection> m_connection;
 
     /// The pointer to the customer data manager
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<registrationManager::MockCustomerDataManager> m_customerDataManager;
 
     /// The mock message sender instance.
     std::shared_ptr<avsCommon::sdkInterfaces::test::MockMessageSender> m_mockMessageSender;

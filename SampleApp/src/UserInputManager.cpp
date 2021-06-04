@@ -76,6 +76,8 @@ static const char PHONE_CONTROL = 'a';
 static const char MEETING_CONTROL = 'j';
 #endif
 
+static const char DEVICE_SETUP_COMPLETE = 'v';
+
 static constexpr char ENABLE = 'E';
 static constexpr char DISABLE = 'D';
 
@@ -391,6 +393,8 @@ SampleAppReturnCode UserInputManager::run() {
         } else if (x == DIAGNOSTICS_CONTROL) {
             diagnosticsMenu();
 #endif
+        } else if (x == DEVICE_SETUP_COMPLETE) {
+            m_interactionManager->sendDeviceSetupComplete();
         } else {
             m_interactionManager->errorValue();
         }

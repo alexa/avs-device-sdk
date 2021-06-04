@@ -28,7 +28,7 @@
 #include <AVSCommon/Utils/RetryTimer.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <RegistrationManager/CustomerDataHandler.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include <deque>
 #include <memory>
@@ -74,7 +74,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<MessageStorageInterface> storage,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager);
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager);
 
     /**
      * Destructor.
@@ -169,7 +169,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connection,
         std::shared_ptr<MessageStorageInterface> storage,
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         int queueSizeWarnLimit = CERTIFIED_SENDER_QUEUE_SIZE_WARN_LIMIT,
         int queueSizeHardLimit = CERTIFIED_SENDER_QUEUE_SIZE_HARD_LIMIT);
 

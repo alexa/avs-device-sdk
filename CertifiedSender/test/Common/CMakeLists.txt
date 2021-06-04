@@ -5,14 +5,15 @@ if (BUILD_TESTING)
       MockCertifiedSender.cpp
     )
     target_include_directories(CertifiedSenderCommonTestLib PUBLIC
-        "${AVSCommon_INCLUDE_DIRS}"
-      "${AVSCommon_SOURCE_DIR}/Utils/test"
-        "${CertifiedSender_SOURCE_DIR}/test")
+            "${AVSCommon_INCLUDE_DIRS}"
+            "${AVSCommon_SOURCE_DIR}/Utils/test"
+            "${CertifiedSender_SOURCE_DIR}/test")
 
     target_link_libraries(CertifiedSenderCommonTestLib
         AVSCommon
         SDKInterfacesTests
         CertifiedSender
+        RegistrationManagerTestUtils
         gtest_main
         gmock_main)
 endif()

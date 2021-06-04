@@ -76,9 +76,6 @@ std::pair<AlexaResponseType, std::string> PeripheralEndpointPowerControllerHandl
     if (m_currentPowerState != state) {
         std::string stateStr = state ? "ON" : "OFF";
         ConsolePrinter::prettyPrint({"ENDPOINT: " + m_endpointName, "POWER STATE: " + stateStr});
-
-        m_currentPowerState = state;
-        copyOfObservers = m_observers;
     }
 
     m_currentPowerState = state;

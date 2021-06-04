@@ -27,6 +27,7 @@
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
+#include <AVSCommon/SDKInterfaces/VisualFocusAnnotation.h>
 #include <InterruptModel/InterruptModel.h>
 
 namespace alexaClientSDK {
@@ -38,6 +39,8 @@ namespace afml {
 using FocusManagementComponent = acsdkManufactory::Component<
     acsdkManufactory::
         Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+    acsdkManufactory::
+        Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
     acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>>,
     acsdkManufactory::Import<acsdkManufactory::Annotated<

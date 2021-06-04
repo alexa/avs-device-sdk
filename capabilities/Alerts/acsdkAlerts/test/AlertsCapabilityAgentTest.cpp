@@ -34,6 +34,7 @@
 #include <AVSCommon/Utils/Memory/Memory.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <AVSCommon/Utils/WaitEvent.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/MockSetting.h>
 #include <Settings/Types/AlarmVolumeRampTypes.h>
@@ -328,7 +329,7 @@ protected:
     std::shared_ptr<MockAlertsAudioFactory> m_alertsAudioFactory;
     std::shared_ptr<MockRenderer> m_renderer;
     std::shared_ptr<MockSetting<AlarmVolumeRampSetting::ValueType>> m_mockAlarmVolumeRampSetting;
-    std::shared_ptr<CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<MockCustomerDataManager> m_customerDataManager;
     std::unique_ptr<StrictMock<MockDirectiveHandlerResult>> m_mockDirectiveHandlerResult;
     std::shared_ptr<settings::DeviceSettingsManager> m_settingsManager;
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
@@ -347,12 +348,11 @@ void AlertsCapabilityAgentTest::SetUp() {
     m_alertStorage = std::make_shared<NiceMock<MockAlertStorage>>();
     m_alertsAudioFactory = std::make_shared<NiceMock<MockAlertsAudioFactory>>();
     m_renderer = std::make_shared<NiceMock<MockRenderer>>();
-    m_customerDataManager = std::make_shared<CustomerDataManager>();
+    m_customerDataManager = std::make_shared<NiceMock<MockCustomerDataManager>>();
     m_messageStorage = std::make_shared<StubMessageStorage>();
     m_mockDirectiveHandlerResult = make_unique<StrictMock<MockDirectiveHandlerResult>>();
     settings::DeviceSettingManagerSettingConfigurations configurations;
-    m_settingsManager = std::make_shared<settings::DeviceSettingsManager>(
-        std::make_shared<registrationManager::CustomerDataManager>(), configurations);
+    m_settingsManager = std::make_shared<settings::DeviceSettingsManager>(m_customerDataManager, configurations);
     m_mockAlarmVolumeRampSetting =
         std::make_shared<MockSetting<AlarmVolumeRampSetting::ValueType>>(settings::types::getAlarmVolumeRampDefault());
     ASSERT_TRUE(m_settingsManager->addSetting<DeviceSettingsIndex::ALARM_VOLUME_RAMP>(m_mockAlarmVolumeRampSetting));

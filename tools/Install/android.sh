@@ -53,10 +53,18 @@ START_PREVIEW_SCRIPT="${INSTALL_BASE}/startpreview.sh"
 # Path to the sdk sqllite databases.
 CONFIG_DB_PATH="${DEVICE_INSTALL_PATH}/databases"
 
-NDK_PACKAGE=${NDK_PACKAGE:-"android-ndk-r16"}
+NDK_PACKAGE=${NDK_PACKAGE:-"android-ndk-r22"}
 
 # Path to run ADB. If not set, it will assume that adb is available on PATH.
 ADB=${ADB:-"adb"}
+
+# Dependency Versions
+CURL_VER=7.67.0
+# OpenSSL should update to 1.1.1 when build issue with NDK 22 is fixed
+# https://github.com/openssl/openssl/pull/13694
+OPENSSL_VER=1_1_0h
+NGHTTP2_VER=1.32.0
+FFMPEG_VER=4.0
 
 # CMake parameters used to build the SDK.
 set_cmake_var() {
@@ -178,6 +186,7 @@ configure_host() {
           NDK_PACKAGE_FILE="${NDK_PACKAGE}-darwin-x86_64.zip"
           SED_IN_PLACE_BACKUP_OPTION="-i ${BACKUP_EXTENSION}"
           TOOLCHAIN_BUILD="x86_64-apple-darwin"
+          HOST_TAG="darwin-x86_64"
           ;;
       "Linux" )
           ANDROID_HOME="${HOME}/Android"
@@ -185,6 +194,7 @@ configure_host() {
           NDK_PACKAGE_FILE="${NDK_PACKAGE}-linux-x86_64.zip"
           SED_IN_PLACE_BACKUP_OPTION="--in-place=${BACKUP_EXTENSION}"
           TOOLCHAIN_BUILD="x86_64-linux-gnu"
+          HOST_TAG="linux-x86_64"
           ;;
       * ) echo "$0: Unknown build system: ${BUILD_SYSTEM}"
           exit 1
@@ -263,7 +273,7 @@ configure_host() {
       TOOLCHAIN_HOST="aarch64-linux-android"
   fi
 
-  TOOLCHAIN="${ANDROID_HOME}/ndk/toolchains/${NDK_PACKAGE}/toolchain-${ANDROID_ABI}/${ANDROID_PLATFORM}"
+  TOOLCHAIN="${ANDROID_NDK}/toolchains/llvm/prebuilt/${HOST_TAG}"
   if [ ! -d "${TOOLCHAIN}" ]; then
       if [ ! -d "${ANDROID_NDK}" ]; then
           mkdir -p "${ANDROID_HOME}/ndk/ndk-bundle"
@@ -281,52 +291,27 @@ configure_host() {
           unzip -a "${NDK_PACKAGE_FILE}"
           popd
       fi
-      MAKE_STANDALONE_TOOLCHAIN_ARCH="${ANDROID_SYSROOT_ABI}"
-      case "${NDK_PACKAGE}" in
-          "android-ndk-r16" )
-              "${ANDROID_NDK}/build/tools/make_standalone_toolchain.py" \
-                      --arch="${MAKE_STANDALONE_TOOLCHAIN_ARCH}" \
-                      --api="${ANDROID_PLATFORM_LEVEL}" \
-                      --stl="libc++" \
-                      --force \
-                      --install-dir="${TOOLCHAIN}"
-              ;;
-          "android-ndk-r15c" )
-              "${ANDROID_NDK}/build/tools/make_standalone_toolchain.py" \
-                      --arch="${MAKE_STANDALONE_TOOLCHAIN_ARCH}" \
-                      --api="${ANDROID_PLATFORM_LEVEL}" \
-                      --stl="libc++" \
-                      --unified-headers \
-                      --force \
-                      --install-dir="${TOOLCHAIN}"
-              ;;
-          * ) echo "Unsupported NDK package: ${NDK_PACKAGE}"
-              exit 1
-              ;;
-      esac
-      if [ "$?" -ne 0 ]; then
-          echo "Error: make standalone toolchain failed!"
-          exit 1
-      fi
   fi
   CMAKE_TOOLCHAIN_FILE="${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
-  if [ "${TARGET_SYSTEM}" == "x86_64" ]; then
-    CXX_SHARED_LIBRARY="${TOOLCHAIN}/${TOOLCHAIN_HOST}/lib64/lib${ANDROID_STL}.so"
-  else
-    CXX_SHARED_LIBRARY="${TOOLCHAIN}/${TOOLCHAIN_HOST}/lib/lib${ANDROID_STL}.so"
-  fi
+  CXX_SHARED_LIBRARY="${TOOLCHAIN}/sysroot/usr/lib/${TOOLCHAIN_HOST}/lib${ANDROID_STL}.so"
   export AR="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-ar"
-  export CC="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-clang"
-  export CPP="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-cpp"
-  export CROSS_SYSROOT="${TOOLCHAIN}/sysroot"
-  export CXX="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-clang++"
-  export LD="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-ld"
+  export AS="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-as"
+  if [ "${TARGET_SYSTEM}" == "arm" ]; then
+    export CC="${TOOLCHAIN}/bin/armv7a-linux-androideabi${ANDROID_PLATFORM_LEVEL}-clang"
+    export CXX="${TOOLCHAIN}/bin/armv7a-linux-androideabi${ANDROID_PLATFORM_LEVEL}-clang++"
+  else
+    export CC="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}${ANDROID_PLATFORM_LEVEL}-clang"
+    export CXX="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}${ANDROID_PLATFORM_LEVEL}-clang++"
+  fi
+  export LD="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-ld.bfd"
   export LINK="${CXX}"
   export PATH="${TOOLCHAIN}/bin:${PATH}"
   export RANLIB="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-ranlib"
   export READELF="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-readelf"
   export STRIP="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-strip"
   export SYSROOT="${TOOLCHAIN}/sysroot"
+  export TOOLCHAIN_HOST=${TOOLCHAIN_HOST}
+  export TOOLCHAIN="${TOOLCHAIN}"
 
   # Out-of-source build
   BUILD_TYPE_LOWER=$(echo "${BUILD_TYPE}" | tr '[:upper:]' '[:lower:]')
@@ -401,11 +386,11 @@ download_dependency() {
 
 install_dependencies() {
 
-  download_dependency "CURL_LIBRARY_SOURCE" "Libraries/curl" "https://github.com/curl/curl/releases/download/curl-7_61_0/curl-7.61.0.tar.gz" "curl-7.61.0"
-  download_dependency "NGHTTP2_LIBRARY_SOURCE" "Libraries/nghttp2" "https://github.com/nghttp2/nghttp2/releases/download/v1.32.0/nghttp2-1.32.0.tar.gz" "nghttp2-1.32.0"
-  download_dependency "OPENSSL_LIBRARY_SOURCE" "Libraries/openssl" "https://github.com/openssl/openssl/archive/OpenSSL_1_1_0h.tar.gz" "openssl-OpenSSL_1_1_0h"
+  download_dependency "CURL_LIBRARY_SOURCE" "Libraries/curl" "https://curl.haxx.se/download/curl-${CURL_VER}.tar.gz" "curl-${CURL_VER}"
+  download_dependency "NGHTTP2_LIBRARY_SOURCE" "Libraries/nghttp2" "https://github.com/nghttp2/nghttp2/releases/download/v${NGHTTP2_VER}/nghttp2-${NGHTTP2_VER}.tar.gz" "nghttp2-${NGHTTP2_VER}"
+  download_dependency "OPENSSL_LIBRARY_SOURCE" "Libraries/openssl" "https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VER}.tar.gz" "openssl-OpenSSL_${OPENSSL_VER}"
   download_dependency "SQLITE3_LIBRARY_SOURCE" "Libraries/sqlite3" "https://sqlite.org/2018/sqlite-autoconf-3240000.tar.gz" "sqlite-autoconf-3240000"
-  download_dependency "FFMPEG_LIBRARY_SOURCE" "Libraries/ffmpeg" "https://www.ffmpeg.org/releases/ffmpeg-4.0.tar.gz" "ffmpeg-4.0"
+  download_dependency "FFMPEG_LIBRARY_SOURCE" "Libraries/ffmpeg" "https://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_VER}.tar.gz" "ffmpeg-${FFMPEG_VER}"
 
   ##################################################
   # Download packages
@@ -687,7 +672,7 @@ install_dependencies() {
                   --cross-prefix="${TOOLCHAIN}/bin/${TOOLCHAIN_HOST}-" \
                   --target-os="android" \
                   --enable-cross-compile \
-                  --cc=clang \
+                  --cc="${CC}" \
                   --cxx=clang++ \
                   --disable-static \
                   --disable-encoders \

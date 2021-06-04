@@ -144,13 +144,20 @@ void NotificationRenderer::onFocusChanged(FocusState newFocus, MixingBehavior be
     });
 }
 
-std::shared_ptr<NotificationRenderer> NotificationRenderer::create(
-    const std::shared_ptr<ApplicationAudioPipelineFactoryInterface>& audioPipelineFactory,
-    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager) {
+std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface> NotificationRenderer::
+    createNotificationRendererInterface(
+        const std::shared_ptr<ApplicationAudioPipelineFactoryInterface>& audioPipelineFactory,
+        acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::AudioFocusAnnotation,
+            avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier) {
     ACSDK_DEBUG5(LX(__func__));
 
-    if (!audioPipelineFactory) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "nullAudioPipelineFactory"));
+    if (!audioPipelineFactory || !audioFocusManager || !shutdownNotifier) {
+        ACSDK_ERROR(LX("createNotificationRendererInterfaceFailed")
+                        .d("isAudioPipelineFactoryNull", !audioPipelineFactory)
+                        .d("isAudioFocusManagerNull", !audioFocusManager)
+                        .d("isShutdownNotifierNull", !shutdownNotifier));
         return nullptr;
     }
 
@@ -162,11 +169,15 @@ std::shared_ptr<NotificationRenderer> NotificationRenderer::create(
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME);
 
     if (!applicationMediaInterfaces) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "failed to create media player or related interfaces"));
+        ACSDK_ERROR(LX("createNotificationRendererInterfaceFailed")
+                        .d("reason", "failed to create media player or related interfaces"));
         return nullptr;
     }
 
-    return create(applicationMediaInterfaces->mediaPlayer, focusManager);
+    auto renderer = create(applicationMediaInterfaces->mediaPlayer, audioFocusManager);
+
+    shutdownNotifier->addObserver(renderer);
+    return renderer;
 }
 
 std::shared_ptr<NotificationRenderer> NotificationRenderer::create(

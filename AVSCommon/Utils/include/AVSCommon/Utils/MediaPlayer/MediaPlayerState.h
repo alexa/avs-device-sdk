@@ -19,6 +19,7 @@
 #include <AVSCommon/Utils/Optional.h>
 
 #include <chrono>
+#include <string>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -92,11 +93,25 @@ struct MediaPlayerState {
      */
     MediaPlayerState(
         std::chrono::milliseconds offsetInMs,
-        const MediaPlayerProtection& aMediaPlayerProtection,
+        const MediaPlayerProtection& mediaPlayerProtection_,
         std::chrono::milliseconds duration_ = DURATION_UNKNOWN) :
             offset(offsetInMs),
             duration(duration_),
-            mediaPlayerProtection(aMediaPlayerProtection) {
+            mediaPlayerProtection(mediaPlayerProtection_) {
+    }
+
+    /**
+     * Constructor.
+     */
+    MediaPlayerState(
+        std::chrono::milliseconds offsetInMs,
+        const MediaPlayerProtection& mediaPlayerProtection_,
+        const std::string& playlistType_,
+        std::chrono::milliseconds duration_ = DURATION_UNKNOWN) :
+            offset(offsetInMs),
+            duration(duration_),
+            mediaPlayerProtection(mediaPlayerProtection_),
+            playlistType(playlistType_) {
     }
 
     /// Offset in milliseconds
@@ -109,6 +124,12 @@ struct MediaPlayerState {
     Optional<MediaPlayerProtection> mediaPlayerProtection;
 
     /**
+     * Optional: Playlist type, HLS, DASH, etc., of the current track.
+     * Empty when adpative streaming is not in use for the current track.
+     */
+    Optional<std::string> playlistType;
+
+    /**
      * Overload the == operator for equality checks
      *
      * @param other The other @c MediaPlayerState to compare
@@ -116,7 +137,7 @@ struct MediaPlayerState {
      */
     bool operator==(const MediaPlayerState& other) const {
         return offset == other.offset && duration == other.duration &&
-               mediaPlayerProtection == other.mediaPlayerProtection;
+               mediaPlayerProtection == other.mediaPlayerProtection && playlistType == other.playlistType;
     }
 };
 

@@ -17,11 +17,12 @@
 /// @file AudioPlayer.cpp
 #include <algorithm>
 #include <cctype>
+#include <regex>
 
 #include "acsdkAudioPlayer/AudioPlayer.h"
+#include "acsdkAudioPlayer/Util.h"
 
 #include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -31,7 +32,6 @@
 #include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
-
 namespace alexaClientSDK {
 namespace acsdkAudioPlayer {
 
@@ -223,9 +223,9 @@ static const std::string MALICIOUS_HEADER_RECEIVED = "MaliciousHeaderReceived";
 /// Message sent failed metric
 static const std::string MESSAGE_SENT_FAILED = "MessageSentFailed";
 
-/// whitelisted metadata to send to server.  This is done to avoid excessive traffic
+/// allowlisted metadata to send to server.  This is done to avoid excessive traffic
 /// must be all lower-case
-static const std::vector<std::string> METADATA_WHITELIST = {"title"};
+static const std::vector<std::string> METADATA_ALLOWLIST = {"title"};
 
 /// Min time between metadata events
 static const std::chrono::seconds METADATA_EVENT_RATE{1};
@@ -238,6 +238,15 @@ static const std::string NORMALIZATION_LEVEL_HIGH = "HIGH";
 
 /// Normalization disabled
 static const std::string NORMALIZATION_LEVEL_OFF = "OFF";
+
+/// Track protection name, meta data sent with metric
+static const std::string TRACK_PROTECTION_NAME = "TrackProtectionName";
+
+/// Track playlist type, meta data sent with metric
+static const std::string TRACK_PLAYLIST_TYPE = "TrackType";
+
+/// Hash of the domain name of the track url, meta data sent with metric
+static const std::string TRACK_DOMAIN_NAME_HASH = "TrackDomainNameHash";
 
 /**
  * Compare two URLs up to the 'query' portion, if one exists.
@@ -281,7 +290,8 @@ static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getAudioPlayerCa
  * @param trackId The track id string retrieved from the directive.
  * @param requesterType The requester type string retrieved from the directive, defaults to empty string.
  * @param trackProtection The track protection on the track.
- * @param trackType Track type meta data.
+ * @param trackPlaylistType Track playtlist type.
+ * @param trackDomainNameHash Hash of the track url domain
  */
 static void submitMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
@@ -290,7 +300,9 @@ static void submitMetric(
     const std::string& msgId,
     const std::string& trackId,
     const std::string& requesterType = "",
-    const std::string& trackProtection = "") {
+    const std::string& trackProtection = "",
+    const std::string& trackPlaylistType = "",
+    const std::string& trackDomainNameHash = "") {
     auto metricBuilder = MetricEventBuilder{}.setActivityName(metricActivityName).addDataPoint(dataPoint);
     if (!msgId.empty()) {
         metricBuilder.addDataPoint(DataPointStringBuilder{}.setName("DIRECTIVE_MESSAGE_ID").setValue(msgId).build());
@@ -303,7 +315,15 @@ static void submitMetric(
     }
     if (!trackProtection.empty()) {
         metricBuilder.addDataPoint(
-            DataPointStringBuilder{}.setName("TrackProtectionName").setValue(trackProtection).build());
+            DataPointStringBuilder{}.setName(TRACK_PROTECTION_NAME).setValue(trackProtection).build());
+    }
+    if (!trackPlaylistType.empty()) {
+        metricBuilder.addDataPoint(
+            DataPointStringBuilder{}.setName(TRACK_PLAYLIST_TYPE).setValue(trackPlaylistType).build());
+    }
+    if (!trackDomainNameHash.empty()) {
+        metricBuilder.addDataPoint(
+            DataPointStringBuilder{}.setName(TRACK_DOMAIN_NAME_HASH).setValue(trackDomainNameHash).build());
     }
 
     auto metric = metricBuilder.build();
@@ -626,10 +646,10 @@ void AudioPlayer::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
                     case AudioPlayerState::PAUSED:
                     case AudioPlayerState::STOPPED:
                     case AudioPlayerState::FINISHED:
+                    case AudioPlayerState::BUFFERING:
                         return true;
                     case AudioPlayerState::PLAYING:
                     case AudioPlayerState::BUFFER_UNDERRUN:
-                    case AudioPlayerState::BUFFERING:
                         return false;
                 }
                 ACSDK_ERROR(LX("onFocusChangedFailed")
@@ -685,8 +705,11 @@ void AudioPlayer::onPlaybackStarted(SourceId id, const MediaPlayerState& state) 
     ACSDK_DEBUG(LX("onPlaybackStarted").d("id", id).d("state", state));
 
     // m_currentMediaPlayerProtection can only be updated in the executor thread, hence
-    // using the MediaPlayerState instead of m_currentMediaPlayerProtection.
-    std::string trackProtectionName = getTrackProtectionName(state);
+    // using the MediaPlayerState instead of m_currentMediaPlayerProtection. Same is true
+    // for m_currentPlaylistType.
+    std::string protectionName = getTrackProtectionName(state);
+    std::string playlistType = getPlaylistType(state);
+    std::string domainNameHash = getDomainNameHash(m_currentlyPlaying->audioItem.stream.url);
     submitMetric(
         m_metricRecorder,
         AUDIO_PLAYER_METRIC_PREFIX + PLAYBACK_STARTED,
@@ -694,7 +717,9 @@ void AudioPlayer::onPlaybackStarted(SourceId id, const MediaPlayerState& state) 
         m_currentlyPlaying->messageId,
         m_currentlyPlaying->audioItem.id,
         "",
-        trackProtectionName);
+        protectionName,
+        playlistType,
+        domainNameHash);
 
     m_executor.submit([this, id, state] { executeOnPlaybackStarted(id, state); });
 }
@@ -848,11 +873,12 @@ bool AudioPlayer::localOperation(PlaybackOperation op) {
 
     m_executor.submit([this, op, &opSuccess] { executeLocalOperation(op, std::move(opSuccess)); });
 
-    if (successFuture.wait_for(std::chrono::milliseconds(1000)) == std::future_status::ready) {
-        return successFuture.get();
+    if (successFuture.wait_for(std::chrono::milliseconds(2000)) == std::future_status::timeout) {
+        // if the operation has timed out, set the success to false
+        m_executor.submit([this] { executeLocalOperationTimedout(); });
     }
 
-    return false;
+    return successFuture.get();
 }
 
 bool AudioPlayer::localSeekTo(std::chrono::milliseconds location, bool fromStart) {
@@ -1685,6 +1711,10 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
     if (state.mediaPlayerProtection.hasValue()) {
         m_currentMediaPlayerProtection = state.mediaPlayerProtection.value();
     }
+    if (state.playlistType.hasValue()) {
+        m_currentPlaylistType = state.playlistType.value();
+    }
+
     // Race condition exists where focus can be lost before the executeOnPlaybackStarted callback.
     if (avsCommon::avs::FocusState::NONE == m_focus) {
         ACSDK_WARN(LX(__func__).d("reason", "callbackAfterFocusLost").d("action", "stopping"));
@@ -1717,14 +1747,41 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
     if (m_isRecordingTimeToPlayback) {
         ACSDK_DEBUG(LX("directiveReceiveToPlaying"));
         m_isRecordingTimeToPlayback = false;
+
+        DataPoint dataPoint =
+            m_playCommandToPlayingTimeMetricData.setName(HANDLE_PLAY_COMMAND_TO_PLAYING).stopDurationTimer().build();
+        std::string protectionName = getTrackProtectionName(m_currentMediaPlayerProtection);
+        std::string playlistType = getPlaylistType(m_currentPlaylistType);
+        std::string domainNameHash = getDomainNameHash(m_currentlyPlaying->audioItem.stream.url);
         submitMetric(
             m_metricRecorder,
             AUDIO_PLAYER_METRIC_PREFIX + HANDLE_PLAY_COMMAND_TO_PLAYING,
-            m_playCommandToPlayingTimeMetricData.setName(HANDLE_PLAY_COMMAND_TO_PLAYING).stopDurationTimer().build(),
+            dataPoint,
             "",
             "",
             m_currentlyPlaying->playRequestor.type,
-            getTrackProtectionName(m_currentMediaPlayerProtection));
+            protectionName,
+            playlistType,
+            domainNameHash);
+
+        // Some metric graphing tools are not necessarily great to graph with multiple meta data.
+        // Therefore, we ceate another metric with the metric name consisting of all of
+        // relevant track metadata.
+        std::string upmlSuffix;
+        if (!domainNameHash.empty() && !protectionName.empty() && !playlistType.empty()) {
+            upmlSuffix = std::string("-") + domainNameHash + "-" + playlistType + "-" + protectionName;
+        }
+        if (!upmlSuffix.empty()) {
+            DataPoint dataPoint =
+                m_playCommandToPlayingTimeMetricData.setName(HANDLE_PLAY_COMMAND_TO_PLAYING + upmlSuffix).build();
+            submitMetric(
+                m_metricRecorder,
+                AUDIO_PLAYER_METRIC_PREFIX + HANDLE_PLAY_COMMAND_TO_PLAYING,
+                dataPoint,
+                "",
+                "",
+                m_currentlyPlaying->playRequestor.type);
+        }
     }
 
     m_progressTimer.start();
@@ -1779,6 +1836,26 @@ void AudioPlayer::executeOnPlaybackStopped(SourceId id, const MediaPlayerState& 
     ACSDK_DEBUG1(LX("executeOnPlaybackStopped").d("id", id).d("state", state));
 
     if (id != m_currentlyPlaying->sourceId) {
+        // See if SourceId identifies a loading track. If so, send error now.
+        if (!m_audioPlayQueue.empty()) {
+            for (auto& it : m_audioPlayQueue) {
+                if (it->sourceId == id && !it->errorMsg.empty()) {
+                    // Only send the event to the server if playing or buffering (or variations - PAUSED is OK too)
+                    // if we send an error after stopped, the server will send a PLAY for the next track - not what we
+                    // want.
+                    if (m_currentState == AudioPlayerState::BUFFERING) {
+                        ACSDK_ERROR(LX("executeOnPlaybackStopped").d("reportingPrebufferedError", id));
+                        sendPlaybackFailedEvent(
+                            it->audioItem.stream.token, it->errorType, it->errorMsg, MediaPlayerState());
+                    } else {
+                        ACSDK_WARN(LX(__FUNCTION__).d("reason", "notReportingPrebufferedError").d("id", id));
+                    }
+                    it->errorMsg.clear();  // make sure we only send once
+                    return;
+                }
+            }
+        }
+
         ACSDK_DEBUG(LX("executeOnPlaybackStopped")
                         .d("reason", "sourceIdDoesNotMatchCurrentTrack")
                         .d("id", id)
@@ -1926,6 +2003,9 @@ void AudioPlayer::executeOnPlaybackError(
     if (state.mediaPlayerProtection.hasValue()) {
         m_currentMediaPlayerProtection = state.mediaPlayerProtection.value();
     }
+    if (state.playlistType.hasValue()) {
+        m_currentPlaylistType = state.playlistType.value();
+    }
 
     m_isStartingPlayback = false;
     m_playNextItemAfterStopped = false;
@@ -2007,6 +2087,7 @@ void AudioPlayer::executeOnPlaybackPaused(SourceId id, const MediaPlayerState& s
     ACSDK_DEBUG1(LX("executeOnPlaybackPaused").d("id", id).d("state", state));
 
     m_isPausingPlayback = false;
+    m_isStartingPlayback = false;
 
     if (id != m_currentlyPlaying->sourceId) {
         ACSDK_ERROR(LX("executeOnPlaybackPausedFailed")
@@ -2142,14 +2223,13 @@ void AudioPlayer::clearPlayQueue(const bool stopCurrentPlayer) {
     // release all MediaPlayers on the play queue
     for (auto& it : m_audioPlayQueue) {
         if (it->mediaPlayer) {
-            if (!stopCurrentPlayer && it->sourceId == m_currentlyPlaying->sourceId) {
-                releaseMediaPlayer(it);
-                continue;
-            }
             stopAndReleaseMediaPlayer(it);
         }
     }
     m_audioPlayQueue.clear();
+    if (stopCurrentPlayer) {
+        stopAndReleaseMediaPlayer(m_currentlyPlaying);
+    }
     // If we were in buffering state before this, then the stop will not trigger any other events,
     // so go back to IDLE here
     if (m_currentState == AudioPlayerState::BUFFERING) {
@@ -2200,6 +2280,7 @@ bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playb
             ACSDK_ERROR(LX("configureMediaPlayerFailed").d("reason", "nullMediaPlayer"));
             return false;
         }
+        mediaPlayer->addObserver(shared_from_this());
         if (playbackItem->audioItem.stream.reader) {
             ACSDK_DEBUG9(LX("configureMediaPlayer"));
             sourceId = mediaPlayer->setSource(std::move(playbackItem->audioItem.stream.reader));
@@ -2238,7 +2319,6 @@ bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playb
         ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId).d("audioItemId", playbackItem->audioItem.id));
         playbackItem->mediaPlayer = mediaPlayer;
         playbackItem->sourceId = sourceId;
-        playbackItem->mediaPlayer->addObserver(shared_from_this());
     }
     return true;
 }
@@ -2537,6 +2617,8 @@ void AudioPlayer::executeStop(const std::string& messageId, bool playNextItem) {
                      .d("m_currentState", playerStateToString(m_currentState))
                      .d("sourceId", m_currentlyPlaying->sourceId));
     m_currentlyPlaying->stopMessageId = messageId;
+    // if a 'stop' comes in before the 'start' event from the player, this can still be true
+    m_isStartingPlayback = false;
     switch (m_currentState) {
         case AudioPlayerState::IDLE:
         case AudioPlayerState::BUFFERING:
@@ -2558,6 +2640,11 @@ void AudioPlayer::executeStop(const std::string& messageId, bool playNextItem) {
                     LX("executeStopFailed").d("reason", "stopFailed").d("sourceId", m_currentlyPlaying->sourceId));
             } else {
                 m_isStopCalled = true;
+                if (!m_playNextItemAfterStopped) {
+                    // Stop pre-loadng items too, so any errors generated will not bubble up
+                    // There will never be used anyway, so continuing to load doesn't help.
+                    clearPlayQueue(false);
+                }
             }
             return;
     }
@@ -2584,6 +2671,15 @@ void AudioPlayer::executeClearQueue(ClearBehavior clearBehavior) {
 void AudioPlayer::executeUpdateProgressReportInterval(std::chrono::milliseconds progressReportInterval) {
     ACSDK_DEBUG1(LX("executeUpdateProgressReportInterval").d("progressReportInterval", progressReportInterval.count()));
     m_progressTimer.updateInterval(progressReportInterval);
+}
+
+void AudioPlayer::executeLocalOperationTimedout() {
+    ACSDK_ERROR(LX(__func__));
+    // First, see if succes value is still unset
+    if (m_isLocalResumePending) {
+        m_isLocalResumePending = false;
+        m_localResumeSuccess.set_value(false);
+    }
 }
 
 void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool> success) {
@@ -2663,6 +2759,9 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                     } else {
                         m_isStopCalled = m_currentlyPlaying->mediaPlayer->stop(
                             m_currentlyPlaying->sourceId, LOCAL_STOP_DEFAULT_PIPELINE_OPEN_TIME);
+                    }
+                    if (m_isStopCalled) {
+                        clearPlayQueue(false);
                     }
                     success.set_value(m_isStopCalled);
                 } else {
@@ -2922,11 +3021,11 @@ void AudioPlayer::sendStreamMetadataExtractedEvent(
     // Make a copy of the duplicate cache
     VectorOfTags newCache(audioItem.cachedMetadata.begin(), audioItem.cachedMetadata.end());
     for (auto& tag : *vectorOfTags) {
-        // Filter metadata against whitelist
+        // Filter metadata against allowlist
         std::string lowerTag = tag.key;
         std::transform(lowerTag.begin(), lowerTag.end(), lowerTag.begin(), ::tolower);
-        if (std::find(std::begin(METADATA_WHITELIST), std::end(METADATA_WHITELIST), lowerTag) !=
-                std::end(METADATA_WHITELIST) &&
+        if (std::find(std::begin(METADATA_ALLOWLIST), std::end(METADATA_ALLOWLIST), lowerTag) !=
+                std::end(METADATA_ALLOWLIST) &&
             !tag.value.empty()) {
             // Check for duplicates
             bool dupFound = false;
@@ -2969,7 +3068,7 @@ void AudioPlayer::sendStreamMetadataExtractedEvent(
             DataPointCounterBuilder{}.setName(METADATA_UNFILTERED_ENCOUNTERED).increment(1).build(),
             "",
             token);
-        ACSDK_DEBUG(LX("sendStreamMetadataExtractedEvent").d("eventNotSent", "noWhitelistedData"));
+        ACSDK_DEBUG(LX("sendStreamMetadataExtractedEvent").d("eventNotSent", "noAllowlistedData"));
         return;
     } else {
         submitMetric(
@@ -3047,6 +3146,7 @@ AudioPlayerObserverInterface::Context AudioPlayer::getObserverContext(std::chron
     }
     context.playRequestor = m_currentlyPlaying->playRequestor;
     context.trackProtectionName = getTrackProtectionName(m_currentMediaPlayerProtection);
+    context.trackPlaylistType = getPlaylistType(m_currentPlaylistType);
     context.startOffset = m_currentlyPlaying->audioItem.stream.offset;
     context.endOffset = m_currentlyPlaying->audioItem.stream.endOffset;
 
@@ -3078,7 +3178,8 @@ void AudioPlayer::sendEvent(
 }
 
 MediaPlayerState AudioPlayer::getMediaPlayerState() {
-    MediaPlayerState state = MediaPlayerState(getOffset(), m_currentMediaPlayerProtection, getDuration());
+    MediaPlayerState state =
+        MediaPlayerState(getOffset(), m_currentMediaPlayerProtection, m_currentPlaylistType, getDuration());
     return state;
 }
 
@@ -3217,6 +3318,18 @@ std::string AudioPlayer::getTrackProtectionName(const MediaPlayerState& mediaPla
     return getTrackProtectionName(mediaPlayerProtection);
 }
 
+std::string AudioPlayer::getPlaylistType(const MediaPlayerState& mediaPlayerState) const {
+    std::string playlistType;
+    if (mediaPlayerState.playlistType.hasValue()) {
+        playlistType = mediaPlayerState.playlistType.value();
+    }
+    return getPlaylistType(playlistType);
+}
+
+std::string AudioPlayer::getPlaylistType(const std::string& playlistType) const {
+    return playlistType.empty() ? "NONE" : playlistType;
+}
+
 avsCommon::avs::PlayerActivity AudioPlayer::activityFromState(AudioPlayerState state) const {
     switch (state) {
         case AudioPlayerState::IDLE:
@@ -3265,6 +3378,15 @@ std::string AudioPlayer::packageContextForEvent(std::chrono::milliseconds offset
     }
 #endif
     return "";
+}
+
+std::string AudioPlayer::getDomainNameHash(const std::string& url) const {
+    std::string domainName = Util::getDomainNameFromUrl(url);
+    std::string md5;
+    if (!domainName.empty()) {
+        md5 = Util::generateMD5Hash(domainName);
+    }
+    return md5;
 }
 
 }  // namespace acsdkAudioPlayer

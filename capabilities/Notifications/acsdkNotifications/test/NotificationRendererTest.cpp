@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 #include <AVSCommon/AVS/MixingBehavior.h>
 #include <AVSCommon/SDKInterfaces/MockFocusManager.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -36,6 +37,7 @@ namespace test {
 using namespace ::testing;
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces;
 using namespace acsdkApplicationAudioPipelineFactoryInterfaces::test;
+using namespace acsdkShutdownManagerInterfaces::test;
 using namespace alexaClientSDK::avsCommon::sdkInterfaces::test;
 using namespace avsCommon;
 using namespace avsCommon::avs;
@@ -134,6 +136,9 @@ public:
     /// Mock Focus Manager with which to exercise NotificationRenderer.
     std::shared_ptr<MockFocusManager> m_focusManager;
 
+    /// Mock ShutdownNotifier with which to exercise NotificationRenderer.
+    std::shared_ptr<MockShutdownNotifier> m_shutdownNotifier;
+
     /// The NotificationRenderer instance to exercise.
     std::shared_ptr<NotificationRenderer> m_renderer;
 
@@ -147,6 +152,8 @@ void NotificationRendererTest::SetUp() {
     m_audioPipelineFactory = std::make_shared<MockApplicationAudioPipelineFactory>();
     m_player = MockMediaPlayer::create();
     m_focusManager = std::make_shared<avsCommon::sdkInterfaces::test::MockFocusManager>();
+    m_shutdownNotifier = std::make_shared<StrictMock<MockShutdownNotifier>>();
+
     m_renderer = NotificationRenderer::create(m_player, m_focusManager);
     ASSERT_TRUE(m_renderer);
     m_observer.reset(new MockNotificationRendererObserver());
@@ -179,7 +186,25 @@ TEST_F(NotificationRendererTest, test_createWithNullMediaPlayer) {
  */
 TEST_F(NotificationRendererTest, test_createWithNullApplicationAudioPipelineFactory) {
     std::shared_ptr<MockApplicationAudioPipelineFactory> factory = nullptr;
-    auto renderer = NotificationRenderer::create(factory, m_focusManager);
+    auto renderer = NotificationRenderer::createNotificationRendererInterface(
+        factory,
+        acsdkManufactory::
+            Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>(
+                m_focusManager),
+        m_shutdownNotifier);
+    ASSERT_FALSE(renderer);
+}
+
+/**
+ * Test that create fails with a null shutdown notifier.
+ */
+TEST_F(NotificationRendererTest, test_createWithNullShutdownNotifier) {
+    auto renderer = NotificationRenderer::createNotificationRendererInterface(
+        m_audioPipelineFactory,
+        acsdkManufactory::
+            Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>(
+                m_focusManager),
+        nullptr);
     ASSERT_FALSE(renderer);
 }
 
@@ -187,10 +212,12 @@ TEST_F(NotificationRendererTest, test_createWithNullApplicationAudioPipelineFact
  * Test that create fails with a null FocusManager
  */
 TEST_F(NotificationRendererTest, test_createWithNullFocusManager) {
-    auto renderer = NotificationRenderer::create(m_player, nullptr);
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface> renderer =
+        NotificationRenderer::create(m_player, nullptr);
     ASSERT_FALSE(renderer);
 
-    renderer = NotificationRenderer::create(m_audioPipelineFactory, nullptr);
+    renderer =
+        NotificationRenderer::createNotificationRendererInterface(m_audioPipelineFactory, nullptr, m_shutdownNotifier);
     ASSERT_FALSE(renderer);
 }
 
@@ -205,6 +232,7 @@ TEST_F(NotificationRendererTest, test_createNotificationsMediaPlayerWithAudioPip
     avsCommon::sdkInterfaces::ChannelVolumeInterface::Type channelVolumeType =
         avsCommon::sdkInterfaces::ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME;
 
+    EXPECT_CALL(*(m_shutdownNotifier.get()), addObserver(_));
     EXPECT_CALL(
         *(m_audioPipelineFactory.get()),
         createApplicationMediaInterfaces(
@@ -212,7 +240,12 @@ TEST_F(NotificationRendererTest, test_createNotificationsMediaPlayerWithAudioPip
         .Times(1)
         .WillOnce(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
             m_player, nullptr, nullptr, nullptr)));
-    auto renderer = NotificationRenderer::create(m_audioPipelineFactory, m_focusManager);
+    auto renderer = NotificationRenderer::createNotificationRendererInterface(
+        m_audioPipelineFactory,
+        acsdkManufactory::
+            Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>(
+                m_focusManager),
+        m_shutdownNotifier);
     ASSERT_TRUE(renderer);
 }
 

@@ -18,6 +18,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/error/en.h>
+#include <sstream>
 
 #include <acsdkManufactory/Annotated.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
@@ -91,6 +92,18 @@ static bool withinBounds(T value, T min, T max) {
         return false;
     }
     return true;
+}
+
+/**
+ * Converts the @c SpeakerManagerObserverInterface::Source to a string.
+ *
+ * @param source The input @c SpeakerManagerObserverInterface::Source.
+ * @return The @c String representing the source.
+ */
+static inline std::string getSourceString(SpeakerManagerObserverInterface::Source source) {
+    std::stringstream ss;
+    ss << source;
+    return ss.str();
 }
 
 /**
@@ -594,6 +607,8 @@ bool SpeakerManager::executeSetVolume(
         submitMetric(m_metricRecorder, "setVolumeZero", 1);
     }
 
+    submitMetric(m_metricRecorder, "setVolumeSource_" + getSourceString(properties.source), 1);
+
     auto adjustedVolume = volume;
 
     auto maximumVolumeLimit = getMaximumVolumeLimit();
@@ -615,7 +630,7 @@ bool SpeakerManager::executeSetVolume(
 
     auto begin = it->second.begin();
     auto end = it->second.end();
-    retryAndApplySettings([this, adjustedVolume, &begin, end]() -> bool {
+    auto result = retryAndApplySettings([this, adjustedVolume, &begin, end]() -> bool {
         // Go through list of Speakers with ChannelVolumeInterface::Type equal
         // to type, and call setVolume.
         while (begin != end) {
@@ -629,6 +644,11 @@ bool SpeakerManager::executeSetVolume(
         submitMetric(m_metricRecorder, "setSpeakerVolumeFailed", 0);
         return true;
     });
+
+    if (!result) {
+        ACSDK_ERROR(LX("executeSetVolumeFailed").d("reason", "retryAndApplySettingsFailed"));
+        return false;
+    }
 
     settings.volume = adjustedVolume;
     if (!executeSetSpeakerSettings(type, settings)) {
@@ -710,6 +730,7 @@ bool SpeakerManager::executeAdjustVolume(
     }
 
     submitMetric(m_metricRecorder, "adjustVolume", 1);
+    submitMetric(m_metricRecorder, "adjustVolumeSource_" + getSourceString(properties.source), 1);
     SpeakerInterface::SpeakerSettings settings;
     if (!executeGetSpeakerSettings(type, &settings)) {
         ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "executeGetSpeakerSettingsFailed"));
@@ -721,7 +742,7 @@ bool SpeakerManager::executeAdjustVolume(
     auto begin = it->second.begin();
     auto end = it->second.end();
 
-    retryAndApplySettings([&begin, end, delta, maxVolumeLimit] {
+    auto result = retryAndApplySettings([&begin, end, delta, maxVolumeLimit] {
         // Go through list of Speakers with ChannelVolumeInterface::Type equal
         // to type, and call adjustUnduckedVolume.
         SpeakerInterface::SpeakerSettings speakerSettings;
@@ -761,6 +782,11 @@ bool SpeakerManager::executeAdjustVolume(
         }
         return true;
     });
+
+    if (!result) {
+        ACSDK_ERROR(LX("executeAdjustVolumeFailed").d("reason", "retryAndApplySettingsFailed"));
+        return false;
+    }
 
     if (delta > 0) {
         settings.volume = static_cast<int8_t>(
@@ -841,7 +867,7 @@ bool SpeakerManager::executeSetMute(
 
     auto begin = it->second.begin();
     auto end = it->second.end();
-    retryAndApplySettings([mute, &begin, end] {
+    auto result = retryAndApplySettings([mute, &begin, end] {
         // Go through list of Speakers with ChannelVolumeInterface::Type equal to type, and call setMute.
         while (begin != end) {
             if (!(*begin)->setMute(mute)) {
@@ -852,8 +878,18 @@ bool SpeakerManager::executeSetMute(
         return true;
     });
 
+    if (!result) {
+        ACSDK_ERROR(LX("executeSetMute").d("reason", "retryAndApplySettingsFailed"));
+        return false;
+    }
+
     submitMetric(m_metricRecorder, mute ? "setMute" : "setUnMute", 1);
     settings.mute = mute;
+    if (mute) {
+        submitMetric(m_metricRecorder, "setMuteSource_" + getSourceString(properties.source), 1);
+    } else {
+        submitMetric(m_metricRecorder, "setUnMuteSource_" + getSourceString(properties.source), 1);
+    }
     if (!executeSetSpeakerSettings(type, settings)) {
         ACSDK_ERROR(LX("executeSetMuteFailed").d("reason", "executeSetSpeakerSettingsFailed"));
         return false;
@@ -1018,7 +1054,7 @@ int8_t SpeakerManager::getMaximumVolumeLimit() {
 }
 
 template <typename Task, typename... Args>
-void SpeakerManager::retryAndApplySettings(Task task, Args&&... args) {
+bool SpeakerManager::retryAndApplySettings(Task task, Args&&... args) {
     auto boundTask = std::bind(std::forward<Task>(task), std::forward<Args>(args)...);
     size_t attempt = 0;
     m_waitCancelEvent.reset();
@@ -1034,6 +1070,7 @@ void SpeakerManager::retryAndApplySettings(Task task, Args&&... args) {
         }
         attempt++;
     }
+    return attempt < m_maxRetries;
 }
 
 }  // namespace speakerManager

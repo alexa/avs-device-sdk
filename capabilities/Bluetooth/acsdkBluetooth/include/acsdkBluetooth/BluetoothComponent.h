@@ -35,7 +35,7 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkBluetooth {
@@ -63,7 +63,7 @@ using BluetoothComponent = acsdkManufactory::Component<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManager>>>;
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>>;
 /**
  * Get the @c Manufactory component for creating an instance of @c BluetoothNotifierInterface.
  *

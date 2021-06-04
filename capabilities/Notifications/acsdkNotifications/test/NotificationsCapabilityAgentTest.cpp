@@ -21,6 +21,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
 #include <AVSCommon/AVS/IndicatorState.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
@@ -32,10 +33,12 @@
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/ConsoleLogger.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 
 #include "acsdkNotifications/NotificationIndicator.h"
 #include "acsdkNotifications/NotificationsCapabilityAgent.h"
+#include "acsdkNotifications/NotificationsNotifier.h"
 #include <acsdkNotificationsInterfaces/NotificationRendererInterface.h>
 #include <acsdkNotificationsInterfaces/NotificationRendererObserverInterface.h>
 
@@ -315,6 +318,42 @@ bool TestNotificationsStorage::waitForQueueSizeToBe(size_t size, std::chrono::mi
     return m_conditionVariable.wait_for(lock, timeout, [this, size] { return m_notificationQueue.size() == size; });
 }
 
+class StubAudioFactory : public avsCommon::sdkInterfaces::audio::AudioFactoryInterface {
+public:
+    StubAudioFactory(const std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface>&
+                         notificationsAudioFactory);
+
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> alerts() const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notifications() const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> communications()
+        const override;
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> systemSounds() const override;
+
+private:
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> m_notificationsFactory;
+};
+
+StubAudioFactory::StubAudioFactory(
+    const std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface>&
+        notificationsAudioFactory) :
+        m_notificationsFactory{notificationsAudioFactory} {};
+
+std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> StubAudioFactory::alerts() const {
+    return nullptr;
+}
+std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> StubAudioFactory::notifications()
+    const {
+    return m_notificationsFactory;
+}
+std::shared_ptr<avsCommon::sdkInterfaces::audio::CommunicationsAudioFactoryInterface> StubAudioFactory::communications()
+    const {
+    return nullptr;
+}
+std::shared_ptr<avsCommon::sdkInterfaces::audio::SystemSoundAudioFactoryInterface> StubAudioFactory::systemSounds()
+    const {
+    return nullptr;
+}
+
 class MockNotificationRenderer : public acsdkNotificationsInterfaces::NotificationRendererInterface {
 public:
     ~MockNotificationRenderer();
@@ -589,8 +628,20 @@ public:
     /// An exception sender used to send exception encountered events to AVS.
     std::shared_ptr<MockExceptionEncounteredSender> m_mockExceptionSender;
 
-    /// An audio factory for testing.
+    /// A audio factory for testing.
+    std::shared_ptr<StubAudioFactory> m_stubAudioFactory;
+
+    /// A notifications audio factory for testing.
     std::shared_ptr<TestNotificationsAudioFactory> m_testNotificationsAudioFactory;
+
+    /// An endpoint capabilities registrar with which to register the Bluetooth CA.
+    acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+        avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>
+        m_mockEndpointCapabilitiesRegistrar;
+
+    /// Mock ShutdownNotifier.
+    std::shared_ptr<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier> m_shutdownNotifier;
 
     /// Serializes access to m_setIndicatorTrigger.
     std::mutex m_mutex;
@@ -599,24 +650,30 @@ public:
     std::condition_variable m_setIndicatorTrigger;
 
     /// Shared pointer to @c CustomerDataManager
-    std::shared_ptr<registrationManager::CustomerDataManager> m_dataManager;
+    std::shared_ptr<NiceMock<registrationManager::MockCustomerDataManager>> m_dataManager;
 
     /// A count of how many SetIndicator directives have been processed.
     unsigned int m_numSetIndicatorsProcessed;
 };
 
 void NotificationsCapabilityAgentTest::initializeCapabilityAgent() {
-    m_notificationsCapabilityAgent = NotificationsCapabilityAgent::create(
+    EXPECT_CALL(*(m_shutdownNotifier.get()), addObserver(_));
+    m_notificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
         m_notificationsStorage,
         m_renderer,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_testNotificationsAudioFactory,
+        m_stubAudioFactory,
         m_dataManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
         m_metricRecorder);
     ASSERT_TRUE(m_notificationsCapabilityAgent);
-    m_notificationsCapabilityAgent->addObserver(m_testNotificationsObserver);
-    m_renderer->addObserver(m_notificationsCapabilityAgent);
+
+    auto notifier = m_notificationsCapabilityAgent->getNotificationsNotifierInterface();
+    ASSERT_TRUE(notifier);
+
+    notifier->addObserver(m_testNotificationsObserver);
 }
 
 void NotificationsCapabilityAgentTest::SetUp() {
@@ -628,19 +685,31 @@ void NotificationsCapabilityAgentTest::SetUp() {
     m_mockContextManager = std::make_shared<NiceMock<MockContextManager>>();
     m_mockExceptionSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
     m_testNotificationsAudioFactory = std::make_shared<TestNotificationsAudioFactory>();
+    m_stubAudioFactory = std::make_shared<StubAudioFactory>(m_testNotificationsAudioFactory);
+    auto registrar =
+        std::make_shared<NiceMock<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>>();
+    m_mockEndpointCapabilitiesRegistrar = acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+        avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>(registrar);
+    EXPECT_CALL(
+        *(registrar.get()),
+        withCapability(A<const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>&>(), _))
+        .WillRepeatedly(ReturnRef(
+            *(std::make_shared<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>()).get()));
 
+    m_shutdownNotifier = std::make_shared<StrictMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>>();
     m_testNotificationsObserver = std::make_shared<TestNotificationsObserver>();
-
     m_mockDirectiveHandlerResult = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult);
 
     m_numSetIndicatorsProcessed = 0;
-    m_dataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    m_dataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
 }
 
 void NotificationsCapabilityAgentTest::TearDown() {
     if (m_notificationsCapabilityAgent) {
         m_notificationsCapabilityAgent->shutdown();
     }
+
     AlexaClientSDKInit::uninitialize();
 }
 
@@ -706,58 +775,104 @@ const std::string NotificationsCapabilityAgentTest::generatePayload(
 }
 
 /**
- * Test create() with nullptrs
+ * Test createNotificationsCapabilityAgent() with nullptrs
  */
-TEST_F(NotificationsCapabilityAgentTest, test_create) {
-    std::shared_ptr<NotificationsCapabilityAgent> testNotificationsCapabilityAgent;
+TEST_F(NotificationsCapabilityAgentTest, test_createNotificationsCapabilityAgent) {
+    std::shared_ptr<acsdkNotifications::NotificationsCapabilityAgent> testNotificationsCapabilityAgent;
 
-    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
         nullptr,
         m_renderer,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_testNotificationsAudioFactory,
+        m_stubAudioFactory,
         m_dataManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
         m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
-    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
         m_notificationsStorage,
         nullptr,
         m_mockContextManager,
         m_mockExceptionSender,
-        m_testNotificationsAudioFactory,
+        m_stubAudioFactory,
         m_dataManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
         m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
-    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
         m_notificationsStorage,
         m_renderer,
         nullptr,
         m_mockExceptionSender,
-        m_testNotificationsAudioFactory,
+        m_stubAudioFactory,
         m_dataManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
         m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
-    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
         m_notificationsStorage,
         m_renderer,
         m_mockContextManager,
         nullptr,
-        m_testNotificationsAudioFactory,
+        m_stubAudioFactory,
         m_dataManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
         m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 
-    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::create(
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
         m_notificationsStorage,
         m_renderer,
         m_mockContextManager,
         m_mockExceptionSender,
         nullptr,
         m_dataManager,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
+        m_metricRecorder);
+    EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
+
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
+        m_notificationsStorage,
+        m_renderer,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_stubAudioFactory,
+        nullptr,
+        m_shutdownNotifier,
+        m_mockEndpointCapabilitiesRegistrar,
+        m_metricRecorder);
+    EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
+
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
+        m_notificationsStorage,
+        m_renderer,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_stubAudioFactory,
+        m_dataManager,
+        nullptr,
+        m_mockEndpointCapabilitiesRegistrar,
+        m_metricRecorder);
+    EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
+
+    testNotificationsCapabilityAgent = NotificationsCapabilityAgent::createNotificationsCapabilityAgent(
+        m_notificationsStorage,
+        m_renderer,
+        m_mockContextManager,
+        m_mockExceptionSender,
+        m_stubAudioFactory,
+        m_dataManager,
+        m_shutdownNotifier,
+        nullptr,
         m_metricRecorder);
     EXPECT_EQ(testNotificationsCapabilityAgent, nullptr);
 }

@@ -281,7 +281,7 @@ AuthObserverInterface::Error parseLWAResponse(
 
 std::shared_ptr<AuthDelegateInterface> CBLAuthDelegate::createAuthDelegateInterface(
     const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configuration,
-    const std::shared_ptr<CustomerDataManager>& customerDataManager,
+    const std::shared_ptr<CustomerDataManagerInterface>& customerDataManager,
     const std::shared_ptr<CBLAuthDelegateStorageInterface>& storage,
     const std::shared_ptr<CBLAuthRequesterInterface>& authRequester,
     std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface> httpPost,
@@ -329,7 +329,7 @@ std::shared_ptr<AuthDelegateInterface> CBLAuthDelegate::createAuthDelegateInterf
 
 std::unique_ptr<CBLAuthDelegate> CBLAuthDelegate::create(
     const avsCommon::utils::configuration::ConfigurationNode& configuration,
-    std::shared_ptr<CustomerDataManager> customerDataManager,
+    std::shared_ptr<CustomerDataManagerInterface> customerDataManager,
     std::shared_ptr<CBLAuthDelegateStorageInterface> storage,
     std::shared_ptr<CBLAuthRequesterInterface> authRequester,
     std::shared_ptr<HttpPostInterface> httpPost,
@@ -434,7 +434,7 @@ void CBLAuthDelegate::clearData() {
 }
 
 CBLAuthDelegate::CBLAuthDelegate(
-    std::shared_ptr<CustomerDataManager> customerDataManager,
+    std::shared_ptr<CustomerDataManagerInterface> customerDataManager,
     std::shared_ptr<CBLAuthDelegateStorageInterface> storage,
     std::shared_ptr<CBLAuthRequesterInterface> authRequester,
     std::shared_ptr<HttpPostInterface> httpPost) :

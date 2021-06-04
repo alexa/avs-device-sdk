@@ -17,10 +17,14 @@ target_link_libraries(LibPreviewAlexaClient
         ${ACSDKHTTPCONTENTFETCHER_LIB}
         ${ACSDKINTERNETCONNECTIONMONITOR_LIB}
         ${ACSDKMETRICRECORDER_LIB}
+        ${ACSDKSPEECHENCODER_LIB}
         ${ACSDKSYSTEMTIMEZONE_LIB}
         acsdkAlerts
         acsdkApplicationAudioPipelineFactoryInterfaces
         acsdkCore
+        acsdkDeviceSetup
+        acsdkDeviceSetupInterfaces
+        acsdkInteractionModel
         acsdkLibcurlHTTPContentFetcher
         acsdkManufactory
         acsdkSampleApplicationInterfaces

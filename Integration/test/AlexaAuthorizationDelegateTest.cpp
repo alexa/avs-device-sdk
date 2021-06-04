@@ -23,7 +23,6 @@
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
-#include <RegistrationManager/CustomerDataManager.h>
 
 #include "Integration/AuthDelegateTestContext.h"
 #include "Integration/AuthObserver.h"

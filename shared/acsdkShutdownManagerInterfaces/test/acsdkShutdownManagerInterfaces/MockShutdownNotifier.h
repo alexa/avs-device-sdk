@@ -39,6 +39,10 @@ public:
     MOCK_METHOD1(
         notifyObserversInReverse,
         bool(std::function<void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>&)>));
+
+    MOCK_METHOD1(
+        setAddObserverFunction,
+        void(std::function<void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>&)>));
 };
 
 }  // namespace test

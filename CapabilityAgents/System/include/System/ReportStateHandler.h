@@ -54,7 +54,7 @@ public:
      * @return @c nullptr if the inputs are not defined, else a new instance of @c ReportStateHandler.
      */
     static std::unique_ptr<ReportStateHandler> create(
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -100,7 +100,7 @@ private:
      * @param pendingReport A flag indicating if there is a report pending.
      */
     ReportStateHandler(
-        std::shared_ptr<registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
         std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
         std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> storage,

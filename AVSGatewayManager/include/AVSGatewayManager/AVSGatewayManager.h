@@ -58,7 +58,7 @@ public:
      */
     static std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> createAVSGatewayManagerInterface(
         std::unique_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-        const std::shared_ptr<registrationManager::CustomerDataManager>& customerDataManager,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
@@ -75,7 +75,7 @@ public:
      */
     static std::shared_ptr<AVSGatewayManager> create(
         std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
     /// @name AVSGatewayManagerInterface Functions
@@ -122,7 +122,7 @@ private:
      */
     AVSGatewayManager(
         std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-        std::shared_ptr<registrationManager::CustomerDataManager> customerDataManager,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         const std::string& defaultGateway);
 
     /**

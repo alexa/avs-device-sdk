@@ -19,6 +19,7 @@
 #include <memory>
 
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 
 #include "Settings/SetSettingResult.h"
@@ -43,13 +44,15 @@ public:
      * @param eventSender Object used to send events to avs in order to report changes to the device.
      * @param settingStorage The setting storage object.
      * @param connectionManager An @c AVSConnectionManagerInterface instance to listen for connection status updates.
+     * @param metricRecorder An @c MetricRecorderInterface instance to log metrics.
      * @return A pointer to the new @c SharedAVSSettingProtocol object if it succeeds; @c nullptr otherwise.
      */
     static std::unique_ptr<DeviceControlledSettingProtocol> create(
         const SettingEventMetadata& metadata,
         std::shared_ptr<SettingEventSenderInterface> eventSender,
         std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
-        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager);
+        std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface> connectionManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /// @name SettingProtocolInterface methods.
     /// @{

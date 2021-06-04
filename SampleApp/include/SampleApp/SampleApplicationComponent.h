@@ -34,7 +34,7 @@
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
 #endif
 
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
 
 #include "SampleApp/UIManager.h"
 
@@ -56,7 +56,7 @@ using SampleApplicationComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::DeviceInfo>,
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
-    std::shared_ptr<registrationManager::CustomerDataManager>,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
     std::shared_ptr<sampleApp::UIManager>>;
 
 /**

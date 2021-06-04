@@ -28,7 +28,6 @@
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <DefaultClient/DefaultClient.h>
-#include <RegistrationManager/CustomerDataManager.h>
 #include <Settings/SpeechConfirmationSettingType.h>
 #include <Settings/Types/NetworkInfo.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
@@ -245,6 +244,17 @@ public:
      * The CapabilitiesDelegate observer callback will indicate whether registration with AVS succeeded.
      */
     bool addEndpoint(const std::string& friendlyName);
+
+    /**
+     * Dynamically updates the endpoint with the given friendlyName.
+     * @param endpointId The endpoint id.
+     * @param friendlyName The updated friendly name.
+     * @return Whether the endpoint is updated successfully.
+     * The CapabilitiesDelegate observer callback will indicate whether update with AVS succeeded.
+     */
+    bool updateEndpoint(
+        const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId,
+        const std::string& friendlyName);
 
     /**
      * Adds an endpoint.
@@ -649,6 +659,11 @@ public:
      */
     void clearProtocolTrace();
 
+    /**
+     * Send the DeviceSetupComplete event
+     */
+    void sendDeviceSetupComplete();
+
 private:
     /// The default SDK client.
     std::shared_ptr<defaultClient::DefaultClient> m_client;
@@ -720,7 +735,6 @@ private:
 
     /// Optional dynamic endpointId.
     avsCommon::utils::Optional<avsCommon::sdkInterfaces::endpoints::EndpointIdentifier> m_dynamicEndpointId;
-
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
     /// Whether to toggle the dynamic endpoint's friendly name.
     bool m_friendlyNameToggle;

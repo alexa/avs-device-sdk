@@ -22,7 +22,7 @@
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
 #include <Diagnostics/DevicePropertyAggregator.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/MockCustomerDataManager.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
@@ -129,7 +129,7 @@ void DevicePropertyAggregatorTest::SetUp() {
     m_mockContextManager = std::make_shared<MockContextManager>();
     m_mockSpeakerManager = std::make_shared<MockSpeakerManager>();
 
-    auto customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+    auto customerDataManager = std::make_shared<registrationManager::MockCustomerDataManager>();
     m_deviceSettingsManager = std::make_shared<settings::DeviceSettingsManager>(customerDataManager);
 
     m_DNDSetting = std::make_shared<SettingStub<settings::DoNotDisturbSetting::ValueType>>(true);

@@ -9,6 +9,7 @@ target_link_libraries(acsdkCore
     acsdkManufactory
     acsdkPostConnectOperationProviderRegistrar
     acsdkShared
+    ADSL
     AFML
     AVSCommon
     AVSGatewayManager

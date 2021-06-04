@@ -40,21 +40,26 @@
 #include <AVSCommon/AVS/CapabilityChangeNotifier.h>
 #include <AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h>
 #include <AVSCommon/SDKInterfaces/MockSpeakerManager.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/Logger/LogEntry.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <CertifiedSender/SQLiteMessageStorage.h>
+#include <RegistrationManager/CustomerDataManagerFactory.h>
 #include <Settings/MockSetting.h>
 #include <Settings/SpeechConfirmationSettingType.h>
 #include <Settings/Types/AlarmVolumeRampTypes.h>
 #include <Settings/WakeWordConfirmationSettingType.h>
-#include <InteractionModel/InteractionModelCapabilityAgent.h>
+#include <acsdkInteractionModel/InteractionModelCapabilityAgent.h>
+#include <acsdkInteractionModel/InteractionModelNotifier.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/UserInactivityMonitor.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkShutdownManager/ShutdownNotifier.h>
 
 #include "Integration/ACLTestContext.h"
 #include "Integration/TestAlertObserver.h"
@@ -76,6 +81,7 @@ namespace test {
 using namespace acl;
 using namespace acsdkAlerts;
 using namespace acsdkAlertsInterfaces;
+using namespace acsdkManufactory;
 using namespace adsl;
 using namespace avsCommon;
 using namespace avsCommon::avs;
@@ -84,11 +90,13 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::mediaPlayer;
 using namespace certifiedSender;
 using namespace sdkInterfaces;
+using namespace sdkInterfaces::endpoints;
+using namespace sdkInterfaces::endpoints::test;
 using namespace avsCommon::utils::sds;
 using namespace avsCommon::utils::json;
 using namespace capabilityAgents::aip;
 using namespace afml;
-using namespace capabilityAgents::interactionModel;
+using namespace acsdkInteractionModel;
 using namespace capabilityAgents::speechSynthesizer;
 using namespace capabilityAgents::system;
 using namespace settings;
@@ -267,6 +275,16 @@ protected:
         m_exceptionEncounteredSender = std::make_shared<TestExceptionEncounteredSender>();
         m_metricRecorder = std::make_shared<NiceMock<avsCommon::utils::metrics::test::MockMetricRecorder>>();
         m_dialogUXStateAggregator = std::make_shared<avsCommon::avs::DialogUXStateAggregator>();
+        m_shutdownNotifier = std::make_shared<acsdkShutdownManager::ShutdownNotifier>();
+
+        auto registrar = std::make_shared<NiceMock<MockEndpointCapabilitiesRegistrar>>();
+        m_endpointCapabilitiesRegistrar =
+            Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface>(registrar);
+        EXPECT_CALL(
+            *(registrar.get()),
+            withCapability(A<const std::shared_ptr<avsCommon::sdkInterfaces::CapabilityConfigurationInterface>&>(), _))
+            .WillRepeatedly(ReturnRef(
+                *std::make_shared<avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar>()));
 
         m_directiveSequencer = DirectiveSequencer::create(m_exceptionEncounteredSender, m_metricRecorder);
         m_messageInterpreter = std::make_shared<MessageInterpreter>(
@@ -359,7 +377,7 @@ protected:
             systemSoundMediaPlayer,
             std::make_shared<applicationUtilities::resources::audio::SystemSoundAudioFactory>());
 
-        m_customerDataManager = std::make_shared<registrationManager::CustomerDataManager>();
+        m_customerDataManager = registrationManager::CustomerDataManagerFactory::createCustomerDataManagerInterface();
 
         DeviceSettingManagerSettingConfigurations configurations;
         m_deviceSettingsManager =
@@ -401,11 +419,15 @@ protected:
         m_speechSynthesizer->addObserver(m_speechSynthesizerObserver);
         m_speechSynthesizer->addObserver(m_dialogUXStateAggregator);
 
-        m_interactionModelCA =
-            InteractionModelCapabilityAgent::create(m_directiveSequencer, m_exceptionEncounteredSender);
+        m_interactionModelNotifier = InteractionModelNotifier::createInteractionModelNotifierInterface();
+        m_interactionModelCA = InteractionModelCapabilityAgent::create(
+            m_directiveSequencer,
+            m_exceptionEncounteredSender,
+            m_interactionModelNotifier,
+            m_endpointCapabilitiesRegistrar);
         ASSERT_NE(nullptr, m_interactionModelCA);
         ASSERT_TRUE(m_directiveSequencer->addDirectiveHandler(m_interactionModelCA));
-        m_interactionModelCA->addObserver(m_dialogUXStateAggregator);
+        m_interactionModelNotifier->addObserver(m_dialogUXStateAggregator);
 
 #ifdef GSTREAMER_MEDIA_PLAYER
         m_rendererMediaPlayer = MediaPlayer::create(nullptr);
@@ -607,6 +629,7 @@ protected:
     std::shared_ptr<TestClient> m_testDialogClient;
     std::shared_ptr<TestAlertObserver> m_AlertsAgentObserver;
     std::shared_ptr<SpeechSynthesizer> m_speechSynthesizer;
+    std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface> m_interactionModelNotifier;
     std::shared_ptr<InteractionModelCapabilityAgent> m_interactionModelCA;
     std::shared_ptr<AlertsCapabilityAgent> m_alertsAgent;
     std::shared_ptr<TestSpeechSynthesizerObserver> m_speechSynthesizerObserver;
@@ -625,7 +648,9 @@ protected:
     std::shared_ptr<UserInactivityMonitor> m_userInactivityMonitor;
     std::shared_ptr<applicationUtilities::systemSoundPlayer::SystemSoundPlayer> m_systemSoundPlayer;
     std::shared_ptr<settings::DeviceSettingsManager> m_deviceSettingsManager;
-    std::shared_ptr<registrationManager::CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> m_customerDataManager;
+    std::shared_ptr<acsdkShutdownManager::ShutdownNotifier> m_shutdownNotifier;
+    Annotated<DefaultEndpointAnnotation, EndpointCapabilitiesRegistrarInterface> m_endpointCapabilitiesRegistrar;
 
     FocusState m_focusState;
     std::mutex m_mutex;

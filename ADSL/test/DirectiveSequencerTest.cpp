@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <acsdkShutdownManagerInterfaces/MockShutdownNotifier.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/NamespaceAndName.h>
 #include <AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h>
@@ -35,6 +36,7 @@ namespace alexaClientSDK {
 namespace adsl {
 namespace test {
 
+using namespace acsdkShutdownManagerInterfaces::test;
 using namespace avsCommon;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
@@ -141,11 +143,14 @@ public:
     /// Handler to invoke for the Test::Done directive.
     std::shared_ptr<MockDirectiveHandler> m_doneHandler;
 
-    /// The DirectiveSequencer to test.
+    /// Mock ExceptionEncounteredSender.
     std::shared_ptr<MockExceptionEncounteredSender> m_exceptionEncounteredSender;
 
+    /// Mock ShutdownNotifier.
+    std::shared_ptr<MockShutdownNotifier> m_shutdownNotifier;
+
     /// The DirectiveSequencer to test.
-    std::unique_ptr<DirectiveSequencerInterface> m_sequencer;
+    std::shared_ptr<DirectiveSequencerInterface> m_sequencer;
 
     /// AttachmentManager with which to create directives.
     std::shared_ptr<AttachmentManager> m_attachmentManager;
@@ -157,7 +162,10 @@ void DirectiveSequencerTest::SetUp() {
     m_doneHandler = MockDirectiveHandler::create(config, LONG_HANDLING_TIME_MS);
     m_attachmentManager = std::make_shared<AttachmentManager>(AttachmentManager::AttachmentType::IN_PROCESS);
     m_exceptionEncounteredSender = std::make_shared<NiceMock<MockExceptionEncounteredSender>>();
-    m_sequencer = DirectiveSequencer::create(m_exceptionEncounteredSender);
+    m_shutdownNotifier = std::make_shared<StrictMock<MockShutdownNotifier>>();
+    EXPECT_CALL(*(m_shutdownNotifier.get()), addObserver(_));
+    m_sequencer = DirectiveSequencer::createDirectiveSequencerInterface(
+        m_exceptionEncounteredSender, m_shutdownNotifier, nullptr);
     ASSERT_TRUE(m_sequencer);
     ASSERT_TRUE(m_sequencer->addDirectiveHandler(m_doneHandler));
 }
@@ -185,9 +193,30 @@ void DirectiveSequencerTest::TearDown() {
 /**
  * Test DirectiveSequencer::create() with a nullptr @c ExceptionEncounteredSender.  Expect create to fail.
  */
-TEST_F(DirectiveSequencerTest, test_nullptrExceptionSender) {
+TEST_F(DirectiveSequencerTest, test_createNullptrExceptionSender) {
     ASSERT_TRUE(m_sequencer);
     auto sequencer = DirectiveSequencer::create(nullptr, nullptr);
+    ASSERT_FALSE(sequencer);
+}
+
+/**
+ * Test DirectiveSequencer::createDirectiveSequencerInterface() with a nullptr @c ExceptionEncounteredSender.  Expect
+ * create to fail.
+ */
+TEST_F(DirectiveSequencerTest, test_createDirectiveSequencerInterfaceNullptrExceptionSender) {
+    ASSERT_TRUE(m_sequencer);
+    auto sequencer = DirectiveSequencer::createDirectiveSequencerInterface(nullptr, m_shutdownNotifier, nullptr);
+    ASSERT_FALSE(sequencer);
+}
+
+/**
+ * Test DirectiveSequencer::createDirectiveSequencerInterface() with a nullptr @c ShutdownNotifier.  Expect create to
+ * fail.
+ */
+TEST_F(DirectiveSequencerTest, test_createDirectiveSequencerInterfaceNullptrShutdownNotifier) {
+    ASSERT_TRUE(m_sequencer);
+    auto sequencer =
+        DirectiveSequencer::createDirectiveSequencerInterface(m_exceptionEncounteredSender, nullptr, nullptr);
     ASSERT_FALSE(sequencer);
 }
 

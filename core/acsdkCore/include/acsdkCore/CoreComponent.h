@@ -23,7 +23,7 @@
 #include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockNotifierInterface.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorInterface.h>
-#include <AFML/ActivityTrackerInterface.h>
+#include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManagerInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
@@ -35,6 +35,7 @@
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
@@ -42,9 +43,12 @@
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
+#include <AVSCommon/SDKInterfaces/VisualFocusAnnotation.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
 #include <InterruptModel/InterruptModel.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerInterface.h>
+#include <RegistrationManager/RegistrationManagerInterface.h>
+#include <RegistrationManager/RegistrationNotifierInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkCore {
@@ -57,7 +61,6 @@ using DefaultEndpointAnnotation = avsCommon::sdkInterfaces::endpoints::DefaultEn
 using CoreComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>,
-    std::shared_ptr<registrationManager::CustomerDataManager>,
     std::shared_ptr<
         acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>,
     std::shared_ptr<acsdkSystemClockMonitorInterfaces::SystemClockNotifierInterface>,
@@ -66,6 +69,7 @@ using CoreComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface>,
+    std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>,
     acsdkManufactory::
         Annotated<DefaultEndpointAnnotation, avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface>,
     acsdkManufactory::Annotated<
@@ -76,6 +80,11 @@ using CoreComponent = acsdkManufactory::Component<
     std::shared_ptr<afml::interruptModel::InterruptModel>,
     acsdkManufactory::
         Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+    acsdkManufactory::
+        Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
+    std::shared_ptr<registrationManager::RegistrationManagerInterface>,
+    std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::timing::MultiTimer>>,

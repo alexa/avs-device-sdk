@@ -35,6 +35,10 @@ namespace timing {
 TimerDelegate::TimerDelegate() : m_running{false}, m_stopping{false} {
 }
 
+TimerDelegate::~TimerDelegate() {
+    stop();
+}
+
 void TimerDelegate::start(
     std::chrono::nanoseconds delay,
     std::chrono::nanoseconds period,
@@ -53,13 +57,6 @@ void TimerDelegate::timerLoop(
     PeriodType periodType,
     size_t maxCount,
     std::function<void()> task) {
-    // Use FinallyGuard to ensure that m_stopping and m_running get reset on completion or exception
-    avsCommon::utils::error::FinallyGuard guard{[this] {
-        m_stopping = false;
-        m_running = false;
-        return;
-    }};
-
     // Timepoint to measure delay/period against.
     auto now = std::chrono::steady_clock::now();
 
@@ -73,6 +70,8 @@ void TimerDelegate::timerLoop(
 
             // Wait for stop() or a delay/period to elapse.
             if (m_waitCondition.wait_until(lock, now + waitTime, [this]() { return m_stopping; })) {
+                m_stopping = false;
+                m_running = false;
                 return;
             }
         }
@@ -101,16 +100,19 @@ void TimerDelegate::timerLoop(
                 break;
         }
     }
+    std::lock_guard<std::mutex> lockGuard(m_waitMutex);
+    m_stopping = false;
+    m_running = false;
 }
 
 void TimerDelegate::stop() {
     std::lock_guard<std::mutex> lock(m_callMutex);
-
-    if (m_running) {
+    {
         std::lock_guard<std::mutex> lock(m_waitMutex);
-        m_stopping = true;
+        if (m_running) {
+            m_stopping = true;
+        }
     }
-
     m_waitCondition.notify_all();
     cleanupLocked();
 }
@@ -121,9 +123,7 @@ bool TimerDelegate::activate() {
 }
 
 bool TimerDelegate::activateLocked() {
-    auto previous = m_running;
-    m_running = true;
-    return !previous;
+    return !m_running.exchange(true);
 }
 
 bool TimerDelegate::isActive() const {

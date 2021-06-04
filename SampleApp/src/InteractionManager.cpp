@@ -13,9 +13,10 @@
  * permissions and limitations under the License.
  */
 
+#include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
+#include <AVSCommon/SDKInterfaces/Endpoints/EndpointModificationData.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "RegistrationManager/CustomerDataManager.h"
 #include "SampleApp/InteractionManager.h"
 #include "Endpoints/Endpoint.h"
 
@@ -28,11 +29,20 @@
 #include <SampleApp/MeetingClient.h>
 #endif
 
+#include <vector>
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("InteractionManager");
+
+/// Dynamic endpoint description.
+static const std::string ENDPOINT_DESCRIPTION = "dynamic light endpoint";
+/// Dynamic endpoint manufacturer name
+static const std::string ENDPOINT_MANUFACTURER_NAME = "Amazon";
+/// Dynamic endpoint display categories
+static const std::vector<std::string> ENDPOINT_DISPLAY_CATEGORIES = {"OTHER"};
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -162,10 +172,10 @@ bool InteractionManager::addEndpoint(const std::string& friendlyName) {
 
     auto derivedEndpointId = "dynamic";
     dynamicEndpointBuilder->withDerivedEndpointId(derivedEndpointId)
-        .withDescription("dynamic light endpoint")
+        .withDescription(ENDPOINT_DESCRIPTION)
         .withFriendlyName(friendlyName)
-        .withManufacturerName("Amazon.com")
-        .withDisplayCategory({"OTHER"});
+        .withManufacturerName(ENDPOINT_MANUFACTURER_NAME)
+        .withDisplayCategory(ENDPOINT_DISPLAY_CATEGORIES);
 
 #ifdef POWER_CONTROLLER
     auto powerHandler = PeripheralEndpointPowerControllerHandler::create(derivedEndpointId);
@@ -194,6 +204,31 @@ bool InteractionManager::addEndpoint(const std::string& friendlyName) {
     return true;
 }
 
+bool InteractionManager::updateEndpoint(
+    const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId,
+    const std::string& friendlyName) {
+    AVSDiscoveryEndpointAttributes updatedAttributes;
+    updatedAttributes.endpointId = m_dynamicEndpointId.value();
+    updatedAttributes.friendlyName = friendlyName;
+    updatedAttributes.description = ENDPOINT_DESCRIPTION;
+    updatedAttributes.manufacturerName = ENDPOINT_MANUFACTURER_NAME;
+    updatedAttributes.displayCategories = ENDPOINT_DISPLAY_CATEGORIES;
+
+    auto updatedData = std::make_shared<avsCommon::sdkInterfaces::endpoints::EndpointModificationData>(
+        avsCommon::sdkInterfaces::endpoints::EndpointModificationData(
+            endpointId, avsCommon::utils::Optional<AVSDiscoveryEndpointAttributes>(updatedAttributes), {}, {}, {}, {}));
+
+    auto result = m_client->updateEndpoint(endpointId, updatedData);
+
+    if (result.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready) {
+        if (result.get() != alexaClientSDK::endpoints::EndpointRegistrationManager::UpdateResult::SUCCEEDED) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void InteractionManager::addDynamicEndpoint() {
     m_executor.submit([this]() {
         if (m_dynamicEndpointId.hasValue()) {
@@ -210,12 +245,15 @@ void InteractionManager::modifyDynamicEndpoint() {
             m_userInterface->printEndpointModificationError("Dynamic endpoint not added yet.");
         } else {
             bool result = false;
+            std::string friendlyName;
 
             if (m_friendlyNameToggle) {
-                result = addEndpoint("lamp");
+                friendlyName = "lamp";
             } else {
-                result = addEndpoint("light");
+                friendlyName = "light";
             }
+
+            result = updateEndpoint(m_dynamicEndpointId.value(), friendlyName);
 
             if (!result) {
                 m_userInterface->printEndpointModificationError("Failed to modify dynamic endpoint!");
@@ -971,6 +1009,23 @@ void InteractionManager::stopMicrophone() {
 
 void InteractionManager::doShutdown() {
     m_client.reset();
+}
+
+void InteractionManager::sendDeviceSetupComplete() {
+    m_executor.submit([this]() {
+        auto deviceSetup = m_client->getDeviceSetup();
+        if (!deviceSetup) {
+            ACSDK_ERROR(LX(__func__).m("DeviceSetup is null"));
+            return;
+        }
+        auto future = deviceSetup->sendDeviceSetupComplete(
+            acsdkDeviceSetupInterfaces::AssistedSetup::ALEXA_COMPANION_APPLICATION);
+        if (future.wait_for(std::chrono::seconds(2)) == std::future_status::ready && future.get()) {
+            m_userInterface->printMessage("DeviceSetupComplete Event Sent");
+        } else {
+            m_userInterface->printMessage("Error sending DeviceSetupComplete Event");
+        }
+    });
 }
 
 }  // namespace sampleApp

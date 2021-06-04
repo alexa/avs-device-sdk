@@ -20,15 +20,17 @@
 #include <unordered_set>
 
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkManufactory/Annotated.h>
+#include <acsdkNotificationsInterfaces/NotificationRendererInterface.h>
+#include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/MixingBehavior.h>
+#include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerObserverInterface.h>
 #include <AVSCommon/Utils/MediaType.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
-
-#include <acsdkNotificationsInterfaces/NotificationRendererInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkNotifications {
@@ -56,14 +58,18 @@ public:
      *
      * @param audioPipelineFactory The @c ApplicationAudioPlayerInterface instance to use to create the notifications
      * media player for rendering audio.
-     * @param focusManager The @c FocusManager instance to use to request audio
+     * @param audioFocusManager The annotated @c FocusManager instance to use to request audio
      * focus.
+     * @param shutdownNotifier The object to register with to receive notification when it is time to shutdown.
      * @return The new NotificationRenderer, or null if the operation fails.
      */
-    static std::shared_ptr<NotificationRenderer> create(
+    static std::shared_ptr<NotificationRendererInterface> createNotificationRendererInterface(
         const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
             audioPipelineFactory,
-        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> focusManager);
+        acsdkManufactory::Annotated<
+            avsCommon::sdkInterfaces::AudioFocusAnnotation,
+            avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier);
 
     /**
      * Create a NotificationRenderer.  The new NotificationRenderer starts life in

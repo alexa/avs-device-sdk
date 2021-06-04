@@ -9,7 +9,8 @@ if (BUILD_TESTING)
       MimeUtils.cpp
       TestableAttachmentManager.cpp
       TestableAttachmentWriter.cpp
-      TestableMessageObserver.cpp)
+      TestableMessageObserver.cpp
+      Timing/StopTaskTimer.cpp)
     target_include_directories(UtilsCommonTestLib PUBLIC
         "${AVSCommon_INCLUDE_DIRS}"
         "${AVSCommon_SOURCE_DIR}/Utils/src/MediaPlayer"

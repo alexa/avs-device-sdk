@@ -141,6 +141,9 @@ static const std::string HELP_MESSAGE =
     "|       Press 'o' followed by Enter at any time to enter the diagnostics     |\n"
     "|       screen.                                                              |\n"
 #endif
+    "| Device Setup Complete:                                                     |\n"
+    "|       Press 'v' followed by Enter at any time to indicate that device      |\n"
+    "|       setup is complete.                                                   |\n"
     "|                                                                            |\n"
     "| Quit:                                                                      |\n"
     "|       Press 'q' followed by Enter at any time to quit the application.     |\n"

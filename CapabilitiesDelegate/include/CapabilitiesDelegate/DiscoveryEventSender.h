@@ -50,12 +50,14 @@ public:
      * @param deleteReportEndpoints The map of endpoints for which the @c Discovery.DeleteReport event will be sent.
      * @param authDelegate The auth delegate instance to request the auth token from to be sent in the @c Discovery
      * events.
+     * @param waitForEventProcessed Indicate if sender should wait for the EventProcessed directive.
      * @return a new instance of the @c DiscoveryEventSender.
      */
     static std::shared_ptr<DiscoveryEventSender> create(
         const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
         const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
-        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate);
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+        const bool waitForEventProcessed = true);
 
     /**
      * Destructor.
@@ -89,11 +91,13 @@ private:
      * @param deleteReportEndpoints The map of endpoints for which the @c Discovery.DeleteReport event will be sent.
      * @param authDelegate The auth delegate instance to request the auth token from to be sent in the @c Discovery
      * events.
+     * @param waitForEventProcessed Indicate if sender should wait for the EventProcessed directive.
      */
     DiscoveryEventSender(
         const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
         const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
-        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate);
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+        const bool waitForEventProcessed);
 
     /**
      * Sends the discovery event while taking into account retries.
@@ -228,6 +232,9 @@ private:
 
     /// Flag to guard against repeated calls to sendDiscoveryEvents method.
     bool m_isSendDiscoveryEventsInvoked;
+
+    /// Flag indicating if the event should wait for the EventProcessed directive.
+    const bool m_waitForEventProcessed;
 };
 
 }  // namespace capabilitiesDelegate

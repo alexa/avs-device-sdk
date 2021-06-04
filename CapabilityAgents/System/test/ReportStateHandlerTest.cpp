@@ -20,7 +20,7 @@
 #include <gtest/gtest.h>
 
 #include <System/ReportStateHandler.h>
-#include <RegistrationManager/CustomerDataManager.h>
+#include <RegistrationManager/CustomerDataManagerFactory.h>
 #include <AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h>
 #include <AVSCommon/SDKInterfaces/MockMessageSender.h>
 #include <AVSCommon/SDKInterfaces/MockAVSConnectionManager.h>
@@ -41,7 +41,6 @@ using alexaClientSDK::avsCommon::sdkInterfaces::test::MockAVSConnectionManager;
 using alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult;
 using alexaClientSDK::avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender;
 using alexaClientSDK::avsCommon::sdkInterfaces::test::MockMessageSender;
-using alexaClientSDK::registrationManager::CustomerDataManager;
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -66,7 +65,7 @@ public:
 class ReportStateHandlerTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        m_customerDataManager = std::make_shared<CustomerDataManager>();
+        m_customerDataManager = registrationManager::CustomerDataManagerFactory::createCustomerDataManagerInterface();
         m_mockExceptionEncounteredSender = std::make_shared<MockExceptionEncounteredSender>();
         m_mockAVSConnectionManager = std::make_shared<::testing::NiceMock<MockAVSConnectionManager>>();
         m_mockMessageSender = std::make_shared<MockMessageSender>();
@@ -84,7 +83,7 @@ protected:
     }
 
     std::shared_ptr<ReportStateHandler> m_unit;
-    std::shared_ptr<CustomerDataManager> m_customerDataManager;
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> m_customerDataManager;
     std::shared_ptr<MockExceptionEncounteredSender> m_mockExceptionEncounteredSender;
     std::shared_ptr<MockMessageSender> m_mockMessageSender;
     std::shared_ptr<::testing::NiceMock<MockAVSConnectionManager>> m_mockAVSConnectionManager;

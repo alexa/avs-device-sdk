@@ -67,12 +67,12 @@ public:
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<alexaClientSDK::certifiedSender::CertifiedSender> certifiedSender,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
-        std::shared_ptr<alexaClientSDK::registrationManager::CustomerDataManager> dataManager,
+        std::shared_ptr<alexaClientSDK::registrationManager::CustomerDataManagerInterface> dataManager,
         std::shared_ptr<alexaClientSDK::capabilityAgents::system::ReportStateHandler> stateReportHandler,
         std::shared_ptr<alexaClientSDK::capabilityAgents::aip::AudioInputProcessor> audioInputProcessor,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::SpeakerManagerInterface> speakerManager,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
-        std::shared_ptr<alexaClientSDK::capabilityAgents::system::UserInactivityMonitor> userInactivityMonitor,
+        std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AVSGatewayManagerInterface> avsGatewayManager,
         std::shared_ptr<alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerInterface> ringtoneMediaPlayer,
@@ -105,6 +105,9 @@ private:
     /// When COMMS is enabled, this will hold the InternetConnectionMonitor.
     std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>
         m_internetConnectionMonitor;
+
+    /// When GUI is enabled, this will hold the visual focus manager.
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> m_visualFocusManager;
 };
 
 }  // namespace sampleApp

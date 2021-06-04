@@ -34,6 +34,7 @@ static const std::string TAG("EndpointRegistrationManager");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::endpoints;
 using namespace avsCommon::utils;
@@ -80,22 +81,12 @@ std::future<EndpointRegistrationManager::RegistrationResult> EndpointRegistratio
 
     auto endpointId = endpoint->getEndpointId();
 
-    /// Modifying the default endpoint is not permitted.
-    if (endpointId == m_defaultEndpointId && m_endpoints.end() != m_endpoints.find(endpointId)) {
-        ACSDK_ERROR(LX("registerEndpointFailed")
-                        .d("reason", "defaultEndpointAlreadyRegistered")
-                        .sensitive("endpointId", endpointId));
-        std::promise<RegistrationResult> promise;
-        promise.set_value(RegistrationResult::CONFIGURATION_ERROR);
-        return promise.get_future();
-    }
-
     if (m_pendingRegistrations.end() != m_pendingRegistrations.find(endpointId)) {
         ACSDK_ERROR(LX("registerEndpointFailed")
                         .d("reason", "endpointRegistrationInProgress")
                         .sensitive("endpointId", endpoint->getEndpointId()));
         std::promise<RegistrationResult> promise;
-        promise.set_value(RegistrationResult::REGISTRATION_IN_PROGRESS);
+        promise.set_value(RegistrationResult::PENDING_REGISTRATION);
         return promise.get_future();
     }
 
@@ -108,9 +99,70 @@ std::future<EndpointRegistrationManager::RegistrationResult> EndpointRegistratio
         return promise.get_future();
     }
 
+    if (m_pendingUpdates.end() != m_pendingUpdates.find(endpointId)) {
+        ACSDK_ERROR(LX("registerEndpointFailed")
+                        .d("reason", "endpointUpdateInProgress")
+                        .sensitive("endpointId", endpoint->getEndpointId()));
+        std::promise<RegistrationResult> promise;
+        promise.set_value(RegistrationResult::PENDING_UPDATE);
+        return promise.get_future();
+    }
+
+    if (m_endpoints.end() != m_endpoints.find(endpointId)) {
+        ACSDK_ERROR(LX("registerEndpointFailed")
+                        .d("reason", "endpointAlreadyRegistered")
+                        .sensitive("endpointId", endpoint->getEndpointId()));
+        std::promise<RegistrationResult> promise;
+        promise.set_value(RegistrationResult::ALREADY_REGISTERED);
+        return promise.get_future();
+    }
+
     m_executor.submit([this, endpoint]() { executeRegisterEndpoint(endpoint); });
 
     auto& pending = m_pendingRegistrations[endpointId];
+    pending.first = std::move(endpoint);
+    return pending.second.get_future();
+}
+
+std::future<EndpointRegistrationManager::UpdateResult> EndpointRegistrationManager::updateEndpoint(
+    const EndpointIdentifier& endpointId,
+    const std::shared_ptr<EndpointModificationData>& endpointModificationData) {
+    ACSDK_DEBUG5(LX(__func__));
+    std::lock_guard<std::mutex> lock{m_endpointsMutex};
+    if (m_pendingRegistrations.end() != m_pendingRegistrations.find(endpointId)) {
+        ACSDK_ERROR(
+            LX("updateEndpoint").d("reason", "endpointRegistrationInProgress").sensitive("endpointId", endpointId));
+        std::promise<UpdateResult> promise;
+        promise.set_value(UpdateResult::PENDING_REGISTRATION);
+        return promise.get_future();
+    }
+
+    if (m_pendingDeregistrations.end() != m_pendingDeregistrations.find(endpointId)) {
+        ACSDK_ERROR(
+            LX("updateEndpoint").d("reason", "endpointDeregistrationInProgress").sensitive("endpointId", endpointId));
+        std::promise<UpdateResult> promise;
+        promise.set_value(UpdateResult::PENDING_DEREGISTRATION);
+        return promise.get_future();
+    }
+
+    if (m_pendingUpdates.end() != m_pendingUpdates.find(endpointId)) {
+        ACSDK_ERROR(LX("updateEndpoint").d("reason", "endpointUpdateInProgress").sensitive("endpointId", endpointId));
+        std::promise<UpdateResult> promise;
+        promise.set_value(UpdateResult::PENDING_UPDATE);
+        return promise.get_future();
+    }
+
+    if (m_endpoints.end() == m_endpoints.find(endpointId)) {
+        ACSDK_ERROR(LX("updateEndpoint").d("reason", "endpointNotRegistered").sensitive("endpointId", endpointId));
+        std::promise<UpdateResult> promise;
+        promise.set_value(UpdateResult::NOT_REGISTERED);
+        return promise.get_future();
+    }
+
+    auto endpoint = m_endpoints[endpointId];
+    m_executor.submit(
+        [this, endpoint, endpointModificationData]() { executeUpdateEndpoint(endpoint, endpointModificationData); });
+    auto& pending = m_pendingUpdates[endpointId];
     pending.first = std::move(endpoint);
     return pending.second.get_future();
 }
@@ -136,15 +188,15 @@ std::future<EndpointRegistrationManager::DeregistrationResult> EndpointRegistrat
                         .d("reason", "endpointRegistrationInProgress")
                         .sensitive("endpointId", endpointId));
         std::promise<DeregistrationResult> promise;
-        promise.set_value(DeregistrationResult::REGISTRATION_IN_PROGRESS);
+        promise.set_value(DeregistrationResult::PENDING_REGISTRATION);
         return promise.get_future();
     }
 
-    if (m_endpoints.end() == m_endpoints.find(endpointId)) {
+    if (m_pendingUpdates.end() != m_pendingUpdates.find(endpointId)) {
         ACSDK_ERROR(
-            LX("deregisterEndpointFailed").d("reason", "endpointNotRegistered").sensitive("endpointId", endpointId));
+            LX("deregisterEndpointFailed").d("reason", "endpointUpdateInProgress").sensitive("endpointId", endpointId));
         std::promise<DeregistrationResult> promise;
-        promise.set_value(DeregistrationResult::NOT_REGISTERED);
+        promise.set_value(DeregistrationResult::PENDING_UPDATE);
         return promise.get_future();
     }
 
@@ -154,6 +206,14 @@ std::future<EndpointRegistrationManager::DeregistrationResult> EndpointRegistrat
                         .sensitive("endpointId", endpointId));
         std::promise<DeregistrationResult> promise;
         promise.set_value(DeregistrationResult::PENDING_DEREGISTRATION);
+        return promise.get_future();
+    }
+
+    if (m_endpoints.end() == m_endpoints.find(endpointId)) {
+        ACSDK_ERROR(
+            LX("deregisterEndpointFailed").d("reason", "endpointNotRegistered").sensitive("endpointId", endpointId));
+        std::promise<DeregistrationResult> promise;
+        promise.set_value(DeregistrationResult::NOT_REGISTERED);
         return promise.get_future();
     }
 
@@ -190,41 +250,21 @@ void EndpointRegistrationManager::executeRegisterEndpoint(const std::shared_ptr<
         }
     });
 
-    // Since an endpoint may reuse the same directive handlers, keep track of things that were added already.
-    // Create logic that will restore the previous endpoint and its handlers, in case of any failure
-    // while registering the new endpoint.
+    // Since an endpoint may reuse the same directive handler, keep track of things that were added.
+    // Create logic that will remove the handlers added in case of any failure while registering the endpoint.
     std::unordered_set<std::shared_ptr<DirectiveHandlerInterface>> handlersAdded;
-    std::unordered_set<std::shared_ptr<DirectiveHandlerInterface>> handlersRemoved;
-
-    std::shared_ptr<EndpointInterface> previousEndpoint;
-    {
-        std::lock_guard<std::mutex> lock{m_endpointsMutex};
-        if (m_endpoints.end() != m_endpoints.find(endpoint->getEndpointId())) {
-            previousEndpoint = m_endpoints[endpointId];
-        }
-    }
-
-    error::FinallyGuard revertDirectiveRouting([this, &result, &handlersAdded, &handlersRemoved, previousEndpoint] {
-        if (result != RegistrationResult::SUCCEEDED && previousEndpoint) {
-            auto endpointId = previousEndpoint->getEndpointId();
-            ACSDK_DEBUG5(LX("restoreDirectiveRoutingForPreviousEndpoint").sensitive("endpointId", endpointId));
+    error::FinallyGuard revertDirectiveRouting([this, &result, &handlersAdded] {
+        if (result != RegistrationResult::SUCCEEDED) {
             for (auto& handler : handlersAdded) {
                 m_directiveSequencer->removeDirectiveHandler(handler);
             }
-            for (auto& handler : handlersRemoved) {
-                m_directiveSequencer->addDirectiveHandler(handler);
-            }
-
-            std::lock_guard<std::mutex> lock{m_endpointsMutex};
-            m_endpoints[endpointId] = previousEndpoint;
         }
     });
 
-    /// Remove capabilities of the previous endpoint, since we are replacing it with a new one, and add
-    /// capabilities for the new endpoint. The previous endpoint will be restored if registering the new one
-    /// fails.
-    if ((previousEndpoint && !removeCapabilities(previousEndpoint, &handlersRemoved)) ||
-        !addCapabilities(endpoint, &handlersAdded)) {
+    if (!addCapabilities(endpoint, &handlersAdded)) {
+        ACSDK_ERROR(LX("registerEndpointFailed")
+                        .d("reason", "addCapabilitiesFailed")
+                        .sensitive("endpointId", endpoint->getEndpointId()));
         result = RegistrationResult::CONFIGURATION_ERROR;
         return;
     }
@@ -236,7 +276,129 @@ void EndpointRegistrationManager::executeRegisterEndpoint(const std::shared_ptr<
         return;
     }
 
+    // Notify observers.
+    std::list<std::shared_ptr<EndpointRegistrationObserverInterface>> observers;
+    {
+        std::lock_guard<std::mutex> lock{m_observersMutex};
+        observers = m_observers;
+    }
+
+    for (const auto& observer : observers) {
+        observer->onPendingEndpointRegistrationOrUpdate(
+            endpoint->getEndpointId(), endpoint->getAttributes(), endpoint->getCapabilityConfigurations());
+    }
+
     result = RegistrationResult::SUCCEEDED;
+    ACSDK_DEBUG2(LX(__func__).d("result", "finished").sensitive("endpointId", endpoint->getEndpointId()));
+    return;
+}
+
+void EndpointRegistrationManager::executeUpdateEndpoint(
+    const std::shared_ptr<EndpointInterface>& endpoint,
+    const std::shared_ptr<EndpointModificationData>& endpointModificationData) {
+    ACSDK_DEBUG5(LX(__func__));
+    auto endpointId = endpoint->getEndpointId();
+    UpdateResult result = UpdateResult::INTERNAL_ERROR;
+    error::FinallyGuard notifyObserver([this, &endpoint, &result] {
+        if (result != UpdateResult::SUCCEEDED) {
+            std::list<std::shared_ptr<EndpointRegistrationObserverInterface>> observers;
+            {
+                std::lock_guard<std::mutex> lock{m_observersMutex};
+                observers = m_observers;
+            }
+
+            for (auto& observer : observers) {
+                observer->onEndpointUpdate(endpoint->getEndpointId(), endpoint->getAttributes(), result);
+            }
+
+            std::lock_guard<std::mutex> lock{m_endpointsMutex};
+            auto it = m_pendingUpdates.find(endpoint->getEndpointId());
+            it->second.second.set_value(result);
+            m_pendingUpdates.erase(it);
+        }
+    });
+
+    // Since an endpoint may add/remove capabilities with directive handlers, keep track of things that were
+    // added or removed.
+    std::unordered_set<std::shared_ptr<DirectiveHandlerInterface>> handlersAdded;
+    std::unordered_set<std::shared_ptr<DirectiveHandlerInterface>> handlersRemoved;
+    // Create logic that will restore the previous endpoint, in case of any failure while updating the new endpoint.
+    std::shared_ptr<EndpointInterface> previousEndpoint;
+    {
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
+        if (m_endpoints.end() != m_endpoints.find(endpoint->getEndpointId())) {
+            previousEndpoint = m_endpoints[endpointId];
+        }
+    }
+
+    error::FinallyGuard revertDirectiveRounting([this, &result, previousEndpoint, &handlersRemoved, &handlersAdded] {
+        if (result != UpdateResult::SUCCEEDED && previousEndpoint) {
+            auto endpointId = previousEndpoint->getEndpointId();
+            ACSDK_DEBUG5(LX("restoreDirectiveRountingForPreviousEndpoint").sensitive("endpointId", endpointId));
+            for (auto& handler : handlersAdded) {
+                m_directiveSequencer->removeDirectiveHandler(handler);
+            }
+            for (auto& handler : handlersRemoved) {
+                m_directiveSequencer->addDirectiveHandler(handler);
+            }
+            std::lock_guard<std::mutex> lock{m_endpointsMutex};
+            m_endpoints[endpointId] = previousEndpoint;
+        }
+    });
+
+    auto capabilitiesToAdd = endpointModificationData->capabilitiesToAdd;
+    auto capabilitiesToRemove = endpointModificationData->capabilitiesToRemove;
+    auto capabilities = endpoint->getCapabilities();
+
+    for (auto& capability : capabilitiesToAdd) {
+        if (!addCapability(endpoint, capability, &handlersAdded)) {
+            ACSDK_ERROR(LX("updateEndpointFailed").d("reason", "capabilitiesFailedToAdd"));
+            result = UpdateResult::CONFIGURATION_ERROR;
+            return;
+        }
+    }
+
+    for (auto& configuration : capabilitiesToRemove) {
+        if (capabilities.find(configuration) != capabilities.end()) {
+            auto& handler = capabilities.at(configuration);
+            if (!removeCapability(endpoint, std::make_pair(configuration, handler), &handlersRemoved)) {
+                ACSDK_ERROR(LX("updateEndpointFailed").d("reason", "capabilitiesFailedToRemove"));
+                result = UpdateResult::CONFIGURATION_ERROR;
+                return;
+            }
+        } else {
+            ACSDK_WARN(LX("updateEndpointWarning")
+                           .d("reason", "capabilityToRemoveNotFound")
+                           .d("interface", configuration.interfaceName)
+                           .d("instance", configuration.instanceName.valueOr("")));
+        }
+    }
+
+    if (!endpoint->update(endpointModificationData)) {
+        ACSDK_ERROR(LX("updateEndpointFailed").d("reason", "endpointModificationDataFailedToUpdate"));
+        result = UpdateResult::CONFIGURATION_ERROR;
+        return;
+    }
+    if (!m_capabilitiesDelegate->addOrUpdateEndpoint(
+            endpoint->getAttributes(), endpoint->getCapabilityConfigurations())) {
+        ACSDK_ERROR(LX("updateEndpointFailed").d("reason", "updateEndpointCapabilitiesFailed"));
+        result = UpdateResult::INTERNAL_ERROR;
+        return;
+    }
+
+    // Notify observers.
+    std::list<std::shared_ptr<EndpointRegistrationObserverInterface>> observers;
+    {
+        std::lock_guard<std::mutex> lock{m_observersMutex};
+        observers = m_observers;
+    }
+
+    for (const auto& observer : observers) {
+        observer->onPendingEndpointRegistrationOrUpdate(
+            endpoint->getEndpointId(), endpoint->getAttributes(), endpoint->getCapabilityConfigurations());
+    }
+
+    result = UpdateResult::SUCCEEDED;
     ACSDK_DEBUG2(LX(__func__).d("result", "finished").sensitive("endpointId", endpoint->getEndpointId()));
     return;
 }
@@ -307,8 +469,8 @@ void EndpointRegistrationManager::removeObserver(
 }
 
 void EndpointRegistrationManager::onCapabilityRegistrationStatusChanged(
-    const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
-    const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints) {
+    const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
+    const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& deletedEndpoints) {
     ACSDK_DEBUG5(LX(__func__));
     m_executor.submit([this, addedOrUpdatedEndpoints, deletedEndpoints] {
         updateAddedOrUpdatedEndpoints(addedOrUpdatedEndpoints);
@@ -336,11 +498,14 @@ EndpointRegistrationManager::~EndpointRegistrationManager() {
     m_executor.shutdown();
 
     auto registrationResult = RegistrationResult::INTERNAL_ERROR;
+    auto updateResult = UpdateResult::INTERNAL_ERROR;
     auto deregistrationResult = DeregistrationResult::INTERNAL_ERROR;
 
     /// Set promises for pending registrations and deregistrations.
     std::list<std::pair<EndpointIdentifier, avsCommon::avs::AVSDiscoveryEndpointAttributes>>
-        addOrUpdateEndpointIdToAttributesPairs;
+        addEndpointIdToAttributePairs;
+    std::list<std::pair<EndpointIdentifier, avsCommon::avs::AVSDiscoveryEndpointAttributes>>
+        updateEndpointIdToAttributePairs;
     std::list<EndpointIdentifier> deleteEndpointIds;
     {
         std::lock_guard<std::mutex> lock{m_endpointsMutex};
@@ -351,9 +516,20 @@ EndpointRegistrationManager::~EndpointRegistrationManager() {
             auto endpointId = endpoint->getEndpointId();
 
             ACSDK_DEBUG5(LX(__func__).d("endpointId", endpointId));
-            addOrUpdateEndpointIdToAttributesPairs.emplace_back(std::make_pair(endpointId, endpoint->getAttributes()));
+            addEndpointIdToAttributePairs.emplace_back(std::make_pair(endpointId, endpoint->getAttributes()));
 
             pending.second.set_value(registrationResult);
+        }
+
+        for (auto& pendingUpdate : m_pendingUpdates) {
+            auto& pending = pendingUpdate.second;
+            auto& endpoint = pending.first;
+            auto endpointId = endpoint->getEndpointId();
+
+            ACSDK_DEBUG5(LX(__func__).d("endpointId", endpointId));
+            updateEndpointIdToAttributePairs.emplace_back(std::make_pair(endpointId, endpoint->getAttributes()));
+
+            pending.second.set_value(updateResult);
         }
 
         for (auto& pendingDeregistration : m_pendingDeregistrations) {
@@ -376,11 +552,14 @@ EndpointRegistrationManager::~EndpointRegistrationManager() {
     }
 
     for (auto& observer : observers) {
-        for (auto& addOrUpdateEndpointIdToAttributesPair : addOrUpdateEndpointIdToAttributesPairs) {
+        for (auto& addEndpointIdToAttributesPair : addEndpointIdToAttributePairs) {
             observer->onEndpointRegistration(
-                addOrUpdateEndpointIdToAttributesPair.first,
-                addOrUpdateEndpointIdToAttributesPair.second,
-                registrationResult);
+                addEndpointIdToAttributesPair.first, addEndpointIdToAttributesPair.second, registrationResult);
+        }
+
+        for (auto& updateEndpointIdToAttributesPair : updateEndpointIdToAttributePairs) {
+            observer->onEndpointUpdate(
+                updateEndpointIdToAttributesPair.first, updateEndpointIdToAttributesPair.second, updateResult);
         }
 
         for (auto& deleteEndpointId : deleteEndpointIds) {
@@ -398,41 +577,41 @@ void EndpointRegistrationManager::CapabilityRegistrationProxy::onCapabilitiesSta
     const std::vector<EndpointIdentifier>& deletedEndpointIds) {
     ACSDK_DEBUG5(LX(__func__).d("state", newState).d("error", newError).d("callback", static_cast<bool>(m_callback)));
     if (m_callback && (CapabilitiesDelegateObserverInterface::State::RETRIABLE_ERROR != newState)) {
-        auto registrationResult = (CapabilitiesDelegateObserverInterface::State::SUCCESS == newState)
-                                      ? RegistrationResult::SUCCEEDED
-                                      : RegistrationResult::CONFIGURATION_ERROR;
-        auto deregistrationResult = (CapabilitiesDelegateObserverInterface::State::SUCCESS == newState)
-                                        ? DeregistrationResult::SUCCEEDED
-                                        : DeregistrationResult::CONFIGURATION_ERROR;
-        m_callback(
-            std::make_pair(registrationResult, addedOrUpdatedEndpointIds),
-            std::make_pair(deregistrationResult, deletedEndpointIds));
+        m_callback(std::make_pair(newState, addedOrUpdatedEndpointIds), std::make_pair(newState, deletedEndpointIds));
     }
 }
 
 void EndpointRegistrationManager::CapabilityRegistrationProxy::setCallback(
     std::function<void(
-        const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
-        const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints)> callback) {
+        const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
+        const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& deletedEndpoints)>
+        callback) {
     m_callback = callback;
 }
 
 void EndpointRegistrationManager::updateAddedOrUpdatedEndpoints(
-    const std::pair<RegistrationResult, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints) {
-    auto registrationResult = addedOrUpdatedEndpoints.first;
+    const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints) {
+    auto state = addedOrUpdatedEndpoints.first;
+    auto registrationResult = (CapabilitiesDelegateObserverInterface::State::SUCCESS == state)
+                                  ? RegistrationResult::SUCCEEDED
+                                  : RegistrationResult::CONFIGURATION_ERROR;
+    auto updateResult = (CapabilitiesDelegateObserverInterface::State::SUCCESS == state)
+                            ? UpdateResult::SUCCEEDED
+                            : UpdateResult::CONFIGURATION_ERROR;
 
     /// Add the added or updated endpoints.
     std::list<std::pair<EndpointIdentifier, avsCommon::avs::AVSDiscoveryEndpointAttributes>>
-        addOrUpdateEndpointIdToAttributesPairs;
+        addEndpointIdToAttributesPairs, updatedEndpointIdToAttributesPairs;
     {
         std::lock_guard<std::mutex> lock{m_endpointsMutex};
         for (auto& addedOrUpdatedId : addedOrUpdatedEndpoints.second) {
-            auto pendingEndpointId = m_pendingRegistrations.find(addedOrUpdatedId);
-            if (m_pendingRegistrations.end() != pendingEndpointId) {
-                auto& pending = pendingEndpointId->second;
+            auto pendingRegistrationEndpointId = m_pendingRegistrations.find(addedOrUpdatedId);
+            auto pendingUpdateEndpointId = m_pendingUpdates.find(addedOrUpdatedId);
+            if (m_pendingRegistrations.end() != pendingRegistrationEndpointId) {
+                auto& pending = pendingRegistrationEndpointId->second;
                 auto& endpoint = pending.first;
 
-                addOrUpdateEndpointIdToAttributesPairs.emplace_back(
+                addEndpointIdToAttributesPairs.emplace_back(
                     std::make_pair(addedOrUpdatedId, endpoint->getAttributes()));
 
                 pending.second.set_value(registrationResult);
@@ -447,20 +626,41 @@ void EndpointRegistrationManager::updateAddedOrUpdatedEndpoints(
                     if (!removeCapabilities(endpoint)) {
                         ACSDK_ERROR((LX("failedToRemoveCapabilitiesFromFailedEndpointRegistration")));
                     }
+                }
+
+                m_pendingRegistrations.erase(addedOrUpdatedId);
+            } else if (m_pendingUpdates.end() != pendingUpdateEndpointId) {
+                auto& pending = pendingUpdateEndpointId->second;
+                auto& endpoint = pending.first;
+
+                updatedEndpointIdToAttributesPairs.emplace_back(
+                    std::make_pair(addedOrUpdatedId, endpoint->getAttributes()));
+
+                pending.second.set_value(updateResult);
+
+                if (UpdateResult::SUCCEEDED == updateResult) {
+                    ACSDK_DEBUG9(LX(__func__).d("result", "success").sensitive("endpointId", addedOrUpdatedId));
+                    m_endpoints[addedOrUpdatedId] = endpoint;
+                } else {
+                    ACSDK_ERROR(LX(__func__).d("result", "failed").sensitive("endpointId", addedOrUpdatedId));
+
+                    /// If updating the existing endpoint failed, remove its capabilities.
+                    if (!removeCapabilities(endpoint)) {
+                        ACSDK_ERROR((LX("failedToRemoveCapabilitiesFromFailedEndpointRegistration")));
+                    }
 
                     /// Restore the original endpoint, if it exists.
                     auto originalEndpoint = m_endpoints.find(addedOrUpdatedId);
-                    if ((m_endpoints.end() != originalEndpoint) && (!addCapabilities(originalEndpoint->second))) {
+                    if ((m_endpoints.end() != originalEndpoint) && !addCapabilities(originalEndpoint->second)) {
                         ACSDK_ERROR((LX("failedToRestorePreviousEndpoint").d("result", "removingPreviousEndpoint")));
                         m_endpoints.erase(addedOrUpdatedId);
                     }
                 }
-
-                m_pendingRegistrations.erase(addedOrUpdatedId);
+                m_pendingUpdates.erase(addedOrUpdatedId);
             } else {
-                ACSDK_DEBUG9(LX("updateAddedOrUpdatedEndpointsSkippedForEndpoint")
-                                 .d("reason", "endpoint not found in pending operations")
-                                 .sensitive("endpointId", addedOrUpdatedId));
+                ACSDK_WARN(LX("updateAddedOrUpdatedEndpointsSkippedForEndpoint")
+                               .d("reason", "endpoint not found in pending registration or update operations")
+                               .sensitive("endpointId", addedOrUpdatedId));
             }
         }
     }
@@ -473,18 +673,23 @@ void EndpointRegistrationManager::updateAddedOrUpdatedEndpoints(
     }
 
     for (auto& observer : observers) {
-        for (auto& addOrUpdateEndpointIdToAttributesPair : addOrUpdateEndpointIdToAttributesPairs) {
+        for (auto& addEndpointIdToAttributesPair : addEndpointIdToAttributesPairs) {
             observer->onEndpointRegistration(
-                addOrUpdateEndpointIdToAttributesPair.first,
-                addOrUpdateEndpointIdToAttributesPair.second,
-                registrationResult);
+                addEndpointIdToAttributesPair.first, addEndpointIdToAttributesPair.second, registrationResult);
+        }
+        for (auto& updatedEndpointIdToAttributesPair : updatedEndpointIdToAttributesPairs) {
+            observer->onEndpointUpdate(
+                updatedEndpointIdToAttributesPair.first, updatedEndpointIdToAttributesPair.second, updateResult);
         }
     }
 }
 
 void EndpointRegistrationManager::removeDeletedEndpoints(
-    const std::pair<DeregistrationResult, std::vector<EndpointIdentifier>>& deletedEndpoints) {
-    auto deregistrationResult = deletedEndpoints.first;
+    const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& deletedEndpoints) {
+    auto state = deletedEndpoints.first;
+    auto deregistrationResult = (CapabilityRegistrationProxy::State::SUCCESS == state)
+                                    ? DeregistrationResult::SUCCEEDED
+                                    : DeregistrationResult::CONFIGURATION_ERROR;
 
     /// Remove deleted endpoints.
     {
@@ -553,25 +758,36 @@ bool EndpointRegistrationManager::removeCapabilities(
 
     // Remove capabilities.
     for (auto& capability : endpoint->getCapabilities()) {
-        auto& handler = capability.second;
-        if (handler) {
-            if ((handlersRemoved->find(handler) == handlersRemoved->end()) &&
-                !m_directiveSequencer->removeDirectiveHandler(handler)) {
-                auto& configuration = capability.first;
-                ACSDK_ERROR(LX("deregisterEndpointFailed")
-                                .d("reason", "removeDirectiveHandlerFailed")
-                                .d("interface", configuration.interfaceName)
-                                .d("instance", configuration.instanceName.valueOr("")));
-                return false;
-            } else {
-                handlersRemoved->insert(handler);
-            }
-        } else {
-            ACSDK_DEBUG5(LX("deregisterEndpoint")
-                             .d("emptyHandler", capability.first.interfaceName)
-                             .sensitive("endpoint", endpoint->getEndpointId()));
+        if (!removeCapability(endpoint, capability, handlersRemoved)) {
+            return false;
         }
     }
+    return true;
+}
+
+bool EndpointRegistrationManager::removeCapability(
+    const std::shared_ptr<EndpointInterface>& endpoint,
+    const std::pair<avsCommon::avs::CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> capability,
+    std::unordered_set<std::shared_ptr<DirectiveHandlerInterface>>* handlersRemoved) {
+    auto& handler = capability.second;
+    if (handler) {
+        if ((handlersRemoved->find(handler) == handlersRemoved->end()) &&
+            !m_directiveSequencer->removeDirectiveHandler(handler)) {
+            auto& configuration = capability.first;
+            ACSDK_ERROR(LX("removeCapabilityFailed")
+                            .d("reason", "removeDirectiveHandlerFailed")
+                            .d("interface", configuration.interfaceName)
+                            .d("instance", configuration.instanceName.valueOr("")));
+            return false;
+        } else {
+            handlersRemoved->insert(handler);
+        }
+    } else {
+        ACSDK_DEBUG5(LX("removeCapability")
+                         .d("emptyHandler", capability.first.interfaceName)
+                         .sensitive("endpoint", endpoint->getEndpointId()));
+    }
+
     return true;
 }
 
@@ -591,25 +807,36 @@ bool EndpointRegistrationManager::addCapabilities(
     /// Add directive handlers for the new endpoint.
     auto capabilitiesToAdd = endpoint->getCapabilities();
     for (auto& capability : capabilitiesToAdd) {
-        auto& handler = capability.second;
-        if (handler) {
-            if ((handlersAdded->end() == handlersAdded->find(handler)) &&
-                !m_directiveSequencer->addDirectiveHandler(handler)) {
-                auto& configuration = capability.first;
-                ACSDK_ERROR(LX("registerEndpointFailed")
-                                .d("reason", "addDirectiveHandlerFailed")
-                                .d("interface", configuration.interfaceName)
-                                .d("instance", configuration.instanceName.valueOr("")));
-                return false;
-            }
-
-            handlersAdded->insert(handler);
-        } else {
-            ACSDK_DEBUG5(LX("registerEndpoint")
-                             .d("emptyHandler", capability.first.interfaceName)
-                             .sensitive("endpoint", endpoint->getEndpointId()));
+        if (!addCapability(endpoint, capability, handlersAdded)) {
+            return false;
         }
     }
+    return true;
+}
+
+bool EndpointRegistrationManager::addCapability(
+    const std::shared_ptr<EndpointInterface>& endpoint,
+    const std::pair<avsCommon::avs::CapabilityConfiguration, std::shared_ptr<DirectiveHandlerInterface>> capability,
+    std::unordered_set<std::shared_ptr<DirectiveHandlerInterface>>* handlersAdded) {
+    auto& handler = capability.second;
+    if (handler) {
+        if ((handlersAdded->end() == handlersAdded->find(handler)) &&
+            !m_directiveSequencer->addDirectiveHandler(handler)) {
+            auto& configuration = capability.first;
+            ACSDK_ERROR(LX("addCapabilityFailed")
+                            .d("reason", "addDirectiveHandlerFailed")
+                            .d("interface", configuration.interfaceName)
+                            .d("instance", configuration.instanceName.valueOr("")));
+            return false;
+        }
+
+        handlersAdded->insert(handler);
+    } else {
+        ACSDK_DEBUG5(LX("addCapability")
+                         .d("emptyHandler", capability.first.interfaceName)
+                         .sensitive("endpoint", endpoint->getEndpointId()));
+    }
+
     return true;
 }
 

@@ -20,6 +20,9 @@ namespace alexaClientSDK {
 namespace acsdkManufactory {
 namespace internal {
 
+/// Forward declaration.
+class RuntimeManufactory;
+
 /**
  * Common parent class for an object used to cache an instance.
  */
@@ -29,6 +32,20 @@ public:
      * Destructor.
      */
     virtual ~AbstractPointerCache() = default;
+
+    /**
+     * Get the instance from the cache.
+     *
+     * @param runtimeManufactory The @c RuntimeManufactory to use to acquire an instance if the cache is empty.
+     * @return A void* to a shared_ptr<Type>. Caller is responsible for casting this to to shared_ptr<Type>*.
+     */
+    virtual void* get(RuntimeManufactory& runtimeManufactory) = 0;
+
+    /**
+     * Release any unneeded references in the cache after calling get().
+     * @note If get() is called without calling cleanup() afterwards, that may result in memory leaks.
+     */
+    virtual void cleanup() = 0;
 };
 
 }  // namespace internal

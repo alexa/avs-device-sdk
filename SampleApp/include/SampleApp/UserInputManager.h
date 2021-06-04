@@ -176,6 +176,11 @@ private:
      */
     void audioInjectionMenu();
 
+    /**
+     * Send @c DeviceSetup DeviceSetupComplete Event.
+     */
+    bool deviceSetupCompleted();
+
     /// The main interaction manager that interfaces with the SDK.
     std::shared_ptr<InteractionManager> m_interactionManager;
 

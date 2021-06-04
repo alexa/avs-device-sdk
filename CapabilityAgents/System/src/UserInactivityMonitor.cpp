@@ -76,6 +76,33 @@ void UserInactivityMonitor::removeDirectiveGracefully(
     }
 }
 
+std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> UserInactivityMonitor::
+    createUserInactivityMonitorInterface(
+        const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
+        const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
+            exceptionEncounteredSender,
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface>& directiveSequencer,
+        const std::chrono::milliseconds& sendPeriod) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!messageSender || !exceptionEncounteredSender || !shutdownNotifier || !directiveSequencer) {
+        ACSDK_ERROR(LX("createUserInactivityMonitorInterfaceFailed")
+                        .d("isMessageSenderNull", !messageSender)
+                        .d("isExceptionEncounteredSenderNull", !exceptionEncounteredSender)
+                        .d("isShutdownNotifierNull", !shutdownNotifier)
+                        .d("isDirectiveSequencerNull", !directiveSequencer));
+        return nullptr;
+    }
+
+    auto monitor = std::shared_ptr<UserInactivityMonitor>(
+        new UserInactivityMonitor(messageSender, exceptionEncounteredSender, sendPeriod));
+
+    shutdownNotifier->addObserver(monitor);
+    directiveSequencer->addDirectiveHandler(monitor);
+
+    return monitor;
+}
+
 std::shared_ptr<UserInactivityMonitor> UserInactivityMonitor::create(
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
