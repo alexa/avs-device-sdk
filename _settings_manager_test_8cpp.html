@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,7 +81,7 @@ $(function() {
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_wait_event_8h_source.html">AVSCommon/Utils/WaitEvent.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_customer_data_manager_8h_source.html">RegistrationManager/MockCustomerDataManager.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_device_settings_manager_8h_source.html">Settings/DeviceSettingsManager.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mock_setting_8h_source.html">Settings/MockSetting.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_settings_manager_8h_source.html">Settings/SettingsManager.h</a>&quot;</code><br />
@@ -91,6 +91,33 @@ Include dependency graph for SettingsManagerTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_settings_manager_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_settings_2test_2_settings_manager_test_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_settings_2test_2_settings_manager_test_8cpp" id="_2workplace_2avs-device-sdk_2_settings_2test_2_settings_manager_test_8cpp">
+<area shape="rect" id="node6" href="_wait_event_8h.html" title="AVSCommon/Utils/WaitEvent.h" alt="" coords="466,191,675,218"/>
+<area shape="rect" id="node25" href="_mock_customer_data_manager_8h.html" title="RegistrationManager\l/MockCustomerDataManager.h" alt="" coords="1987,184,2191,225"/>
+<area shape="rect" id="node28" href="_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="2971,109,3195,136"/>
+<area shape="rect" id="node35" href="_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="939,363,1107,404"/>
+<area shape="rect" id="node36" href="_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="1767,191,1950,218"/>
+<area shape="rect" id="node50" href="_mock_setting_8h.html" title="Settings/MockSetting.h" alt="" coords="1622,109,1781,136"/>
+<area shape="rect" id="node9" href="_condition_variable_wrapper_8h.html" title="AVSCommon/Utils/Threading\l/ConditionVariableWrapper.h" alt="" coords="339,273,533,315"/>
+<area shape="rect" id="node14" href="_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="307,363,482,404"/>
+<area shape="rect" id="node15" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="5,363,181,404"/>
+<area shape="rect" id="node17" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1435,452,1611,493"/>
+<area shape="rect" id="node18" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1435,541,1611,583"/>
+<area shape="rect" id="node21" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1588,631,1764,672"/>
+<area shape="rect" id="node23" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1793,720,1969,761"/>
+<area shape="rect" id="node26" href="_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="1946,363,2169,404"/>
+<area shape="rect" id="node27" href="_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="1893,452,2112,493"/>
+<area shape="rect" id="node31" href="_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="1385,281,1562,307"/>
+<area shape="rect" id="node45" href="_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="3459,631,3651,672"/>
+<area shape="rect" id="node47" href="_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="2955,631,3168,672"/>
+<area shape="rect" id="node48" href="_alarm_volume_ramp_types_8h.html" title="Settings/Types/AlarmVolume\lRampTypes.h" alt="" coords="3192,631,3384,672"/>
+<area shape="rect" id="node49" href="_network_info_8h.html" title="Settings/Types/NetworkInfo.h" alt="" coords="3323,281,3519,307"/>
+<area shape="rect" id="node33" href="_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1129,549,1359,575"/>
+<area shape="rect" id="node34" href="_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1864,549,2048,575"/>
+<area shape="rect" id="node39" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2798,370,2994,397"/>
+<area shape="rect" id="node40" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1897,273,2063,315"/>
+<area shape="rect" id="node41" href="_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="2683,549,2898,575"/>
+<area shape="rect" id="node42" href="_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="2251,281,2477,307"/>
+<area shape="rect" id="node44" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2435,363,2608,404"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -187,7 +214,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

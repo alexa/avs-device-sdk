@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface" name="alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSenderInternalInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="255,45,501,101"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html" title=" " alt="" coords="549,5,796,61"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html" title="A mock MockAlexaInterfaceMessageSenderInternal." alt="" coords="567,85,778,141"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html" title=" " alt="" coords="5,45,207,101"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html" title="alexaClientSDK::capability\lAgents::alexa::AlexaInterfaceMessage\lSender" alt="" coords="549,5,796,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html" title="A mock MockAlexaInterfaceMessageSenderInternal. " alt="" coords="567,85,778,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaInterface\lMessageSenderInterface" alt="" coords="5,45,207,101"/>
 </map>

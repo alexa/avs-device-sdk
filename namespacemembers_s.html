@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -101,10 +101,10 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ac8f41663468e3cdcd0ded4bc4ec09dea">alexaClientSDK::capabilityAgents::aip::test</a>
 </li>
 <li>SampleApplicationComponent
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#ac56c680b8c784afdc834620a2ac452ad">alexaClientSDK::acsdkSampleApplication</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#acc20e19bd32c2173bc43cf84f80d5df4">alexaClientSDK::acsdkSampleApplication</a>
 </li>
 <li>SampleApplicationOptionsComponent
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#aa254b01dee44e00b7bf8a2ab29902442">alexaClientSDK::acsdkSampleApplication</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#a46f56b9cf64e66bac9e5e9984ca71c8e">alexaClientSDK::acsdkSampleApplication</a>
 </li>
 <li>SampleAppReturnCode
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a091908d2e9931dcf16819bd967de7e70">alexaClientSDK::sampleApp</a>
@@ -431,6 +431,10 @@ $(function() {
 <li>SETTING_CONFIGURATION_ROOT_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a00a421d9345a45c00e08405c0d6135d3">alexaClientSDK::sampleApp</a>
 </li>
+<li>SETTING_KEY
+: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a407b3afbccab83b8e92e7aa24f37e3c5">alexaClientSDK::capabilityAgents::doNotDisturb</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a486081c48252e5b05ebc07dc88a92852">alexaClientSDK::settings</a>
+</li>
 <li>SettingBool
 : <a class="el" href="group___define.html#gaf748ab20b13bb5891b74fe35ceec16d2">alexaClientSDK::settings::test</a>
 </li>
@@ -463,6 +467,10 @@ $(function() {
 </li>
 <li>SettingsValues
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#acf0d771f547caeda5a3a7d2bacaaa57e">alexaClientSDK::sampleApp</a>
+</li>
+<li>SETUP_COMPLETED_EVENT
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_device_setup.html#ae2393a6ef0179af081b4182abfb2dbb7">alexaClientSDK::acsdkDeviceSetup</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_device_setup_1_1test.html#acedd52bd5ba3483f1facce8c8a3c1e90">alexaClientSDK::acsdkDeviceSetup::test</a>
 </li>
 <li>SharedComponent
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shared.html#a468633190e97c2cedac330eafa22a7e7">alexaClientSDK::acsdkShared</a>
@@ -642,6 +650,9 @@ $(function() {
 </li>
 <li>SpeechConfirmationSettingType
 : <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#ab569e7779d8742426ce7bc4b524d0c9e">alexaClientSDK::settings</a>
+</li>
+<li>SpeechEncoderComponent
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_speech_encoder.html#a8edfd290f35cb61444b3675dc0de5fd2">alexaClientSDK::acsdkSpeechEncoder</a>
 </li>
 <li>SPEECHRECOGNIZER_CAPABILITY_INTERFACE_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a289ea50d1769f9459f2ab3b57bb39354">alexaClientSDK::capabilityAgents::aip</a>
@@ -910,7 +921,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a5b0a38568aab26aa9371470c4493f234">alexaClientSDK::avsCommon::utils::string</a>
 </li>
 <li>stringToInt64()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a6f7407a74bb9f68ed89e46444ba78ae7">alexaClientSDK::avsCommon::utils::string</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a8d96285d85475e9d145a8e01311cf4a1">alexaClientSDK::avsCommon::utils::string</a>
 </li>
 <li>stringToLowerCase()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1string.html#a01a26b31f8413cc8b4cf637f81014b17">alexaClientSDK::avsCommon::utils::string</a>
@@ -933,19 +944,34 @@ $(function() {
 <li>submitAnnotatedMetric()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a645a37f09fddbe356d280d69f8314c87">alexaClientSDK::acsdkAudioPlayer</a>
 </li>
+<li>submitDisconnectReasonMetric()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a4786f1cb7180c247e64cb6d0359a0527">alexaClientSDK::acl</a>
+</li>
+<li>submitLogoutMetric()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1registration_manager.html#a68bd3b62e0d8103ec9a5acf27d104f43">alexaClientSDK::registrationManager</a>
+</li>
+<li>submitMessageSendErrorMetric()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a9cfaf3d2a20a55c84bba1d5bc4974e33">alexaClientSDK::acl</a>
+</li>
 <li>submitMetric()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#ac79e36faa0b8be8e750a20ea7296f5ab">alexaClientSDK::acsdkAlerts::renderer</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac55dd902d79fa039de40d89c78e9627e">alexaClientSDK::acl</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1renderer.html#ac79e36faa0b8be8e750a20ea7296f5ab">alexaClientSDK::acsdkAlerts::renderer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a31676ffdc60053e4fe87f08734cd0bfb">alexaClientSDK::acsdkAlerts</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aab76c860338f1fb57bb0f5e407077301">alexaClientSDK::acsdkAudioPlayer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a65460918722176f9ce229a66d860178e">alexaClientSDK::acsdkAudioPlayer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a16000e3337234f63246fae358dde0e7a">alexaClientSDK::acsdkExternalMediaPlayer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a72a20e157a8f55914f17f2e6736709ae">alexaClientSDK::acsdkNotifications</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a2c384c576c0a720b4ae2273bbe26ffe0">alexaClientSDK::avsCommon::avs</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2fabee4de459d733425f1de6184c7438">alexaClientSDK::capabilityAgents::aip</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a012ec8b8741cb3038b46aae4af2562d3">alexaClientSDK::capabilityAgents::doNotDisturb</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a8b6e41c384143eebb942421ef855e70a">alexaClientSDK::capabilityAgents::speakerManager</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a49fc0308066c207861e117f163dd73e0">alexaClientSDK::settings</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1synchronize_state_sender.html#a00e235bdfcd039c5a4d8558ebf382654">alexaClientSDK::synchronizeStateSender</a>
 </li>
 <li>submitMetricWithMetadata()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a3517de091472f10127eeb32c15d4886d">alexaClientSDK::acsdkAlerts</a>
+</li>
+<li>submitResponseFinishedMetric()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac2b9c5ea667054daf93129851bc937cc">alexaClientSDK::acl</a>
 </li>
 <li>SUBNET_MASK
 : <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1test.html#af6e5ea39c332978cf801912640144de6">alexaClientSDK::settings::test</a>
@@ -1014,7 +1040,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a87dbc3eca9768efcbbb9caba1389be65">alexaClientSDK::acsdkBluetooth</a>
 </li>
 <li>swapEndian()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#ab060ce1683a20aab33b6214a034692c2">alexaClientSDK::avsCommon::utils</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a541ec4efe3c10a69a243ea28492025b7">alexaClientSDK::avsCommon::utils</a>
 </li>
 <li>SwrContextDeleter
 : <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#af50d473513b970700d437b32cc7bcb2a">alexaClientSDK::mediaPlayer::android</a>
@@ -1043,6 +1069,9 @@ $(function() {
 <li>SystemClockNotifierInterface
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_system_clock_monitor_interfaces.html#adaf69ee55517a6021a25d22ca1f000a0">alexaClientSDK::acsdkSystemClockMonitorInterfaces</a>
 </li>
+<li>SystemComponent
+: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a85c5b3d8e4caa100443138ab01a66d15">alexaClientSDK::capabilityAgents::system</a>
+</li>
 <li>SystemTimeZoneComponent
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_system_time_zone.html#a3f6fe122d87165affc8c845ba1edfbcd">alexaClientSDK::acsdkSystemTimeZone</a>
 </li>
@@ -1051,7 +1080,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

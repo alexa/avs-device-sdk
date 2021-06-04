@@ -1,8 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockPowerResourceManager.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockPowerResourceManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="474,5,694,76"/>
-<area shape="rect" id="node2" href="$_aggregated_power_resource_manager_test_8cpp.html" title=" " alt="" coords="5,124,232,209"/>
-<area shape="rect" id="node3" href="$_power_resource_test_8cpp.html" title=" " alt="" coords="256,131,467,202"/>
-<area shape="rect" id="node4" href="$_wake_guard_test_8cpp.html" title=" " alt="" coords="491,131,677,202"/>
-<area shape="rect" id="node5" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="701,131,899,202"/>
-<area shape="rect" id="node6" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="924,131,1113,202"/>
+<area shape="rect" id="node2" href="$_aggregated_power_resource_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/Power/AggregatedPowerResource\lManagerTest.cpp" alt="" coords="5,124,232,209"/>
+<area shape="rect" id="node3" href="$_power_resource_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/Power/PowerResourceTest.cpp" alt="" coords="256,131,467,202"/>
+<area shape="rect" id="node4" href="$_wake_guard_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/Power/WakeGuardTest.cpp" alt="" coords="491,131,677,202"/>
+<area shape="rect" id="node5" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="702,131,901,202"/>
+<area shape="rect" id="node6" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="925,131,1115,202"/>
 </map>

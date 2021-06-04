@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/src/SystemClockDelay.cpp" name="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/src/SystemClockDelay.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="27,5,223,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,109,64,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="88,109,163,136"/>
-<area shape="rect" id="node4" href="$_system_clock_delay_8h.html" title=" " alt="" coords="187,109,387,136"/>
-<area shape="rect" id="node5" href="$_delay_interface_8h.html" title=" " alt="" coords="227,184,346,211"/>
-<area shape="rect" id="node6" title=" " alt="" coords="256,259,317,285"/>
+<area shape="rect" id="node4" href="$_system_clock_delay_8h.html" title="Captions/SystemClockDelay.h" alt="" coords="187,109,389,136"/>
+<area shape="rect" id="node5" href="$_delay_interface_8h.html" title="DelayInterface.h" alt="" coords="229,184,347,211"/>
 </map>

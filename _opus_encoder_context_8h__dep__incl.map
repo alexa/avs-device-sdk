@@ -1,4 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/OpusEncoderContext/include/SpeechEncoder/OpusEncoderContext.h" name="/workplace/avs&#45;device&#45;sdk/SpeechEncoder/OpusEncoderContext/include/SpeechEncoder/OpusEncoderContext.h">
-<area shape="rect" id="node1" title=" " alt="" coords="14,5,241,76"/>
-<area shape="rect" id="node2" href="$_opus_encoder_context_8cpp.html" title=" " alt="" coords="5,124,249,180"/>
+<area shape="rect" id="node2" href="$acsdk_opus_speech_encoder_2src_2_speech_encoder_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkOpus\lSpeechEncoder/src/SpeechEncoderComponent.cpp" alt="" coords="5,124,329,180"/>
+<area shape="rect" id="node3" href="$_opus_encoder_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/src/OpusEncoderContext.cpp" alt="" coords="353,124,597,180"/>
 </map>

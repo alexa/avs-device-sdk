@@ -1,52 +1,34 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/test/TestTimingAdapterFactory.cpp" name="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/test/TestTimingAdapterFactory.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1261,5,1489,61"/>
-<area shape="rect" id="node2" href="$_test_timing_adapter_factory_8h.html" title=" " alt="" coords="1283,109,1467,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1105,184,1200,211"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1381,259,1495,285"/>
-<area shape="rect" id="node5" href="$_mock_caption_timing_adapter_8h.html" title=" " alt="" coords="1476,184,1669,211"/>
-<area shape="rect" id="node50" href="$_mock_system_clock_delay_8h.html" title=" " alt="" coords="1225,184,1401,211"/>
-<area shape="rect" id="node6" href="$_timing_adapter_factory_8h.html" title=" " alt="" coords="1799,259,2013,285"/>
-<area shape="rect" id="node7" href="$_caption_presenter_interface_8h.html" title=" " alt="" coords="2123,333,2302,375"/>
-<area shape="rect" id="node48" href="$_caption_timing_adapter_interface_8h.html" title=" " alt="" coords="1799,341,2013,367"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2239,423,2293,449"/>
-<area shape="rect" id="node9" href="$_focus_state_8h.html" title=" " alt="" coords="1171,1041,1382,1067"/>
-<area shape="rect" id="node12" href="$_caption_frame_8h.html" title=" " alt="" coords="2101,423,2215,449"/>
-<area shape="rect" id="node46" href="$_caption_line_8h.html" title=" " alt="" coords="2603,505,2705,531"/>
-<area shape="rect" id="node47" href="$_text_style_8h.html" title=" " alt="" coords="2653,594,2741,621"/>
-<area shape="rect" id="node10" title=" " alt="" coords="889,1130,958,1157"/>
-<area shape="rect" id="node11" title=" " alt="" coords="1879,1130,1933,1157"/>
-<area shape="rect" id="node13" title=" " alt="" coords="413,1130,474,1157"/>
-<area shape="rect" id="node14" title=" " alt="" coords="2295,1130,2367,1157"/>
-<area shape="rect" id="node15" title=" " alt="" coords="2698,1130,2757,1157"/>
-<area shape="rect" id="node16" href="$_media_player_observer_interface_8h.html" title=" " alt="" coords="1727,497,1941,539"/>
-<area shape="rect" id="node17" title=" " alt="" coords="2071,1130,2141,1157"/>
-<area shape="rect" id="node18" href="$_error_types_8h.html" title=" " alt="" coords="1589,587,1796,628"/>
-<area shape="rect" id="node20" href="$_media_player_interface_8h.html" title=" " alt="" coords="1388,594,1544,621"/>
-<area shape="rect" id="node38" href="$_media_player_state_8h.html" title=" " alt="" coords="233,676,440,717"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1313,773,1382,799"/>
-<area shape="rect" id="node21" title=" " alt="" coords="2466,683,2527,710"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1600,683,1655,710"/>
-<area shape="rect" id="node23" href="$_attachment_reader_8h.html" title=" " alt="" coords="798,676,998,717"/>
-<area shape="rect" id="node26" href="$_audio_format_8h.html" title=" " alt="" coords="1356,683,1576,710"/>
-<area shape="rect" id="node27" href="$_optional_8h.html" title=" " alt="" coords="427,773,622,799"/>
-<area shape="rect" id="node36" href="$_media_player_factory_interface_8h.html" title=" " alt="" coords="1643,1033,1849,1075"/>
-<area shape="rect" id="node39" href="$_playback_attributes_8h.html" title=" " alt="" coords="145,765,352,807"/>
-<area shape="rect" id="node40" href="$_playback_context_8h.html" title=" " alt="" coords="1901,676,2108,717"/>
-<area shape="rect" id="node43" href="$_playback_report_8h.html" title=" " alt="" coords="516,676,723,717"/>
-<area shape="rect" id="node44" href="$_source_config_8h.html" title=" " alt="" coords="1125,676,1332,717"/>
-<area shape="rect" id="node45" href="$_media_type_8h.html" title=" " alt="" coords="2227,1041,2436,1067"/>
-<area shape="rect" id="node24" title=" " alt="" coords="779,1130,844,1157"/>
-<area shape="rect" id="node25" href="$_reader_policy_8h.html" title=" " alt="" coords="697,765,859,807"/>
-<area shape="rect" id="node28" href="$_logger_utils_8h.html" title=" " alt="" coords="481,855,656,896"/>
-<area shape="rect" id="node29" href="$_logger_8h.html" title=" " alt="" coords="836,944,1011,985"/>
-<area shape="rect" id="node30" title=" " alt="" coords="1035,1041,1097,1067"/>
-<area shape="rect" id="node31" title=" " alt="" coords="1294,1130,1353,1157"/>
-<area shape="rect" id="node32" href="$_configuration_node_8h.html" title=" " alt="" coords="1407,1033,1619,1075"/>
-<area shape="rect" id="node33" href="$_level_8h.html" title=" " alt="" coords="1925,1033,2100,1075"/>
-<area shape="rect" id="node34" href="$_log_entry_8h.html" title=" " alt="" coords="836,1033,1011,1075"/>
-<area shape="rect" id="node35" title=" " alt="" coords="669,1130,743,1157"/>
-<area shape="rect" id="node37" href="$_media_player_factory_observer_interface_8h.html" title=" " alt="" coords="1597,1123,1855,1164"/>
-<area shape="rect" id="node41" title=" " alt="" coords="1872,773,1919,799"/>
-<area shape="rect" id="node42" href="$_platform_definitions_8h.html" title=" " alt="" coords="1943,765,2127,807"/>
-<area shape="rect" id="node49" href="$_delay_interface_8h.html" title=" " alt="" coords="880,423,999,449"/>
+<area shape="rect" id="node2" href="$_test_timing_adapter_factory_8h.html" title="TestTimingAdapterFactory.h" alt="" coords="852,109,1039,136"/>
+<area shape="rect" id="node5" href="$_mock_caption_timing_adapter_8h.html" title="MockCaptionTimingAdapter.h" alt="" coords="781,184,976,211"/>
+<area shape="rect" id="node50" href="$_mock_system_clock_delay_8h.html" title="MockSystemClockDelay.h" alt="" coords="1051,184,1229,211"/>
+<area shape="rect" id="node6" href="$_timing_adapter_factory_8h.html" title="Captions/TimingAdapterFactory.h" alt="" coords="730,259,947,285"/>
+<area shape="rect" id="node7" href="$_caption_presenter_interface_8h.html" title="Captions/CaptionPresenter\lInterface.h" alt="" coords="608,333,787,375"/>
+<area shape="rect" id="node48" href="$_caption_timing_adapter_interface_8h.html" title="CaptionTimingAdapterInterface.h" alt="" coords="811,341,1024,367"/>
+<area shape="rect" id="node9" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="581,1041,795,1067"/>
+<area shape="rect" id="node12" href="$_caption_frame_8h.html" title="CaptionFrame.h" alt="" coords="836,423,951,449"/>
+<area shape="rect" id="node46" href="$_caption_line_8h.html" title="CaptionLine.h" alt="" coords="557,505,659,531"/>
+<area shape="rect" id="node47" href="$_text_style_8h.html" title="TextStyle.h" alt="" coords="653,594,742,621"/>
+<area shape="rect" id="node16" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="787,497,1000,539"/>
+<area shape="rect" id="node18" href="$_error_types_8h.html" title="AVSCommon/Utils/MediaPlayer\l/ErrorTypes.h" alt="" coords="818,587,1027,628"/>
+<area shape="rect" id="node20" href="$_media_player_interface_8h.html" title="MediaPlayerInterface.h" alt="" coords="1451,594,1607,621"/>
+<area shape="rect" id="node38" href="$_media_player_state_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h" alt="" coords="1715,676,1925,717"/>
+<area shape="rect" id="node23" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2182,676,2386,717"/>
+<area shape="rect" id="node26" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="1418,683,1641,710"/>
+<area shape="rect" id="node27" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1445,773,1641,799"/>
+<area shape="rect" id="node36" href="$_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="347,1033,557,1075"/>
+<area shape="rect" id="node39" href="$_playback_attributes_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h" alt="" coords="2542,765,2751,807"/>
+<area shape="rect" id="node40" href="$_playback_context_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackContext.h" alt="" coords="1949,676,2158,717"/>
+<area shape="rect" id="node43" href="$_playback_report_8h.html" title="AVSCommon/Utils/MediaPlayer\l/PlaybackReport.h" alt="" coords="2593,676,2802,717"/>
+<area shape="rect" id="node44" href="$_source_config_8h.html" title="AVSCommon/Utils/MediaPlayer\l/SourceConfig.h" alt="" coords="1106,676,1315,717"/>
+<area shape="rect" id="node45" href="$_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="1901,1041,2113,1067"/>
+<area shape="rect" id="node25" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="2200,765,2365,807"/>
+<area shape="rect" id="node28" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1455,855,1631,896"/>
+<area shape="rect" id="node29" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1249,944,1425,985"/>
+<area shape="rect" id="node32" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1461,1033,1675,1075"/>
+<area shape="rect" id="node33" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1700,1033,1876,1075"/>
+<area shape="rect" id="node34" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1073,1033,1249,1075"/>
+<area shape="rect" id="node37" href="$_media_player_factory_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h" alt="" coords="369,1123,626,1164"/>
+<area shape="rect" id="node42" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1939,765,2125,807"/>
+<area shape="rect" id="node49" href="$_delay_interface_8h.html" title="DelayInterface.h" alt="" coords="1081,423,1199,449"/>
 </map>

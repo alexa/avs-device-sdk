@@ -1,11 +1,10 @@
 <map id="alexaClientSDK::avsCommon::utils::bluetooth::BluetoothEvent" name="alexaClientSDK::avsCommon::utils::bluetooth::BluetoothEvent">
-<area shape="rect" id="node1" title="Base class for a BluetoothEvent." alt="" coords="5,265,217,306"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_device_manager_initialized_event.html" title=" " alt="" coords="288,5,507,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html" title=" " alt="" coords="265,86,529,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html" title=" " alt="" coords="270,151,525,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_state_changed_event.html" title=" " alt="" coords="299,217,496,273"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_command_received_event.html" title=" " alt="" coords="288,297,507,353"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_streaming_state_changed_event.html" title=" " alt="" coords="289,377,506,433"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_scanning_state_changed_event.html" title=" " alt="" coords="293,457,501,513"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_toggle_a2_d_p_profile_state_changed_event.html" title=" " alt="" coords="281,537,514,593"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_device_manager_initialized_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::BluetoothDevice\lManagerInitializedEvent" alt="" coords="288,5,507,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_discovered_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceDiscoveredEvent" alt="" coords="265,86,529,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_removed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceRemovedEvent" alt="" coords="270,151,525,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_device_state_changed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::DeviceState\lChangedEvent" alt="" coords="299,217,496,273"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_command_received_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::MediaCommand\lReceivedEvent" alt="" coords="288,297,507,353"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_media_streaming_state_changed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::MediaStreaming\lStateChangedEvent" alt="" coords="289,377,506,433"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_scanning_state_changed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::ScanningState\lChangedEvent" alt="" coords="293,457,501,513"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_toggle_a2_d_p_profile_state_changed_event.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::ToggleA2DPProfile\lStateChangedEvent" alt="" coords="280,537,515,593"/>
 </map>

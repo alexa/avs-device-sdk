@@ -1,5 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/PlatformSpecificValues.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/PlatformSpecificValues.h">
-<area shape="rect" id="node1" title=" " alt="" coords="53,5,268,91"/>
-<area shape="rect" id="node2" href="$_android_application_audio_pipeline_factory_8h.html" title=" " alt="" coords="5,139,316,224"/>
-<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="9,272,312,343"/>
+<area shape="rect" id="node2" href="$_android_application_audio_pipeline_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/AndroidApplicationAudioPipelineFactory.h" alt="" coords="180,139,473,224"/>
+<area shape="rect" id="node5" href="$acsdk_android_application_audio_pipeline_factory_2include_2acsdk_application_audio_pipeline_fact952244caba7ee8985a8bdd12c0ca49b0.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/ApplicationAudioPipelineFactoryComponent.h" alt="" coords="497,139,791,224"/>
+<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp" alt="" coords="5,272,309,343"/>
+<area shape="rect" id="node4" href="$acsdk_android_application_audio_pipeline_factory_2src_2_application_audio_pipeline_factory_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/ApplicationAudioPipelineFactoryComponent.cpp" alt="" coords="334,272,661,343"/>
 </map>

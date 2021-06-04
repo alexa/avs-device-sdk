@@ -1,0 +1,21 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/src/DeviceConnectionRulesAdapter.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/src/DeviceConnectionRulesAdapter.cpp">
+<area shape="rect" id="node2" href="$_device_connection_rules_adapter_8h.html" title="acsdkBluetooth/DeviceConnection\lRulesAdapter.h" alt="" coords="22,124,245,165"/>
+<area shape="rect" id="node5" href="$_bluetooth_device_connection_rules_provider_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceConnectionRules\lProviderInterface.h" alt="" coords="142,213,365,269"/>
+<area shape="rect" id="node8" href="$_bluetooth_device_connection_rule_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceConnection\lRuleInterface.h" alt="" coords="405,317,651,373"/>
+<area shape="rect" id="node6" href="$_bluetooth_device_observer_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceObserverInterface.h" alt="" coords="93,325,331,366"/>
+<area shape="rect" id="node11" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="885,421,1128,463"/>
+<area shape="rect" id="node38" href="$_device_category_8h.html" title="AVSCommon/Utils/Bluetooth\l/DeviceCategory.h" alt="" coords="355,897,547,939"/>
+<area shape="rect" id="node15" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="625,511,820,567"/>
+<area shape="rect" id="node16" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="968,615,1179,671"/>
+<area shape="rect" id="node17" href="$_media_streaming_state_8h.html" title="AVSCommon/Utils/Bluetooth\l/MediaStreamingState.h" alt="" coords="844,518,1036,559"/>
+<area shape="rect" id="node18" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1349,525,1545,552"/>
+<area shape="rect" id="node19" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1515,622,1691,663"/>
+<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1515,719,1691,760"/>
+<area shape="rect" id="node25" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1411,808,1626,849"/>
+<area shape="rect" id="node29" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1880,897,2056,939"/>
+<area shape="rect" id="node30" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="889,808,1065,849"/>
+<area shape="rect" id="node36" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1737,808,1930,849"/>
+<area shape="rect" id="node37" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="253,987,429,1028"/>
+<area shape="rect" id="node33" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="571,897,747,939"/>
+<area shape="rect" id="node34" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1004,987,1180,1028"/>
+</map>

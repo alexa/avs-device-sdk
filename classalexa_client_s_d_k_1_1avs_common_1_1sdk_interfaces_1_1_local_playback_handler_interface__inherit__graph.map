@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::LocalPlaybackHandlerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,208,87"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title=" " alt="" coords="272,5,463,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html" title=" " alt="" coords="256,71,479,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title="alexaClientSDK::acsdkAudio\lPlayer::AudioPlayer" alt="" coords="272,5,463,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::ExternalMediaPlayer" alt="" coords="256,71,479,112"/>
 </map>

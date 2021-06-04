@@ -1,7 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/test/include/acsdkBluetoothInterfaces/MockBluetoothDeviceObserver.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/test/include/acsdkBluetoothInterfaces/MockBluetoothDeviceObserver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="40,5,285,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,146,120,173"/>
-<area shape="rect" id="node3" href="$_bluetooth_device_observer_interface_8h.html" title=" " alt="" coords="144,139,381,180"/>
-<area shape="rect" id="node4" title=" " alt="" coords="183,228,238,255"/>
-<area shape="rect" id="node5" title=" " alt="" coords="263,228,367,255"/>
+<area shape="rect" id="node3" href="$_bluetooth_device_observer_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceObserverInterface.h" alt="" coords="144,139,381,180"/>
 </map>

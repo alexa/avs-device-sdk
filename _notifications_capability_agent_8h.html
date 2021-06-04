@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,26 +74,69 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
+<code>#include &lt;<a class="el" href="_annotated_8h_source.html">acsdkManufactory/Annotated.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notifications_notifier_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationsNotifierInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notifications_observer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationsObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notification_renderer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationRendererInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notification_renderer_observer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationRendererObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_notifications_storage_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationsStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_shutdown_notifier_interface_8h_source.html">acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_agent_8h_source.html">AVSCommon/AVS/CapabilityAgent.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_factory_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_notifications_audio_factory_interface_8h_source.html">AVSCommon/SDKInterfaces/Audio/NotificationsAudioFactoryInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_default_endpoint_annotation_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_capabilities_registrar_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_interface_8h_source.html">AVSCommon/SDKInterfaces/CapabilityConfigurationInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_context_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/ContextManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_requires_shutdown_8h_source.html">AVSCommon/Utils/RequiresShutdown.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_executor_8h_source.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_handler_8h_source.html">RegistrationManager/CustomerDataHandler.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_notification_indicator_8h_source.html">NotificationIndicator.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_notifications_capability_agent_state_8h_source.html">NotificationsCapabilityAgentState.h</a>&quot;</code><br />
-<code>#include &lt;<a class="el" href="_notification_renderer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationRendererInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_notification_renderer_observer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationRendererObserverInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_notifications_observer_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationsObserverInterface.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_notifications_storage_interface_8h_source.html">acsdkNotificationsInterfaces/NotificationsStorageInterface.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_notification_indicator_8h_source.html">acsdkNotifications/NotificationIndicator.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_notifications_capability_agent_state_8h_source.html">acsdkNotifications/NotificationsCapabilityAgentState.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for NotificationsCapabilityAgent.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_notifications_capability_agent_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notifications_capability_agent_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notifications_capability_agent_8h" id="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notifications_capability_agent_8h">
+<area shape="rect" id="node4" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1304,153,1507,180"/>
+<area shape="rect" id="node5" href="_notifications_notifier_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsNotifierInterface.h" alt="" coords="1531,146,1733,187"/>
+<area shape="rect" id="node8" href="_notifications_observer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsObserverInterface.h" alt="" coords="4255,243,4470,284"/>
+<area shape="rect" id="node10" href="_notification_renderer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationRendererInterface.h" alt="" coords="70,339,277,381"/>
+<area shape="rect" id="node14" href="_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="5,436,200,477"/>
+<area shape="rect" id="node15" href="_notifications_storage_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsStorageInterface.h" alt="" coords="3695,146,3902,187"/>
+<area shape="rect" id="node16" href="_notification_indicator_8h.html" title="acsdkNotifications\l/NotificationIndicator.h" alt="" coords="4546,243,4699,284"/>
+<area shape="rect" id="node17" href="_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="1562,243,1785,284"/>
+<area shape="rect" id="node18" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2589,339,2779,381"/>
+<area shape="rect" id="node20" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="2956,146,3151,187"/>
+<area shape="rect" id="node31" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3225,339,3420,381"/>
+<area shape="rect" id="node34" href="_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AudioFactoryInterface.h" alt="" coords="845,243,1048,284"/>
+<area shape="rect" id="node39" href="_notifications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/NotificationsAudioFactory\lInterface.h" alt="" coords="301,332,515,388"/>
+<area shape="rect" id="node41" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="4193,146,4447,187"/>
+<area shape="rect" id="node42" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="2113,139,2319,195"/>
+<area shape="rect" id="node43" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="1959,243,2182,284"/>
+<area shape="rect" id="node44" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3428,146,3620,187"/>
+<area shape="rect" id="node47" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="4471,146,4651,187"/>
+<area shape="rect" id="node48" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1795,339,1989,381"/>
+<area shape="rect" id="node49" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1113,146,1279,187"/>
+<area shape="rect" id="node50" href="_notifications_capability_agent_state_8h.html" title="acsdkNotifications\l/NotificationsCapabilityAgent\lState.h" alt="" coords="3978,139,4169,195"/>
+<area shape="rect" id="node6" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1461,339,1619,381"/>
+<area shape="rect" id="node9" href="_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="4305,347,4535,373"/>
+<area shape="rect" id="node13" href="_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="539,443,751,470"/>
+<area shape="rect" id="node22" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="3445,339,3675,381"/>
+<area shape="rect" id="node25" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="2623,243,2883,284"/>
+<area shape="rect" id="node26" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="2908,243,3100,284"/>
+<area shape="rect" id="node27" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3695,243,3889,284"/>
+<area shape="rect" id="node28" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="3428,243,3620,284"/>
+<area shape="rect" id="node29" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2256,243,2448,284"/>
+<area shape="rect" id="node30" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2293,339,2515,381"/>
+<area shape="rect" id="node23" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="3532,436,3727,477"/>
+<area shape="rect" id="node24" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3261,525,3457,552"/>
+<area shape="rect" id="node35" href="_alerts_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/AlertsAudioFactoryInterface.h" alt="" coords="786,339,1022,381"/>
+<area shape="rect" id="node38" href="_communications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/CommunicationsAudioFactory\lInterface.h" alt="" coords="1046,332,1285,388"/>
+<area shape="rect" id="node40" href="_system_sound_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/SystemSoundAudioFactory\lInterface.h" alt="" coords="539,332,762,388"/>
+<area shape="rect" id="node46" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="3965,243,4179,284"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -101,6 +144,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_notifications_capability_agent_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notifications_capability_agent_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notifications_capability_agent_8hdep" id="_2workplace_2avs-device-sdk_2capabilities_2_notifications_2acsdk_notifications_2include_2acsdk_notifications_2_notifications_capability_agent_8hdep">
+<area shape="rect" id="node2" href="_notifications_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lCapabilityAgent.cpp" alt="" coords="5,139,239,209"/>
+<area shape="rect" id="node3" href="_notifications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lComponent.cpp" alt="" coords="263,139,496,209"/>
+<area shape="rect" id="node4" href="_notifications_notifier_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lNotifier.cpp" alt="" coords="520,139,753,209"/>
+<area shape="rect" id="node5" href="_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="778,139,1015,209"/>
 </map>
 </div>
 </div>
@@ -123,7 +170,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

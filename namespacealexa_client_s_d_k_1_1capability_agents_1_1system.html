@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -108,6 +108,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a85c5b3d8e4caa100443138ab01a66d15"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a85c5b3d8e4caa100443138ab01a66d15">SystemComponent</a> = <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">acsdkManufactory::Component</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html">avsCommon::sdkInterfaces::UserInactivityMonitorInterface</a> &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &gt;&gt;</td></tr>
+<tr class="separator:a85c5b3d8e4caa100443138ab01a66d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a425cfac84db5b5710f2db5b771533e87"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a425cfac84db5b5710f2db5b771533e87">MockSettingManager</a> = <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_settings_manager.html">SettingsManager</a>&lt; <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html">SettingInterface</a>&lt; bool &gt;, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html">SettingInterface</a>&lt; int &gt;, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_interface.html">SettingInterface</a>&lt; std::string &gt; &gt;</td></tr>
 <tr class="memdesc:a425cfac84db5b5710f2db5b771533e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for setting manager configuration.  <a href="#a425cfac84db5b5710f2db5b771533e87">More...</a><br /></td></tr>
 <tr class="separator:a425cfac84db5b5710f2db5b771533e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,6 +125,8 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:aabfe73c0b35e78aa1c194e946eef3039"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a85c5b3d8e4caa100443138ab01a66d15">SystemComponent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#aabfe73c0b35e78aa1c194e946eef3039">getComponent</a> (const std::chrono::milliseconds &amp;sendPeriod=std::chrono::hours(1))</td></tr>
+<tr class="separator:aabfe73c0b35e78aa1c194e946eef3039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6457de285109f3b5477b7e58faca6c86"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a6457de285109f3b5477b7e58faca6c86">TAG</a> (&quot;LocaleHandler&quot;)</td></tr>
 <tr class="memdesc:a6457de285109f3b5477b7e58faca6c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a6457de285109f3b5477b7e58faca6c86">More...</a><br /></td></tr>
 <tr class="separator:a6457de285109f3b5477b7e58faca6c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,6 +140,8 @@ Functions</h2></td></tr>
 <tr class="separator:a9dcd9d2c0ecb3671719d0db18ac28f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab68bb7076fbc4e5b5c79f122872b459"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#aab68bb7076fbc4e5b5c79f122872b459">getSystemCapabilityConfiguration</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a> &gt; &amp;localeAssetsManager)</td></tr>
 <tr class="separator:aab68bb7076fbc4e5b5c79f122872b459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a140cd7e772dade547c637a377f15f92e"><td class="memItemLeft" align="right" valign="top">static std::function&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html">avsCommon::sdkInterfaces::UserInactivityMonitorInterface</a> &gt; const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt; &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a140cd7e772dade547c637a377f15f92e">getCreateUserInactivityMonitorInterface</a> (const std::chrono::milliseconds &amp;sendPeriod)</td></tr>
+<tr class="separator:a140cd7e772dade547c637a377f15f92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad9559dcbb2708cdc0ef3d9eb77d63d2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#aad9559dcbb2708cdc0ef3d9eb77d63d2">TAG</a> (&quot;TimeZoneHandler&quot;)</td></tr>
 <tr class="memdesc:aad9559dcbb2708cdc0ef3d9eb77d63d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#aad9559dcbb2708cdc0ef3d9eb77d63d2">More...</a><br /></td></tr>
 <tr class="separator:aad9559dcbb2708cdc0ef3d9eb77d63d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -304,6 +310,21 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a85c5b3d8e4caa100443138ab01a66d15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85c5b3d8e4caa100443138ab01a66d15">&#9670;&nbsp;</a></span>SystemComponent</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a85c5b3d8e4caa100443138ab01a66d15">alexaClientSDK::capabilityAgents::system::SystemComponent</a> = typedef <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">acsdkManufactory::Component</a>&lt; std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html">avsCommon::sdkInterfaces::UserInactivityMonitorInterface</a>&gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a>&gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a>&gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a>&gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a>&gt; &gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Manufactory Component definition for the System Capability Agent and related handlers. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="aed878648ece248da3c364b307400d4ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed878648ece248da3c364b307400d4ab">&#9670;&nbsp;</a></span>Index</h2>
@@ -327,6 +348,66 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aabfe73c0b35e78aa1c194e946eef3039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabfe73c0b35e78aa1c194e946eef3039">&#9670;&nbsp;</a></span>getComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system.html#a85c5b3d8e4caa100443138ab01a66d15">SystemComponent</a> alexaClientSDK::capabilityAgents::system::getComponent </td>
+          <td>(</td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>sendPeriod</em> = <code>std::chrono::hours(1)</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the <code>Manufactory</code> component for System.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sendPeriod</td><td>Optional. The period of send events for the <code>UserInactivityMonitorInterface</code> in seconds. Default value is 1 hour.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>Manufactory</code> component for System. </dd></dl>
+
+</div>
+</div>
+<a id="a140cd7e772dade547c637a377f15f92e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a140cd7e772dade547c637a377f15f92e">&#9670;&nbsp;</a></span>getCreateUserInactivityMonitorInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::function&lt;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_interface.html">avsCommon::sdkInterfaces::UserInactivityMonitorInterface</a>&gt; const std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a>&gt;&amp;, const std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a>&gt;&amp;, const std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a>&gt;&amp;, const std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a>&gt;&amp;)&gt; alexaClientSDK::capabilityAgents::system::getCreateUserInactivityMonitorInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::chrono::milliseconds &amp;&#160;</td>
+          <td class="paramname"><em>sendPeriod</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper that returns an std::function wrapping the <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_user_inactivity_monitor.html#ad1c6b83e352043dd92d87654a60deb11">UserInactivityMonitor::createUserInactivityMonitorInterface</a></code>, which captures the sendPeriod.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sendPeriod</td><td>The period of send events for the <code>UserInactivityMonitorInterface</code> in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A std::function that produces an instance of <code>UserInactivityMonitorInterface</code>. </dd></dl>
+
+</div>
+</div>
 <a id="aab68bb7076fbc4e5b5c79f122872b459"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab68bb7076fbc4e5b5c79f122872b459">&#9670;&nbsp;</a></span>getSystemCapabilityConfiguration()</h2>
 
@@ -1754,7 +1835,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

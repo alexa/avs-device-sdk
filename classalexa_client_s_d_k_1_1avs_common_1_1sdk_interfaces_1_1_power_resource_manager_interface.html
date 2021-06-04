@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,9 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceM
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_power_resource_manager.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockPowerResourceManager" alt="" coords="281,5,479,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1power_1_1_aggregated_power_resource_manager.html" title="alexaClientSDK::avsCommon\l::utils::power::AggregatedPower\lResourceManager" alt="" coords="276,85,484,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1power_1_1_no_op_power_resource_manager.html" title="alexaClientSDK::avsCommon\l::utils::power::NoOpPowerResource\lManager" alt="" coords="264,165,496,221"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -102,6 +105,32 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:aa6c87f2f5104369c2eed8ddc07d13057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab175b162715a7afdaeab981836bb8c2a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2a">PowerResourceTypeIndex</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aaa16fe7713df6bcd2941e53df672ee097">TYPE_CPU</a> = 0, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aaed1b316a88cd4293936352f696b6edbe">TYPE_DDR</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aa068c84a4020914ffd3901840ca53af46">TYPE_STORAGE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aa358f58f9a0ad204041a508ba4e270cdf">TYPE_NETWORK</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aaec10a31000e41818ecd1c71a3372dea3">TYPE_RESERVED_ONE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aa32946ff4e040ff3adb3c2a8dd77009e4">TYPE_RESERVED_TWO</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2aa4d84c42c62cb5cec53520091c9565f94">NUM_OF_TYPES</a>
+<br />
+ }</td></tr>
+<tr class="separator:ab175b162715a7afdaeab981836bb8c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdbfff9111d0c785492ea8a2cd74c3e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3e">PowerResourceTypeFlag</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3eaf1cfcc01132de97aff96c219b8dd503f">TYPE_ALL_FLAG</a> = 0, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3ea407e8248679b10c5f02554b8fe000e55">TYPE_CPU_FLAG</a> = 1 &lt;&lt; PowerResourceTypeIndex::TYPE_CPU, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3eadd9ef3fbafef85b729d247eede545cdd">TYPE_DDR_FLAG</a> = 1 &lt;&lt; PowerResourceTypeIndex::TYPE_DDR, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3ea51b30ea50c2a8ebb0df893e44ac51dd1">TYPE_STORAGE_FLAG</a> = 1 &lt;&lt; PowerResourceTypeIndex::TYPE_STORAGE, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3eac6804040a3404acdb3d739a8e561ea8b">TYPE_NETWORK_FLAG</a> = 1 &lt;&lt; PowerResourceTypeIndex::TYPE_NETWORK, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3ea8ad28c4eed994ee3ddd65ad10bcfa689">TYPE_RESERVED_ONE_FLAG</a> = 1 &lt;&lt; PowerResourceTypeIndex::TYPE_RESERVED_ONE, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3ea256a586846959354027b8d0e45541b03">TYPE_RESERVED_TWO_FLAG</a> = 1 &lt;&lt; PowerResourceTypeIndex::TYPE_RESERVED_TWO
+<br />
+ }</td></tr>
+<tr class="separator:a4fdbfff9111d0c785492ea8a2cd74c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25fbd43f9f916033daedf01a1298aedd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a> = std::bitset&lt; PowerResourceTypeIndex::NUM_OF_TYPES &gt;</td></tr>
+<tr class="separator:a25fbd43f9f916033daedf01a1298aedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -115,6 +144,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a79e710992f0d03ec72113e7138f07cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b347aed113dee929afbaede4c38e8ee"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a3b347aed113dee929afbaede4c38e8ee">getTimeSinceLastResumeMS</a> ()</td></tr>
 <tr class="separator:a3b347aed113dee929afbaede4c38e8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae32c4cc02c742cb08442fdb050b6e880"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ae32c4cc02c742cb08442fdb050b6e880">getTimeSinceLastPartialMS</a> (const std::string &amp;component, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a> partialState=PowerResourceTypeFlag::TYPE_ALL_FLAG)</td></tr>
+<tr class="separator:ae32c4cc02c742cb08442fdb050b6e880"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a2b351931ce9bba2fbe0c2beb4ef1f3"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_1_1_power_resource_id.html">PowerResourceId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a6a2b351931ce9bba2fbe0c2beb4ef1f3">create</a> (const std::string &amp;resourceId, bool isRefCounted=true, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#aa6c87f2f5104369c2eed8ddc07d13057">PowerResourceLevel</a> level=<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#aa6c87f2f5104369c2eed8ddc07d13057a813d55cbff97c1d8e24ca0b469e14044">PowerResourceLevel::STANDBY_MED</a>)=0</td></tr>
 <tr class="separator:a6a2b351931ce9bba2fbe0c2beb4ef1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a342fcf3d8dfb8e4f93a99bc78fbdaf05"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a342fcf3d8dfb8e4f93a99bc78fbdaf05">acquire</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_1_1_power_resource_id.html">PowerResourceId</a> &gt; &amp;id, const std::chrono::milliseconds autoReleaseTimeout=std::chrono::milliseconds::zero())=0</td></tr>
@@ -126,7 +157,23 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This interface provides APIs for components of AVS-SDK to manage power resources. These components, such as AudioInputProcessor and SpeechSynthesizer, can claim the level of power resource they need when active (listening or speacking) by invoking the acquirePowerResource API, such that the power management system keeps the hardware devices works in the claimed power levels. When the component is inactive, it invokes the releasePowerResource API to release the acquired power resource level. This interface defined 6 power resource levels. To implement this interface, the user need define a mapping from them to the real power resource levels of the power management system. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a25fbd43f9f916033daedf01a1298aedd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25fbd43f9f916033daedf01a1298aedd">&#9670;&nbsp;</a></span>PartialStateBitSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface::PartialStateBitSet</a> =  std::bitset&lt;PowerResourceTypeIndex::NUM_OF_TYPES&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Alias for the bitset of partial states in low power mode. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="aa6c87f2f5104369c2eed8ddc07d13057"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa6c87f2f5104369c2eed8ddc07d13057">&#9670;&nbsp;</a></span>PowerResourceLevel</h2>
 
@@ -148,12 +195,80 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Power resource levels. Each hardware device may have multiple STANDBY and ACTIVE power modes. For example, CPU can work in different frequency and number of cores. It has a latency to switch from low power mode to high power mode, and the latency increases with the gaps of the power levels. Power management system defines a group of power polices; each policy specifies the power modes of hardware components. To implement this interface, the user needs to map the power polices (that allow applications to proactively claim) to the 6 power resource levels we defined in this enumaration. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a7aad6bf024170309c463e07ca846856f"></a>STANDBY_LOW&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a813d55cbff97c1d8e24ca0b469e14044"></a>STANDBY_MED&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a328c11a018bb415cb6a88b49a3860456"></a>STANDBY_HIGH&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057ae434209643a0d01f383a46eece525679"></a>ACTIVE_LOW&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a89e1923ddab08cd11a66ce0f29af046e"></a>ACTIVE_MED&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057ab868e37f0edfdbea9838600657b6f4b3"></a>ACTIVE_HIGH&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a7aad6bf024170309c463e07ca846856f"></a>STANDBY_LOW&#160;</td><td class="fielddoc"><p>A STANDBY level means hardware components are in standby mode, they are suitable for background activities. STANDBY_LOW usually means all the hardware components work in the lowest standby power levels </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a813d55cbff97c1d8e24ca0b469e14044"></a>STANDBY_MED&#160;</td><td class="fielddoc"><p>STANDBY_MED usually means all the hardware components work in the medium standby power levels. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a328c11a018bb415cb6a88b49a3860456"></a>STANDBY_HIGH&#160;</td><td class="fielddoc"><p>STANDBY_HIGH usually means all the hardware components work in the highest standby power levels. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057ae434209643a0d01f383a46eece525679"></a>ACTIVE_LOW&#160;</td><td class="fielddoc"><p>An ACTIVE level means hardware components are in active mode, they are suitable for foreground activities. ACTIVE_LOW usually means all the hardware components work in the lowest active power levels </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057a89e1923ddab08cd11a66ce0f29af046e"></a>ACTIVE_MED&#160;</td><td class="fielddoc"><p>ACTIVE_LOW usually means all the hardware components work in the medium active power levels. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa6c87f2f5104369c2eed8ddc07d13057ab868e37f0edfdbea9838600657b6f4b3"></a>ACTIVE_HIGH&#160;</td><td class="fielddoc"><p>ACTIVE_HIGH usually means all the hardware components work in the highest active power levels. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a4fdbfff9111d0c785492ea8a2cd74c3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fdbfff9111d0c785492ea8a2cd74c3e">&#9670;&nbsp;</a></span>PowerResourceTypeFlag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3e">alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceTypeFlag</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Power resource type flags. Each hardware device might have multiple power resource types that they must support. This interface describes some of the commonly-used resource types that consumers of this interface may choose to implement. These resource types are presented in a bitwise format to allow combinations of resource types to be added as well. The resource types can be used to set a particular value or to perform a bitwise comparison. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3eaf1cfcc01132de97aff96c219b8dd503f"></a>TYPE_ALL_FLAG&#160;</td><td class="fielddoc"><p>The default flag value which corresponds to all power resource types. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3ea407e8248679b10c5f02554b8fe000e55"></a>TYPE_CPU_FLAG&#160;</td><td class="fielddoc"><p>Flag value which represents the CPU resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3eadd9ef3fbafef85b729d247eede545cdd"></a>TYPE_DDR_FLAG&#160;</td><td class="fielddoc"><p>Flag value which represents the DDR resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3ea51b30ea50c2a8ebb0df893e44ac51dd1"></a>TYPE_STORAGE_FLAG&#160;</td><td class="fielddoc"><p>Flag value which represents the storage resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3eac6804040a3404acdb3d739a8e561ea8b"></a>TYPE_NETWORK_FLAG&#160;</td><td class="fielddoc"><p>Flag value which represents the network resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3ea8ad28c4eed994ee3ddd65ad10bcfa689"></a>TYPE_RESERVED_ONE_FLAG&#160;</td><td class="fielddoc"><p>Flag value which represents the first reserved resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4fdbfff9111d0c785492ea8a2cd74c3ea256a586846959354027b8d0e45541b03"></a>TYPE_RESERVED_TWO_FLAG&#160;</td><td class="fielddoc"><p>Flag value which represents the second reserved resource type. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ab175b162715a7afdaeab981836bb8c2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab175b162715a7afdaeab981836bb8c2a">&#9670;&nbsp;</a></span>PowerResourceTypeIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2a">alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceTypeIndex</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Power resource type index. These indices represent a bit position for each of the different power resource types that are likely to be used on a given system. These can be used in combination with std::bitset by using the [] operator. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aaa16fe7713df6bcd2941e53df672ee097"></a>TYPE_CPU&#160;</td><td class="fielddoc"><p>CPU capacity is limited or improved under the CPU resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aaed1b316a88cd4293936352f696b6edbe"></a>TYPE_DDR&#160;</td><td class="fielddoc"><p>DDR latency/bandwidth are limited or improved under the DDR resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aa068c84a4020914ffd3901840ca53af46"></a>TYPE_STORAGE&#160;</td><td class="fielddoc"><p>Disk I/O performance is limited or improved under the storage resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aa358f58f9a0ad204041a508ba4e270cdf"></a>TYPE_NETWORK&#160;</td><td class="fielddoc"><p>Network latency is limited or improved under the network resource type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aaec10a31000e41818ecd1c71a3372dea3"></a>TYPE_RESERVED_ONE&#160;</td><td class="fielddoc"><p>A reserved type that allows platforms to reserve custom PowerResourceTypeFlags. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aa32946ff4e040ff3adb3c2a8dd77009e4"></a>TYPE_RESERVED_TWO&#160;</td><td class="fielddoc"><p>A reserved type that allows platforms to reserve custom PowerResourceTypeFlags. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab175b162715a7afdaeab981836bb8c2aa4d84c42c62cb5cec53520091c9565f94"></a>NUM_OF_TYPES&#160;</td><td class="fielddoc"><p>Number of power resource types. This must always be the last enum member. </p>
+</td></tr>
 </table>
 
 </div>
@@ -365,6 +480,58 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae32c4cc02c742cb08442fdb050b6e880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae32c4cc02c742cb08442fdb050b6e880">&#9670;&nbsp;</a></span>getTimeSinceLastPartialMS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface::getTimeSinceLastPartialMS </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>component</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a>&#160;</td>
+          <td class="paramname"><em>partialState</em> = <code>PowerResourceTypeFlag::TYPE_ALL_FLAG</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Acquires the time since latest partial low power mode state change. This API should only be called after a power resource has been acquired. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">component</td><td>component name. </td></tr>
+    <tr><td class="paramname">partialState</td><td>the partial low power mode state (PowerResourceTypeFlags) to check. The state type is determined based on the bits that are passed in. For example, if TYPE_CPU is passed in then the time since the most recent CPU low power mode state will be returned. The default behavior of this partial state, TYPE_ALL, returns the most recent low power mode state value. If more than one partial state is passed in, e.g. TYPE_CPU|TYPE_DDR, this API will return the time from the most recent change of the types given. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>time since last partial system resume - zero indicates that either the platform doesn't support the partial state or that the device was never in partial low power mode.</dd></dl>
+<p>Provides the default <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">PowerResourceManagerInterface</a></code> time since last partial in MS. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">component</td><td>component name. </td></tr>
+    <tr><td class="paramname">partialState</td><td>the partial low power mode state (PowerResourceTypeFlags) to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return default value of 0 milliseconds in the form of std::chrono::milliseconds. </dd></dl>
+
+</div>
+</div>
 <a id="a3b347aed113dee929afbaede4c38e8ee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3b347aed113dee929afbaede4c38e8ee">&#9670;&nbsp;</a></span>getTimeSinceLastResumeMS()</h2>
 
@@ -504,7 +671,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

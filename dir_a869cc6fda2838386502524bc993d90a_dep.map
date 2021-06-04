@@ -1,9 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/SpeakerManager/include/SpeakerManager">
-<area shape="rect" id="node1" href="dir_a869cc6fda2838386502524bc993d90a.html" title="SpeakerManager" alt="" coords="27,52,147,100"/>
-<area shape="rect" id="node2" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="13,148,85,196"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000368_000533.html" title="5" alt="" coords="69,127,77,142"/>
-<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="35,244,135,292"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000368_000017.html" title="27" alt="" coords="94,220,109,235"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000533_000017.html" title="14" alt="" coords="71,217,85,231"/>
-<area shape="rect" id="clust1" href="dir_58f46be1458388d2fc10aa8246ff1704.html" title="include" alt="" coords="16,16,157,111"/>
+<area shape="rect" id="node1" href="dir_a869cc6fda2838386502524bc993d90a.html" title="SpeakerManager" alt="" coords="34,52,154,100"/>
+<area shape="rect" id="node2" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="21,148,93,196"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000407_000588.html" title="5" alt="" coords="77,126,85,141"/>
+<area shape="rect" id="node3" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="5,244,108,292"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000407_000017.html" title="27" alt="" coords="88,227,103,242"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000588_000017.html" title="14" alt="" coords="49,217,63,232"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000017_000588.html" title="2" alt="" coords="53,208,61,222"/>
+<area shape="rect" id="clust1" href="dir_58f46be1458388d2fc10aa8246ff1704.html" title="include" alt="" coords="23,16,165,111"/>
 </map>

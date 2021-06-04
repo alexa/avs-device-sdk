@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,20 +68,56 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">InteractionManager.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="_a_v_s_discovery_endpoint_attributes_8h_source.html">AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_endpoint_modification_data_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointModificationData.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_interaction_manager_8h_source.html">SampleApp/InteractionManager.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_endpoint_8h_source.html">Endpoints/Endpoint.h</a>&quot;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for InteractionManager.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_interaction_manager_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2src_2_interaction_manager_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2src_2_interaction_manager_8cpp" id="_2workplace_2avs-device-sdk_2_sample_app_2src_2_interaction_manager_8cpp">
+<area shape="rect" id="node2" href="_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="1233,631,1456,672"/>
+<area shape="rect" id="node11" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="613,899,789,940"/>
+<area shape="rect" id="node26" href="_endpoint_modification_data_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointModification\lData.h" alt="" coords="1485,527,1695,583"/>
+<area shape="rect" id="node35" href="_interaction_manager_8h.html" title="SampleApp/InteractionManager.h" alt="" coords="2653,109,2868,136"/>
+<area shape="rect" id="node44" href="_endpoint_8h.html" title="Endpoints/Endpoint.h" alt="" coords="1830,355,1977,382"/>
+<area shape="rect" id="node7" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1727,720,1927,761"/>
+<area shape="rect" id="node8" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="979,727,1175,754"/>
+<area shape="rect" id="node9" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="645,809,821,851"/>
+<area shape="rect" id="node15" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="707,988,921,1029"/>
+<area shape="rect" id="node20" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="466,1077,642,1119"/>
+<area shape="rect" id="node21" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="85,988,261,1029"/>
+<area shape="rect" id="node24" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="437,988,631,1029"/>
+<area shape="rect" id="node25" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1606,988,1782,1029"/>
+<area shape="rect" id="node28" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1530,631,1725,672"/>
+<area shape="rect" id="node30" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2103,631,2295,672"/>
+<area shape="rect" id="node34" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2402,899,2591,940"/>
+<area shape="rect" id="node31" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2002,995,2229,1022"/>
+<area shape="rect" id="node32" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="2053,720,2287,761"/>
+<area shape="rect" id="node33" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2004,899,2227,940"/>
+<area shape="rect" id="node36" href="_microphone_interface_8h.html" title="Audio/MicrophoneInterface.h" alt="" coords="2504,541,2692,568"/>
+<area shape="rect" id="node37" href="_audio_injector_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Diagnostics/AudioInjectorInterface.h" alt="" coords="2455,437,2693,479"/>
+<area shape="rect" id="node38" href="_dialog_u_x_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DialogUXStateObserverInterface.h" alt="" coords="3339,809,3567,851"/>
+<area shape="rect" id="node39" href="_call_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CallStateObserverInterface.h" alt="" coords="722,259,917,300"/>
+<area shape="rect" id="node40" href="_diagnostics_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Diagnostics/DiagnosticsInterface.h" alt="" coords="2505,348,2736,389"/>
+<area shape="rect" id="node41" href="_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="2970,809,3162,851"/>
+<area shape="rect" id="node42" href="_default_client_8h.html" title="DefaultClient/DefaultClient.h" alt="" coords="2169,266,2358,293"/>
+<area shape="rect" id="node45" href="_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="3591,809,3783,851"/>
+<area shape="rect" id="node46" href="_network_info_8h.html" title="Settings/Types/NetworkInfo.h" alt="" coords="747,638,943,665"/>
+<area shape="rect" id="node47" href="_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="3858,809,4071,851"/>
+<area shape="rect" id="node48" href="_keyword_observer_8h.html" title="KeywordObserver.h" alt="" coords="2913,184,3051,211"/>
+<area shape="rect" id="node49" href="_gui_renderer_8h.html" title="GuiRenderer.h" alt="" coords="2869,638,2975,665"/>
+<area shape="rect" id="node50" href="_u_i_manager_8h.html" title="UIManager.h" alt="" coords="3201,727,3299,754"/>
+<area shape="rect" id="node43" href="_endpoint_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointInterface.h" alt="" coords="1872,437,2073,479"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -103,6 +139,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ad572f78221770c87e14f4f705c3e7208"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ad572f78221770c87e14f4f705c3e7208">alexaClientSDK::sampleApp::TAG</a> (&quot;InteractionManager&quot;)</td></tr>
 <tr class="memdesc:ad572f78221770c87e14f4f705c3e7208"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#ad572f78221770c87e14f4f705c3e7208">More...</a><br /></td></tr>
 <tr class="separator:ad572f78221770c87e14f4f705c3e7208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac0060c6f8716b0001e3800a9a55a81d6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ac0060c6f8716b0001e3800a9a55a81d6">alexaClientSDK::sampleApp::ENDPOINT_DESCRIPTION</a> = &quot;dynamic light endpoint&quot;</td></tr>
+<tr class="memdesc:ac0060c6f8716b0001e3800a9a55a81d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic endpoint description.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#ac0060c6f8716b0001e3800a9a55a81d6">More...</a><br /></td></tr>
+<tr class="separator:ac0060c6f8716b0001e3800a9a55a81d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a5f1ee7cecb195fe4b51ee8c6122a45"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a9a5f1ee7cecb195fe4b51ee8c6122a45">alexaClientSDK::sampleApp::ENDPOINT_MANUFACTURER_NAME</a> = &quot;Amazon&quot;</td></tr>
+<tr class="memdesc:a9a5f1ee7cecb195fe4b51ee8c6122a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic endpoint manufacturer name.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#a9a5f1ee7cecb195fe4b51ee8c6122a45">More...</a><br /></td></tr>
+<tr class="separator:a9a5f1ee7cecb195fe4b51ee8c6122a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d0ee1c9c364664cbe97692e6702805b"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a7d0ee1c9c364664cbe97692e6702805b">alexaClientSDK::sampleApp::ENDPOINT_DISPLAY_CATEGORIES</a> = {&quot;OTHER&quot;}</td></tr>
+<tr class="memdesc:a7d0ee1c9c364664cbe97692e6702805b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic endpoint display categories.  <a href="namespacealexa_client_s_d_k_1_1sample_app.html#a7d0ee1c9c364664cbe97692e6702805b">More...</a><br /></td></tr>
+<tr class="separator:a7d0ee1c9c364664cbe97692e6702805b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -134,7 +182,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

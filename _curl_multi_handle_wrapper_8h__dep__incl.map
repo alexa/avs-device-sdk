@@ -1,8 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/CurlMultiHandleWrapper.h">
-<area shape="rect" id="node1" title=" " alt="" coords="347,5,594,76"/>
-<area shape="rect" id="node2" href="$_libcurl_h_t_t_p2_connection_8h.html" title=" " alt="" coords="89,124,341,195"/>
-<area shape="rect" id="node5" href="$_curl_multi_handle_wrapper_8cpp.html" title=" " alt="" coords="365,124,576,195"/>
-<area shape="rect" id="node6" href="$_lib_curl_http_content_fetcher_8cpp.html" title=" " alt="" coords="601,124,783,195"/>
-<area shape="rect" id="node3" href="$_libcurl_h_t_t_p2_connection_8cpp.html" title=" " alt="" coords="5,243,203,313"/>
-<area shape="rect" id="node4" href="$_libcurl_h_t_t_p2_connection_factory_8cpp.html" title=" " alt="" coords="227,243,424,313"/>
+<area shape="rect" id="node2" href="$_libcurl_h_t_t_p2_connection_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/LibcurlHTTP2Connection.h" alt="" coords="89,124,341,195"/>
+<area shape="rect" id="node5" href="$_curl_multi_handle_wrapper_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/CurlMultiHandle\lWrapper.cpp" alt="" coords="365,124,576,195"/>
+<area shape="rect" id="node6" href="$_lib_curl_http_content_fetcher_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibCurlHttp\lContentFetcher.cpp" alt="" coords="601,124,783,195"/>
+<area shape="rect" id="node3" href="$_libcurl_h_t_t_p2_connection_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibcurlHTTP2\lConnection.cpp" alt="" coords="5,243,203,313"/>
+<area shape="rect" id="node4" href="$_libcurl_h_t_t_p2_connection_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibcurlHTTP2\lConnectionFactory.cpp" alt="" coords="227,243,424,313"/>
 </map>

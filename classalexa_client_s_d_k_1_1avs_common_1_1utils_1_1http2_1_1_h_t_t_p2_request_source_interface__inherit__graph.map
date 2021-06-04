@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::utils::http2::HTTP2RequestSourceInterface" name="alexaClientSDK::avsCommon::utils::http2::HTTP2RequestSourceInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,63,236,119"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_downchannel_handler.html" title=" " alt="" coords="318,5,473,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_ping_handler.html" title=" " alt="" coords="325,71,465,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_request_encoder.html" title=" " alt="" coords="284,137,507,193"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_downchannel_handler.html" title="alexaClientSDK::acl\l::DownchannelHandler" alt="" coords="318,5,473,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1_ping_handler.html" title="alexaClientSDK::acl\l::PingHandler" alt="" coords="325,71,465,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_request_encoder.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2MimeRequest\lEncoder" alt="" coords="284,137,507,193"/>
 </map>

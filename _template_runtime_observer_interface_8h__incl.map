@@ -1,10 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="53,5,296,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,124,67,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="105,199,159,225"/>
-<area shape="rect" id="node4" href="$_focus_state_8h.html" title=" " alt="" coords="141,124,352,151"/>
-<area shape="rect" id="node6" href="$_player_activity_8h.html" title=" " alt="" coords="377,124,599,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="212,199,281,225"/>
-<area shape="rect" id="node7" title=" " alt="" coords="409,199,474,225"/>
-<area shape="rect" id="node8" title=" " alt="" coords="499,199,568,225"/>
+<area shape="rect" id="node4" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="142,124,357,151"/>
+<area shape="rect" id="node6" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="381,124,611,151"/>
 </map>

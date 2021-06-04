@@ -1,28 +1,27 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManagerInterfaces/include/acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManagerInterfaces/include/acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1040,5,1312,76"/>
-<area shape="rect" id="node2" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="889,569,1143,640"/>
-<area shape="rect" id="node6" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="1167,569,1420,640"/>
-<area shape="rect" id="node7" href="$_default_client_8h.html" title=" " alt="" coords="715,124,941,195"/>
-<area shape="rect" id="node18" href="$_shared_component_8h.html" title=" " alt="" coords="1567,131,1838,187"/>
-<area shape="rect" id="node24" href="$_shutdown_manager_8h.html" title=" " alt="" coords="2445,124,2683,195"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="674,695,929,751"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="1191,688,1420,759"/>
-<area shape="rect" id="node5" href="$preview_main_8cpp.html" title=" " alt="" coords="953,695,1167,751"/>
-<area shape="rect" id="node8" href="$_default_client_8cpp.html" title=" " alt="" coords="789,250,1019,306"/>
-<area shape="rect" id="node9" href="$_interaction_manager_8h.html" title=" " alt="" coords="643,361,861,417"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title=" " alt="" coords="500,250,711,306"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8h.html" title=" " alt="" coords="643,465,858,521"/>
-<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="883,465,1088,521"/>
-<area shape="rect" id="node11" href="$_sample_application_8h.html" title=" " alt="" coords="352,577,568,633"/>
-<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="650,577,851,633"/>
-<area shape="rect" id="node12" href="$main_8cpp.html" title=" " alt="" coords="452,703,649,744"/>
-<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title=" " alt="" coords="151,703,428,744"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="5,369,277,410"/>
-<area shape="rect" id="node19" href="$_default_sample_application_options_component_8cpp.html" title=" " alt="" coords="2019,243,2333,313"/>
-<area shape="rect" id="node20" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="1214,243,1525,313"/>
-<area shape="rect" id="node21" href="$_default_client_component_8cpp.html" title=" " alt="" coords="1601,243,1805,313"/>
-<area shape="rect" id="node22" href="$_core_component_8cpp.html" title=" " alt="" coords="1829,250,1995,306"/>
-<area shape="rect" id="node23" href="$_shared_component_8cpp.html" title=" " alt="" coords="2357,250,2539,306"/>
-<area shape="rect" id="node25" href="$_shutdown_manager_8cpp.html" title=" " alt="" coords="2563,250,2800,306"/>
-<area shape="rect" id="node26" href="$_shutdown_manager_test_8cpp.html" title=" " alt="" coords="2824,250,3061,306"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="891,569,1145,640"/>
+<area shape="rect" id="node6" href="$_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="1169,569,1422,640"/>
+<area shape="rect" id="node7" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="717,124,943,195"/>
+<area shape="rect" id="node18" href="$_shared_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShared\l/include/acsdkShared/SharedComponent.h" alt="" coords="1569,131,1840,187"/>
+<area shape="rect" id="node24" href="$_shutdown_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShutdownManager\l/include/acsdkShutdownManager\l/ShutdownManager.h" alt="" coords="2447,124,2685,195"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="676,695,931,751"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="1193,688,1422,759"/>
+<area shape="rect" id="node5" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="955,695,1169,751"/>
+<area shape="rect" id="node8" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="791,250,1021,306"/>
+<area shape="rect" id="node9" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="645,361,863,417"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="501,250,713,306"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="645,465,860,521"/>
+<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="885,465,1090,521"/>
+<area shape="rect" id="node11" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="354,577,570,633"/>
+<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="652,577,853,633"/>
+<area shape="rect" id="node12" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="454,703,651,744"/>
+<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="153,703,430,744"/>
+<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="5,369,279,410"/>
+<area shape="rect" id="node19" href="$_default_sample_application_options_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/src\l/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="2021,243,2335,313"/>
+<area shape="rect" id="node20" href="$_alexa_communications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/src/AlexaCommunications\lComponent.cpp" alt="" coords="1216,243,1527,313"/>
+<area shape="rect" id="node21" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="1603,243,1807,313"/>
+<area shape="rect" id="node22" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="1831,250,1997,306"/>
+<area shape="rect" id="node23" href="$_shared_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShared\l/src/SharedComponent.cpp" alt="" coords="2359,250,2541,306"/>
+<area shape="rect" id="node25" href="$_shutdown_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShutdownManager\l/src/ShutdownManager.cpp" alt="" coords="2565,250,2802,306"/>
+<area shape="rect" id="node26" href="$_shutdown_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShutdownManager\l/test/ShutdownManagerTest.cpp" alt="" coords="2826,250,3063,306"/>
 </map>

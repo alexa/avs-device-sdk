@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -69,7 +69,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">alexaClientSDK::acsdkManufactory::internal::AbstractPointerCache Class Reference</div>  </div>
+<div class="title">alexaClientSDK::acsdkManufactory::internal::AbstractPointerCache Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -79,6 +79,8 @@ Inheritance diagram for alexaClientSDK::acsdkManufactory::internal::AbstractPoin
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache_inherit__map" id="alexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_shared_pointer_cache.html" title="alexaClientSDK::acsdkManufactory\l::internal::SharedPointerCache" alt="" coords="284,5,515,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_weak_pointer_cache.html" title="alexaClientSDK::acsdkManufactory\l::internal::WeakPointerCache" alt="" coords="284,71,515,112"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -86,6 +88,10 @@ Inheritance diagram for alexaClientSDK::acsdkManufactory::internal::AbstractPoin
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad4a7aea56e2efcb33c12fcac62908474"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html#ad4a7aea56e2efcb33c12fcac62908474">~AbstractPointerCache</a> ()=default</td></tr>
 <tr class="separator:ad4a7aea56e2efcb33c12fcac62908474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac02b5e92eb8776bc16f50937800aef98"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html#ac02b5e92eb8776bc16f50937800aef98">get</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_runtime_manufactory.html">RuntimeManufactory</a> &amp;runtimeManufactory)=0</td></tr>
+<tr class="separator:ac02b5e92eb8776bc16f50937800aef98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2a0450fe4070380e0ee38475075c999"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html#aa2a0450fe4070380e0ee38475075c999">cleanup</a> ()=0</td></tr>
+<tr class="separator:aa2a0450fe4070380e0ee38475075c999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Common parent class for an object used to cache an instance. </p>
@@ -116,6 +122,71 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa2a0450fe4070380e0ee38475075c999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2a0450fe4070380e0ee38475075c999">&#9670;&nbsp;</a></span>cleanup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::acsdkManufactory::internal::AbstractPointerCache::cleanup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Release any unneeded references in the cache after calling <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html#ac02b5e92eb8776bc16f50937800aef98">get()</a>. </p><dl class="section note"><dt>Note</dt><dd>If <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html#ac02b5e92eb8776bc16f50937800aef98">get()</a> is called without calling <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html#aa2a0450fe4070380e0ee38475075c999">cleanup()</a> afterwards, that may result in memory leaks. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_shared_pointer_cache.html#a32c012076bb584937b2065100c6f973a">alexaClientSDK::acsdkManufactory::internal::SharedPointerCache</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_weak_pointer_cache.html#a5b251c4738b2b8ab281e4261300de5d4">alexaClientSDK::acsdkManufactory::internal::WeakPointerCache</a>.</p>
+
+</div>
+</div>
+<a id="ac02b5e92eb8776bc16f50937800aef98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac02b5e92eb8776bc16f50937800aef98">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void* alexaClientSDK::acsdkManufactory::internal::AbstractPointerCache::get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_runtime_manufactory.html">RuntimeManufactory</a> &amp;&#160;</td>
+          <td class="paramname"><em>runtimeManufactory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the instance from the cache.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">runtimeManufactory</td><td>The <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_runtime_manufactory.html">RuntimeManufactory</a></code> to use to acquire an instance if the cache is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A void* to a shared_ptr&lt;Type&gt;. Caller is responsible for casting this to to shared_ptr&lt;Type&gt;*. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_shared_pointer_cache.html#a1c260454eaff957a951f51fe115a5f30">alexaClientSDK::acsdkManufactory::internal::SharedPointerCache</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_weak_pointer_cache.html#a66f898415b25fe02172176f1f9737059">alexaClientSDK::acsdkManufactory::internal::WeakPointerCache</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/<a class="el" href="_abstract_pointer_cache_8h_source.html">AbstractPointerCache.h</a></li>
 </ul>
@@ -123,7 +194,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

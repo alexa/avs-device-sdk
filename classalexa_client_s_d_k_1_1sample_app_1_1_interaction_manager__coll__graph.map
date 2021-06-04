@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::sampleApp::InteractionManager" name="alexaClientSDK::sampleApp::InteractionManager">
-<area shape="rect" id="node1" title=" " alt="" coords="277,93,465,134"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer." alt="" coords="15,5,219,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title=" " alt="" coords="5,85,229,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="19,166,216,207"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="15,5,219,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallStateObserver\lInterface" alt="" coords="5,85,229,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="19,166,216,207"/>
 </map>

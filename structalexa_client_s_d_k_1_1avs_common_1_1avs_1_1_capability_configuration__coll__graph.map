@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::avs::CapabilityConfiguration" name="alexaClientSDK::avsCommon::avs::CapabilityConfiguration">
-<area shape="rect" id="node1" title=" " alt="" coords="447,64,644,105"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title=" " alt="" coords="5,5,309,76"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title=" " alt="" coords="59,101,256,157"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; alexaClient\lSDK::avsCommon::avs::CapabilityConfiguration\l::Properties \&gt;" alt="" coords="5,5,309,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::string \&gt;" alt="" coords="59,101,256,157"/>
 </map>

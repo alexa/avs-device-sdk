@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::acsdkStartupManagerInterfaces::RequiresStartupInterface" name="alexaClientSDK::acsdkStartupManagerInterfaces::RequiresStartupInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,71,237,127"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html" title=" " alt="" coords="305,5,528,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1_post_connect_operation_provider_registrar.html" title=" " alt="" coords="285,71,548,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_startup_manager_1_1test_1_1_mock_requires_startup.html" title=" " alt="" coords="299,152,535,193"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::ExternalMediaPlayer" alt="" coords="305,5,528,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1_post_connect_operation_provider_registrar.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\l::PostConnectOperationProviderRegistrar" alt="" coords="285,71,548,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_startup_manager_1_1test_1_1_mock_requires_startup.html" title="alexaClientSDK::acsdkStartup\lManager::test::MockRequiresStartup" alt="" coords="299,152,535,193"/>
 </map>

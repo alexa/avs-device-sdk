@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/InteractionModel/src/InteractionModelCapabilityAgent.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/InteractionModel/acsdkInteractionModel/src/InteractionModelCapabilityAgent.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_011a3f6e181db4516776f7256f22dadd.html">InteractionModel</a></li><li class="navelem"><a class="el" href="dir_fcbc11f39a834741fc85d1ceeca28def.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_011a3f6e181db4516776f7256f22dadd.html">InteractionModel</a></li><li class="navelem"><a class="el" href="dir_ca435cf5d0d4245f97d7668f020b8422.html">acsdkInteractionModel</a></li><li class="navelem"><a class="el" href="dir_d2577f678d6bab4a97018c6b771a03d4.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,7 +74,7 @@ $(function() {
 <div class="title">InteractionModelCapabilityAgent.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_interaction_model_capability_agent_8h_source.html">InteractionModel/InteractionModelCapabilityAgent.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_interaction_model_capability_agent_8h_source.html">acsdkInteractionModel/InteractionModelCapabilityAgent.h</a>&quot;</code><br />
 <code>#include &lt;<a class="el" href="_namespace_and_name_8h_source.html">AVSCommon/AVS/NamespaceAndName.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
@@ -85,8 +85,38 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for InteractionModelCapabilityAgent.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_interaction_model_capability_agent_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2src_2_interaction_model_capability_agent_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2src_2_interaction_model_capability_agent_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2src_2_interaction_model_capability_agent_8cpp">
+<div class="center"><img src="_interaction_model_capability_agent_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2acsdk_interaction_model_2src_2_interaction_model_capability_agent_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2acsdk_interaction_model_2src_2_interaction_model_capability_agent_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2acsdk_interaction_model_2src_2_interaction_model_capability_agent_8cpp">
+<area shape="rect" id="node2" href="_interaction_model_capability_agent_8h.html" title="acsdkInteractionModel\l/InteractionModelCapability\lAgent.h" alt="" coords="1142,124,1322,180"/>
+<area shape="rect" id="node13" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2510,421,2741,463"/>
+<area shape="rect" id="node19" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1977,779,2153,820"/>
+<area shape="rect" id="node47" href="_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2752,600,2925,641"/>
+<area shape="rect" id="node6" href="_interaction_model_notifier_interface_8h.html" title="acsdkInteractionModelInterfaces\l/InteractionModelNotifierInterface.h" alt="" coords="152,228,379,269"/>
+<area shape="rect" id="node8" href="_interaction_model_request_processing_observer_interface_8h.html" title="acsdkInteractionModelInterfaces\l/InteractionModelRequestProcessing\lObserverInterface.h" alt="" coords="257,317,493,373"/>
+<area shape="rect" id="node9" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="275,429,477,455"/>
+<area shape="rect" id="node10" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1135,228,1329,269"/>
+<area shape="rect" id="node39" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1735,511,1929,552"/>
+<area shape="rect" id="node41" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="502,421,725,463"/>
+<area shape="rect" id="node43" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="1049,600,1252,641"/>
+<area shape="rect" id="node45" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="1354,228,1609,269"/>
+<area shape="rect" id="node46" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="649,317,855,373"/>
+<area shape="rect" id="node7" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="93,421,251,463"/>
+<area shape="rect" id="node31" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1031,325,1291,366"/>
+<area shape="rect" id="node32" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1316,325,1508,366"/>
+<area shape="rect" id="node33" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2097,600,2292,641"/>
+<area shape="rect" id="node35" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2683,325,2875,366"/>
+<area shape="rect" id="node36" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="715,689,907,731"/>
+<area shape="rect" id="node38" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="695,779,918,820"/>
+<area shape="rect" id="node14" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="2617,511,2812,552"/>
+<area shape="rect" id="node16" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2481,607,2677,634"/>
+<area shape="rect" id="node17" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2528,689,2704,731"/>
+<area shape="rect" id="node23" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2507,868,2722,909"/>
+<area shape="rect" id="node27" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1815,957,1991,999"/>
+<area shape="rect" id="node28" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2155,868,2331,909"/>
+<area shape="rect" id="node29" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1785,868,1978,909"/>
+<area shape="rect" id="node30" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1584,868,1760,909"/>
+<area shape="rect" id="node37" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="893,875,1120,902"/>
+<area shape="rect" id="node44" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1195,779,1384,820"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -95,9 +125,7 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html">alexaClientSDK::capabilityAgents::interactionModel</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_interaction_model"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html">alexaClientSDK::acsdkInteractionModel</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -107,37 +135,37 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0a50cd8882b7db303cb0f47ba154a790"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a0a50cd8882b7db303cb0f47ba154a790">alexaClientSDK::capabilityAgents::interactionModel::getInteractionModelCapabilityConfiguration</a> ()</td></tr>
-<tr class="separator:a0a50cd8882b7db303cb0f47ba154a790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1450ea587773ee4355f02d4ca3c8dd37"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a1450ea587773ee4355f02d4ca3c8dd37">alexaClientSDK::acsdkInteractionModel::getInteractionModelCapabilityConfiguration</a> ()</td></tr>
+<tr class="separator:a1450ea587773ee4355f02d4ca3c8dd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a5fcc14286ca89bed7895457eefe05db3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5fcc14286ca89bed7895457eefe05db3">alexaClientSDK::capabilityAgents::interactionModel::TAG</a> {&quot;InteractionModel&quot;}</td></tr>
-<tr class="memdesc:a5fcc14286ca89bed7895457eefe05db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5fcc14286ca89bed7895457eefe05db3">More...</a><br /></td></tr>
-<tr class="separator:a5fcc14286ca89bed7895457eefe05db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c781bb98176fc9f24d9aa89b2cd94cd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5c781bb98176fc9f24d9aa89b2cd94cd">alexaClientSDK::capabilityAgents::interactionModel::NAMESPACE</a> = &quot;InteractionModel&quot;</td></tr>
-<tr class="memdesc:a5c781bb98176fc9f24d9aa89b2cd94cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for this capability agent.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5c781bb98176fc9f24d9aa89b2cd94cd">More...</a><br /></td></tr>
-<tr class="separator:a5c781bb98176fc9f24d9aa89b2cd94cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3e6d477aa0e0eeafdd9c47e76052114"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#aa3e6d477aa0e0eeafdd9c47e76052114">alexaClientSDK::capabilityAgents::interactionModel::NEW_DIALOG_REQUEST</a> {NAMESPACE, &quot;NewDialogRequest&quot;}</td></tr>
-<tr class="memdesc:aa3e6d477aa0e0eeafdd9c47e76052114"><td class="mdescLeft">&#160;</td><td class="mdescRight">The NewDialogRequest directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#aa3e6d477aa0e0eeafdd9c47e76052114">More...</a><br /></td></tr>
-<tr class="separator:aa3e6d477aa0e0eeafdd9c47e76052114"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99ef0596a5fbc5723c88b2aee1604f54"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a99ef0596a5fbc5723c88b2aee1604f54">alexaClientSDK::capabilityAgents::interactionModel::REQUEST_PROCESS_STARTED</a> {NAMESPACE, &quot;RequestProcessingStarted&quot;}</td></tr>
-<tr class="memdesc:a99ef0596a5fbc5723c88b2aee1604f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RequestProcessingStarted (RPS) directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a99ef0596a5fbc5723c88b2aee1604f54">More...</a><br /></td></tr>
-<tr class="separator:a99ef0596a5fbc5723c88b2aee1604f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ab365c3550c979d883c74d210eedcf0"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a1ab365c3550c979d883c74d210eedcf0">alexaClientSDK::capabilityAgents::interactionModel::REQUEST_PROCESS_COMPLETED</a> {NAMESPACE, &quot;RequestProcessingCompleted&quot;}</td></tr>
-<tr class="memdesc:a1ab365c3550c979d883c74d210eedcf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RequestProcessingCompleted (RPC) directive signature.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a1ab365c3550c979d883c74d210eedcf0">More...</a><br /></td></tr>
-<tr class="separator:a1ab365c3550c979d883c74d210eedcf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a714f2d99a157d8609c667ec983badd45"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a714f2d99a157d8609c667ec983badd45">alexaClientSDK::capabilityAgents::interactionModel::INTERACTION_MODEL_CAPABILITY_INTERFACE_TYPE</a> = &quot;AlexaInterface&quot;</td></tr>
-<tr class="separator:a714f2d99a157d8609c667ec983badd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb9e80e494a9ec0999f826d2d6606251"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#abb9e80e494a9ec0999f826d2d6606251">alexaClientSDK::capabilityAgents::interactionModel::INTERACTION_MODEL_CAPABILITY_INTERFACE_NAME</a> = &quot;InteractionModel&quot;</td></tr>
-<tr class="memdesc:abb9e80e494a9ec0999f826d2d6606251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction Model interface name.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#abb9e80e494a9ec0999f826d2d6606251">More...</a><br /></td></tr>
-<tr class="separator:abb9e80e494a9ec0999f826d2d6606251"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad020a829fb29941cfadcad4dd427966a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#ad020a829fb29941cfadcad4dd427966a">alexaClientSDK::capabilityAgents::interactionModel::INTERACTION_MODEL_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.2&quot;</td></tr>
-<tr class="memdesc:ad020a829fb29941cfadcad4dd427966a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction Model interface version.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#ad020a829fb29941cfadcad4dd427966a">More...</a><br /></td></tr>
-<tr class="separator:ad020a829fb29941cfadcad4dd427966a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbec9dea6271153e8ec32072a9ac0e38"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#afbec9dea6271153e8ec32072a9ac0e38">alexaClientSDK::capabilityAgents::interactionModel::PAYLOAD_KEY_DIALOG_REQUEST_ID</a> = &quot;dialogRequestId&quot;</td></tr>
-<tr class="memdesc:afbec9dea6271153e8ec32072a9ac0e38"><td class="mdescLeft">&#160;</td><td class="mdescRight">NewDialogRequestID payload key.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#afbec9dea6271153e8ec32072a9ac0e38">More...</a><br /></td></tr>
-<tr class="separator:afbec9dea6271153e8ec32072a9ac0e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9243ffee3ad2aa60b66b1cb6c4214929"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a9243ffee3ad2aa60b66b1cb6c4214929">alexaClientSDK::acsdkInteractionModel::TAG</a> {&quot;InteractionModel&quot;}</td></tr>
+<tr class="memdesc:a9243ffee3ad2aa60b66b1cb6c4214929"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a9243ffee3ad2aa60b66b1cb6c4214929">More...</a><br /></td></tr>
+<tr class="separator:a9243ffee3ad2aa60b66b1cb6c4214929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a940af2bfdaeff78eda884f0e3eaaaebd"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a940af2bfdaeff78eda884f0e3eaaaebd">alexaClientSDK::acsdkInteractionModel::NAMESPACE</a> = &quot;InteractionModel&quot;</td></tr>
+<tr class="memdesc:a940af2bfdaeff78eda884f0e3eaaaebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace for this capability agent.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a940af2bfdaeff78eda884f0e3eaaaebd">More...</a><br /></td></tr>
+<tr class="separator:a940af2bfdaeff78eda884f0e3eaaaebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb9f5c2618c794a3413b23765b71a00b"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#adb9f5c2618c794a3413b23765b71a00b">alexaClientSDK::acsdkInteractionModel::NEW_DIALOG_REQUEST</a> {NAMESPACE, &quot;NewDialogRequest&quot;}</td></tr>
+<tr class="memdesc:adb9f5c2618c794a3413b23765b71a00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The NewDialogRequest directive signature.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#adb9f5c2618c794a3413b23765b71a00b">More...</a><br /></td></tr>
+<tr class="separator:adb9f5c2618c794a3413b23765b71a00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88b8e8bf05e8305a80efaa6f04d5fac"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#ac88b8e8bf05e8305a80efaa6f04d5fac">alexaClientSDK::acsdkInteractionModel::REQUEST_PROCESS_STARTED</a> {NAMESPACE, &quot;RequestProcessingStarted&quot;}</td></tr>
+<tr class="memdesc:ac88b8e8bf05e8305a80efaa6f04d5fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RequestProcessingStarted (RPS) directive signature.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#ac88b8e8bf05e8305a80efaa6f04d5fac">More...</a><br /></td></tr>
+<tr class="separator:ac88b8e8bf05e8305a80efaa6f04d5fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a202b4c635c0635043d541dfaf36fe62f"><td class="memItemLeft" align="right" valign="top">static const NamespaceAndName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a202b4c635c0635043d541dfaf36fe62f">alexaClientSDK::acsdkInteractionModel::REQUEST_PROCESS_COMPLETED</a> {NAMESPACE, &quot;RequestProcessingCompleted&quot;}</td></tr>
+<tr class="memdesc:a202b4c635c0635043d541dfaf36fe62f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The RequestProcessingCompleted (RPC) directive signature.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a202b4c635c0635043d541dfaf36fe62f">More...</a><br /></td></tr>
+<tr class="separator:a202b4c635c0635043d541dfaf36fe62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a8c01ce3bc9a4799422df8f67ea2ad0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a6a8c01ce3bc9a4799422df8f67ea2ad0">alexaClientSDK::acsdkInteractionModel::INTERACTION_MODEL_CAPABILITY_INTERFACE_TYPE</a> = &quot;AlexaInterface&quot;</td></tr>
+<tr class="separator:a6a8c01ce3bc9a4799422df8f67ea2ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c70dcdf9f58b3013e93316272f37b01"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a4c70dcdf9f58b3013e93316272f37b01">alexaClientSDK::acsdkInteractionModel::INTERACTION_MODEL_CAPABILITY_INTERFACE_NAME</a> = &quot;InteractionModel&quot;</td></tr>
+<tr class="memdesc:a4c70dcdf9f58b3013e93316272f37b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction Model interface name.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a4c70dcdf9f58b3013e93316272f37b01">More...</a><br /></td></tr>
+<tr class="separator:a4c70dcdf9f58b3013e93316272f37b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3496803c8f37674c2d02c10c4d9e1509"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a3496803c8f37674c2d02c10c4d9e1509">alexaClientSDK::acsdkInteractionModel::INTERACTION_MODEL_CAPABILITY_INTERFACE_VERSION</a> = &quot;1.2&quot;</td></tr>
+<tr class="memdesc:a3496803c8f37674c2d02c10c4d9e1509"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction Model interface version.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a3496803c8f37674c2d02c10c4d9e1509">More...</a><br /></td></tr>
+<tr class="separator:a3496803c8f37674c2d02c10c4d9e1509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e5b9dd7a2aa7244699b5ec1692f1c86"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a9e5b9dd7a2aa7244699b5ec1692f1c86">alexaClientSDK::acsdkInteractionModel::PAYLOAD_KEY_DIALOG_REQUEST_ID</a> = &quot;dialogRequestId&quot;</td></tr>
+<tr class="memdesc:a9e5b9dd7a2aa7244699b5ec1692f1c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">NewDialogRequestID payload key.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a9e5b9dd7a2aa7244699b5ec1692f1c86">More...</a><br /></td></tr>
+<tr class="separator:a9e5b9dd7a2aa7244699b5ec1692f1c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -169,7 +197,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

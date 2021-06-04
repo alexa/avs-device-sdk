@@ -1,13 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/SDKComponent/test/SDKComponentTest.cpp" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/SDKComponent/test/SDKComponentTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="304,5,551,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,100,158"/>
-<area shape="rect" id="node3" title=" " alt="" coords="433,377,502,404"/>
-<area shape="rect" id="node4" href="$_component_configuration_8h.html" title=" " alt="" coords="559,303,847,329"/>
-<area shape="rect" id="node7" href="$_mock_component_reporter_interface_8h.html" title=" " alt="" coords="179,124,417,165"/>
-<area shape="rect" id="node10" href="$_s_d_k_version_8h.html" title=" " alt="" coords="871,303,1090,329"/>
-<area shape="rect" id="node11" href="$_s_d_k_component_8h.html" title=" " alt="" coords="443,131,670,158"/>
-<area shape="rect" id="node5" title=" " alt="" coords="664,377,743,404"/>
-<area shape="rect" id="node6" title=" " alt="" coords="860,377,915,404"/>
-<area shape="rect" id="node8" title=" " alt="" coords="226,221,341,247"/>
-<area shape="rect" id="node9" href="$_component_reporter_interface_8h.html" title=" " alt="" coords="365,213,570,255"/>
+<area shape="rect" id="node4" href="$_component_configuration_8h.html" title="AVSCommon/AVS/ComponentConfiguration.h" alt="" coords="559,303,851,329"/>
+<area shape="rect" id="node7" href="$_mock_component_reporter_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MockComponentReporterInterface.h" alt="" coords="179,124,417,165"/>
+<area shape="rect" id="node10" href="$_s_d_k_version_8h.html" title="AVSCommon/Utils/SDKVersion.h" alt="" coords="875,303,1095,329"/>
+<area shape="rect" id="node11" href="$_s_d_k_component_8h.html" title="SDKComponent/SDKComponent.h" alt="" coords="443,131,670,158"/>
+<area shape="rect" id="node9" href="$_component_reporter_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ComponentReporterInterface.h" alt="" coords="365,213,570,255"/>
 </map>

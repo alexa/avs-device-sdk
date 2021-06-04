@@ -1,6 +1,6 @@
-<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/SystemClockMonitor.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/SystemClockMonitor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="50,5,251,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,75,158"/>
-<area shape="rect" id="node3" title=" " alt="" coords="99,131,203,158"/>
-<area shape="rect" id="node4" href="$_system_clock_monitor_observer_interface_8h.html" title=" " alt="" coords="227,124,490,165"/>
+<map id="/workplace/avs&#45;device&#45;sdk/core/acsdkSystemClockMonitor/include/acsdkSystemClockMonitor/SystemClockMonitor.h" name="/workplace/avs&#45;device&#45;sdk/core/acsdkSystemClockMonitor/include/acsdkSystemClockMonitor/SystemClockMonitor.h">
+<area shape="rect" id="node2" href="$_system_clock_monitor_interface_8h.html" title="acsdkSystemClockMonitorInterfaces\l/SystemClockMonitorInterface.h" alt="" coords="5,124,243,165"/>
+<area shape="rect" id="node3" href="$_system_clock_monitor_observer_interface_8h.html" title="acsdkSystemClockMonitorInterfaces\l/SystemClockMonitorObserverInterface.h" alt="" coords="149,213,411,255"/>
+<area shape="rect" id="node4" href="$_system_clock_notifier_interface_8h.html" title="acsdkSystemClockMonitorInterfaces\l/SystemClockNotifierInterface.h" alt="" coords="317,124,555,165"/>
+<area shape="rect" id="node5" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="436,213,593,255"/>
 </map>

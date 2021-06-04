@@ -1,7 +1,5 @@
 <map id="alexaClientSDK::acl::transport::test::HTTP2TransportTest" name="alexaClientSDK::acl::transport::test::HTTP2TransportTest">
-<area shape="rect" id="node1" title="Test harness for HTTP2Transport class." alt="" coords="500,147,741,189"/>
-<area shape="rect" id="node2" title=" " alt="" coords="121,5,168,32"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title=" " alt="" coords="9,56,280,171"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair_3_01void_01_4.html" title=" " alt="" coords="46,195,243,251"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title=" " alt="" coords="5,275,284,360"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title="alexaClientSDK::avsCommon\l::utils::PromiseFuturePair\l\&lt; std::pair\&lt; std::shared_ptr\l\&lt; alexaClientSDK::avsCommon\l::sdkInterfaces::MessageSenderInterface\l \&gt;, std::shared_ptr\&lt; alexaClientSDK\l::acl::PostConnectObserverInterface \&gt; \&gt; \&gt;" alt="" coords="9,56,280,171"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair_3_01void_01_4.html" title="alexaClientSDK::avsCommon\l::utils::PromiseFuturePair\l\&lt; void \&gt;" alt="" coords="46,195,243,251"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title="alexaClientSDK::avsCommon\l::utils::PromiseFuturePair\l\&lt; std::shared_ptr\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::AuthObserver\lInterface \&gt; \&gt;" alt="" coords="5,275,284,360"/>
 </map>

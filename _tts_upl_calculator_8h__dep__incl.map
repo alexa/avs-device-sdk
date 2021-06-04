@@ -1,5 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Metrics/UplCalculator/include/Metrics/TtsUplCalculator.h" name="/workplace/avs&#45;device&#45;sdk/Metrics/UplCalculator/include/Metrics/TtsUplCalculator.h">
-<area shape="rect" id="node1" title=" " alt="" coords="81,5,307,61"/>
-<area shape="rect" id="node2" href="$_tts_upl_calculator_8cpp.html" title=" " alt="" coords="5,109,183,165"/>
-<area shape="rect" id="node3" href="$_upl_metric_sink_8cpp.html" title=" " alt="" coords="207,109,384,165"/>
+<area shape="rect" id="node2" href="$_tts_upl_calculator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/TtsUplCalculator.cpp" alt="" coords="5,109,183,165"/>
+<area shape="rect" id="node3" href="$_upl_metric_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/UplMetricSink.cpp" alt="" coords="207,109,384,165"/>
 </map>

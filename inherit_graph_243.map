@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_exception_encountered_event.html" title=" " alt="" coords="5,5,231,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_revoke_authorization_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::RevokeAuthorization\lObserverInterface" alt="" coords="5,43,244,99"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_revoke_authorization_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockRevokeAuthorizationObserver" alt="" coords="292,5,520,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_revoke_authorization_observer.html" title="alexaClientSDK::sampleApp\l::RevokeAuthorizationObserver" alt="" coords="304,86,508,127"/>
 </map>

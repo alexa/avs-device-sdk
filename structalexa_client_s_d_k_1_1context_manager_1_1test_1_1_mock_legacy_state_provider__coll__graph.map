@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::contextManager::test::MockLegacyStateProvider" name="alexaClientSDK::contextManager::test::MockLegacyStateProvider">
-<area shape="rect" id="node1" title="Mock legacy state provider." alt="" coords="5,109,221,151"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title=" " alt="" coords="15,5,212,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="15,5,212,61"/>
 </map>

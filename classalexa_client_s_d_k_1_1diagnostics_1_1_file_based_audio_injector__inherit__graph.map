@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::diagnostics::FileBasedAudioInjector" name="alexaClientSDK::diagnostics::FileBasedAudioInjector">
-<area shape="rect" id="node1" title=" " alt="" coords="9,109,199,151"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_audio_injector_interface.html" title=" " alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_audio_injector_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::AudioInjectorInterface" alt="" coords="5,5,203,61"/>
 </map>

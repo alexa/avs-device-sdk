@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkPostConnectOperationProviderRegistrar::PostConnectOperationProviderRegistrar" name="alexaClientSDK::acsdkPostConnectOperationProviderRegistrar::PostConnectOperationProviderRegistrar">
-<area shape="rect" id="node1" title=" " alt="" coords="321,49,584,105"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_startup_manager_interfaces_1_1_requires_startup_interface.html" title=" " alt="" coords="23,5,255,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html" title=" " alt="" coords="5,86,273,157"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_startup_manager_interfaces_1_1_requires_startup_interface.html" title="alexaClientSDK::acsdkStartup\lManagerInterfaces::RequiresStartup\lInterface" alt="" coords="23,5,255,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_interfaces_1_1_post_cdd91e70ba57bbaacd59765fda1f54ac4.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\lInterfaces::PostConnectOperationProvider\lRegistrarInterface" alt="" coords="5,86,273,157"/>
 </map>

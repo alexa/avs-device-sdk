@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -91,8 +92,15 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1_message_interpreter.html">MessageInterpreter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a560d500d798e7c530fa5c0e9bb0a74b8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl.html#a560d500d798e7c530fa5c0e9bb0a74b8">ADSLComponent</a> = <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">acsdkManufactory::Component</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a> &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &gt;&gt;</td></tr>
+<tr class="separator:a560d500d798e7c530fa5c0e9bb0a74b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a67bba402622b309ae204227c02cb3ee6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl.html#a560d500d798e7c530fa5c0e9bb0a74b8">ADSLComponent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl.html#a67bba402622b309ae204227c02cb3ee6">getComponent</a> ()</td></tr>
+<tr class="separator:a67bba402622b309ae204227c02cb3ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89c8cce9c4d01c57d7ff22aa526b3c45"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl.html#a89c8cce9c4d01c57d7ff22aa526b3c45">PARSE_COMPLETE</a> (&quot;PARSE_COMPLETE&quot;)</td></tr>
 <tr class="memdesc:a89c8cce9c4d01c57d7ff22aa526b3c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric recorded when parse has been completed.  <a href="#a89c8cce9c4d01c57d7ff22aa526b3c45">More...</a><br /></td></tr>
 <tr class="separator:a89c8cce9c4d01c57d7ff22aa526b3c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,7 +126,42 @@ Variables</h2></td></tr>
 <tr class="memdesc:a084188495c228c1525fb6038539b35a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metric name for directives that were handled directly.  <a href="#a084188495c228c1525fb6038539b35a7">More...</a><br /></td></tr>
 <tr class="separator:a084188495c228c1525fb6038539b35a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a560d500d798e7c530fa5c0e9bb0a74b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a560d500d798e7c530fa5c0e9bb0a74b8">&#9670;&nbsp;</a></span>ADSLComponent</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacealexa_client_s_d_k_1_1adsl.html#a560d500d798e7c530fa5c0e9bb0a74b8">alexaClientSDK::adsl::ADSLComponent</a> = typedef <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">acsdkManufactory::Component</a>&lt; std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">avsCommon::sdkInterfaces::DirectiveSequencerInterface</a>&gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a>&gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a>&gt; &gt;, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">acsdkManufactory::Import</a>&lt;std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a>&gt; &gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Definition of a Manufactory component for Alexa directive sequencing. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a67bba402622b309ae204227c02cb3ee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67bba402622b309ae204227c02cb3ee6">&#9670;&nbsp;</a></span>getComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl.html#a560d500d798e7c530fa5c0e9bb0a74b8">ADSLComponent</a> alexaClientSDK::adsl::getComponent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates an manufactory component that exports a shared pointer to <code>DirectiveSequenceInterface</code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A component. </dd></dl>
+
+</div>
+</div>
 <a id="a89c8cce9c4d01c57d7ff22aa526b3c45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89c8cce9c4d01c57d7ff22aa526b3c45">&#9670;&nbsp;</a></span>PARSE_COMPLETE()</h2>
 
@@ -304,7 +347,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

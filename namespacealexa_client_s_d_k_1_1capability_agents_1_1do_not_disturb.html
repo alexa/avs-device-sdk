@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a63f96f9c55d26f4fd1a42c4a1f516cc6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a63f96f9c55d26f4fd1a42c4a1f516cc6">TAG</a> (&quot;DNDMessageRequest&quot;)</td></tr>
 <tr class="memdesc:a63f96f9c55d26f4fd1a42c4a1f516cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a63f96f9c55d26f4fd1a42c4a1f516cc6">More...</a><br /></td></tr>
 <tr class="separator:a63f96f9c55d26f4fd1a42c4a1f516cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a012ec8b8741cb3038b46aae4af2562d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a012ec8b8741cb3038b46aae4af2562d3">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName, const std::string &amp;settingsKey, uint64_t count)</td></tr>
+<tr class="separator:a012ec8b8741cb3038b46aae4af2562d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bd2df54b5fa192d585e5e2801a45fcd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a9bd2df54b5fa192d585e5e2801a45fcd">parseDirectivePayload</a> (const std::string &amp;payload, Document *document)</td></tr>
 <tr class="separator:a9bd2df54b5fa192d585e5e2801a45fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -102,6 +104,24 @@ Variables</h2></td></tr>
 <tr class="memitem:ac089210f401c8046e92403ff29abbb1c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#ac089210f401c8046e92403ff29abbb1c">INVALID_VALUE</a> = &quot;&quot;</td></tr>
 <tr class="memdesc:ac089210f401c8046e92403ff29abbb1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to designate invalid value for the DND setting. NOTE: Valid values are "true" and "false".  <a href="#ac089210f401c8046e92403ff29abbb1c">More...</a><br /></td></tr>
 <tr class="separator:ac089210f401c8046e92403ff29abbb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a886647acf18e63011bd3210db3bc0e50"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a886647acf18e63011bd3210db3bc0e50">METRIC_SOURCE_PREFIX</a> = &quot;SETTINGS-&quot;</td></tr>
+<tr class="memdesc:a886647acf18e63011bd3210db3bc0e50"><td class="mdescLeft">&#160;</td><td class="mdescRight">The metrics source string.  <a href="#a886647acf18e63011bd3210db3bc0e50">More...</a><br /></td></tr>
+<tr class="separator:a886647acf18e63011bd3210db3bc0e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c542f5ec15c5bf9983a2bed928baf0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a48c542f5ec15c5bf9983a2bed928baf0">LOCAL_CHANGE_METRIC</a> = &quot;LOCAL_CHANGE&quot;</td></tr>
+<tr class="memdesc:a48c542f5ec15c5bf9983a2bed928baf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The local change metric string.  <a href="#a48c542f5ec15c5bf9983a2bed928baf0">More...</a><br /></td></tr>
+<tr class="separator:a48c542f5ec15c5bf9983a2bed928baf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bfd75f666f1fc6915efa9df98a7694c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a5bfd75f666f1fc6915efa9df98a7694c">LOCAL_CHANGE_FAILED_METRIC</a> = &quot;LOCAL_CHANGE_FAILED&quot;</td></tr>
+<tr class="memdesc:a5bfd75f666f1fc6915efa9df98a7694c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The local change failed metric string.  <a href="#a5bfd75f666f1fc6915efa9df98a7694c">More...</a><br /></td></tr>
+<tr class="separator:a5bfd75f666f1fc6915efa9df98a7694c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a139e1e3c0439d6e6e79ca47202ce1f82"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a139e1e3c0439d6e6e79ca47202ce1f82">AVS_CHANGE_METRIC</a> = &quot;AVS_CHANGE&quot;</td></tr>
+<tr class="memdesc:a139e1e3c0439d6e6e79ca47202ce1f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">The AVS change metric string.  <a href="#a139e1e3c0439d6e6e79ca47202ce1f82">More...</a><br /></td></tr>
+<tr class="separator:a139e1e3c0439d6e6e79ca47202ce1f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dff326630531b0d2b75f745e02fc862"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a2dff326630531b0d2b75f745e02fc862">AVS_CHANGE_FAILED_METRIC</a> = &quot;AVS_CHANGE_FAILED&quot;</td></tr>
+<tr class="memdesc:a2dff326630531b0d2b75f745e02fc862"><td class="mdescLeft">&#160;</td><td class="mdescRight">The local change failed metric string.  <a href="#a2dff326630531b0d2b75f745e02fc862">More...</a><br /></td></tr>
+<tr class="separator:a2dff326630531b0d2b75f745e02fc862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a407b3afbccab83b8e92e7aa24f37e3c5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a407b3afbccab83b8e92e7aa24f37e3c5">SETTING_KEY</a> = &quot;SETTING_KEY&quot;</td></tr>
+<tr class="memdesc:a407b3afbccab83b8e92e7aa24f37e3c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The setting key metric string.  <a href="#a407b3afbccab83b8e92e7aa24f37e3c5">More...</a><br /></td></tr>
+<tr class="separator:a407b3afbccab83b8e92e7aa24f37e3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e1deee97249472a677b346e9dcc8e01"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a6e1deee97249472a677b346e9dcc8e01">TAG</a> {&quot;DoNotDisturbCapabilityAgent&quot;}</td></tr>
 <tr class="memdesc:a6e1deee97249472a677b346e9dcc8e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a6e1deee97249472a677b346e9dcc8e01">More...</a><br /></td></tr>
 <tr class="separator:a6e1deee97249472a677b346e9dcc8e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +196,63 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a012ec8b8741cb3038b46aae4af2562d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a012ec8b8741cb3038b46aae4af2562d3">&#9670;&nbsp;</a></span>submitMetric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::capabilityAgents::doNotDisturb::submitMetric </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>eventName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>settingsKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Submits a counter metric with the passed in event name </p><dl class="section note"><dt>Note</dt><dd>: This function returns immediately if metricRecorder is null.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metricRecorder</td><td>The <code>MetricRecorder</code> instance used to record the metric. </td></tr>
+    <tr><td class="paramname">eventName</td><td>The event name string. </td></tr>
+    <tr><td class="paramname">count</td><td>The count to increment the datapoint with. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a63f96f9c55d26f4fd1a42c4a1f516cc6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a63f96f9c55d26f4fd1a42c4a1f516cc6">&#9670;&nbsp;</a></span>TAG()</h2>
 
@@ -205,6 +282,54 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a2dff326630531b0d2b75f745e02fc862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dff326630531b0d2b75f745e02fc862">&#9670;&nbsp;</a></span>AVS_CHANGE_FAILED_METRIC</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::doNotDisturb::AVS_CHANGE_FAILED_METRIC = &quot;AVS_CHANGE_FAILED&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The local change failed metric string. </p>
+
+</div>
+</div>
+<a id="a139e1e3c0439d6e6e79ca47202ce1f82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139e1e3c0439d6e6e79ca47202ce1f82">&#9670;&nbsp;</a></span>AVS_CHANGE_METRIC</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::doNotDisturb::AVS_CHANGE_METRIC = &quot;AVS_CHANGE&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The AVS change metric string. </p>
+
+</div>
+</div>
 <a id="abbdf65051fce7b3a65f02e6fe8136cd4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abbdf65051fce7b3a65f02e6fe8136cd4">&#9670;&nbsp;</a></span>DIRECTIVE_SETDONOTDISTURB</h2>
 
@@ -397,6 +522,78 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a5bfd75f666f1fc6915efa9df98a7694c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bfd75f666f1fc6915efa9df98a7694c">&#9670;&nbsp;</a></span>LOCAL_CHANGE_FAILED_METRIC</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::doNotDisturb::LOCAL_CHANGE_FAILED_METRIC = &quot;LOCAL_CHANGE_FAILED&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The local change failed metric string. </p>
+
+</div>
+</div>
+<a id="a48c542f5ec15c5bf9983a2bed928baf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c542f5ec15c5bf9983a2bed928baf0">&#9670;&nbsp;</a></span>LOCAL_CHANGE_METRIC</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::doNotDisturb::LOCAL_CHANGE_METRIC = &quot;LOCAL_CHANGE&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The local change metric string. </p>
+
+</div>
+</div>
+<a id="a886647acf18e63011bd3210db3bc0e50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a886647acf18e63011bd3210db3bc0e50">&#9670;&nbsp;</a></span>METRIC_SOURCE_PREFIX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::doNotDisturb::METRIC_SOURCE_PREFIX = &quot;SETTINGS-&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The metrics source string. </p>
+
+</div>
+</div>
 <a id="a6b47b726e208a9264c916764dc9b75de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6b47b726e208a9264c916764dc9b75de">&#9670;&nbsp;</a></span>NAMESPACE</h2>
 
@@ -418,6 +615,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The Alexa.DoNotDisturb interface namespace. </p>
+
+</div>
+</div>
+<a id="a407b3afbccab83b8e92e7aa24f37e3c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a407b3afbccab83b8e92e7aa24f37e3c5">&#9670;&nbsp;</a></span>SETTING_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::doNotDisturb::SETTING_KEY = &quot;SETTING_KEY&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The setting key metric string. </p>
 
 </div>
 </div>
@@ -449,7 +670,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

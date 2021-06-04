@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -447,7 +447,7 @@ Variables</h2></td></tr>
 <tr class="memdesc:a46385facca9e4b2b068071ab5660e17c"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "string" type field in metadata section of StreamMetadataExtracted event.  <a href="#a46385facca9e4b2b068071ab5660e17c">More...</a><br /></td></tr>
 <tr class="separator:a46385facca9e4b2b068071ab5660e17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37e5b5fa0e2a568a6da376e9eefeb814"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a37e5b5fa0e2a568a6da376e9eefeb814">MESSAGE_METADATA_STRING_KEY_WL</a> = &quot;Title&quot;</td></tr>
-<tr class="memdesc:a37e5b5fa0e2a568a6da376e9eefeb814"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "string" type field in metadata section of StreamMetadataExtracted event. On whitelist.  <a href="#a37e5b5fa0e2a568a6da376e9eefeb814">More...</a><br /></td></tr>
+<tr class="memdesc:a37e5b5fa0e2a568a6da376e9eefeb814"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON key for "string" type field in metadata section of StreamMetadataExtracted event. On allowlist.  <a href="#a37e5b5fa0e2a568a6da376e9eefeb814">More...</a><br /></td></tr>
 <tr class="separator:a37e5b5fa0e2a568a6da376e9eefeb814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae462d731274ef92ae886550fcdb178a3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#ae462d731274ef92ae886550fcdb178a3">MESSAGE_METADATA_STRING_VALUE</a> = &quot;StringValue&quot;</td></tr>
 <tr class="memdesc:ae462d731274ef92ae886550fcdb178a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">JSON value for "string" type field in metadata section of StreamMetadataExtracted event.  <a href="#ae462d731274ef92ae886550fcdb178a3">More...</a><br /></td></tr>
@@ -2509,7 +2509,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Verify that metadata not on whitelist is removed, and not sent </p>
+<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Verify that metadata not on allowlist is removed, and not sent </p>
 
 </div>
 </div>
@@ -2538,7 +2538,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Send data on whitelist </p>
+<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Send data on allowlist </p>
 
 </div>
 </div>
@@ -2567,7 +2567,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Send data on whitelist make sure event not sent too fast </p>
+<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Send data on allowlist make sure event not sent too fast </p>
 
 </div>
 </div>
@@ -2596,7 +2596,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Send data on whitelist make sure duplicate not sent </p>
+<p>Test <code>onTags</code> and expect valid JSON. Build a vector of tags and pass to Observer (onTags). Observer will use the vector of tags and build a valid JSON object "StreamMetadataExtracted Event". This JSON object is verified in verifyTags. Send data on allowlist make sure duplicate not sent </p>
 
 </div>
 </div>
@@ -4408,7 +4408,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>JSON key for "string" type field in metadata section of StreamMetadataExtracted event. On whitelist. </p>
+<p>JSON key for "string" type field in metadata section of StreamMetadataExtracted event. On allowlist. </p>
 
 </div>
 </div>
@@ -5896,7 +5896,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,13 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaResourceProviderInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaResourceProviderInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="191,5,425,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,235,75,262"/>
-<area shape="rect" id="node3" title=" " alt="" coords="381,235,435,262"/>
-<area shape="rect" id="node4" href="$_channel_volume_interface_8h.html" title=" " alt="" coords="515,139,706,180"/>
-<area shape="rect" id="node10" href="$_media_player_factory_interface_8h.html" title=" " alt="" coords="134,139,341,180"/>
-<area shape="rect" id="node5" title=" " alt="" coords="459,235,538,262"/>
-<area shape="rect" id="node6" href="$_speaker_constants_8h.html" title=" " alt="" coords="562,228,803,269"/>
-<area shape="rect" id="node8" href="$_speaker_interface_8h.html" title=" " alt="" coords="827,228,1018,269"/>
-<area shape="rect" id="node7" title=" " alt="" coords="652,317,713,344"/>
-<area shape="rect" id="node9" title=" " alt="" coords="888,317,957,344"/>
-<area shape="rect" id="node11" href="$_media_player_factory_observer_interface_8h.html" title=" " alt="" coords="99,228,357,269"/>
+<area shape="rect" id="node4" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="517,139,709,180"/>
+<area shape="rect" id="node10" href="$_media_player_factory_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryInterface.h" alt="" coords="133,139,342,180"/>
+<area shape="rect" id="node6" href="$_speaker_constants_8h.html" title="AVSCommon/AVS/SpeakerConstants\l/SpeakerConstants.h" alt="" coords="563,228,808,269"/>
+<area shape="rect" id="node8" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="832,228,1024,269"/>
+<area shape="rect" id="node11" href="$_media_player_factory_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerFactoryObserverInterface.h" alt="" coords="99,228,357,269"/>
 </map>

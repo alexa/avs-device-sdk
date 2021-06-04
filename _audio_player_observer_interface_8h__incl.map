@@ -1,9 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/AudioPlayerObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/AudioPlayer/acsdkAudioPlayerInterfaces/include/acsdkAudioPlayerInterfaces/AudioPlayerObserverInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="63,5,297,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,139,67,165"/>
-<area shape="rect" id="node3" title=" " alt="" coords="153,213,207,240"/>
-<area shape="rect" id="node4" href="$_player_activity_8h.html" title=" " alt="" coords="395,139,618,165"/>
-<area shape="rect" id="node7" href="$_play_requestor_8h.html" title=" " alt="" coords="141,139,371,165"/>
-<area shape="rect" id="node5" title=" " alt="" coords="427,213,493,240"/>
-<area shape="rect" id="node6" title=" " alt="" coords="517,213,587,240"/>
+<area shape="rect" id="node4" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="400,139,629,165"/>
+<area shape="rect" id="node7" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="141,139,376,165"/>
 </map>

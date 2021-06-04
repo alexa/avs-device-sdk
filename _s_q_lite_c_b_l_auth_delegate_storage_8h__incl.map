@@ -1,12 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h">
-<area shape="rect" id="node1" title=" " alt="" coords="220,5,505,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,64,158"/>
-<area shape="rect" id="node3" title=" " alt="" coords="402,288,457,315"/>
-<area shape="rect" id="node4" title=" " alt="" coords="853,288,923,315"/>
-<area shape="rect" id="node5" href="$_s_q_lite_database_8h.html" title=" " alt="" coords="468,131,687,158"/>
-<area shape="rect" id="node10" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title=" " alt="" coords="89,124,325,165"/>
-<area shape="rect" id="node6" title=" " alt="" coords="781,213,851,240"/>
-<area shape="rect" id="node7" title=" " alt="" coords="400,213,459,240"/>
-<area shape="rect" id="node8" href="$_s_q_lite_statement_8h.html" title=" " alt="" coords="534,213,757,240"/>
-<area shape="rect" id="node9" title=" " alt="" coords="626,288,665,315"/>
+<area shape="rect" id="node5" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="467,131,685,158"/>
+<area shape="rect" id="node10" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="89,124,325,165"/>
+<area shape="rect" id="node8" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="531,213,754,240"/>
 </map>

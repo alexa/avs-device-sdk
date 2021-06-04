@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::synchronizeStateSender::SynchronizeStateSenderFactory" name="alexaClientSDK::synchronizeStateSender::SynchronizeStateSenderFactory">
-<area shape="rect" id="node1" title=" " alt="" coords="7,109,253,165"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html" title=" " alt="" coords="5,5,255,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PostConnectOperation\lProviderInterface" alt="" coords="5,5,255,61"/>
 </map>

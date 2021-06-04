@@ -1,9 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/Stream/StreamFunctions.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/Stream/StreamFunctions.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="174,5,393,61"/>
-<area shape="rect" id="node2" href="$_stream_functions_8h.html" title=" " alt="" coords="5,109,183,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="274,199,343,225"/>
-<area shape="rect" id="node6" title=" " alt="" coords="407,199,461,225"/>
-<area shape="rect" id="node7" href="$_streambuf_8h.html" title=" " alt="" coords="259,109,436,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="51,199,121,225"/>
-<area shape="rect" id="node4" title=" " alt="" coords="145,199,211,225"/>
+<area shape="rect" id="node2" href="$_stream_functions_8h.html" title="AVSCommon/Utils/Stream\l/StreamFunctions.h" alt="" coords="5,109,184,151"/>
+<area shape="rect" id="node7" href="$_streambuf_8h.html" title="AVSCommon/Utils/Stream\l/Streambuf.h" alt="" coords="259,109,437,151"/>
 </map>

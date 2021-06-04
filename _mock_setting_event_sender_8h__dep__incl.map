@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockSettingEventSender.h" name="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockSettingEventSender.h">
-<area shape="rect" id="node1" title=" " alt="" coords="374,5,558,61"/>
-<area shape="rect" id="node2" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="5,109,204,180"/>
-<area shape="rect" id="node3" href="$_locale_handler_test_8cpp.html" title=" " alt="" coords="229,117,463,173"/>
-<area shape="rect" id="node4" href="$_locale_wake_words_setting_test_8cpp.html" title=" " alt="" coords="487,117,687,173"/>
-<area shape="rect" id="node5" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title=" " alt="" coords="712,117,948,173"/>
+<area shape="rect" id="node2" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="5,109,204,180"/>
+<area shape="rect" id="node3" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="227,117,462,173"/>
+<area shape="rect" id="node4" href="$_locale_wake_words_setting_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/LocaleWake\lWordsSettingTest.cpp" alt="" coords="487,117,688,173"/>
+<area shape="rect" id="node5" href="$_shared_a_v_s_setting_protocol_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SharedAVSSetting\lProtocolTest.cpp" alt="" coords="712,117,951,173"/>
 </map>

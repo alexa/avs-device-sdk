@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::acsdkManufactory::internal::AbstractPointerCache" name="alexaClientSDK::acsdkManufactory::internal::AbstractPointerCache">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,236,47"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_pointer_cache.html" title=" " alt="" coords="5,95,236,136"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_shared_pointer_cache.html" title="alexaClientSDK::acsdkManufactory\l::internal::SharedPointerCache" alt="" coords="284,5,515,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_weak_pointer_cache.html" title="alexaClientSDK::acsdkManufactory\l::internal::WeakPointerCache" alt="" coords="284,71,515,112"/>
 </map>

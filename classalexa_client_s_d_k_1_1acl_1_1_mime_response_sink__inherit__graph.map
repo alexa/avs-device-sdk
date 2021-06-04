@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::acl::MimeResponseSink" name="alexaClientSDK::acl::MimeResponseSink">
-<area shape="rect" id="node1" title=" " alt="" coords="48,109,195,151"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_response_sink_interface.html" title=" " alt="" coords="5,5,237,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_mime_response_sink_interface.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2MimeResponse\lSinkInterface" alt="" coords="5,5,237,61"/>
 </map>

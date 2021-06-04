@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/InterruptModel/config/include/InterruptModel/config/InterruptModelConfiguration.h" name="/workplace/avs&#45;device&#45;sdk/InterruptModel/config/include/InterruptModel/config/InterruptModelConfiguration.h">
-<area shape="rect" id="node1" title=" " alt="" coords="413,5,610,76"/>
-<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,124,260,180"/>
-<area shape="rect" id="node3" href="$_interrupt_model_configuration_8cpp.html" title=" " alt="" coords="284,124,517,180"/>
-<area shape="rect" id="node4" href="$_interrupt_model_test_8cpp.html" title=" " alt="" coords="542,124,702,180"/>
-<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title=" " alt="" coords="726,131,1003,173"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,124,260,180"/>
+<area shape="rect" id="node3" href="$_interrupt_model_configuration_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/InterruptModel/config\l/src/InterruptModelConfiguration.cpp" alt="" coords="284,124,517,180"/>
+<area shape="rect" id="node4" href="$_interrupt_model_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/InterruptModel/test\l/InterruptModelTest.cpp" alt="" coords="542,124,702,180"/>
+<area shape="rect" id="node5" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="726,131,1003,173"/>
 </map>

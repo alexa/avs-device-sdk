@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_bus.html" title=" " alt="" coords="5,5,240,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_synchronizer_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateSynchronizer\lObserverInterface" alt="" coords="5,5,229,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_state_synchronizer_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockStateSynchronizerObserver" alt="" coords="277,5,492,61"/>
 </map>

@@ -1,11 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/DBusObject.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/DBusObject.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,235,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="144,259,213,285"/>
-<area shape="rect" id="node3" title=" " alt="" coords="75,184,130,211"/>
-<area shape="rect" id="node4" title=" " alt="" coords="111,109,222,136"/>
-<area shape="rect" id="node5" href="$_d_bus_object_base_8h.html" title=" " alt="" coords="246,109,418,136"/>
-<area shape="rect" id="node6" href="$_d_bus_connection_8h.html" title=" " alt="" coords="247,184,417,211"/>
-<area shape="rect" id="node7" title=" " alt="" coords="237,259,296,285"/>
-<area shape="rect" id="node8" title=" " alt="" coords="320,259,379,285"/>
-<area shape="rect" id="node9" title=" " alt="" coords="403,259,474,285"/>
+<area shape="rect" id="node5" href="$_d_bus_object_base_8h.html" title="BlueZ/DBusObjectBase.h" alt="" coords="246,109,418,136"/>
+<area shape="rect" id="node6" href="$_d_bus_connection_8h.html" title="BlueZ/DBusConnection.h" alt="" coords="247,184,417,211"/>
 </map>

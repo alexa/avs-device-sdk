@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/core/acsdkPostConnectOperationProviderRegistrar/include/acsdkPostConnectOperationProviderRegistrar/PostConnectOperationProviderRegistrar.h" name="/workplace/avs&#45;device&#45;sdk/core/acsdkPostConnectOperationProviderRegistrar/include/acsdkPostConnectOperationProviderRegistrar/PostConnectOperationProviderRegistrar.h">
-<area shape="rect" id="node1" title=" " alt="" coords="179,5,493,91"/>
-<area shape="rect" id="node2" href="$_core_component_8cpp.html" title=" " alt="" coords="5,146,171,202"/>
-<area shape="rect" id="node3" href="$_post_connect_operation_provider_registrar_8cpp.html" title=" " alt="" coords="195,139,477,209"/>
-<area shape="rect" id="node4" href="$_post_connect_operation_provider_registrar_test_8cpp.html" title=" " alt="" coords="501,139,787,209"/>
+<area shape="rect" id="node2" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="5,146,171,202"/>
+<area shape="rect" id="node3" href="$_post_connect_operation_provider_registrar_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkPostConnectOperation\lProviderRegistrar/src/PostConnectOperation\lProviderRegistrar.cpp" alt="" coords="195,139,477,209"/>
+<area shape="rect" id="node4" href="$_post_connect_operation_provider_registrar_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkPostConnectOperation\lProviderRegistrar/test/PostConnectOperation\lProviderRegistrarTest.cpp" alt="" coords="501,139,787,209"/>
 </map>

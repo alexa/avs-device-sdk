@@ -1,5 +1,5 @@
 <map id="alexaClientSDK::capabilityAgents::mrm::MRMHandlerInterface" name="alexaClientSDK::capabilityAgents::mrm::MRMHandlerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="11,95,244,136"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html" title=" " alt="" coords="5,184,249,225"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="29,5,226,47"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html" title="alexaClientSDK::capability\lAgents::mrm::test::MockMRMHandler" alt="" coords="549,50,793,91"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface" alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="14,86,211,127"/>
 </map>

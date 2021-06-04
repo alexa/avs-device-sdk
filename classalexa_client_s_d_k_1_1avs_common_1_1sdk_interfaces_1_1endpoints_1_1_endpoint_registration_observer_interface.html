@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,7 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::endpoints::End
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_o085aa7b45d801b2c9f1e7ca0bc824751.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_observer.html" title="Mocks an endpoint registration observer. " alt="" coords="308,5,575,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -89,19 +90,34 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13afd9f6519d3f45276829fe74eb2c4bb85">RegistrationResult::SUCCEEDED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13aaa595e66a778dba96326c52f53662bb6">RegistrationResult::CONFIGURATION_ERROR</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13ae8c0c70879b5895c615677261d64a1ee">RegistrationResult::INTERNAL_ERROR</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13a1e6a6aba9b8643fbd531868968b4300d">RegistrationResult::REGISTRATION_IN_PROGRESS</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13a505afebce44fe81c69cd764b5ab8c934">RegistrationResult::PENDING_REGISTRATION</a>, 
 <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13ae516e5e34ab1e8fe7dd4f071564551a3">RegistrationResult::PENDING_DEREGISTRATION</a>
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13ae516e5e34ab1e8fe7dd4f071564551a3">RegistrationResult::PENDING_DEREGISTRATION</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13a5e6405e0a3ee35eff28e8e76e28c23b3">RegistrationResult::PENDING_UPDATE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13a2ed29473219607b1b8c2d77f28b1df5c">RegistrationResult::ALREADY_REGISTERED</a>
 <br />
  }</td></tr>
 <tr class="separator:a4b484b54ad8e43edeb9e3cf576a75f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ddce239d643fd57bd83b3cbc1a9044"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044">UpdateResult</a> { <br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044afd9f6519d3f45276829fe74eb2c4bb85">UpdateResult::SUCCEEDED</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044aaa595e66a778dba96326c52f53662bb6">UpdateResult::CONFIGURATION_ERROR</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044ae8c0c70879b5895c615677261d64a1ee">UpdateResult::INTERNAL_ERROR</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044a28f1d55993bd11ecf4a39f61530c84f3">UpdateResult::NOT_REGISTERED</a>, 
+<br />
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044a5e6405e0a3ee35eff28e8e76e28c23b3">UpdateResult::PENDING_UPDATE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044a505afebce44fe81c69cd764b5ab8c934">UpdateResult::PENDING_REGISTRATION</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044ae516e5e34ab1e8fe7dd4f071564551a3">UpdateResult::PENDING_DEREGISTRATION</a>
+<br />
+ }</td></tr>
+<tr class="separator:a34ddce239d643fd57bd83b3cbc1a9044"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a601480494d340d3704fb4dd7cad4c622"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622">DeregistrationResult</a> { <br />
 &#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622afd9f6519d3f45276829fe74eb2c4bb85">DeregistrationResult::SUCCEEDED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622a28f1d55993bd11ecf4a39f61530c84f3">DeregistrationResult::NOT_REGISTERED</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622ae8c0c70879b5895c615677261d64a1ee">DeregistrationResult::INTERNAL_ERROR</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622aaa595e66a778dba96326c52f53662bb6">DeregistrationResult::CONFIGURATION_ERROR</a>, 
 <br />
-&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622a1e6a6aba9b8643fbd531868968b4300d">DeregistrationResult::REGISTRATION_IN_PROGRESS</a>, 
+&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622a5e6405e0a3ee35eff28e8e76e28c23b3">DeregistrationResult::PENDING_UPDATE</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622a505afebce44fe81c69cd764b5ab8c934">DeregistrationResult::PENDING_REGISTRATION</a>, 
 <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622ae516e5e34ab1e8fe7dd4f071564551a3">DeregistrationResult::PENDING_DEREGISTRATION</a>
 <br />
  }</td></tr>
@@ -113,8 +129,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3fa7a5ae3fd2e550b9dd3a06a9d51607"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a026696a301207b9faebe0411731b6b2c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a026696a301207b9faebe0411731b6b2c">onEndpointRegistration</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;endpointId, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">avs::AVSDiscoveryEndpointAttributes</a> &amp;attributes, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a4b484b54ad8e43edeb9e3cf576a75f13">RegistrationResult</a> result)=0</td></tr>
 <tr class="separator:a026696a301207b9faebe0411731b6b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b3a494d182837d1e921f0e237e8c686"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a3b3a494d182837d1e921f0e237e8c686">onEndpointUpdate</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;endpointId, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">avs::AVSDiscoveryEndpointAttributes</a> &amp;attributes, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044">UpdateResult</a> result)=0</td></tr>
+<tr class="separator:a3b3a494d182837d1e921f0e237e8c686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c323f96c7c2116d1dd873d43d8907c1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a1c323f96c7c2116d1dd873d43d8907c1">onEndpointDeregistration</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;endpointId, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a601480494d340d3704fb4dd7cad4c622">DeregistrationResult</a> result)=0</td></tr>
 <tr class="separator:a1c323f96c7c2116d1dd873d43d8907c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb457f08091b8649643fced6bf52cbe8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#aeb457f08091b8649643fced6bf52cbe8">onPendingEndpointRegistrationOrUpdate</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;endpointId, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">avs::AVSDiscoveryEndpointAttributes</a> &amp;attributes, const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avs::CapabilityConfiguration</a> &gt; &amp;capabilities)</td></tr>
+<tr class="separator:aeb457f08091b8649643fced6bf52cbe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface that can be implemented in order to receive notifications about changes in endpoints registration. </p>
@@ -148,9 +168,11 @@ Public Member Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a601480494d340d3704fb4dd7cad4c622aaa595e66a778dba96326c52f53662bb6"></a>CONFIGURATION_ERROR&#160;</td><td class="fielddoc"><p>Deregistration failed due to some configuration error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a601480494d340d3704fb4dd7cad4c622a1e6a6aba9b8643fbd531868968b4300d"></a>REGISTRATION_IN_PROGRESS&#160;</td><td class="fielddoc"><p>Deregistration failed because the endpoint is currently being updated. </p>
+<tr><td class="fieldname"><a id="a601480494d340d3704fb4dd7cad4c622a5e6405e0a3ee35eff28e8e76e28c23b3"></a>PENDING_UPDATE&#160;</td><td class="fielddoc"><p>Deregistration failed because the endpoint is being updated. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a601480494d340d3704fb4dd7cad4c622ae516e5e34ab1e8fe7dd4f071564551a3"></a>PENDING_DEREGISTRATION&#160;</td><td class="fielddoc"><p>Deregistration is pending. </p>
+<tr><td class="fieldname"><a id="a601480494d340d3704fb4dd7cad4c622a505afebce44fe81c69cd764b5ab8c934"></a>PENDING_REGISTRATION&#160;</td><td class="fielddoc"><p>Deregistration failed because the endpoint is being registered. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a601480494d340d3704fb4dd7cad4c622ae516e5e34ab1e8fe7dd4f071564551a3"></a>PENDING_DEREGISTRATION&#160;</td><td class="fielddoc"><p>Deregistration failed because the endpoint is being deregistered. </p>
 </td></tr>
 </table>
 
@@ -183,9 +205,52 @@ Public Member Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a4b484b54ad8e43edeb9e3cf576a75f13ae8c0c70879b5895c615677261d64a1ee"></a>INTERNAL_ERROR&#160;</td><td class="fielddoc"><p>Registration failed due to internal error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a4b484b54ad8e43edeb9e3cf576a75f13a1e6a6aba9b8643fbd531868968b4300d"></a>REGISTRATION_IN_PROGRESS&#160;</td><td class="fielddoc"><p>Registration failed because the endpoint is currently being updated. </p>
+<tr><td class="fieldname"><a id="a4b484b54ad8e43edeb9e3cf576a75f13a505afebce44fe81c69cd764b5ab8c934"></a>PENDING_REGISTRATION&#160;</td><td class="fielddoc"><p>Registration failed because the endpoint is being registered. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a4b484b54ad8e43edeb9e3cf576a75f13ae516e5e34ab1e8fe7dd4f071564551a3"></a>PENDING_DEREGISTRATION&#160;</td><td class="fielddoc"><p>Registration failed because the endpoint is being deregistered. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4b484b54ad8e43edeb9e3cf576a75f13a5e6405e0a3ee35eff28e8e76e28c23b3"></a>PENDING_UPDATE&#160;</td><td class="fielddoc"><p>Registration failed because the endpoint is being updated. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4b484b54ad8e43edeb9e3cf576a75f13a2ed29473219607b1b8c2d77f28b1df5c"></a>ALREADY_REGISTERED&#160;</td><td class="fielddoc"><p>Registration failed because the endpoint has already been registered. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a34ddce239d643fd57bd83b3cbc1a9044"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ddce239d643fd57bd83b3cbc1a9044">&#9670;&nbsp;</a></span>UpdateResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface::UpdateResult</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Enumeration of possible update results. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044afd9f6519d3f45276829fe74eb2c4bb85"></a>SUCCEEDED&#160;</td><td class="fielddoc"><p>Update Succeeded. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044aaa595e66a778dba96326c52f53662bb6"></a>CONFIGURATION_ERROR&#160;</td><td class="fielddoc"><p>Update failed due to some configuration error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044ae8c0c70879b5895c615677261d64a1ee"></a>INTERNAL_ERROR&#160;</td><td class="fielddoc"><p>Update failed due to internal error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044a28f1d55993bd11ecf4a39f61530c84f3"></a>NOT_REGISTERED&#160;</td><td class="fielddoc"><p>Update failed due to the endpoint not being registered yet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044a5e6405e0a3ee35eff28e8e76e28c23b3"></a>PENDING_UPDATE&#160;</td><td class="fielddoc"><p>Update failed because the endpoint is being updated. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044a505afebce44fe81c69cd764b5ab8c934"></a>PENDING_REGISTRATION&#160;</td><td class="fielddoc"><p>Update failed because the endpoint is being registered. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a34ddce239d643fd57bd83b3cbc1a9044ae516e5e34ab1e8fe7dd4f071564551a3"></a>PENDING_DEREGISTRATION&#160;</td><td class="fielddoc"><p>Update failed because the endpoint is being deregistered. </p>
 </td></tr>
 </table>
 
@@ -314,6 +379,108 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a3b3a494d182837d1e921f0e237e8c686"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b3a494d182837d1e921f0e237e8c686">&#9670;&nbsp;</a></span>onEndpointUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface::onEndpointUpdate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;&#160;</td>
+          <td class="paramname"><em>endpointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">avs::AVSDiscoveryEndpointAttributes</a> &amp;&#160;</td>
+          <td class="paramname"><em>attributes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_registration_observer_interface.html#a34ddce239d643fd57bd83b3cbc1a9044">UpdateResult</a>&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Notifies observer that an existing endpoint update has been processed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">endpointId</td><td>The endpoint identifier. </td></tr>
+    <tr><td class="paramname">attributes</td><td>The endpoint attributes. </td></tr>
+    <tr><td class="paramname">result</td><td>The final registration result. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb457f08091b8649643fced6bf52cbe8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb457f08091b8649643fced6bf52cbe8">&#9670;&nbsp;</a></span>onPendingEndpointRegistrationOrUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointRegistrationObserverInterface::onPendingEndpointRegistrationOrUpdate </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;&#160;</td>
+          <td class="paramname"><em>endpointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_discovery_endpoint_attributes.html">avs::AVSDiscoveryEndpointAttributes</a> &amp;&#160;</td>
+          <td class="paramname"><em>attributes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avs::CapabilityConfiguration</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>capabilities</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Notifies observer that an endpoint registration or update has been started.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">endpointId</td><td>The endpoint identifier. </td></tr>
+    <tr><td class="paramname">attributes</td><td>The endpoint attributes. </td></tr>
+    <tr><td class="paramname">capabilities</td><td>The endpoint capabilities. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/<a class="el" href="_endpoint_registration_observer_interface_8h_source.html">EndpointRegistrationObserverInterface.h</a></li>
 </ul>
@@ -321,7 +488,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::capabilityAgents::templateRuntime::test::MockRenderInfoCardsPlayer" name="alexaClientSDK::capabilityAgents::templateRuntime::test::MockRenderInfoCardsPlayer">
-<area shape="rect" id="node1" title=" " alt="" coords="5,109,233,165"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_interface.html" title=" " alt="" coords="10,5,229,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_render_player_info_cards_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::RenderPlayerInfo\lCardsProviderInterface" alt="" coords="10,5,229,61"/>
 </map>

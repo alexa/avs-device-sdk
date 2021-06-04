@@ -1,12 +1,2 @@
-<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/include/acsdkBluetooth/BluetoothStorageInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/include/acsdkBluetooth/BluetoothStorageInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="176,5,431,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,124,116,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="209,348,248,375"/>
-<area shape="rect" id="node4" href="$_s_q_lite_database_8h.html" title=" " alt="" coords="415,199,634,225"/>
-<area shape="rect" id="node9" href="$_s_q_lite_statement_8h.html" title=" " alt="" coords="192,273,415,300"/>
-<area shape="rect" id="node10" href="$_s_q_lite_utils_8h.html" title=" " alt="" coords="495,124,685,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="490,273,559,300"/>
-<area shape="rect" id="node6" title=" " alt="" coords="652,348,707,375"/>
-<area shape="rect" id="node7" title=" " alt="" coords="583,273,642,300"/>
-<area shape="rect" id="node8" title=" " alt="" coords="417,348,488,375"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/include/acsdkBluetoothInterfaces/BluetoothStorageInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/include/acsdkBluetoothInterfaces/BluetoothStorageInterface.h">
 </map>

@@ -1,20 +1,19 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/ExternalCapabilitiesBuilderInterface.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/DefaultClient/include/DefaultClient/ExternalCapabilitiesBuilderInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="890,5,1134,76"/>
-<area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="677,124,904,195"/>
-<area shape="rect" id="node17" href="$_external_capabilities_builder_8h.html" title=" " alt="" coords="1159,555,1372,625"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="452,243,681,299"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="519,347,737,403"/>
-<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title=" " alt="" coords="756,243,967,299"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title=" " alt="" coords="521,451,735,507"/>
-<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="291,451,496,507"/>
-<area shape="rect" id="node6" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="244,555,497,625"/>
-<area shape="rect" id="node10" href="$_sample_application_8h.html" title=" " alt="" coords="521,562,737,618"/>
-<area shape="rect" id="node13" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="18,562,219,618"/>
-<area shape="rect" id="node7" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="718,681,973,737"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="243,673,472,744"/>
-<area shape="rect" id="node9" href="$preview_main_8cpp.html" title=" " alt="" coords="5,681,219,737"/>
-<area shape="rect" id="node11" href="$main_8cpp.html" title=" " alt="" coords="496,688,693,729"/>
-<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title=" " alt="" coords="997,688,1275,729"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="812,354,1084,395"/>
-<area shape="rect" id="node18" href="$_external_capabilities_builder_8cpp.html" title=" " alt="" coords="1299,681,1491,737"/>
+<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="676,124,903,195"/>
+<area shape="rect" id="node17" href="$_external_capabilities_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h" alt="" coords="1160,555,1373,625"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="451,243,680,299"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="517,347,736,403"/>
+<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="754,243,966,299"/>
+<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="519,451,734,507"/>
+<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="289,451,495,507"/>
+<area shape="rect" id="node6" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="243,555,496,625"/>
+<area shape="rect" id="node10" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="520,562,736,618"/>
+<area shape="rect" id="node13" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="17,562,218,618"/>
+<area shape="rect" id="node7" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="718,681,973,737"/>
+<area shape="rect" id="node8" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="243,673,472,744"/>
+<area shape="rect" id="node9" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="5,681,219,737"/>
+<area shape="rect" id="node11" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="496,688,693,729"/>
+<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="997,688,1275,729"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="811,354,1085,395"/>
+<area shape="rect" id="node18" href="$_external_capabilities_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/External\lCapabilitiesBuilder.cpp" alt="" coords="1299,681,1491,737"/>
 </map>

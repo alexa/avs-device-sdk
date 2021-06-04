@@ -1,11 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="325,5,623,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,221,71,247"/>
-<area shape="rect" id="node3" title=" " alt="" coords="635,131,697,158"/>
-<area shape="rect" id="node4" title=" " alt="" coords="505,221,560,247"/>
-<area shape="rect" id="node5" title=" " alt="" coords="585,221,643,247"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title=" " alt="" coords="291,124,510,165"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_send_data_result_8h.html" title=" " alt="" coords="89,124,267,165"/>
-<area shape="rect" id="node7" href="$_h_t_t_p2_send_status_8h.html" title=" " alt="" coords="304,213,481,255"/>
-<area shape="rect" id="node8" href="$_platform_definitions_8h.html" title=" " alt="" coords="95,213,279,255"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_get_mime_headers_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2GetMimeHeadersResult.h" alt="" coords="294,124,513,165"/>
+<area shape="rect" id="node9" href="$_h_t_t_p2_send_data_result_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h" alt="" coords="91,124,270,165"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_send_status_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h" alt="" coords="306,213,485,255"/>
+<area shape="rect" id="node8" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="95,213,282,255"/>
 </map>

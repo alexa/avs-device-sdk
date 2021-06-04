@@ -1,6 +1,4 @@
 <map id="alexaClientSDK::avsCommon::avs::test::AttachmentManagerTest" name="alexaClientSDK::avsCommon::avs::test::AttachmentManagerTest">
-<area shape="rect" id="node1" title=" " alt="" coords="5,215,236,256"/>
-<area shape="rect" id="node2" title=" " alt="" coords="44,118,91,145"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html" title=" " alt="" coords="115,111,364,152"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html" title=" " alt="" coords="115,5,364,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager.html" title="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentManager" alt="" coords="149,111,398,152"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_manager_interface.html" title="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentManager\lInterface" alt="" coords="149,5,398,61"/>
 </map>

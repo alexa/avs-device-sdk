@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['cachedinstancelifecycle',['CachedInstanceLifecycle',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_recipe.html#a29efa1c299b1df9f87edbcba08a19cc3',1,'alexaClientSDK::acsdkManufactory::internal::AbstractRecipe']]],
   ['callstate',['CallState',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html#a4aa43d132f855115fbc6c8b56e3ade76',1,'alexaClientSDK::avsCommon::sdkInterfaces::CallStateObserverInterface']]],
   ['captionformat',['CaptionFormat',['../namespacealexa_client_s_d_k_1_1captions.html#a773094fa15abd23a640ea7b16b6eb0b1',1,'alexaClientSDK::captions']]],
   ['changecausetype',['ChangeCauseType',['../namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#aba785eb38e1db3b723d5510caae58707',1,'alexaClientSDK::acsdkExternalMediaPlayerInterfaces']]],

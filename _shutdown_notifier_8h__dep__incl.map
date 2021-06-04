@@ -1,5 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownNotifier.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownNotifier.h">
-<area shape="rect" id="node1" title=" " alt="" coords="93,5,331,76"/>
-<area shape="rect" id="node2" href="$_shared_component_8cpp.html" title=" " alt="" coords="5,124,187,180"/>
-<area shape="rect" id="node3" href="$_shutdown_manager_test_8cpp.html" title=" " alt="" coords="211,124,448,180"/>
+<area shape="rect" id="node2" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="5,124,177,180"/>
+<area shape="rect" id="node3" href="$_shared_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShared\l/src/SharedComponent.cpp" alt="" coords="202,124,383,180"/>
+<area shape="rect" id="node4" href="$_shutdown_notifier_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShutdownManager\l/src/ShutdownNotifier.cpp" alt="" coords="407,124,645,180"/>
+<area shape="rect" id="node5" href="$_shutdown_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShutdownManager\l/test/ShutdownManagerTest.cpp" alt="" coords="669,124,906,180"/>
 </map>

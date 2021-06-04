@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface" name="alexaClientSDK::acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent" alt="" coords="329,5,521,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_system_clock_monitor_1_1test_1_1_mock_system_clock_observer.html" title="alexaClientSDK::acsdkSystem\lClockMonitor::test::MockSystemClock\lObserver" alt="" coords="301,71,549,127"/>
+</map>

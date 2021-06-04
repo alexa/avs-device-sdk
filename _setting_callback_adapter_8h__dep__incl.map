@@ -1,27 +1,26 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingCallbackAdapter.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingCallbackAdapter.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1258,5,1483,61"/>
-<area shape="rect" id="node2" href="$_setting_callbacks_8h.html" title=" " alt="" coords="1162,109,1350,165"/>
-<area shape="rect" id="node25" href="$_setting_callback_adapter_test_8cpp.html" title=" " alt="" coords="1375,109,1596,165"/>
-<area shape="rect" id="node3" href="$_device_property_aggregator_8h.html" title=" " alt="" coords="337,213,599,269"/>
-<area shape="rect" id="node8" href="$_u_i_manager_8h.html" title=" " alt="" coords="1171,213,1341,269"/>
-<area shape="rect" id="node24" href="$_setting_callbacks_test_8cpp.html" title=" " alt="" coords="1366,213,1594,269"/>
-<area shape="rect" id="node4" href="$_device_property_aggregator_8cpp.html" title=" " alt="" coords="5,317,208,373"/>
-<area shape="rect" id="node5" href="$_device_property_aggregator_test_8cpp.html" title=" " alt="" coords="232,317,461,373"/>
-<area shape="rect" id="node6" href="$_s_d_k_diagnostics_8h.html" title=" " alt="" coords="485,317,691,373"/>
-<area shape="rect" id="node7" href="$_s_d_k_diagnostics_8cpp.html" title=" " alt="" coords="439,429,705,470"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="503,525,756,596"/>
-<area shape="rect" id="node11" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="679,644,908,715"/>
-<area shape="rect" id="node12" href="$_interaction_manager_8h.html" title=" " alt="" coords="1147,317,1365,373"/>
-<area shape="rect" id="node21" href="$_sample_application_component_8h.html" title=" " alt="" coords="1411,317,1693,373"/>
-<area shape="rect" id="node22" href="$_sample_application_component_8cpp.html" title=" " alt="" coords="1626,421,1878,477"/>
-<area shape="rect" id="node23" href="$_u_i_manager_8cpp.html" title=" " alt="" coords="1768,325,2000,366"/>
-<area shape="rect" id="node10" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="399,651,654,707"/>
-<area shape="rect" id="node13" href="$_user_input_manager_8h.html" title=" " alt="" coords="1106,421,1321,477"/>
-<area shape="rect" id="node20" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="1345,421,1551,477"/>
-<area shape="rect" id="node14" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="831,525,1084,596"/>
-<area shape="rect" id="node16" href="$_sample_application_8h.html" title=" " alt="" coords="1108,533,1324,589"/>
-<area shape="rect" id="node19" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="1349,533,1550,589"/>
-<area shape="rect" id="node15" href="$preview_main_8cpp.html" title=" " alt="" coords="932,651,1145,707"/>
-<area shape="rect" id="node17" href="$main_8cpp.html" title=" " alt="" coords="1169,659,1367,700"/>
-<area shape="rect" id="node18" href="$_sample_application_8cpp.html" title=" " alt="" coords="1420,659,1697,700"/>
+<area shape="rect" id="node2" href="$_setting_callbacks_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/include\l/Settings/SettingCallbacks.h" alt="" coords="1165,109,1353,165"/>
+<area shape="rect" id="node25" href="$_setting_callback_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingCallback\lAdapterTest.cpp" alt="" coords="1378,109,1599,165"/>
+<area shape="rect" id="node3" href="$_device_property_aggregator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/include\l/Diagnostics/DevicePropertyAggregator.h" alt="" coords="339,213,601,269"/>
+<area shape="rect" id="node8" href="$_u_i_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UIManager.h" alt="" coords="1173,213,1345,269"/>
+<area shape="rect" id="node24" href="$_setting_callbacks_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/SettingCallbacks\lTest.cpp" alt="" coords="1369,213,1597,269"/>
+<area shape="rect" id="node4" href="$_device_property_aggregator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/src\l/DevicePropertyAggregator.cpp" alt="" coords="5,317,209,373"/>
+<area shape="rect" id="node5" href="$_device_property_aggregator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/test\l/DevicePropertyAggregatorTest.cpp" alt="" coords="233,317,464,373"/>
+<area shape="rect" id="node6" href="$_s_d_k_diagnostics_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SDKDiagnostics.h" alt="" coords="489,317,694,373"/>
+<area shape="rect" id="node7" href="$_s_d_k_diagnostics_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SDKDiagnostics.cpp" alt="" coords="442,429,709,470"/>
+<area shape="rect" id="node9" href="$_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="506,525,759,596"/>
+<area shape="rect" id="node11" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="682,644,911,715"/>
+<area shape="rect" id="node12" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1150,317,1369,373"/>
+<area shape="rect" id="node21" href="$_sample_application_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplicationComponent.h" alt="" coords="1414,317,1697,373"/>
+<area shape="rect" id="node22" href="$_sample_application_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication\lComponent.cpp" alt="" coords="1629,421,1881,477"/>
+<area shape="rect" id="node23" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="1772,325,2005,366"/>
+<area shape="rect" id="node10" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="403,651,657,707"/>
+<area shape="rect" id="node13" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1109,421,1324,477"/>
+<area shape="rect" id="node20" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1349,421,1554,477"/>
+<area shape="rect" id="node14" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="834,525,1087,596"/>
+<area shape="rect" id="node16" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="1111,533,1327,589"/>
+<area shape="rect" id="node19" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1352,533,1553,589"/>
+<area shape="rect" id="node15" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="935,651,1149,707"/>
+<area shape="rect" id="node17" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="1173,659,1370,700"/>
+<area shape="rect" id="node18" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1423,659,1701,700"/>
 </map>

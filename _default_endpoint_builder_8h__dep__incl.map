@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/DefaultEndpointBuilder.h" name="/workplace/avs&#45;device&#45;sdk/Endpoints/include/Endpoints/DefaultEndpointBuilder.h">
-<area shape="rect" id="node1" title=" " alt="" coords="201,5,432,61"/>
-<area shape="rect" id="node2" href="$_default_client_component_8cpp.html" title=" " alt="" coords="5,109,209,180"/>
-<area shape="rect" id="node3" href="$_core_component_8cpp.html" title=" " alt="" coords="234,117,399,173"/>
-<area shape="rect" id="node4" href="$_default_endpoint_builder_8cpp.html" title=" " alt="" coords="424,117,652,173"/>
+<area shape="rect" id="node2" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="5,109,209,180"/>
+<area shape="rect" id="node3" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="234,117,399,173"/>
+<area shape="rect" id="node4" href="$_default_endpoint_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/DefaultEndpoint\lBuilder.cpp" alt="" coords="424,117,652,173"/>
 </map>

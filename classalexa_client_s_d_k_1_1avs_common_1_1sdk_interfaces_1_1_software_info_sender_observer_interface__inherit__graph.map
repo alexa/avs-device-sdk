@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,63,237,119"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title=" " alt="" coords="285,5,527,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title=" " alt="" coords="287,71,525,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_software_info_sender_observer.html" title=" " alt="" coords="288,137,524,193"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallManagerInterface" alt="" coords="285,5,527,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_sender.html" title="alexaClientSDK::capability\lAgents::system::SoftwareInfoSender" alt="" coords="287,71,525,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_software_info_sender_observer.html" title="alexaClientSDK::capability\lAgents::system::test::MockSoftware\lInfoSenderObserver" alt="" coords="288,137,524,193"/>
 </map>

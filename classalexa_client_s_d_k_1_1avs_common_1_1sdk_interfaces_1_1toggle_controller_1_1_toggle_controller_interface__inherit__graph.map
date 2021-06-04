@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,85,213,141"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html" title=" " alt="" coords="261,5,499,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_toggle_controller_handler.html" title=" " alt="" coords="271,85,489,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_toggle_controller_handler.html" title=" " alt="" coords="263,165,497,221"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html" title="alexaClientSDK::capability\lAgents::toggleController\l::test::MockToggleControllerInterface" alt="" coords="261,5,500,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_default_endpoint_toggle_controller_handler.html" title="alexaClientSDK::sampleApp\l::DefaultEndpointToggleController\lHandler" alt="" coords="271,85,490,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_app_1_1_peripheral_endpoint_toggle_controller_handler.html" title="alexaClientSDK::sampleApp\l::PeripheralEndpointToggleController\lHandler" alt="" coords="263,165,498,221"/>
 </map>

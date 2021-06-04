@@ -1,8 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h">
-<area shape="rect" id="node1" title=" " alt="" coords="202,5,459,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="231,199,286,225"/>
-<area shape="rect" id="node3" title=" " alt="" coords="373,199,432,225"/>
-<area shape="rect" id="node4" href="$_actions_to_directive_mapping_8h.html" title=" " alt="" coords="28,124,220,151"/>
-<area shape="rect" id="node5" href="$_states_to_range_mapping_8h.html" title=" " alt="" coords="244,124,416,151"/>
-<area shape="rect" id="node6" href="$_states_to_value_mapping_8h.html" title=" " alt="" coords="440,124,607,151"/>
+<area shape="rect" id="node4" href="$_actions_to_directive_mapping_8h.html" title="ActionsToDirectiveMapping.h" alt="" coords="23,124,217,151"/>
+<area shape="rect" id="node5" href="$_states_to_range_mapping_8h.html" title="StatesToRangeMapping.h" alt="" coords="241,124,415,151"/>
+<area shape="rect" id="node6" href="$_states_to_value_mapping_8h.html" title="StatesToValueMapping.h" alt="" coords="439,124,607,151"/>
 </map>

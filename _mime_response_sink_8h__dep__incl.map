@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MimeResponseSink.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MimeResponseSink.h">
-<area shape="rect" id="node1" title=" " alt="" coords="197,5,410,61"/>
-<area shape="rect" id="node2" href="$_downchannel_handler_8cpp.html" title=" " alt="" coords="5,109,180,165"/>
-<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="205,109,402,165"/>
-<area shape="rect" id="node4" href="$_mime_response_sink_8cpp.html" title=" " alt="" coords="426,109,594,165"/>
+<area shape="rect" id="node2" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="5,109,180,165"/>
+<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="204,109,403,165"/>
+<area shape="rect" id="node4" href="$_mime_response_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MimeResponseSink.cpp" alt="" coords="427,109,595,165"/>
 </map>

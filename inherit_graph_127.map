@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1afml_1_1interrupt_model_1_1_interrupt_model_configuration.html" title=" " alt="" coords="5,5,173,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; avsCommon::sdkInterfaces::\lAlexaEventProcessedObserverInterface \&gt;" alt="" coords="5,5,272,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; avsCommon::sdkInterfaces\l::AlexaEventProcessedObserverInterface \&gt;" alt="" coords="320,13,595,69"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_event_processed_notifier.html" title="alexaClientSDK::capability\lAgents::alexa::AlexaEventProcessed\lNotifier" alt="" coords="643,13,881,69"/>
 </map>

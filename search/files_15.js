@@ -10,6 +10,8 @@ var searchData=
   ['wakewordconfirmationsettingtype_2eh',['WakeWordConfirmationSettingType.h',['../_wake_word_confirmation_setting_type_8h.html',1,'']]],
   ['wavutils_2ecpp',['WavUtils.cpp',['../_wav_utils_8cpp.html',1,'']]],
   ['wavutils_2eh',['WavUtils.h',['../_wav_utils_8h.html',1,'']]],
+  ['weakpointercache_2ecpp',['WeakPointerCache.cpp',['../_weak_pointer_cache_8cpp.html',1,'']]],
+  ['weakpointercache_2eh',['WeakPointerCache.h',['../_weak_pointer_cache_8h.html',1,'']]],
   ['workerthread_2ecpp',['WorkerThread.cpp',['../_worker_thread_8cpp.html',1,'']]],
   ['workerthread_2eh',['WorkerThread.h',['../_worker_thread_8h.html',1,'']]],
   ['workerthreadtest_2ecpp',['WorkerThreadTest.cpp',['../_worker_thread_test_8cpp.html',1,'']]],

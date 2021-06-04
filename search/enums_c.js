@@ -11,5 +11,7 @@ var searchData=
   ['playlistparseresult',['PlaylistParseResult',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser.html#ab60fb31cb5497bc9f16feda4fc24fe8a',1,'alexaClientSDK::avsCommon::utils::playlistParser']]],
   ['playlisttype',['PlaylistType',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_interface.html#a740ba431010fcb299ba2b193a9edc484',1,'alexaClientSDK::avsCommon::utils::playlistParser::PlaylistParserInterface']]],
   ['powerresourcelevel',['PowerResourceLevel',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#aa6c87f2f5104369c2eed8ddc07d13057',1,'alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface']]],
+  ['powerresourcetypeflag',['PowerResourceTypeFlag',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3e',1,'alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface']]],
+  ['powerresourcetypeindex',['PowerResourceTypeIndex',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ab175b162715a7afdaeab981836bb8c2a',1,'alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface']]],
   ['priority',['Priority',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics.html#a288af415af6d051ee25083b835210b11',1,'alexaClientSDK::avsCommon::utils::metrics']]]
 ];

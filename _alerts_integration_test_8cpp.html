@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -98,21 +98,26 @@ $(function() {
 <code>#include &lt;<a class="el" href="_capability_change_notifier_8h_source.html">AVSCommon/AVS/CapabilityChangeNotifier.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_locale_assets_manager_8h_source.html">AVSCommon/SDKInterfaces/MockLocaleAssetsManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_speaker_manager_8h_source.html">AVSCommon/SDKInterfaces/MockSpeakerManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_endpoint_capabilities_registrar_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_h_t_t_p_content_fetcher_factory_8h_source.html">AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_log_entry_8h_source.html">AVSCommon/Utils/Logger/LogEntry.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_metric_recorder_8h_source.html">AVSCommon/Utils/Metrics/MockMetricRecorder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_certified_sender_8h_source.html">CertifiedSender/CertifiedSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_s_q_lite_message_storage_8h_source.html">CertifiedSender/SQLiteMessageStorage.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_customer_data_manager_factory_8h_source.html">RegistrationManager/CustomerDataManagerFactory.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_setting_8h_source.html">Settings/MockSetting.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speech_confirmation_setting_type_8h_source.html">Settings/SpeechConfirmationSettingType.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alarm_volume_ramp_types_8h_source.html">Settings/Types/AlarmVolumeRampTypes.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_wake_word_confirmation_setting_type_8h_source.html">Settings/WakeWordConfirmationSettingType.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_interaction_model_capability_agent_8h_source.html">InteractionModel/InteractionModelCapabilityAgent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_interaction_model_capability_agent_8h_source.html">acsdkInteractionModel/InteractionModelCapabilityAgent.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_interaction_model_notifier_8h_source.html">acsdkInteractionModel/InteractionModelNotifier.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speech_synthesizer_8h_source.html">SpeechSynthesizer/SpeechSynthesizer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_user_inactivity_monitor_8h_source.html">System/UserInactivityMonitor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_system_sound_player_8h_source.html">SystemSoundPlayer/SystemSoundPlayer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alert_observer_interface_8h_source.html">acsdkAlertsInterfaces/AlertObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_annotated_8h_source.html">acsdkManufactory/Annotated.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_shutdown_notifier_8h_source.html">acsdkShutdownManager/ShutdownNotifier.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_a_c_l_test_context_8h_source.html">Integration/ACLTestContext.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_test_alert_observer_8h_source.html">Integration/TestAlertObserver.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_test_directive_handler_8h_source.html">Integration/TestDirectiveHandler.h</a>&quot;</code><br />
@@ -120,13 +125,6 @@ $(function() {
 <code>#include &quot;<a class="el" href="_test_message_sender_8h_source.html">Integration/TestMessageSender.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_test_speech_synthesizer_observer_8h_source.html">Integration/TestSpeechSynthesizerObserver.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_test_media_player_8h_source.html">Integration/TestMediaPlayer.h</a>&quot;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for AlertsIntegrationTest.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="_alerts_integration_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_integration_2test_2_alerts_integration_test_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_integration_2test_2_alerts_integration_test_8cpp" id="_2workplace_2avs-device-sdk_2_integration_2test_2_alerts_integration_test_8cpp">
-</map>
-</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -341,7 +339,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

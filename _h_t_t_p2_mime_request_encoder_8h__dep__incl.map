@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeRequestEncoder.h">
-<area shape="rect" id="node1" title=" " alt="" coords="294,5,547,76"/>
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8cpp.html" title=" " alt="" coords="5,124,164,180"/>
-<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="189,124,386,180"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_mime_request_encoder_8cpp.html" title=" " alt="" coords="411,124,700,180"/>
-<area shape="rect" id="node5" href="$_m_i_m_e_parser_test_8cpp.html" title=" " alt="" coords="724,124,899,180"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="5,124,164,180"/>
+<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="188,124,387,180"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_mime_request_encoder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/HTTP2/HTTP2MimeRequestEncoder.cpp" alt="" coords="411,124,702,180"/>
+<area shape="rect" id="node5" href="$_m_i_m_e_parser_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/MIMEParserTest.cpp" alt="" coords="726,124,902,180"/>
 </map>

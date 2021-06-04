@@ -1,9 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/HFPInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="253,5,492,76"/>
-<area shape="rect" id="node2" href="$_s_d_p_records_8cpp.html" title=" " alt="" coords="31,124,240,180"/>
-<area shape="rect" id="node3" href="$_blue_z_h_f_p_8h.html" title=" " alt="" coords="264,124,481,180"/>
-<area shape="rect" id="node7" href="$_bluetooth_8cpp.html" title=" " alt="" coords="505,124,728,180"/>
-<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_8cpp.html" title=" " alt="" coords="5,228,247,284"/>
-<area shape="rect" id="node5" href="$_blue_z_h_f_p_8cpp.html" title=" " alt="" coords="271,228,474,284"/>
-<area shape="rect" id="node6" href="$_blue_z_h_f_p_test_8cpp.html" title=" " alt="" coords="498,228,701,284"/>
+<area shape="rect" id="node2" href="$_s_d_p_records_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Bluetooth/SDPRecords.cpp" alt="" coords="29,124,239,180"/>
+<area shape="rect" id="node3" href="$_blue_z_h_f_p_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZHFP.h" alt="" coords="263,124,482,180"/>
+<area shape="rect" id="node7" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="507,124,729,180"/>
+<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDevice.cpp" alt="" coords="5,228,247,284"/>
+<area shape="rect" id="node5" href="$_blue_z_h_f_p_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZHFP.cpp" alt="" coords="271,228,474,284"/>
+<area shape="rect" id="node6" href="$_blue_z_h_f_p_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/test/BlueZHFPTest.cpp" alt="" coords="498,228,701,284"/>
 </map>

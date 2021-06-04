@@ -1,8 +1,7 @@
 <map id="alexaClientSDK::settings::SettingProtocolInterface" name="alexaClientSDK::settings::SettingProtocolInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,151,176,193"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_setting_protocol.html" title=" " alt="" coords="224,5,451,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1_cloud_controlled_setting_protocol.html" title=" " alt="" coords="231,86,443,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1_device_controlled_setting_protocol.html" title=" " alt="" coords="228,151,447,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html" title=" " alt="" coords="245,217,430,258"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_protocol.html" title=" " alt="" coords="247,282,428,323"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_setting_protocol.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DNDSetting\lProtocol" alt="" coords="224,5,451,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1settings_1_1_cloud_controlled_setting_protocol.html" title="alexaClientSDK::settings\l::CloudControlledSettingProtocol" alt="" coords="231,86,443,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1settings_1_1_device_controlled_setting_protocol.html" title="alexaClientSDK::settings\l::DeviceControlledSettingProtocol" alt="" coords="228,151,447,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html" title="alexaClientSDK::settings\l::SharedAVSSettingProtocol" alt="" coords="244,217,431,258"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_protocol.html" title="alexaClientSDK::settings\l::test::MockSettingProtocol" alt="" coords="247,282,428,323"/>
 </map>

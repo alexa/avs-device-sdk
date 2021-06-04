@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime/RenderPlayerInfoCardsProviderRegistrar.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/include/TemplateRuntime/RenderPlayerInfoCardsProviderRegistrar.h">
-<area shape="rect" id="node1" title=" " alt="" coords="366,5,599,91"/>
-<area shape="rect" id="node2" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="5,146,235,217"/>
-<area shape="rect" id="node3" href="$_default_client_component_8cpp.html" title=" " alt="" coords="259,146,463,217"/>
-<area shape="rect" id="node4" href="$_render_player_info_cards_provider_registrar_8cpp.html" title=" " alt="" coords="487,146,721,217"/>
-<area shape="rect" id="node5" href="$_render_player_info_cards_provider_registrar_test_8cpp.html" title=" " alt="" coords="745,139,956,224"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="5,146,235,217"/>
+<area shape="rect" id="node3" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="259,146,463,217"/>
+<area shape="rect" id="node4" href="$_render_player_info_cards_provider_registrar_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/src/RenderPlayer\lInfoCardsProviderRegistrar.cpp" alt="" coords="488,146,723,217"/>
+<area shape="rect" id="node5" href="$_render_player_info_cards_provider_registrar_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/TemplateRuntime/test\l/RenderPlayerInfoCardsProvider\lRegistrarTest.cpp" alt="" coords="747,139,957,224"/>
 </map>

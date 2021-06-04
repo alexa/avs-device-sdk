@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,10 @@ Inheritance diagram for alexaClientSDK::afml::VisualActivityTracker:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker_inherit__map" id="alexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="33,5,230,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html" title="alexaClientSDK::afml\l::ActivityTrackerInterface" alt="" coords="47,71,216,112"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,137,257,193"/>
+<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="33,217,230,273"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -86,6 +90,10 @@ Collaboration diagram for alexaClientSDK::afml::VisualActivityTracker:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker_coll__map" id="alexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker_coll__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="33,5,230,47"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html" title="alexaClientSDK::afml\l::ActivityTrackerInterface" alt="" coords="47,71,216,112"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,137,257,193"/>
+<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateProvider\lInterface" alt="" coords="33,217,230,273"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -131,6 +139,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:afe666d23803d644b56ffae57632099b3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_visual_focus_annotation.html">avsCommon::sdkInterfaces::VisualFocusAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html">ActivityTrackerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html#afe666d23803d644b56ffae57632099b3">createVisualActivityTrackerInterface</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; shutdownNotifier, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; defaultEndpointCapabilitiesRegistrar)</td></tr>
+<tr class="separator:afe666d23803d644b56ffae57632099b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affa95dcfda560b41cda06cad3c0d5385"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html">VisualActivityTracker</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html#affa95dcfda560b41cda06cad3c0d5385">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager)</td></tr>
 <tr class="separator:affa95dcfda560b41cda06cad3c0d5385"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -171,6 +181,58 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::shared_ptr</code> to the new <code><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html">VisualActivityTracker</a></code> instance, or <code>nullptr</code> if the operation failed. </dd></dl>
+
+</div>
+</div>
+<a id="afe666d23803d644b56ffae57632099b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe666d23803d644b56ffae57632099b3">&#9670;&nbsp;</a></span>createVisualActivityTrackerInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_visual_focus_annotation.html">VisualFocusAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html">ActivityTrackerInterface</a> &gt; alexaClientSDK::afml::VisualActivityTracker::createVisualActivityTrackerInterface </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>contextManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>defaultEndpointCapabilitiesRegistrar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates a new <code><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_activity_tracker_interface.html">ActivityTrackerInterface</a></code> instance, annotated with <code>VisualFocusAnnotation</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>The AVS Context manager used to generate system context for events. </td></tr>
+    <tr><td class="paramname">shutdownNotifier</td><td>The object to notify this instance when it is time to shut down. </td></tr>
+    <tr><td class="paramname">defaultEndpointCapabilitiesRegistrar</td><td>The capabilities registrar for the default endpoint with which to register this capability. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <code>Annotated</code> <code>std::shared_ptr</code> to the new <code><a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html">AudioActivityTracker</a></code> instance, or <code>nullptr</code> if the operation failed. </dd></dl>
 
 </div>
 </div>
@@ -280,7 +342,7 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000031">Deprecated:</a></b></dt><dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000032">Deprecated:</a></b></dt><dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#ad7e749a95830d3bf65d44e873402f1b0">alexaClientSDK::avsCommon::sdkInterfaces::StateProviderInterface</a>.</p>
 
@@ -294,7 +356,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

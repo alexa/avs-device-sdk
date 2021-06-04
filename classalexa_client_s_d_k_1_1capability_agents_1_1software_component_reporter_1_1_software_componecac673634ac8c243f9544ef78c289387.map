@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::capabilityAgents::softwareComponentReporter::SoftwareComponentReporterCapabilityAgent" name="alexaClientSDK::capabilityAgents::softwareComponentReporter::SoftwareComponentReporterCapabilityAgent">
-<area shape="rect" id="node1" title=" " alt="" coords="305,45,596,101"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_component_reporter_interface.html" title=" " alt="" coords="14,5,249,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title=" " alt="" coords="5,85,257,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_component_reporter_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ComponentReporter\lInterface" alt="" coords="14,5,249,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,85,257,141"/>
 </map>

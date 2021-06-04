@@ -1,14 +1,14 @@
 <map id="alexaClientSDK::registrationManager::CustomerDataHandler" name="alexaClientSDK::registrationManager::CustomerDataHandler">
-<area shape="rect" id="node1" title=" " alt="" coords="5,365,216,407"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title=" " alt="" coords="287,5,479,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html" title=" " alt="" coords="277,71,490,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_equalizer_capability_agent.html" title=" " alt="" coords="277,136,489,177"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html" title=" " alt="" coords="268,201,499,243"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html" title=" " alt="" coords="264,267,503,308"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html" title=" " alt="" coords="280,332,487,373"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title=" " alt="" coords="282,397,485,439"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_report_state_handler.html" title=" " alt="" coords="265,463,502,504"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title=" " alt="" coords="299,528,468,569"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_customer_data_handler.html" title=" " alt="" coords="270,594,497,650"/>
-<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1settings_1_1_settings_manager.html" title=" " alt="" coords="279,675,487,716"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent" alt="" coords="597,5,789,47"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html" title="alexaClientSDK::acsdkBluetooth\l::Bluetooth" alt="" coords="586,71,799,112"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_equalizer_capability_agent.html" title="alexaClientSDK::acsdkEqualizer\l::EqualizerCapabilityAgent" alt="" coords="587,136,799,177"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html" title="alexaClientSDK::acsdkNotifications\l::NotificationsCapabilityAgent" alt="" coords="577,201,808,243"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthDelegate" alt="" coords="573,267,812,308"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_a_v_s_gateway_manager.html" title="alexaClientSDK::avsGateway\lManager::AVSGatewayManager" alt="" coords="588,332,797,373"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_capabilities_delegate.html" title="alexaClientSDK::capabilities\lDelegate::CapabilitiesDelegate" alt="" coords="591,397,794,439"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_report_state_handler.html" title="alexaClientSDK::capability\lAgents::system::ReportStateHandler" alt="" coords="574,463,811,504"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html" title="alexaClientSDK::certified\lSender::CertifiedSender" alt="" coords="608,528,777,569"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_customer_data_handler.html" title="alexaClientSDK::registration\lManager::test::MockCustomerData\lHandler" alt="" coords="579,594,806,650"/>
+<area shape="rect" id="node13" href="$classalexa_client_s_d_k_1_1settings_1_1_settings_manager.html" title="alexaClientSDK::settings\l::SettingsManager\&lt; SettingsT \&gt;" alt="" coords="589,675,797,716"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html" title="alexaClientSDK::registration\lManager::CustomerDataHandlerInterface" alt="" coords="5,365,267,407"/>
 </map>

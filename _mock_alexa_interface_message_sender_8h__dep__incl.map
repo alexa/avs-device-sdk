@@ -1,8 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAlexaInterfaceMessageSender.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAlexaInterfaceMessageSender.h">
-<area shape="rect" id="node1" title=" " alt="" coords="499,5,745,76"/>
-<area shape="rect" id="node2" href="$_alexa_interface_capability_agent_test_8cpp.html" title=" " alt="" coords="5,131,236,202"/>
-<area shape="rect" id="node3" href="$_mode_controller_capability_agent_test_8cpp.html" title=" " alt="" coords="261,131,493,202"/>
-<area shape="rect" id="node4" href="$_power_controller_capability_agent_test_8cpp.html" title=" " alt="" coords="517,124,727,209"/>
-<area shape="rect" id="node5" href="$_range_controller_capability_agent_test_8cpp.html" title=" " alt="" coords="752,124,964,209"/>
-<area shape="rect" id="node6" href="$_toggle_controller_capability_agent_test_8cpp.html" title=" " alt="" coords="988,124,1200,209"/>
+<area shape="rect" id="node2" href="$_alexa_interface_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/test/AlexaInterfaceCapability\lAgentTest.cpp" alt="" coords="5,131,236,202"/>
+<area shape="rect" id="node3" href="$_mode_controller_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ModeController/test/ModeController\lCapabilityAgentTest.cpp" alt="" coords="261,131,493,202"/>
+<area shape="rect" id="node4" href="$_power_controller_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PowerController/test\l/PowerControllerCapabilityAgent\lTest.cpp" alt="" coords="517,124,727,209"/>
+<area shape="rect" id="node5" href="$_range_controller_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/RangeController/test\l/RangeControllerCapabilityAgent\lTest.cpp" alt="" coords="751,124,963,209"/>
+<area shape="rect" id="node6" href="$_toggle_controller_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ToggleController/test\l/ToggleControllerCapabilityAgent\lTest.cpp" alt="" coords="987,124,1201,209"/>
 </map>

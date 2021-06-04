@@ -1,52 +1,34 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/src/NotificationRenderer.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/src/NotificationRenderer.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="39,5,265,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,64,158"/>
-<area shape="rect" id="node3" href="$_focus_state_8h.html" title=" " alt="" coords="97,578,308,605"/>
-<area shape="rect" id="node6" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="969,392,1159,433"/>
-<area shape="rect" id="node15" href="$_logger_8h.html" title=" " alt="" coords="1557,392,1731,433"/>
-<area shape="rect" id="node30" href="$_notification_renderer_8h.html" title=" " alt="" coords="2755,124,2909,165"/>
-<area shape="rect" id="node4" title=" " alt="" coords="567,667,636,694"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1667,667,1722,694"/>
-<area shape="rect" id="node7" title=" " alt="" coords="2386,578,2441,605"/>
-<area shape="rect" id="node8" title=" " alt="" coords="2727,667,2796,694"/>
-<area shape="rect" id="node9" title=" " alt="" coords="2012,578,2071,605"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1679,578,1737,605"/>
-<area shape="rect" id="node11" href="$_content_type_8h.html" title=" " alt="" coords="948,489,1167,515"/>
-<area shape="rect" id="node12" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="437,489,622,515"/>
-<area shape="rect" id="node14" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="190,489,413,515"/>
-<area shape="rect" id="node13" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="332,578,564,605"/>
-<area shape="rect" id="node16" title=" " alt="" coords="2199,578,2260,605"/>
-<area shape="rect" id="node17" title=" " alt="" coords="4160,749,4221,776"/>
-<area shape="rect" id="node18" href="$_configuration_node_8h.html" title=" " alt="" coords="1242,481,1454,523"/>
-<area shape="rect" id="node23" href="$_level_8h.html" title=" " alt="" coords="1813,571,1987,612"/>
-<area shape="rect" id="node24" href="$_log_entry_8h.html" title=" " alt="" coords="698,481,873,523"/>
-<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1933,481,2126,523"/>
-<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1682,481,1857,523"/>
-<area shape="rect" id="node19" title=" " alt="" coords="3011,667,3077,694"/>
-<area shape="rect" id="node20" title=" " alt="" coords="3220,667,3292,694"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1241,578,1281,605"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1305,578,1452,605"/>
-<area shape="rect" id="node25" title=" " alt="" coords="889,578,964,605"/>
-<area shape="rect" id="node26" title=" " alt="" coords="2095,578,2174,605"/>
-<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title=" " alt="" coords="639,571,814,612"/>
-<area shape="rect" id="node31" title=" " alt="" coords="2716,399,2820,426"/>
-<area shape="rect" id="node32" href="$_application_audio_pipeline_factory_interface_8h.html" title=" " alt="" coords="2387,213,2613,269"/>
-<area shape="rect" id="node35" href="$_media_player_interface_8h.html" title=" " alt="" coords="3593,481,3799,523"/>
-<area shape="rect" id="node45" href="$_media_type_8h.html" title=" " alt="" coords="3365,578,3574,605"/>
-<area shape="rect" id="node46" href="$_requires_shutdown_8h.html" title=" " alt="" coords="2620,481,2807,523"/>
-<area shape="rect" id="node48" href="$_media_player_observer_interface_8h.html" title=" " alt="" coords="2952,392,3165,433"/>
-<area shape="rect" id="node49" href="$_executor_8h.html" title=" " alt="" coords="2831,481,3023,523"/>
-<area shape="rect" id="node50" href="$_notification_renderer_interface_8h.html" title=" " alt="" coords="3082,571,3289,612"/>
-<area shape="rect" id="node33" href="$_application_media_interfaces_8h.html" title=" " alt="" coords="2497,392,2692,433"/>
-<area shape="rect" id="node34" href="$_channel_volume_interface_8h.html" title=" " alt="" coords="2354,481,2545,523"/>
-<area shape="rect" id="node47" href="$_pooled_application_media_interfaces_8h.html" title=" " alt="" coords="2538,317,2769,344"/>
-<area shape="rect" id="node36" title=" " alt="" coords="3700,578,3761,605"/>
-<area shape="rect" id="node37" href="$_attachment_reader_8h.html" title=" " alt="" coords="4031,571,4231,612"/>
-<area shape="rect" id="node38" href="$_audio_format_8h.html" title=" " alt="" coords="3786,578,4006,605"/>
-<area shape="rect" id="node39" href="$_optional_8h.html" title=" " alt="" coords="4563,667,4757,694"/>
-<area shape="rect" id="node40" href="$_media_player_factory_interface_8h.html" title=" " alt="" coords="2799,571,3006,612"/>
-<area shape="rect" id="node41" href="$_media_player_state_8h.html" title=" " alt="" coords="4639,571,4846,612"/>
-<area shape="rect" id="node42" href="$_playback_attributes_8h.html" title=" " alt="" coords="4331,660,4538,701"/>
-<area shape="rect" id="node43" href="$_playback_context_8h.html" title=" " alt="" coords="2517,571,2723,612"/>
-<area shape="rect" id="node44" href="$_playback_report_8h.html" title=" " alt="" coords="4306,571,4513,612"/>
+<area shape="rect" id="node3" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="3369,578,3584,605"/>
+<area shape="rect" id="node6" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="3250,392,3442,433"/>
+<area shape="rect" id="node15" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="776,392,952,433"/>
+<area shape="rect" id="node30" href="$_notification_renderer_8h.html" title="acsdkNotifications\l/NotificationRenderer.h" alt="" coords="2381,124,2537,165"/>
+<area shape="rect" id="node11" href="$_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="3697,489,3920,515"/>
+<area shape="rect" id="node12" href="$_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="3488,489,3673,515"/>
+<area shape="rect" id="node14" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="3241,489,3464,515"/>
+<area shape="rect" id="node13" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="3659,578,3896,605"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="477,481,692,523"/>
+<area shape="rect" id="node23" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="914,571,1090,612"/>
+<area shape="rect" id="node24" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="226,481,402,523"/>
+<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="768,481,961,523"/>
+<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1690,481,1866,523"/>
+<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="124,571,300,612"/>
+<area shape="rect" id="node32" href="$_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="2346,213,2572,269"/>
+<area shape="rect" id="node35" href="$_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="2674,481,2884,523"/>
+<area shape="rect" id="node40" href="$_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="2864,578,3076,605"/>
+<area shape="rect" id="node41" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1991,481,2180,523"/>
+<area shape="rect" id="node43" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="2538,317,2740,344"/>
+<area shape="rect" id="node44" href="$_notification_renderer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationRendererInterface.h" alt="" coords="2960,481,3166,523"/>
+<area shape="rect" id="node46" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="1782,392,2005,433"/>
+<area shape="rect" id="node48" href="$_audio_focus_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/AudioFocusAnnotation.h" alt="" coords="2919,221,3111,262"/>
+<area shape="rect" id="node49" href="$_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="1444,392,1658,433"/>
+<area shape="rect" id="node50" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1290,481,1484,523"/>
+<area shape="rect" id="node33" href="$_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="2258,392,2452,433"/>
+<area shape="rect" id="node34" href="$_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="2255,481,2447,523"/>
+<area shape="rect" id="node42" href="$_pooled_application_media_interfaces_8h.html" title="PooledApplicationMediaInterfaces.h" alt="" coords="2181,317,2412,344"/>
+<area shape="rect" id="node37" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1853,571,2057,612"/>
+<area shape="rect" id="node38" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="2268,578,2490,605"/>
+<area shape="rect" id="node39" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2514,578,2710,605"/>
+<area shape="rect" id="node45" href="$_notification_renderer_observer_interface_8h.html" title="NotificationRendererObserver\lInterface.h" alt="" coords="3150,571,3344,612"/>
+<area shape="rect" id="node47" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1508,481,1666,523"/>
 </map>

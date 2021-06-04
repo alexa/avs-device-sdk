@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/RegistrationManager/include/RegistrationManager/CustomerDataManager.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/core/acsdkRegistrationManager/privateInclude/RegistrationManager/CustomerDataManager.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b14333b5607b47fe7356eaa790107bd3.html">RegistrationManager</a></li><li class="navelem"><a class="el" href="dir_82c30e042dc7afd8546dd92e314e84ca.html">include</a></li><li class="navelem"><a class="el" href="dir_6a568f4c47ff8f5c05d806b725a69572.html">RegistrationManager</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_4270bfced15e0e73154b13468c7c9ad9.html">core</a></li><li class="navelem"><a class="el" href="dir_0e266d38695ca9476ecc895db9e29676.html">acsdkRegistrationManager</a></li><li class="navelem"><a class="el" href="dir_4a51e47e48a2d7421cd11c25b8eb2059.html">privateInclude</a></li><li class="navelem"><a class="el" href="dir_e72ec73b058861c5846f27896ae13a2a.html">RegistrationManager</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -72,23 +72,29 @@ $(function() {
 <div class="title">CustomerDataManager.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;list&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
-<code>#include &quot;<a class="el" href="_customer_data_handler_8h_source.html">RegistrationManager/CustomerDataHandler.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_customer_data_manager_interface_8h_source.html">RegistrationManager/CustomerDataManagerInterface.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for CustomerDataManager.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_customer_data_manager_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_registration_manager_2include_2_registration_manager_2_customer_data_manager_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_registration_manager_2include_2_registration_manager_2_customer_data_manager_8h" id="_2workplace_2avs-device-sdk_2_registration_manager_2include_2_registration_manager_2_customer_data_manager_8h">
+<div class="center"><img src="_customer_data_manager_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2core_2acsdk_registration_manager_2private_include_2_registration_manager_2_customer_data_manager_8h" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2core_2acsdk_registration_manager_2private_include_2_registration_manager_2_customer_data_manager_8h" id="_2workplace_2avs-device-sdk_2core_2acsdk_registration_manager_2private_include_2_registration_manager_2_customer_data_manager_8h">
+<area shape="rect" id="node5" href="_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="310,124,533,165"/>
+<area shape="rect" id="node6" href="_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="312,213,531,255"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_customer_data_manager_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_registration_manager_2include_2_registration_manager_2_customer_data_manager_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_registration_manager_2include_2_registration_manager_2_customer_data_manager_8hdep" id="_2workplace_2avs-device-sdk_2_registration_manager_2include_2_registration_manager_2_customer_data_manager_8hdep">
+<div class="center"><img src="_customer_data_manager_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2core_2acsdk_registration_manager_2private_include_2_registration_manager_2_customer_data_manager_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2core_2acsdk_registration_manager_2private_include_2_registration_manager_2_customer_data_manager_8hdep" id="_2workplace_2avs-device-sdk_2core_2acsdk_registration_manager_2private_include_2_registration_manager_2_customer_data_manager_8hdep">
+<area shape="rect" id="node2" href="_customer_data_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkRegistration\lManager/src/CustomerDataManager.cpp" alt="" coords="5,131,264,187"/>
+<area shape="rect" id="node3" href="_customer_data_manager_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkRegistration\lManager/src/CustomerDataManagerFactory.cpp" alt="" coords="289,131,591,187"/>
+<area shape="rect" id="node4" href="_registration_manager_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkRegistration\lManager/src/RegistrationManagerComponent.cpp" alt="" coords="615,131,926,187"/>
+<area shape="rect" id="node5" href="_customer_data_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkRegistration\lManager/test/CustomerDataManager\lTest.cpp" alt="" coords="951,124,1188,195"/>
+<area shape="rect" id="node6" href="_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkRegistration\lManager/test/RegistrationManager\lTest.cpp" alt="" coords="1211,124,1434,195"/>
 </map>
 </div>
 </div>
@@ -111,7 +117,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

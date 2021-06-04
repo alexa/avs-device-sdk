@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -2277,38 +2277,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a467a78b260d1c4b49fdf375556070f38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a467a78b260d1c4b49fdf375556070f38">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_test_handleOneTimerWithLocalStop&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when one timer is stopped locally</p>
-<p>Set a 5 second timer, ensure it goes off, then use local stop and make sure the timer is stopped. </p>
-
-</div>
-</div>
 <a id="a16ad842bfd8489230369e3fdc0b2270a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16ad842bfd8489230369e3fdc0b2270a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a16ad842bfd8489230369e3fdc0b2270a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2335,6 +2305,36 @@ template&lt;typename T &gt; </div>
 <p>Test ability for the AudioPlayer to handle multiple play directives.</p>
 <p>This test is intended to test the AudioPlayer's ability to handle a group play directive all the way through. To do this, an audio file of "Flashbriefing" is sent as a Recognize event. In response, a Speak, then an undefined number of Play directives, and a final Speak directive is received. The tests then observe that the correct events are sent in order.</p>
 <dl class="section note"><dt>Note</dt><dd>ACSDK-2373 - Test is disabled due to an assumption that each flash briefing must be less than 2min in length, and this is making this integration test unstable. </dd></dl>
+
+</div>
+</div>
+<a id="a467a78b260d1c4b49fdf375556070f38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a467a78b260d1c4b49fdf375556070f38">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_test_handleOneTimerWithLocalStop&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when one timer is stopped locally</p>
+<p>Set a 5 second timer, ensure it goes off, then use local stop and make sure the timer is stopped. </p>
 
 </div>
 </div>
@@ -2368,38 +2368,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a8ea51a4fcf19f0b1574bf0b0f7ace396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ea51a4fcf19f0b1574bf0b0f7ace396">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_test_handleMultipleTimersWithLocalStop&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when one timer is stopped verbally</p>
-<p>Set two second timer, ensure they go off, then stop both timers. </p>
-
-</div>
-</div>
 <a id="ac8728547c0004c7628e804593ed58ebf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8728547c0004c7628e804593ed58ebf">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8728547c0004c7628e804593ed58ebf">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2428,8 +2398,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a155c993523153615c8fb2f805ec63ed0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a155c993523153615c8fb2f805ec63ed0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/70]</span></h2>
+<a id="a8ea51a4fcf19f0b1574bf0b0f7ace396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ea51a4fcf19f0b1574bf0b0f7ace396">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2437,13 +2407,13 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_bargeInOnMultipleSpeaksAtTheBeginning&#160;</td>
+          <td class="paramtype">DISABLED_test_handleMultipleTimersWithLocalStop&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -2453,13 +2423,13 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consecutive speaks.</p>
-<p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled. </p>
+<p>Test when one timer is stopped verbally</p>
+<p>Set two second timer, ensure they go off, then stop both timers. </p>
 
 </div>
 </div>
 <a id="ac8d5ff4ede3b435dc6c4979caafced2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8d5ff4ede3b435dc6c4979caafced2f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8d5ff4ede3b435dc6c4979caafced2f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2488,8 +2458,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a0db6f6de5e820eb1e4814b1d8c23cbcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0db6f6de5e820eb1e4814b1d8c23cbcd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/70]</span></h2>
+<a id="a155c993523153615c8fb2f805ec63ed0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a155c993523153615c8fb2f805ec63ed0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2497,13 +2467,13 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_speech_synthesizer_test.html">SpeechSynthesizerTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DISABLED_test_stealChannelFromActiveAlert&#160;</td>
+          <td class="paramtype">test_bargeInOnMultipleSpeaksAtTheBeginning&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -2513,13 +2483,13 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test when the Alerts channel is acqired by a different client when an alert is active</p>
-<p>Set a 5 second timer, ensure it goes off, then have a test client acquire the Alerts channel. Ensure that the alert is stopped. </p>
+<p>Test ability for the SpeechSynthesizer to handle a barge in at the begining of consecutive speaks.</p>
+<p>This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a MediaPlayer then return to a finished state and notify the DirectiveSequencer that the directive was handled. This is done by sending a Recognize event to AVS with audio of "What's up?" which returns four sets of SetMute and Speak. Once the first Speak reaches the SpeechSynthesizer, the dialogRequestID is changed and all directives are cancelled. </p>
 
 </div>
 </div>
 <a id="a16ae21ad0ff8eb4468518a0f2bd6e89b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16ae21ad0ff8eb4468518a0f2bd6e89b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a16ae21ad0ff8eb4468518a0f2bd6e89b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2545,6 +2515,36 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test <code>DirectiveSequencer's</code> ability to sequence a group that has a Blocking Directive before other directives.</p>
 <p>This test is intended to verify the Directive Sequencer's ability to handle a dialogRequestID group that has a blocking directive, followed by non-blocking directives. Expect that the directive handler will receive a SetMute directive and then nothing until setComplete() is called for that directive. Then expect the directive handler to receive at least one subsequent directive. </p>
+
+</div>
+</div>
+<a id="a0db6f6de5e820eb1e4814b1d8c23cbcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0db6f6de5e820eb1e4814b1d8c23cbcd">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_test_stealChannelFromActiveAlert&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when the Alerts channel is acqired by a different client when an alert is active</p>
+<p>Set a 5 second timer, ensure it goes off, then have a test client acquire the Alerts channel. Ensure that the alert is stopped. </p>
 
 </div>
 </div>
@@ -2578,38 +2578,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aa22e46f7632a2fcbeb781fbebe2320b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa22e46f7632a2fcbeb781fbebe2320b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_disconnectAndReconnectBeforeLocalStop&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when a disconnect and reconnect happens while an alert is active</p>
-<p>Set a 5 second timer, then call disconnect, wait for the alert to become active and reconnect. Locally stop the alert and ensure AlertStopped is sent. </p>
-
-</div>
-</div>
 <a id="ad4a1c6fc5142a4704d043703bacd1e13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4a1c6fc5142a4704d043703bacd1e13">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4a1c6fc5142a4704d043703bacd1e13">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2638,8 +2608,68 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="aa22e46f7632a2fcbeb781fbebe2320b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa22e46f7632a2fcbeb781fbebe2320b6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_disconnectAndReconnectBeforeLocalStop&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when a disconnect and reconnect happens while an alert is active</p>
+<p>Set a 5 second timer, then call disconnect, wait for the alert to become active and reconnect. Locally stop the alert and ensure AlertStopped is sent. </p>
+
+</div>
+</div>
+<a id="a84836d6e7c112d618930accb99d8a7c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84836d6e7c112d618930accb99d8a7c8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_noDirectiveHandlerRegisteredForADirectiveAtTheFront&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <code>DirectiveSequencer's</code> ability to drop a directive when no handler is registered for it.</p>
+<p>To do this, no handler is set for a directive (<code>SetMute</code>) that is known to come down consistently in response to a Recognize event, instead an exception encountered is expected. </p>
+
+</div>
+</div>
 <a id="a4e96360647d6ced4bb557a681ccbaf02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e96360647d6ced4bb557a681ccbaf02">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e96360647d6ced4bb557a681ccbaf02">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2669,7 +2699,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="aa499f04b3a10921cad14ac78da2e7252"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa499f04b3a10921cad14ac78da2e7252">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa499f04b3a10921cad14ac78da2e7252">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2695,36 +2725,6 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test ability for the SpeechSynthesizer to handle a Multiturn scenario.</p>
 <p>This test is intended to test the SpeechSynthesizer's ability to receive one directive, play it using a MediaPlayer then return to a finished state. Another recognize event is then sent to AVS is response to the ExpectSpeech directive which prompts another Speak directive to be handled. </p>
-
-</div>
-</div>
-<a id="a84836d6e7c112d618930accb99d8a7c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84836d6e7c112d618930accb99d8a7c8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_noDirectiveHandlerRegisteredForADirectiveAtTheFront&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>DirectiveSequencer's</code> ability to drop a directive when no handler is registered for it.</p>
-<p>To do this, no handler is set for a directive (<code>SetMute</code>) that is known to come down consistently in response to a Recognize event, instead an exception encountered is expected. </p>
 
 </div>
 </div>
@@ -2758,38 +2758,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a1fa91ab3b25dc4782f0f9c2165594488"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fa91ab3b25dc4782f0f9c2165594488">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_removeAllAlertsBeforeAlertIsActive&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when all alerts are cleared from storage before an alert is active</p>
-<p>Set a 5 second timer, then call removeAllAlerts. Wait and ensure that the alert does not become active and no events are sent for it. </p>
-
-</div>
-</div>
 <a id="a14fd63c2859f64ffb30daf8313fd28f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14fd63c2859f64ffb30daf8313fd28f7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a14fd63c2859f64ffb30daf8313fd28f7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2815,6 +2785,36 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test <code>DirectiveSequencer's</code> ability to refuse to overwrite registration of a directive handler.</p>
 <p>To do this, an attempt is made to set two different handlers for the same directive. The <code>DirectiveSequencer</code> is expected to refuse the second handler. This directive is known to come down consistently in response to a Recognize event. The Handler that was first set is the only one that should receive the directive. </p>
+
+</div>
+</div>
+<a id="a1fa91ab3b25dc4782f0f9c2165594488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa91ab3b25dc4782f0f9c2165594488">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_removeAllAlertsBeforeAlertIsActive&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when all alerts are cleared from storage before an alert is active</p>
+<p>Set a 5 second timer, then call removeAllAlerts. Wait and ensure that the alert does not become active and no events are sent for it. </p>
 
 </div>
 </div>
@@ -2852,38 +2852,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ab58f9fda3915f8c6be5526f167134ca3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab58f9fda3915f8c6be5526f167134ca3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_test_cancelAlertBeforeItIsActive&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when an alert is canceled before it is due</p>
-<p>Set a 10 second timer, then send audio of "Cancel the timer" as a recognize event. Ensure the timer does not go off and the DeleteAlertSucceeded event is sent. </p>
-
-</div>
-</div>
 <a id="aa9a7733ff11384cbc598dd4fdfd1f8ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9a7733ff11384cbc598dd4fdfd1f8ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9a7733ff11384cbc598dd4fdfd1f8ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2909,6 +2879,36 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test <code>DirectiveSequencer's</code> ability to handle a multi-turn scenario</p>
 <p>This test is intended to test the Directive Sequencer's ability to go through a full loop of sending a recognize event that will prompt a multi-turn directive, receiving a directive group that contains ExpectSpeech, sending a recognize event to respond to Alexa's question, and receiving the final directive group. </p>
+
+</div>
+</div>
+<a id="ab58f9fda3915f8c6be5526f167134ca3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab58f9fda3915f8c6be5526f167134ca3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_test_cancelAlertBeforeItIsActive&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when an alert is canceled before it is due</p>
+<p>Set a 10 second timer, then send audio of "Cancel the timer" as a recognize event. Ensure the timer does not go off and the DeleteAlertSucceeded event is sent. </p>
 
 </div>
 </div>
@@ -2970,8 +2970,37 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a79ff2bdb7a9c7df0ffcd9d64d5b957aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79ff2bdb7a9c7df0ffcd9d64d5b957aa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/70]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_getAttachmentWithContentId&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test ability to get an attachment from <code>AttachmentManager</code>. </p>
+
+</div>
+</div>
 <a id="adc35db61572e581db9a5219148c54a28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc35db61572e581db9a5219148c54a28">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/70]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adc35db61572e581db9a5219148c54a28">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/70]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2997,35 +3026,6 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test when the storage is removed before an alert is set</p>
 <p>Close the storage before asking for a 5 second timer. SetAlertFailed and then DeleteAlertSucceeded events are then sent. Deletion succeeds because missing alert is not treated as an error. </p>
-
-</div>
-</div>
-<a id="a79ff2bdb7a9c7df0ffcd9d64d5b957aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79ff2bdb7a9c7df0ffcd9d64d5b957aa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/70]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_getAttachmentWithContentId&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test ability to get an attachment from <code>AttachmentManager</code>. </p>
 
 </div>
 </div>
@@ -3645,8 +3645,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a02c081d9e04191b32024383219fda363"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02c081d9e04191b32024383219fda363">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[3/4]</span></h2>
+<a id="a283cbcbaa3f230fbad5a91e2b1cc2bd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a283cbcbaa3f230fbad5a91e2b1cc2bd0">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3657,7 +3657,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">static const std::chrono::seconds alexaClientSDK::integration::test::WAIT_FOR_TIMEOUT_DURATION </td>
           <td>(</td>
-          <td class="paramtype">15&#160;</td>
+          <td class="paramtype">5&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -3671,8 +3671,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a283cbcbaa3f230fbad5a91e2b1cc2bd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a283cbcbaa3f230fbad5a91e2b1cc2bd0">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[4/4]</span></h2>
+<a id="a02c081d9e04191b32024383219fda363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02c081d9e04191b32024383219fda363">&#9670;&nbsp;</a></span>WAIT_FOR_TIMEOUT_DURATION() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3683,7 +3683,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">static const std::chrono::seconds alexaClientSDK::integration::test::WAIT_FOR_TIMEOUT_DURATION </td>
           <td>(</td>
-          <td class="paramtype">5&#160;</td>
+          <td class="paramtype">15&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -4783,8 +4783,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a4a6de85102cbf6d146c10248d8376680"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a6de85102cbf6d146c10248d8376680">&#9670;&nbsp;</a></span>EXPECT_SPEECH_PAIR <span class="overload">[2/3]</span></h2>
+<a id="ae6de2be236c2ecbaa09aec2b78c234b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6de2be236c2ecbaa09aec2b78c234b5">&#9670;&nbsp;</a></span>EXPECT_SPEECH_PAIR <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4793,7 +4793,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::EXPECT_SPEECH_PAIR = {<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a36677d27b7a766c6bff3a4522f919004">NAMESPACE_SPEECH_RECOGNIZER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a3f5ca25c223173ab4607d36a86b0ee92">NAME_EXPECT_SPEECH</a>}</td>
+          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::EXPECT_SPEECH_PAIR(<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a36677d27b7a766c6bff3a4522f919004">NAMESPACE_SPEECH_RECOGNIZER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a3f5ca25c223173ab4607d36a86b0ee92">NAME_EXPECT_SPEECH</a>)</td>
         </tr>
       </table>
   </td>
@@ -4805,8 +4805,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ae6de2be236c2ecbaa09aec2b78c234b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6de2be236c2ecbaa09aec2b78c234b5">&#9670;&nbsp;</a></span>EXPECT_SPEECH_PAIR <span class="overload">[3/3]</span></h2>
+<a id="a4a6de85102cbf6d146c10248d8376680"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a6de85102cbf6d146c10248d8376680">&#9670;&nbsp;</a></span>EXPECT_SPEECH_PAIR <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4815,7 +4815,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::EXPECT_SPEECH_PAIR(<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a36677d27b7a766c6bff3a4522f919004">NAMESPACE_SPEECH_RECOGNIZER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a3f5ca25c223173ab4607d36a86b0ee92">NAME_EXPECT_SPEECH</a>)</td>
+          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::EXPECT_SPEECH_PAIR = {<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a36677d27b7a766c6bff3a4522f919004">NAMESPACE_SPEECH_RECOGNIZER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a3f5ca25c223173ab4607d36a86b0ee92">NAME_EXPECT_SPEECH</a>}</td>
         </tr>
       </table>
   </td>
@@ -7835,6 +7835,8 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>This is a 16 bit 16 kHz little endian linear PCM audio file of "flashbriefing" to be recognized. </p>
+
 </div>
 </div>
 <a id="ab8c417246d9423c819563307ad4cf9d3"></a>
@@ -7856,8 +7858,6 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>This is a 16 bit 16 kHz little endian linear PCM audio file of "flashbriefing" to be recognized. </p>
 
 </div>
 </div>
@@ -8355,8 +8355,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ab26a43379a571b3c3a1ed7309566c80c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab26a43379a571b3c3a1ed7309566c80c">&#9670;&nbsp;</a></span>SET_MUTE_PAIR <span class="overload">[2/3]</span></h2>
+<a id="ae9597d5d2ed9d09fd0eb5fac6a0e2146"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9597d5d2ed9d09fd0eb5fac6a0e2146">&#9670;&nbsp;</a></span>SET_MUTE_PAIR <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8365,7 +8365,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::SET_MUTE_PAIR = {<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a1d06ca049551a66a8aef7c8872bf136b">NAMESPACE_SPEAKER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a5249f9a9fae0d1f57a2204b403a248ff">NAME_SET_MUTE</a>}</td>
+          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::SET_MUTE_PAIR(<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a1d06ca049551a66a8aef7c8872bf136b">NAMESPACE_SPEAKER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a5249f9a9fae0d1f57a2204b403a248ff">NAME_SET_MUTE</a>)</td>
         </tr>
       </table>
   </td>
@@ -8377,8 +8377,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ae9597d5d2ed9d09fd0eb5fac6a0e2146"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9597d5d2ed9d09fd0eb5fac6a0e2146">&#9670;&nbsp;</a></span>SET_MUTE_PAIR <span class="overload">[3/3]</span></h2>
+<a id="ab26a43379a571b3c3a1ed7309566c80c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab26a43379a571b3c3a1ed7309566c80c">&#9670;&nbsp;</a></span>SET_MUTE_PAIR <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8387,7 +8387,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::SET_MUTE_PAIR(<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a1d06ca049551a66a8aef7c8872bf136b">NAMESPACE_SPEAKER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a5249f9a9fae0d1f57a2204b403a248ff">NAME_SET_MUTE</a>)</td>
+          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html">NamespaceAndName</a> alexaClientSDK::integration::test::SET_MUTE_PAIR = {<a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a1d06ca049551a66a8aef7c8872bf136b">NAMESPACE_SPEAKER</a>, <a class="el" href="namespacealexa_client_s_d_k_1_1integration_1_1test.html#a5249f9a9fae0d1f57a2204b403a248ff">NAME_SET_MUTE</a>}</td>
         </tr>
       </table>
   </td>
@@ -8771,7 +8771,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

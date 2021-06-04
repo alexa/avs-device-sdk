@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h">
-<area shape="rect" id="node1" title=" " alt="" coords="52,5,271,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,146,75,173"/>
-<area shape="rect" id="node3" title=" " alt="" coords="99,146,157,173"/>
-<area shape="rect" id="node4" href="$_audio_format_8h.html" title=" " alt="" coords="169,228,389,255"/>
-<area shape="rect" id="node6" href="$_formatted_audio_stream_adapter_listener_8h.html" title=" " alt="" coords="232,139,493,180"/>
-<area shape="rect" id="node5" title=" " alt="" coords="244,303,313,329"/>
+<area shape="rect" id="node4" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="167,228,390,255"/>
+<area shape="rect" id="node6" href="$_formatted_audio_stream_adapter_listener_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapterListener.h" alt="" coords="233,139,495,180"/>
 </map>

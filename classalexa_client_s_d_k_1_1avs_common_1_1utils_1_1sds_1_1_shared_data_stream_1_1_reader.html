@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -88,6 +88,8 @@ Public Types</h2></td></tr>
 <tr class="memitem:a6e323e30dec60992cd3219566ddcbfe0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a6e323e30dec60992cd3219566ddcbfe0">Policy</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a07d2a9441f40d089a1f9a0d7e2baab4b">ReaderPolicy</a></td></tr>
 <tr class="memdesc:a6e323e30dec60992cd3219566ddcbfe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the policy to use for reading from the stream.  <a href="#a6e323e30dec60992cd3219566ddcbfe0">More...</a><br /></td></tr>
 <tr class="separator:a6e323e30dec60992cd3219566ddcbfe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bf4dfedfd9de2aeb6cd684afd5ed38c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a9bf4dfedfd9de2aeb6cd684afd5ed38c">OutputFunction</a> = std::function&lt; bool(void *buf, size_t nWords)&gt;</td></tr>
+<tr class="separator:a9bf4dfedfd9de2aeb6cd684afd5ed38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -96,6 +98,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8a98bb7ebd77885e98c8cc93eba62f55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a8a98bb7ebd77885e98c8cc93eba62f55">~Reader</a> ()</td></tr>
 <tr class="memdesc:a8a98bb7ebd77885e98c8cc93eba62f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">This destructor detaches the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> from a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html">BufferLayout</a></code>.  <a href="#a8a98bb7ebd77885e98c8cc93eba62f55">More...</a><br /></td></tr>
 <tr class="separator:a8a98bb7ebd77885e98c8cc93eba62f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af003c65c65026bbbbd27101f2094cb8c"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#af003c65c65026bbbbd27101f2094cb8c">read</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a9bf4dfedfd9de2aeb6cd684afd5ed38c">OutputFunction</a> function, size_t maxWordsCanRead, std::chrono::milliseconds timeout=std::chrono::milliseconds(0))</td></tr>
+<tr class="separator:af003c65c65026bbbbd27101f2094cb8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33a659ec04bf29971a87bf104ae4a37a"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a33a659ec04bf29971a87bf104ae4a37a">read</a> (void *buf, size_t nWords, std::chrono::milliseconds timeout=std::chrono::milliseconds(0))</td></tr>
 <tr class="separator:a33a659ec04bf29971a87bf104ae4a37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fff66cc486dd687247c6414540f978b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek</a> (Index offset, <a class="el" href="_reader_8h.html#af8301ba5b9319ad0427cfe10efcf91ba">Reference</a> reference=Reference::ABSOLUTE)</td></tr>
@@ -121,6 +125,33 @@ class alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Reader&lt; T &gt;
 <p>This is a nested class in <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">SharedDataStream</a> which provides an interface for reading (consuming) data from a stream.</p>
 <dl class="section note"><dt>Note</dt><dd>This class is primarily intended to be used from a single thread. The <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> as a whole is thread-safe in the sense that <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> and <code>Readers</code> can all live in different threads, but individual member functions of a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> instance should not be called from multiple threads except where specifically noted in function documentation below. </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a9bf4dfedfd9de2aeb6cd684afd5ed38c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bf4dfedfd9de2aeb6cd684afd5ed38c">&#9670;&nbsp;</a></span>OutputFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Reader</a>&lt; T &gt;::<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a9bf4dfedfd9de2aeb6cd684afd5ed38c">OutputFunction</a> =  std::function&lt;bool(void* buf, size_t nWords)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is passed in a read call to allow reading directly from the raw buffer. This allows you to avoid an intermediate copy while using a reader. It is passed into a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> below in with a read call and no reference to the lambda will be saved after the read function has returned. Implementations are not required to be thread safe, callbacks will return before the next one is called.</p>
+<p>Since nWords is bound by nWords in the read function it is assumed that the caller will consume the entire buffer in every callback.</p>
+<dl class="section note"><dt>Note</dt><dd>This function can be called multiple times per call to read depending on the implementation of <code><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream.html">SharedDataStream</a></code> and how much data was requested and it is up to the caller to handle multiple calls and the offsets into the caller's buffer. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buf</td><td>The pointer to read from. Note that this pointer is only valid for this read and there are no guarantees on it after the read is complete. </td></tr>
+    <tr><td class="paramname">nWords</td><td>The number of <code>wordSize</code> words that are safe to read from buf. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if all words consumed, false otherwise. Returning false will cause the read function to fail and not consume any words from the <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a>. </dd></dl>
+
+</div>
+</div>
 <a id="a6e323e30dec60992cd3219566ddcbfe0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e323e30dec60992cd3219566ddcbfe0">&#9670;&nbsp;</a></span>Policy</h2>
 
@@ -242,7 +273,7 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This function can be called from any thread or process, and it will schedule the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> to close, however it will <em>not</em> wake up a <code>BLOCKING</code> <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> which is already blocked waiting for data. In the case of a blocked <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a33a659ec04bf29971a87bf104ae4a37a">read()</a></code>, that <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a33a659ec04bf29971a87bf104ae4a37a">read()</a></code> will return when it wakes up - either due to a timeout, or due to a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> adding data to the stream. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function can be called from any thread or process, and it will schedule the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> to close, however it will <em>not</em> wake up a <code>BLOCKING</code> <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> which is already blocked waiting for data. In the case of a blocked <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#af003c65c65026bbbbd27101f2094cb8c">read()</a></code>, that <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#af003c65c65026bbbbd27101f2094cb8c">read()</a></code> will return when it wakes up - either due to a timeout, or due to a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> adding data to the stream. </dd></dl>
 
 </div>
 </div>
@@ -318,8 +349,55 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="af003c65c65026bbbbd27101f2094cb8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af003c65c65026bbbbd27101f2094cb8c">&#9670;&nbsp;</a></span>read() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Reader</a>&lt; T &gt;::read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a9bf4dfedfd9de2aeb6cd684afd5ed38c">OutputFunction</a>&#160;</td>
+          <td class="paramname"><em>function</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxWordsCanRead</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>std::chrono::milliseconds(0)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function consumes data from the stream and passes it into the read function to avoid intermediate copies of the data.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">function</td><td>The read function that will take a read pointer and the number of words that it's expected to handle. The read function's parameter nWords will be equal to or less than maxWordsCanRead. This may be called twice on account of the circular buffer however the sum of nWords in both calls will be less than <code>maxWordsCanRead</code>. </td></tr>
+    <tr><td class="paramname">maxWordsCanRead</td><td>The maximum number of <code>wordSize</code> words to copy. </td></tr>
+    <tr><td class="paramname">timeout</td><td>The maximum time to wait (if <code>policy</code> is <code>BLOCKING</code>) for data. If this parameter is zero, there is no timeout and blocking reads will wait forever. If <code>policy</code> is <code>NONBLOCKING</code>, this parameter is ignored. In the case of a timeout <code>function</code> will not be called. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of <code>wordSize</code> words copied if data was consumed, or zero if the stream has closed, or a negative <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader_1_1_error.html">Error</a></code> code if the stream is still open, but no data could be consumed.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A stream is closed for the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> if <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a0bfaf0f8a72a0d7bd2be54fe1068708d">Reader::close()</a></code> has been called on it, or if <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html#a14d8dcf215e22b0634a6bdb4339242c0">Writer::close()</a></code> has been called and the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> has consumed all remaining data left in the stream when the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> closed. In the special case of a new stream, where no <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> has been created, the stream is not considered to be closed for the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code>; attempts to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#af003c65c65026bbbbd27101f2094cb8c">read()</a></code> will either block or return <code>WOULDBLOCK</code>, depending on the <code>Policy</code>. </dd></dl>
+
+</div>
+</div>
 <a id="a33a659ec04bf29971a87bf104ae4a37a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33a659ec04bf29971a87bf104ae4a37a">&#9670;&nbsp;</a></span>read()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a33a659ec04bf29971a87bf104ae4a37a">&#9670;&nbsp;</a></span>read() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -361,7 +439,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of <code>wordSize</code> words copied if data was consumed, or zero if the stream has closed, or a negative <code><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader_1_1_error.html">Error</a></code> code if the stream is still open, but no data could be consumed.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>A stream is closed for the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> if <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a0bfaf0f8a72a0d7bd2be54fe1068708d">Reader::close()</a></code> has been called on it, or if <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html#a14d8dcf215e22b0634a6bdb4339242c0">Writer::close()</a></code> has been called and the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> has consumed all remaining data left in the stream when the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> closed. In the special case of a new stream, where no <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> has been created, the stream is not considered to be closed for the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code>; attempts to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a33a659ec04bf29971a87bf104ae4a37a">read()</a></code> will either block or return <code>WOULDBLOCK</code>, depending on the <code>Policy</code>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A stream is closed for the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> if <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a0bfaf0f8a72a0d7bd2be54fe1068708d">Reader::close()</a></code> has been called on it, or if <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html#a14d8dcf215e22b0634a6bdb4339242c0">Writer::close()</a></code> has been called and the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> has consumed all remaining data left in the stream when the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> closed. In the special case of a new stream, where no <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html">Writer</a></code> has been created, the stream is not considered to be closed for the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code>; attempts to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#af003c65c65026bbbbd27101f2094cb8c">read()</a></code> will either block or return <code>WOULDBLOCK</code>, depending on the <code>Policy</code>. </dd></dl>
 
 </div>
 </div>
@@ -392,7 +470,7 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function moves the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> to the specified location in the stream. If successful, subsequent calls to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a33a659ec04bf29971a87bf104ae4a37a">read()</a></code> will start from the new location. For this function to succeed, the specified location <em>must</em> point at data which has not been pushed out of the buffer; if the specified location points at old data which has already been overwritten, the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek()</a></code> call will fail. If the specified location points at future data which does not yet exist in the buffer, the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek()</a></code> call will succeed. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek()</a></code> call fails, the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> position will remain unchanged.</p>
+<p>This function moves the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> to the specified location in the stream. If successful, subsequent calls to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#af003c65c65026bbbbd27101f2094cb8c">read()</a></code> will start from the new location. For this function to succeed, the specified location <em>must</em> point at data which has not been pushed out of the buffer; if the specified location points at old data which has already been overwritten, the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek()</a></code> call will fail. If the specified location points at future data which does not yet exist in the buffer, the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek()</a></code> call will succeed. If the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html#a4fff66cc486dd687247c6414540f978b">seek()</a></code> call fails, the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> position will remain unchanged.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">offset</td><td>The position (in <code>wordSize</code> words) in the stream, relative to <code>reference</code>, to move the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html">Reader</a></code> to. </td></tr>
@@ -440,7 +518,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

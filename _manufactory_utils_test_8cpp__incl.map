@@ -1,9 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/test/ManufactoryUtilsTest.cpp" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/test/ManufactoryUtilsTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="71,5,273,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,117,77,143"/>
-<area shape="rect" id="node3" title=" " alt="" coords="101,117,171,143"/>
-<area shape="rect" id="node4" href="$_import_8h.html" title=" " alt="" coords="113,199,295,225"/>
-<area shape="rect" id="node5" href="$_utils_8h.html" title=" " alt="" coords="253,109,427,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="319,199,369,225"/>
-<area shape="rect" id="node7" title=" " alt="" coords="393,199,476,225"/>
+<area shape="rect" id="node4" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="113,199,295,225"/>
+<area shape="rect" id="node5" href="$_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="253,109,427,151"/>
 </map>

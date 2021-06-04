@@ -1,6 +1,4 @@
 <map id="alexaClientSDK::kwd::test::KittAiKeyWordTest" name="alexaClientSDK::kwd::test::KittAiKeyWordTest">
-<area shape="rect" id="node1" title=" " alt="" coords="392,63,563,105"/>
-<area shape="rect" id="node2" title=" " alt="" coords="81,5,127,32"/>
-<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector_1_1_kitt_ai_configuration.html" title=" " alt="" coords="21,56,187,112"/>
-<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html" title=" " alt="" coords="5,137,203,178"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector_1_1_kitt_ai_configuration.html" title="alexaClientSDK::kwd\l::KittAiKeyWordDetector\l::KittAiConfiguration" alt="" coords="21,56,187,112"/>
+<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html" title="alexaClientSDK::avsCommon\l::utils::AudioFormat" alt="" coords="5,137,203,178"/>
 </map>

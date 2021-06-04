@@ -1,8 +1,6 @@
 <map id="alexaClientSDK::acsdkNotifications::NotificationRenderer" name="alexaClientSDK::acsdkNotifications::NotificationRenderer">
-<area shape="rect" id="node1" title=" " alt="" coords="312,152,543,193"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notification_renderer_interface.html" title=" " alt="" coords="5,5,264,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html" title=" " alt="" coords="27,71,242,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="36,152,233,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title=" " alt="" coords="25,218,244,274"/>
-<area shape="rect" id="node6" title=" " alt="" coords="21,299,248,340"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notification_renderer_interface.html" title="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationRendererInterface" alt="" coords="5,5,264,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lObserverInterface" alt="" coords="27,71,242,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="36,152,233,193"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ChannelObserver\lInterface" alt="" coords="25,218,244,274"/>
 </map>

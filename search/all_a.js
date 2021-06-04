@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['kbitsinbyte',['kBitsInByte',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac56433e9cefab2acfa96c2a3e815a987',1,'alexaClientSDK::acsdkAudioPlayer']]],
+  ['kbitsinhex',['kBitsInHex',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aa0585bbad435438351c9b43603a9cbfb',1,'alexaClientSDK::acsdkAudioPlayer']]],
   ['key',['key',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface_1_1_tag_key_value_type.html#a874156c3c9a3933587c1060f843d81f0',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface::TagKeyValueType::key()'],['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#a30b6ded2378bbf26427886c6951ceea7',1,'alexaClientSDK::settings::test::KEY()'],['../namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a7d5a72a5726e876161d49b107db60d8e',1,'alexaClientSDK::playlistParser::test::KEY()'],['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#ac8ad13483f2414a22fa5f27ac8cdc949',1,'alexaClientSDK::settings::test::key()']]],
   ['key1',['key1',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_m_i_m_e_parser_test.html#a7ff6a83622c690df9327c1623c552a5e',1,'alexaClientSDK::avsCommon::test::MIMEParserTest']]],
   ['key2',['key2',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_m_i_m_e_parser_test.html#a9ab72b9794089443ad201172b06b52ba',1,'alexaClientSDK::avsCommon::test::MIMEParserTest']]],
@@ -52,6 +54,7 @@ var searchData=
   ['keywordobserverinterface',['KeyWordObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['keywordobserverinterface_2eh',['KeyWordObserverInterface.h',['../_key_word_observer_interface_8h.html',1,'']]],
   ['kget',['kGET',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55ae0bd139e3b8411576d1407e0600756d0',1,'alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper']]],
+  ['khexinbyte',['kHexInByte',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad4c40543631424e2ec8e97118b91fa6f',1,'alexaClientSDK::acsdkAudioPlayer']]],
   ['kitt_5fai_5fcompatible_5fencoding',['KITT_AI_COMPATIBLE_ENCODING',['../namespacealexa_client_s_d_k_1_1kwd.html#a3d70f642f3e29cff9a9ccbf724091d2d',1,'alexaClientSDK::kwd']]],
   ['kitt_5fai_5fcompatible_5fendianness',['KITT_AI_COMPATIBLE_ENDIANNESS',['../namespacealexa_client_s_d_k_1_1kwd.html#a028a192ad4b5c16ea5f8bc8d6e2ca203',1,'alexaClientSDK::kwd']]],
   ['kitt_5fai_5ferror_5fdetection_5fresult',['KITT_AI_ERROR_DETECTION_RESULT',['../namespacealexa_client_s_d_k_1_1kwd.html#a64c65ba89493b9027ff62bf93a7b77fe',1,'alexaClientSDK::kwd']]],

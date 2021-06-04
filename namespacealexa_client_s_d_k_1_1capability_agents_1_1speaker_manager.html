@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -109,6 +109,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ac8dcdcb036a00615ef8b5652254bc25c"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:ac8dcdcb036a00615ef8b5652254bc25c"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#ac8dcdcb036a00615ef8b5652254bc25c">withinBounds</a> (T value, T min, T max)</td></tr>
 <tr class="separator:ac8dcdcb036a00615ef8b5652254bc25c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee1956a9e8e33189a347430376c956af"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#aee1956a9e8e33189a347430376c956af">getSourceString</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb">SpeakerManagerObserverInterface::Source</a> source)</td></tr>
+<tr class="separator:aee1956a9e8e33189a347430376c956af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6e41c384143eebb942421ef855e70a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a8b6e41c384143eebb942421ef855e70a">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName, int count)</td></tr>
 <tr class="separator:a8b6e41c384143eebb942421ef855e70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1e5526da4f88815d1f97dea9529602c"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#ad1e5526da4f88815d1f97dea9529602c">getSpeakerCapabilityConfiguration</a> ()</td></tr>
@@ -223,6 +225,40 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Creates an manufactory component that exports a shared pointer to an implementation of <code>SpeakerManagerInterface</code>.</p>
 <dl class="section return"><dt>Returns</dt><dd>A component. </dd></dl>
+
+</div>
+</div>
+<a id="aee1956a9e8e33189a347430376c956af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee1956a9e8e33189a347430376c956af">&#9670;&nbsp;</a></span>getSourceString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string alexaClientSDK::capabilityAgents::speakerManager::getSourceString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb">SpeakerManagerObserverInterface::Source</a>&#160;</td>
+          <td class="paramname"><em>source</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Converts the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb" title="Indicates whether the source of the call is from an AVS Directive or through a Local API call...">SpeakerManagerObserverInterface::Source</a></code> to a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The input <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html#a38d6a50cc5799f07612827e1a163babb" title="Indicates whether the source of the call is from an AVS Directive or through a Local API call...">SpeakerManagerObserverInterface::Source</a></code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>String</code> representing the source. </dd></dl>
 
 </div>
 </div>
@@ -846,7 +882,7 @@ template&lt;class T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,11 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/WakeGuard.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/WakeGuard.h">
-<area shape="rect" id="node1" title=" " alt="" coords="273,5,453,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="419,303,489,329"/>
-<area shape="rect" id="node3" href="$_power_resource_8h.html" title=" " alt="" coords="216,124,388,165"/>
-<area shape="rect" id="node4" title=" " alt="" coords="25,221,83,247"/>
-<area shape="rect" id="node5" title=" " alt="" coords="36,303,91,329"/>
-<area shape="rect" id="node6" title=" " alt="" coords="363,221,417,247"/>
-<area shape="rect" id="node7" href="$_power_resource_manager_interface_8h.html" title=" " alt="" coords="108,213,339,255"/>
-<area shape="rect" id="node8" title=" " alt="" coords="147,303,209,329"/>
-<area shape="rect" id="node9" title=" " alt="" coords="233,303,302,329"/>
+<area shape="rect" id="node3" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="223,124,397,165"/>
+<area shape="rect" id="node7" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="116,213,347,255"/>
 </map>

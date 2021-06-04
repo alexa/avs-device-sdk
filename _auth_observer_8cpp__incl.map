@@ -1,10 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/src/AuthObserver.cpp" name="/workplace/avs&#45;device&#45;sdk/Integration/src/AuthObserver.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="212,5,364,61"/>
-<area shape="rect" id="node2" href="$_auth_observer_8h.html" title=" " alt="" coords="125,109,302,136"/>
-<area shape="rect" id="node8" title=" " alt="" coords="327,109,399,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,191,67,218"/>
-<area shape="rect" id="node4" title=" " alt="" coords="91,191,218,218"/>
-<area shape="rect" id="node5" title=" " alt="" coords="243,191,301,218"/>
-<area shape="rect" id="node6" href="$_auth_observer_interface_8h.html" title=" " alt="" coords="326,184,517,225"/>
-<area shape="rect" id="node7" title=" " alt="" coords="387,273,456,300"/>
+<area shape="rect" id="node2" href="$_auth_observer_8h.html" title="Integration/AuthObserver.h" alt="" coords="124,109,303,136"/>
+<area shape="rect" id="node6" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="325,184,517,225"/>
 </map>

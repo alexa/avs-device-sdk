@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::acl::MessageConsumerInterface" name="alexaClientSDK::acl::MessageConsumerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,71,200,112"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title=" " alt="" coords="281,5,421,47"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_consumer.html" title=" " alt="" coords="248,71,453,112"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_consumer.html" title=" " alt="" coords="266,136,435,177"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title=" " alt="" coords="501,5,703,47"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="281,5,421,47"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_consumer.html" title="alexaClientSDK::acl\l::test::MockMessageConsumer" alt="" coords="248,71,453,112"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_consumer.html" title="alexaClientSDK::acl\l::test::TestableConsumer" alt="" coords="265,136,436,177"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title="alexaClientSDK::acl\l::test::TestableMessageRouter" alt="" coords="501,5,704,47"/>
 </map>

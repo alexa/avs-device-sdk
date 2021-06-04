@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_event_builder.html" title=" " alt="" coords="5,5,228,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lFactoryInterface" alt="" coords="5,43,220,99"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProviderInterface" alt="" coords="268,5,485,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html" title="alexaClientSDK::mediaPlayer\l::PooledMediaPlayerFactory" alt="" coords="279,86,474,127"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProvider" alt="" coords="533,5,751,61"/>
 </map>

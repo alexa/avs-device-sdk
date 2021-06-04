@@ -1,8 +1,9 @@
 <map id="alexaClientSDK::avsCommon::avs::MessageRequest" name="alexaClientSDK::avsCommon::avs::MessageRequest">
-<area shape="rect" id="node1" title=" " alt="" coords="5,144,203,185"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_request.html" title=" " alt="" coords="273,5,467,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_waitable_message_request.html" title=" " alt="" coords="265,71,475,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_message_request.html" title=" " alt="" coords="251,137,489,193"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_message_request.html" title=" " alt="" coords="277,217,463,273"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html" title=" " alt="" coords="271,297,469,339"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_request.html" title="alexaClientSDK::acl\l::test::MockMessageRequest" alt="" coords="274,5,469,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_device_setup_1_1_device_setup_message_request.html" title="alexaClientSDK::acsdkDevice\lSetup::DeviceSetupMessageRequest" alt="" coords="251,71,492,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_editable_message_request.html" title="alexaClientSDK::avsCommon\l::avs::EditableMessageRequest" alt="" coords="267,136,475,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_waitable_message_request.html" title="alexaClientSDK::avsCommon\l::avs::WaitableMessageRequest" alt="" coords="265,201,477,243"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_message_request.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DNDMessage\lRequest" alt="" coords="252,267,491,323"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_message_request.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackMessageRequest" alt="" coords="278,347,465,403"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html" title="alexaClientSDK::integration\l::ObservableMessageRequest" alt="" coords="272,428,471,469"/>
 </map>

@@ -11,5 +11,6 @@ var searchData=
   ['userinactivitymonitorobserverinterface',['UserInactivityMonitorObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_user_inactivity_monitor_observer_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces']]],
   ['userinactivitymonitortest',['UserInactivityMonitorTest',['../classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_user_inactivity_monitor_test.html',1,'alexaClientSDK::capabilityAgents::system::test']]],
   ['userinputmanager',['UserInputManager',['../classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html',1,'alexaClientSDK::sampleApp']]],
+  ['util',['Util',['../classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_util.html',1,'alexaClientSDK::acsdkAudioPlayer']]],
   ['uuidgenerationtest',['UUIDGenerationTest',['../classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_u_u_i_d_generation_test.html',1,'alexaClientSDK::avsCommon::test']]]
 ];

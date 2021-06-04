@@ -1,46 +1,32 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/DeviceControlledSettingProtocol.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/DeviceControlledSettingProtocol.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1413,5,1632,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="1543,578,1612,605"/>
-<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="901,213,1131,255"/>
-<area shape="rect" id="node21" href="$_executor_8h.html" title=" " alt="" coords="2107,303,2299,344"/>
-<area shape="rect" id="node35" href="$_set_setting_result_8h.html" title=" " alt="" coords="2575,310,2759,337"/>
-<area shape="rect" id="node36" href="$_setting_event_metadata_8h.html" title=" " alt="" coords="95,221,310,247"/>
-<area shape="rect" id="node37" href="$_setting_event_sender_interface_8h.html" title=" " alt="" coords="686,213,877,255"/>
-<area shape="rect" id="node38" href="$_setting_protocol_interface_8h.html" title=" " alt="" coords="1864,213,2027,255"/>
-<area shape="rect" id="node40" href="$_shared_a_v_s_setting_protocol_8h.html" title=" " alt="" coords="1432,124,1613,165"/>
-<area shape="rect" id="node43" href="$_device_setting_storage_interface_8h.html" title=" " alt="" coords="335,213,540,255"/>
-<area shape="rect" id="node4" href="$_a_v_s_gateway_assigner_interface_8h.html" title=" " alt="" coords="912,303,1128,344"/>
-<area shape="rect" id="node6" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="645,392,891,433"/>
-<area shape="rect" id="node9" href="$_message_observer_interface_8h.html" title=" " alt="" coords="915,392,1109,433"/>
-<area shape="rect" id="node10" href="$_message_sender_interface_8h.html" title=" " alt="" coords="595,303,786,344"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1170,660,1225,687"/>
-<area shape="rect" id="node7" title=" " alt="" coords="699,578,771,605"/>
-<area shape="rect" id="node8" title=" " alt="" coords="949,489,1008,515"/>
-<area shape="rect" id="node11" href="$_message_request_8h.html" title=" " alt="" coords="323,399,570,426"/>
-<area shape="rect" id="node12" title=" " alt="" coords="590,489,650,515"/>
-<area shape="rect" id="node13" title=" " alt="" coords="1832,489,1891,515"/>
-<area shape="rect" id="node14" title=" " alt="" coords="461,489,565,515"/>
-<area shape="rect" id="node15" href="$_attachment_reader_8h.html" title=" " alt="" coords="675,481,875,523"/>
-<area shape="rect" id="node20" href="$_message_request_observer_interface_8h.html" title=" " alt="" coords="195,481,437,523"/>
-<area shape="rect" id="node16" title=" " alt="" coords="2267,578,2328,605"/>
-<area shape="rect" id="node17" title=" " alt="" coords="609,578,674,605"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1995,578,2064,605"/>
-<area shape="rect" id="node19" href="$_reader_policy_8h.html" title=" " alt="" coords="795,571,957,612"/>
-<area shape="rect" id="node22" title=" " alt="" coords="3079,660,3140,687"/>
-<area shape="rect" id="node23" title=" " alt="" coords="2755,660,2882,687"/>
-<area shape="rect" id="node24" title=" " alt="" coords="2322,399,2379,426"/>
-<area shape="rect" id="node25" title=" " alt="" coords="2475,660,2554,687"/>
-<area shape="rect" id="node26" title=" " alt="" coords="1590,399,1645,426"/>
-<area shape="rect" id="node27" title=" " alt="" coords="1915,489,1968,515"/>
-<area shape="rect" id="node28" href="$_task_thread_8h.html" title=" " alt="" coords="2732,392,2924,433"/>
-<area shape="rect" id="node33" href="$_power_resource_8h.html" title=" " alt="" coords="2126,392,2298,433"/>
-<area shape="rect" id="node29" title=" " alt="" coords="2989,660,3048,687"/>
-<area shape="rect" id="node30" href="$_thread_pool_8h.html" title=" " alt="" coords="2805,489,2904,515"/>
-<area shape="rect" id="node32" href="$_worker_thread_8h.html" title=" " alt="" coords="2907,578,3021,605"/>
-<area shape="rect" id="node31" title=" " alt="" coords="2913,660,2951,687"/>
-<area shape="rect" id="node34" href="$_power_resource_manager_interface_8h.html" title=" " alt="" coords="2145,481,2375,523"/>
-<area shape="rect" id="node39" href="$_setting_observer_interface_8h.html" title=" " alt="" coords="1640,481,1808,523"/>
-<area shape="rect" id="node41" href="$_setting_connection_observer_8h.html" title=" " alt="" coords="1253,303,1435,344"/>
-<area shape="rect" id="node42" href="$_setting_status_8h.html" title=" " alt="" coords="355,310,519,337"/>
-<area shape="rect" id="node44" title=" " alt="" coords="280,310,331,337"/>
+<area shape="rect" id="node3" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="2881,213,3111,255"/>
+<area shape="rect" id="node20" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="698,213,878,255"/>
+<area shape="rect" id="node28" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="692,303,887,344"/>
+<area shape="rect" id="node41" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="2504,310,2688,337"/>
+<area shape="rect" id="node42" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="3187,221,3402,247"/>
+<area shape="rect" id="node43" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="2547,213,2738,255"/>
+<area shape="rect" id="node44" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="1960,213,2123,255"/>
+<area shape="rect" id="node46" href="$_shared_a_v_s_setting_protocol_8h.html" title="Settings/SharedAVSSetting\lProtocol.h" alt="" coords="2247,124,2430,165"/>
+<area shape="rect" id="node49" href="$_device_setting_storage_interface_8h.html" title="Settings/Storage/DeviceSetting\lStorageInterface.h" alt="" coords="3897,213,4103,255"/>
+<area shape="rect" id="node4" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="3636,571,3855,612"/>
+<area shape="rect" id="node6" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="3316,392,3561,433"/>
+<area shape="rect" id="node9" href="$_message_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageObserverInterface.h" alt="" coords="3879,571,4073,612"/>
+<area shape="rect" id="node10" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2915,303,3107,344"/>
+<area shape="rect" id="node11" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="2836,399,3087,426"/>
+<area shape="rect" id="node16" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="2049,481,2253,523"/>
+<area shape="rect" id="node19" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="3049,481,3292,523"/>
+<area shape="rect" id="node21" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="1654,303,1834,344"/>
+<area shape="rect" id="node23" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="3111,392,3291,433"/>
+<area shape="rect" id="node25" href="$_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="1739,392,1919,433"/>
+<area shape="rect" id="node26" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1385,399,1581,426"/>
+<area shape="rect" id="node24" href="$_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="3450,481,3630,523"/>
+<area shape="rect" id="node27" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1159,481,1335,523"/>
+<area shape="rect" id="node34" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="195,392,389,433"/>
+<area shape="rect" id="node39" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1055,392,1230,433"/>
+<area shape="rect" id="node36" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="241,489,340,515"/>
+<area shape="rect" id="node38" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="175,578,289,605"/>
+<area shape="rect" id="node40" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2277,481,2507,523"/>
+<area shape="rect" id="node45" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1653,481,1821,523"/>
+<area shape="rect" id="node47" href="$_setting_connection_observer_8h.html" title="Settings/SettingConnection\lObserver.h" alt="" coords="2248,303,2429,344"/>
+<area shape="rect" id="node48" href="$_setting_status_8h.html" title="Settings/SettingStatus.h" alt="" coords="3858,310,4022,337"/>
 </map>

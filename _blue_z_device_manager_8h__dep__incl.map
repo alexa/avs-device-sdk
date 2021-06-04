@@ -1,18 +1,18 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZDeviceManager.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZDeviceManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1301,5,1584,61"/>
-<area shape="rect" id="node2" href="$_blue_z_bluetooth_device_manager_8h.html" title=" " alt="" coords="114,109,350,180"/>
-<area shape="rect" id="node4" href="$_media_endpoint_8h.html" title=" " alt="" coords="525,117,769,173"/>
-<area shape="rect" id="node5" href="$_blue_z_a2_d_p_source_8cpp.html" title=" " alt="" coords="320,228,541,284"/>
-<area shape="rect" id="node6" href="$_blue_z_device_manager_8cpp.html" title=" " alt="" coords="792,228,1027,284"/>
-<area shape="rect" id="node8" href="$_blue_z_a2_d_p_sink_8cpp.html" title=" " alt="" coords="845,117,1051,173"/>
-<area shape="rect" id="node9" href="$_blue_z_bluetooth_device_8cpp.html" title=" " alt="" coords="1075,117,1317,173"/>
-<area shape="rect" id="node10" href="$_blue_z_h_f_p_8cpp.html" title=" " alt="" coords="1341,117,1544,173"/>
-<area shape="rect" id="node11" href="$_blue_z_h_i_d_8cpp.html" title=" " alt="" coords="1568,117,1771,173"/>
-<area shape="rect" id="node12" href="$_blue_z_host_controller_8cpp.html" title=" " alt="" coords="1795,117,2023,173"/>
-<area shape="rect" id="node13" href="$_blue_z_s_p_p_8cpp.html" title=" " alt="" coords="2048,117,2251,173"/>
-<area shape="rect" id="node14" href="$_d_bus_properties_proxy_8cpp.html" title=" " alt="" coords="2275,117,2509,173"/>
-<area shape="rect" id="node15" href="$_m_p_r_i_s_player_8cpp.html" title=" " alt="" coords="2533,117,2736,173"/>
-<area shape="rect" id="node16" href="$_pairing_agent_8cpp.html" title=" " alt="" coords="2760,117,2963,173"/>
-<area shape="rect" id="node3" href="$_blue_z_bluetooth_device_manager_8cpp.html" title=" " alt="" coords="5,228,296,284"/>
-<area shape="rect" id="node7" href="$_media_endpoint_8cpp.html" title=" " alt="" coords="565,228,768,284"/>
+<area shape="rect" id="node2" href="$_blue_z_bluetooth_device_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZBluetooth\lDeviceManager.h" alt="" coords="341,109,577,180"/>
+<area shape="rect" id="node5" href="$_media_endpoint_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/MediaEndpoint.h" alt="" coords="833,117,1077,173"/>
+<area shape="rect" id="node6" href="$_blue_z_a2_d_p_source_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZA2DPSource.cpp" alt="" coords="629,235,850,291"/>
+<area shape="rect" id="node7" href="$_blue_z_device_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZDeviceManager.cpp" alt="" coords="1101,235,1337,291"/>
+<area shape="rect" id="node9" href="$_blue_z_a2_d_p_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZA2DPSink.cpp" alt="" coords="1153,117,1360,173"/>
+<area shape="rect" id="node10" href="$_blue_z_bluetooth_device_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDevice.cpp" alt="" coords="1384,117,1625,173"/>
+<area shape="rect" id="node11" href="$_blue_z_h_f_p_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZHFP.cpp" alt="" coords="1650,117,1853,173"/>
+<area shape="rect" id="node12" href="$_blue_z_h_i_d_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZHID.cpp" alt="" coords="1877,117,2079,173"/>
+<area shape="rect" id="node13" href="$_blue_z_host_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZHostController.cpp" alt="" coords="2103,117,2333,173"/>
+<area shape="rect" id="node14" href="$_blue_z_s_p_p_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZSPP.cpp" alt="" coords="2357,117,2559,173"/>
+<area shape="rect" id="node15" href="$_d_bus_properties_proxy_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/DBusPropertiesProxy.cpp" alt="" coords="2583,117,2821,173"/>
+<area shape="rect" id="node16" href="$_m_p_r_i_s_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MPRISPlayer.cpp" alt="" coords="2845,117,3047,173"/>
+<area shape="rect" id="node17" href="$_pairing_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/PairingAgent.cpp" alt="" coords="3071,117,3274,173"/>
+<area shape="rect" id="node3" href="$acsdk_blue_z_bluetooth_implementation_2src_2_bluetooth_implementation_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkBlue\lZBluetoothImplementation\l/src/BluetoothImplementationComponent.cpp" alt="" coords="5,228,289,299"/>
+<area shape="rect" id="node4" href="$_blue_z_bluetooth_device_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDeviceManager.cpp" alt="" coords="314,235,605,291"/>
+<area shape="rect" id="node8" href="$_media_endpoint_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/MediaEndpoint.cpp" alt="" coords="874,235,1077,291"/>
 </map>

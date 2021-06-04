@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkAlerts::Alert::DynamicData" name="alexaClientSDK::acsdkAlerts::Alert::DynamicData">
-<area shape="rect" id="node1" title=" " alt="" coords="364,39,556,80"/>
-<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_1_1_asset_configuration.html" title=" " alt="" coords="8,5,200,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html" title=" " alt="" coords="5,71,203,112"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_1_1_asset_configuration.html" title="alexaClientSDK::acsdkAlerts\l::Alert::AssetConfiguration" alt="" coords="8,5,200,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimePoint" alt="" coords="5,71,203,112"/>
 </map>

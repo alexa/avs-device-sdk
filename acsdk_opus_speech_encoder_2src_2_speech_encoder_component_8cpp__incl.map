@@ -1,0 +1,30 @@
+<map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkOpusSpeechEncoder/src/SpeechEncoderComponent.cpp" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkOpusSpeechEncoder/src/SpeechEncoderComponent.cpp">
+<area shape="rect" id="node2" href="$_component_accumulator_8h.html" title="acsdkManufactory/Component\lAccumulator.h" alt="" coords="2133,109,2333,151"/>
+<area shape="rect" id="node47" href="$_opus_encoder_context_8h.html" title="SpeechEncoder/OpusEncoder\lContext.h" alt="" coords="43,1077,240,1119"/>
+<area shape="rect" id="node4" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="2083,288,2293,315"/>
+<area shape="rect" id="node5" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="1265,363,1439,404"/>
+<area shape="rect" id="node33" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="1678,988,1853,1029"/>
+<area shape="rect" id="node44" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="2264,638,2445,665"/>
+<area shape="rect" id="node46" href="$_component_accumulator__imp_8h.html" title="acsdkManufactory/internal\l/ComponentAccumulator_imp.h" alt="" coords="2061,199,2267,240"/>
+<area shape="rect" id="node45" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="2101,363,2275,404"/>
+<area shape="rect" id="node11" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1861,638,2064,665"/>
+<area shape="rect" id="node12" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="1121,809,1295,851"/>
+<area shape="rect" id="node13" href="$_abstract_recipe_8h.html" title="acsdkManufactory/internal\l/AbstractRecipe.h" alt="" coords="922,809,1097,851"/>
+<area shape="rect" id="node14" href="$_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="1195,899,1370,940"/>
+<area shape="rect" id="node34" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="1265,452,1439,493"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1320,1167,1496,1208"/>
+<area shape="rect" id="node23" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="588,988,764,1029"/>
+<area shape="rect" id="node32" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="957,988,1144,1029"/>
+<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1271,1256,1447,1297"/>
+<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1271,1345,1447,1387"/>
+<area shape="rect" id="node25" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="588,1077,764,1119"/>
+<area shape="rect" id="node28" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="678,1167,893,1208"/>
+<area shape="rect" id="node31" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="917,1167,1093,1208"/>
+<area shape="rect" id="node39" href="$_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="1441,541,1615,583"/>
+<area shape="rect" id="node41" href="$_shared_pointer_cache_8h.html" title="acsdkManufactory/internal\l/SharedPointerCache.h" alt="" coords="922,720,1097,761"/>
+<area shape="rect" id="node42" href="$_weak_pointer_cache_8h.html" title="acsdkManufactory/internal\l/WeakPointerCache.h" alt="" coords="1121,720,1295,761"/>
+<area shape="rect" id="node43" href="$_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="2141,541,2315,583"/>
+<area shape="rect" id="node40" href="$_runtime_manufactory__imp_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory_imp.h" alt="" coords="916,631,1103,672"/>
+<area shape="rect" id="node48" href="$_encoder_context_8h.html" title="SpeechEncoder/EncoderContext.h" alt="" coords="93,1174,315,1201"/>
+<area shape="rect" id="node49" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="245,1263,467,1290"/>
+</map>

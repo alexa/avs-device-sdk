@@ -1,9 +1,35 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/LocaleAssetsManager.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/LocaleAssetsManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="7,5,243,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,199,52,225"/>
-<area shape="rect" id="node3" title=" " alt="" coords="331,117,401,143"/>
-<area shape="rect" id="node4" title=" " alt="" coords="91,199,131,225"/>
-<area shape="rect" id="node5" href="$_locale_assets_manager_interface_8h.html" title=" " alt="" coords="89,109,307,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="163,199,217,225"/>
-<area shape="rect" id="node7" title=" " alt="" coords="242,199,301,225"/>
+<area shape="rect" id="node7" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="784,1121,1006,1163"/>
+<area shape="rect" id="node10" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1414,1211,1603,1252"/>
+<area shape="rect" id="node13" href="$_locale_assets_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="3320,109,3537,151"/>
+<area shape="rect" id="node8" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1232,1211,1390,1252"/>
+<area shape="rect" id="node15" href="$_capability_configuration_change_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationChange\lObserverInterface.h" alt="" coords="2157,749,2364,805"/>
+<area shape="rect" id="node29" href="$_endpoint_registration_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointRegistration\lManagerInterface.h" alt="" coords="3236,199,3445,255"/>
+<area shape="rect" id="node50" href="$_locale_assets_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/LocaleAssetsObserverInterface.h" alt="" coords="3588,206,3808,247"/>
+<area shape="rect" id="node16" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="2534,853,2728,895"/>
+<area shape="rect" id="node18" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2513,950,2709,977"/>
+<area shape="rect" id="node19" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1911,1032,2087,1073"/>
+<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1911,1121,2087,1163"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1881,1211,2096,1252"/>
+<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2136,1300,2312,1341"/>
+<area shape="rect" id="node26" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2440,1211,2616,1252"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2222,1211,2416,1252"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="702,1211,878,1252"/>
+<area shape="rect" id="node32" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3403,943,3603,984"/>
+<area shape="rect" id="node33" href="$_endpoint_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointInterface.h" alt="" coords="3009,303,3210,344"/>
+<area shape="rect" id="node48" href="$_endpoint_modification_data_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointModification\lData.h" alt="" coords="2614,392,2824,448"/>
+<area shape="rect" id="node49" href="$_endpoint_registration_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointRegistration\lObserverInterface.h" alt="" coords="3209,749,3418,805"/>
+<area shape="rect" id="node34" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1908,496,2100,537"/>
+<area shape="rect" id="node47" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="3146,853,3369,895"/>
+<area shape="rect" id="node35" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1906,675,2132,701"/>
+<area shape="rect" id="node43" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1784,853,2019,895"/>
+<area shape="rect" id="node46" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1860,585,2082,627"/>
+<area shape="rect" id="node37" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="550,1121,760,1163"/>
+<area shape="rect" id="node41" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="2568,764,2681,791"/>
+<area shape="rect" id="node38" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1004,1211,1208,1252"/>
+<area shape="rect" id="node39" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="852,1300,1056,1341"/>
+<area shape="rect" id="node40" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1080,1300,1284,1341"/>
+<area shape="rect" id="node42" href="$_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="2804,853,3021,895"/>
+<area shape="rect" id="node44" href="$_blocking_policy_8h.html" title="AVSCommon/AVS/BlockingPolicy.h" alt="" coords="2122,1039,2356,1066"/>
+<area shape="rect" id="node45" href="$_directive_routing_rule_8h.html" title="AVSCommon/AVS/DirectiveRouting\lRule.h" alt="" coords="1771,943,2006,984"/>
 </map>

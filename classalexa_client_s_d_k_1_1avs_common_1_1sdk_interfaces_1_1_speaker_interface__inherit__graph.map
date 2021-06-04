@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::SpeakerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,130,221,171"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker.html" title=" " alt="" coords="274,5,471,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker_interface.html" title=" " alt="" coords="274,85,471,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_speaker.html" title=" " alt="" coords="269,166,476,207"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title=" " alt="" coords="275,231,470,273"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockSpeaker" alt="" coords="274,5,471,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockSpeakerInterface" alt="" coords="274,85,471,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_speaker.html" title="alexaClientSDK::mediaPlayer\l::android::AndroidSLESSpeaker" alt="" coords="269,166,476,207"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1media_player_1_1_media_player.html" title="alexaClientSDK::mediaPlayer\l::MediaPlayer" alt="" coords="275,231,470,273"/>
 </map>

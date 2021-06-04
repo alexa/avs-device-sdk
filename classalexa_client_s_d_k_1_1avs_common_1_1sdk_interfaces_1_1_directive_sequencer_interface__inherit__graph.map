@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::DirectiveSequencerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="251,63,481,119"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html" title=" " alt="" coords="559,5,706,47"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html" title=" " alt="" coords="529,71,736,112"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html" title="Mock class that implements the DirectiveSequencer." alt="" coords="534,137,731,193"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="5,71,203,112"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1adsl_1_1_directive_sequencer.html" title="alexaClientSDK::adsl\l::DirectiveSequencer" alt="" coords="559,5,706,47"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html" title="alexaClientSDK::adsl\l::test::MockDirectiveSequencer" alt="" coords="529,71,736,112"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html" title="Mock class that implements the DirectiveSequencer. " alt="" coords="534,137,731,193"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,71,203,112"/>
 </map>

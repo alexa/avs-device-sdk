@@ -49,7 +49,6 @@ var searchData=
   ['playlistutils_2eh',['PlaylistUtils.h',['../_playlist_utils_8h.html',1,'']]],
   ['playlistutilstest_2ecpp',['PlaylistUtilsTest.cpp',['../_playlist_utils_test_8cpp.html',1,'']]],
   ['playrequestor_2eh',['PlayRequestor.h',['../_play_requestor_8h.html',1,'']]],
-  ['pointercache_2eh',['PointerCache.h',['../_pointer_cache_8h.html',1,'']]],
   ['pooledapplicationmediainterfaces_2eh',['PooledApplicationMediaInterfaces.h',['../_pooled_application_media_interfaces_8h.html',1,'']]],
   ['pooledmediaplayerfactory_2ecpp',['PooledMediaPlayerFactory.cpp',['../_pooled_media_player_factory_8cpp.html',1,'']]],
   ['pooledmediaplayerfactory_2eh',['PooledMediaPlayerFactory.h',['../_pooled_media_player_factory_8h.html',1,'']]],

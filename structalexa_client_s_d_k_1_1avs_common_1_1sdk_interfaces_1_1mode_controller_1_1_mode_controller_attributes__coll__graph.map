@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::modeController::ModeControllerAttributes" name="alexaClientSDK::avsCommon::sdkInterfaces::modeController::ModeControllerAttributes">
-<area shape="rect" id="node1" title=" " alt="" coords="463,53,668,109"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title=" " alt="" coords="5,5,292,76"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_resources.html" title=" " alt="" coords="50,100,247,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; alexaClient\lSDK::avsCommon::avs::capabilitySemantics\l::CapabilitySemantics \&gt;" alt="" coords="5,5,292,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_resources.html" title="alexaClientSDK::avsCommon\l::avs::CapabilityResources" alt="" coords="50,100,247,141"/>
 </map>

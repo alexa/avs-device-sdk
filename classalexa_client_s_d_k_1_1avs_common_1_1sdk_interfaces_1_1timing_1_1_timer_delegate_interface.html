@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,6 +82,8 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerD
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html" title="alexaClientSDK::avsCommon\l::utils::timing::test::\lStopTaskTimer" alt="" coords="251,5,448,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimerDelegate" alt="" coords="251,86,448,127"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -206,7 +208,7 @@ Static Public Attributes</h2></td></tr>
 <p>Marks this <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html">TimerDelegateInterface</a></code> as active for strict ordering purposes. When called, the implementation must atomically set the internal state as active. Functionally this method must behave as an std::atomic_exchange operation.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code>Timer</code> was previously inactive, else <code>false</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#aa66d944dd20c9410ea18e05f2b944b7e">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html#ad65780c6d24aa33385d11b080b443646">alexaClientSDK::avsCommon::utils::timing::test::StopTaskTimer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#aa66d944dd20c9410ea18e05f2b944b7e">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
 
 </div>
 </div>
@@ -262,7 +264,7 @@ Static Public Attributes</h2></td></tr>
 <p>Reports whether the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html">TimerDelegateInterface</a></code> is active. A timer is considered active if it is waiting to start a call to the task, or if a call to the task is in progress. Examples of these can be after calls to <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#ab66ea3e7bf987a8c06f2c5d8127386a9">activate()</a> or <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#ac9fc86c549a69a3106c8262e6b0a9810">start()</a>. A timer is only considered inactive if it has not been started, if all requested/scheduled calls to the task have completed, or after a call to <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#a53aace1b2cefd567d7f1bb42db8c2ab0">stop()</a></code>.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <code>Timer</code> is active, else <code>false</code>. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#a37f28c92a0b3c1f5d7fa99f568e8ad88">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html#a09290c5d9a8bd2ae268299b93853874e">alexaClientSDK::avsCommon::utils::timing::test::StopTaskTimer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#a37f28c92a0b3c1f5d7fa99f568e8ad88">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
 
 </div>
 </div>
@@ -329,7 +331,7 @@ Static Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#ad7811521ea3add0147da903ad7547a9a">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html#a86bae4e95667172c82bef16fb5ec48e4">alexaClientSDK::avsCommon::utils::timing::test::StopTaskTimer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#ad7811521ea3add0147da903ad7547a9a">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
 
 </div>
 </div>
@@ -358,7 +360,7 @@ Static Public Attributes</h2></td></tr>
 <p>Stops the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html">TimerDelegateInterface</a></code> (if running). This should not interrupt an active call to the task, but will prevent any subequent calls to the task. If <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#a53aace1b2cefd567d7f1bb42db8c2ab0">stop()</a></code> is called while the task is executing, this function will block until the task completes.</p>
 <dl class="section note"><dt>Note</dt><dd>In the special case that <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#a53aace1b2cefd567d7f1bb42db8c2ab0">stop()</a></code> is called from inside the task function, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html#a53aace1b2cefd567d7f1bb42db8c2ab0">stop()</a></code> will still prevent any subsequent calls to the task, but will <em>not</em> block as described above. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#a6446bf5f0672edd602be68d7c90db2c5">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html#a9ae4332014606725262d11dd43cb79fd">alexaClientSDK::avsCommon::utils::timing::test::StopTaskTimer</a>, and <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html#a6446bf5f0672edd602be68d7c90db2c5">alexaClientSDK::avsCommon::utils::timing::TimerDelegate</a>.</p>
 
 </div>
 </div>
@@ -393,7 +395,7 @@ Static Public Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

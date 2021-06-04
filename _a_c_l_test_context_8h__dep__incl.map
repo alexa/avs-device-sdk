@@ -1,11 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/ACLTestContext.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/ACLTestContext.h">
-<area shape="rect" id="node1" title=" " alt="" coords="771,5,970,61"/>
-<area shape="rect" id="node2" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="5,117,157,173"/>
-<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="181,117,352,173"/>
-<area shape="rect" id="node4" href="$_alexa_communications_library_test_8cpp.html" title=" " alt="" coords="377,117,623,173"/>
-<area shape="rect" id="node5" href="$_alexa_directive_sequencer_library_test_8cpp.html" title=" " alt="" coords="647,109,859,180"/>
-<area shape="rect" id="node6" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="884,109,1092,180"/>
-<area shape="rect" id="node7" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="1117,117,1323,173"/>
-<area shape="rect" id="node8" href="$_network_integration_test_8cpp.html" title=" " alt="" coords="1348,117,1535,173"/>
-<area shape="rect" id="node9" href="$_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="1559,109,1759,180"/>
+<area shape="rect" id="node2" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="5,117,157,173"/>
+<area shape="rect" id="node3" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="182,117,354,173"/>
+<area shape="rect" id="node4" href="$_alexa_communications_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaCommunicationsLibraryTest.cpp" alt="" coords="378,117,625,173"/>
+<area shape="rect" id="node5" href="$_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="649,109,861,180"/>
+<area shape="rect" id="node6" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="885,109,1093,180"/>
+<area shape="rect" id="node7" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1117,117,1325,173"/>
+<area shape="rect" id="node8" href="$_network_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/NetworkIntegrationTest.cpp" alt="" coords="1349,117,1536,173"/>
+<area shape="rect" id="node9" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1560,109,1760,180"/>
 </map>

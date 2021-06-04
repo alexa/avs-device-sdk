@@ -1,5 +1,3 @@
 <map id="alexaClientSDK::bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer" name="alexaClientSDK::bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer">
-<area shape="rect" id="node1" title=" " alt="" coords="269,45,472,101"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_listener_interface.html" title=" " alt="" coords="7,5,219,61"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,85,221,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_listener_interface.html" title="alexaClientSDK::avsCommon\l::utils::bluetooth::BluetoothEvent\lListenerInterface" alt="" coords="7,5,219,61"/>
 </map>

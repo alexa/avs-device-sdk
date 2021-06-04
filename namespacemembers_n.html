@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -271,6 +271,7 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a5f565fd5039c750f309b8221c6892fd0">alexaClientSDK::acsdkAudioPlayer</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a94f05821dfdf724fac4aa87cb4da131b">alexaClientSDK::acsdkBluetooth</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_equalizer.html#a1b4bad18ab9e872dc381ad55efd7f555">alexaClientSDK::acsdkEqualizer</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#a940af2bfdaeff78eda884f0e3eaaaebd">alexaClientSDK::acsdkInteractionModel</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a8db4c3ac5118cc15ffff54c3c7123281">alexaClientSDK::acsdkNotifications</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ae0369d542c740afe71d4e8c3a3b10a56">alexaClientSDK::avsCommon::avs</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1test.html#a0a44abd9176d4f212a6b8a66bc18dd4b">alexaClientSDK::avsCommon::test</a>
@@ -281,7 +282,6 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1api_gateway.html#a2a7f8411babd847c34b68460f5255e3f">alexaClientSDK::capabilityAgents::apiGateway</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1api_gateway_1_1test.html#a8a6bed8b716027b627e81484c2d3e4c9">alexaClientSDK::capabilityAgents::apiGateway::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a6b47b726e208a9264c916764dc9b75de">alexaClientSDK::capabilityAgents::doNotDisturb</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#a5c781bb98176fc9f24d9aa89b2cd94cd">alexaClientSDK::capabilityAgents::interactionModel</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mode_controller.html#a1ee01b2b1c607231c795c23c83314e03">alexaClientSDK::capabilityAgents::modeController</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test.html#a38fdf37806e35270af421d0eac079b5f">alexaClientSDK::capabilityAgents::modeController::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1power_controller.html#ac0361d8598fddd29e4b2efbbf867535f">alexaClientSDK::capabilityAgents::powerController</a>
@@ -427,7 +427,7 @@ $(function() {
 : <a class="el" href="group___define.html#ga0db6296b1df4c02872c1e3b78c0f4a65">alexaClientSDK::settings::test</a>
 </li>
 <li>NEW_DIALOG_REQUEST
-: <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html#aa3e6d477aa0e0eeafdd9c47e76052114">alexaClientSDK::capabilityAgents::interactionModel</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html#adb9f5c2618c794a3413b23765b71a00b">alexaClientSDK::acsdkInteractionModel</a>
 </li>
 <li>NEW_DIALOG_REQUEST_DIRECTIVE_V0
 : <a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a67cb64d7bfbfa0f98313ffdc5a34fd55">alexaClientSDK::adsl::test</a>
@@ -448,7 +448,7 @@ $(function() {
 : <a class="el" href="group___define.html#gaca58a281a1a405c213831deda2f181f3">alexaClientSDK::settings::test</a>
 </li>
 <li>NEW_VALUE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1test.html#a9cf76406dde67a6812dd27e767911ee9">alexaClientSDK::settings::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1test.html#af1d832e6029e21781368837bf284616d">alexaClientSDK::settings::test</a>
 </li>
 <li>NEW_VALUE_STR
 : <a class="el" href="namespacealexa_client_s_d_k_1_1settings_1_1test.html#a101fb2af39f2e9a5b97b7d37fff7751f">alexaClientSDK::settings::test</a>
@@ -584,6 +584,12 @@ $(function() {
 <li>NotificationsCapabilityAgentState
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#aa8b01a263c6990882ba028f05648a511">alexaClientSDK::acsdkNotifications</a>
 </li>
+<li>NotificationsComponent
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#ae1eafe58d59cd2fcfb46a817f02ca490">alexaClientSDK::acsdkNotifications</a>
+</li>
+<li>NotificationsNotifierInterface
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications_interfaces.html#aab9dfae6e7b0736c64de8e240ccc39bc">alexaClientSDK::acsdkNotificationsInterfaces</a>
+</li>
 <li>notifyExit()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#accb3e679597df3733c5a185d482e82a5">alexaClientSDK::capabilityAgents::system::test</a>
 </li>
@@ -670,7 +676,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,5 +1,3 @@
 <map id="alexaClientSDK::capabilitiesDelegate::PostConnectCapabilitiesPublisher" name="alexaClientSDK::capabilitiesDelegate::PostConnectCapabilitiesPublisher">
-<area shape="rect" id="node1" title=" " alt="" coords="303,45,529,101"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_interface.html" title=" " alt="" coords="5,5,255,61"/>
-<area shape="rect" id="node3" title=" " alt="" coords="11,85,249,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_post_connect_operation_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::PostConnectOperation\lInterface" alt="" coords="5,5,255,61"/>
 </map>

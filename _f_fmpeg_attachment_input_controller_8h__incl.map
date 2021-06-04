@@ -1,12 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegAttachmentInputController.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegAttachmentInputController.h">
-<area shape="rect" id="node1" title=" " alt="" coords="203,5,461,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,75,158"/>
-<area shape="rect" id="node3" href="$_attachment_reader_8h.html" title=" " alt="" coords="589,124,789,165"/>
-<area shape="rect" id="node8" href="$_audio_format_8h.html" title=" " alt="" coords="99,131,319,158"/>
-<area shape="rect" id="node9" href="$_f_fmpeg_input_controller_interface_8h.html" title=" " alt="" coords="344,124,565,165"/>
-<area shape="rect" id="node4" title=" " alt="" coords="519,221,580,247"/>
-<area shape="rect" id="node5" title=" " alt="" coords="794,221,859,247"/>
-<area shape="rect" id="node6" title=" " alt="" coords="421,221,491,247"/>
-<area shape="rect" id="node7" href="$_reader_policy_8h.html" title=" " alt="" coords="607,213,769,255"/>
-<area shape="rect" id="node10" title=" " alt="" coords="347,221,397,247"/>
+<area shape="rect" id="node3" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="591,124,795,165"/>
+<area shape="rect" id="node8" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="98,131,321,158"/>
+<area shape="rect" id="node9" href="$_f_fmpeg_input_controller_interface_8h.html" title="AndroidSLESMediaPlayer\l/FFmpegInputControllerInterface.h" alt="" coords="345,124,567,165"/>
+<area shape="rect" id="node7" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="609,213,775,255"/>
 </map>

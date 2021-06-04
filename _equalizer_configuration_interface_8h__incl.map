@@ -1,14 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/include/acsdkEqualizerInterfaces/EqualizerConfigurationInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/include/acsdkEqualizerInterfaces/EqualizerConfigurationInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="73,5,291,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="54,139,94,165"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,221,60,247"/>
-<area shape="rect" id="node4" href="$_success_result_8h.html" title=" " alt="" coords="85,213,247,255"/>
-<area shape="rect" id="node6" href="$hash_8h.html" title=" " alt="" coords="483,213,673,255"/>
-<area shape="rect" id="node10" href="$_equalizer_types_8h.html" title=" " alt="" coords="250,139,373,165"/>
-<area shape="rect" id="node5" href="$_result_8h.html" title=" " alt="" coords="131,303,201,329"/>
-<area shape="rect" id="node7" title=" " alt="" coords="464,303,524,329"/>
-<area shape="rect" id="node8" title=" " alt="" coords="548,303,608,329"/>
-<area shape="rect" id="node9" title=" " alt="" coords="632,303,711,329"/>
-<area shape="rect" id="node11" title=" " alt="" coords="407,221,458,247"/>
-<area shape="rect" id="node12" title=" " alt="" coords="272,221,383,247"/>
+<area shape="rect" id="node4" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="85,213,250,255"/>
+<area shape="rect" id="node6" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="485,213,679,255"/>
+<area shape="rect" id="node10" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="253,139,375,165"/>
+<area shape="rect" id="node5" href="$_result_8h.html" title="Result.h" alt="" coords="132,303,203,329"/>
 </map>

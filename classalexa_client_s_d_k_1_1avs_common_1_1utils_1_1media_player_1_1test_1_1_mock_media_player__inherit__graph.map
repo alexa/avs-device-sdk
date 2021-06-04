@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer" name="alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer">
-<area shape="rect" id="node1" title="A mock MediaPlayer for unit tests." alt="" coords="513,43,711,99"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1test_1_1_test_media_player.html" title=" " alt="" coords="759,50,971,91"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player_helper.html" title=" " alt="" coords="268,5,465,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title=" " alt="" coords="5,5,220,61"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="268,86,465,127"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1test_1_1_test_media_player.html" title="alexaClientSDK::acsdkAlerts\l::renderer::test::TestMediaPlayer" alt="" coords="759,50,972,91"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player_helper.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::test\l::MockMediaPlayerHelper" alt="" coords="268,5,465,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lInterface" alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="268,86,465,127"/>
 </map>

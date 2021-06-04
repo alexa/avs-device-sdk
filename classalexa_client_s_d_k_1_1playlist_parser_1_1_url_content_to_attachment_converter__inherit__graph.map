@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::playlistParser::UrlContentToAttachmentConverter" name="alexaClientSDK::playlistParser::UrlContentToAttachmentConverter">
-<area shape="rect" id="node1" title="Class that handles the streaming of urls containing media into Attachments." alt="" coords="268,43,480,99"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html" title=" " alt="" coords="5,5,220,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="14,86,211,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::playlistParser\l::PlaylistParserObserverInterface" alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="14,86,211,127"/>
 </map>

@@ -1,7 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkApplicationAudioPipelineFactoryInterfaces/test/acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h">
-<area shape="rect" id="node1" title=" " alt="" coords="289,5,601,91"/>
-<area shape="rect" id="node2" href="$_renderer_test_8cpp.html" title=" " alt="" coords="5,139,184,209"/>
-<area shape="rect" id="node3" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="209,139,431,209"/>
-<area shape="rect" id="node4" href="$_notification_renderer_test_8cpp.html" title=" " alt="" coords="455,139,686,209"/>
-<area shape="rect" id="node5" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="711,139,900,209"/>
+<area shape="rect" id="node2" href="$_system_sound_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/SystemSoundPlayer/test\l/SystemSoundPlayerTest.cpp" alt="" coords="5,139,201,209"/>
+<area shape="rect" id="node3" href="$_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/Renderer\l/RendererTest.cpp" alt="" coords="226,139,405,209"/>
+<area shape="rect" id="node4" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="429,146,681,202"/>
+<area shape="rect" id="node5" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/test/ExternalMediaPlayerTest.cpp" alt="" coords="705,139,928,209"/>
+<area shape="rect" id="node6" href="$_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="952,139,1183,209"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="1207,139,1397,209"/>
 </map>

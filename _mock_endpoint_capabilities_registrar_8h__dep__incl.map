@@ -1,5 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h">
-<area shape="rect" id="node1" title=" " alt="" coords="91,5,393,76"/>
-<area shape="rect" id="node2" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="5,124,228,195"/>
-<area shape="rect" id="node3" href="$_alexa_interface_capability_agent_test_8cpp.html" title=" " alt="" coords="252,124,483,195"/>
+<area shape="rect" id="node2" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="5,139,257,195"/>
+<area shape="rect" id="node3" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/test/ExternalMediaPlayerTest.cpp" alt="" coords="281,131,504,202"/>
+<area shape="rect" id="node4" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="527,131,765,202"/>
+<area shape="rect" id="node5" href="$_alexa_interface_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/test/AlexaInterfaceCapability\lAgentTest.cpp" alt="" coords="789,131,1020,202"/>
+<area shape="rect" id="node6" href="$_interaction_model_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/InteractionModel/acsdkInteraction\lModel/test/InteractionModelCapabilityAgent\lTest.cpp" alt="" coords="1045,124,1319,209"/>
+<area shape="rect" id="node7" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1344,139,1516,195"/>
+<area shape="rect" id="node8" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1541,131,1749,202"/>
+<area shape="rect" id="node9" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="1773,131,1973,202"/>
 </map>

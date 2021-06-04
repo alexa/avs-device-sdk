@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -97,6 +97,9 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a6bd6d9487f0905d0ebaa8a573184a40c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1registration_manager.html#abcc8dcd069e370278a6b801b35c67aa1">RegistrationNotifierInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#a6bd6d9487f0905d0ebaa8a573184a40c">m_notifier</a></td></tr>
+<tr class="memdesc:a6bd6d9487f0905d0ebaa8a573184a40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to notify logout to observers.  <a href="#a6bd6d9487f0905d0ebaa8a573184a40c">More...</a><br /></td></tr>
+<tr class="separator:a6bd6d9487f0905d0ebaa8a573184a40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a470598c09c56c18e1ff224c406f14859"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html">MockDirectiveSequencer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#a470598c09c56c18e1ff224c406f14859">m_directiveSequencer</a></td></tr>
 <tr class="memdesc:a470598c09c56c18e1ff224c406f14859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to check if logout disabled the directive sequencer.  <a href="#a470598c09c56c18e1ff224c406f14859">More...</a><br /></td></tr>
 <tr class="separator:a470598c09c56c18e1ff224c406f14859"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,14 +112,19 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:af3699da84ee6e19f1df15841d9425481"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">CustomerDataManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#af3699da84ee6e19f1df15841d9425481">m_dataManager</a></td></tr>
 <tr class="memdesc:af3699da84ee6e19f1df15841d9425481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data manager is used to call <code>clearData()</code> on every dataHandler.  <a href="#af3699da84ee6e19f1df15841d9425481">More...</a><br /></td></tr>
 <tr class="separator:af3699da84ee6e19f1df15841d9425481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4688da381a733b3f7f3de8bf1463ea79"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager.html">RegistrationManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#a4688da381a733b3f7f3de8bf1463ea79">m_registrationManager</a></td></tr>
-<tr class="memdesc:a4688da381a733b3f7f3de8bf1463ea79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object under test. It is responsible for implementing logout.  <a href="#a4688da381a733b3f7f3de8bf1463ea79">More...</a><br /></td></tr>
-<tr class="separator:a4688da381a733b3f7f3de8bf1463ea79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4d2842a3dca8f49ee04c78490bdc0d4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager_interface.html">RegistrationManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#ab4d2842a3dca8f49ee04c78490bdc0d4">m_registrationManager</a></td></tr>
+<tr class="memdesc:ab4d2842a3dca8f49ee04c78490bdc0d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object under test. It is responsible for implementing logout.  <a href="#ab4d2842a3dca8f49ee04c78490bdc0d4">More...</a><br /></td></tr>
+<tr class="separator:ab4d2842a3dca8f49ee04c78490bdc0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6604c4900c122d7d4a40e84d8a03330e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_registration_observer.html">MockRegistrationObserver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#a6604c4900c122d7d4a40e84d8a03330e">m_registrationObserver</a></td></tr>
 <tr class="memdesc:a6604c4900c122d7d4a40e84d8a03330e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mock registration observer used to check if RegistrationObserver is notified after logout.  <a href="#a6604c4900c122d7d4a40e84d8a03330e">More...</a><br /></td></tr>
 <tr class="separator:a6604c4900c122d7d4a40e84d8a03330e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50b3157f2afb86326dea3638f3bd1c56"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html">MockMetricRecorder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_registration_manager_test.html#a50b3157f2afb86326dea3638f3bd1c56">m_metricRecorder</a></td></tr>
+<tr class="memdesc:a50b3157f2afb86326dea3638f3bd1c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mock Metrics recorder.  <a href="#a50b3157f2afb86326dea3638f3bd1c56">More...</a><br /></td></tr>
+<tr class="separator:a50b3157f2afb86326dea3638f3bd1c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Test harness for <code><a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager.html">RegistrationManager</a></code>. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a72edffed626989e54242881aab87b583"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72edffed626989e54242881aab87b583">&#9670;&nbsp;</a></span>SetUp()</h2>
 
@@ -264,8 +272,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a4688da381a733b3f7f3de8bf1463ea79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4688da381a733b3f7f3de8bf1463ea79">&#9670;&nbsp;</a></span>m_registrationManager</h2>
+<a id="a50b3157f2afb86326dea3638f3bd1c56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50b3157f2afb86326dea3638f3bd1c56">&#9670;&nbsp;</a></span>m_metricRecorder</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,7 +282,55 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager.html">RegistrationManager</a>&gt; alexaClientSDK::registrationManager::test::RegistrationManagerTest::m_registrationManager</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html">MockMetricRecorder</a>&gt; alexaClientSDK::registrationManager::test::RegistrationManagerTest::m_metricRecorder</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Mock Metrics recorder. </p>
+
+</div>
+</div>
+<a id="a6bd6d9487f0905d0ebaa8a573184a40c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bd6d9487f0905d0ebaa8a573184a40c">&#9670;&nbsp;</a></span>m_notifier</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1registration_manager.html#abcc8dcd069e370278a6b801b35c67aa1">RegistrationNotifierInterface</a>&gt; alexaClientSDK::registrationManager::test::RegistrationManagerTest::m_notifier</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Used to notify logout to observers. </p>
+
+</div>
+</div>
+<a id="ab4d2842a3dca8f49ee04c78490bdc0d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4d2842a3dca8f49ee04c78490bdc0d4">&#9670;&nbsp;</a></span>m_registrationManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager_interface.html">RegistrationManagerInterface</a>&gt; alexaClientSDK::registrationManager::test::RegistrationManagerTest::m_registrationManager</td>
         </tr>
       </table>
   </td>
@@ -313,13 +369,13 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/RegistrationManager/test/<a class="el" href="_registration_manager_test_8cpp.html">RegistrationManagerTest.cpp</a></li>
+<li>/workplace/avs-device-sdk/core/acsdkRegistrationManager/test/<a class="el" href="_registration_manager_test_8cpp.html">RegistrationManagerTest.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

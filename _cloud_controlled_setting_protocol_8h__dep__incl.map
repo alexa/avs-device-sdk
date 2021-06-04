@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/CloudControlledSettingProtocol.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/CloudControlledSettingProtocol.h">
-<area shape="rect" id="node1" title=" " alt="" coords="287,5,499,76"/>
-<area shape="rect" id="node2" href="$_device_settings_manager_builder_8h.html" title=" " alt="" coords="107,124,400,209"/>
-<area shape="rect" id="node5" href="$_cloud_controlled_setting_protocol_8cpp.html" title=" " alt="" coords="424,139,643,195"/>
-<area shape="rect" id="node3" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="5,257,235,328"/>
-<area shape="rect" id="node4" href="$_device_settings_manager_component_8cpp.html" title=" " alt="" coords="259,257,517,328"/>
+<area shape="rect" id="node2" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/include\l/acsdkDeviceSettingsManager/DeviceSettings\lManagerBuilder.h" alt="" coords="107,124,401,209"/>
+<area shape="rect" id="node5" href="$_cloud_controlled_setting_protocol_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/CloudControlled\lSettingProtocol.cpp" alt="" coords="425,139,643,195"/>
+<area shape="rect" id="node3" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerBuilder.cpp" alt="" coords="5,257,236,328"/>
+<area shape="rect" id="node4" href="$_device_settings_manager_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerComponent.cpp" alt="" coords="260,257,517,328"/>
 </map>

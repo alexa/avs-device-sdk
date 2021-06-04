@@ -1,12 +1,11 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,185,253,227"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html" title=" " alt="" coords="365,5,505,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title=" " alt="" coords="317,71,552,127"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html" title=" " alt="" coords="301,152,568,193"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html" title=" " alt="" coords="343,217,526,259"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title=" " alt="" coords="341,283,529,324"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions." alt="" coords="341,348,529,389"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title=" " alt="" coords="640,79,829,120"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender.html" title=" " alt="" coords="627,148,843,189"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_event_sender.html" title=" " alt="" coords="616,214,853,270"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html" title="alexaClientSDK::acl\l::HTTP2Transport" alt="" coords="365,5,505,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="317,71,552,127"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html" title="alexaClientSDK::capabilities\lDelegate::DiscoveryEventSenderInterface" alt="" coords="301,152,568,193"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html" title="alexaClientSDK::integration\l::AuthObserver" alt="" coords="343,217,526,259"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html" title="alexaClientSDK::sampleApp\l::UIManager" alt="" coords="341,283,529,324"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions..." alt="" coords="341,348,529,389"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="640,79,829,120"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender.html" title="alexaClientSDK::capabilities\lDelegate::DiscoveryEventSender" alt="" coords="627,148,843,189"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_event_sender.html" title="alexaClientSDK::capabilities\lDelegate::test::MockDiscoveryEvent\lSender" alt="" coords="616,214,853,270"/>
 </map>

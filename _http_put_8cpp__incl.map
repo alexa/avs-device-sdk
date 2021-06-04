@@ -1,36 +1,17 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/LibcurlUtils/HttpPut.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/LibcurlUtils/HttpPut.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1920,5,2107,61"/>
-<area shape="rect" id="node2" href="$_http_put_8h.html" title=" " alt="" coords="490,109,690,151"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1707,735,1766,761"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title=" " alt="" coords="1249,377,1424,419"/>
-<area shape="rect" id="node31" title=" " alt="" coords="1984,117,2044,143"/>
-<area shape="rect" id="node32" title=" " alt="" coords="2068,117,2130,143"/>
-<area shape="rect" id="node33" href="$_http_response_code_8h.html" title=" " alt="" coords="1420,199,1591,240"/>
-<area shape="rect" id="node34" href="$_callback_data_8h.html" title=" " alt="" coords="2046,467,2246,508"/>
-<area shape="rect" id="node3" title=" " alt="" coords="682,735,751,761"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1083,563,1142,590"/>
-<area shape="rect" id="node5" title=" " alt="" coords="662,653,717,679"/>
-<area shape="rect" id="node6" title=" " alt="" coords="550,295,629,322"/>
-<area shape="rect" id="node7" href="$_curl_easy_handle_wrapper_8h.html" title=" " alt="" coords="630,199,830,240"/>
-<area shape="rect" id="node29" href="$_http_put_interface_8h.html" title=" " alt="" coords="127,467,327,508"/>
-<area shape="rect" id="node8" title=" " alt="" coords="998,563,1059,590"/>
-<area shape="rect" id="node9" href="$_log_entry_8h.html" title=" " alt="" coords="652,467,826,508"/>
-<area shape="rect" id="node18" href="$_logger_utils_8h.html" title=" " alt="" coords="1121,288,1296,329"/>
-<area shape="rect" id="node10" title=" " alt="" coords="600,563,675,590"/>
-<area shape="rect" id="node11" title=" " alt="" coords="700,563,778,590"/>
-<area shape="rect" id="node12" title=" " alt="" coords="904,563,974,590"/>
-<area shape="rect" id="node13" href="$_log_entry_stream_8h.html" title=" " alt="" coords="97,556,272,597"/>
-<area shape="rect" id="node14" title=" " alt="" coords="296,653,366,679"/>
-<area shape="rect" id="node15" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="46,645,221,687"/>
-<area shape="rect" id="node16" title=" " alt="" coords="94,735,174,761"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1158,474,1219,501"/>
-<area shape="rect" id="node21" href="$_configuration_node_8h.html" title=" " alt="" coords="1294,467,1506,508"/>
-<area shape="rect" id="node26" href="$_level_8h.html" title=" " alt="" coords="1745,556,1920,597"/>
-<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1676,467,1869,508"/>
-<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1253,645,1428,687"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1604,563,1669,590"/>
-<area shape="rect" id="node23" title=" " alt="" coords="1796,653,1868,679"/>
-<area shape="rect" id="node24" title=" " alt="" coords="1488,563,1528,590"/>
-<area shape="rect" id="node25" title=" " alt="" coords="1267,563,1414,590"/>
-<area shape="rect" id="node30" href="$_h_t_t_p_response_8h.html" title=" " alt="" coords="348,563,474,590"/>
+<area shape="rect" id="node2" href="$_http_put_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPut.h" alt="" coords="488,109,691,151"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1250,377,1426,419"/>
+<area shape="rect" id="node33" href="$_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="1421,199,1593,240"/>
+<area shape="rect" id="node34" href="$_callback_data_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CallbackData.h" alt="" coords="2046,467,2248,508"/>
+<area shape="rect" id="node7" href="$_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="630,199,832,240"/>
+<area shape="rect" id="node29" href="$_http_put_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPutInterface.h" alt="" coords="127,467,330,508"/>
+<area shape="rect" id="node9" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="651,467,827,508"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1122,288,1298,329"/>
+<area shape="rect" id="node13" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="96,556,272,597"/>
+<area shape="rect" id="node15" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="46,645,222,687"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1294,467,1509,508"/>
+<area shape="rect" id="node26" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1744,556,1920,597"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1676,467,1869,508"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1252,645,1428,687"/>
+<area shape="rect" id="node30" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="348,563,474,590"/>
 </map>

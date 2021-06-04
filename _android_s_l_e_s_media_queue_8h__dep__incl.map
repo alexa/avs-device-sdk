@@ -1,9 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESMediaQueue.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESMediaQueue.h">
-<area shape="rect" id="node1" title=" " alt="" coords="617,5,875,76"/>
-<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8h.html" title=" " alt="" coords="333,124,591,195"/>
-<area shape="rect" id="node6" href="$_android_s_l_e_s_media_queue_8cpp.html" title=" " alt="" coords="615,131,877,187"/>
-<area shape="rect" id="node7" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title=" " alt="" coords="901,131,1191,187"/>
-<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="5,243,308,313"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_media_player_8cpp.html" title=" " alt="" coords="333,250,591,306"/>
-<area shape="rect" id="node5" href="$_android_s_l_e_s_media_player_test_8cpp.html" title=" " alt="" coords="616,250,905,306"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="335,124,593,195"/>
+<area shape="rect" id="node6" href="$_android_s_l_e_s_media_queue_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaQueue.cpp" alt="" coords="617,131,879,187"/>
+<area shape="rect" id="node7" href="$_android_s_l_e_s_media_queue_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaQueueTest.cpp" alt="" coords="903,131,1193,187"/>
+<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp" alt="" coords="5,243,309,313"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp" alt="" coords="334,250,594,306"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="619,250,909,306"/>
 </map>

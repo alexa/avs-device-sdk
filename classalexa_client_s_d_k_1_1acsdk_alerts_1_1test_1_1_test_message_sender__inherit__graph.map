@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::acsdkAlerts::test::TestMessageSender" name="alexaClientSDK::acsdkAlerts::test::TestMessageSender">
-<area shape="rect" id="node1" title=" " alt="" coords="15,109,207,151"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="5,5,216,61"/>
 </map>

@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkNotificationsInterfaces::NotificationRendererObserverInterface" name="alexaClientSDK::acsdkNotificationsInterfaces::NotificationRendererObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,265,87"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html" title=" " alt="" coords="330,5,561,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer_observer.html" title=" " alt="" coords="313,71,577,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html" title="alexaClientSDK::acsdkNotifications\l::NotificationsCapabilityAgent" alt="" coords="330,5,561,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer_observer.html" title="alexaClientSDK::acsdkNotifications\l::test::MockNotificationRendererObserver" alt="" coords="313,71,577,112"/>
 </map>

@@ -1,24 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotificationsInterfaces/include/acsdkNotificationsInterfaces/NotificationRendererInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotificationsInterfaces/include/acsdkNotificationsInterfaces/NotificationRendererInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="265,5,503,91"/>
-<area shape="rect" id="node2" href="$_notification_renderer_8h.html" title=" " alt="" coords="651,146,917,217"/>
-<area shape="rect" id="node20" href="$_notifications_capability_agent_8h.html" title=" " alt="" coords="249,139,519,224"/>
-<area shape="rect" id="node22" href="$_notifications_capability_agent_test_8cpp.html" title=" " alt="" coords="5,272,243,343"/>
-<area shape="rect" id="node3" href="$_default_client_8h.html" title=" " alt="" coords="525,272,752,343"/>
-<area shape="rect" id="node18" href="$_notification_renderer_8cpp.html" title=" " alt="" coords="1032,272,1259,343"/>
-<area shape="rect" id="node19" href="$_notification_renderer_test_8cpp.html" title=" " alt="" coords="777,272,1007,343"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title=" " alt="" coords="372,391,601,447"/>
-<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title=" " alt="" coords="527,495,745,551"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title=" " alt="" coords="677,391,888,447"/>
-<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title=" " alt="" coords="529,599,743,655"/>
-<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="299,599,504,655"/>
-<area shape="rect" id="node7" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="492,703,745,773"/>
-<area shape="rect" id="node11" href="$_sample_application_8h.html" title=" " alt="" coords="820,710,1036,766"/>
-<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="266,710,467,766"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="550,829,805,885"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="59,821,288,892"/>
-<area shape="rect" id="node10" href="$preview_main_8cpp.html" title=" " alt="" coords="312,829,525,885"/>
-<area shape="rect" id="node12" href="$main_8cpp.html" title=" " alt="" coords="829,836,1027,877"/>
-<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title=" " alt="" coords="1051,836,1328,877"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="1111,502,1383,543"/>
-<area shape="rect" id="node21" href="$_notifications_capability_agent_8cpp.html" title=" " alt="" coords="267,272,501,343"/>
+<area shape="rect" id="node2" href="$_notification_renderer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationRenderer.h" alt="" coords="491,146,759,217"/>
+<area shape="rect" id="node7" href="$_notifications_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationsCapability\lAgent.h" alt="" coords="1091,139,1360,224"/>
+<area shape="rect" id="node10" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="1537,272,1775,343"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,279,235,335"/>
+<area shape="rect" id="node4" href="$_notification_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notification\lRenderer.cpp" alt="" coords="259,272,485,343"/>
+<area shape="rect" id="node5" href="$_notifications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lComponent.cpp" alt="" coords="765,272,998,343"/>
+<area shape="rect" id="node6" href="$_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="510,272,741,343"/>
+<area shape="rect" id="node8" href="$_notifications_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lCapabilityAgent.cpp" alt="" coords="1022,272,1255,343"/>
+<area shape="rect" id="node9" href="$_notifications_notifier_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lNotifier.cpp" alt="" coords="1279,272,1513,343"/>
 </map>

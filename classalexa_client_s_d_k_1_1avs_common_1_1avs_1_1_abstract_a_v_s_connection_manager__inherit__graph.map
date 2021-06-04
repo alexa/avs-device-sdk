@@ -1,9 +1,8 @@
 <map id="alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager" name="alexaClientSDK::avsCommon::avs::AbstractAVSConnectionManager">
-<area shape="rect" id="node1" title=" " alt="" coords="555,71,804,112"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title=" " alt="" coords="892,5,1063,47"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_connection.html" title=" " alt="" coords="852,71,1103,112"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_connection.html" title=" " alt="" coords="878,136,1077,177"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title=" " alt="" coords="299,63,507,119"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message." alt="" coords="23,23,233,79"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html" title=" " alt="" coords="5,103,251,159"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="896,5,1069,47"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_connection.html" title="alexaClientSDK::capability\lAgents::system::test::MockConnection" alt="" coords="857,71,1108,112"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_connection.html" title="alexaClientSDK::certified\lSender::test::MockConnection" alt="" coords="883,136,1082,177"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSConnection\lManagerInterface" alt="" coords="300,63,511,119"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html" title="This specifies an interface to send a message. " alt="" coords="23,23,234,79"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_gateway_assigner_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSGatewayAssigner\lInterface" alt="" coords="5,103,252,159"/>
 </map>

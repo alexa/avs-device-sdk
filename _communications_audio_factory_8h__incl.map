@@ -1,11 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/Resources/Audio/include/Audio/CommunicationsAudioFactory.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/Resources/Audio/include/Audio/CommunicationsAudioFactory.h">
-<area shape="rect" id="node1" title=" " alt="" coords="109,5,356,76"/>
-<area shape="rect" id="node2" href="$_communications_audio_factory_interface_8h.html" title=" " alt="" coords="113,124,352,180"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,228,84,255"/>
-<area shape="rect" id="node4" title=" " alt="" coords="108,228,173,255"/>
-<area shape="rect" id="node5" title=" " alt="" coords="198,228,267,255"/>
-<area shape="rect" id="node6" title=" " alt="" coords="291,228,345,255"/>
-<area shape="rect" id="node7" href="$_media_type_8h.html" title=" " alt="" coords="369,228,579,255"/>
-<area shape="rect" id="node8" title=" " alt="" coords="394,303,466,329"/>
-<area shape="rect" id="node9" title=" " alt="" coords="491,303,545,329"/>
+<area shape="rect" id="node2" href="$_communications_audio_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Audio/CommunicationsAudioFactory\lInterface.h" alt="" coords="113,124,352,180"/>
+<area shape="rect" id="node7" href="$_media_type_8h.html" title="AVSCommon/Utils/MediaType.h" alt="" coords="368,228,580,255"/>
 </map>

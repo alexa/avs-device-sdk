@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,85,215,141"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_channel_volume_interface.html" title=" " alt="" coords="263,5,460,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_channel_volume_manager.html" title=" " alt="" coords="263,85,460,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_channel_volume_manager.html" title=" " alt="" coords="272,165,451,221"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_channel_volume_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockChannelVolumeInterface" alt="" coords="263,5,460,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_channel_volume_manager.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockChannelVolumeManager" alt="" coords="263,85,460,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_channel_volume_manager.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::ChannelVolumeManager" alt="" coords="272,165,451,221"/>
 </map>

@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkAudioPlayer::ProgressTimer::ContextInterface" name="alexaClientSDK::acsdkAudioPlayer::ProgressTimer::ContextInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,196,87"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title=" " alt="" coords="244,5,435,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_context.html" title=" " alt="" coords="244,71,435,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title="alexaClientSDK::acsdkAudio\lPlayer::AudioPlayer" alt="" coords="244,5,435,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_context.html" title="alexaClientSDK::acsdkAudio\lPlayer::test::MockContext" alt="" coords="244,71,435,112"/>
 </map>

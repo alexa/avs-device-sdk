@@ -1,7 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="24,5,262,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="200,213,254,240"/>
-<area shape="rect" id="node3" title=" " alt="" coords="26,131,95,158"/>
-<area shape="rect" id="node4" href="$_a_v_s_gateway_assigner_interface_8h.html" title=" " alt="" coords="119,124,335,165"/>
-<area shape="rect" id="node5" href="$_a_v_s_gateway_observer_interface_8h.html" title=" " alt="" coords="359,124,578,165"/>
+<area shape="rect" id="node4" href="$_a_v_s_gateway_assigner_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayAssignerInterface.h" alt="" coords="119,124,338,165"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSGatewayObserverInterface.h" alt="" coords="362,124,582,165"/>
 </map>

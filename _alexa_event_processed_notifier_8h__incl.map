@@ -1,11 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Alexa/include/Alexa/AlexaEventProcessedNotifier.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/Alexa/include/Alexa/AlexaEventProcessedNotifier.h">
-<area shape="rect" id="node1" title=" " alt="" coords="181,5,393,76"/>
-<area shape="rect" id="node2" href="$_notifier_8h.html" title=" " alt="" coords="107,139,261,165"/>
-<area shape="rect" id="node8" href="$_alexa_event_processed_observer_interface_8h.html" title=" " alt="" coords="313,124,521,180"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,235,80,262"/>
-<area shape="rect" id="node4" title=" " alt="" coords="133,317,203,344"/>
-<area shape="rect" id="node5" title=" " alt="" coords="155,235,213,262"/>
-<area shape="rect" id="node6" href="$_notifier_interface_8h.html" title=" " alt="" coords="237,228,395,269"/>
-<area shape="rect" id="node7" title=" " alt="" coords="277,317,355,344"/>
-<area shape="rect" id="node9" title=" " alt="" coords="419,235,474,262"/>
+<area shape="rect" id="node3" href="$_alexa_event_processed_notifier_interface_8h.html" title="acsdkAlexaEventProcessed\lNotifierInterfaces/AlexaEvent\lProcessedNotifierInterface.h" alt="" coords="203,124,397,180"/>
+<area shape="rect" id="node6" href="$_alexa_event_processed_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaEventProcessedObserver\lInterface.h" alt="" coords="5,228,213,284"/>
+<area shape="rect" id="node8" href="$_notifier_8h.html" title="acsdkNotifier/Notifier.h" alt="" coords="421,139,577,165"/>
+<area shape="rect" id="node4" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="237,235,395,277"/>
 </map>

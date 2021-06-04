@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_device_observer_interface_1_1_device_attributes.html" title=" " alt="" coords="5,5,243,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_device_connection_rules_provider_interface.html" title="alexaClientSDK::acsdkBluetooth\lInterfaces::BluetoothDeviceConnection\lRulesProviderInterface" alt="" coords="5,31,256,87"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_basic_device_connection_rules_provider.html" title="alexaClientSDK::acsdkBluetooth\l::BasicDeviceConnectionRulesProvider" alt="" coords="304,5,556,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_device_connection_rules_adapter.html" title="alexaClientSDK::acsdkBluetooth\l::DeviceConnectionRulesAdapter" alt="" coords="322,71,538,112"/>
 </map>

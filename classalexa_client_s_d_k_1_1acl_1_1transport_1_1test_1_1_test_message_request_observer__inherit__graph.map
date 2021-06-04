@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::acl::transport::test::TestMessageRequestObserver" name="alexaClientSDK::acl::transport::test::TestMessageRequestObserver">
-<area shape="rect" id="node1" title=" " alt="" coords="16,109,213,165"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title=" " alt="" coords="5,5,224,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="5,5,224,61"/>
 </map>

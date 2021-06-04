@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::sampleApp::DefaultEndpointModeControllerHandler" name="alexaClientSDK::sampleApp::DefaultEndpointModeControllerHandler">
-<area shape="rect" id="node1" title=" " alt="" coords="259,5,469,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface.html" title=" " alt="" coords="5,5,211,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::modeController\l::ModeControllerInterface" alt="" coords="5,5,211,61"/>
 </map>

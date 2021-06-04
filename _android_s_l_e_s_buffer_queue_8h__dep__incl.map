@@ -1,9 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/AndroidSLESBufferQueue.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/AndroidSLESBufferQueue.h">
-<area shape="rect" id="node1" title=" " alt="" coords="641,5,871,91"/>
-<area shape="rect" id="node2" href="$_android_s_l_e_s_microphone_8h.html" title=" " alt="" coords="331,139,605,209"/>
-<area shape="rect" id="node6" href="$_android_s_l_e_s_buffer_queue_8cpp.html" title=" " alt="" coords="629,139,883,209"/>
-<area shape="rect" id="node7" href="$_android_s_l_e_s_buffer_queue_test_8cpp.html" title=" " alt="" coords="907,139,1165,209"/>
-<area shape="rect" id="node3" href="$_android_s_l_e_s_engine_8cpp.html" title=" " alt="" coords="5,265,288,321"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_microphone_8cpp.html" title=" " alt="" coords="313,265,623,321"/>
-<area shape="rect" id="node5" href="$_android_s_l_e_s_microphone_test_8cpp.html" title=" " alt="" coords="647,257,937,328"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_microphone_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/include\l/AndroidUtilities/AndroidSLESMicrophone.h" alt="" coords="329,139,604,209"/>
+<area shape="rect" id="node6" href="$_android_s_l_e_s_buffer_queue_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/src/AndroidSLESBuffer\lQueue.cpp" alt="" coords="628,139,881,209"/>
+<area shape="rect" id="node7" href="$_android_s_l_e_s_buffer_queue_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/test/AndroidSLESBuffer\lQueueTest.cpp" alt="" coords="906,139,1163,209"/>
+<area shape="rect" id="node3" href="$_android_s_l_e_s_engine_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/src/AndroidSLESEngine.cpp" alt="" coords="5,265,288,321"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_microphone_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/src/AndroidSLESMicrophone.cpp" alt="" coords="311,265,622,321"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_microphone_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/AndroidUtilities/test/AndroidSLESMicrophone\lTest.cpp" alt="" coords="646,257,935,328"/>
 </map>

@@ -1,13 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/PowerMonitor.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/PowerMonitor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="233,5,413,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="528,303,597,329"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,221,64,247"/>
-<area shape="rect" id="node4" title=" " alt="" coords="229,303,283,329"/>
-<area shape="rect" id="node5" title=" " alt="" coords="293,131,352,158"/>
-<area shape="rect" id="node6" title=" " alt="" coords="377,131,487,158"/>
-<area shape="rect" id="node7" href="$_power_resource_manager_interface_8h.html" title=" " alt="" coords="294,213,525,255"/>
-<area shape="rect" id="node10" href="$_power_resource_8h.html" title=" " alt="" coords="46,124,218,165"/>
-<area shape="rect" id="node8" title=" " alt="" coords="423,303,484,329"/>
-<area shape="rect" id="node9" title=" " alt="" coords="329,303,399,329"/>
-<area shape="rect" id="node11" title=" " alt="" coords="165,221,219,247"/>
+<area shape="rect" id="node7" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="236,213,466,255"/>
+<area shape="rect" id="node11" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="74,124,249,165"/>
 </map>

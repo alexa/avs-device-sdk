@@ -1,46 +1,25 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/AVSMessageHeaderTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/test/AVSMessageHeaderTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="269,5,465,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="137,109,231,136"/>
-<area shape="rect" id="node3" href="$_a_v_s_directive_8h.html" title=" " alt="" coords="256,109,477,136"/>
-<area shape="rect" id="node44" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="1679,452,1849,493"/>
-<area shape="rect" id="node4" title=" " alt="" coords="1549,906,1621,933"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1112,988,1181,1015"/>
-<area shape="rect" id="node6" title=" " alt="" coords="511,906,566,933"/>
-<area shape="rect" id="node7" title=" " alt="" coords="45,191,99,218"/>
-<area shape="rect" id="node8" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="505,184,716,225"/>
-<area shape="rect" id="node39" href="$_a_v_s_message_8h.html" title=" " alt="" coords="311,281,422,307"/>
-<area shape="rect" id="node9" title=" " alt="" coords="947,817,1008,843"/>
-<area shape="rect" id="node10" href="$_attachment_8h.html" title=" " alt="" coords="937,273,1137,315"/>
-<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title=" " alt="" coords="800,363,1000,404"/>
-<area shape="rect" id="node17" href="$_attachment_writer_8h.html" title=" " alt="" coords="627,720,827,761"/>
-<area shape="rect" id="node11" title=" " alt="" coords="2332,727,2393,754"/>
-<area shape="rect" id="node12" title=" " alt="" coords="2469,817,2528,843"/>
-<area shape="rect" id="node16" href="$_reader_policy_8h.html" title=" " alt="" coords="953,452,1116,493"/>
-<area shape="rect" id="node18" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="2215,363,2377,404"/>
-<area shape="rect" id="node38" href="$_writer_policy_8h.html" title=" " alt="" coords="1360,363,1523,404"/>
-<area shape="rect" id="node14" title=" " alt="" coords="845,817,910,843"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1040,906,1109,933"/>
-<area shape="rect" id="node19" title=" " alt="" coords="2403,988,2461,1015"/>
-<area shape="rect" id="node20" title=" " alt="" coords="2215,459,2342,486"/>
-<area shape="rect" id="node21" href="$_shared_data_stream_8h.html" title=" " alt="" coords="1511,459,1655,486"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1529,549,1591,575"/>
-<area shape="rect" id="node23" href="$_logger_utils_8h.html" title=" " alt="" coords="1330,541,1505,583"/>
-<area shape="rect" id="node24" href="$_logger_8h.html" title=" " alt="" coords="1865,631,2039,672"/>
-<area shape="rect" id="node25" title=" " alt="" coords="1771,817,1840,843"/>
-<area shape="rect" id="node26" href="$_configuration_node_8h.html" title=" " alt="" coords="1577,720,1789,761"/>
-<area shape="rect" id="node29" href="$_level_8h.html" title=" " alt="" coords="1185,809,1359,851"/>
-<area shape="rect" id="node30" href="$_log_entry_8h.html" title=" " alt="" coords="1915,720,2090,761"/>
-<area shape="rect" id="node36" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1307,720,1501,761"/>
-<area shape="rect" id="node37" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="1682,899,1857,940"/>
-<area shape="rect" id="node27" title=" " alt="" coords="1435,817,1475,843"/>
-<area shape="rect" id="node28" title=" " alt="" coords="1600,817,1747,843"/>
-<area shape="rect" id="node31" title=" " alt="" coords="2165,817,2240,843"/>
-<area shape="rect" id="node32" title=" " alt="" coords="2265,817,2343,843"/>
-<area shape="rect" id="node33" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1915,809,2090,851"/>
-<area shape="rect" id="node34" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1915,899,2090,940"/>
-<area shape="rect" id="node35" title=" " alt="" coords="1963,988,2043,1015"/>
-<area shape="rect" id="node40" href="$_optional_8h.html" title=" " alt="" coords="1241,459,1436,486"/>
-<area shape="rect" id="node41" href="$_a_v_s_message_endpoint_8h.html" title=" " alt="" coords="1075,363,1285,404"/>
-<area shape="rect" id="node43" href="$_a_v_s_message_header_8h.html" title=" " alt="" coords="261,631,472,672"/>
-<area shape="rect" id="node42" title=" " alt="" coords="1003,549,1050,575"/>
+<area shape="rect" id="node3" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="257,109,484,136"/>
+<area shape="rect" id="node44" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="1695,452,1868,493"/>
+<area shape="rect" id="node8" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="513,184,724,225"/>
+<area shape="rect" id="node39" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="314,281,427,307"/>
+<area shape="rect" id="node10" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="949,273,1153,315"/>
+<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="809,363,1013,404"/>
+<area shape="rect" id="node17" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="630,720,834,761"/>
+<area shape="rect" id="node16" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="964,452,1129,493"/>
+<area shape="rect" id="node18" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2225,363,2391,404"/>
+<area shape="rect" id="node38" href="$_writer_policy_8h.html" title="AVSCommon/Utils/SDS\l/WriterPolicy.h" alt="" coords="1381,363,1547,404"/>
+<area shape="rect" id="node21" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1527,459,1671,486"/>
+<area shape="rect" id="node23" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1341,541,1517,583"/>
+<area shape="rect" id="node24" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1875,631,2051,672"/>
+<area shape="rect" id="node26" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1585,720,1799,761"/>
+<area shape="rect" id="node29" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1195,809,1371,851"/>
+<area shape="rect" id="node30" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1925,720,2101,761"/>
+<area shape="rect" id="node36" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1315,720,1509,761"/>
+<area shape="rect" id="node37" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1691,899,1867,940"/>
+<area shape="rect" id="node33" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1925,809,2101,851"/>
+<area shape="rect" id="node34" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1925,899,2101,940"/>
+<area shape="rect" id="node40" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1255,459,1451,486"/>
+<area shape="rect" id="node41" href="$_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="1089,363,1306,404"/>
+<area shape="rect" id="node43" href="$_a_v_s_message_header_8h.html" title="AVSCommon/AVS/AVSMessage\lHeader.h" alt="" coords="262,631,479,672"/>
 </map>

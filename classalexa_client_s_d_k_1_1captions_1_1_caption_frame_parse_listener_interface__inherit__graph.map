@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::captions::CaptionFrameParseListenerInterface" name="alexaClientSDK::captions::CaptionFrameParseListenerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,39,248,80"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html" title=" " alt="" coords="303,5,475,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html" title=" " alt="" coords="296,71,483,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html" title="alexaClientSDK::captions\l::CaptionManager" alt="" coords="303,5,475,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html" title="alexaClientSDK::captions\l::test::MockCaptionManager" alt="" coords="296,71,483,112"/>
 </map>

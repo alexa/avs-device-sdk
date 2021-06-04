@@ -1,11 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1services_1_1_s_d_p_record_interface.html" title="Used to implement ServiceDiscoveryProtocol records. This allows identification of the service." alt="" coords="5,231,213,287"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_s_d_p_record.html" title="Base class for an SDPRecord object used." alt="" coords="261,239,459,280"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_sink_record.html" title="A SDP record representing A2DPSink." alt="" coords="507,5,733,47"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a2_d_p_source_record.html" title="A SDP record representing A2DPSource." alt="" coords="521,71,719,127"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_controller_record.html" title="A SDP record representing AVRCPController." alt="" coords="508,151,732,207"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_a_v_r_c_p_target_record.html" title="A SDP record representing AVRCPTarget." alt="" coords="518,231,722,287"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_h_f_p_record.html" title="A SDP record representing HFP." alt="" coords="521,312,719,353"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_h_i_d_record.html" title="A SDP record representing HID." alt="" coords="521,377,719,419"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_s_p_p_record.html" title="A SDP record representing SPP." alt="" coords="521,443,719,484"/>
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request_1_1_named_reader.html" title="A struct to hold an AttachmentReader alongside its name. " alt="" coords="5,5,203,61"/>
 </map>

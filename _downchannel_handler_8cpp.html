@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,10 +74,13 @@ $(function() {
 <div class="title">DownchannelHandler.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="_http_response_code_8h_source.html">AVSCommon/Utils/HTTP/HttpResponseCode.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;<a class="el" href="_http_response_code_8h_source.html">AVSCommon/Utils/HTTP/HttpResponseCode.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_h_t_t_p2_mime_response_decoder_8h_source.html">AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_power_monitor_8h_source.html">AVSCommon/Utils/Power/PowerMonitor.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_data_point_counter_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointCounterBuilder.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_metric_event_builder_8h_source.html">AVSCommon/Utils/Metrics/MetricEventBuilder.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_downchannel_handler_8h_source.html">ACL/Transport/DownchannelHandler.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_h_t_t_p2_transport_8h_source.html">ACL/Transport/HTTP2Transport.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_mime_response_sink_8h_source.html">ACL/Transport/MimeResponseSink.h</a>&quot;</code><br />
@@ -86,6 +89,42 @@ Include dependency graph for DownchannelHandler.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_downchannel_handler_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_c_l_2src_2_transport_2_downchannel_handler_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_c_l_2src_2_transport_2_downchannel_handler_8cpp" id="_2workplace_2avs-device-sdk_2_a_c_l_2src_2_transport_2_downchannel_handler_8cpp">
+<area shape="rect" id="node3" href="_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="5,199,177,240"/>
+<area shape="rect" id="node8" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1282,377,1458,419"/>
+<area shape="rect" id="node18" href="_h_t_t_p2_mime_response_decoder_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeResponseDecoder.h" alt="" coords="2078,288,2297,329"/>
+<area shape="rect" id="node22" href="_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="2763,288,2937,329"/>
+<area shape="rect" id="node27" href="_data_point_counter_builder_8h.html" title="AVSCommon/Utils/Metrics\l/DataPointCounterBuilder.h" alt="" coords="129,109,310,151"/>
+<area shape="rect" id="node29" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="411,377,591,419"/>
+<area shape="rect" id="node31" href="_downchannel_handler_8h.html" title="ACL/Transport/Downchannel\lHandler.h" alt="" coords="3836,288,4027,329"/>
+<area shape="rect" id="node38" href="_h_t_t_p2_transport_8h.html" title="ACL/Transport/HTTP2Transport.h" alt="" coords="2490,117,2709,143"/>
+<area shape="rect" id="node50" href="_mime_response_sink_8h.html" title="ACL/Transport/MimeResponse\lSink.h" alt="" coords="4237,288,4439,329"/>
+<area shape="rect" id="node6" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1434,288,1610,329"/>
+<area shape="rect" id="node12" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1263,467,1477,508"/>
+<area shape="rect" id="node14" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="689,556,865,597"/>
+<area shape="rect" id="node15" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="961,467,1137,508"/>
+<area shape="rect" id="node16" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="692,467,885,508"/>
+<area shape="rect" id="node17" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1806,467,1982,508"/>
+<area shape="rect" id="node20" href="_h_t_t_p2_mime_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2MimeResponseSinkInterface.h" alt="" coords="2509,377,2756,419"/>
+<area shape="rect" id="node21" href="_h_t_t_p2_response_sink_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ResponseSinkInterface.h" alt="" coords="2193,467,2408,508"/>
+<area shape="rect" id="node25" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="3047,467,3277,508"/>
+<area shape="rect" id="node26" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="3084,377,3259,419"/>
+<area shape="rect" id="node28" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="360,556,540,597"/>
+<area shape="rect" id="node30" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="436,467,616,508"/>
+<area shape="rect" id="node32" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="3758,467,3963,508"/>
+<area shape="rect" id="node33" href="_h_t_t_p2_request_source_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2RequestSourceInterface.h" alt="" coords="2484,467,2704,508"/>
+<area shape="rect" id="node34" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="1077,377,1257,419"/>
+<area shape="rect" id="node35" href="_exchange_handler_8h.html" title="ACL/Transport/ExchangeHandler.h" alt="" coords="3435,385,3660,411"/>
+<area shape="rect" id="node36" href="_message_consumer_interface_8h.html" title="ACL/Transport/MessageConsumer\lInterface.h" alt="" coords="3938,377,4162,419"/>
+<area shape="rect" id="node37" href="_mime_response_status_handler_interface_8h.html" title="ACL/Transport/MimeResponse\lStatusHandlerInterface.h" alt="" coords="4186,377,4389,419"/>
+<area shape="rect" id="node41" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2830,467,3022,508"/>
+<area shape="rect" id="node42" href="_event_tracer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/EventTracerInterface.h" alt="" coords="1374,199,1566,240"/>
+<area shape="rect" id="node43" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="2025,199,2217,240"/>
+<area shape="rect" id="node44" href="_h_t_t_p2_connection_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionInterface.h" alt="" coords="3303,199,3499,240"/>
+<area shape="rect" id="node45" href="_h_t_t_p2_connection_observer_interface_8h.html" title="AVSCommon/Utils/HTTP2\l/HTTP2ConnectionObserverInterface.h" alt="" coords="3461,288,3711,329"/>
+<area shape="rect" id="node46" href="_distant_future_8h.html" title="AVSCommon/Utils/Timing\l/DistantFuture.h" alt="" coords="1691,199,1867,240"/>
+<area shape="rect" id="node47" href="_condition_variable_wrapper_8h.html" title="AVSCommon/Utils/Threading\l/ConditionVariableWrapper.h" alt="" coords="2291,199,2486,240"/>
+<area shape="rect" id="node48" href="_ping_handler_8h.html" title="ACL/Transport/PingHandler.h" alt="" coords="2961,295,3155,322"/>
+<area shape="rect" id="node49" href="_post_connect_factory_interface_8h.html" title="ACL/Transport/PostConnect\lFactoryInterface.h" alt="" coords="3574,199,3761,240"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -107,6 +146,10 @@ Functions</h2></td></tr>
 <tr class="memitem:afccc8a1e23dde7851b9f1b375ded13c8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#afccc8a1e23dde7851b9f1b375ded13c8">alexaClientSDK::acl::TAG</a> (&quot;DownchannelHandler&quot;)</td></tr>
 <tr class="memdesc:afccc8a1e23dde7851b9f1b375ded13c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acl.html#afccc8a1e23dde7851b9f1b375ded13c8">More...</a><br /></td></tr>
 <tr class="separator:afccc8a1e23dde7851b9f1b375ded13c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac55dd902d79fa039de40d89c78e9627e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac55dd902d79fa039de40d89c78e9627e">alexaClientSDK::acl::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;eventName, const DataPoint &amp;dataPoint)</td></tr>
+<tr class="separator:ac55dd902d79fa039de40d89c78e9627e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b9c5ea667054daf93129851bc937cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#ac2b9c5ea667054daf93129851bc937cc">alexaClientSDK::acl::submitResponseFinishedMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, HTTP2ResponseFinishedStatus status)</td></tr>
+<tr class="separator:ac2b9c5ea667054daf93129851bc937cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -119,6 +162,12 @@ Variables</h2></td></tr>
 <tr class="memitem:aaa1190700da733de1e5c13fc653e7355"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#aaa1190700da733de1e5c13fc653e7355">alexaClientSDK::acl::ESTABLISH_CONNECTION_TIMEOUT</a> = std::chrono::seconds(60)</td></tr>
 <tr class="memdesc:aaa1190700da733de1e5c13fc653e7355"><td class="mdescLeft">&#160;</td><td class="mdescRight">How long to wait for a downchannel request to connect to AVS.  <a href="namespacealexa_client_s_d_k_1_1acl.html#aaa1190700da733de1e5c13fc653e7355">More...</a><br /></td></tr>
 <tr class="separator:aaa1190700da733de1e5c13fc653e7355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4289d4a6573c1819159598b623e2ca19"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a4289d4a6573c1819159598b623e2ca19">alexaClientSDK::acl::METRIC_SOURCE_PREFIX</a> = &quot;DOWNCHANNEL_HANDLER-&quot;</td></tr>
+<tr class="memdesc:a4289d4a6573c1819159598b623e2ca19"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify the metric source prefix for <code>DownChannelHandler</code>.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a4289d4a6573c1819159598b623e2ca19">More...</a><br /></td></tr>
+<tr class="separator:a4289d4a6573c1819159598b623e2ca19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f5e2249f95d828830892c2b7e5cbbf7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a0f5e2249f95d828830892c2b7e5cbbf7">alexaClientSDK::acl::RESPONSE_FINISHED</a> = &quot;RESPONSE_FINISHED&quot;</td></tr>
+<tr class="memdesc:a0f5e2249f95d828830892c2b7e5cbbf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify the response finished metric.  <a href="namespacealexa_client_s_d_k_1_1acl.html#a0f5e2249f95d828830892c2b7e5cbbf7">More...</a><br /></td></tr>
+<tr class="separator:a0f5e2249f95d828830892c2b7e5cbbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -150,7 +199,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

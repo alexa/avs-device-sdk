@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,7 @@ $(function() {
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_shutdown_notifier_8h_source.html">acsdkShutdownManagerInterfaces/MockShutdownNotifier.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_attachment_manager_8h_source.html">AVSCommon/AVS/Attachment/AttachmentManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_namespace_and_name_8h_source.html">AVSCommon/AVS/NamespaceAndName.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_directive_handler_result_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveHandlerResult.h</a>&gt;</code><br />
@@ -89,6 +90,36 @@ Include dependency graph for DirectiveSequencerTest.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_directive_sequencer_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_d_s_l_2test_2_directive_sequencer_test_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_d_s_l_2test_2_directive_sequencer_test_8cpp" id="_2workplace_2avs-device-sdk_2_a_d_s_l_2test_2_directive_sequencer_test_8cpp">
+<area shape="rect" id="node8" href="_mock_shutdown_notifier_8h.html" title="acsdkShutdownManagerInterfaces\l/MockShutdownNotifier.h" alt="" coords="727,109,950,151"/>
+<area shape="rect" id="node15" href="_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManager.h" alt="" coords="1467,467,1671,508"/>
+<area shape="rect" id="node22" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="126,377,357,419"/>
+<area shape="rect" id="node26" href="_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="398,109,602,151"/>
+<area shape="rect" id="node29" href="_directive_sequencer_8h.html" title="ADSL/DirectiveSequencer.h" alt="" coords="1997,117,2184,143"/>
+<area shape="rect" id="node9" href="_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="1133,377,1355,419"/>
+<area shape="rect" id="node10" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1184,467,1341,508"/>
+<area shape="rect" id="node12" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1235,556,1424,597"/>
+<area shape="rect" id="node17" href="_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="315,556,520,597"/>
+<area shape="rect" id="node18" href="_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="322,645,526,687"/>
+<area shape="rect" id="node19" href="_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="253,735,457,776"/>
+<area shape="rect" id="node21" href="_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="25,735,229,776"/>
+<area shape="rect" id="node23" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="509,467,704,508"/>
+<area shape="rect" id="node24" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2082,563,2278,590"/>
+<area shape="rect" id="node25" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2807,645,2983,687"/>
+<area shape="rect" id="node27" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="482,377,705,419"/>
+<area shape="rect" id="node28" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="259,474,485,501"/>
+<area shape="rect" id="node33" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1298,199,1558,240"/>
+<area shape="rect" id="node35" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="808,199,1011,240"/>
+<area shape="rect" id="node38" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2179,377,2359,419"/>
+<area shape="rect" id="node40" href="_condition_variable_wrapper_8h.html" title="AVSCommon/Utils/Threading\l/ConditionVariableWrapper.h" alt="" coords="2605,377,2800,419"/>
+<area shape="rect" id="node45" href="_directive_processor_8h.html" title="ADSL/DirectiveProcessor.h" alt="" coords="1999,206,2182,233"/>
+<area shape="rect" id="node48" href="_directive_router_8h.html" title="ADSL/DirectiveRouter.h" alt="" coords="1789,295,1952,322"/>
+<area shape="rect" id="node34" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="1298,288,1521,329"/>
+<area shape="rect" id="node36" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="880,288,1072,329"/>
+<area shape="rect" id="node37" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1531,377,1765,419"/>
+<area shape="rect" id="node39" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="2001,467,2181,508"/>
+<area shape="rect" id="node42" href="_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="2205,467,2379,508"/>
+<area shape="rect" id="node44" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2937,467,3113,508"/>
+<area shape="rect" id="node43" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1831,556,2006,597"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -180,8 +211,12 @@ Functions</h2></td></tr>
 <tr class="separator:ad7ba7a500206034d23a64677cd3c3e9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25b334d650bf1bcba5bce2582172c5c3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a25b334d650bf1bcba5bce2582172c5c3">alexaClientSDK::adsl::test::TEST_ATTACHMENT_CONTEXT_ID</a> (&quot;TEST_ATTACHMENT_CONTEXT_ID&quot;)</td></tr>
 <tr class="separator:a25b334d650bf1bcba5bce2582172c5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2e34a121f4ed0ff98568803d6c8e216"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#ab2e34a121f4ed0ff98568803d6c8e216">alexaClientSDK::adsl::test::TEST_F</a> (DirectiveSequencerTest, test_nullptrExceptionSender)</td></tr>
-<tr class="separator:ab2e34a121f4ed0ff98568803d6c8e216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ee16c56a8d031f8af5f55390e48eb6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a0ee16c56a8d031f8af5f55390e48eb6b">alexaClientSDK::adsl::test::TEST_F</a> (DirectiveSequencerTest, test_createNullptrExceptionSender)</td></tr>
+<tr class="separator:a0ee16c56a8d031f8af5f55390e48eb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff720e0b1b0427eca377d23de1058441"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#aff720e0b1b0427eca377d23de1058441">alexaClientSDK::adsl::test::TEST_F</a> (DirectiveSequencerTest, test_createDirectiveSequencerInterfaceNullptrExceptionSender)</td></tr>
+<tr class="separator:aff720e0b1b0427eca377d23de1058441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a093847630924791a982e032f0a3411a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a093847630924791a982e032f0a3411a1">alexaClientSDK::adsl::test::TEST_F</a> (DirectiveSequencerTest, test_createDirectiveSequencerInterfaceNullptrShutdownNotifier)</td></tr>
+<tr class="separator:a093847630924791a982e032f0a3411a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8928cca92090ab591ca5bb96f4c654f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#a8928cca92090ab591ca5bb96f4c654f2">alexaClientSDK::adsl::test::TEST_F</a> (DirectiveSequencerTest, test_createAndDoneTrigger)</td></tr>
 <tr class="separator:a8928cca92090ab591ca5bb96f4c654f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebfad0b93df1133658dfa36ee3b1c36a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1adsl_1_1test.html#aebfad0b93df1133658dfa36ee3b1c36a">alexaClientSDK::adsl::test::TEST_F</a> (DirectiveSequencerTest, test_nullptrDirective)</td></tr>
@@ -223,7 +258,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

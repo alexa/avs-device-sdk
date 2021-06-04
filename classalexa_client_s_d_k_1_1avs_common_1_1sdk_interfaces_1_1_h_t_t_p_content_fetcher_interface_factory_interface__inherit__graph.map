@@ -1,7 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,123,248,179"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html" title=" " alt="" coords="313,5,511,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_content_fetcher_factory.html" title="Mocks the content fetcher factory." alt="" coords="296,85,528,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers." alt="" coords="299,166,525,207"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers." alt="" coords="302,232,522,288"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHTTPContentFetcherFactory" alt="" coords="313,5,511,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_content_fetcher_factory.html" title="Mocks the content fetcher factory. " alt="" coords="296,85,528,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers. " alt="" coords="299,166,525,207"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher_factory.html" title="A mock factory that creates mock content fetchers. " alt="" coords="302,232,522,288"/>
 </map>

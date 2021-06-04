@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1captions_1_1_text_style.html" title=" " alt="" coords="5,5,177,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1_capabilities_delegate_storage_interface.html" title="alexaClientSDK::capabilities\lDelegate::storage::Capabilities\lDelegateStorageInterface" alt="" coords="5,45,207,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1storage_1_1_s_q_lite_capabilities_delegate_storage.html" title="alexaClientSDK::capabilities\lDelegate::storage::SQLiteCapabilities\lDelegateStorage" alt="" coords="255,5,496,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_delegate_storage.html" title="alexaClientSDK::capabilities\lDelegate::test::MockCapabilities\lDelegateStorage" alt="" coords="269,85,481,141"/>
 </map>

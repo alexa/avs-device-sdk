@@ -1,17 +1,19 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkCBLAuthorizationDelegate/include/acsdkAuthorizationDelegate" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkCBLAuthorizationDelegate/include/acsdkAuthorizationDelegate">
-<area shape="rect" id="node1" href="dir_54165b18d89afa1f49e42106207c5b21.html" title="acsdkAuthorizationDelegate" alt="" coords="81,52,266,100"/>
-<area shape="rect" id="node2" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="5,244,77,292"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000040_000533.html" title="2" alt="" coords="50,220,58,234"/>
-<area shape="rect" id="node3" href="dir_69fa8d0f4fee2820ffc8601fbf428b42.html" title="SampleApp" alt="" coords="86,148,175,196"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000040_000093.html" title="1" alt="" coords="152,128,160,142"/>
-<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="119,340,219,388"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000040_000017.html" title="4" alt="" coords="235,346,243,360"/>
-<area shape="rect" id="node5" href="dir_b14333b5607b47fe7356eaa790107bd3.html" title="RegistrationManager" alt="" coords="153,244,295,292"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000040_000508.html" title="1" alt="" coords="217,217,225,231"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000533_000017.html" title="14" alt="" coords="121,315,136,330"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000093_000533.html" title="4" alt="" coords="78,229,86,244"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000093_000017.html" title="130" alt="" coords="147,312,169,327"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000093_000508.html" title="6" alt="" coords="190,218,198,232"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000508_000017.html" title="9" alt="" coords="195,321,203,336"/>
-<area shape="rect" id="clust1" href="dir_45320e0bd3356ae5e31d86d82807ba3c.html" title="include" alt="" coords="69,16,277,111"/>
+<area shape="rect" id="node1" href="dir_54165b18d89afa1f49e42106207c5b21.html" title="acsdkAuthorizationDelegate" alt="" coords="27,52,213,100"/>
+<area shape="rect" id="node2" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="111,340,183,388"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000056_000588.html" title="2" alt="" coords="151,314,159,329"/>
+<area shape="rect" id="node3" href="dir_69fa8d0f4fee2820ffc8601fbf428b42.html" title="SampleApp" alt="" coords="34,148,123,196"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000056_000113.html" title="1" alt="" coords="100,127,108,141"/>
+<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="95,436,198,484"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000056_000017.html" title="4" alt="" coords="109,409,117,424"/>
+<area shape="rect" id="node5" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="199,244,271,292"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000056_000457.html" title="1" alt="" coords="223,216,231,231"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000588_000017.html" title="14" alt="" coords="139,409,153,424"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000113_000588.html" title="4" alt="" coords="136,313,144,327"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000113_000017.html" title="133" alt="" coords="112,409,133,423"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000113_000457.html" title="5" alt="" coords="184,222,192,236"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000017_000588.html" title="2" alt="" coords="143,400,151,414"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000457_000588.html" title="13" alt="" coords="180,324,195,339"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000457_000017.html" title="45" alt="" coords="175,418,190,433"/>
+<area shape="rect" id="clust1" href="dir_45320e0bd3356ae5e31d86d82807ba3c.html" title="include" alt="" coords="16,16,224,111"/>
 </map>

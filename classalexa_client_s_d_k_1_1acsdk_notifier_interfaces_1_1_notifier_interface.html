@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,9 @@ Inheritance diagram for alexaClientSDK::acsdkNotifierInterfaces::NotifierInterfa
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface_3_01_observer_type_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface_3_01_observer_type_01_4_inherit__map" id="alexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface_3_01_observer_type_01_4_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::test::MockStartupNotifier\l\&lt; RequiresStartupInterface \&gt;" alt="" coords="253,5,501,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; ObserverType \&gt;" alt="" coords="277,86,477,127"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\l::test::MockStartupNotifier\&lt;\l RequiresStartupInterface \&gt;" alt="" coords="263,151,491,222"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -94,6 +97,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a68875775a1c33e720a3f5df573103dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7a3f83373bdffebb201f9822fc7412a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#ae7a3f83373bdffebb201f9822fc7412a">notifyObserversInReverse</a> (std::function&lt; void(const std::shared_ptr&lt; ObserverType &gt; &amp;)&gt; notify)=0</td></tr>
 <tr class="separator:ae7a3f83373bdffebb201f9822fc7412a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa50e3889612520e63f94589c36ad3502"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#aa50e3889612520e63f94589c36ad3502">setAddObserverFunction</a> (std::function&lt; void(const std::shared_ptr&lt; ObserverType &gt; &amp;)&gt; postAddFunc)=0</td></tr>
+<tr class="separator:aa50e3889612520e63f94589c36ad3502"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename ObserverType&gt;<br />
@@ -169,7 +174,7 @@ template&lt;typename ObserverType&gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkInteractionModelInterfaces::InteractionModelRequestProcessingObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkNotificationsInterfaces::NotificationsObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; registrationManager::RegistrationObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
 
 </div>
 </div>
@@ -206,7 +211,7 @@ template&lt;typename ObserverType&gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkInteractionModelInterfaces::InteractionModelRequestProcessingObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkNotificationsInterfaces::NotificationsObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; registrationManager::RegistrationObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
 
 </div>
 </div>
@@ -244,7 +249,7 @@ template&lt;typename ObserverType&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if (and only if) all observers were notified (observers added during calls to this method will miss out). </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkInteractionModelInterfaces::InteractionModelRequestProcessingObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkNotificationsInterfaces::NotificationsObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; registrationManager::RegistrationObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
 
 </div>
 </div>
@@ -281,7 +286,45 @@ template&lt;typename ObserverType&gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkInteractionModelInterfaces::InteractionModelRequestProcessingObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkNotificationsInterfaces::NotificationsObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; registrationManager::RegistrationObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
+
+</div>
+</div>
+<a id="aa50e3889612520e63f94589c36ad3502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa50e3889612520e63f94589c36ad3502">&#9670;&nbsp;</a></span>setAddObserverFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ObserverType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface</a>&lt; ObserverType &gt;::setAddObserverFunction </td>
+          <td>(</td>
+          <td class="paramtype">std::function&lt; void(const std::shared_ptr&lt; ObserverType &gt; &amp;)&gt;&#160;</td>
+          <td class="paramname"><em>postAddFunc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the function to be called after an observer is added (for example, to notify the newly-added observer of the current state).</p>
+<p>Use caution when setting this function. The function MUST be reentrant, or else you run the risk of deadlock. When an observer adds itself to a <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html">NotifierInterface</a></code>, this function will be called in the same context.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">postAddFunc</td><td>The function to call after an observer is added. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; ObserverType &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkInteractionModelInterfaces::InteractionModelRequestProcessingObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkNotificationsInterfaces::NotificationsObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; registrationManager::RegistrationObserverInterface &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; avsCommon::utils::RequiresShutdown &gt;</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkStartupManagerInterfaces::RequiresStartupInterface &gt;</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a922e8cf4955198be89a9ea4384df4041">alexaClientSDK::acsdkNotifier::Notifier&lt; acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface &gt;</a>.</p>
 
 </div>
 </div>
@@ -292,7 +335,7 @@ template&lt;typename ObserverType&gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

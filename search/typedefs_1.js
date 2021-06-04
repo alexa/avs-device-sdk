@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bluetoothcomponent',['BluetoothComponent',['../namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#afc974cd9368f58b162dbb8b43601ebbe',1,'alexaClientSDK::acsdkBluetooth']]],
+  ['bluetoothcomponent',['BluetoothComponent',['../namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#a00b54119aa71045f34ce3283e26e48b5',1,'alexaClientSDK::acsdkBluetooth']]],
   ['bluetoothimplementationcomponent',['BluetoothImplementationComponent',['../namespacealexa_client_s_d_k_1_1acsdk_bluetooth_implementation.html#a9f6477abe110cd3f90d022c29455672e',1,'alexaClientSDK::acsdkBluetoothImplementation']]],
   ['bluetoothnotifierinterface',['BluetoothNotifierInterface',['../namespacealexa_client_s_d_k_1_1acsdk_bluetooth_interfaces.html#aac2f66d31b4e9b626798ae0cbdf97a32',1,'alexaClientSDK::acsdkBluetoothInterfaces']]],
   ['buffer',['Buffer',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_in_process_s_d_s_traits.html#af7ff4eb1e4f1628fb39ba7534b2bdb32',1,'alexaClientSDK::avsCommon::utils::sds::InProcessSDSTraits::Buffer()'],['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_minimal_traits2.html#a1544ed0edda4682d15b5149e1493e5e8',1,'alexaClientSDK::avsCommon::utils::sds::test::MinimalTraits2::Buffer()']]],

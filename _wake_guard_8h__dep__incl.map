@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/WakeGuard.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power/WakeGuard.h">
-<area shape="rect" id="node1" title=" " alt="" coords="282,5,462,76"/>
-<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title=" " alt="" coords="5,139,256,180"/>
-<area shape="rect" id="node3" href="$_wake_guard_8cpp.html" title=" " alt="" coords="281,131,463,187"/>
-<area shape="rect" id="node4" href="$_wake_guard_test_8cpp.html" title=" " alt="" coords="487,124,673,195"/>
+<area shape="rect" id="node2" href="$_directive_sequencer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/src/DirectiveSequencer.cpp" alt="" coords="5,139,256,180"/>
+<area shape="rect" id="node3" href="$_wake_guard_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Power/WakeGuard.cpp" alt="" coords="281,131,463,187"/>
+<area shape="rect" id="node4" href="$_wake_guard_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/Power/WakeGuardTest.cpp" alt="" coords="488,124,675,195"/>
 </map>

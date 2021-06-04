@@ -1,9 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZAVRCPController.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/BlueZAVRCPController.h">
-<area shape="rect" id="node1" title=" " alt="" coords="30,5,322,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,332,75,359"/>
-<area shape="rect" id="node3" href="$_a_v_r_c_p_controller_interface_8h.html" title=" " alt="" coords="55,109,297,165"/>
-<area shape="rect" id="node7" href="$_s_d_p_records_8h.html" title=" " alt="" coords="274,221,465,262"/>
-<area shape="rect" id="node4" href="$_bluetooth_service_interface_8h.html" title=" " alt="" coords="55,213,249,269"/>
-<area shape="rect" id="node5" href="$_s_d_p_record_interface_8h.html" title=" " alt="" coords="121,317,332,373"/>
-<area shape="rect" id="node6" title=" " alt="" coords="270,421,325,448"/>
+<area shape="rect" id="node3" href="$_a_v_r_c_p_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPController\lInterface.h" alt="" coords="55,109,297,165"/>
+<area shape="rect" id="node7" href="$_s_d_p_records_8h.html" title="AVSCommon/Utils/Bluetooth\l/SDPRecords.h" alt="" coords="273,221,465,262"/>
+<area shape="rect" id="node4" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="55,213,249,269"/>
+<area shape="rect" id="node5" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="121,317,332,373"/>
 </map>

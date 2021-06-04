@@ -1,0 +1,16 @@
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/Timing/StopTaskTimer.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/Timing/StopTaskTimer.cpp">
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="540,124,716,165"/>
+<area shape="rect" id="node25" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="1223,124,1407,165"/>
+<area shape="rect" id="node27" href="$_timer_delegate_factory_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegateFactory.h" alt="" coords="1431,124,1607,165"/>
+<area shape="rect" id="node30" href="$_stop_task_timer_8h.html" title="AVSCommon/Utils/Timing\l/StopTaskTimer.h" alt="" coords="1691,124,1867,165"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="289,317,504,359"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="528,317,704,359"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="836,221,1012,262"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="532,221,725,262"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="42,221,218,262"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="872,317,1048,359"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="858,407,1034,448"/>
+<area shape="rect" id="node28" href="$_timer_delegate_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateFactory\lInterface.h" alt="" coords="1450,213,1649,269"/>
+<area shape="rect" id="node29" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="1510,317,1726,359"/>
+<area shape="rect" id="node31" href="$_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="1723,221,1899,262"/>
+</map>

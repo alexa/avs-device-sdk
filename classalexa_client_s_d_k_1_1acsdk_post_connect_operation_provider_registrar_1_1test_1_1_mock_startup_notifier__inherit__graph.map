@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::acsdkPostConnectOperationProviderRegistrar::test::MockStartupNotifier" name="alexaClientSDK::acsdkPostConnectOperationProviderRegistrar::test::MockStartupNotifier">
-<area shape="rect" id="node1" title=" " alt="" coords="5,80,233,136"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title=" " alt="" coords="41,5,198,32"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="StartupNotifierInterface" alt="" coords="41,5,198,32"/>
 </map>

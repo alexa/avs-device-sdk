@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::acsdkNotifications::test::NotificationsCapabilityAgentTest" name="alexaClientSDK::acsdkNotifications::test::NotificationsCapabilityAgentTest">
-<area shape="rect" id="node1" title=" " alt="" coords="5,80,256,121"/>
-<area shape="rect" id="node2" title=" " alt="" coords="107,5,154,32"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html" title="alexaClientSDK::acsdkManufactory\l::Annotated\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::\lendpoints::DefaultEndpointAnnotation,\l alexaClientSDK::avsCommon::sdkInterfaces\l::endpoints::EndpointCapabilitiesRegistrarInterface \&gt;" alt="" coords="5,57,335,157"/>
 </map>

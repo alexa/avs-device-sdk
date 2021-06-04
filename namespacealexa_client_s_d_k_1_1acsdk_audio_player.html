@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -90,6 +90,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_progress_timer.html">ProgressTimer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_util.html">Util</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -158,8 +160,8 @@ Functions</h2></td></tr>
 <tr class="separator:a8a183791094a059235c14407c9eb5f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac42d2215b50777102c818a5f28893081"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac42d2215b50777102c818a5f28893081">getAudioPlayerCapabilityConfiguration</a> (<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_fingerprint.html">Fingerprint</a> fingerprint)</td></tr>
 <tr class="separator:ac42d2215b50777102c818a5f28893081"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab76c860338f1fb57bb0f5e407077301"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aab76c860338f1fb57bb0f5e407077301">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;metricActivityName, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_data_point.html">DataPoint</a> &amp;dataPoint, const std::string &amp;msgId, const std::string &amp;trackId, const std::string &amp;requesterType=&quot;&quot;, const std::string &amp;trackProtection=&quot;&quot;)</td></tr>
-<tr class="separator:aab76c860338f1fb57bb0f5e407077301"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65460918722176f9ce229a66d860178e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a65460918722176f9ce229a66d860178e">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;metricActivityName, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_data_point.html">DataPoint</a> &amp;dataPoint, const std::string &amp;msgId, const std::string &amp;trackId, const std::string &amp;requesterType=&quot;&quot;, const std::string &amp;trackProtection=&quot;&quot;, const std::string &amp;trackPlaylistType=&quot;&quot;, const std::string &amp;trackDomainNameHash=&quot;&quot;)</td></tr>
+<tr class="separator:a65460918722176f9ce229a66d860178e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a645a37f09fddbe356d280d69f8314c87"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a645a37f09fddbe356d280d69f8314c87">submitAnnotatedMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;baseMetric, const std::string &amp;annotation)</td></tr>
 <tr class="separator:a645a37f09fddbe356d280d69f8314c87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a546941d95a3d266b99540ad6e20a5799"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a546941d95a3d266b99540ad6e20a5799">messageSentSuccessfully</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a> status)</td></tr>
@@ -185,6 +187,15 @@ Functions</h2></td></tr>
 <tr class="separator:a5ff172a08f0a2b7519f0a682b855bcfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f2a5c12b3edf3a6ba782530b15420c2"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a1f2a5c12b3edf3a6ba782530b15420c2">operator&lt;&lt;</a> (std::ostream &amp;stream, ProgressTimer::State state)</td></tr>
 <tr class="separator:a1f2a5c12b3edf3a6ba782530b15420c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe2d65993a700719eb3b9bebb9c54f2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a3fe2d65993a700719eb3b9bebb9c54f2">TAG</a> (&quot;AudioPlayerUtil&quot;)</td></tr>
+<tr class="memdesc:a3fe2d65993a700719eb3b9bebb9c54f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a3fe2d65993a700719eb3b9bebb9c54f2">More...</a><br /></td></tr>
+<tr class="separator:a3fe2d65993a700719eb3b9bebb9c54f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac56433e9cefab2acfa96c2a3e815a987"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac56433e9cefab2acfa96c2a3e815a987">kBitsInByte</a> (8)</td></tr>
+<tr class="separator:ac56433e9cefab2acfa96c2a3e815a987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0585bbad435438351c9b43603a9cbfb"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aa0585bbad435438351c9b43603a9cbfb">kBitsInHex</a> (4)</td></tr>
+<tr class="separator:aa0585bbad435438351c9b43603a9cbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c40543631424e2ec8e97118b91fa6f"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad4c40543631424e2ec8e97118b91fa6f">kHexInByte</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac56433e9cefab2acfa96c2a3e815a987">kBitsInByte</a>/<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aa0585bbad435438351c9b43603a9cbfb">kBitsInHex</a>)</td></tr>
+<tr class="separator:ad4c40543631424e2ec8e97118b91fa6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -346,8 +357,8 @@ Variables</h2></td></tr>
 <tr class="memitem:a25d08396b834aeeea975a167e33d2349"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a25d08396b834aeeea975a167e33d2349">MESSAGE_SENT_FAILED</a> = &quot;MessageSentFailed&quot;</td></tr>
 <tr class="memdesc:a25d08396b834aeeea975a167e33d2349"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message sent failed metric.  <a href="#a25d08396b834aeeea975a167e33d2349">More...</a><br /></td></tr>
 <tr class="separator:a25d08396b834aeeea975a167e33d2349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5861da52402b5e80e8c2e5657c85a220"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a5861da52402b5e80e8c2e5657c85a220">METADATA_WHITELIST</a> = {&quot;title&quot;}</td></tr>
-<tr class="separator:a5861da52402b5e80e8c2e5657c85a220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a499ac21e76b3362474671269cf274e8a"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a499ac21e76b3362474671269cf274e8a">METADATA_ALLOWLIST</a> = {&quot;title&quot;}</td></tr>
+<tr class="separator:a499ac21e76b3362474671269cf274e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a8121c739ffa328d21dda45f5930bf2"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a5a8121c739ffa328d21dda45f5930bf2">METADATA_EVENT_RATE</a> {1}</td></tr>
 <tr class="memdesc:a5a8121c739ffa328d21dda45f5930bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Min time between metadata events.  <a href="#a5a8121c739ffa328d21dda45f5930bf2">More...</a><br /></td></tr>
 <tr class="separator:a5a8121c739ffa328d21dda45f5930bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -357,6 +368,15 @@ Variables</h2></td></tr>
 <tr class="memitem:aeab6a288c4a106d9dc07c92ea3cc9f33"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aeab6a288c4a106d9dc07c92ea3cc9f33">NORMALIZATION_LEVEL_OFF</a> = &quot;OFF&quot;</td></tr>
 <tr class="memdesc:aeab6a288c4a106d9dc07c92ea3cc9f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalization disabled.  <a href="#aeab6a288c4a106d9dc07c92ea3cc9f33">More...</a><br /></td></tr>
 <tr class="separator:aeab6a288c4a106d9dc07c92ea3cc9f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a92f292a892fe22aa831832d447af9d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a7a92f292a892fe22aa831832d447af9d">TRACK_PROTECTION_NAME</a> = &quot;TrackProtectionName&quot;</td></tr>
+<tr class="memdesc:a7a92f292a892fe22aa831832d447af9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track protection name, meta data sent with metric.  <a href="#a7a92f292a892fe22aa831832d447af9d">More...</a><br /></td></tr>
+<tr class="separator:a7a92f292a892fe22aa831832d447af9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad75b42a14772aa1e8763a5c8527a2013"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad75b42a14772aa1e8763a5c8527a2013">TRACK_PLAYLIST_TYPE</a> = &quot;TrackType&quot;</td></tr>
+<tr class="memdesc:ad75b42a14772aa1e8763a5c8527a2013"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track playlist type, meta data sent with metric.  <a href="#ad75b42a14772aa1e8763a5c8527a2013">More...</a><br /></td></tr>
+<tr class="separator:ad75b42a14772aa1e8763a5c8527a2013"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d4d0aa9b9bcfcbdca769b5b44113689"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a1d4d0aa9b9bcfcbdca769b5b44113689">TRACK_DOMAIN_NAME_HASH</a> = &quot;TrackDomainNameHash&quot;</td></tr>
+<tr class="memdesc:a1d4d0aa9b9bcfcbdca769b5b44113689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash of the domain name of the track url, meta data sent with metric.  <a href="#a1d4d0aa9b9bcfcbdca769b5b44113689">More...</a><br /></td></tr>
+<tr class="separator:a1d4d0aa9b9bcfcbdca769b5b44113689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54872b69b200c8c6bb995fd50ee83b1f"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a54872b69b200c8c6bb995fd50ee83b1f">AUDIO_MEDIAPLAYER_POOL_SIZE_DEFAULT</a> = 2</td></tr>
 <tr class="separator:a54872b69b200c8c6bb995fd50ee83b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -792,7 +812,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Creates an manufactory component that exports <code>AudioPlayer-related</code> implementations.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000044">Deprecated:</a></b></dt><dd>This is for backwards compatibility only to allow the application to inject a PooledMediaResourceProviderInterface; prefer using getComponent. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000045">Deprecated:</a></b></dt><dd>This is for backwards compatibility only to allow the application to inject a PooledMediaResourceProviderInterface; prefer using getComponent. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A component. </dd></dl>
 
 </div>
@@ -872,6 +892,84 @@ Variables</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac56433e9cefab2acfa96c2a3e815a987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac56433e9cefab2acfa96c2a3e815a987">&#9670;&nbsp;</a></span>kBitsInByte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const int alexaClientSDK::acsdkAudioPlayer::kBitsInByte </td>
+          <td>(</td>
+          <td class="paramtype">8&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0585bbad435438351c9b43603a9cbfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0585bbad435438351c9b43603a9cbfb">&#9670;&nbsp;</a></span>kBitsInHex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const int alexaClientSDK::acsdkAudioPlayer::kBitsInHex </td>
+          <td>(</td>
+          <td class="paramtype">4&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad4c40543631424e2ec8e97118b91fa6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4c40543631424e2ec8e97118b91fa6f">&#9670;&nbsp;</a></span>kHexInByte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const int alexaClientSDK::acsdkAudioPlayer::kHexInByte </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac56433e9cefab2acfa96c2a3e815a987">kBitsInByte</a>/&#160;</td>
+          <td class="paramname"><em>kBitsInHex</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -1256,8 +1354,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aab76c860338f1fb57bb0f5e407077301"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab76c860338f1fb57bb0f5e407077301">&#9670;&nbsp;</a></span>submitMetric()</h2>
+<a id="a65460918722176f9ce229a66d860178e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65460918722176f9ce229a66d860178e">&#9670;&nbsp;</a></span>submitMetric()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1305,7 +1403,19 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>trackProtection</em> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramname"><em>trackProtection</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>trackPlaylistType</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>trackDomainNameHash</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1329,15 +1439,44 @@ Variables</h2></td></tr>
     <tr><td class="paramname">trackId</td><td>The track id string retrieved from the directive. </td></tr>
     <tr><td class="paramname">requesterType</td><td>The requester type string retrieved from the directive, defaults to empty string. </td></tr>
     <tr><td class="paramname">trackProtection</td><td>The track protection on the track. </td></tr>
-    <tr><td class="paramname">trackType</td><td>Track type meta data. </td></tr>
+    <tr><td class="paramname">trackPlaylistType</td><td>Track playtlist type. </td></tr>
+    <tr><td class="paramname">trackDomainNameHash</td><td>Hash of the track url domain </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
+<a id="a3fe2d65993a700719eb3b9bebb9c54f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fe2d65993a700719eb3b9bebb9c54f2">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acsdkAudioPlayer::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;AudioPlayerUtil&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="a5ff172a08f0a2b7519f0a682b855bcfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ff172a08f0a2b7519f0a682b855bcfa">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ff172a08f0a2b7519f0a682b855bcfa">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1365,7 +1504,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad6a55831cf0465f98ce9a824c59eea95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6a55831cf0465f98ce9a824c59eea95">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a55831cf0465f98ce9a824c59eea95">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1393,7 +1532,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab63b8e2f751ea9083f875159a0014be5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab63b8e2f751ea9083f875159a0014be5">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab63b8e2f751ea9083f875159a0014be5">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1993,6 +2132,29 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a499ac21e76b3362474671269cf274e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a499ac21e76b3362474671269cf274e8a">&#9670;&nbsp;</a></span>METADATA_ALLOWLIST</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::string&gt; alexaClientSDK::acsdkAudioPlayer::METADATA_ALLOWLIST = {&quot;title&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>allowlisted metadata to send to server. This is done to avoid excessive traffic must be all lower-case </p>
+
+</div>
+</div>
 <a id="a5a8121c739ffa328d21dda45f5930bf2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a8121c739ffa328d21dda45f5930bf2">&#9670;&nbsp;</a></span>METADATA_EVENT_RATE</h2>
 
@@ -2060,29 +2222,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Metrics for filtered and unfiltered metadata. </p>
-
-</div>
-</div>
-<a id="a5861da52402b5e80e8c2e5657c85a220"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5861da52402b5e80e8c2e5657c85a220">&#9670;&nbsp;</a></span>METADATA_WHITELIST</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::vector&lt;std::string&gt; alexaClientSDK::acsdkAudioPlayer::METADATA_WHITELIST = {&quot;title&quot;}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>whitelisted metadata to send to server. This is done to avoid excessive traffic must be all lower-case </p>
 
 </div>
 </div>
@@ -2685,6 +2824,54 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a1d4d0aa9b9bcfcbdca769b5b44113689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d4d0aa9b9bcfcbdca769b5b44113689">&#9670;&nbsp;</a></span>TRACK_DOMAIN_NAME_HASH</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAudioPlayer::TRACK_DOMAIN_NAME_HASH = &quot;TrackDomainNameHash&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Hash of the domain name of the track url, meta data sent with metric. </p>
+
+</div>
+</div>
+<a id="ad75b42a14772aa1e8763a5c8527a2013"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad75b42a14772aa1e8763a5c8527a2013">&#9670;&nbsp;</a></span>TRACK_PLAYLIST_TYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAudioPlayer::TRACK_PLAYLIST_TYPE = &quot;TrackType&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Track playlist type, meta data sent with metric. </p>
+
+</div>
+</div>
 <a id="ada8058ee43cd543d082c901690345ec4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada8058ee43cd543d082c901690345ec4">&#9670;&nbsp;</a></span>TRACK_PROGRESSION_FATAL</h2>
 
@@ -2706,6 +2893,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Playback error during auto-progression. </p>
+
+</div>
+</div>
+<a id="a7a92f292a892fe22aa831832d447af9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a92f292a892fe22aa831832d447af9d">&#9670;&nbsp;</a></span>TRACK_PROTECTION_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAudioPlayer::TRACK_PROTECTION_NAME = &quot;TrackProtectionName&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Track protection name, meta data sent with metric. </p>
 
 </div>
 </div>
@@ -2833,7 +3044,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

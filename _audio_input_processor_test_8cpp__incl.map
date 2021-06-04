@@ -1,52 +1,35 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/test/AudioInputProcessorTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/AIP/test/AudioInputProcessorTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2311,5,2510,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,67,158"/>
-<area shape="rect" id="node3" title=" " alt="" coords="91,131,151,158"/>
-<area shape="rect" id="node4" title=" " alt="" coords="175,131,243,158"/>
-<area shape="rect" id="node5" title=" " alt="" coords="268,131,337,158"/>
-<area shape="rect" id="node6" title=" " alt="" coords="4677,392,4736,419"/>
-<area shape="rect" id="node7" title=" " alt="" coords="1561,221,1655,247"/>
-<area shape="rect" id="node8" title=" " alt="" coords="735,221,881,247"/>
-<area shape="rect" id="node9" title=" " alt="" coords="513,131,647,158"/>
-<area shape="rect" id="node10" title=" " alt="" coords="671,131,825,158"/>
-<area shape="rect" id="node11" title=" " alt="" coords="849,131,969,158"/>
-<area shape="rect" id="node12" href="$_mock_attachment_manager_8h.html" title=" " alt="" coords="3873,124,4073,165"/>
-<area shape="rect" id="node18" href="$_connection_status_observer_interface_8h.html" title=" " alt="" coords="981,303,1227,344"/>
-<area shape="rect" id="node20" href="$_context_request_token_8h.html" title=" " alt="" coords="1239,124,1430,165"/>
-<area shape="rect" id="node21" href="$_expect_speech_timeout_handler_interface_8h.html" title=" " alt="" coords="5063,213,5329,255"/>
-<area shape="rect" id="node24" href="$_mock_a_v_s_connection_manager_8h.html" title=" " alt="" coords="1734,124,1943,165"/>
-<area shape="rect" id="node27" href="$_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title=" " alt="" coords="4098,124,4289,165"/>
-<area shape="rect" id="node29" href="$_mock_message_sender_8h.html" title=" " alt="" coords="4517,124,4707,165"/>
-<area shape="rect" id="node30" href="$_mock_context_manager_8h.html" title=" " alt="" coords="3658,124,3849,165"/>
-<area shape="rect" id="node32" href="$_mock_focus_manager_8h.html" title=" " alt="" coords="4731,124,4922,165"/>
-<area shape="rect" id="node34" href="$_mock_directive_handler_result_8h.html" title=" " alt="" coords="1506,124,1710,165"/>
-<area shape="rect" id="node35" href="$_mock_exception_encountered_sender_8h.html" title=" " alt="" coords="2856,124,3096,165"/>
-<area shape="rect" id="node36" href="$_mock_locale_assets_manager_8h.html" title=" " alt="" coords="2203,124,2400,165"/>
-<area shape="rect" id="node37" href="$_mock_system_sound_player_8h.html" title=" " alt="" coords="2425,124,2615,165"/>
-<area shape="rect" id="node38" href="$_mock_user_inactivity_monitor_8h.html" title=" " alt="" coords="2640,124,2832,165"/>
-<area shape="rect" id="node39" href="$_mock_power_resource_manager_8h.html" title=" " alt="" coords="1968,124,2179,165"/>
-<area shape="rect" id="node40" href="$_j_s_o_n_utils_8h.html" title=" " alt="" coords="993,124,1164,165"/>
-<area shape="rect" id="node41" href="$_memory_8h.html" title=" " alt="" coords="1302,213,1485,255"/>
-<area shape="rect" id="node42" href="$_mock_metric_recorder_8h.html" title=" " alt="" coords="4313,124,4492,165"/>
-<area shape="rect" id="node43" href="$_u_u_i_d_generation_8h.html" title=" " alt="" coords="5652,213,5884,255"/>
-<area shape="rect" id="node44" href="$_device_settings_manager_8h.html" title=" " alt="" coords="5405,221,5627,247"/>
-<area shape="rect" id="node45" href="$_mock_device_setting_storage_8h.html" title=" " alt="" coords="3121,124,3309,165"/>
-<area shape="rect" id="node46" href="$_mock_setting_event_sender_8h.html" title=" " alt="" coords="4947,124,5128,165"/>
-<area shape="rect" id="node47" href="$_setting_event_sender_8h.html" title=" " alt="" coords="4471,221,4671,247"/>
-<area shape="rect" id="node48" href="$_mock_setting_8h.html" title=" " alt="" coords="3333,131,3491,158"/>
-<area shape="rect" id="node49" href="$_audio_input_processor_8h.html" title=" " alt="" coords="5203,131,5381,158"/>
-<area shape="rect" id="node50" href="$_mock_observer_8h.html" title=" " alt="" coords="3516,131,3633,158"/>
-<area shape="rect" id="node13" title=" " alt="" coords="3884,310,3945,337"/>
-<area shape="rect" id="node14" title=" " alt="" coords="4286,310,4341,337"/>
-<area shape="rect" id="node15" title=" " alt="" coords="3724,310,3793,337"/>
-<area shape="rect" id="node16" title=" " alt="" coords="3256,221,3371,247"/>
-<area shape="rect" id="node17" href="$_attachment_manager_interface_8h.html" title=" " alt="" coords="3812,213,4017,255"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1068,392,1140,419"/>
-<area shape="rect" id="node22" title=" " alt="" coords="5405,310,5483,337"/>
-<area shape="rect" id="node23" title=" " alt="" coords="4998,310,5053,337"/>
-<area shape="rect" id="node25" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="1765,213,1995,255"/>
-<area shape="rect" id="node26" href="$_message_sender_interface_8h.html" title=" " alt="" coords="4611,303,4802,344"/>
-<area shape="rect" id="node28" href="$_directive_sequencer_interface_8h.html" title=" " alt="" coords="4092,213,4295,255"/>
-<area shape="rect" id="node31" href="$_context_manager_interface_8h.html" title=" " alt="" coords="3597,213,3787,255"/>
-<area shape="rect" id="node33" href="$_focus_manager_interface_8h.html" title=" " alt="" coords="4746,213,4937,255"/>
+<area shape="rect" id="node12" href="$_capability_change_notifier_8h.html" title="AVSCommon/AVS/Capability\lChangeNotifier.h" alt="" coords="783,124,977,165"/>
+<area shape="rect" id="node17" href="$_capability_configuration_change_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationChange\lObserverInterface.h" alt="" coords="951,303,1158,359"/>
+<area shape="rect" id="node20" href="$_capability_change_notifier_interface_8h.html" title="AVSCommon/AVS/Capability\lChangeNotifierInterface.h" alt="" coords="955,213,1149,255"/>
+<area shape="rect" id="node21" href="$_mock_attachment_manager_8h.html" title="AVSCommon/AVS/Attachment\l/MockAttachmentManager.h" alt="" coords="1870,124,2074,165"/>
+<area shape="rect" id="node25" href="$_connection_status_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ConnectionStatusObserverInterface.h" alt="" coords="412,124,657,165"/>
+<area shape="rect" id="node27" href="$_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="6213,124,6405,165"/>
+<area shape="rect" id="node28" href="$_expect_speech_timeout_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExpectSpeechTimeoutHandlerInterface.h" alt="" coords="1174,213,1439,255"/>
+<area shape="rect" id="node29" href="$_mock_a_v_s_connection_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockAVSConnectionManager.h" alt="" coords="4782,124,4994,165"/>
+<area shape="rect" id="node30" href="$_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="5019,124,5211,165"/>
+<area shape="rect" id="node31" href="$_mock_message_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockMessageSender.h" alt="" coords="5235,124,5427,165"/>
+<area shape="rect" id="node32" href="$_mock_context_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockContextManager.h" alt="" coords="2889,124,3081,165"/>
+<area shape="rect" id="node33" href="$_mock_focus_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockFocusManager.h" alt="" coords="3105,124,3297,165"/>
+<area shape="rect" id="node34" href="$_mock_directive_handler_result_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveHandlerResult.h" alt="" coords="5451,124,5655,165"/>
+<area shape="rect" id="node35" href="$_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="3322,124,3563,165"/>
+<area shape="rect" id="node36" href="$_mock_locale_assets_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockLocaleAssetsManager.h" alt="" coords="3587,124,3786,165"/>
+<area shape="rect" id="node37" href="$_mock_system_sound_player_8h.html" title="AVSCommon/SDKInterfaces\l/MockSystemSoundPlayer.h" alt="" coords="3811,124,4003,165"/>
+<area shape="rect" id="node38" href="$_mock_user_inactivity_monitor_8h.html" title="AVSCommon/SDKInterfaces\l/MockUserInactivityMonitor.h" alt="" coords="4027,124,4221,165"/>
+<area shape="rect" id="node39" href="$_mock_power_resource_manager_8h.html" title="AVSCommon/SDKInterfaces\l/MockPowerResourceManager.h" alt="" coords="2447,124,2659,165"/>
+<area shape="rect" id="node40" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2200,124,2373,165"/>
+<area shape="rect" id="node41" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="1917,310,2101,351"/>
+<area shape="rect" id="node42" href="$_mock_metric_recorder_8h.html" title="AVSCommon/Utils/Metrics\l/MockMetricRecorder.h" alt="" coords="6430,124,6610,165"/>
+<area shape="rect" id="node43" href="$_u_u_i_d_generation_8h.html" title="AVSCommon/Utils/UUIDGeneration\l/UUIDGeneration.h" alt="" coords="692,310,927,351"/>
+<area shape="rect" id="node44" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="1612,414,1836,441"/>
+<area shape="rect" id="node45" href="$_mock_device_setting_storage_8h.html" title="Settings/MockDeviceSetting\lStorage.h" alt="" coords="4245,124,4433,165"/>
+<area shape="rect" id="node46" href="$_mock_setting_event_sender_8h.html" title="Settings/MockSettingEvent\lSender.h" alt="" coords="2684,124,2865,165"/>
+<area shape="rect" id="node47" href="$_setting_event_sender_8h.html" title="Settings/SettingEventSender.h" alt="" coords="2177,317,2378,344"/>
+<area shape="rect" id="node48" href="$_mock_setting_8h.html" title="Settings/MockSetting.h" alt="" coords="4457,131,4615,158"/>
+<area shape="rect" id="node49" href="$_audio_input_processor_8h.html" title="AIP/AudioInputProcessor.h" alt="" coords="1463,131,1643,158"/>
+<area shape="rect" id="node50" href="$_mock_observer_8h.html" title="MockObserver.h" alt="" coords="4639,131,4758,158"/>
+<area shape="rect" id="node13" href="$_notifier_8h.html" title="acsdkNotifier/Notifier.h" alt="" coords="774,221,930,247"/>
+<area shape="rect" id="node15" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1183,310,1340,351"/>
+<area shape="rect" id="node18" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1393,407,1588,448"/>
+<area shape="rect" id="node24" href="$_attachment_manager_interface_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentManagerInterface.h" alt="" coords="1819,213,2024,255"/>
 </map>

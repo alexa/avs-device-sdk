@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -146,9 +146,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a52ce37378a6e0e0ceb8cdecad1e46d09"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:a52ce37378a6e0e0ceb8cdecad1e46d09"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; Type &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_cook_book.html#a52ce37378a6e0e0ceb8cdecad1e46d09">createUniquePointer</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_runtime_manufactory.html">RuntimeManufactory</a> &amp;runtimeManufactory)</td></tr>
 <tr class="separator:a52ce37378a6e0e0ceb8cdecad1e46d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad680f2695d6e55619aa882b30a21398f"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
-<tr class="memitem:ad680f2695d6e55619aa882b30a21398f"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_pointer_cache.html">PointerCache</a>&lt; Type &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_cook_book.html#ad680f2695d6e55619aa882b30a21398f">createPointerCache</a> ()</td></tr>
-<tr class="separator:ad680f2695d6e55619aa882b30a21398f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab94552a5276db826aa431df08fc41c2b"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:ab94552a5276db826aa431df08fc41c2b"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html">AbstractPointerCache</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_cook_book.html#ab94552a5276db826aa431df08fc41c2b">createPointerCache</a> ()</td></tr>
+<tr class="separator:ab94552a5276db826aa431df08fc41c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_cook_book.html">CookBook</a> is a collection of recipes for creating instances. </p>
@@ -1066,8 +1066,8 @@ template&lt;typename Annotation , typename Type, typename... Dependencies&gt; </
 
 </div>
 </div>
-<a id="ad680f2695d6e55619aa882b30a21398f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad680f2695d6e55619aa882b30a21398f">&#9670;&nbsp;</a></span>createPointerCache()</h2>
+<a id="ab94552a5276db826aa431df08fc41c2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab94552a5276db826aa431df08fc41c2b">&#9670;&nbsp;</a></span>createPointerCache()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1078,7 +1078,7 @@ template&lt;typename Type &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_pointer_cache.html">PointerCache</a>&lt; Type &gt; &gt; alexaClientSDK::acsdkManufactory::internal::CookBook::createPointerCache </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_pointer_cache.html">AbstractPointerCache</a> &gt; alexaClientSDK::acsdkManufactory::internal::CookBook::createPointerCache </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1140,6 +1140,10 @@ template&lt;typename Type &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::unique_ptr&lt;Type&gt;</code> to the new instance of Type. </dd></dl>
+<p><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_cook_book.html#a52ce37378a6e0e0ceb8cdecad1e46d09">createUniquePointer()</a> returns a void* to a std::unique_ptr&lt;Type&gt; created on the heap. The following ensures that we retain the object, but delete the temporary std::unique_ptr pointed to by the void* before returning a std::unique_ptr to the object.</p>
+<p>Cast the void* to a std::unique_ptr&lt;Type&gt;*.</p>
+<p>Move the object from the underlying temporary std::unique_ptr on the heap. Now *temporaryPointerToUniquePointerOnHeap no longer owns the object.</p>
+<p>Delete the temporary std::unique_ptr created on the heap. Without this, there is a memory leak. </p>
 
 </div>
 </div>
@@ -1186,7 +1190,7 @@ template&lt;typename Type &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

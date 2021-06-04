@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,6 +77,7 @@ $(function() {
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;<a class="el" href="_shutdown_notifier_interface_8h_source.html">acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_exception_encountered_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_directive_sequencer_interface_8h_source.html">AVSCommon/SDKInterfaces/DirectiveSequencerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metric_recorder_interface_8h_source.html">AVSCommon/Utils/Metrics/MetricRecorderInterface.h</a>&gt;</code><br />
@@ -88,6 +89,37 @@ Include dependency graph for DirectiveSequencer.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_directive_sequencer_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_d_s_l_2include_2_a_d_s_l_2_directive_sequencer_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_d_s_l_2include_2_a_d_s_l_2_directive_sequencer_8h" id="_2workplace_2avs-device-sdk_2_a_d_s_l_2include_2_a_d_s_l_2_directive_sequencer_8h">
+<area shape="rect" id="node7" href="_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="1503,452,1726,493"/>
+<area shape="rect" id="node13" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="3331,109,3591,151"/>
+<area shape="rect" id="node16" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="2653,273,2856,315"/>
+<area shape="rect" id="node28" href="_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3615,273,3795,315"/>
+<area shape="rect" id="node33" href="_condition_variable_wrapper_8h.html" title="AVSCommon/Utils/Threading\l/ConditionVariableWrapper.h" alt="" coords="949,363,1144,404"/>
+<area shape="rect" id="node43" href="_directive_processor_8h.html" title="ADSL/DirectiveProcessor.h" alt="" coords="2150,117,2333,143"/>
+<area shape="rect" id="node46" href="_directive_router_8h.html" title="ADSL/DirectiveRouter.h" alt="" coords="3168,199,3331,225"/>
+<area shape="rect" id="node8" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="1272,541,1429,583"/>
+<area shape="rect" id="node10" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1939,541,2128,583"/>
+<area shape="rect" id="node14" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="3694,363,3917,404"/>
+<area shape="rect" id="node17" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="2808,549,3035,575"/>
+<area shape="rect" id="node24" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="2727,363,2919,404"/>
+<area shape="rect" id="node19" href="_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="2767,631,2977,672"/>
+<area shape="rect" id="node21" href="_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="3154,638,3267,665"/>
+<area shape="rect" id="node22" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3401,720,3597,747"/>
+<area shape="rect" id="node23" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="448,795,624,836"/>
+<area shape="rect" id="node25" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="3211,452,3445,493"/>
+<area shape="rect" id="node27" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="2711,452,2934,493"/>
+<area shape="rect" id="node29" href="_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="3861,452,4041,493"/>
+<area shape="rect" id="node31" href="_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="4149,541,4329,583"/>
+<area shape="rect" id="node32" href="_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="3861,541,4041,583"/>
+<area shape="rect" id="node35" href="_power_monitor_8h.html" title="AVSCommon/Utils/Power\l/PowerMonitor.h" alt="" coords="2305,452,2479,493"/>
+<area shape="rect" id="node38" href="_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="679,452,855,493"/>
+<area shape="rect" id="node36" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2383,631,2614,672"/>
+<area shape="rect" id="node37" href="_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="2406,541,2581,583"/>
+<area shape="rect" id="node40" href="_finally_guard_8h.html" title="AVSCommon/Utils/Error\l/FinallyGuard.h" alt="" coords="549,541,715,583"/>
+<area shape="rect" id="node41" href="_s_d_k_primitives_provider_8h.html" title="AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="1555,541,1762,583"/>
+<area shape="rect" id="node42" href="_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="920,541,1096,583"/>
+<area shape="rect" id="node48" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="3540,631,3735,672"/>
+<area shape="rect" id="node49" href="_handler_and_policy_8h.html" title="AVSCommon/AVS/HandlerAnd\lPolicy.h" alt="" coords="2880,273,3085,315"/>
+<area shape="rect" id="node50" href="_metric_event_builder_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h" alt="" coords="3490,363,3670,404"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -95,6 +127,32 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_directive_sequencer_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_d_s_l_2include_2_a_d_s_l_2_directive_sequencer_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_d_s_l_2include_2_a_d_s_l_2_directive_sequencer_8hdep" id="_2workplace_2avs-device-sdk_2_a_d_s_l_2include_2_a_d_s_l_2_directive_sequencer_8hdep">
+<area shape="rect" id="node2" href="_a_d_s_l_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/src/ADSLComponent.cpp" alt="" coords="5,124,244,165"/>
+<area shape="rect" id="node3" href="_directive_sequencer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/src/DirectiveSequencer.cpp" alt="" coords="269,124,519,165"/>
+<area shape="rect" id="node4" href="_directive_sequencer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/test/DirectiveSequencer\lTest.cpp" alt="" coords="544,117,775,173"/>
+<area shape="rect" id="node5" href="_message_interpreter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/test/MessageInterpreter\lTest.cpp" alt="" coords="799,117,1027,173"/>
+<area shape="rect" id="node6" href="_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="1051,109,1278,180"/>
+<area shape="rect" id="node21" href="_revoke_authorization_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/a4btest/RevokeAuthorization\lHandlerTest.cpp" alt="" coords="1302,109,1545,180"/>
+<area shape="rect" id="node22" href="_user_inactivity_monitor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/UserInactivityMonitor\lTest.cpp" alt="" coords="1569,109,1795,180"/>
+<area shape="rect" id="node23" href="_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1819,117,1991,173"/>
+<area shape="rect" id="node24" href="_alexa_directive_sequencer_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaDirectiveSequencerLibrary\lTest.cpp" alt="" coords="2015,109,2227,180"/>
+<area shape="rect" id="node25" href="_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="2251,109,2459,180"/>
+<area shape="rect" id="node26" href="_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="2483,117,2691,173"/>
+<area shape="rect" id="node27" href="_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="2715,109,2915,180"/>
+<area shape="rect" id="node7" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="898,228,1127,284"/>
+<area shape="rect" id="node8" href="_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1054,332,1273,388"/>
+<area shape="rect" id="node19" href="_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="1204,228,1416,284"/>
+<area shape="rect" id="node9" href="_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1056,436,1271,492"/>
+<area shape="rect" id="node18" href="_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="826,436,1031,492"/>
+<area shape="rect" id="node10" href="_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="1019,540,1273,611"/>
+<area shape="rect" id="node14" href="_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="1347,547,1563,603"/>
+<area shape="rect" id="node17" href="_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="793,547,995,603"/>
+<area shape="rect" id="node11" href="_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="1077,666,1332,722"/>
+<area shape="rect" id="node12" href="_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="586,659,815,729"/>
+<area shape="rect" id="node13" href="preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="839,666,1053,722"/>
+<area shape="rect" id="node15" href="main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="1357,673,1554,715"/>
+<area shape="rect" id="node16" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1578,673,1855,715"/>
+<area shape="rect" id="node20" href="_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="1639,339,1912,381"/>
 </map>
 </div>
 </div>
@@ -117,7 +175,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

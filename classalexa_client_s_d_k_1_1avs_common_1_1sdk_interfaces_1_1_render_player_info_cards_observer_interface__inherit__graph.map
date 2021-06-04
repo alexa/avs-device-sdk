@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::RenderPlayerInfoCardsObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,45,224,101"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_render_player_info_cards_observer.html" title=" " alt="" coords="272,5,515,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html" title=" " alt="" coords="304,85,483,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_render_player_info_cards_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockRenderPlayerInfoCardsObserver" alt="" coords="272,5,515,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html" title="alexaClientSDK::capability\lAgents::templateRuntime\l::TemplateRuntime" alt="" coords="304,85,483,141"/>
 </map>

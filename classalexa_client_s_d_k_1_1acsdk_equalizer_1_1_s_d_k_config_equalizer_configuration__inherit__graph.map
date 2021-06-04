@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkEqualizer::SDKConfigEqualizerConfiguration" name="alexaClientSDK::acsdkEqualizer::SDKConfigEqualizerConfiguration">
-<area shape="rect" id="node1" title=" " alt="" coords="5,199,232,240"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_in_memory_equalizer_configuration.html" title=" " alt="" coords="9,109,228,151"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1_equalizer_configuration_interface.html" title=" " alt="" coords="9,5,228,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_in_memory_equalizer_configuration.html" title="alexaClientSDK::acsdkEqualizer\l::InMemoryEqualizerConfiguration" alt="" coords="9,109,228,151"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1_equalizer_configuration_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::EqualizerConfiguration\lInterface" alt="" coords="9,5,228,61"/>
 </map>

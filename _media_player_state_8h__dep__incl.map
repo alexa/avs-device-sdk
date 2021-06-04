@@ -1,52 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/MediaPlayerState.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/MediaPlayerState.h">
-<area shape="rect" id="node1" title=" " alt="" coords="2489,5,2705,76"/>
-<area shape="rect" id="node2" href="$_media_player_interface_8h.html" title=" " alt="" coords="2401,124,2637,195"/>
-<area shape="rect" id="node28" href="$_media_player_observer_interface_8h.html" title=" " alt="" coords="3965,243,4191,328"/>
-<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8h.html" title=" " alt="" coords="331,383,641,469"/>
-<area shape="rect" id="node5" href="$_custom_application_audio_pipeline_factory_8h.html" title=" " alt="" coords="666,383,978,469"/>
-<area shape="rect" id="node7" href="$_gstreamer_application_audio_pipeline_factory_8h.html" title=" " alt="" coords="1002,376,1322,476"/>
-<area shape="rect" id="node9" href="$_default_client_8h.html" title=" " alt="" coords="3939,657,4166,728"/>
-<area shape="rect" id="node13" href="$_external_capabilities_builder_interface_8h.html" title=" " alt="" coords="2096,531,2340,602"/>
-<area shape="rect" id="node15" href="$_stub_application_audio_pipeline_factory_8h.html" title=" " alt="" coords="5,391,255,461"/>
-<area shape="rect" id="node19" href="$_system_sound_player_8h.html" title=" " alt="" coords="3611,391,3889,461"/>
-<area shape="rect" id="node25" href="$_application_media_interfaces_8h.html" title=" " alt="" coords="703,250,941,321"/>
-<area shape="rect" id="node26" href="$_speech_synthesizer_observer_interface_8h.html" title=" " alt="" coords="2309,250,2564,321"/>
-<area shape="rect" id="node27" href="$_speech_synthesizer_8h.html" title=" " alt="" coords="2198,391,2465,461"/>
-<area shape="rect" id="node29" href="$_mock_media_player_8h.html" title=" " alt="" coords="5001,391,5217,461"/>
-<area shape="rect" id="node31" href="$_renderer_8h.html" title=" " alt="" coords="5291,391,5505,461"/>
-<area shape="rect" id="node33" href="$_audio_player_8h.html" title=" " alt="" coords="3945,531,4160,602"/>
-<area shape="rect" id="node34" href="$_bluetooth_8h.html" title=" " alt="" coords="5529,391,5784,461"/>
-<area shape="rect" id="node35" href="$_notification_renderer_8h.html" title=" " alt="" coords="5859,391,6126,461"/>
-<area shape="rect" id="node39" href="$_test_media_player_8h.html" title=" " alt="" coords="2739,398,2937,454"/>
-<area shape="rect" id="node42" href="$_media_player_8h.html" title=" " alt="" coords="2489,391,2715,461"/>
-<area shape="rect" id="node44" href="$_pooled_media_player_factory_8h.html" title=" " alt="" coords="3023,250,3290,321"/>
-<area shape="rect" id="node45" href="$_pooled_media_resource_provider_8h.html" title=" " alt="" coords="687,524,920,609"/>
-<area shape="rect" id="node46" href="$_external_media_player_8h.html" title=" " alt="" coords="1846,383,2073,469"/>
-<area shape="rect" id="node47" href="$_android_s_l_e_s_media_player_8h.html" title=" " alt="" coords="2690,250,2949,321"/>
-<area shape="rect" id="node48" href="$_attachment_reader_source_8h.html" title=" " alt="" coords="1347,391,1572,461"/>
-<area shape="rect" id="node49" href="$_base_stream_source_8h.html" title=" " alt="" coords="1596,250,1821,321"/>
-<area shape="rect" id="node50" href="$_i_stream_source_8h.html" title=" " alt="" coords="1596,391,1821,461"/>
-<area shape="rect" id="node4" href="$_android_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="1769,531,2072,602"/>
-<area shape="rect" id="node6" href="$_custom_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="945,531,1249,602"/>
-<area shape="rect" id="node8" href="$_gstreamer_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="2364,531,2683,602"/>
-<area shape="rect" id="node10" href="$_default_client_8cpp.html" title=" " alt="" coords="689,776,918,832"/>
-<area shape="rect" id="node11" href="$_interaction_manager_8h.html" title=" " alt="" coords="3942,880,4161,936"/>
-<area shape="rect" id="node12" href="$_keyword_observer_8h.html" title=" " alt="" coords="4018,776,4229,832"/>
-<area shape="rect" id="node14" href="$_external_capabilities_builder_8h.html" title=" " alt="" coords="2111,657,2325,728"/>
-<area shape="rect" id="node16" href="$_default_client_component_8h.html" title=" " alt="" coords="435,531,662,602"/>
-<area shape="rect" id="node17" href="$_default_client_component_8cpp.html" title=" " alt="" coords="295,657,499,728"/>
-<area shape="rect" id="node18" href="$_stub_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="193,531,411,602"/>
-<area shape="rect" id="node20" href="$_system_sound_player_8cpp.html" title=" " alt="" coords="3638,531,3891,602"/>
-<area shape="rect" id="node21" href="$_system_sound_player_test_8cpp.html" title=" " alt="" coords="4505,531,4699,602"/>
-<area shape="rect" id="node22" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="2859,539,3030,595"/>
-<area shape="rect" id="node23" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="3305,531,3513,602"/>
-<area shape="rect" id="node24" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="2719,665,2925,721"/>
-<area shape="rect" id="node30" href="$_mock_media_player_8cpp.html" title=" " alt="" coords="5023,539,5261,595"/>
-<area shape="rect" id="node32" href="$_audio_item_8h.html" title=" " alt="" coords="3965,391,4170,461"/>
-<area shape="rect" id="node36" href="$_caption_timing_adapter_8h.html" title=" " alt="" coords="4245,398,4511,454"/>
-<area shape="rect" id="node37" href="$_mock_caption_presenter_8h.html" title=" " alt="" coords="4536,398,4732,454"/>
-<area shape="rect" id="node38" href="$_caption_frame_8h.html" title=" " alt="" coords="4756,398,4976,454"/>
-<area shape="rect" id="node40" href="$_android_s_l_e_s_media_player_8cpp.html" title=" " alt="" coords="2962,398,3221,454"/>
-<area shape="rect" id="node41" href="$_android_s_l_e_s_media_player_test_8cpp.html" title=" " alt="" coords="3245,398,3535,454"/>
-<area shape="rect" id="node43" href="$_media_player_test_8cpp.html" title=" " alt="" coords="3055,539,3280,595"/>
+<area shape="rect" id="node2" href="$_media_player_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/MediaPlayerInterface.h" alt="" coords="2252,124,2488,195"/>
+<area shape="rect" id="node28" href="$_media_player_observer_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/MediaPlayerObserver\lInterface.h" alt="" coords="3809,243,4035,328"/>
+<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/AndroidApplicationAudioPipelineFactory.h" alt="" coords="1091,376,1385,461"/>
+<area shape="rect" id="node6" href="$_custom_application_audio_pipeline_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCustom\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/CustomApplicationAudioPipelineFactory.h" alt="" coords="774,376,1067,461"/>
+<area shape="rect" id="node9" href="$_gstreamer_application_audio_pipeline_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkGstreamer\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/GstreamerApplicationAudioPipelineFactory.h" alt="" coords="1683,376,1977,461"/>
+<area shape="rect" id="node12" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="267,635,494,706"/>
+<area shape="rect" id="node16" href="$_external_capabilities_builder_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/ExternalCapabilitiesBuilderInterface.h" alt="" coords="5,509,249,580"/>
+<area shape="rect" id="node18" href="$_stub_application_audio_pipeline_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/StubApplicationAudioPipelineFactory.h" alt="" coords="1409,383,1659,454"/>
+<area shape="rect" id="node22" href="$_system_sound_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/SystemSoundPlayer/include\l/SystemSoundPlayer/SystemSoundPlayer.h" alt="" coords="3507,383,3785,454"/>
+<area shape="rect" id="node25" href="$_application_media_interfaces_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="1413,250,1655,321"/>
+<area shape="rect" id="node26" href="$_speech_synthesizer_observer_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/SpeechSynthesizerObserverInterface.h" alt="" coords="191,250,445,321"/>
+<area shape="rect" id="node27" href="$_speech_synthesizer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/include\l/SpeechSynthesizer/SpeechSynthesizer.h" alt="" coords="165,383,431,454"/>
+<area shape="rect" id="node29" href="$_mock_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/MediaPlayer/MockMediaPlayer.h" alt="" coords="5196,383,5413,454"/>
+<area shape="rect" id="node31" href="$_renderer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Renderer/Renderer.h" alt="" coords="3045,383,3258,454"/>
+<area shape="rect" id="node33" href="$_audio_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioPlayer.h" alt="" coords="4026,509,4242,580"/>
+<area shape="rect" id="node34" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="5437,383,5692,454"/>
+<area shape="rect" id="node35" href="$_notification_renderer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationRenderer.h" alt="" coords="2153,383,2421,454"/>
+<area shape="rect" id="node39" href="$_test_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/include\l/Integration/TestMediaPlayer.h" alt="" coords="3282,391,3482,447"/>
+<area shape="rect" id="node42" href="$_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/MediaPlayer.h" alt="" coords="3809,383,4035,454"/>
+<area shape="rect" id="node44" href="$_pooled_media_player_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/PooledMediaPlayerFactory.h" alt="" coords="2759,250,3029,321"/>
+<area shape="rect" id="node45" href="$_pooled_media_resource_provider_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/PooledMediaResource\lProvider.h" alt="" coords="2304,628,2537,713"/>
+<area shape="rect" id="node46" href="$_external_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayer.h" alt="" coords="455,376,682,461"/>
+<area shape="rect" id="node47" href="$_android_s_l_e_s_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="2325,250,2583,321"/>
+<area shape="rect" id="node48" href="$_attachment_reader_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/AttachmentReaderSource.h" alt="" coords="5716,383,5941,454"/>
+<area shape="rect" id="node49" href="$_base_stream_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/BaseStreamSource.h" alt="" coords="5716,250,5941,321"/>
+<area shape="rect" id="node50" href="$_i_stream_source_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/include/MediaPlayer\l/IStreamSource.h" alt="" coords="5965,383,6191,454"/>
+<area shape="rect" id="node4" href="$_android_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp" alt="" coords="2458,509,2762,580"/>
+<area shape="rect" id="node5" href="$acsdk_android_application_audio_pipeline_factory_2src_2_application_audio_pipeline_factory_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/ApplicationAudioPipelineFactoryComponent.cpp" alt="" coords="1360,509,1687,580"/>
+<area shape="rect" id="node7" href="$acsdk_custom_application_audio_pipeline_factory_2src_2_application_audio_pipeline_factory_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCustom\lApplicationAudioPipelineFactory\l/src/ApplicationAudioPipelineFactoryComponent.cpp" alt="" coords="757,509,1084,580"/>
+<area shape="rect" id="node8" href="$_custom_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCustom\lApplicationAudioPipelineFactory\l/src/CustomApplicationAudioPipelineFactory.cpp" alt="" coords="426,509,733,580"/>
+<area shape="rect" id="node10" href="$acsdk_gstreamer_application_audio_pipeline_factory_2src_2_application_audio_pipeline_factory_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkGstreamer\lApplicationAudioPipelineFactory\l/src/ApplicationAudioPipelineFactoryComponent.cpp" alt="" coords="2056,509,2383,580"/>
+<area shape="rect" id="node11" href="$_gstreamer_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkGstreamer\lApplicationAudioPipelineFactory\l/src/GstreamerApplicationAudioPipelineFactory.cpp" alt="" coords="3680,509,4001,580"/>
+<area shape="rect" id="node13" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="2306,761,2535,817"/>
+<area shape="rect" id="node14" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="270,865,489,921"/>
+<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="345,761,557,817"/>
+<area shape="rect" id="node17" href="$_external_capabilities_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h" alt="" coords="21,635,234,706"/>
+<area shape="rect" id="node19" href="$_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="1109,509,1335,580"/>
+<area shape="rect" id="node20" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="1776,635,1980,706"/>
+<area shape="rect" id="node21" href="$_stub_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/StubApplication\lAudioPipelineFactory.cpp" alt="" coords="1711,509,1930,580"/>
+<area shape="rect" id="node23" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="3426,509,3655,580"/>
+<area shape="rect" id="node24" href="$_system_sound_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/SystemSoundPlayer/src/SystemSound\lPlayer.cpp" alt="" coords="3149,509,3402,580"/>
+<area shape="rect" id="node30" href="$_mock_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/MockMediaPlayer.cpp" alt="" coords="4864,517,5103,573"/>
+<area shape="rect" id="node32" href="$_audio_item_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioItem.h" alt="" coords="4059,383,4265,454"/>
+<area shape="rect" id="node36" href="$_caption_timing_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionTimingAdapter.h" alt="" coords="4441,391,4707,447"/>
+<area shape="rect" id="node37" href="$_mock_caption_presenter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionPresenter.h" alt="" coords="4732,391,4928,447"/>
+<area shape="rect" id="node38" href="$_caption_frame_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Interface\l/include/Captions/CaptionFrame.h" alt="" coords="4952,391,5172,447"/>
+<area shape="rect" id="node40" href="$_android_s_l_e_s_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp" alt="" coords="2445,391,2705,447"/>
+<area shape="rect" id="node41" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="2730,391,3021,447"/>
+<area shape="rect" id="node43" href="$_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="4267,517,4492,573"/>
 </map>

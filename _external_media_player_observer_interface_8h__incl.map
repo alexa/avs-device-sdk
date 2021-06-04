@@ -1,12 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerObserverInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="87,5,371,91"/>
-<area shape="rect" id="node2" href="$_play_requestor_8h.html" title=" " alt="" coords="5,250,235,277"/>
-<area shape="rect" id="node4" href="$_external_media_adapter_interface_8h.html" title=" " alt="" coords="199,139,411,195"/>
-<area shape="rect" id="node3" title=" " alt="" coords="245,332,299,359"/>
-<area shape="rect" id="node5" title=" " alt="" coords="309,250,371,277"/>
-<area shape="rect" id="node6" title=" " alt="" coords="395,250,435,277"/>
-<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title=" " alt="" coords="459,243,645,284"/>
-<area shape="rect" id="node8" title=" " alt="" coords="432,332,493,359"/>
-<area shape="rect" id="node9" title=" " alt="" coords="517,332,587,359"/>
-<area shape="rect" id="node10" title=" " alt="" coords="611,332,669,359"/>
+<area shape="rect" id="node2" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="5,250,240,277"/>
+<area shape="rect" id="node4" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="205,139,417,195"/>
+<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="464,243,653,284"/>
 </map>

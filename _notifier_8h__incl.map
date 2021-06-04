@@ -1,8 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkNotifier/include/acsdkNotifier/Notifier.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkNotifier/include/acsdkNotifier/Notifier.h">
-<area shape="rect" id="node1" title=" " alt="" coords="49,5,253,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,117,80,143"/>
-<area shape="rect" id="node3" title=" " alt="" coords="133,199,203,225"/>
-<area shape="rect" id="node4" title=" " alt="" coords="155,117,213,143"/>
-<area shape="rect" id="node5" href="$_notifier_interface_8h.html" title=" " alt="" coords="237,109,395,151"/>
-<area shape="rect" id="node6" title=" " alt="" coords="277,199,355,225"/>
+<area shape="rect" id="node6" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="320,109,477,151"/>
 </map>

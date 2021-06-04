@@ -1,11 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MimeResponseStatusHandlerInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MimeResponseStatusHandlerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="272,5,487,76"/>
-<area shape="rect" id="node2" href="$_downchannel_handler_8h.html" title=" " alt="" coords="30,124,249,180"/>
-<area shape="rect" id="node5" href="$_message_request_handler_8h.html" title=" " alt="" coords="534,124,777,180"/>
-<area shape="rect" id="node8" href="$_mime_response_sink_8h.html" title=" " alt="" coords="273,124,486,180"/>
-<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title=" " alt="" coords="5,228,180,284"/>
-<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8cpp.html" title=" " alt="" coords="397,228,556,284"/>
-<area shape="rect" id="node6" href="$_message_request_handler_8cpp.html" title=" " alt="" coords="581,228,778,284"/>
-<area shape="rect" id="node7" href="$_message_request_handler_test_8cpp.html" title=" " alt="" coords="803,228,1025,284"/>
-<area shape="rect" id="node9" href="$_mime_response_sink_8cpp.html" title=" " alt="" coords="205,228,373,284"/>
+<area shape="rect" id="node2" href="$_downchannel_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/DownchannelHandler.h" alt="" coords="29,124,249,180"/>
+<area shape="rect" id="node5" href="$_message_request_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestHandler.h" alt="" coords="534,124,777,180"/>
+<area shape="rect" id="node8" href="$_mime_response_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MimeResponseSink.h" alt="" coords="274,124,487,180"/>
+<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="5,228,180,284"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="397,228,556,284"/>
+<area shape="rect" id="node6" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="580,228,779,284"/>
+<area shape="rect" id="node7" href="$_message_request_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MessageRequestHandlerTest.cpp" alt="" coords="802,228,1026,284"/>
+<area shape="rect" id="node9" href="$_mime_response_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MimeResponseSink.cpp" alt="" coords="205,228,373,284"/>
 </map>

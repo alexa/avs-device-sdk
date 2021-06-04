@@ -1,3 +1,12 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_data_point_counter_builder.html" title=" " alt="" coords="5,5,223,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_console_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ConsoleLogger" alt="" coords="288,5,485,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::Logger" alt="" coords="24,213,221,255"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_logger.html" title="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidLogger" alt="" coords="294,283,479,339"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::ModuleLogger" alt="" coords="288,71,485,112"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockLogger" alt="" coords="288,363,485,419"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_test_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lTestLogger" alt="" coords="288,137,485,193"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1sample_app_1_1_console_printer.html" title="alexaClientSDK::sampleApp\l::ConsolePrinter" alt="" coords="293,217,481,259"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_module_logger.html" title="alexaClientSDK::avsCommon\l::utils::logger::test::\lMockModuleLogger" alt="" coords="533,63,731,119"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::LogLevelObserver\lInterface" alt="" coords="17,63,228,119"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_sink_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::logger::SinkObserverInterface" alt="" coords="5,144,240,185"/>
 </map>

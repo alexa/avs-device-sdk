@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Stream/Streambuf.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Stream/Streambuf.h">
-<area shape="rect" id="node1" title=" " alt="" coords="227,5,407,76"/>
-<area shape="rect" id="node2" href="$_streambuf_8cpp.html" title=" " alt="" coords="5,124,184,180"/>
-<area shape="rect" id="node3" href="$_stream_functions_8cpp.html" title=" " alt="" coords="208,124,427,180"/>
-<area shape="rect" id="node4" href="$_streambuf_test_8cpp.html" title=" " alt="" coords="451,124,613,180"/>
+<area shape="rect" id="node2" href="$_streambuf_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Stream/Streambuf.cpp" alt="" coords="5,124,184,180"/>
+<area shape="rect" id="node3" href="$_stream_functions_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Stream/StreamFunctions.cpp" alt="" coords="208,124,427,180"/>
+<area shape="rect" id="node4" href="$_streambuf_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/StreambufTest.cpp" alt="" coords="451,124,613,180"/>
 </map>

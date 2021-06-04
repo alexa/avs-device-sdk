@@ -1,8 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html" title=" " alt="" coords="5,152,253,208"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_exception_encountered_sender.html" title=" " alt="" coords="311,5,534,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_exception_encountered_sender.html" title=" " alt="" coords="307,86,538,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_exception_encountered_sender.html" title=" " alt="" coords="309,152,536,208"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_waitable_exception_encountered_sender.html" title=" " alt="" coords="301,232,544,288"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender.html" title=" " alt="" coords="315,312,531,368"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_factory_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ChannelVolume\lFactoryInterface" alt="" coords="5,5,215,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_default_channel_volume_factory.html" title="alexaClientSDK::capability\lAgents::speakerManager\l::DefaultChannelVolumeFactory" alt="" coords="263,5,471,61"/>
 </map>

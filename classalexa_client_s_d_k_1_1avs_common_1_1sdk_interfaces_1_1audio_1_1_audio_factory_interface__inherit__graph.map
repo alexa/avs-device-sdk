@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::audio::AudioFactoryInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::audio::AudioFactoryInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,203,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_audio_factory.html" title=" " alt="" coords="11,109,197,165"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_stub_audio_factory.html" title="alexaClientSDK::acsdkNotifications\l::test::StubAudioFactory" alt="" coords="251,5,481,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_audio_factory.html" title="alexaClientSDK::application\lUtilities::resources::audio\l::AudioFactory" alt="" coords="273,71,459,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1application_utilities_1_1system_sound_player_1_1test_1_1_stub_audio_factory.html" title="Stub class that implements AudioFactoryInterface. " alt="" coords="271,151,461,207"/>
 </map>

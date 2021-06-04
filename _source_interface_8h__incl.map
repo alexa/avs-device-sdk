@@ -1,14 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/SourceInterface.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/GStreamerMediaPlayer/include/MediaPlayer/SourceInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="339,5,565,76"/>
-<area shape="rect" id="node2" href="$_pipeline_interface_8h.html" title=" " alt="" coords="125,131,331,158"/>
-<area shape="rect" id="node8" href="$_source_observer_interface_8h.html" title=" " alt="" coords="356,124,548,165"/>
-<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title=" " alt="" coords="572,124,759,165"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,213,67,240"/>
-<area shape="rect" id="node4" title=" " alt="" coords="456,213,525,240"/>
-<area shape="rect" id="node5" title=" " alt="" coords="91,213,170,240"/>
-<area shape="rect" id="node6" title=" " alt="" coords="194,213,267,240"/>
-<area shape="rect" id="node7" title=" " alt="" coords="291,213,429,240"/>
-<area shape="rect" id="node10" title=" " alt="" coords="551,213,612,240"/>
-<area shape="rect" id="node11" title=" " alt="" coords="636,213,695,240"/>
-<area shape="rect" id="node12" title=" " alt="" coords="719,213,774,240"/>
+<area shape="rect" id="node2" href="$_pipeline_interface_8h.html" title="MediaPlayer/PipelineInterface.h" alt="" coords="125,131,331,158"/>
+<area shape="rect" id="node8" href="$_source_observer_interface_8h.html" title="MediaPlayer/SourceObserver\lInterface.h" alt="" coords="356,124,548,165"/>
+<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="572,124,761,165"/>
 </map>

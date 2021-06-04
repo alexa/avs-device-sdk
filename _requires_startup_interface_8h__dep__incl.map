@@ -1,42 +1,42 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManagerInterfaces/include/acsdkStartupManagerInterfaces/RequiresStartupInterface.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManagerInterfaces/include/acsdkStartupManagerInterfaces/RequiresStartupInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="2844,5,3100,76"/>
-<area shape="rect" id="node2" href="$_external_media_player_8h.html" title=" " alt="" coords="980,243,1207,328"/>
-<area shape="rect" id="node28" href="$_post_connect_operation_provider_registrar_8h.html" title=" " alt="" coords="3269,243,3584,328"/>
-<area shape="rect" id="node32" href="$_startup_notifier_8h.html" title=" " alt="" coords="3024,250,3245,321"/>
-<area shape="rect" id="node35" href="$_startup_notifier_interface_8h.html" title=" " alt="" coords="2761,124,3017,195"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="923,940,1176,1011"/>
-<area shape="rect" id="node7" href="$_default_client_8h.html" title=" " alt="" coords="519,509,745,580"/>
-<area shape="rect" id="node11" href="$_sample_application_8h.html" title=" " alt="" coords="53,947,269,1003"/>
-<area shape="rect" id="node18" href="$_default_client_component_8h.html" title=" " alt="" coords="733,383,960,454"/>
-<area shape="rect" id="node20" href="$_external_capabilities_builder_interface_8h.html" title=" " alt="" coords="363,383,607,454"/>
-<area shape="rect" id="node23" href="$_external_media_player_component_8h.html" title=" " alt="" coords="1824,376,2051,461"/>
-<area shape="rect" id="node25" href="$_external_media_player_8cpp.html" title=" " alt="" coords="984,383,1203,454"/>
-<area shape="rect" id="node26" href="$_external_media_adapter_handler_test_8cpp.html" title=" " alt="" coords="1227,383,1501,454"/>
-<area shape="rect" id="node27" href="$_external_media_player_test_8cpp.html" title=" " alt="" coords="1526,383,1749,454"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="751,1066,1006,1122"/>
-<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="1637,1059,1867,1129"/>
-<area shape="rect" id="node6" href="$preview_main_8cpp.html" title=" " alt="" coords="1031,1066,1244,1122"/>
-<area shape="rect" id="node8" href="$_default_client_8cpp.html" title=" " alt="" coords="669,628,899,684"/>
-<area shape="rect" id="node9" href="$_interaction_manager_8h.html" title=" " alt="" coords="524,732,743,788"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title=" " alt="" coords="384,628,595,684"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8h.html" title=" " alt="" coords="403,836,618,892"/>
-<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="643,836,848,892"/>
-<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="641,947,842,1003"/>
-<area shape="rect" id="node12" href="$main_8cpp.html" title=" " alt="" coords="5,1073,203,1115"/>
-<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title=" " alt="" coords="227,1073,504,1115"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="177,739,449,781"/>
-<area shape="rect" id="node19" href="$_default_client_component_8cpp.html" title=" " alt="" coords="1510,509,1714,580"/>
-<area shape="rect" id="node21" href="$_external_capabilities_builder_8h.html" title=" " alt="" coords="403,940,616,1011"/>
-<area shape="rect" id="node22" href="$_external_capabilities_builder_8cpp.html" title=" " alt="" coords="528,1066,720,1122"/>
-<area shape="rect" id="node24" href="$_external_media_player_component_8cpp.html" title=" " alt="" coords="1790,509,2050,580"/>
-<area shape="rect" id="node29" href="$_core_component_8cpp.html" title=" " alt="" coords="3249,391,3415,447"/>
-<area shape="rect" id="node30" href="$_post_connect_operation_provider_registrar_8cpp.html" title=" " alt="" coords="3994,383,4275,454"/>
-<area shape="rect" id="node31" href="$_post_connect_operation_provider_registrar_test_8cpp.html" title=" " alt="" coords="3684,383,3969,454"/>
-<area shape="rect" id="node33" href="$_shared_component_8cpp.html" title=" " alt="" coords="2799,391,2980,447"/>
-<area shape="rect" id="node34" href="$_startup_manager_test_8cpp.html" title=" " alt="" coords="3439,391,3660,447"/>
-<area shape="rect" id="node36" href="$_shared_component_8h.html" title=" " alt="" coords="2483,257,2754,313"/>
-<area shape="rect" id="node39" href="$_startup_manager_8h.html" title=" " alt="" coords="2779,250,3000,321"/>
-<area shape="rect" id="node37" href="$_default_sample_application_options_component_8cpp.html" title=" " alt="" coords="2126,383,2439,454"/>
-<area shape="rect" id="node38" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="2463,383,2774,454"/>
-<area shape="rect" id="node40" href="$_startup_manager_8cpp.html" title=" " alt="" coords="3004,391,3225,447"/>
+<area shape="rect" id="node2" href="$_external_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayer.h" alt="" coords="1010,243,1236,328"/>
+<area shape="rect" id="node28" href="$_post_connect_operation_provider_registrar_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkPostConnectOperation\lProviderRegistrar/include/acsdkPostConnect\lOperationProviderRegistrar/PostConnectOperation\lProviderRegistrar.h" alt="" coords="3354,243,3668,328"/>
+<area shape="rect" id="node32" href="$_startup_notifier_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkStartupManager\l/include/acsdkStartupManager\l/StartupNotifier.h" alt="" coords="2203,250,2424,321"/>
+<area shape="rect" id="node36" href="$_startup_notifier_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkStartupManager\lInterfaces/include/acsdkStartupManager\lInterfaces/StartupNotifierInterface.h" alt="" coords="2103,124,2359,195"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="1047,940,1300,1011"/>
+<area shape="rect" id="node7" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="784,509,1011,580"/>
+<area shape="rect" id="node11" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="70,947,286,1003"/>
+<area shape="rect" id="node18" href="$_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="1211,383,1438,454"/>
+<area shape="rect" id="node20" href="$_external_capabilities_builder_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/ExternalCapabilitiesBuilderInterface.h" alt="" coords="52,383,296,454"/>
+<area shape="rect" id="node23" href="$_external_media_player_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayerComponent.h" alt="" coords="1462,376,1688,461"/>
+<area shape="rect" id="node25" href="$_external_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/src/ExternalMediaPlayer.cpp" alt="" coords="320,383,539,454"/>
+<area shape="rect" id="node26" href="$_external_media_adapter_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/test/ExternalMediaAdapterHandlerTest.cpp" alt="" coords="564,383,840,454"/>
+<area shape="rect" id="node27" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/test/ExternalMediaPlayerTest.cpp" alt="" coords="864,383,1086,454"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="806,1066,1061,1122"/>
+<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="1772,1059,2002,1129"/>
+<area shape="rect" id="node6" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="1086,1066,1299,1122"/>
+<area shape="rect" id="node8" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1211,628,1440,684"/>
+<area shape="rect" id="node9" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="716,732,935,788"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="649,628,861,684"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="490,836,705,892"/>
+<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="730,836,935,892"/>
+<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="657,947,858,1003"/>
+<area shape="rect" id="node12" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="22,1073,219,1115"/>
+<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="243,1073,520,1115"/>
+<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="368,739,641,781"/>
+<area shape="rect" id="node19" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="1645,509,1849,580"/>
+<area shape="rect" id="node21" href="$_external_capabilities_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h" alt="" coords="419,940,632,1011"/>
+<area shape="rect" id="node22" href="$_external_capabilities_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/External\lCapabilitiesBuilder.cpp" alt="" coords="544,1066,736,1122"/>
+<area shape="rect" id="node24" href="$_external_media_player_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/src/ExternalMediaPlayerComponent.cpp" alt="" coords="1361,509,1621,580"/>
+<area shape="rect" id="node29" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="3428,391,3594,447"/>
+<area shape="rect" id="node30" href="$_post_connect_operation_provider_registrar_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkPostConnectOperation\lProviderRegistrar/src/PostConnectOperation\lProviderRegistrar.cpp" alt="" coords="3618,383,3900,454"/>
+<area shape="rect" id="node31" href="$_post_connect_operation_provider_registrar_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkPostConnectOperation\lProviderRegistrar/test/PostConnectOperation\lProviderRegistrarTest.cpp" alt="" coords="3924,383,4210,454"/>
+<area shape="rect" id="node33" href="$_shared_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShared\l/src/SharedComponent.cpp" alt="" coords="2448,391,2630,447"/>
+<area shape="rect" id="node34" href="$_startup_notifier_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkStartupManager\l/src/StartupNotifier.cpp" alt="" coords="2203,391,2424,447"/>
+<area shape="rect" id="node35" href="$_startup_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkStartupManager\l/test/StartupManagerTest.cpp" alt="" coords="1958,391,2179,447"/>
+<area shape="rect" id="node37" href="$_shared_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShared\l/include/acsdkShared/SharedComponent.h" alt="" coords="2726,257,2997,313"/>
+<area shape="rect" id="node40" href="$_startup_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkStartupManager\l/include/acsdkStartupManager\l/StartupManager.h" alt="" coords="1958,250,2179,321"/>
+<area shape="rect" id="node38" href="$_default_sample_application_options_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/src\l/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="2705,383,3018,454"/>
+<area shape="rect" id="node39" href="$_alexa_communications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/src/AlexaCommunications\lComponent.cpp" alt="" coords="3042,383,3353,454"/>
+<area shape="rect" id="node41" href="$_startup_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkStartupManager\l/src/StartupManager.cpp" alt="" coords="1712,391,1934,447"/>
 </map>

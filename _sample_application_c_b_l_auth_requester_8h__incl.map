@@ -1,7 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkSampleApplicationCBLAuthRequester/include/acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkSampleApplicationCBLAuthRequester/include/acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h">
-<area shape="rect" id="node1" title=" " alt="" coords="52,5,369,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,146,75,173"/>
-<area shape="rect" id="node3" href="$_u_i_manager_interface_8h.html" title=" " alt="" coords="99,139,322,180"/>
-<area shape="rect" id="node5" href="$_c_b_l_auth_requester_interface_8h.html" title=" " alt="" coords="346,139,590,180"/>
-<area shape="rect" id="node4" title=" " alt="" coords="311,228,366,255"/>
+<area shape="rect" id="node3" href="$_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="98,139,321,180"/>
+<area shape="rect" id="node5" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="345,139,589,180"/>
 </map>

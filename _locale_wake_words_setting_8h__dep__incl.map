@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Types/LocaleWakeWordsSetting.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/Types/LocaleWakeWordsSetting.h">
-<area shape="rect" id="node1" title=" " alt="" coords="383,5,609,76"/>
-<area shape="rect" id="node2" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="5,124,235,195"/>
-<area shape="rect" id="node3" href="$_locale_handler_test_8cpp.html" title=" " alt="" coords="259,131,493,187"/>
-<area shape="rect" id="node4" href="$_locale_wake_words_setting_8cpp.html" title=" " alt="" coords="517,131,717,187"/>
-<area shape="rect" id="node5" href="$_locale_wake_words_setting_test_8cpp.html" title=" " alt="" coords="741,131,941,187"/>
+<area shape="rect" id="node2" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerBuilder.cpp" alt="" coords="5,124,236,195"/>
+<area shape="rect" id="node3" href="$_locale_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/LocaleHandlerTest.cpp" alt="" coords="261,131,495,187"/>
+<area shape="rect" id="node4" href="$_locale_wake_words_setting_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/src/Types\l/LocaleWakeWordsSetting.cpp" alt="" coords="519,131,722,187"/>
+<area shape="rect" id="node5" href="$_locale_wake_words_setting_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/LocaleWake\lWordsSettingTest.cpp" alt="" coords="747,131,948,187"/>
 </map>

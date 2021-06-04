@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::mediaPlayer::android::test::MockPlaylistParser" name="alexaClientSDK::mediaPlayer::android::test::MockPlaylistParser">
-<area shape="rect" id="node1" title=" " alt="" coords="263,13,485,54"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html" title=" " alt="" coords="5,5,215,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_iterative_playlist_parser_interface.html" title="alexaClientSDK::avsCommon\l::utils::playlistParser\l::IterativePlaylistParserInterface" alt="" coords="5,5,215,61"/>
 </map>

@@ -1,7 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h" name="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/include/SQLiteStorage/SQLiteMiscStorage.h">
-<area shape="rect" id="node1" title=" " alt="" coords="347,5,575,76"/>
-<area shape="rect" id="node2" href="$_core_component_8cpp.html" title=" " alt="" coords="5,124,171,180"/>
-<area shape="rect" id="node3" href="$_sample_application_8cpp.html" title=" " alt="" coords="195,131,472,173"/>
-<area shape="rect" id="node4" href="$_s_q_lite_misc_storage_8cpp.html" title=" " alt="" coords="496,124,683,180"/>
-<area shape="rect" id="node5" href="$_s_q_lite_misc_storage_test_8cpp.html" title=" " alt="" coords="707,124,922,180"/>
+<area shape="rect" id="node2" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="5,124,171,180"/>
+<area shape="rect" id="node3" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="195,131,472,173"/>
+<area shape="rect" id="node4" href="$_s_q_lite_misc_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Storage/SQLiteStorage\l/src/SQLiteMiscStorage.cpp" alt="" coords="496,124,683,180"/>
+<area shape="rect" id="node5" href="$_s_q_lite_misc_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Storage/SQLiteStorage\l/test/SQLiteMiscStorageTest.cpp" alt="" coords="707,124,923,180"/>
 </map>

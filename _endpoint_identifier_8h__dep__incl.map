@@ -1,52 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Endpoints/EndpointIdentifier.h">
-<area shape="rect" id="node1" title=" " alt="" coords="2259,5,2498,76"/>
-<area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="931,732,1157,803"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="864,969,1083,1025"/>
-<area shape="rect" id="node7" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title=" " alt="" coords="3195,243,3467,313"/>
-<area shape="rect" id="node12" href="$_capabilities_delegate_8h.html" title=" " alt="" coords="3507,613,3698,684"/>
-<area shape="rect" id="node14" href="$_endpoint_registration_manager_8h.html" title=" " alt="" coords="1937,613,2146,684"/>
-<area shape="rect" id="node16" href="$_endpoint_interface_8h.html" title=" " alt="" coords="2142,369,2381,439"/>
-<area shape="rect" id="node18" href="$_alexa_interface_capability_agent_8h.html" title=" " alt="" coords="701,613,931,684"/>
-<area shape="rect" id="node21" href="$_endpoint_registration_manager_interface_8h.html" title=" " alt="" coords="2347,495,2669,565"/>
-<area shape="rect" id="node24" href="$_endpoint_8h.html" title=" " alt="" coords="827,502,981,558"/>
-<area shape="rect" id="node25" href="$_endpoint_registration_observer_interface_8h.html" title=" " alt="" coords="2457,361,2719,447"/>
-<area shape="rect" id="node31" href="$_context_requester_interface_8h.html" title=" " alt="" coords="531,124,770,195"/>
-<area shape="rect" id="node35" href="$_endpoint_capabilities_builder_interface_8h.html" title=" " alt="" coords="1412,369,1721,439"/>
-<area shape="rect" id="node38" href="$_context_manager_8h.html" title=" " alt="" coords="3723,621,3955,677"/>
-<area shape="rect" id="node40" href="$_device_info_8h.html" title=" " alt="" coords="4321,495,4501,565"/>
-<area shape="rect" id="node42" href="$_device_info_8cpp.html" title=" " alt="" coords="5431,621,5591,677"/>
-<area shape="rect" id="node50" href="$_u_i_manager_8cpp.html" title=" " alt="" coords="4576,139,4808,180"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="1480,858,1709,914"/>
-<area shape="rect" id="node5" href="$_keyword_observer_8h.html" title=" " alt="" coords="1011,858,1221,914"/>
-<area shape="rect" id="node6" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="3475,969,3730,1025"/>
-<area shape="rect" id="node8" href="$_capabilities_delegate_interface_8h.html" title=" " alt="" coords="1779,495,2018,565"/>
-<area shape="rect" id="node15" href="$_endpoint_registration_manager_test_8cpp.html" title=" " alt="" coords="2779,739,2971,795"/>
-<area shape="rect" id="node19" href="$_default_endpoint_builder_8h.html" title=" " alt="" coords="2215,739,2446,795"/>
-<area shape="rect" id="node20" href="$_endpoint_builder_8h.html" title=" " alt="" coords="2171,621,2360,677"/>
-<area shape="rect" id="node27" href="$_discovery_utils_8h.html" title=" " alt="" coords="3953,369,4143,439"/>
-<area shape="rect" id="node28" href="$_discovery_utils_test_8cpp.html" title=" " alt="" coords="3904,502,4123,558"/>
-<area shape="rect" id="node29" href="$_endpoint_attribute_validation_8h.html" title=" " alt="" coords="3571,376,3826,432"/>
-<area shape="rect" id="node30" href="$_endpoint_attribute_validation_test_8cpp.html" title=" " alt="" coords="3645,502,3835,558"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="3229,613,3483,684"/>
-<area shape="rect" id="node10" href="$_default_client_component_8h.html" title=" " alt="" coords="1483,613,1709,684"/>
-<area shape="rect" id="node11" href="$_equalizer_capability_agent_8h.html" title=" " alt="" coords="424,613,677,684"/>
-<area shape="rect" id="node13" href="$_core_component_8h.html" title=" " alt="" coords="1259,621,1458,677"/>
-<area shape="rect" id="node17" href="$_endpoint_builder_interface_8h.html" title=" " alt="" coords="1462,495,1703,565"/>
-<area shape="rect" id="node23" href="$_mock_endpoint_8h.html" title=" " alt="" coords="2745,495,2965,565"/>
-<area shape="rect" id="node22" href="$_mock_endpoint_registration_manager_8h.html" title=" " alt="" coords="2435,613,2736,684"/>
-<area shape="rect" id="node26" href="$_mock_endpoint_registration_observer_8h.html" title=" " alt="" coords="2989,495,3293,565"/>
-<area shape="rect" id="node32" href="$_capability_agent_8h.html" title=" " alt="" coords="461,502,701,558"/>
-<area shape="rect" id="node33" href="$_bluetooth_8h.html" title=" " alt="" coords="145,613,399,684"/>
-<area shape="rect" id="node34" href="$_context_manager_interface_8h.html" title=" " alt="" coords="1205,243,1443,313"/>
-<area shape="rect" id="node36" href="$_alexa_interface_message_sender_8h.html" title=" " alt="" coords="1107,495,1336,565"/>
-<area shape="rect" id="node37" href="$_playback_controller_8h.html" title=" " alt="" coords="145,369,405,439"/>
-<area shape="rect" id="node39" href="$_post_connect_synchronize_state_sender_8h.html" title=" " alt="" coords="683,369,939,439"/>
-<area shape="rect" id="node41" href="$_authorization_delegate_component_8h.html" title=" " alt="" coords="4469,613,4755,684"/>
-<area shape="rect" id="node43" href="$_device_info_test_8cpp.html" title=" " alt="" coords="4780,621,4945,677"/>
-<area shape="rect" id="node44" href="$_a_c_l_test_context_8cpp.html" title=" " alt="" coords="4877,739,5029,795"/>
-<area shape="rect" id="node45" href="$_auth_delegate_test_context_8cpp.html" title=" " alt="" coords="5054,739,5255,795"/>
-<area shape="rect" id="node46" href="$_c_b_l_auth_delegate_8h.html" title=" " alt="" coords="5071,613,5356,684"/>
-<area shape="rect" id="node47" href="$_c_b_l_auth_delegate_8cpp.html" title=" " alt="" coords="5279,739,5566,795"/>
-<area shape="rect" id="node48" href="$_c_b_l_auth_delegate_configuration_8cpp.html" title=" " alt="" coords="4182,613,4445,684"/>
-<area shape="rect" id="node49" href="$_external_capabilities_builder_8h.html" title=" " alt="" coords="3839,851,4052,921"/>
+<area shape="rect" id="node2" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="2165,732,2392,803"/>
+<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1157,955,1376,1011"/>
+<area shape="rect" id="node8" href="$_a_v_s_discovery_endpoint_attributes_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/AVSDiscoveryEndpoint\lAttributes.h" alt="" coords="1239,124,1518,195"/>
+<area shape="rect" id="node13" href="$_capabilities_delegate_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="1406,613,1597,684"/>
+<area shape="rect" id="node15" href="$_endpoint_registration_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/EndpointRegistration\lManager.h" alt="" coords="867,613,1077,684"/>
+<area shape="rect" id="node17" href="$_endpoint_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Endpoints/EndpointInterface.h" alt="" coords="1406,369,1647,439"/>
+<area shape="rect" id="node19" href="$_alexa_interface_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/include/Alexa/AlexaInterface\lCapabilityAgent.h" alt="" coords="2480,613,2709,684"/>
+<area shape="rect" id="node22" href="$_endpoint_registration_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Endpoints/EndpointRegistrationManagerInterface.h" alt="" coords="1830,495,2151,565"/>
+<area shape="rect" id="node26" href="$_endpoint_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/Endpoint.h" alt="" coords="576,502,731,558"/>
+<area shape="rect" id="node27" href="$_endpoint_modification_data_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Endpoints/EndpointModificationData.h" alt="" coords="1596,243,1844,313"/>
+<area shape="rect" id="node28" href="$_endpoint_registration_observer_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Endpoints/EndpointRegistrationObserver\lInterface.h" alt="" coords="303,361,566,447"/>
+<area shape="rect" id="node34" href="$_context_requester_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2810,124,3051,195"/>
+<area shape="rect" id="node38" href="$_endpoint_capabilities_builder_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilitiesBuilderInterface.h" alt="" coords="3891,369,4200,439"/>
+<area shape="rect" id="node41" href="$_context_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ContextManager/include\l/ContextManager/ContextManager.h" alt="" coords="3994,621,4227,677"/>
+<area shape="rect" id="node43" href="$_device_info_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/DeviceInfo.h" alt="" coords="4377,495,4559,565"/>
+<area shape="rect" id="node45" href="$_device_info_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/DeviceInfo.cpp" alt="" coords="5419,621,5581,677"/>
+<area shape="rect" id="node50" href="$_u_i_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UIManager.cpp" alt="" coords="4635,139,4869,180"/>
+<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="3392,851,3621,907"/>
+<area shape="rect" id="node6" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="2173,851,2385,907"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="676,1059,881,1115"/>
+<area shape="rect" id="node7" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="2721,955,2975,1011"/>
+<area shape="rect" id="node9" href="$_capabilities_delegate_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/CapabilitiesDelegateInterface.h" alt="" coords="1565,495,1806,565"/>
+<area shape="rect" id="node16" href="$_endpoint_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lRegistrationManagerTest.cpp" alt="" coords="875,739,1069,795"/>
+<area shape="rect" id="node20" href="$_default_endpoint_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/DefaultEndpointBuilder.h" alt="" coords="2885,739,3117,795"/>
+<area shape="rect" id="node21" href="$_endpoint_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/EndpointBuilder.h" alt="" coords="3202,621,3393,677"/>
+<area shape="rect" id="node30" href="$_discovery_utils_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/Utils/DiscoveryUtils.h" alt="" coords="794,243,985,313"/>
+<area shape="rect" id="node31" href="$_discovery_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Utils/DiscoveryUtilsTest.cpp" alt="" coords="794,376,1014,432"/>
+<area shape="rect" id="node32" href="$_endpoint_attribute_validation_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/EndpointAttributeValidation.h" alt="" coords="1060,250,1316,306"/>
+<area shape="rect" id="node33" href="$_endpoint_attribute_validation_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lAttributeValidationTest.cpp" alt="" coords="1038,376,1229,432"/>
+<area shape="rect" id="node10" href="$_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="3141,732,3395,803"/>
+<area shape="rect" id="node11" href="$_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="3469,732,3696,803"/>
+<area shape="rect" id="node12" href="$_equalizer_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Equalizer\l/acsdkEqualizer/include/acsdkEqualizer\l/EqualizerCapabilityAgent.h" alt="" coords="2152,613,2405,684"/>
+<area shape="rect" id="node14" href="$_core_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/include\l/acsdkCore/CoreComponent.h" alt="" coords="3518,621,3717,677"/>
+<area shape="rect" id="node18" href="$_endpoint_builder_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/Endpoints/EndpointBuilderInterface.h" alt="" coords="2681,495,2922,565"/>
+<area shape="rect" id="node25" href="$_mock_endpoint_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/Endpoints/MockEndpoint.h" alt="" coords="957,495,1179,565"/>
+<area shape="rect" id="node23" href="$_locale_assets_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/LocaleAssetsManagerInterface.h" alt="" coords="2937,613,3178,684"/>
+<area shape="rect" id="node24" href="$_mock_endpoint_registration_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/Endpoints/MockEndpointRegistrationManager.h" alt="" coords="1774,613,2077,684"/>
+<area shape="rect" id="node29" href="$_mock_endpoint_registration_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/Endpoints/MockEndpointRegistrationObserver.h" alt="" coords="43,495,349,565"/>
+<area shape="rect" id="node35" href="$_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/CapabilityAgent.h" alt="" coords="2549,250,2793,306"/>
+<area shape="rect" id="node36" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="3611,369,3866,439"/>
+<area shape="rect" id="node37" href="$_context_manager_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/include/AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3301,243,3542,313"/>
+<area shape="rect" id="node39" href="$_alexa_interface_message_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/Alexa/include/Alexa/AlexaInterface\lMessageSender.h" alt="" coords="3335,495,3564,565"/>
+<area shape="rect" id="node40" href="$_playback_controller_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/include\l/PlaybackController/PlaybackController.h" alt="" coords="2632,369,2893,439"/>
+<area shape="rect" id="node42" href="$_post_connect_synchronize_state_sender_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SynchronizeStateSender\l/include/SynchronizeStateSender\l/PostConnectSynchronizeStateSender.h" alt="" coords="2969,369,3226,439"/>
+<area shape="rect" id="node44" href="$_authorization_delegate_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCBLAuthorization\lDelegate/include/acsdkAuthorizationDelegate\l/AuthorizationDelegateComponent.h" alt="" coords="4506,613,4793,684"/>
+<area shape="rect" id="node46" href="$_device_info_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/DeviceInfoTest.cpp" alt="" coords="4817,621,4983,677"/>
+<area shape="rect" id="node47" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="4985,739,5137,795"/>
+<area shape="rect" id="node48" href="$_auth_delegate_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/AuthDelegateTestContext.cpp" alt="" coords="5240,739,5443,795"/>
+<area shape="rect" id="node49" href="$_c_b_l_auth_delegate_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/include/CBLAuthDelegate\l/CBLAuthDelegate.h" alt="" coords="5059,613,5344,684"/>
 </map>

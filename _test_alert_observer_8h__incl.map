@@ -1,9 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/TestAlertObserver.h" name="/workplace/avs&#45;device&#45;sdk/Integration/include/Integration/TestAlertObserver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="202,5,409,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,117,67,143"/>
-<area shape="rect" id="node3" title=" " alt="" coords="91,117,218,143"/>
-<area shape="rect" id="node4" title=" " alt="" coords="243,117,301,143"/>
-<area shape="rect" id="node5" title=" " alt="" coords="413,199,467,225"/>
-<area shape="rect" id="node6" title=" " alt="" coords="377,117,434,143"/>
-<area shape="rect" id="node7" href="$_alert_observer_interface_8h.html" title=" " alt="" coords="459,109,627,151"/>
+<area shape="rect" id="node7" href="$_alert_observer_interface_8h.html" title="acsdkAlertsInterfaces\l/AlertObserverInterface.h" alt="" coords="459,109,627,151"/>
 </map>

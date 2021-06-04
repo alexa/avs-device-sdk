@@ -1,0 +1,14 @@
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/AbstractRecipe.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/include/acsdkManufactory/internal/AbstractRecipe.h">
+<area shape="rect" id="node2" href="$_type_index_8h.html" title="acsdkManufactory/internal\l/TypeIndex.h" alt="" coords="560,124,735,165"/>
+<area shape="rect" id="node8" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="258,392,434,433"/>
+<area shape="rect" id="node16" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="559,213,735,255"/>
+<area shape="rect" id="node29" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1113,213,1299,255"/>
+<area shape="rect" id="node30" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="863,213,1037,255"/>
+<area shape="rect" id="node10" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="109,481,285,523"/>
+<area shape="rect" id="node12" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="410,571,586,612"/>
+<area shape="rect" id="node18" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="711,303,887,344"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1116,392,1331,433"/>
+<area shape="rect" id="node26" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="746,481,922,523"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="899,392,1092,433"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1478,571,1654,612"/>
+</map>

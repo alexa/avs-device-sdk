@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkEqualizerInterfaces::EqualizerModeControllerInterface" name="alexaClientSDK::acsdkEqualizerInterfaces::EqualizerModeControllerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,43,236,99"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_mode_controller_interface.html" title=" " alt="" coords="284,5,520,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_sample_equalizer_mode_controller.html" title=" " alt="" coords="294,86,510,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_mode_controller_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::test::MockEqualizerMode\lControllerInterface" alt="" coords="284,5,520,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_sample_equalizer_mode_controller.html" title="alexaClientSDK::sampleApp\l::SampleEqualizerModeController" alt="" coords="294,86,510,127"/>
 </map>

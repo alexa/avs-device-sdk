@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegUrlInputController.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegUrlInputController.h">
-<area shape="rect" id="node1" title=" " alt="" coords="288,5,547,76"/>
-<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8cpp.html" title=" " alt="" coords="5,131,264,187"/>
-<area shape="rect" id="node3" href="$_f_fmpeg_url_input_controller_8cpp.html" title=" " alt="" coords="288,131,547,187"/>
-<area shape="rect" id="node4" href="$_f_fmpeg_url_input_controller_test_8cpp.html" title=" " alt="" coords="571,124,811,195"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp" alt="" coords="5,131,265,187"/>
+<area shape="rect" id="node3" href="$_f_fmpeg_url_input_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/FFmpegUrlInputController.cpp" alt="" coords="289,131,549,187"/>
+<area shape="rect" id="node4" href="$_f_fmpeg_url_input_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegUrlInputController\lTest.cpp" alt="" coords="574,124,814,195"/>
 </map>

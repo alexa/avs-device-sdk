@@ -1,9 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/TimerDelegate.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/TimerDelegate.h">
-<area shape="rect" id="node1" title=" " alt="" coords="123,5,303,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,131,67,158"/>
-<area shape="rect" id="node3" title=" " alt="" coords="91,131,218,158"/>
-<area shape="rect" id="node4" title=" " alt="" coords="243,131,301,158"/>
-<area shape="rect" id="node5" href="$_timer_delegate_interface_8h.html" title=" " alt="" coords="325,124,541,165"/>
-<area shape="rect" id="node6" title=" " alt="" coords="355,213,416,240"/>
-<area shape="rect" id="node7" title=" " alt="" coords="441,213,519,240"/>
+<area shape="rect" id="node5" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="325,124,541,165"/>
 </map>

@@ -1,8 +1,6 @@
 <map id="alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaAdapterHandler" name="alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaAdapterHandler">
-<area shape="rect" id="node1" title=" " alt="" coords="541,85,772,141"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html" title="Mock class for ExternalMediaPlayerAdapterHandler." alt="" coords="820,85,1067,141"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title=" " alt="" coords="265,5,479,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface.html" title=" " alt="" coords="251,85,493,141"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="5,93,203,134"/>
-<area shape="rect" id="node5" title=" " alt="" coords="261,165,483,221"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html" title="Mock class for ExternalMediaPlayerAdapterHandler. " alt="" coords="820,85,1067,141"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface" alt="" coords="265,5,479,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface.html" title="alexaClientSDK::acsdkExternal\lMediaPlayerInterfaces::ExternalMedia\lAdapterHandlerInterface" alt="" coords="251,85,493,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="5,93,203,134"/>
 </map>

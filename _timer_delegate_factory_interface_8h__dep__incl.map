@@ -1,52 +1,51 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Timing/TimerDelegateFactoryInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Timing/TimerDelegateFactoryInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="4206,5,4466,76"/>
-<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="4443,621,4698,677"/>
-<area shape="rect" id="node3" href="$_initialization_parameters_8h.html" title=" " alt="" coords="4807,243,5014,313"/>
-<area shape="rect" id="node25" href="$_s_d_k_primitives_provider_8h.html" title=" " alt="" coords="4041,124,4247,195"/>
-<area shape="rect" id="node49" href="$_timer_delegate_factory_8h.html" title=" " alt="" coords="4349,124,4555,195"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="8296,495,8549,565"/>
-<area shape="rect" id="node6" href="$_alexa_client_s_d_k_init_8h.html" title=" " alt="" coords="6002,369,6209,439"/>
-<area shape="rect" id="node23" href="$_initialization_parameters_builder_8h.html" title=" " alt="" coords="4490,369,4702,439"/>
-<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="7347,613,7576,684"/>
-<area shape="rect" id="node7" href="$_a_v_s_connection_manager_8cpp.html" title=" " alt="" coords="6653,509,6921,551"/>
-<area shape="rect" id="node8" href="$_a_v_s_connection_manager_test_8cpp.html" title=" " alt="" coords="6945,502,7143,558"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="6375,495,6628,565"/>
-<area shape="rect" id="node10" href="$_alexa_client_s_d_k_init_8cpp.html" title=" " alt="" coords="4506,502,4686,558"/>
-<area shape="rect" id="node11" href="$_alexa_client_s_d_k_init_test_8cpp.html" title=" " alt="" coords="7168,502,7357,558"/>
-<area shape="rect" id="node12" href="$_notifications_capability_agent_test_8cpp.html" title=" " alt="" coords="7381,495,7619,565"/>
-<area shape="rect" id="node13" href="$_certified_sender_test_8cpp.html" title=" " alt="" coords="7643,502,7835,558"/>
-<area shape="rect" id="node14" href="$_s_d_k_test_context_8cpp.html" title=" " alt="" coords="7859,502,8011,558"/>
-<area shape="rect" id="node15" href="$_alexa_authorization_delegate_test_8cpp.html" title=" " alt="" coords="8035,502,8272,558"/>
-<area shape="rect" id="node16" href="$_server_disconnect_integration_test_8cpp.html" title=" " alt="" coords="4762,495,4953,565"/>
-<area shape="rect" id="node17" href="$_media_player_test_8cpp.html" title=" " alt="" coords="4977,502,5202,558"/>
-<area shape="rect" id="node18" href="$_c_b_l_auth_delegate_8cpp.html" title=" " alt="" coords="5226,502,5513,558"/>
-<area shape="rect" id="node19" href="$_sample_application_8h.html" title=" " alt="" coords="5537,502,5753,558"/>
-<area shape="rect" id="node20" href="$_sample_application_8cpp.html" title=" " alt="" coords="5507,628,5784,669"/>
-<area shape="rect" id="node21" href="$_sample_application_component_8h.html" title=" " alt="" coords="5828,502,6111,558"/>
-<area shape="rect" id="node22" href="$_s_q_lite_misc_storage_test_8cpp.html" title=" " alt="" coords="6135,502,6350,558"/>
-<area shape="rect" id="node24" href="$_initialization_parameters_builder_8cpp.html" title=" " alt="" coords="4199,495,4379,565"/>
-<area shape="rect" id="node26" href="$_s_d_k_primitives_provider_8cpp.html" title=" " alt="" coords="4106,250,4363,306"/>
-<area shape="rect" id="node27" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title=" " alt="" coords="2450,243,2630,313"/>
-<area shape="rect" id="node28" href="$_message_router_8h.html" title=" " alt="" coords="3476,376,3663,432"/>
-<area shape="rect" id="node29" href="$_channel_8h.html" title=" " alt="" coords="3687,376,3857,432"/>
-<area shape="rect" id="node30" href="$_dialog_u_x_state_aggregator_8h.html" title=" " alt="" coords="937,376,1234,432"/>
-<area shape="rect" id="node31" href="$_audio_input_processor_8h.html" title=" " alt="" coords="2306,502,2561,558"/>
-<area shape="rect" id="node32" href="$_internet_connection_monitor_8h.html" title=" " alt="" coords="3932,495,4175,565"/>
-<area shape="rect" id="node33" href="$_condition_variable_wrapper_8h.html" title=" " alt="" coords="3983,369,4230,439"/>
-<area shape="rect" id="node34" href="$_multi_timer_8cpp.html" title=" " alt="" coords="331,376,491,432"/>
-<area shape="rect" id="node35" href="$_a_v_s_common_2_utils_2src_2_timer_8cpp.html" title=" " alt="" coords="4255,376,4415,432"/>
-<area shape="rect" id="node36" href="$_shared_data_stream_test_8cpp.html" title=" " alt="" coords="515,376,728,432"/>
-<area shape="rect" id="node37" href="$_timer_test_8cpp.html" title=" " alt="" coords="752,376,912,432"/>
-<area shape="rect" id="node38" href="$_alert_8h.html" title=" " alt="" coords="43,369,256,439"/>
-<area shape="rect" id="node39" href="$_alerts_capability_agent_8h.html" title=" " alt="" coords="115,495,328,565"/>
-<area shape="rect" id="node40" href="$_audio_player_8h.html" title=" " alt="" coords="1258,369,1473,439"/>
-<area shape="rect" id="node41" href="$_progress_timer_8cpp.html" title=" " alt="" coords="1497,376,1764,432"/>
-<area shape="rect" id="node42" href="$_mode_controller_capability_agent_8h.html" title=" " alt="" coords="1788,361,2052,447"/>
-<area shape="rect" id="node43" href="$_power_controller_capability_agent_8h.html" title=" " alt="" coords="2076,361,2292,447"/>
-<area shape="rect" id="node44" href="$_range_controller_capability_agent_8h.html" title=" " alt="" coords="2316,361,2535,447"/>
-<area shape="rect" id="node45" href="$_software_info_send_request_8h.html" title=" " alt="" coords="2559,369,2750,439"/>
-<area shape="rect" id="node46" href="$_user_inactivity_monitor_8h.html" title=" " alt="" coords="2775,369,2940,439"/>
-<area shape="rect" id="node47" href="$_template_runtime_8h.html" title=" " alt="" coords="2964,369,3209,439"/>
-<area shape="rect" id="node48" href="$_toggle_controller_capability_agent_8h.html" title=" " alt="" coords="3233,361,3452,447"/>
-<area shape="rect" id="node50" href="$_timer_delegate_factory_8cpp.html" title=" " alt="" coords="4489,250,4732,306"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="4337,621,4591,677"/>
+<area shape="rect" id="node3" href="$_initialization_parameters_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Initialization\l/InitializationParameters.h" alt="" coords="6360,243,6571,313"/>
+<area shape="rect" id="node25" href="$_s_d_k_primitives_provider_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="5704,243,5915,313"/>
+<area shape="rect" id="node47" href="$_timer_delegate_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Timing/TimerDelegateFactory.h" alt="" coords="6218,124,6427,195"/>
+<area shape="rect" id="node50" href="$_stop_task_timer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/AVSCommon/Utils\l/Timing/StopTaskTimer.h" alt="" coords="7429,124,7598,195"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="3924,487,4177,558"/>
+<area shape="rect" id="node6" href="$_alexa_client_s_d_k_init_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Initialization\l/AlexaClientSDKInit.h" alt="" coords="6217,361,6428,432"/>
+<area shape="rect" id="node23" href="$_initialization_parameters_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Initialization\l/InitializationParametersBuilder.h" alt="" coords="8048,361,8261,432"/>
+<area shape="rect" id="node5" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="3936,613,4165,684"/>
+<area shape="rect" id="node7" href="$_a_v_s_connection_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/AVSConnectionManager.cpp" alt="" coords="6731,502,7002,543"/>
+<area shape="rect" id="node8" href="$_a_v_s_connection_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/AVSConnection\lManagerTest.cpp" alt="" coords="7025,495,7225,551"/>
+<area shape="rect" id="node9" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="4201,487,4455,558"/>
+<area shape="rect" id="node10" href="$_alexa_client_s_d_k_init_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/AlexaClientSDKInit.cpp" alt="" coords="8063,495,8247,551"/>
+<area shape="rect" id="node11" href="$_alexa_client_s_d_k_init_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/AlexaClientSDKInitTest.cpp" alt="" coords="7301,495,7491,551"/>
+<area shape="rect" id="node12" href="$_notifications_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp" alt="" coords="4796,487,5033,558"/>
+<area shape="rect" id="node13" href="$_certified_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CertifiedSender\l/test/CertifiedSenderTest.cpp" alt="" coords="5058,495,5251,551"/>
+<area shape="rect" id="node14" href="$_s_d_k_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/SDKTestContext.cpp" alt="" coords="5276,495,5428,551"/>
+<area shape="rect" id="node15" href="$_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="5453,495,5691,551"/>
+<area shape="rect" id="node16" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="5715,487,5906,558"/>
+<area shape="rect" id="node17" href="$_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/GStreamerMedia\lPlayer/test/MediaPlayerTest.cpp" alt="" coords="5930,495,6155,551"/>
+<area shape="rect" id="node18" href="$_c_b_l_auth_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/src/CBLAuthDelegate.cpp" alt="" coords="6179,495,6466,551"/>
+<area shape="rect" id="node19" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="7516,495,7732,551"/>
+<area shape="rect" id="node20" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="7485,628,7763,669"/>
+<area shape="rect" id="node21" href="$_sample_application_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplicationComponent.h" alt="" coords="7756,495,8039,551"/>
+<area shape="rect" id="node22" href="$_s_q_lite_misc_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Storage/SQLiteStorage\l/test/SQLiteMiscStorageTest.cpp" alt="" coords="6491,495,6707,551"/>
+<area shape="rect" id="node24" href="$_initialization_parameters_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/Initialization/Initialization\lParametersBuilder.cpp" alt="" coords="8372,487,8556,558"/>
+<area shape="rect" id="node26" href="$_s_d_k_primitives_provider_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/Initialization/SDKPrimitivesProvider.cpp" alt="" coords="5693,369,5952,425"/>
+<area shape="rect" id="node27" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Timing/Timer.h" alt="" coords="1963,361,2146,432"/>
+<area shape="rect" id="node28" href="$_message_router_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouter.h" alt="" coords="3049,495,3237,551"/>
+<area shape="rect" id="node29" href="$_channel_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AFML/include/AFML\l/Channel.h" alt="" coords="2065,495,2236,551"/>
+<area shape="rect" id="node30" href="$_dialog_u_x_state_aggregator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/DialogUXStateAggregator.h" alt="" coords="2261,495,2563,551"/>
+<area shape="rect" id="node31" href="$_audio_input_processor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/include/AIP/AudioInputProcessor.h" alt="" coords="258,621,513,677"/>
+<area shape="rect" id="node32" href="$_internet_connection_monitor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Network/InternetConnectionMonitor.h" alt="" coords="4479,487,4721,558"/>
+<area shape="rect" id="node33" href="$_condition_variable_wrapper_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Threading/ConditionVariableWrapper.h" alt="" coords="2587,487,2837,558"/>
+<area shape="rect" id="node34" href="$_multi_timer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/MultiTimer.cpp" alt="" coords="2861,495,3024,551"/>
+<area shape="rect" id="node35" href="$_a_v_s_common_2_utils_2src_2_timer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Timer.cpp" alt="" coords="3687,495,3849,551"/>
+<area shape="rect" id="node36" href="$_shared_data_stream_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/SharedDataStreamTest.cpp" alt="" coords="3261,495,3475,551"/>
+<area shape="rect" id="node37" href="$_timer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/TimerTest.cpp" alt="" coords="3500,495,3663,551"/>
+<area shape="rect" id="node38" href="$_alert_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/Alert.h" alt="" coords="71,487,284,558"/>
+<area shape="rect" id="node39" href="$_alerts_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/AlertsCapabilityAgent.h" alt="" coords="5,613,219,684"/>
+<area shape="rect" id="node40" href="$_audio_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioPlayer.h" alt="" coords="359,487,575,558"/>
+<area shape="rect" id="node41" href="$_progress_timer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/src/ProgressTimer.cpp" alt="" coords="599,495,865,551"/>
+<area shape="rect" id="node42" href="$_mode_controller_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/ModeController/include\l/ModeController/ModeControllerCapability\lAgent.h" alt="" coords="889,480,1153,565"/>
+<area shape="rect" id="node43" href="$_power_controller_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PowerController/include\l/PowerController/PowerController\lCapabilityAgent.h" alt="" coords="1177,480,1393,565"/>
+<area shape="rect" id="node44" href="$_range_controller_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/RangeController/include\l/RangeController/RangeController\lCapabilityAgent.h" alt="" coords="1417,480,1636,565"/>
+<area shape="rect" id="node45" href="$_software_info_send_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/SoftwareInfoSendRequest.h" alt="" coords="1661,487,1851,558"/>
+<area shape="rect" id="node46" href="$_user_inactivity_monitor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/UserInactivityMonitor.h" alt="" coords="1876,487,2041,558"/>
+<area shape="rect" id="node48" href="$_timer_delegate_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Timing/TimerDelegateFactory.cpp" alt="" coords="6040,250,6285,306"/>
+<area shape="rect" id="node49" href="$_stop_task_timer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/Common/Timing/StopTask\lTimer.cpp" alt="" coords="8336,243,8544,313"/>
 </map>

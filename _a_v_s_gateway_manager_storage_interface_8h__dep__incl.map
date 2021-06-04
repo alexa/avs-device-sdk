@@ -1,13 +1,12 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="835,5,1145,76"/>
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8h.html" title=" " alt="" coords="764,124,963,195"/>
-<area shape="rect" id="node9" href="$_a_v_s_gateway_manager_storage_8h.html" title=" " alt="" coords="1087,124,1346,195"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,250,260,306"/>
-<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title=" " alt="" coords="761,243,965,313"/>
-<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_8cpp.html" title=" " alt="" coords="284,250,483,306"/>
-<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_test_8cpp.html" title=" " alt="" coords="507,250,737,306"/>
-<area shape="rect" id="node7" href="$_core_component_8cpp.html" title=" " alt="" coords="990,250,1155,306"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title=" " alt="" coords="1179,257,1457,299"/>
-<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_storage_8cpp.html" title=" " alt="" coords="1481,243,1705,313"/>
-<area shape="rect" id="node11" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title=" " alt="" coords="1729,243,1957,313"/>
+<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/AVSGatewayManager.h" alt="" coords="770,124,970,195"/>
+<area shape="rect" id="node9" href="$_a_v_s_gateway_manager_storage_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/Storage/AVSGatewayManagerStorage.h" alt="" coords="1093,124,1353,195"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,250,260,306"/>
+<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="768,243,972,313"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/AVSGatewayManager.cpp" alt="" coords="285,250,487,306"/>
+<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/AVSGatewayManagerTest.cpp" alt="" coords="511,250,743,306"/>
+<area shape="rect" id="node7" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="997,250,1162,306"/>
+<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1186,257,1463,299"/>
+<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/Storage/AVSGatewayManager\lStorage.cpp" alt="" coords="1487,243,1714,313"/>
+<area shape="rect" id="node11" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/Storage/AVSGatewayManager\lStorageTest.cpp" alt="" coords="1739,243,1969,313"/>
 </map>

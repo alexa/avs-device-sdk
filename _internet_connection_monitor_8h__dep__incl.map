@@ -1,8 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Network/InternetConnectionMonitor.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Network/InternetConnectionMonitor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="596,5,839,76"/>
-<area shape="rect" id="node2" href="$_internet_connection_monitor_component_8cpp.html" title=" " alt="" coords="5,124,299,195"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="323,131,578,187"/>
-<area shape="rect" id="node4" href="$_default_client_8cpp.html" title=" " alt="" coords="603,131,832,187"/>
-<area shape="rect" id="node5" href="$_internet_connection_monitor_8cpp.html" title=" " alt="" coords="856,124,1067,195"/>
-<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title=" " alt="" coords="1091,139,1368,180"/>
+<area shape="rect" id="node2" href="$_internet_connection_monitor_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lInternetConnectionMonitor\l/src/InternetConnectionMonitorComponent.cpp" alt="" coords="5,124,299,195"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="323,131,578,187"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="603,131,832,187"/>
+<area shape="rect" id="node5" href="$_internet_connection_monitor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Network/InternetConnection\lMonitor.cpp" alt="" coords="856,124,1067,195"/>
+<area shape="rect" id="node6" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1091,139,1368,180"/>
 </map>

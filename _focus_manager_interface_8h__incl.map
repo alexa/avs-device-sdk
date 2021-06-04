@@ -1,14 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/FocusManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/FocusManagerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="188,5,427,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,124,60,151"/>
-<area shape="rect" id="node3" title=" " alt="" coords="85,124,154,151"/>
-<area shape="rect" id="node4" title=" " alt="" coords="178,124,237,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="457,273,512,300"/>
-<area shape="rect" id="node6" title=" " alt="" coords="311,124,370,151"/>
-<area shape="rect" id="node7" href="$_content_type_8h.html" title=" " alt="" coords="151,199,370,225"/>
-<area shape="rect" id="node8" href="$_channel_observer_interface_8h.html" title=" " alt="" coords="468,124,653,151"/>
-<area shape="rect" id="node12" href="$_focus_manager_observer_interface_8h.html" title=" " alt="" coords="687,124,909,151"/>
-<area shape="rect" id="node9" href="$_focus_state_8h.html" title=" " alt="" coords="701,199,911,225"/>
-<area shape="rect" id="node11" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title=" " alt="" coords="445,199,677,225"/>
-<area shape="rect" id="node10" title=" " alt="" coords="771,273,841,300"/>
+<area shape="rect" id="node7" href="$_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="148,199,371,225"/>
+<area shape="rect" id="node8" href="$_channel_observer_interface_8h.html" title="ChannelObserverInterface.h" alt="" coords="471,124,656,151"/>
+<area shape="rect" id="node12" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="692,124,915,151"/>
+<area shape="rect" id="node9" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="707,199,921,225"/>
+<area shape="rect" id="node11" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="445,199,682,225"/>
 </map>

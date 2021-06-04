@@ -1,4 +1,3 @@
 <map id="alexaClientSDK::diagnostics::AudioInjectorMicrophone" name="alexaClientSDK::diagnostics::AudioInjectorMicrophone">
-<area shape="rect" id="node1" title="This represents a microphone which injects audio data into the shared data stream." alt="" coords="5,109,195,151"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface.html" title="This acts as an interface to record audio input from a microphone." alt="" coords="7,5,193,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface.html" title="This acts as an interface to record audio input from a microphone. " alt="" coords="7,5,193,61"/>
 </map>

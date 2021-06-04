@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::EventTracerInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::EventTracerInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,43,244,84"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_event_tracer.html" title=" " alt="" coords="309,5,472,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_protocol_tracer_interface.html" title=" " alt="" coords="292,71,489,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_protocol_tracer.html" title=" " alt="" coords="537,79,727,120"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_event_tracer.html" title="alexaClientSDK::acl\l::test::MockEventTracer" alt="" coords="309,5,472,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_protocol_tracer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::ProtocolTracerInterface" alt="" coords="292,71,489,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_protocol_tracer.html" title="alexaClientSDK::diagnostics\l::DeviceProtocolTracer" alt="" coords="537,79,727,120"/>
 </map>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper Class Reference</div>  </div>
@@ -134,6 +135,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a70d24d4c4d1a084168268b8e5b04a28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeec0d23463b0d5dc1f61960732d0320"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper_options_setting_adapter.html">CurlEasyHandleWrapperOptionsSettingAdapter</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#aeeec0d23463b0d5dc1f61960732d0320">curlOptionsSetter</a> ()</td></tr>
 <tr class="separator:aeeec0d23463b0d5dc1f61960732d0320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a614947ce140fbab970fa4bcdef98fb40"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a614947ce140fbab970fa4bcdef98fb40">setInterfaceName</a> (const std::string &amp;interfaceName)</td></tr>
+<tr class="separator:a614947ce140fbab970fa4bcdef98fb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e9b4695e80c5b0137605db9df6d4793"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a4e9b4695e80c5b0137605db9df6d4793">getInterfaceName</a> ()</td></tr>
+<tr class="separator:a4e9b4695e80c5b0137605db9df6d4793"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to allocate and configure a curl easy handle </p>
@@ -391,6 +399,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a4e9b4695e80c5b0137605db9df6d4793"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e9b4695e80c5b0137605db9df6d4793">&#9670;&nbsp;</a></span>getInterfaceName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::getInterfaceName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Static function to get the network interface.</p>
+<dl class="section return"><dt>Returns</dt><dd>the current network interface, otherwise an empty string. </dd></dl>
+
+</div>
+</div>
 <a id="a2aa345bbddc974cf1cb11f3de90bb01d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2aa345bbddc974cf1cb11f3de90bb01d">&#9670;&nbsp;</a></span>isValid()</h2>
 
@@ -549,6 +584,41 @@ CURL post form </li>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the addition was successful </dd></dl>
+
+</div>
+</div>
+<a id="a614947ce140fbab970fa4bcdef98fb40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a614947ce140fbab970fa4bcdef98fb40">&#9670;&nbsp;</a></span>setInterfaceName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper::setInterfaceName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>interfaceName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Static function to set the network interface to be used for the curl connection.</p>
+<p>Network interface provided will be used in preference over the value in provided in config. Set emtpy string to reset to default.</p>
+<dl class="section note"><dt>Note</dt><dd>The network interace set shall applied only to newly instantiated <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html">CurlEasyHandleWrapper</a></code> objects.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The interface name as defined in CURLOPT_INTERFACE. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -764,7 +834,7 @@ CURL post form </li>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

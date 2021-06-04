@@ -1,6 +1,5 @@
 <map id="alexaClientSDK::sampleApp::UserInputManager" name="alexaClientSDK::sampleApp::UserInputManager">
-<area shape="rect" id="node1" title="Observes user input from the console and notifies the interaction manager of the user&#39;s intentions." alt="" coords="308,79,496,120"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title=" " alt="" coords="9,5,257,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_observer_interface.html" title=" " alt="" coords="13,71,252,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_registration_observer_interface.html" title=" " alt="" coords="5,152,260,193"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface" alt="" coords="9,5,257,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lObserverInterface" alt="" coords="14,71,251,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_registration_observer_interface.html" title="alexaClientSDK::registration\lManager::RegistrationObserverInterface" alt="" coords="5,152,260,193"/>
 </map>

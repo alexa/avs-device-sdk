@@ -1,11 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/TimeUtils.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/TimeUtils.h">
-<area shape="rect" id="node1" title=" " alt="" coords="217,5,397,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,213,67,240"/>
-<area shape="rect" id="node3" title=" " alt="" coords="355,213,410,240"/>
-<area shape="rect" id="node4" title=" " alt="" coords="279,131,334,158"/>
-<area shape="rect" id="node5" href="$_retry_timer_8h.html" title=" " alt="" coords="44,131,255,158"/>
-<area shape="rect" id="node7" href="$_safe_c_time_access_8h.html" title=" " alt="" coords="410,124,585,165"/>
-<area shape="rect" id="node6" title=" " alt="" coords="120,213,179,240"/>
-<area shape="rect" id="node8" title=" " alt="" coords="539,213,608,240"/>
-<area shape="rect" id="node9" title=" " alt="" coords="456,213,515,240"/>
+<area shape="rect" id="node5" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="43,131,256,158"/>
+<area shape="rect" id="node7" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="411,124,587,165"/>
 </map>

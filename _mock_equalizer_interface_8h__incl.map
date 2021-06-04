@@ -1,15 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/test/include/acsdkEqualizerInterfaces/MockEqualizerInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Equalizer/acsdkEqualizerInterfaces/test/include/acsdkEqualizerInterfaces/MockEqualizerInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="23,5,267,91"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,146,120,173"/>
-<area shape="rect" id="node3" href="$_equalizer_interface_8h.html" title=" " alt="" coords="145,139,314,180"/>
-<area shape="rect" id="node4" href="$_equalizer_types_8h.html" title=" " alt="" coords="168,228,291,255"/>
-<area shape="rect" id="node5" title=" " alt="" coords="20,310,71,337"/>
-<area shape="rect" id="node6" title=" " alt="" coords="95,310,150,337"/>
-<area shape="rect" id="node7" title=" " alt="" coords="174,310,285,337"/>
-<area shape="rect" id="node8" href="$hash_8h.html" title=" " alt="" coords="309,303,499,344"/>
-<area shape="rect" id="node12" href="$_success_result_8h.html" title=" " alt="" coords="524,303,687,344"/>
-<area shape="rect" id="node9" title=" " alt="" coords="290,392,350,419"/>
-<area shape="rect" id="node10" title=" " alt="" coords="374,392,434,419"/>
-<area shape="rect" id="node11" title=" " alt="" coords="458,392,537,419"/>
-<area shape="rect" id="node13" href="$_result_8h.html" title=" " alt="" coords="570,392,641,419"/>
+<area shape="rect" id="node3" href="$_equalizer_interface_8h.html" title="acsdkEqualizerInterfaces\l/EqualizerInterface.h" alt="" coords="145,139,314,180"/>
+<area shape="rect" id="node4" href="$_equalizer_types_8h.html" title="EqualizerTypes.h" alt="" coords="168,228,291,255"/>
+<area shape="rect" id="node8" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="309,303,502,344"/>
+<area shape="rect" id="node12" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="527,303,692,344"/>
+<area shape="rect" id="node13" href="$_result_8h.html" title="Result.h" alt="" coords="574,392,645,419"/>
 </map>

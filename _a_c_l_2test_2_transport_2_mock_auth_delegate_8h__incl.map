@@ -1,9 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockAuthDelegate.h" name="/workplace/avs&#45;device&#45;sdk/ACL/test/Transport/MockAuthDelegate.h">
-<area shape="rect" id="node1" title=" " alt="" coords="189,5,351,61"/>
-<area shape="rect" id="node2" href="$_auth_observer_interface_8h.html" title=" " alt="" coords="5,199,196,240"/>
-<area shape="rect" id="node4" href="$_auth_delegate_interface_8h.html" title=" " alt="" coords="175,109,365,151"/>
-<area shape="rect" id="node5" title=" " alt="" coords="227,206,297,233"/>
-<area shape="rect" id="node6" title=" " alt="" coords="348,206,403,233"/>
-<area shape="rect" id="node7" title=" " alt="" coords="441,117,555,143"/>
-<area shape="rect" id="node3" title=" " alt="" coords="66,288,135,315"/>
+<area shape="rect" id="node2" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="5,199,197,240"/>
+<area shape="rect" id="node4" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="175,109,367,151"/>
 </map>

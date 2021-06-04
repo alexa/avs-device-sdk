@@ -1,0 +1,15 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DeviceSetup/acsdkDeviceSetup/src/DeviceSetupMessageRequest.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/DeviceSetup/acsdkDeviceSetup/src/DeviceSetupMessageRequest.cpp">
+<area shape="rect" id="node2" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="740,124,916,165"/>
+<area shape="rect" id="node25" href="$_device_setup_message_request_8h.html" title="acsdkDeviceSetup/DeviceSetup\lMessageRequest.h" alt="" coords="1279,124,1489,165"/>
+<area shape="rect" id="node8" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="307,303,522,344"/>
+<area shape="rect" id="node15" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="597,303,773,344"/>
+<area shape="rect" id="node16" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="916,213,1092,255"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="597,213,790,255"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="5,213,181,255"/>
+<area shape="rect" id="node19" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1792,303,1968,344"/>
+<area shape="rect" id="node21" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1563,392,1739,433"/>
+<area shape="rect" id="node27" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="1461,221,1712,247"/>
+<area shape="rect" id="node32" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1144,303,1387,344"/>
+<area shape="rect" id="node30" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="1563,303,1767,344"/>
+<area shape="rect" id="node31" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="1813,392,1979,433"/>
+</map>

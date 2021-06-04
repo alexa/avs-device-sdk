@@ -1,52 +1,38 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkDefaultSampleApplicationOptions/src/DefaultSampleApplicationOptionsComponent.cpp" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkDefaultSampleApplicationOptions/src/DefaultSampleApplicationOptionsComponent.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1582,5,1896,76"/>
-<area shape="rect" id="node2" href="$_component_accumulator_8h.html" title=" " alt="" coords="380,124,580,165"/>
-<area shape="rect" id="node16" href="$_metric_recorder_component_8h.html" title=" " alt="" coords="888,221,1081,262"/>
-<area shape="rect" id="node18" href="$_shared_component_8h.html" title=" " alt="" coords="1515,228,1736,255"/>
-<area shape="rect" id="node31" href="$_c_b_l_auth_delegate_8h.html" title=" " alt="" coords="3077,228,3324,255"/>
-<area shape="rect" id="node41" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title=" " alt="" coords="4636,317,4860,359"/>
-<area shape="rect" id="node44" href="$_default_sample_application_options_component_8h.html" title=" " alt="" coords="2015,213,2236,269"/>
-<area shape="rect" id="node3" title=" " alt="" coords="1623,585,1692,612"/>
-<area shape="rect" id="node4" href="$_component_8h.html" title=" " alt="" coords="492,325,703,351"/>
-<area shape="rect" id="node5" href="$_cook_book_8h.html" title=" " alt="" coords="269,407,444,448"/>
-<area shape="rect" id="node13" href="$_import_8h.html" title=" " alt="" coords="36,228,218,255"/>
-<area shape="rect" id="node14" href="$_type_traits_helper_8h.html" title=" " alt="" coords="242,221,417,262"/>
-<area shape="rect" id="node15" href="$_component_accumulator__imp_8h.html" title=" " alt="" coords="543,221,748,262"/>
-<area shape="rect" id="node12" href="$_component__imp_8h.html" title=" " alt="" coords="520,407,694,448"/>
-<area shape="rect" id="node6" title=" " alt="" coords="2262,503,2341,530"/>
-<area shape="rect" id="node7" title=" " alt="" coords="152,503,230,530"/>
-<area shape="rect" id="node8" title=" " alt="" coords="17,503,128,530"/>
-<area shape="rect" id="node9" title=" " alt="" coords="1370,503,1474,530"/>
-<area shape="rect" id="node10" title=" " alt="" coords="2888,503,2947,530"/>
-<area shape="rect" id="node11" href="$_annotated_8h.html" title=" " alt="" coords="255,503,458,530"/>
-<area shape="rect" id="node17" href="$_metric_recorder_interface_8h.html" title=" " alt="" coords="1010,317,1188,359"/>
-<area shape="rect" id="node19" href="$_shutdown_manager_interface_8h.html" title=" " alt="" coords="1264,317,1486,359"/>
-<area shape="rect" id="node20" href="$_shutdown_notifier_interface_8h.html" title=" " alt="" coords="1546,407,1769,448"/>
-<area shape="rect" id="node21" href="$_startup_manager_interface_8h.html" title=" " alt="" coords="778,317,985,359"/>
-<area shape="rect" id="node22" href="$_startup_notifier_interface_8h.html" title=" " alt="" coords="1088,496,1294,537"/>
-<area shape="rect" id="node23" href="$_configuration_node_8h.html" title=" " alt="" coords="2760,407,2972,448"/>
-<area shape="rect" id="node27" href="$_http_post_interface_8h.html" title=" " alt="" coords="3332,407,3532,448"/>
-<area shape="rect" id="node28" href="$_multi_timer_8h.html" title=" " alt="" coords="2357,407,2532,448"/>
-<area shape="rect" id="node30" href="$_system_clock_monitor_8h.html" title=" " alt="" coords="1245,407,1420,448"/>
-<area shape="rect" id="node24" title=" " alt="" coords="3172,503,3234,530"/>
-<area shape="rect" id="node25" title=" " alt="" coords="2624,503,2683,530"/>
-<area shape="rect" id="node26" title=" " alt="" coords="4094,503,4149,530"/>
-<area shape="rect" id="node29" title=" " alt="" coords="2370,503,2497,530"/>
-<area shape="rect" id="node32" title=" " alt="" coords="4292,325,4351,351"/>
-<area shape="rect" id="node33" href="$_auth_delegate_interface_8h.html" title=" " alt="" coords="3809,317,4000,359"/>
-<area shape="rect" id="node34" href="$_auth_observer_interface_8h.html" title=" " alt="" coords="4210,407,4401,448"/>
-<area shape="rect" id="node35" href="$_device_info_8h.html" title=" " alt="" coords="3576,325,3785,351"/>
-<area shape="rect" id="node36" href="$_retry_timer_8h.html" title=" " alt="" coords="3098,414,3308,441"/>
-<area shape="rect" id="node37" href="$_customer_data_handler_8h.html" title=" " alt="" coords="1796,496,1962,537"/>
-<area shape="rect" id="node38" href="$_c_b_l_auth_delegate_configuration_8h.html" title=" " alt="" coords="3264,317,3500,359"/>
-<area shape="rect" id="node39" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title=" " alt="" coords="4477,407,4713,448"/>
-<area shape="rect" id="node40" href="$_c_b_l_auth_requester_interface_8h.html" title=" " alt="" coords="4024,317,4268,359"/>
-<area shape="rect" id="node42" title=" " alt="" coords="4936,503,5006,530"/>
-<area shape="rect" id="node43" href="$_s_q_lite_database_8h.html" title=" " alt="" coords="4788,414,5007,441"/>
-<area shape="rect" id="node45" href="$_u_i_manager_interface_8h.html" title=" " alt="" coords="3760,407,3982,448"/>
-<area shape="rect" id="node46" href="$_a_v_s_connection_manager_interface_8h.html" title=" " alt="" coords="1815,317,2044,359"/>
-<area shape="rect" id="node47" href="$_message_sender_interface_8h.html" title=" " alt="" coords="1989,407,2180,448"/>
-<area shape="rect" id="node48" href="$_exception_encountered_sender_interface_8h.html" title=" " alt="" coords="2170,317,2430,359"/>
-<area shape="rect" id="node49" href="$_logger_8h.html" title=" " alt="" coords="2658,317,2833,359"/>
-<area shape="rect" id="node50" href="$_customer_data_manager_8h.html" title=" " alt="" coords="1794,407,1964,448"/>
+<area shape="rect" id="node2" href="$_component_accumulator_8h.html" title="acsdkManufactory/Component\lAccumulator.h" alt="" coords="641,124,841,165"/>
+<area shape="rect" id="node18" href="$_shared_component_8h.html" title="acsdkShared/SharedComponent.h" alt="" coords="1309,228,1530,255"/>
+<area shape="rect" id="node30" href="$_c_b_l_auth_delegate_8h.html" title="CBLAuthDelegate/CBLAuthDelegate.h" alt="" coords="2305,228,2552,255"/>
+<area shape="rect" id="node41" href="$_s_q_lite_c_b_l_auth_delegate_storage_8h.html" title="CBLAuthDelegate/SQLiteCBLAuth\lDelegateStorage.h" alt="" coords="4682,317,4906,359"/>
+<area shape="rect" id="node44" href="$_default_sample_application_options_component_8h.html" title="acsdkDefaultSampleApplication\lOptions/DefaultSampleApplication\lOptionsComponent.h" alt="" coords="3409,213,3630,269"/>
+<area shape="rect" id="node4" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="613,325,823,351"/>
+<area shape="rect" id="node5" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="437,407,612,448"/>
+<area shape="rect" id="node14" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="898,228,1079,255"/>
+<area shape="rect" id="node15" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="317,221,492,262"/>
+<area shape="rect" id="node16" href="$_component_accumulator__imp_8h.html" title="acsdkManufactory/internal\l/ComponentAccumulator_imp.h" alt="" coords="567,221,773,262"/>
+<area shape="rect" id="node13" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="636,407,811,448"/>
+<area shape="rect" id="node11" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="493,503,695,530"/>
+<area shape="rect" id="node12" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="243,496,417,537"/>
+<area shape="rect" id="node19" href="$_shutdown_manager_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownManagerInterface.h" alt="" coords="948,317,1171,359"/>
+<area shape="rect" id="node20" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="948,407,1171,448"/>
+<area shape="rect" id="node21" href="$_startup_manager_interface_8h.html" title="acsdkStartupManagerInterfaces\l/StartupManagerInterface.h" alt="" coords="1245,317,1452,359"/>
+<area shape="rect" id="node22" href="$_startup_notifier_interface_8h.html" title="acsdkStartupManagerInterfaces\l/StartupNotifierInterface.h" alt="" coords="1195,407,1401,448"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2547,407,2761,448"/>
+<area shape="rect" id="node27" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="2066,407,2269,448"/>
+<area shape="rect" id="node28" href="$_multi_timer_8h.html" title="AVSCommon/Utils/Timing\l/MultiTimer.h" alt="" coords="1477,407,1653,448"/>
+<area shape="rect" id="node32" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="3302,317,3494,359"/>
+<area shape="rect" id="node33" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="3295,407,3487,448"/>
+<area shape="rect" id="node34" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="2725,325,2935,351"/>
+<area shape="rect" id="node35" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1829,414,2042,441"/>
+<area shape="rect" id="node36" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2959,317,3125,359"/>
+<area shape="rect" id="node38" href="$_c_b_l_auth_delegate_configuration_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lConfiguration.h" alt="" coords="2465,317,2701,359"/>
+<area shape="rect" id="node39" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="3929,407,4165,448"/>
+<area shape="rect" id="node40" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="3519,317,3763,359"/>
+<area shape="rect" id="node37" href="$_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="3048,407,3271,448"/>
+<area shape="rect" id="node43" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="4537,414,4755,441"/>
+<area shape="rect" id="node45" href="$_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="4189,407,4412,448"/>
+<area shape="rect" id="node46" href="$_a_v_s_connection_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AVSConnectionManagerInterface.h" alt="" coords="4376,317,4607,359"/>
+<area shape="rect" id="node47" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="3663,407,3855,448"/>
+<area shape="rect" id="node48" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="3888,317,4148,359"/>
+<area shape="rect" id="node49" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2215,317,2391,359"/>
+<area shape="rect" id="node50" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="4172,317,4352,359"/>
 </map>

@@ -92,6 +92,9 @@ var searchData=
   ['curlmultihandlewrapper',['CurlMultiHandleWrapper',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_multi_handle_wrapper.html',1,'alexaClientSDK::avsCommon::utils::libcurlUtils']]],
   ['customapplicationaudiopipelinefactory',['CustomApplicationAudioPipelineFactory',['../classalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_1_1_custom_application_audio_pipeline_factory.html',1,'alexaClientSDK::acsdkApplicationAudioPipelineFactory']]],
   ['customerdatahandler',['CustomerDataHandler',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html',1,'alexaClientSDK::registrationManager']]],
+  ['customerdatahandlerinterface',['CustomerDataHandlerInterface',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html',1,'alexaClientSDK::registrationManager']]],
   ['customerdatamanager',['CustomerDataManager',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html',1,'alexaClientSDK::registrationManager']]],
+  ['customerdatamanagerfactory',['CustomerDataManagerFactory',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_factory.html',1,'alexaClientSDK::registrationManager']]],
+  ['customerdatamanagerinterface',['CustomerDataManagerInterface',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_interface.html',1,'alexaClientSDK::registrationManager']]],
   ['customerdatamanagertest',['CustomerDataManagerTest',['../classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_customer_data_manager_test.html',1,'alexaClientSDK::registrationManager::test']]]
 ];

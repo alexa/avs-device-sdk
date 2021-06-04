@@ -1,9 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/MetricSinkInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/MetricSinkInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="266,5,463,76"/>
-<area shape="rect" id="node2" href="$_metric_recorder_8h.html" title=" " alt="" coords="5,124,223,180"/>
-<area shape="rect" id="node4" href="$_sample_metric_sink_8h.html" title=" " alt="" coords="247,124,482,180"/>
-<area shape="rect" id="node6" href="$_upl_metric_sink_8h.html" title=" " alt="" coords="506,124,717,180"/>
-<area shape="rect" id="node3" href="$_metric_recorder_8cpp.html" title=" " alt="" coords="21,228,207,284"/>
-<area shape="rect" id="node5" href="$_sample_metric_sink_8cpp.html" title=" " alt="" coords="263,228,467,284"/>
-<area shape="rect" id="node7" href="$_upl_metric_sink_8cpp.html" title=" " alt="" coords="523,228,700,284"/>
+<area shape="rect" id="node2" href="$_metric_recorder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/MetricRecorder\l/include/Metrics/MetricRecorder.h" alt="" coords="267,124,485,180"/>
+<area shape="rect" id="node5" href="$_sample_metric_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/SampleMetricSink\l/include/Metrics/SampleMetricSink.h" alt="" coords="511,124,745,180"/>
+<area shape="rect" id="node7" href="$_upl_metric_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/UplMetricSink.h" alt="" coords="769,124,980,180"/>
+<area shape="rect" id="node3" href="$acsdk_sample_metric_recorder_2src_2_metric_recorder_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkSample\lMetricRecorder/src/MetricRecorderComponent.cpp" alt="" coords="217,228,535,284"/>
+<area shape="rect" id="node4" href="$_metric_recorder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/MetricRecorder\l/src/MetricRecorder.cpp" alt="" coords="5,228,192,284"/>
+<area shape="rect" id="node6" href="$_sample_metric_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/SampleMetricSink\l/src/SampleMetricSink.cpp" alt="" coords="559,228,763,284"/>
+<area shape="rect" id="node8" href="$_upl_metric_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/UplMetricSink.cpp" alt="" coords="787,228,965,284"/>
 </map>

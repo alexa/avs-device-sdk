@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,7 +74,8 @@ $(function() {
 <div class="title">Bluetooth.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;deque&gt;</code><br />
+<div class="textblock"><code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;deque&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
@@ -118,7 +119,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_formatted_audio_stream_adapter_8h_source.html">AVSCommon/Utils/Bluetooth/FormattedAudioStreamAdapter.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_executor_8h_source.html">AVSCommon/Utils/Threading/Executor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_handler_8h_source.html">RegistrationManager/CustomerDataHandler.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_customer_data_manager_8h_source.html">RegistrationManager/CustomerDataManager.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_customer_data_manager_interface_8h_source.html">RegistrationManager/CustomerDataManagerInterface.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_bluetooth_event_state_8h_source.html">acsdkBluetooth/BluetoothEventState.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_bluetooth_media_input_transformer_8h_source.html">acsdkBluetooth/BluetoothMediaInputTransformer.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -126,6 +127,47 @@ Include dependency graph for Bluetooth.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_bluetooth_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_bluetooth_2acsdk_bluetooth_2include_2acsdk_bluetooth_2_bluetooth_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2capabilities_2_bluetooth_2acsdk_bluetooth_2include_2acsdk_bluetooth_2_bluetooth_8h" id="_2workplace_2avs-device-sdk_2capabilities_2_bluetooth_2acsdk_bluetooth_2include_2acsdk_bluetooth_2_bluetooth_8h">
+<area shape="rect" id="node10" href="_application_audio_pipeline_factory_interface_8h.html" title="acsdkApplicationAudioPipeline\lFactoryInterfaces/ApplicationAudio\lPipelineFactoryInterface.h" alt="" coords="1094,124,1319,180"/>
+<area shape="rect" id="node12" href="_channel_volume_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelVolumeInterface.h" alt="" coords="705,332,897,373"/>
+<area shape="rect" id="node13" href="_media_player_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h" alt="" coords="2554,429,2763,470"/>
+<area shape="rect" id="node14" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3879,525,4075,552"/>
+<area shape="rect" id="node15" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="976,332,1165,373"/>
+<area shape="rect" id="node16" href="_bluetooth_notifier_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothNotifierInterface.h" alt="" coords="2555,131,2741,173"/>
+<area shape="rect" id="node17" href="_bluetooth_device_observer_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceObserverInterface.h" alt="" coords="3187,235,3424,277"/>
+<area shape="rect" id="node18" href="_bluetooth_device_connection_rules_provider_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceConnectionRules\lProviderInterface.h" alt="" coords="3323,124,3546,180"/>
+<area shape="rect" id="node19" href="_bluetooth_device_connection_rule_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceConnection\lRuleInterface.h" alt="" coords="3599,228,3846,284"/>
+<area shape="rect" id="node20" href="_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="3339,429,3581,470"/>
+<area shape="rect" id="node21" href="_device_category_8h.html" title="AVSCommon/Utils/Bluetooth\l/DeviceCategory.h" alt="" coords="3609,332,3801,373"/>
+<area shape="rect" id="node22" href="_bluetooth_storage_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothStorageInterface.h" alt="" coords="4255,131,4443,173"/>
+<area shape="rect" id="node23" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="435,243,637,269"/>
+<area shape="rect" id="node24" href="_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="813,235,1035,277"/>
+<area shape="rect" id="node25" href="_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="4467,131,4671,173"/>
+<area shape="rect" id="node26" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1577,436,1804,463"/>
+<area shape="rect" id="node27" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1721,332,1916,373"/>
+<area shape="rect" id="node28" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2183,429,2377,470"/>
+<area shape="rect" id="node29" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="3876,332,4071,373"/>
+<area shape="rect" id="node30" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="4695,131,4918,173"/>
+<area shape="rect" id="node31" href="_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="2947,243,3162,269"/>
+<area shape="rect" id="node32" href="_requester_8h.html" title="AVSCommon/AVS/Requester.h" alt="" coords="4092,436,4300,463"/>
+<area shape="rect" id="node33" href="_audio_focus_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/AudioFocusAnnotation.h" alt="" coords="4943,131,5135,173"/>
+<area shape="rect" id="node34" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="2650,235,2873,277"/>
+<area shape="rect" id="node35" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="2041,332,2233,373"/>
+<area shape="rect" id="node36" href="_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1260,429,1452,470"/>
+<area shape="rect" id="node37" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="5159,131,5351,173"/>
+<area shape="rect" id="node38" href="_bluetooth_device_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceManager\lInterface.h" alt="" coords="2765,124,2995,180"/>
+<area shape="rect" id="node39" href="_bluetooth_event_bus_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEventBus.h" alt="" coords="2333,235,2525,277"/>
+<area shape="rect" id="node40" href="_bluetooth_events_8h.html" title="AVSCommon/Utils/Bluetooth\l/BluetoothEvents.h" alt="" coords="2799,332,2991,373"/>
+<area shape="rect" id="node41" href="_a_v_r_c_p_target_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/AVRCPTarget\lInterface.h" alt="" coords="2788,421,3012,477"/>
+<area shape="rect" id="node42" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="5375,131,5630,173"/>
+<area shape="rect" id="node43" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="2273,124,2479,180"/>
+<area shape="rect" id="node44" href="_media_player_observer_interface_8h.html" title="AVSCommon/Utils/MediaPlayer\l/MediaPlayerObserverInterface.h" alt="" coords="2359,332,2572,373"/>
+<area shape="rect" id="node45" href="_formatted_audio_stream_adapter_8h.html" title="AVSCommon/Utils/Bluetooth\l/FormattedAudioStreamAdapter.h" alt="" coords="43,235,259,277"/>
+<area shape="rect" id="node46" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="333,332,528,373"/>
+<area shape="rect" id="node47" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1633,131,1799,173"/>
+<area shape="rect" id="node48" href="_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="1631,235,1854,277"/>
+<area shape="rect" id="node49" href="_bluetooth_event_state_8h.html" title="acsdkBluetooth/Bluetooth\lEventState.h" alt="" coords="4095,332,4265,373"/>
+<area shape="rect" id="node50" href="_bluetooth_media_input_transformer_8h.html" title="acsdkBluetooth/Bluetooth\lMediaInputTransformer.h" alt="" coords="2077,131,2248,173"/>
+<area shape="rect" id="node11" href="_application_media_interfaces_8h.html" title="AVSCommon/SDKInterfaces\l/ApplicationMediaInterfaces.h" alt="" coords="1109,235,1304,277"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -133,6 +175,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_bluetooth_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2capabilities_2_bluetooth_2acsdk_bluetooth_2include_2acsdk_bluetooth_2_bluetooth_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2capabilities_2_bluetooth_2acsdk_bluetooth_2include_2acsdk_bluetooth_2_bluetooth_8hdep" id="_2workplace_2avs-device-sdk_2capabilities_2_bluetooth_2acsdk_bluetooth_2include_2acsdk_bluetooth_2_bluetooth_8hdep">
+<area shape="rect" id="node2" href="_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,124,235,180"/>
+<area shape="rect" id="node3" href="_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="259,124,482,180"/>
+<area shape="rect" id="node4" href="_bluetooth_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothComponent.cpp" alt="" coords="506,124,795,180"/>
+<area shape="rect" id="node5" href="_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="819,124,1071,180"/>
 </map>
 </div>
 </div>
@@ -176,7 +222,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/PlatformSpecificValues.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/PlatformSpecificValues.h">
-<area shape="rect" id="node1" title=" " alt="" coords="93,5,335,61"/>
-<area shape="rect" id="node2" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="170,109,423,180"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="5,235,260,291"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="285,228,514,299"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="170,109,423,180"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,235,260,291"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="285,228,514,299"/>
 </map>

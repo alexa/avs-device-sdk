@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1afml_1_1test_1_1_test_client_1_1test_client_info.html" title=" " alt="" coords="5,5,211,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; registrationManager::RegistrationObserver\lInterface \&gt;" alt="" coords="5,5,284,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; registrationManager\l::RegistrationObserverInterface \&gt;" alt="" coords="332,13,548,69"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_registration_notifier.html" title="alexaClientSDK::registration\lManager::RegistrationNotifier" alt="" coords="596,20,788,61"/>
 </map>

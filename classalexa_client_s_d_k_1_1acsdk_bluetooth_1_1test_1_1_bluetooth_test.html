@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -86,6 +86,8 @@ Collaboration diagram for alexaClientSDK::acsdkBluetooth::test::BluetoothTest:</
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test_coll__map" id="alexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test_coll__map">
+<area shape="rect" id="node3" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html" title="alexaClientSDK::acsdkManufactory\l::Annotated\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::\lendpoints::DefaultEndpointAnnotation,\l alexaClientSDK::avsCommon::sdkInterfaces\l::endpoints::EndpointCapabilitiesRegistrarInterface \&gt;" alt="" coords="15,57,344,157"/>
+<area shape="rect" id="node4" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html" title="alexaClientSDK::acsdkManufactory\l::Annotated\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::\lAudioFocusAnnotation, alexaClientSDK\l::avsCommon::sdkInterfaces::FocusManagerInterface \&gt;" alt="" coords="5,181,353,267"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -138,9 +140,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ad49632dfda03d4d3ae7d3243abc99a25"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_bus.html">avsCommon::utils::bluetooth::BluetoothEventBus</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html#ad49632dfda03d4d3ae7d3243abc99a25">m_eventBus</a></td></tr>
 <tr class="memdesc:ad49632dfda03d4d3ae7d3243abc99a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">A bus to abstract <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html">Bluetooth</a> stack specific messages.  <a href="#ad49632dfda03d4d3ae7d3243abc99a25">More...</a><br /></td></tr>
 <tr class="separator:ad49632dfda03d4d3ae7d3243abc99a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af876c5488841d07ddf0cdaa558614d6e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html#af876c5488841d07ddf0cdaa558614d6e">m_customerDataManager</a></td></tr>
-<tr class="memdesc:af876c5488841d07ddf0cdaa558614d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object that will track the CustomerDataHandler.  <a href="#af876c5488841d07ddf0cdaa558614d6e">More...</a><br /></td></tr>
-<tr class="separator:af876c5488841d07ddf0cdaa558614d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a440aa893b08778495c57a3a43f48df15"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; NiceMock&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_mock_customer_data_manager.html">registrationManager::MockCustomerDataManager</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html#a440aa893b08778495c57a3a43f48df15">m_customerDataManager</a></td></tr>
+<tr class="memdesc:a440aa893b08778495c57a3a43f48df15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object that will track the CustomerDataHandler.  <a href="#a440aa893b08778495c57a3a43f48df15">More...</a><br /></td></tr>
+<tr class="separator:a440aa893b08778495c57a3a43f48df15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe044f8d5ba2def984a7ae53b418703d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_host_controller.html">MockBluetoothHostController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html#abe044f8d5ba2def984a7ae53b418703d">m_mockBluetoothHostController</a></td></tr>
 <tr class="memdesc:abe044f8d5ba2def984a7ae53b418703d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>BluetoothHostController</code> to create <code>MockBluetoothDeviceManager</code>  <a href="#abe044f8d5ba2def984a7ae53b418703d">More...</a><br /></td></tr>
 <tr class="separator:abe044f8d5ba2def984a7ae53b418703d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -519,14 +521,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af876c5488841d07ddf0cdaa558614d6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af876c5488841d07ddf0cdaa558614d6e">&#9670;&nbsp;</a></span>m_customerDataManager</h2>
+<a id="a440aa893b08778495c57a3a43f48df15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a440aa893b08778495c57a3a43f48df15">&#9670;&nbsp;</a></span>m_customerDataManager</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a>&gt; alexaClientSDK::acsdkBluetooth::test::BluetoothTest::m_customerDataManager</td>
+          <td class="memname">std::shared_ptr&lt;NiceMock&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_mock_customer_data_manager.html">registrationManager::MockCustomerDataManager</a>&gt; &gt; alexaClientSDK::acsdkBluetooth::test::BluetoothTest::m_customerDataManager</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -936,7 +938,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

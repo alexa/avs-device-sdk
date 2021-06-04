@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerDelegateInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerDelegateInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,203,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html" title=" " alt="" coords="5,109,203,151"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html" title="alexaClientSDK::avsCommon\l::utils::timing::test::\lStopTaskTimer" alt="" coords="251,5,448,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimerDelegate" alt="" coords="251,86,448,127"/>
 </map>

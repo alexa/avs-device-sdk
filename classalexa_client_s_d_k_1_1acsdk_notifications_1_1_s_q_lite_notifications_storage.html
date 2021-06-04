@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,7 @@ Inheritance diagram for alexaClientSDK::acsdkNotifications::SQLiteNotificationsS
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage_inherit__map" id="alexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html" title="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationsStorageInterface" alt="" coords="5,5,263,47"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -87,6 +88,7 @@ Collaboration diagram for alexaClientSDK::acsdkNotifications::SQLiteNotification
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage_coll__map" id="alexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage_coll__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html" title="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationsStorageInterface" alt="" coords="5,5,263,47"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -124,6 +126,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ab8f9ad72acaf9e0a23d98472e4234278"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html">acsdkNotificationsInterfaces::NotificationsStorageInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage.html#ab8f9ad72acaf9e0a23d98472e4234278">createNotificationsStorageInterface</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &gt; &amp;configurationRoot)</td></tr>
+<tr class="separator:ab8f9ad72acaf9e0a23d98472e4234278"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec6c08b580270965525cb44641c1afcd"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage.html">SQLiteNotificationsStorage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage.html#aec6c08b580270965525cb44641c1afcd">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configurationRoot)</td></tr>
 <tr class="separator:aec6c08b580270965525cb44641c1afcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -333,6 +337,40 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> If the database is created ok, or <code>false</code> if a database is already being handled by this object or there is a problem creating the database. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html#a642d3705d9a26c6b05e0b1ea36c9db65">alexaClientSDK::acsdkNotificationsInterfaces::NotificationsStorageInterface</a>.</p>
+
+</div>
+</div>
+<a id="ab8f9ad72acaf9e0a23d98472e4234278"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8f9ad72acaf9e0a23d98472e4234278">&#9670;&nbsp;</a></span>createNotificationsStorageInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html">acsdkNotificationsInterfaces::NotificationsStorageInterface</a> &gt; alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage::createNotificationsStorageInterface </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>configurationRoot</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Factory method for creating a storage object for Notifications based on an SQLite database.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configurationRoot</td><td>The global config object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the NotificationsStorageInterface object, nullptr if there's an error creating it. </dd></dl>
 
 </div>
 </div>
@@ -577,7 +615,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

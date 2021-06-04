@@ -1,6 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/test/MockCaptionManager.h" name="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/test/MockCaptionManager.h">
-<area shape="rect" id="node1" title=" " alt="" coords="257,5,453,61"/>
-<area shape="rect" id="node2" href="$_audio_player_test_8cpp.html" title=" " alt="" coords="5,109,236,180"/>
-<area shape="rect" id="node3" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="261,109,450,180"/>
-<area shape="rect" id="node4" href="$_libwebvtt_parser_adapter_test_8cpp.html" title=" " alt="" coords="475,117,716,173"/>
+<area shape="rect" id="node2" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="5,109,236,180"/>
+<area shape="rect" id="node3" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="260,109,451,180"/>
+<area shape="rect" id="node4" href="$_libwebvtt_parser_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/LibwebvttParserAdapterTest.cpp" alt="" coords="475,117,718,173"/>
 </map>

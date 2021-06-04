@@ -1,5 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_storage_interface.html" title=" " alt="" coords="5,39,263,80"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage.html" title=" " alt="" coords="311,5,541,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_storage.html" title=" " alt="" coords="311,71,541,112"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_interface_a.html" title="alexaClientSDK::acsdkManufactory\l::test::InterfaceA" alt="" coords="5,5,236,47"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_interface_a_b.html" title="alexaClientSDK::acsdkManufactory\l::test::InterfaceAB" alt="" coords="284,39,515,80"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_a_b.html" title="alexaClientSDK::acsdkManufactory\l::test::AB" alt="" coords="563,39,793,80"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_a_b_subclass.html" title="alexaClientSDK::acsdkManufactory\l::test::ABSubclass\&lt; X \&gt;" alt="" coords="841,39,1072,80"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_interface_b.html" title="alexaClientSDK::acsdkManufactory\l::test::InterfaceB" alt="" coords="5,71,236,112"/>
 </map>

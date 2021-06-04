@@ -1,10 +1,8 @@
 <map id="alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender" name="alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender">
-<area shape="rect" id="node1" title=" " alt="" coords="549,205,796,261"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html" title=" " alt="" coords="255,5,501,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html" title=" " alt="" coords="5,5,207,61"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html" title=" " alt="" coords="271,85,485,141"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title=" " alt="" coords="267,165,489,221"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title=" " alt="" coords="269,245,487,301"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="279,326,477,367"/>
-<area shape="rect" id="node8" title=" " alt="" coords="289,392,467,448"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html" title="alexaClientSDK::capability\lAgents::alexa::AlexaInterfaceMessage\lSenderInternalInterface" alt="" coords="255,5,501,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AlexaInterface\lMessageSenderInterface" alt="" coords="5,5,207,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextManager\lObserverInterface" alt="" coords="271,85,485,141"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::ContextRequester\lInterface" alt="" coords="267,165,489,221"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageRequest\lObserverInterface" alt="" coords="269,245,487,301"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="279,326,477,367"/>
 </map>

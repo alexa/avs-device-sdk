@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -85,6 +85,8 @@ Collaboration diagram for alexaClientSDK::integration::test::AlertsTest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test_coll__map" id="alexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test_coll__map">
+<area shape="rect" id="node3" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html" title="alexaClientSDK::avsCommon\l::utils::AudioFormat" alt="" coords="71,57,269,98"/>
+<area shape="rect" id="node4" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html" title="alexaClientSDK::acsdkManufactory\l::Annotated\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::\lendpoints::DefaultEndpointAnnotation,\l alexaClientSDK::avsCommon::sdkInterfaces\l::endpoints::EndpointCapabilitiesRegistrarInterface \&gt;" alt="" coords="5,122,335,222"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -138,7 +140,9 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a7b02f4388f3f42486819ff9962f8808c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9d513f8b7c5479253c5605d353d833a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#ab9d513f8b7c5479253c5605d353d833a">m_speechSynthesizer</a></td></tr>
 <tr class="separator:ab9d513f8b7c5479253c5605d353d833a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30a53b7dc07db84bf305f3a4e27918d9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1_interaction_model_capability_agent.html">InteractionModelCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a30a53b7dc07db84bf305f3a4e27918d9">m_interactionModelCA</a></td></tr>
+<tr class="memitem:a0f08542387149c67bd213a48c61c1330"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_interfaces.html#acd3e614ad8a5282f0a8d1252d0f48481">acsdkInteractionModelInterfaces::InteractionModelNotifierInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a0f08542387149c67bd213a48c61c1330">m_interactionModelNotifier</a></td></tr>
+<tr class="separator:a0f08542387149c67bd213a48c61c1330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30a53b7dc07db84bf305f3a4e27918d9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_interaction_model_1_1_interaction_model_capability_agent.html">InteractionModelCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a30a53b7dc07db84bf305f3a4e27918d9">m_interactionModelCA</a></td></tr>
 <tr class="separator:a30a53b7dc07db84bf305f3a4e27918d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae08b07a92c0aa31ab8ca59e599c936a0"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html">AlertsCapabilityAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#ae08b07a92c0aa31ab8ca59e599c936a0">m_alertsAgent</a></td></tr>
 <tr class="separator:ae08b07a92c0aa31ab8ca59e599c936a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,8 +178,12 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:afe70c69587c5aec96dc16d09cfb7f192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbed1ed69f646de365caf5cca8a5ab3a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#aa60d0d69fe71adcf1ca5a25a2497ff56">settings::DeviceSettingsManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#acbed1ed69f646de365caf5cca8a5ab3a">m_deviceSettingsManager</a></td></tr>
 <tr class="separator:acbed1ed69f646de365caf5cca8a5ab3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e151de94b1cebdc2ea7bff139cdb23c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a8e151de94b1cebdc2ea7bff139cdb23c">m_customerDataManager</a></td></tr>
-<tr class="separator:a8e151de94b1cebdc2ea7bff139cdb23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1db857eb805ab4d1633cb41768627f3"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_interface.html">registrationManager::CustomerDataManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#ad1db857eb805ab4d1633cb41768627f3">m_customerDataManager</a></td></tr>
+<tr class="separator:ad1db857eb805ab4d1633cb41768627f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32429f5b3da5a0d8ef1143ade3e67d08"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_shutdown_manager_1_1_shutdown_notifier.html">acsdkShutdownManager::ShutdownNotifier</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a32429f5b3da5a0d8ef1143ade3e67d08">m_shutdownNotifier</a></td></tr>
+<tr class="separator:a32429f5b3da5a0d8ef1143ade3e67d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb97e4961b90a39104a0107867549db6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">EndpointCapabilitiesRegistrarInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#afb97e4961b90a39104a0107867549db6">m_endpointCapabilitiesRegistrar</a></td></tr>
+<tr class="separator:afb97e4961b90a39104a0107867549db6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56054b4a0ff3cc07546741e56660d434"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">FocusState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a56054b4a0ff3cc07546741e56660d434">m_focusState</a></td></tr>
 <tr class="separator:a56054b4a0ff3cc07546741e56660d434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b96c0a440055a34f9b31a3a54ece426"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a4b96c0a440055a34f9b31a3a54ece426">m_mutex</a></td></tr>
@@ -685,8 +693,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8e151de94b1cebdc2ea7bff139cdb23c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e151de94b1cebdc2ea7bff139cdb23c">&#9670;&nbsp;</a></span>m_customerDataManager</h2>
+<a id="ad1db857eb805ab4d1633cb41768627f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1db857eb805ab4d1633cb41768627f3">&#9670;&nbsp;</a></span>m_customerDataManager</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -695,7 +703,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html">registrationManager::CustomerDataManager</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_customerDataManager</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_interface.html">registrationManager::CustomerDataManagerInterface</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_customerDataManager</td>
         </tr>
       </table>
   </td>
@@ -784,6 +792,28 @@ Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_directiveSequencer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afb97e4961b90a39104a0107867549db6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb97e4961b90a39104a0107867549db6">&#9670;&nbsp;</a></span>m_endpointCapabilitiesRegistrar</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">Annotated</a>&lt;<a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">EndpointCapabilitiesRegistrarInterface</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_endpointCapabilitiesRegistrar</td>
         </tr>
       </table>
   </td>
@@ -959,7 +989,29 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1_interaction_model_capability_agent.html">InteractionModelCapabilityAgent</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_interactionModelCA</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1acsdk_interaction_model_1_1_interaction_model_capability_agent.html">InteractionModelCapabilityAgent</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_interactionModelCA</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0f08542387149c67bd213a48c61c1330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f08542387149c67bd213a48c61c1330">&#9670;&nbsp;</a></span>m_interactionModelNotifier</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_interfaces.html#acd3e614ad8a5282f0a8d1252d0f48481">acsdkInteractionModelInterfaces::InteractionModelNotifierInterface</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_interactionModelNotifier</td>
         </tr>
       </table>
   </td>
@@ -1114,6 +1166,28 @@ Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_media_player.html">TestMediaPlayer</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_rendererMediaPlayer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a32429f5b3da5a0d8ef1143ade3e67d08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32429f5b3da5a0d8ef1143ade3e67d08">&#9670;&nbsp;</a></span>m_shutdownNotifier</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1acsdk_shutdown_manager_1_1_shutdown_notifier.html">acsdkShutdownManager::ShutdownNotifier</a>&gt; alexaClientSDK::integration::test::AlertsTest::m_shutdownNotifier</td>
         </tr>
       </table>
   </td>
@@ -1308,7 +1382,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

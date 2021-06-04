@@ -1,36 +1,40 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/DialogUXStateAggregator.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/DialogUXStateAggregator.h">
-<area shape="rect" id="node1" title=" " alt="" coords="601,5,898,61"/>
-<area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="876,347,1103,417"/>
-<area shape="rect" id="node17" href="$_external_capabilities_builder_interface_8h.html" title=" " alt="" coords="202,228,446,299"/>
-<area shape="rect" id="node20" href="$_dialog_u_x_state_aggregator_8cpp.html" title=" " alt="" coords="531,117,731,173"/>
-<area shape="rect" id="node21" href="$_dialog_u_x_state_aggregator_test_8cpp.html" title=" " alt="" coords="755,117,981,173"/>
-<area shape="rect" id="node22" href="$_audio_input_processor_8h.html" title=" " alt="" coords="1011,117,1266,173"/>
-<area shape="rect" id="node31" href="$_speech_synthesizer_8h.html" title=" " alt="" coords="2081,109,2348,180"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="1025,465,1255,521"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="879,569,1097,625"/>
-<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title=" " alt="" coords="613,465,824,521"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title=" " alt="" coords="817,673,1031,729"/>
-<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="1056,673,1261,729"/>
-<area shape="rect" id="node6" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="1049,777,1303,848"/>
-<area shape="rect" id="node10" href="$_sample_application_8h.html" title=" " alt="" coords="583,785,799,841"/>
-<area shape="rect" id="node13" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="823,785,1025,841"/>
-<area shape="rect" id="node7" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="523,903,778,959"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="1292,896,1521,967"/>
-<area shape="rect" id="node9" href="$preview_main_8cpp.html" title=" " alt="" coords="1055,903,1268,959"/>
-<area shape="rect" id="node11" href="$main_8cpp.html" title=" " alt="" coords="803,911,1000,952"/>
-<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title=" " alt="" coords="221,911,499,952"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="583,577,855,618"/>
-<area shape="rect" id="node18" href="$_external_capabilities_builder_8h.html" title=" " alt="" coords="239,777,452,848"/>
-<area shape="rect" id="node19" href="$_external_capabilities_builder_8cpp.html" title=" " alt="" coords="5,903,197,959"/>
-<area shape="rect" id="node23" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="1028,228,1257,299"/>
-<area shape="rect" id="node24" href="$_connection_retry_trigger_8h.html" title=" " alt="" coords="1524,228,1751,299"/>
-<area shape="rect" id="node26" href="$_audio_input_processor_8cpp.html" title=" " alt="" coords="1281,235,1500,291"/>
-<area shape="rect" id="node27" href="$_audio_input_processor_test_8cpp.html" title=" " alt="" coords="522,228,721,299"/>
-<area shape="rect" id="node28" href="$_alerts_integration_test_8cpp.html" title=" " alt="" coords="1775,235,1945,291"/>
-<area shape="rect" id="node29" href="$_audio_input_processor_integration_test_8cpp.html" title=" " alt="" coords="745,228,953,299"/>
-<area shape="rect" id="node30" href="$_audio_player_integration_test_8cpp.html" title=" " alt="" coords="1970,235,2177,291"/>
-<area shape="rect" id="node25" href="$_connection_retry_trigger_8cpp.html" title=" " alt="" coords="1524,347,1751,417"/>
-<area shape="rect" id="node32" href="$_speech_synthesizer_8cpp.html" title=" " alt="" coords="2689,228,2852,299"/>
-<area shape="rect" id="node33" href="$_speech_synthesizer_test_8cpp.html" title=" " alt="" coords="2252,228,2441,299"/>
-<area shape="rect" id="node34" href="$_speech_synthesizer_integration_test_8cpp.html" title=" " alt="" coords="2465,228,2665,299"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="2869,896,3098,967"/>
+<area shape="rect" id="node3" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="982,347,1209,417"/>
+<area shape="rect" id="node17" href="$_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="2719,109,2946,180"/>
+<area shape="rect" id="node19" href="$_external_capabilities_builder_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/ExternalCapabilitiesBuilderInterface.h" alt="" coords="5,228,249,299"/>
+<area shape="rect" id="node22" href="$_dialog_u_x_state_aggregator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/DialogUXStateAggregator.cpp" alt="" coords="3293,117,3495,173"/>
+<area shape="rect" id="node23" href="$_dialog_u_x_state_aggregator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/DialogUXStateAggregatorTest.cpp" alt="" coords="3519,117,3746,173"/>
+<area shape="rect" id="node24" href="$_audio_input_processor_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/include/AIP/AudioInputProcessor.h" alt="" coords="964,117,1219,173"/>
+<area shape="rect" id="node33" href="$_speech_synthesizer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/include\l/SpeechSynthesizer/SpeechSynthesizer.h" alt="" coords="2011,109,2278,180"/>
+<area shape="rect" id="node37" href="$_core_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/include\l/acsdkCore/CoreComponent.h" alt="" coords="3020,117,3219,173"/>
+<area shape="rect" id="node39" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="3407,235,3573,291"/>
+<area shape="rect" id="node4" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="2042,465,2271,521"/>
+<area shape="rect" id="node5" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1186,569,1405,625"/>
+<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="919,465,1131,521"/>
+<area shape="rect" id="node6" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1151,673,1365,729"/>
+<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1390,673,1595,729"/>
+<area shape="rect" id="node7" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="1390,777,1643,848"/>
+<area shape="rect" id="node10" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="1150,785,1366,841"/>
+<area shape="rect" id="node13" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="924,785,1125,841"/>
+<area shape="rect" id="node8" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="895,903,1149,959"/>
+<area shape="rect" id="node9" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="1410,903,1623,959"/>
+<area shape="rect" id="node11" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="1174,911,1371,952"/>
+<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="593,911,870,952"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="888,577,1161,618"/>
+<area shape="rect" id="node18" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="2691,228,2895,299"/>
+<area shape="rect" id="node20" href="$_external_capabilities_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h" alt="" coords="457,777,670,848"/>
+<area shape="rect" id="node21" href="$_external_capabilities_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/External\lCapabilitiesBuilder.cpp" alt="" coords="377,903,569,959"/>
+<area shape="rect" id="node25" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerBuilder.cpp" alt="" coords="557,228,788,299"/>
+<area shape="rect" id="node26" href="$_connection_retry_trigger_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/ConnectionRetryTrigger.h" alt="" coords="1331,228,1558,299"/>
+<area shape="rect" id="node28" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="864,235,1084,291"/>
+<area shape="rect" id="node29" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="1108,228,1307,299"/>
+<area shape="rect" id="node30" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="1583,235,1755,291"/>
+<area shape="rect" id="node31" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="325,228,533,299"/>
+<area shape="rect" id="node32" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1779,235,1987,291"/>
+<area shape="rect" id="node27" href="$_connection_retry_trigger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/ConnectionRetry\lTrigger.cpp" alt="" coords="1331,347,1558,417"/>
+<area shape="rect" id="node34" href="$_speech_synthesizer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/src\l/SpeechSynthesizer.cpp" alt="" coords="2063,228,2227,299"/>
+<area shape="rect" id="node35" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="2251,228,2441,299"/>
+<area shape="rect" id="node36" href="$_speech_synthesizer_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp" alt="" coords="2466,228,2666,299"/>
+<area shape="rect" id="node38" href="$_alexa_communications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/src/AlexaCommunications\lComponent.cpp" alt="" coords="3072,228,3383,299"/>
 </map>

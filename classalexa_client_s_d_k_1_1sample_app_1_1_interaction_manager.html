@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,9 @@ Inheritance diagram for alexaClientSDK::sampleApp::InteractionManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_inherit__map" id="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_inherit__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="15,5,219,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallStateObserver\lInterface" alt="" coords="5,85,229,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="19,166,216,207"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -86,6 +89,9 @@ Collaboration diagram for alexaClientSDK::sampleApp::InteractionManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager__coll__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_coll__map" id="alexa_client_s_d_k_1_1sample_app_1_1_interaction_manager_coll__map">
+<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="15,5,219,61"/>
+<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_state_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CallStateObserver\lInterface" alt="" coords="5,85,229,141"/>
+<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="19,166,216,207"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -209,6 +215,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3cb2c9c3b3f4139b25c74bfb94de257e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a631e9d6f53570f6503ac795a8b33fafd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a631e9d6f53570f6503ac795a8b33fafd">clearProtocolTrace</a> ()</td></tr>
 <tr class="separator:a631e9d6f53570f6503ac795a8b33fafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935cc83afe60a9e21fcb2e0c2cc76c42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a935cc83afe60a9e21fcb2e0c2cc76c42">sendDeviceSetupComplete</a> ()</td></tr>
+<tr class="separator:a935cc83afe60a9e21fcb2e0c2cc76c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Network Info Prompt Functions</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>Should be called whenever a user requests a specific 'NETWORK_INFO' change. </p>
 </div></td></tr>
@@ -1205,6 +1213,24 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a935cc83afe60a9e21fcb2e0c2cc76c42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a935cc83afe60a9e21fcb2e0c2cc76c42">&#9670;&nbsp;</a></span>sendDeviceSetupComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::sampleApp::InteractionManager::sendDeviceSetupComplete </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send the DeviceSetupComplete event </p>
+
+</div>
+</div>
 <a id="a511fa1941313f779422a104ad8aff854"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a511fa1941313f779422a104ad8aff854">&#9670;&nbsp;</a></span>setAlarmVolumeRamp()</h2>
 
@@ -1628,7 +1654,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

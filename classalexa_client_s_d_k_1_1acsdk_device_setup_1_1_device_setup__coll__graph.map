@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::acsdkDeviceSetup::DeviceSetup" name="alexaClientSDK::acsdkDeviceSetup::DeviceSetup">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_device_setup_interfaces_1_1_device_setup_interface.html" title="Satisfies the AVS DeviceSetup Interface. " alt="" coords="7,5,255,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capability_configuration_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilityConfiguration\lInterface" alt="" coords="5,71,257,127"/>
+</map>

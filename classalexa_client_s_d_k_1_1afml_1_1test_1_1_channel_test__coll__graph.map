@@ -1,5 +1,3 @@
 <map id="alexaClientSDK::afml::test::ChannelTest" name="alexaClientSDK::afml::test::ChannelTest">
-<area shape="rect" id="node1" title="Test fixture for testing Channel." alt="" coords="25,95,173,136"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,13,52,39"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1test_1_1_focus_change_manager.html" title="Manages testing focus changes." alt="" coords="76,5,267,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1afml_1_1test_1_1_focus_change_manager.html" title="Manages testing focus changes. " alt="" coords="78,5,269,47"/>
 </map>

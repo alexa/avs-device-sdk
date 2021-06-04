@@ -1,44 +1,20 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/test/AndroidSLESMicrophoneTest.cpp" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/test/AndroidSLESMicrophoneTest.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="912,5,1201,76"/>
-<area shape="rect" id="node2" title=" " alt="" coords="704,310,755,337"/>
-<area shape="rect" id="node3" title=" " alt="" coords="858,131,953,158"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_engine_8h.html" title=" " alt="" coords="1225,213,1384,255"/>
-<area shape="rect" id="node7" href="$_audio_input_stream_8h.html" title=" " alt="" coords="1376,303,1571,344"/>
-<area shape="rect" id="node38" href="$_android_s_l_e_s_microphone_8h.html" title=" " alt="" coords="977,124,1136,165"/>
-<area shape="rect" id="node5" title=" " alt="" coords="1166,399,1302,426"/>
-<area shape="rect" id="node6" title=" " alt="" coords="259,1017,328,1044"/>
-<area shape="rect" id="node35" href="$_android_s_l_e_s_object_8h.html" title=" " alt="" coords="780,303,938,344"/>
-<area shape="rect" id="node8" href="$_shared_data_stream_8h.html" title=" " alt="" coords="831,481,994,523"/>
-<area shape="rect" id="node33" href="$_in_process_s_d_s_8h.html" title=" " alt="" coords="1427,392,1590,433"/>
-<area shape="rect" id="node9" title=" " alt="" coords="979,578,1040,605"/>
-<area shape="rect" id="node10" title=" " alt="" coords="928,846,993,873"/>
-<area shape="rect" id="node11" href="$_logger_utils_8h.html" title=" " alt="" coords="780,571,954,612"/>
-<area shape="rect" id="node12" title=" " alt="" coords="1018,846,1079,873"/>
-<area shape="rect" id="node13" href="$_logger_8h.html" title=" " alt="" coords="945,660,1120,701"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1570,757,1631,783"/>
-<area shape="rect" id="node15" title=" " alt="" coords="356,846,415,873"/>
-<area shape="rect" id="node16" title=" " alt="" coords="1303,846,1372,873"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1763,1017,1822,1044"/>
-<area shape="rect" id="node18" href="$_configuration_node_8h.html" title=" " alt="" coords="560,749,772,791"/>
-<area shape="rect" id="node23" href="$_level_8h.html" title=" " alt="" coords="1104,839,1278,880"/>
-<area shape="rect" id="node24" href="$_log_entry_8h.html" title=" " alt="" coords="1320,749,1494,791"/>
-<area shape="rect" id="node31" href="$_log_level_observer_interface_8h.html" title=" " alt="" coords="1000,749,1193,791"/>
-<area shape="rect" id="node32" href="$_sink_observer_interface_8h.html" title=" " alt="" coords="357,928,532,969"/>
-<area shape="rect" id="node19" title=" " alt="" coords="708,935,780,962"/>
-<area shape="rect" id="node20" title=" " alt="" coords="762,846,802,873"/>
-<area shape="rect" id="node21" title=" " alt="" coords="1325,935,1380,962"/>
-<area shape="rect" id="node22" title=" " alt="" coords="540,846,687,873"/>
-<area shape="rect" id="node25" title=" " alt="" coords="1551,846,1626,873"/>
-<area shape="rect" id="node26" title=" " alt="" coords="1397,846,1476,873"/>
-<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title=" " alt="" coords="1752,839,1926,880"/>
-<area shape="rect" id="node28" title=" " alt="" coords="1658,935,1727,962"/>
-<area shape="rect" id="node29" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="1752,928,1926,969"/>
-<area shape="rect" id="node30" title=" " alt="" coords="1846,1017,1926,1044"/>
-<area shape="rect" id="node34" title=" " alt="" coords="1546,489,1673,515"/>
-<area shape="rect" id="node36" href="$_memory_8h.html" title=" " alt="" coords="230,392,413,433"/>
-<area shape="rect" id="node37" title=" " alt="" coords="295,489,348,515"/>
-<area shape="rect" id="node39" href="$_android_s_l_e_s_buffer_queue_8h.html" title=" " alt="" coords="977,213,1136,255"/>
-<area shape="rect" id="node41" href="$_microphone_interface_8h.html" title=" " alt="" coords="48,221,236,247"/>
-<area shape="rect" id="node40" title=" " alt="" coords="963,310,1150,337"/>
-<area shape="rect" id="node42" title=" " alt="" coords="46,310,104,337"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_engine_8h.html" title="AndroidUtilities/Android\lSLESEngine.h" alt="" coords="1228,213,1386,255"/>
+<area shape="rect" id="node7" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1378,303,1577,344"/>
+<area shape="rect" id="node38" href="$_android_s_l_e_s_microphone_8h.html" title="AndroidUtilities/Android\lSLESMicrophone.h" alt="" coords="980,124,1138,165"/>
+<area shape="rect" id="node35" href="$_android_s_l_e_s_object_8h.html" title="AndroidUtilities/Android\lSLESObject.h" alt="" coords="782,303,941,344"/>
+<area shape="rect" id="node8" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="832,481,998,523"/>
+<area shape="rect" id="node33" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1430,392,1595,433"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="782,571,958,612"/>
+<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="947,660,1123,701"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="560,749,774,791"/>
+<area shape="rect" id="node23" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1103,839,1279,880"/>
+<area shape="rect" id="node24" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1322,749,1498,791"/>
+<area shape="rect" id="node31" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1002,749,1196,791"/>
+<area shape="rect" id="node32" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="356,928,532,969"/>
+<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1751,839,1927,880"/>
+<area shape="rect" id="node29" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1751,928,1927,969"/>
+<area shape="rect" id="node36" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="230,392,414,433"/>
+<area shape="rect" id="node39" href="$_android_s_l_e_s_buffer_queue_8h.html" title="AndroidUtilities/Android\lSLESBufferQueue.h" alt="" coords="980,213,1138,255"/>
+<area shape="rect" id="node41" href="$_microphone_interface_8h.html" title="Audio/MicrophoneInterface.h" alt="" coords="48,221,236,247"/>
 </map>

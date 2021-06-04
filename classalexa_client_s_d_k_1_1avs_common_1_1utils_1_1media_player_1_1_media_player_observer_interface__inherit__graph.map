@@ -1,13 +1,12 @@
 <map id="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface" name="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="5,307,220,363"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html" title=" " alt="" coords="287,5,479,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title=" " alt="" coords="288,71,479,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html" title=" " alt="" coords="277,136,490,177"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notification_renderer.html" title=" " alt="" coords="268,201,499,243"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1application_utilities_1_1system_sound_player_1_1_system_sound_player.html" title=" " alt="" coords="288,267,479,323"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title=" " alt="" coords="292,347,475,403"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html" title=" " alt="" coords="297,428,469,469"/>
-<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html" title=" " alt="" coords="290,493,477,535"/>
-<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html" title="Mocks the media player observer." alt="" coords="286,559,481,600"/>
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html" title=" " alt="" coords="286,624,481,665"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html" title="alexaClientSDK::acsdkAlerts\l::renderer::Renderer" alt="" coords="287,5,479,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html" title="alexaClientSDK::acsdkAudio\lPlayer::AudioPlayer" alt="" coords="288,71,479,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html" title="alexaClientSDK::acsdkBluetooth\l::Bluetooth" alt="" coords="277,136,490,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notification_renderer.html" title="alexaClientSDK::acsdkNotifications\l::NotificationRenderer" alt="" coords="268,201,499,243"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1application_utilities_1_1system_sound_player_1_1_system_sound_player.html" title="alexaClientSDK::application\lUtilities::systemSoundPlayer\l::SystemSoundPlayer" alt="" coords="288,267,479,323"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html" title="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer" alt="" coords="292,347,475,403"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1captions_1_1_caption_manager.html" title="alexaClientSDK::captions\l::CaptionManager" alt="" coords="297,428,469,469"/>
+<area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html" title="alexaClientSDK::captions\l::test::MockCaptionManager" alt="" coords="290,493,477,535"/>
+<area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html" title="Mocks the media player observer. " alt="" coords="286,559,481,600"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_player_observer.html" title="alexaClientSDK::mediaPlayer\l::test::MockPlayerObserver" alt="" coords="286,624,481,665"/>
 </map>

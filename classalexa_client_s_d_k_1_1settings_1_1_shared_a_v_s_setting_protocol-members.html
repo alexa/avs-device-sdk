@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -77,7 +77,7 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#ac57d4757e1e9f62c6a9acaa1d586f9bd">avsChange</a>(ApplyChangeFunction applyChange, RevertChangeFunction revertChange, SettingNotificationFunction notifyObservers) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#a256f686e5deefa86117104a1345a0e3e">clearData</a>() override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#ac9190000da856da8394da69a838a5568">connectionStatusChangeCallback</a>(bool isConnected)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#acdb31fdc6983ee555219dd7f105339af">create</a>(const SettingEventMetadata &amp;metadata, std::shared_ptr&lt; SettingEventSenderInterface &gt; eventSender, std::shared_ptr&lt; storage::DeviceSettingStorageInterface &gt; settingStorage, std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSConnectionManagerInterface &gt; connectionManager, bool isDefaultCloudAuthoritative=false)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#a11dc3e88427e5510a388cb4b0c215ccb">create</a>(const SettingEventMetadata &amp;metadata, std::shared_ptr&lt; SettingEventSenderInterface &gt; eventSender, std::shared_ptr&lt; storage::DeviceSettingStorageInterface &gt; settingStorage, std::shared_ptr&lt; avsCommon::sdkInterfaces::AVSConnectionManagerInterface &gt; connectionManager, const std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &amp;metricRecorder, bool isDefaultCloudAuthoritative=false)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#a9ca124e4641c4f992d754093957d473b">localChange</a>(ApplyChangeFunction applyChange, RevertChangeFunction revertChange, SettingNotificationFunction notifyObservers) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html#aa313d2d9edcb1c40a556a6c3bdd3d29d">restoreValue</a>(ApplyDbChangeFunction applyChange, SettingNotificationFunction notifyObservers) override</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_shared_a_v_s_setting_protocol.html">alexaClientSDK::settings::SharedAVSSettingProtocol</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html#a0fa0729b0ab81f0a7500777b0015c378">RevertChangeFunction</a> typedef</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html">alexaClientSDK::settings::SettingProtocolInterface</a></td><td class="entry"></td></tr>
@@ -88,7 +88,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

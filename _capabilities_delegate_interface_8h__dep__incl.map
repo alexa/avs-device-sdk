@@ -1,43 +1,42 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1967,5,2206,76"/>
-<area shape="rect" id="node2" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="1624,747,1877,817"/>
-<area shape="rect" id="node6" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="1346,747,1600,817"/>
-<area shape="rect" id="node7" href="$_default_client_8h.html" title=" " alt="" coords="2188,265,2414,335"/>
-<area shape="rect" id="node18" href="$_default_client_component_8h.html" title=" " alt="" coords="1558,265,1785,335"/>
-<area shape="rect" id="node20" href="$_mock_capabilities_delegate_8h.html" title=" " alt="" coords="3027,131,3247,202"/>
-<area shape="rect" id="node22" href="$_do_not_disturb_capability_agent_8h.html" title=" " alt="" coords="1120,124,1402,209"/>
-<area shape="rect" id="node31" href="$_equalizer_capability_agent_8h.html" title=" " alt="" coords="1960,131,2213,202"/>
-<area shape="rect" id="node33" href="$_equalizer_component_8h.html" title=" " alt="" coords="194,509,450,595"/>
-<area shape="rect" id="node34" href="$_capabilities_delegate_8h.html" title=" " alt="" coords="2439,265,2630,335"/>
-<area shape="rect" id="node38" href="$_core_component_8h.html" title=" " alt="" coords="2654,272,2852,328"/>
-<area shape="rect" id="node40" href="$_endpoint_registration_manager_8h.html" title=" " alt="" coords="2747,131,2956,202"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="1914,873,2168,929"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="1181,865,1410,936"/>
-<area shape="rect" id="node5" href="$preview_main_8cpp.html" title=" " alt="" coords="1644,873,1857,929"/>
-<area shape="rect" id="node8" href="$_default_client_8cpp.html" title=" " alt="" coords="1606,398,1836,454"/>
-<area shape="rect" id="node9" href="$_interaction_manager_8h.html" title=" " alt="" coords="1750,524,1969,580"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title=" " alt="" coords="1961,398,2172,454"/>
-<area shape="rect" id="node10" href="$_user_input_manager_8h.html" title=" " alt="" coords="1752,643,1967,699"/>
-<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="1992,643,2197,699"/>
-<area shape="rect" id="node11" href="$_sample_application_8h.html" title=" " alt="" coords="2258,754,2474,810"/>
-<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="1902,754,2103,810"/>
-<area shape="rect" id="node12" href="$main_8cpp.html" title=" " alt="" coords="2209,880,2406,921"/>
-<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title=" " alt="" coords="2430,880,2708,921"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="1993,531,2265,573"/>
-<area shape="rect" id="node19" href="$_default_client_component_8cpp.html" title=" " alt="" coords="1327,391,1531,461"/>
-<area shape="rect" id="node21" href="$_endpoint_registration_manager_test_8cpp.html" title=" " alt="" coords="3088,272,3280,328"/>
-<area shape="rect" id="node23" href="$_device_settings_manager_builder_8h.html" title=" " alt="" coords="50,257,344,343"/>
-<area shape="rect" id="node26" href="$_device_settings_manager_component_8h.html" title=" " alt="" coords="642,257,936,343"/>
-<area shape="rect" id="node27" href="$_do_not_disturb_component_8h.html" title=" " alt="" coords="960,265,1263,335"/>
-<area shape="rect" id="node29" href="$_do_not_disturb_capability_agent_8cpp.html" title=" " alt="" coords="1287,265,1534,335"/>
-<area shape="rect" id="node30" href="$_do_not_disturb_capability_agent_test_8cpp.html" title=" " alt="" coords="368,265,618,335"/>
-<area shape="rect" id="node24" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="82,391,312,461"/>
-<area shape="rect" id="node25" href="$_device_settings_manager_component_8cpp.html" title=" " alt="" coords="575,391,832,461"/>
-<area shape="rect" id="node28" href="$_do_not_disturb_component_8cpp.html" title=" " alt="" coords="1056,391,1303,461"/>
-<area shape="rect" id="node32" href="$_equalizer_capability_agent_8cpp.html" title=" " alt="" coords="1910,265,2164,335"/>
-<area shape="rect" id="node35" href="$_capabilities_delegate_8cpp.html" title=" " alt="" coords="2494,398,2687,454"/>
-<area shape="rect" id="node36" href="$_capabilities_delegate_test_8cpp.html" title=" " alt="" coords="2247,398,2470,454"/>
-<area shape="rect" id="node37" href="$_core_component_8cpp.html" title=" " alt="" coords="2813,398,2978,454"/>
-<area shape="rect" id="node39" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="3054,391,3364,461"/>
-<area shape="rect" id="node41" href="$_endpoint_registration_manager_8cpp.html" title=" " alt="" coords="2877,272,3064,328"/>
+<area shape="rect" id="node2" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="1624,747,1877,817"/>
+<area shape="rect" id="node6" href="$_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="1347,747,1600,817"/>
+<area shape="rect" id="node7" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="2188,265,2415,335"/>
+<area shape="rect" id="node18" href="$_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="1559,265,1785,335"/>
+<area shape="rect" id="node20" href="$_mock_capabilities_delegate_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockCapabilitiesDelegate.h" alt="" coords="3027,131,3250,202"/>
+<area shape="rect" id="node22" href="$_do_not_disturb_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DoNotDisturbCapability\lAgent.h" alt="" coords="1120,124,1403,209"/>
+<area shape="rect" id="node31" href="$_equalizer_capability_agent_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Equalizer\l/acsdkEqualizer/include/acsdkEqualizer\l/EqualizerCapabilityAgent.h" alt="" coords="1960,131,2213,202"/>
+<area shape="rect" id="node33" href="$_equalizer_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/include/acsdkEqualizerImplementations\l/EqualizerComponent.h" alt="" coords="195,509,451,595"/>
+<area shape="rect" id="node34" href="$_capabilities_delegate_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/include/CapabilitiesDelegate\l/CapabilitiesDelegate.h" alt="" coords="2439,265,2630,335"/>
+<area shape="rect" id="node38" href="$_core_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/include\l/acsdkCore/CoreComponent.h" alt="" coords="2654,272,2853,328"/>
+<area shape="rect" id="node40" href="$_endpoint_registration_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/include\l/Endpoints/EndpointRegistration\lManager.h" alt="" coords="2747,131,2957,202"/>
+<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="1915,873,2170,929"/>
+<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="1183,865,1412,936"/>
+<area shape="rect" id="node5" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="1644,873,1857,929"/>
+<area shape="rect" id="node8" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="1607,398,1836,454"/>
+<area shape="rect" id="node9" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="1751,524,1969,580"/>
+<area shape="rect" id="node16" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="1961,398,2173,454"/>
+<area shape="rect" id="node10" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="1753,643,1967,699"/>
+<area shape="rect" id="node15" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="1992,643,2197,699"/>
+<area shape="rect" id="node11" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="2261,754,2477,810"/>
+<area shape="rect" id="node14" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="1902,754,2103,810"/>
+<area shape="rect" id="node12" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="2212,880,2409,921"/>
+<area shape="rect" id="node13" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="2433,880,2711,921"/>
+<area shape="rect" id="node17" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="1994,531,2267,573"/>
+<area shape="rect" id="node19" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="1327,391,1531,461"/>
+<area shape="rect" id="node21" href="$_endpoint_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lRegistrationManagerTest.cpp" alt="" coords="3089,272,3282,328"/>
+<area shape="rect" id="node23" href="$_device_settings_manager_builder_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/include\l/acsdkDeviceSettingsManager/DeviceSettings\lManagerBuilder.h" alt="" coords="51,257,344,343"/>
+<area shape="rect" id="node26" href="$_device_settings_manager_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/include\l/acsdkDeviceSettingsManager/DeviceSettings\lManagerComponent.h" alt="" coords="643,257,936,343"/>
+<area shape="rect" id="node27" href="$_do_not_disturb_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DoNotDisturbComponent.h" alt="" coords="961,265,1263,335"/>
+<area shape="rect" id="node29" href="$_do_not_disturb_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp" alt="" coords="1287,265,1534,335"/>
+<area shape="rect" id="node30" href="$_do_not_disturb_capability_agent_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/test/DoNotDisturb\lCapabilityAgentTest.cpp" alt="" coords="368,265,619,335"/>
+<area shape="rect" id="node24" href="$_device_settings_manager_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerBuilder.cpp" alt="" coords="82,391,313,461"/>
+<area shape="rect" id="node25" href="$_device_settings_manager_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerComponent.cpp" alt="" coords="574,391,831,461"/>
+<area shape="rect" id="node28" href="$_do_not_disturb_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/src/DoNotDisturb\lComponent.cpp" alt="" coords="1057,391,1303,461"/>
+<area shape="rect" id="node32" href="$_equalizer_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Equalizer\l/acsdkEqualizer/src/EqualizerCapability\lAgent.cpp" alt="" coords="1911,265,2164,335"/>
+<area shape="rect" id="node35" href="$_capabilities_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="2493,398,2686,454"/>
+<area shape="rect" id="node36" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="2246,398,2469,454"/>
+<area shape="rect" id="node37" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="2812,398,2977,454"/>
+<area shape="rect" id="node39" href="$_alexa_communications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/src/AlexaCommunications\lComponent.cpp" alt="" coords="3053,391,3363,461"/>
+<area shape="rect" id="node41" href="$_endpoint_registration_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/Endpoint\lRegistrationManager.cpp" alt="" coords="2877,272,3064,328"/>
 </map>

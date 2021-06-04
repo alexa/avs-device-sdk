@@ -1,9 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/GVariantMapReader.h" name="/workplace/avs&#45;device&#45;sdk/BluetoothImplementations/BlueZ/include/BlueZ/GVariantMapReader.h">
-<area shape="rect" id="node1" title=" " alt="" coords="154,5,429,61"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,109,84,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="352,184,423,211"/>
-<area shape="rect" id="node4" href="$_managed_g_variant_8h.html" title=" " alt="" coords="108,109,283,136"/>
-<area shape="rect" id="node7" href="$_managed_g_error_8h.html" title=" " alt="" coords="307,109,468,136"/>
-<area shape="rect" id="node5" title=" " alt="" coords="161,184,230,211"/>
-<area shape="rect" id="node6" title=" " alt="" coords="264,184,319,211"/>
+<area shape="rect" id="node4" href="$_managed_g_variant_8h.html" title="BlueZ/ManagedGVariant.h" alt="" coords="108,109,283,136"/>
+<area shape="rect" id="node7" href="$_managed_g_error_8h.html" title="BlueZ/ManagedGError.h" alt="" coords="307,109,470,136"/>
 </map>

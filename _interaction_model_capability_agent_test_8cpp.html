@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/InteractionModel/test/InteractionModelCapabilityAgentTest.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/CapabilityAgents/InteractionModel/acsdkInteractionModel/test/InteractionModelCapabilityAgentTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.23.0</span>
+   &#160;<span id="projectnumber">1.24.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_011a3f6e181db4516776f7256f22dadd.html">InteractionModel</a></li><li class="navelem"><a class="el" href="dir_b819e75753f7bb77d8ca90a46d7111d0.html">test</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7cf910bd1d7603f12ef47ff650cec893.html">CapabilityAgents</a></li><li class="navelem"><a class="el" href="dir_011a3f6e181db4516776f7256f22dadd.html">InteractionModel</a></li><li class="navelem"><a class="el" href="dir_ca435cf5d0d4245f97d7668f020b8422.html">acsdkInteractionModel</a></li><li class="navelem"><a class="el" href="dir_3f08d67afa2f07d4a9f62a9a27f7ec6b.html">test</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -82,24 +82,57 @@ $(function() {
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="_interaction_model_request_processing_observer_interface_8h_source.html">acsdkInteractionModelInterfaces/InteractionModelRequestProcessingObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h_source.html">AVSCommon/SDKInterfaces/MockDirectiveSequencer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_mock_exception_encountered_sender_8h_source.html">AVSCommon/SDKInterfaces/MockExceptionEncounteredSender.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_interaction_model_request_processing_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/InteractionModelRequestProcessingObserverInterface.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_interaction_model_capability_agent_8h_source.html">InteractionModel/InteractionModelCapabilityAgent.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_mock_endpoint_capabilities_registrar_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/MockEndpointCapabilitiesRegistrar.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_interaction_model_capability_agent_8h_source.html">acsdkInteractionModel/InteractionModelCapabilityAgent.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_interaction_model_notifier_8h_source.html">acsdkInteractionModel/InteractionModelNotifier.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for InteractionModelCapabilityAgentTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_interaction_model_capability_agent_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2test_2_interaction_model_capability_agent_test_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2test_2_interaction_model_capability_agent_test_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2test_2_interaction_model_capability_agent_test_8cpp">
+<div class="center"><img src="_interaction_model_capability_agent_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2acsdk_interaction_model_2test_2_interaction_model_capability_agent_test_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2acsdk_interaction_model_2test_2_interaction_model_capability_agent_test_8cpp" id="_2workplace_2avs-device-sdk_2_capability_agents_2_interaction_model_2acsdk_interaction_model_2test_2_interaction_model_capability_agent_test_8cpp">
+<area shape="rect" id="node10" href="_interaction_model_request_processing_observer_interface_8h.html" title="acsdkInteractionModelInterfaces\l/InteractionModelRequestProcessing\lObserverInterface.h" alt="" coords="2607,436,2843,492"/>
+<area shape="rect" id="node11" href="_a_v_s_common_2_s_d_k_interfaces_2test_2_a_v_s_common_2_s_d_k_interfaces_2_mock_directive_sequencer_8h.html" title="AVSCommon/SDKInterfaces\l/MockDirectiveSequencer.h" alt="" coords="926,146,1118,187"/>
+<area shape="rect" id="node25" href="_mock_exception_encountered_sender_8h.html" title="AVSCommon/SDKInterfaces\l/MockExceptionEncounteredSender.h" alt="" coords="489,146,731,187"/>
+<area shape="rect" id="node28" href="_mock_endpoint_capabilities_registrar_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/MockEndpointCapabilities\lRegistrar.h" alt="" coords="1143,139,1381,195"/>
+<area shape="rect" id="node35" href="_interaction_model_capability_agent_8h.html" title="acsdkInteractionModel\l/InteractionModelCapability\lAgent.h" alt="" coords="2099,139,2279,195"/>
+<area shape="rect" id="node48" href="_interaction_model_notifier_8h.html" title="acsdkInteractionModel\l/InteractionModelNotifier.h" alt="" coords="2849,250,3024,291"/>
+<area shape="rect" id="node12" href="_directive_sequencer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveSequencerInterface.h" alt="" coords="905,250,1107,291"/>
+<area shape="rect" id="node13" href="_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1290,547,1517,574"/>
+<area shape="rect" id="node19" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1563,347,1755,388"/>
+<area shape="rect" id="node23" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="779,347,969,388"/>
+<area shape="rect" id="node16" href="_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="1399,629,1610,671"/>
+<area shape="rect" id="node17" href="_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="1685,637,1799,663"/>
+<area shape="rect" id="node18" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1644,719,1840,745"/>
+<area shape="rect" id="node20" href="_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="1698,443,1933,485"/>
+<area shape="rect" id="node22" href="_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1401,443,1624,485"/>
+<area shape="rect" id="node26" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="445,347,705,388"/>
+<area shape="rect" id="node27" href="_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="636,540,859,581"/>
+<area shape="rect" id="node29" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="1893,243,2100,299"/>
+<area shape="rect" id="node30" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="2260,347,2483,388"/>
+<area shape="rect" id="node32" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="2058,443,2253,485"/>
+<area shape="rect" id="node37" href="_interaction_model_notifier_interface_8h.html" title="acsdkInteractionModelInterfaces\l/InteractionModelNotifierInterface.h" alt="" coords="2823,347,3050,388"/>
+<area shape="rect" id="node40" href="_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="2413,637,2615,663"/>
+<area shape="rect" id="node41" href="_capability_agent_8h.html" title="AVSCommon/AVS/Capability\lAgent.h" alt="" coords="1187,250,1382,291"/>
+<area shape="rect" id="node47" href="_default_endpoint_annotation_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/DefaultEndpointAnnotation.h" alt="" coords="2277,250,2532,291"/>
+<area shape="rect" id="node38" href="_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="2967,443,3125,485"/>
+<area shape="rect" id="node42" href="_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="984,540,1215,581"/>
+<area shape="rect" id="node44" href="_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="1347,347,1539,388"/>
+<area shape="rect" id="node45" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="637,629,831,671"/>
+<area shape="rect" id="node46" href="_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="1034,443,1226,485"/>
+<area shape="rect" id="node43" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="957,629,1151,671"/>
+<area shape="rect" id="node49" href="_notifier_8h.html" title="acsdkNotifier/Notifier.h" alt="" coords="3075,354,3231,381"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test_1_1_interaction_model_capability_agent_test.html">alexaClientSDK::capabilityAgents::interactionModel::test::InteractionModelCapabilityAgentTest</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test harness for <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1_interaction_model_capability_agent.html">InteractionModelCapabilityAgent</a></code> class.  <a href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test_1_1_interaction_model_capability_agent_test.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_interaction_model_1_1test_1_1_interaction_model_capability_agent_test.html">alexaClientSDK::acsdkInteractionModel::test::InteractionModelCapabilityAgentTest</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test harness for <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_interaction_model_1_1_interaction_model_capability_agent.html">InteractionModelCapabilityAgent</a></code> class.  <a href="classalexa_client_s_d_k_1_1acsdk_interaction_model_1_1test_1_1_interaction_model_capability_agent_test.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test_1_1_mock_observer.html">alexaClientSDK::capabilityAgents::interactionModel::test::MockObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_interaction_model_1_1test_1_1_mock_observer.html">alexaClientSDK::acsdkInteractionModel::test::MockObserver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -107,69 +140,67 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents.html">alexaClientSDK::capabilityAgents</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_interaction_model"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model.html">alexaClientSDK::acsdkInteractionModel</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model.html">alexaClientSDK::capabilityAgents::interactionModel</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html">alexaClientSDK::capabilityAgents::interactionModel::test</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html">alexaClientSDK::acsdkInteractionModel::test</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae4f214afc45ce3fb6ed079cff90beb56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#ae4f214afc45ce3fb6ed079cff90beb56">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_createNoDirectiveSequencer)</td></tr>
-<tr class="separator:ae4f214afc45ce3fb6ed079cff90beb56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad4b8bf4d4d36dc86202af8739040d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a7ad4b8bf4d4d36dc86202af8739040d5">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_createNoExceptionHanlder)</td></tr>
-<tr class="separator:a7ad4b8bf4d4d36dc86202af8739040d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a224155392a2c75b9df2b5bd84d2174da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a224155392a2c75b9df2b5bd84d2174da">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_processNewDialogRequestID)</td></tr>
-<tr class="separator:a224155392a2c75b9df2b5bd84d2174da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4d377899f535f6da13bb5fa99146d2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#af4d377899f535f6da13bb5fa99146d2a">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_processNullDirective)</td></tr>
-<tr class="separator:af4d377899f535f6da13bb5fa99146d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee7084db5920e83ce2fad802ab2ea32c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#aee7084db5920e83ce2fad802ab2ea32c">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_processInvalidDirective)</td></tr>
-<tr class="separator:aee7084db5920e83ce2fad802ab2ea32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47d158ec05200edced35c768cbd90154"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a47d158ec05200edced35c768cbd90154">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_addObserverRPS)</td></tr>
-<tr class="separator:a47d158ec05200edced35c768cbd90154"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d30b469f37c976508775cd4e5d736a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a9d30b469f37c976508775cd4e5d736a5">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_addObserverRPC)</td></tr>
-<tr class="separator:a9d30b469f37c976508775cd4e5d736a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b74d4f0d49084bfe02e22cfd28ba3bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a5b74d4f0d49084bfe02e22cfd28ba3bf">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_addObserverNullptr_NoErrors)</td></tr>
-<tr class="separator:a5b74d4f0d49084bfe02e22cfd28ba3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acf58c42f892995ebb0edbb1b1a128c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a4acf58c42f892995ebb0edbb1b1a128c">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_removeObserver)</td></tr>
-<tr class="separator:a4acf58c42f892995ebb0edbb1b1a128c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5c763c444875dd074f4b3466c104268"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#aa5c763c444875dd074f4b3466c104268">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_removeObserverNullptr_NoErrors)</td></tr>
-<tr class="separator:aa5c763c444875dd074f4b3466c104268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f531b3d61d0c9c08b5b63e973071f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#aa3f531b3d61d0c9c08b5b63e973071f5">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_createNoDirectiveSequencer)</td></tr>
+<tr class="separator:aa3f531b3d61d0c9c08b5b63e973071f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae29bbf95a494e16f83e110e30332d3e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#ae29bbf95a494e16f83e110e30332d3e7">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_createNoExceptionHandler)</td></tr>
+<tr class="separator:ae29bbf95a494e16f83e110e30332d3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02a5e0e033db6a971b7cb056f4cad842"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a02a5e0e033db6a971b7cb056f4cad842">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_createNoNotifier)</td></tr>
+<tr class="separator:a02a5e0e033db6a971b7cb056f4cad842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedad053e89cc05da79fcc8c53a156c69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#aedad053e89cc05da79fcc8c53a156c69">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_createNoEndpointCapabilitiesRegistrar)</td></tr>
+<tr class="separator:aedad053e89cc05da79fcc8c53a156c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7805913f5e83e2ec905eab488cf9b474"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a7805913f5e83e2ec905eab488cf9b474">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_processNewDialogRequestID)</td></tr>
+<tr class="separator:a7805913f5e83e2ec905eab488cf9b474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd5061cd9cc2994bb2598a730499fca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#adbd5061cd9cc2994bb2598a730499fca">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_processNullDirective)</td></tr>
+<tr class="separator:adbd5061cd9cc2994bb2598a730499fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae914b9661842b87a8e4baa196aaeb88"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#aae914b9661842b87a8e4baa196aaeb88">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_processInvalidDirective)</td></tr>
+<tr class="separator:aae914b9661842b87a8e4baa196aaeb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38f8858329e7df1245ac50f59bf89920"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a38f8858329e7df1245ac50f59bf89920">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_addObserverRPS)</td></tr>
+<tr class="separator:a38f8858329e7df1245ac50f59bf89920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37606b53bbb2938a5187d77deafbc883"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a37606b53bbb2938a5187d77deafbc883">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_addObserverRPC)</td></tr>
+<tr class="separator:a37606b53bbb2938a5187d77deafbc883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a732b8c00c9d362b23422352e056db7d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a732b8c00c9d362b23422352e056db7d9">alexaClientSDK::acsdkInteractionModel::test::TEST_F</a> (InteractionModelCapabilityAgentTest, test_removeObserver)</td></tr>
+<tr class="separator:a732b8c00c9d362b23422352e056db7d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a27d51871f6c632424b4e0ed8ea8df3b4"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a27d51871f6c632424b4e0ed8ea8df3b4">alexaClientSDK::capabilityAgents::interactionModel::test::TEST_DIALOG_REQUEST_AVS</a> = &quot;2&quot;</td></tr>
-<tr class="separator:a27d51871f6c632424b4e0ed8ea8df3b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb1bc8425dfe7c2052508f7af4949c37"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#acb1bc8425dfe7c2052508f7af4949c37">alexaClientSDK::capabilityAgents::interactionModel::test::CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING</a></td></tr>
-<tr class="memdesc:acb1bc8425dfe7c2052508f7af4949c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sample Directive JSON string for the purposes of creating an AVSDirective object.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#acb1bc8425dfe7c2052508f7af4949c37">More...</a><br /></td></tr>
-<tr class="separator:acb1bc8425dfe7c2052508f7af4949c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a047c4e37df570077e5d584a055ab22cc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a047c4e37df570077e5d584a055ab22cc">alexaClientSDK::capabilityAgents::interactionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_1</a></td></tr>
-<tr class="memdesc:a047c4e37df570077e5d584a055ab22cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest directive with an incorrect name.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a047c4e37df570077e5d584a055ab22cc">More...</a><br /></td></tr>
-<tr class="separator:a047c4e37df570077e5d584a055ab22cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43364b819a73d76e73d724c33b9cc1de"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a43364b819a73d76e73d724c33b9cc1de">alexaClientSDK::capabilityAgents::interactionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_2</a></td></tr>
-<tr class="memdesc:a43364b819a73d76e73d724c33b9cc1de"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest directive with no payload.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a43364b819a73d76e73d724c33b9cc1de">More...</a><br /></td></tr>
-<tr class="separator:a43364b819a73d76e73d724c33b9cc1de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ed7455f2fd309e600fbc1e024caa1d7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a8ed7455f2fd309e600fbc1e024caa1d7">alexaClientSDK::capabilityAgents::interactionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_3</a></td></tr>
-<tr class="memdesc:a8ed7455f2fd309e600fbc1e024caa1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest with invalid dialogRequestID format.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a8ed7455f2fd309e600fbc1e024caa1d7">More...</a><br /></td></tr>
-<tr class="separator:a8ed7455f2fd309e600fbc1e024caa1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8313a30ca4d7be3e4025263750bcdaba"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a8313a30ca4d7be3e4025263750bcdaba">alexaClientSDK::capabilityAgents::interactionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_4</a></td></tr>
-<tr class="memdesc:a8313a30ca4d7be3e4025263750bcdaba"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest with empty dialogRequestID format.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a8313a30ca4d7be3e4025263750bcdaba">More...</a><br /></td></tr>
-<tr class="separator:a8313a30ca4d7be3e4025263750bcdaba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a86abd4b393386b1e3cc313d8e3d298"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a4a86abd4b393386b1e3cc313d8e3d298">alexaClientSDK::capabilityAgents::interactionModel::test::RPS_DIRECTIVE_JSON_STRING</a></td></tr>
-<tr class="memdesc:a4a86abd4b393386b1e3cc313d8e3d298"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sample RPS Directive JSON string for the purposes of creating an AVSDirective object.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a4a86abd4b393386b1e3cc313d8e3d298">More...</a><br /></td></tr>
-<tr class="separator:a4a86abd4b393386b1e3cc313d8e3d298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9890ec6edee31bc4b089ecd1127543ea"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a9890ec6edee31bc4b089ecd1127543ea">alexaClientSDK::capabilityAgents::interactionModel::test::RPC_DIRECTIVE_JSON_STRING</a></td></tr>
-<tr class="memdesc:a9890ec6edee31bc4b089ecd1127543ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sample RPC Directive JSON string for the purposes of creating an AVSDirective object.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a9890ec6edee31bc4b089ecd1127543ea">More...</a><br /></td></tr>
-<tr class="separator:a9890ec6edee31bc4b089ecd1127543ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22e174769dd5f3baa1609eba742a3d78"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1interaction_model_1_1test.html#a22e174769dd5f3baa1609eba742a3d78">alexaClientSDK::capabilityAgents::interactionModel::test::TIMEOUT</a> {500}</td></tr>
-<tr class="separator:a22e174769dd5f3baa1609eba742a3d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d0196267f48d0497850df9cfe584ab"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#ab7d0196267f48d0497850df9cfe584ab">alexaClientSDK::acsdkInteractionModel::test::TEST_DIALOG_REQUEST_AVS</a> = &quot;2&quot;</td></tr>
+<tr class="separator:ab7d0196267f48d0497850df9cfe584ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3cc8270dbc47aaaea43ec650f0df4f9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#aa3cc8270dbc47aaaea43ec650f0df4f9">alexaClientSDK::acsdkInteractionModel::test::CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING</a></td></tr>
+<tr class="memdesc:aa3cc8270dbc47aaaea43ec650f0df4f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sample Directive JSON string for the purposes of creating an AVSDirective object.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#aa3cc8270dbc47aaaea43ec650f0df4f9">More...</a><br /></td></tr>
+<tr class="separator:aa3cc8270dbc47aaaea43ec650f0df4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ec595a6e878ac4772681a6ba5bd0031"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a5ec595a6e878ac4772681a6ba5bd0031">alexaClientSDK::acsdkInteractionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_1</a></td></tr>
+<tr class="memdesc:a5ec595a6e878ac4772681a6ba5bd0031"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest directive with an incorrect name.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a5ec595a6e878ac4772681a6ba5bd0031">More...</a><br /></td></tr>
+<tr class="separator:a5ec595a6e878ac4772681a6ba5bd0031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e5bd53ad51eca92b331aee6d7ab261e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a4e5bd53ad51eca92b331aee6d7ab261e">alexaClientSDK::acsdkInteractionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_2</a></td></tr>
+<tr class="memdesc:a4e5bd53ad51eca92b331aee6d7ab261e"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest directive with no payload.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a4e5bd53ad51eca92b331aee6d7ab261e">More...</a><br /></td></tr>
+<tr class="separator:a4e5bd53ad51eca92b331aee6d7ab261e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01b7e16efc2d99c1a7701ecce19c5d23"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a01b7e16efc2d99c1a7701ecce19c5d23">alexaClientSDK::acsdkInteractionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_3</a></td></tr>
+<tr class="memdesc:a01b7e16efc2d99c1a7701ecce19c5d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest with invalid dialogRequestID format.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a01b7e16efc2d99c1a7701ecce19c5d23">More...</a><br /></td></tr>
+<tr class="separator:a01b7e16efc2d99c1a7701ecce19c5d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f5aca6cbbbdb8749a7b387be2ea1ba1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a5f5aca6cbbbdb8749a7b387be2ea1ba1">alexaClientSDK::acsdkInteractionModel::test::INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_4</a></td></tr>
+<tr class="memdesc:a5f5aca6cbbbdb8749a7b387be2ea1ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid NewDialogRequest with empty dialogRequestID format.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a5f5aca6cbbbdb8749a7b387be2ea1ba1">More...</a><br /></td></tr>
+<tr class="separator:a5f5aca6cbbbdb8749a7b387be2ea1ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ac145ade00b3a004f5661af1ba5cb3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a13ac145ade00b3a004f5661af1ba5cb3">alexaClientSDK::acsdkInteractionModel::test::RPS_DIRECTIVE_JSON_STRING</a></td></tr>
+<tr class="memdesc:a13ac145ade00b3a004f5661af1ba5cb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sample RPS Directive JSON string for the purposes of creating an AVSDirective object.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#a13ac145ade00b3a004f5661af1ba5cb3">More...</a><br /></td></tr>
+<tr class="separator:a13ac145ade00b3a004f5661af1ba5cb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ea4be10f076d736b3b732446557b6d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#ab1ea4be10f076d736b3b732446557b6d">alexaClientSDK::acsdkInteractionModel::test::RPC_DIRECTIVE_JSON_STRING</a></td></tr>
+<tr class="memdesc:ab1ea4be10f076d736b3b732446557b6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sample RPC Directive JSON string for the purposes of creating an AVSDirective object.  <a href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#ab1ea4be10f076d736b3b732446557b6d">More...</a><br /></td></tr>
+<tr class="separator:ab1ea4be10f076d736b3b732446557b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3b3d25e7bc096fba276bde71ce8bba2"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_interaction_model_1_1test.html#aa3b3d25e7bc096fba276bde71ce8bba2">alexaClientSDK::acsdkInteractionModel::test::TIMEOUT</a> {500}</td></tr>
+<tr class="separator:aa3b3d25e7bc096fba276bde71ce8bba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.23.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

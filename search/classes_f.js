@@ -30,7 +30,6 @@ var searchData=
   ['playlistparserobserverinterface',['PlaylistParserObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1playlist_parser_1_1_playlist_parser_observer_interface.html',1,'alexaClientSDK::avsCommon::utils::playlistParser']]],
   ['playlistparsertest',['PlaylistParserTest',['../classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_playlist_parser_test.html',1,'alexaClientSDK::playlistParser::test']]],
   ['playrequestor',['PlayRequestor',['../structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html',1,'alexaClientSDK::avsCommon::avs']]],
-  ['pointercache',['PointerCache',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_pointer_cache.html',1,'alexaClientSDK::acsdkManufactory::internal']]],
   ['pooledapplicationmediainterfaces',['PooledApplicationMediaInterfaces',['../structalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1_pooled_application_media_interfaces.html',1,'alexaClientSDK::acsdkApplicationAudioPipelineFactoryInterfaces']]],
   ['pooledmediaplayerfactory',['PooledMediaPlayerFactory',['../classalexa_client_s_d_k_1_1media_player_1_1_pooled_media_player_factory.html',1,'alexaClientSDK::mediaPlayer']]],
   ['pooledmediaplayerfactorytest',['PooledMediaPlayerFactoryTest',['../classalexa_client_s_d_k_1_1media_player_1_1test_1_1_pooled_media_player_factory_test.html',1,'alexaClientSDK::mediaPlayer::test']]],

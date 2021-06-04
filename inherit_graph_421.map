@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1kwd_1_1_kitt_ai_key_word_detector_1_1_kitt_ai_configuration.html" title=" " alt="" coords="5,5,171,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1captions_1_1_timing_adapter_factory.html" title="alexaClientSDK::captions\l::TimingAdapterFactory" alt="" coords="5,5,177,47"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1captions_1_1test_1_1_test_timing_adapter_factory.html" title="alexaClientSDK::captions\l::test::TestTimingAdapterFactory" alt="" coords="225,5,440,47"/>
 </map>

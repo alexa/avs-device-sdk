@@ -1,11 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/Logger/LogEntryStream.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/src/Logger/LogEntryStream.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="131,5,341,61"/>
-<area shape="rect" id="node2" href="$_log_entry_stream_8h.html" title=" " alt="" coords="41,109,215,151"/>
-<area shape="rect" id="node8" href="$_retry_timer_8h.html" title=" " alt="" coords="240,117,451,143"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,206,75,233"/>
-<area shape="rect" id="node4" href="$_log_entry_buffer_8h.html" title=" " alt="" coords="99,199,274,240"/>
-<area shape="rect" id="node5" title=" " alt="" coords="61,288,131,315"/>
-<area shape="rect" id="node6" title=" " alt="" coords="155,288,235,315"/>
-<area shape="rect" id="node7" title=" " alt="" coords="275,288,333,315"/>
-<area shape="rect" id="node9" title=" " alt="" coords="349,206,411,233"/>
+<area shape="rect" id="node2" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="39,109,215,151"/>
+<area shape="rect" id="node8" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="239,117,452,143"/>
+<area shape="rect" id="node4" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="99,199,275,240"/>
 </map>

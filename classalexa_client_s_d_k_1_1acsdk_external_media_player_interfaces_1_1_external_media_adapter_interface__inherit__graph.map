@@ -1,5 +1,4 @@
 <map id="alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterInterface" name="alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterInterface">
-<area shape="rect" id="node1" title=" " alt="" coords="7,95,250,151"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html" title="Mock class of ExternalMediaAdapterInterface." alt="" coords="5,199,252,255"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title=" " alt="" coords="30,5,227,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html" title="Mock class of ExternalMediaAdapterInterface. " alt="" coords="5,199,252,255"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="30,5,227,47"/>
 </map>

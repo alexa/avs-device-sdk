@@ -1,9 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegDecoder.h" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/FFmpegDecoder.h">
-<area shape="rect" id="node1" title=" " alt="" coords="477,5,736,76"/>
-<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8h.html" title=" " alt="" coords="311,124,569,195"/>
-<area shape="rect" id="node4" href="$_android_s_l_e_s_media_player_8cpp.html" title=" " alt="" coords="5,250,264,306"/>
-<area shape="rect" id="node5" href="$_android_s_l_e_s_media_player_test_8cpp.html" title=" " alt="" coords="615,250,905,306"/>
-<area shape="rect" id="node6" href="$_f_fmpeg_decoder_8cpp.html" title=" " alt="" coords="644,131,884,187"/>
-<area shape="rect" id="node7" href="$_f_fmpeg_decoder_test_8cpp.html" title=" " alt="" coords="908,131,1148,187"/>
-<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8cpp.html" title=" " alt="" coords="289,243,591,313"/>
+<area shape="rect" id="node2" href="$_android_s_l_e_s_media_player_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h" alt="" coords="313,124,571,195"/>
+<area shape="rect" id="node4" href="$_android_s_l_e_s_media_player_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp" alt="" coords="5,250,265,306"/>
+<area shape="rect" id="node5" href="$_android_s_l_e_s_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp" alt="" coords="618,250,909,306"/>
+<area shape="rect" id="node6" href="$_f_fmpeg_decoder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/FFmpegDecoder.cpp" alt="" coords="646,131,886,187"/>
+<area shape="rect" id="node7" href="$_f_fmpeg_decoder_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/FFmpegDecoderTest.cpp" alt="" coords="910,131,1150,187"/>
+<area shape="rect" id="node3" href="$_android_application_audio_pipeline_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp" alt="" coords="290,243,594,313"/>
 </map>

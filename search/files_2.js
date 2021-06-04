@@ -136,7 +136,11 @@ var searchData=
   ['customapplicationaudiopipelinefactory_2eh',['CustomApplicationAudioPipelineFactory.h',['../_custom_application_audio_pipeline_factory_8h.html',1,'']]],
   ['customerdatahandler_2ecpp',['CustomerDataHandler.cpp',['../_customer_data_handler_8cpp.html',1,'']]],
   ['customerdatahandler_2eh',['CustomerDataHandler.h',['../_customer_data_handler_8h.html',1,'']]],
+  ['customerdatahandlerinterface_2eh',['CustomerDataHandlerInterface.h',['../_customer_data_handler_interface_8h.html',1,'']]],
   ['customerdatamanager_2ecpp',['CustomerDataManager.cpp',['../_customer_data_manager_8cpp.html',1,'']]],
   ['customerdatamanager_2eh',['CustomerDataManager.h',['../_customer_data_manager_8h.html',1,'']]],
+  ['customerdatamanagerfactory_2ecpp',['CustomerDataManagerFactory.cpp',['../_customer_data_manager_factory_8cpp.html',1,'']]],
+  ['customerdatamanagerfactory_2eh',['CustomerDataManagerFactory.h',['../_customer_data_manager_factory_8h.html',1,'']]],
+  ['customerdatamanagerinterface_2eh',['CustomerDataManagerInterface.h',['../_customer_data_manager_interface_8h.html',1,'']]],
   ['customerdatamanagertest_2ecpp',['CustomerDataManagerTest.cpp',['../_customer_data_manager_test_8cpp.html',1,'']]]
 ];

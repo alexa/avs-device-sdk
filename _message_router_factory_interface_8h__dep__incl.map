@@ -1,22 +1,21 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MessageRouterFactoryInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/MessageRouterFactoryInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="757,5,979,76"/>
-<area shape="rect" id="node2" href="$_message_router_factory_8h.html" title=" " alt="" coords="626,131,857,187"/>
-<area shape="rect" id="node19" href="$_default_client_component_8h.html" title=" " alt="" coords="881,124,1108,195"/>
-<area shape="rect" id="node3" href="$_message_router_factory_8cpp.html" title=" " alt="" coords="710,250,895,306"/>
-<area shape="rect" id="node4" href="$_default_client_8h.html" title=" " alt="" coords="459,243,685,313"/>
-<area shape="rect" id="node5" href="$_default_client_8cpp.html" title=" " alt="" coords="789,361,1019,417"/>
-<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title=" " alt="" coords="223,465,441,521"/>
-<area shape="rect" id="node17" href="$_keyword_observer_8h.html" title=" " alt="" coords="496,361,707,417"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title=" " alt="" coords="491,569,706,625"/>
-<area shape="rect" id="node16" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="229,569,435,625"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="239,673,492,744"/>
-<area shape="rect" id="node12" href="$_sample_application_8h.html" title=" " alt="" coords="812,681,1028,737"/>
-<area shape="rect" id="node15" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="517,681,718,737"/>
-<area shape="rect" id="node9" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="497,799,751,855"/>
-<area shape="rect" id="node10" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="5,792,235,863"/>
-<area shape="rect" id="node11" href="$preview_main_8cpp.html" title=" " alt="" coords="259,799,472,855"/>
-<area shape="rect" id="node13" href="$main_8cpp.html" title=" " alt="" coords="776,807,973,848"/>
-<area shape="rect" id="node14" href="$_sample_application_8cpp.html" title=" " alt="" coords="997,807,1275,848"/>
-<area shape="rect" id="node18" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="465,473,737,514"/>
-<area shape="rect" id="node20" href="$_default_client_component_8cpp.html" title=" " alt="" coords="971,243,1175,313"/>
+<area shape="rect" id="node2" href="$_message_router_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRouterFactory.h" alt="" coords="624,131,856,187"/>
+<area shape="rect" id="node19" href="$_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="880,124,1107,195"/>
+<area shape="rect" id="node3" href="$_message_router_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRouterFactory.cpp" alt="" coords="708,250,895,306"/>
+<area shape="rect" id="node4" href="$_default_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h" alt="" coords="457,243,684,313"/>
+<area shape="rect" id="node5" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="788,361,1017,417"/>
+<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="220,465,439,521"/>
+<area shape="rect" id="node17" href="$_keyword_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/KeywordObserver.h" alt="" coords="494,361,706,417"/>
+<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="490,569,705,625"/>
+<area shape="rect" id="node16" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="227,569,432,625"/>
+<area shape="rect" id="node8" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="239,673,492,744"/>
+<area shape="rect" id="node12" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="812,681,1028,737"/>
+<area shape="rect" id="node15" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="517,681,718,737"/>
+<area shape="rect" id="node9" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="497,799,751,855"/>
+<area shape="rect" id="node10" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="5,792,235,863"/>
+<area shape="rect" id="node11" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="259,799,472,855"/>
+<area shape="rect" id="node13" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="776,807,973,848"/>
+<area shape="rect" id="node14" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="997,807,1275,848"/>
+<area shape="rect" id="node18" href="$_keyword_observer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/KeywordObserver.cpp" alt="" coords="463,473,737,514"/>
+<area shape="rect" id="node20" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="970,243,1174,313"/>
 </map>
