@@ -41,6 +41,7 @@ var searchData=
   ['httpcontentfetcherinterface_2eh',['HTTPContentFetcherInterface.h',['../_h_t_t_p_content_fetcher_interface_8h.html',1,'']]],
   ['httpcontentfetcherinterfacefactoryinterface_2eh',['HTTPContentFetcherInterfaceFactoryInterface.h',['../_h_t_t_p_content_fetcher_interface_factory_interface_8h.html',1,'']]],
   ['httpcontenttest_2ecpp',['HTTPContentTest.cpp',['../_h_t_t_p_content_test_8cpp.html',1,'']]],
+  ['httpgetinterface_2eh',['HttpGetInterface.h',['../_http_get_interface_8h.html',1,'']]],
   ['httppost_2ecpp',['HttpPost.cpp',['../_http_post_8cpp.html',1,'']]],
   ['httppost_2eh',['HttpPost.h',['../_http_post_8h.html',1,'']]],
   ['httppostinterface_2eh',['HttpPostInterface.h',['../_http_post_interface_8h.html',1,'']]],

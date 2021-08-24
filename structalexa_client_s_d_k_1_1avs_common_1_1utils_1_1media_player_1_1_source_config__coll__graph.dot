@@ -4,8 +4,10 @@ digraph "alexaClientSDK::avsCommon::utils::mediaPlayer::SourceConfig"
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
   Node1 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::SourceConfig",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fadeInConfig" ,fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::SourceConfig\l::FadeInConfig",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_1_1_fade_in_config.html"];
-  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" audioNormalizationConfig" ,fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::SourceConfig\l::AudioNormalizationConfig",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_1_1_audio_normalization_config.html"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" mediaDescription" ,fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaDescription",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_description.html"];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fadeInConfig" ,fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::SourceConfig\l::FadeInConfig",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_1_1_fade_in_config.html"];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" audioNormalizationConfig" ,fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::SourceConfig\l::AudioNormalizationConfig",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_1_1_audio_normalization_config.html"];
 }

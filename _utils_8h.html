@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,8 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">Utils.h File Reference</div>  </div>
 </div><!--header-->
@@ -76,12 +75,14 @@ $(function() {
 <div class="textblock"><code>#include &lt;tuple&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &quot;<a class="el" href="_import_8h_source.html">acsdkManufactory/Import.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_optional_import_8h_source.html">acsdkManufactory/OptionalImport.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_cook_book_8h_source.html">acsdkManufactory/internal/CookBook.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_make_optional_8h_source.html">acsdkManufactory/internal/MakeOptional.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Utils.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_utils_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h" id="_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h">
-<area shape="rect" id="node4" href="_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="187,124,368,151"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -89,55 +90,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_utils_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8hdep" id="_2workplace_2avs-device-sdk_2shared_2acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8hdep">
-<area shape="rect" id="node2" href="_component__imp_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/Component_imp.h" alt="" coords="6110,243,6311,313"/>
-<area shape="rect" id="node44" href="_manufactory__imp_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/Manufactory_imp.h" alt="" coords="10885,487,11086,558"/>
-<area shape="rect" id="node47" href="_cook_book__imp_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/CookBook_imp.h" alt="" coords="8533,124,8734,195"/>
-<area shape="rect" id="node50" href="_manufactory_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/test/ManufactoryUtilsTest.cpp" alt="" coords="8857,131,9060,187"/>
-<area shape="rect" id="node3" href="_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/Component.h" alt="" coords="6110,361,6311,432"/>
-<area shape="rect" id="node4" href="_a_d_s_l_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/include/ADSL\l/ADSLComponent.h" alt="" coords="8005,495,8176,551"/>
-<area shape="rect" id="node5" href="_focus_management_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AFML/include/AFML\l/FocusManagementComponent.h" alt="" coords="8495,495,8710,551"/>
-<area shape="rect" id="node6" href="acsdk_android_application_audio_pipeline_factory_2include_2acsdk_application_audio_pipeline_fact952244caba7ee8985a8bdd12c0ca49b0.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/ApplicationAudioPipelineFactoryComponent.h" alt="" coords="8735,480,9028,565"/>
-<area shape="rect" id="node7" href="acsdk_blue_z_bluetooth_implementation_2include_2acsdk_bluetooth_implementation_2_bluetooth_implementation_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkBlue\lZBluetoothImplementation\l/include/acsdkBluetoothImplementation\l/BluetoothImplementationComponent.h" alt="" coords="9052,480,9303,565"/>
-<area shape="rect" id="node8" href="_authorization_delegate_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCBLAuthorization\lDelegate/include/acsdkAuthorizationDelegate\l/AuthorizationDelegateComponent.h" alt="" coords="9327,487,9614,558"/>
-<area shape="rect" id="node9" href="acsdk_custom_application_audio_pipeline_factory_2include_2acsdk_application_audio_pipeline_facto8c9309582bcbe9bd6b3881aa1a5e4e02.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCustom\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/ApplicationAudioPipelineFactoryComponent.h" alt="" coords="9639,480,9932,565"/>
-<area shape="rect" id="node10" href="_device_settings_manager_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lDeviceSettingsManager/include\l/acsdkDeviceSettingsManager/DeviceSettings\lManagerComponent.h" alt="" coords="9956,480,10249,565"/>
-<area shape="rect" id="node11" href="_internet_connection_monitor_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lInternetConnectionMonitor\l/include/acsdkInternetConnectionMonitor\l/InternetConnectionMonitorComponent.h" alt="" coords="10273,480,10532,565"/>
-<area shape="rect" id="node12" href="_default_sample_application_options_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/include\l/acsdkDefaultSampleApplicationOptions\l/DefaultSampleApplicationOptionsComponent.h" alt="" coords="5,480,304,565"/>
-<area shape="rect" id="node13" href="acsdk_gstreamer_application_audio_pipeline_factory_2include_2acsdk_application_audio_pipeline_fa57fe12eb11b773ba1c54aba24163473a.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkGstreamer\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/ApplicationAudioPipelineFactoryComponent.h" alt="" coords="328,480,621,565"/>
-<area shape="rect" id="node14" href="_alexa_communications_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/include\l/acsdkAlexaCommunications/AlexaCommunications\lComponent.h" alt="" coords="646,480,973,565"/>
-<area shape="rect" id="node15" href="_h_t_t_p_content_fetcher_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lHTTPContentFetcher/include\l/acsdkHTTPContentFetcher/HTTPContent\lFetcherComponent.h" alt="" coords="997,480,1267,565"/>
-<area shape="rect" id="node16" href="acsdk_null_bluetooth_implementation_2include_2acsdk_bluetooth_implementation_2_bluetooth_implementation_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkNull\lBluetoothImplementation/include\l/acsdkBluetoothImplementation\l/BluetoothImplementationComponent.h" alt="" coords="1291,480,1539,565"/>
-<area shape="rect" id="node17" href="acsdk_null_metric_recorder_2include_2acsdk_metric_recorder_2_metric_recorder_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkNull\lMetricRecorder/include/acsdkMetric\lRecorder/MetricRecorderComponent.h" alt="" coords="1562,487,1809,558"/>
-<area shape="rect" id="node18" href="acsdk_null_speech_encoder_2include_2acsdk_speech_encoder_2_speech_encoder_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkNull\lSpeechEncoder/include/acsdkSpeech\lEncoder/SpeechEncoderComponent.h" alt="" coords="1833,487,2077,558"/>
-<area shape="rect" id="node19" href="_system_time_zone_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkNull\lSystemTimeZone/include/acsdkSystem\lTimeZone/SystemTimeZoneComponent.h" alt="" coords="2101,487,2366,558"/>
-<area shape="rect" id="node20" href="acsdk_opus_speech_encoder_2include_2acsdk_speech_encoder_2_speech_encoder_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkOpus\lSpeechEncoder/include/acsdkSpeech\lEncoder/SpeechEncoderComponent.h" alt="" coords="2390,487,2634,558"/>
-<area shape="rect" id="node21" href="_preview_alexa_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h" alt="" coords="2659,487,2912,558"/>
-<area shape="rect" id="node22" href="acsdk_sample_metric_recorder_2include_2acsdk_metric_recorder_2_metric_recorder_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkSample\lMetricRecorder/include/acsdkMetric\lRecorder/MetricRecorderComponent.h" alt="" coords="2937,487,3183,558"/>
-<area shape="rect" id="node23" href="_default_client_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h" alt="" coords="3208,487,3435,558"/>
-<area shape="rect" id="node24" href="_alerts_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/include/acsdkAlerts\l/AlertsComponent.h" alt="" coords="3459,487,3672,558"/>
-<area shape="rect" id="node25" href="_audio_player_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioPlayerComponent.h" alt="" coords="3696,487,3979,558"/>
-<area shape="rect" id="node26" href="_bluetooth_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BluetoothComponent.h" alt="" coords="4003,487,4258,558"/>
-<area shape="rect" id="node27" href="_device_setup_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DeviceSetup\l/acsdkDeviceSetup/include\l/acsdkDeviceSetup/DeviceSetupComponent.h" alt="" coords="4283,487,4576,558"/>
-<area shape="rect" id="node28" href="_do_not_disturb_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DoNotDisturbComponent.h" alt="" coords="4601,487,4903,558"/>
-<area shape="rect" id="node29" href="_equalizer_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/include/acsdkEqualizerImplementations\l/EqualizerComponent.h" alt="" coords="4928,480,5184,565"/>
-<area shape="rect" id="node30" href="_equalizer_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/EqualizerComponent.cpp" alt="" coords="6419,613,6629,684"/>
-<area shape="rect" id="node31" href="_external_media_player_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayerComponent.h" alt="" coords="5259,480,5485,565"/>
-<area shape="rect" id="node32" href="_notifications_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationsComponent.h" alt="" coords="5510,487,5799,558"/>
-<area shape="rect" id="node33" href="_interaction_model_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/InteractionModel/acsdkInteraction\lModel/include/acsdkInteractionModel\l/InteractionModelComponent.h" alt="" coords="5824,480,6061,565"/>
-<area shape="rect" id="node34" href="_playback_controller_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/PlaybackController/include\l/PlaybackController/PlaybackController\lComponent.h" alt="" coords="6085,480,6336,565"/>
-<area shape="rect" id="node35" href="_speaker_manager_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/include\l/SpeakerManager/SpeakerManagerComponent.h" alt="" coords="6360,487,6664,558"/>
-<area shape="rect" id="node36" href="_system_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/include/System\l/SystemComponent.h" alt="" coords="6688,487,6853,558"/>
-<area shape="rect" id="node37" href="_captions_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Component\l/include/Captions/CaptionsComponent.h" alt="" coords="6878,495,7135,551"/>
-<area shape="rect" id="node38" href="_core_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/include\l/acsdkCore/CoreComponent.h" alt="" coords="7159,495,7358,551"/>
-<area shape="rect" id="node39" href="_registration_manager_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkRegistration\lManager/include/RegistrationManager\l/RegistrationManagerComponent.h" alt="" coords="7382,487,7623,558"/>
-<area shape="rect" id="node40" href="_sample_application_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplicationComponent.h" alt="" coords="7648,495,7931,551"/>
-<area shape="rect" id="node41" href="_component_accumulator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/ComponentAccumulator.h" alt="" coords="10607,487,10809,558"/>
-<area shape="rect" id="node42" href="_component_accumulator__imp_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/ComponentAccumulator_imp.h" alt="" coords="10472,613,10723,684"/>
-<area shape="rect" id="node43" href="_manufactory_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/test/ManufactoryTest.cpp" alt="" coords="10659,732,10861,788"/>
-<area shape="rect" id="node45" href="_manufactory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/Manufactory.h" alt="" coords="10855,613,11057,684"/>
-<area shape="rect" id="node46" href="_shared_component_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkShared\l/include/acsdkShared/SharedComponent.h" alt="" coords="8201,495,8471,551"/>
-<area shape="rect" id="node48" href="_cook_book_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/CookBook.h" alt="" coords="8533,243,8734,313"/>
-<area shape="rect" id="node49" href="_runtime_manufactory__imp_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/RuntimeManufactory_imp.h" alt="" coords="8551,361,8783,432"/>
 </map>
 </div>
 </div>
@@ -193,13 +145,21 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_import_3_01_import_3_01_type_01_4_01_4.html">alexaClientSDK::acsdkManufactory::internal::IsImport&lt; Import&lt; Type &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_import_3_01_optional_import_3_01_type_01_4_01_4.html">alexaClientSDK::acsdkManufactory::internal::IsImport&lt; OptionalImport&lt; Type &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_import_3_01_type_01_4.html">alexaClientSDK::acsdkManufactory::internal::IsImport&lt; Type &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_import.html">alexaClientSDK::acsdkManufactory::internal::HasImport&lt; Types &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_required_import.html">alexaClientSDK::acsdkManufactory::internal::IsRequiredImport&lt;... &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_import_1_1_is_false.html">alexaClientSDK::acsdkManufactory::internal::HasImport&lt; Types &gt;::IsFalse&lt; InType &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_required_import_3_01_import_3_01_type_01_4_01_4.html">alexaClientSDK::acsdkManufactory::internal::IsRequiredImport&lt; Import&lt; Type &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_import_1_1_bool_values.html">alexaClientSDK::acsdkManufactory::internal::HasImport&lt; Types &gt;::BoolValues&lt; InTypes &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_required_import_3_01_type_01_4.html">alexaClientSDK::acsdkManufactory::internal::IsRequiredImport&lt; Type &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_required_import.html">alexaClientSDK::acsdkManufactory::internal::HasRequiredImport&lt; Types &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_required_import_1_1_is_false.html">alexaClientSDK::acsdkManufactory::internal::HasRequiredImport&lt; Types &gt;::IsFalse&lt; InType &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_required_import_1_1_bool_values.html">alexaClientSDK::acsdkManufactory::internal::HasRequiredImport&lt; Types &gt;::BoolValues&lt; InTypes &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_dedup_types.html">alexaClientSDK::acsdkManufactory::internal::DedupTypes&lt; Types &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,15 +187,53 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ex6adecd1f4b45736dea8d6781cb845a31.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetExportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_imports_operation.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetImportsOperation</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_make_optional_imports_operation.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetMakeOptionalImportsOperation</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_imports_operation_1_1_apply.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetImportsOperation::Apply&lt;... &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma85d5ac4368be34d727b03417bce9edfa.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetMakeOptionalImportsOperation::Apply&lt;... &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_imfe7bcfe70079ed8edbc0b1868d855104.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Import&lt; Type &gt; &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma5de9a0d95ac305a6c7567be459c13750.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetMakeOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, MakeOptional&lt; Type &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_imca4cd9ac669dc96e10e905a570e0df86.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma583a59ff3c84ffad68c7e508556f5505.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetMakeOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_optional_imports_operation.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_op6aa581e286a4d9aa27ea8529990ec6f1.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt;... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_opf22bd56bc67a1aabf711d95ee1842125.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, OptionalImport&lt; Type &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_op49c067d8ce3010204e62ef27a5ff1aa3.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, MakeOptional&lt; Type &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_op12859f12d22ecc2ca7c88a046950b441.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_required_imports_operation.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetRequiredImportsOperation</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_re859cbe2ce5980ebbc9ac1016f88e0a72.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetRequiredImportsOperation::Apply&lt;... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_re7a64155bfb76f23b8ec7693b3eb47406.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetRequiredImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Import&lt; Type &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_rea39eea3433e99a45e792e6b5d531a21a.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetRequiredImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1type.html">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::type</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_default_values.html">alexaClientSDK::acsdkManufactory::internal::DefaultValues&lt; Types &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_default_values_3_01_optional_imporc6b36ceae0841d133ddd7afb0ab9e621.html">alexaClientSDK::acsdkManufactory::internal::DefaultValues&lt; OptionalImport&lt; Type &gt;, Types... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_default_values_3_01_type_00_01_types_8_8_8_01_4.html">alexaClientSDK::acsdkManufactory::internal::DefaultValues&lt; Type, Types... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_default_values_3_4.html">alexaClientSDK::acsdkManufactory::internal::DefaultValues&lt;&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_export.html">alexaClientSDK::acsdkManufactory::internal::PrintMissingExport&lt; Types &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_export_3_4.html">alexaClientSDK::acsdkManufactory::internal::PrintMissingExport&lt;&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_export_3_01std_1_1tuple_3_4_01_4.html">alexaClientSDK::acsdkManufactory::internal::PrintMissingExport&lt; std::tuple&lt;&gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_import.html">alexaClientSDK::acsdkManufactory::internal::PrintMissingImport&lt; Types &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_import_3_4.html">alexaClientSDK::acsdkManufactory::internal::PrintMissingImport&lt;&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_import_3_01std_1_1tuple_3_4_01_4.html">alexaClientSDK::acsdkManufactory::internal::PrintMissingImport&lt; std::tuple&lt;&gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -247,61 +245,12 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1internal.html">alexaClientSDK::acsdkManufactory::internal</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a0863044a5e7934c389b330b05c6a70cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_utils_8h.html#a0863044a5e7934c389b330b05c6a70cc">ACSDK_STATIC_ASSERT_IS_SAME</a>(LHS,  RHS,  message)</td></tr>
-<tr class="separator:a0863044a5e7934c389b330b05c6a70cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a0863044a5e7934c389b330b05c6a70cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0863044a5e7934c389b330b05c6a70cc">&#9670;&nbsp;</a></span>ACSDK_STATIC_ASSERT_IS_SAME</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ACSDK_STATIC_ASSERT_IS_SAME</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">LHS, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">RHS, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">message&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{                                                                               \</div><div class="line">        <span class="comment">/* This assigment is intended to generate useful compiler error messages */</span> \</div><div class="line">        LHS* lhs = <span class="keyword">nullptr</span>;                                                         \</div><div class="line">        RHS* rhs = <span class="keyword">nullptr</span>;                                                         \</div><div class="line">        lhs = rhs;                                                                  \</div><div class="line">        (void)lhs;                                                                  \</div><div class="line">        static_assert(std::is_same&lt;LHS, RHS&gt;::value, message);                      \</div><div class="line">    }</div></div><!-- fragment --><p>Assert at compile time that two types are the same.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">LHS</td><td>The "left hand side" type for the is_same test. </td></tr>
-    <tr><td class="paramname">RHS</td><td>The "right hand side" type for the is_same test. </td></tr>
-    <tr><td class="paramname">message</td><td>The message to display if the assertion fails. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

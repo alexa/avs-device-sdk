@@ -28,4 +28,6 @@ digraph "alexaClientSDK::acsdkBluetooth::Bluetooth"
   Node11 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
   Node12 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node12 [label="alexaClientSDK::registration\lManager::CustomerDataHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html"];
+  Node13 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="alexaClientSDK::registration\lManager::CustomerDataHandlerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html"];
 }

@@ -12,8 +12,8 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/AndroidUtilities/include
   }
   dir_64fbf9e5512ec11acc25e4f2d433d2a3 [shape=box label="Resources" fillcolor="white" style="filled" color="red" URL="dir_64fbf9e5512ec11acc25e4f2d433d2a3.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_64fbf9e5512ec11acc25e4f2d433d2a3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000111_000017.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000111.html"];
-  dir_691ac723b59835d8cc7304ebace6d7e5->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000100_000111.html"];
-  dir_691ac723b59835d8cc7304ebace6d7e5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000100_000017.html"];
+  dir_64fbf9e5512ec11acc25e4f2d433d2a3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000127_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000127.html"];
+  dir_691ac723b59835d8cc7304ebace6d7e5->dir_64fbf9e5512ec11acc25e4f2d433d2a3 [headlabel="1", labeldistance=1.5 headhref="dir_000116_000127.html"];
+  dir_691ac723b59835d8cc7304ebace6d7e5->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000116_000017.html"];
 }

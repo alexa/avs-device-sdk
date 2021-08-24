@@ -6,12 +6,9 @@ digraph "/workplace/avs-device-sdk/SampleApp/Authorization/CBLAuthDelegate/inclu
     graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_9dd8d0f9a49957230a9490745c7e4f43.html"]
   dir_be1d93f3c47bfa6e8af1e657ecd75a30 [shape=box, label="CBLAuthDelegate", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_be1d93f3c47bfa6e8af1e657ecd75a30.html"];
   }
-  dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_b14333b5607b47fe7356eaa790107bd3 [shape=box label="RegistrationManager" fillcolor="white" style="filled" color="red" URL="dir_b14333b5607b47fe7356eaa790107bd3.html"];
-  dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000594_000017.html"];
-  dir_b14333b5607b47fe7356eaa790107bd3->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000524_000017.html"];
-  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="1", labeldistance=1.5 headhref="dir_000532_000594.html"];
-  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000532_000017.html"];
-  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_b14333b5607b47fe7356eaa790107bd3 [headlabel="1", labeldistance=1.5 headhref="dir_000532_000524.html"];
+  dir_4270bfced15e0e73154b13468c7c9ad9 [shape=box label="core" fillcolor="white" style="filled" color="red" URL="dir_4270bfced15e0e73154b13468c7c9ad9.html"];
+  dir_4270bfced15e0e73154b13468c7c9ad9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="76", labeldistance=1.5 headhref="dir_000461_000017.html"];
+  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000581_000017.html"];
+  dir_be1d93f3c47bfa6e8af1e657ecd75a30->dir_4270bfced15e0e73154b13468c7c9ad9 [headlabel="3", labeldistance=1.5 headhref="dir_000581_000461.html"];
 }

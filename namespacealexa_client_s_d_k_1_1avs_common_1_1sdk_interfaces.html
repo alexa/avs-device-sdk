@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -166,6 +166,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html">DirectiveSequencerInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dtmf_observer_interface.html">DtmfObserverInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_event_tracer_interface.html">EventTracerInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">ExceptionEncounteredSenderInterface</a></td></tr>
@@ -293,6 +295,8 @@ Functions</h2></td></tr>
 <tr class="separator:a624bc30ab6e0e487597a8645de8e51b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a379b88faa712291cb1064f972ef6298b"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a379b88faa712291cb1064f972ef6298b">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html#aaec10009cef97fa38316fb0f2beab1c7">AudioInputProcessorObserverInterface::State</a> &amp;state)</td></tr>
 <tr class="separator:a379b88faa712291cb1064f972ef6298b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a356e52c742c08eb1d377842bda880328"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a356e52c742c08eb1d377842bda880328">operator==</a> (const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface_1_1_full_state.html">AuthObserverInterface::FullState</a> &amp;lhs, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface_1_1_full_state.html">AuthObserverInterface::FullState</a> &amp;rhs)</td></tr>
+<tr class="separator:a356e52c742c08eb1d377842bda880328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe023bf4384a9c6ca6af92cff063e760"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#afe023bf4384a9c6ca6af92cff063e760">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#a62a72a6ac191b845c9a379a7d4ad56f4">AuthObserverInterface::State</a> &amp;state)</td></tr>
 <tr class="separator:afe023bf4384a9c6ca6af92cff063e760"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949148bd6331752d67e947dc69e8407d"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a949148bd6331752d67e947dc69e8407d">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#a3a3b2f95459c18e64fab7a296ad9fbce">AuthObserverInterface::Error</a> &amp;error)</td></tr>
@@ -674,53 +678,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="afe023bf4384a9c6ca6af92cff063e760"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe023bf4384a9c6ca6af92cff063e760">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[5/16]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::sdkInterfaces::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>stream</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#a62a72a6ac191b845c9a379a7d4ad56f4">AuthObserverInterface::State</a> &amp;&#160;</td>
-          <td class="paramname"><em>state</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Write a <code>State</code> value to an <code>ostream</code> as a string.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
-    <tr><td class="paramname">state</td><td>The state value to write to the <code>ostream</code> as a string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
-
-</div>
-</div>
 <a id="a7383de44cfbc43ef18d3408b48f35825"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7383de44cfbc43ef18d3408b48f35825">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[6/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7383de44cfbc43ef18d3408b48f35825">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[5/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -765,7 +724,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae063669c86e17a8cb6f04f2b09b8dfca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae063669c86e17a8cb6f04f2b09b8dfca">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[7/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae063669c86e17a8cb6f04f2b09b8dfca">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[6/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -810,7 +769,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac3791272f455451f045b823d135be99c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3791272f455451f045b823d135be99c">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[8/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3791272f455451f045b823d135be99c">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[7/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -855,7 +814,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af16855e6799be9afe18362d4d182e13e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af16855e6799be9afe18362d4d182e13e">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af16855e6799be9afe18362d4d182e13e">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[8/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -899,53 +858,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a949148bd6331752d67e947dc69e8407d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a949148bd6331752d67e947dc69e8407d">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/16]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::sdkInterfaces::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>stream</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#a3a3b2f95459c18e64fab7a296ad9fbce">AuthObserverInterface::Error</a> &amp;&#160;</td>
-          <td class="paramname"><em>error</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Write an <code>Error</code> value to an <code>ostream</code> as a string.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
-    <tr><td class="paramname">error</td><td>The error value to write to the <code>ostream</code> as a string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
-
-</div>
-</div>
 <a id="a1186154f0895ad6ba3a3ee971483116c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1186154f0895ad6ba3a3ee971483116c">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[11/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1186154f0895ad6ba3a3ee971483116c">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[9/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -990,7 +904,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="adf0a9e0348a114c5c026670bc960af5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf0a9e0348a114c5c026670bc960af5f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[12/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adf0a9e0348a114c5c026670bc960af5f">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[10/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1034,8 +948,53 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afe023bf4384a9c6ca6af92cff063e760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe023bf4384a9c6ca6af92cff063e760">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[11/16]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::sdkInterfaces::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#a62a72a6ac191b845c9a379a7d4ad56f4">AuthObserverInterface::State</a> &amp;&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write a <code>State</code> value to an <code>ostream</code> as a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">state</td><td>The state value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
 <a id="ad482fe204dd360db86ae31d00a07a406"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad482fe204dd360db86ae31d00a07a406">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[13/16]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad482fe204dd360db86ae31d00a07a406">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[12/16]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1072,6 +1031,51 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
     <tr><td class="paramname">status</td><td>The <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html#a2e6b08990caa9d1911b01d51d92806b4">ConnectionStatusObserverInterface::Status</a> value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
+<a id="a949148bd6331752d67e947dc69e8407d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a949148bd6331752d67e947dc69e8407d">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[13/16]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::avsCommon::sdkInterfaces::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#a3a3b2f95459c18e64fab7a296ad9fbce">AuthObserverInterface::Error</a> &amp;&#160;</td>
+          <td class="paramname"><em>error</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write an <code>Error</code> value to an <code>ostream</code> as a string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">error</td><td>The error value to write to the <code>ostream</code> as a string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1214,6 +1218,51 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a356e52c742c08eb1d377842bda880328"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a356e52c742c08eb1d377842bda880328">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::sdkInterfaces::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface_1_1_full_state.html">AuthObserverInterface::FullState</a> &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface_1_1_full_state.html">AuthObserverInterface::FullState</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Operator overload to compare two FullState objects.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lhs</td><td>The object to compare. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Another object to compare.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Whether the two objects are considered equivalent. </p>
+
+</div>
+</div>
 <a id="a283fcc0d0a61c72b74e404f177e86fbd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a283fcc0d0a61c72b74e404f177e86fbd">&#9670;&nbsp;</a></span>powerResourceLevelToString()</h2>
 
@@ -1275,7 +1324,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

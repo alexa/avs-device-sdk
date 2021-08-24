@@ -8,7 +8,10 @@ digraph "/workplace/avs-device-sdk/applications/acsdkSampleApplicationCBLAuthReq
   }
   dir_0c573f6f99f98abb37dc81ba5bc6038c [shape=box label="acsdkSampleApplicationInterfaces" fillcolor="white" style="filled" color="red" URL="dir_0c573f6f99f98abb37dc81ba5bc6038c.html"];
   dir_69fa8d0f4fee2820ffc8601fbf428b42 [shape=box label="SampleApp" fillcolor="white" style="filled" color="red" URL="dir_69fa8d0f4fee2820ffc8601fbf428b42.html"];
-  dir_69fa8d0f4fee2820ffc8601fbf428b42->dir_0c573f6f99f98abb37dc81ba5bc6038c [headlabel="1", labeldistance=1.5 headhref="dir_000101_000094.html"];
-  dir_be90750fb70307604638997b03047c68->dir_0c573f6f99f98abb37dc81ba5bc6038c [headlabel="1", labeldistance=1.5 headhref="dir_000092_000094.html"];
-  dir_be90750fb70307604638997b03047c68->dir_69fa8d0f4fee2820ffc8601fbf428b42 [headlabel="1", labeldistance=1.5 headhref="dir_000092_000101.html"];
+  dir_4270bfced15e0e73154b13468c7c9ad9 [shape=box label="core" fillcolor="white" style="filled" color="red" URL="dir_4270bfced15e0e73154b13468c7c9ad9.html"];
+  dir_69fa8d0f4fee2820ffc8601fbf428b42->dir_0c573f6f99f98abb37dc81ba5bc6038c [headlabel="1", labeldistance=1.5 headhref="dir_000117_000110.html"];
+  dir_69fa8d0f4fee2820ffc8601fbf428b42->dir_4270bfced15e0e73154b13468c7c9ad9 [headlabel="8", labeldistance=1.5 headhref="dir_000117_000461.html"];
+  dir_be90750fb70307604638997b03047c68->dir_0c573f6f99f98abb37dc81ba5bc6038c [headlabel="1", labeldistance=1.5 headhref="dir_000108_000110.html"];
+  dir_be90750fb70307604638997b03047c68->dir_69fa8d0f4fee2820ffc8601fbf428b42 [headlabel="1", labeldistance=1.5 headhref="dir_000108_000117.html"];
+  dir_be90750fb70307604638997b03047c68->dir_4270bfced15e0e73154b13468c7c9ad9 [headlabel="1", labeldistance=1.5 headhref="dir_000108_000461.html"];
 }

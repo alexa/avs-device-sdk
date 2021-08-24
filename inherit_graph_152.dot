@@ -3,17 +3,9 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::avs::attachment::AttachmentReader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html"];
+  Node0 [label="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\< acsdkNotificationsInterfaces\l::NotificationsObserverInterface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html"];
   Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::avsCommon\l::avs::attachment::DefaultAttachment\lReader\< SDSType \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_default_attachment_reader.html"];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::avs::attachment::InProcessAttachment\lReader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_reader.html"];
-  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::avsCommon\l::avs::test::MockAttachmentReader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_mock_attachment_reader.html"];
-  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::mediaPlayer\l::android::test::MockAttachment\lReader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_attachment_reader.html",tooltip="This class mocks an attachment reader that reads from the INPUT_CSTR. "];
-  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::mediaPlayer\l::android::test::MockEmptyAttachment\lReader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_empty_attachment_reader.html",tooltip="A mock AttachmentReader that mocks reading from an empty attachment (immediate EOF). "];
-  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="alexaClientSDK::mediaPlayer\l::test::MockAttachmentReader",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html"];
+  Node1 [label="alexaClientSDK::acsdkNotifier\l::Notifier\< acsdkNotificationsInterfaces\l::NotificationsObserverInterface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkNotifications\l::NotificationsNotifier",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_notifier.html"];
 }

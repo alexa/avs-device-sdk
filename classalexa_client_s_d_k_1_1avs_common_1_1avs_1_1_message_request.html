@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,13 +82,6 @@ Inheritance diagram for alexaClientSDK::avsCommon::avs::MessageRequest:</div>
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_request.html" title="alexaClientSDK::acl\l::test::MockMessageRequest" alt="" coords="274,5,469,47"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1acsdk_device_setup_1_1_device_setup_message_request.html" title="alexaClientSDK::acsdkDevice\lSetup::DeviceSetupMessageRequest" alt="" coords="251,71,492,112"/>
-<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_editable_message_request.html" title="alexaClientSDK::avsCommon\l::avs::EditableMessageRequest" alt="" coords="267,136,475,177"/>
-<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_waitable_message_request.html" title="alexaClientSDK::avsCommon\l::avs::WaitableMessageRequest" alt="" coords="265,201,477,243"/>
-<area shape="rect" id="node6" href="classalexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb_1_1_d_n_d_message_request.html" title="alexaClientSDK::capability\lAgents::doNotDisturb::DNDMessage\lRequest" alt="" coords="252,267,491,323"/>
-<area shape="rect" id="node7" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_playback_message_request.html" title="alexaClientSDK::capability\lAgents::playbackController\l::PlaybackMessageRequest" alt="" coords="278,347,465,403"/>
-<area shape="rect" id="node8" href="classalexa_client_s_d_k_1_1integration_1_1_observable_message_request.html" title="alexaClientSDK::integration\l::ObservableMessageRequest" alt="" coords="272,428,471,469"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -105,10 +98,12 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a74d6eb572d6c3f1172cfa5108fcd5a64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a74d6eb572d6c3f1172cfa5108fcd5a64">MessageRequest</a> (const std::string &amp;jsonContent, const std::string &amp;uriPathExtension=&quot;&quot;)</td></tr>
-<tr class="separator:a74d6eb572d6c3f1172cfa5108fcd5a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7791cdcd1ce3b666f986f475ee9a1861"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a7791cdcd1ce3b666f986f475ee9a1861">MessageRequest</a> (const std::string &amp;jsonContent, bool isSerialized, const std::string &amp;uriPathExtension=&quot;&quot;, std::vector&lt; std::pair&lt; std::string, std::string &gt;&gt; headers={}, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#aef0454cedb3c097a3c2701fee718ef38">MessageRequestResolveFunction</a> resolver=nullptr)</td></tr>
-<tr class="separator:a7791cdcd1ce3b666f986f475ee9a1861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a269bdec60ec3c6b4b0cf4d81ca0468d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a269bdec60ec3c6b4b0cf4d81ca0468d6">MessageRequest</a> (const std::string &amp;jsonContent, const std::string &amp;uriPathExtension=&quot;&quot;, const unsigned int threshold=0, const std::string &amp;streamMetricName=&quot;&quot;)</td></tr>
+<tr class="separator:a269bdec60ec3c6b4b0cf4d81ca0468d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60bedccff5260f1d06281f775c4d0acf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a60bedccff5260f1d06281f775c4d0acf">MessageRequest</a> (const std::string &amp;jsonContent, const unsigned int threshold, const std::string &amp;streamMetricName)</td></tr>
+<tr class="separator:a60bedccff5260f1d06281f775c4d0acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78858e1d0c2e637c97aecba08ccf4e23"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a78858e1d0c2e637c97aecba08ccf4e23">MessageRequest</a> (const std::string &amp;jsonContent, bool isSerialized, const std::string &amp;uriPathExtension=&quot;&quot;, std::vector&lt; std::pair&lt; std::string, std::string &gt;&gt; headers={}, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#aef0454cedb3c097a3c2701fee718ef38">MessageRequestResolveFunction</a> resolver=nullptr, const unsigned int threshold=0, const std::string &amp;streamMetricName=&quot;&quot;)</td></tr>
+<tr class="separator:a78858e1d0c2e637c97aecba08ccf4e23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab93eed92b60d6e2681db5f6500b99a89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#ab93eed92b60d6e2681db5f6500b99a89">MessageRequest</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &amp;messageRequest)</td></tr>
 <tr class="separator:ab93eed92b60d6e2681db5f6500b99a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a62d7ec22c5c11079faec9f1a7a834a"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a8a62d7ec22c5c11079faec9f1a7a834a">~MessageRequest</a> ()</td></tr>
@@ -141,6 +136,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a35a451de93434914abb29201c5c5d430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae375374224a31e4acb17f8947825970c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#ae375374224a31e4acb17f8947825970c">resolveRequest</a> (const std::string &amp;resolveKey) const</td></tr>
 <tr class="separator:ae375374224a31e4acb17f8947825970c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b5e3ddd4980d432b6572ca93f20e37b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a5b5e3ddd4980d432b6572ca93f20e37b">getStreamBytesThreshold</a> () const</td></tr>
+<tr class="separator:a5b5e3ddd4980d432b6572ca93f20e37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc2ba4b1b576aad958c06f6f0f19a5a4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#afc2ba4b1b576aad958c06f6f0f19a5a4">getStreamMetricName</a> () const</td></tr>
+<tr class="separator:afc2ba4b1b576aad958c06f6f0f19a5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -168,6 +167,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a00956a3f08d202b675a199c5babbac3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#aef0454cedb3c097a3c2701fee718ef38">MessageRequestResolveFunction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a00956a3f08d202b675a199c5babbac3a">m_resolver</a></td></tr>
 <tr class="memdesc:a00956a3f08d202b675a199c5babbac3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resolver function to resolve current message request to a valid state. Null if message is already resolved.  <a href="#a00956a3f08d202b675a199c5babbac3a">More...</a><br /></td></tr>
 <tr class="separator:a00956a3f08d202b675a199c5babbac3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77f401088d3a01b0a1f25ff6db28bc24"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#a77f401088d3a01b0a1f25ff6db28bc24">m_streamMetricName</a></td></tr>
+<tr class="memdesc:a77f401088d3a01b0a1f25ff6db28bc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name for the stream byte metric.  <a href="#a77f401088d3a01b0a1f25ff6db28bc24">More...</a><br /></td></tr>
+<tr class="separator:a77f401088d3a01b0a1f25ff6db28bc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae492e9449889da0a71fd45a2bca2d44b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#ae492e9449889da0a71fd45a2bca2d44b">m_streamBytesThreshold</a></td></tr>
+<tr class="memdesc:ae492e9449889da0a71fd45a2bca2d44b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The threshold for the number of bytes for when we should record the stream metric.  <a href="#ae492e9449889da0a71fd45a2bca2d44b">More...</a><br /></td></tr>
+<tr class="separator:ae492e9449889da0a71fd45a2bca2d44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is a wrapper class which allows a client to send a Message to AVS, and be notified when the attempt to send the Message was completed. </p>
@@ -196,8 +201,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a74d6eb572d6c3f1172cfa5108fcd5a64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74d6eb572d6c3f1172cfa5108fcd5a64">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[1/3]</span></h2>
+<a id="a269bdec60ec3c6b4b0cf4d81ca0468d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a269bdec60ec3c6b4b0cf4d81ca0468d6">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,7 +217,19 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>uriPathExtension</em> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramname"><em>uriPathExtension</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramname"><em>threshold</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>streamMetricName</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -226,14 +243,59 @@ Protected Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">jsonContent</td><td>The message to be sent to AVS. </td></tr>
     <tr><td class="paramname">uriPathExtension</td><td>An optional uri path extension which will be appended to the base url of the AVS. endpoint. If not specified, the default AVS path extension should be used by the sender implementation. </td></tr>
+    <tr><td class="paramname">threshold.</td><td>An optional threshold to ACL to send the metric specified by streamMetricName. If this isn't specified no metric will be recorded. </td></tr>
+    <tr><td class="paramname">streamMetricName.</td><td>An optional metric name for ACL to submit when the threshold is met. If this isn't specified no metric will be recorded. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a7791cdcd1ce3b666f986f475ee9a1861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7791cdcd1ce3b666f986f475ee9a1861">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[2/3]</span></h2>
+<a id="a60bedccff5260f1d06281f775c4d0acf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60bedccff5260f1d06281f775c4d0acf">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::avs::MessageRequest::MessageRequest </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>jsonContent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramname"><em>threshold</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>streamMetricName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">jsonContent</td><td>The message to be sent to AVS. </td></tr>
+    <tr><td class="paramname">threshold.</td><td>A required threshold to ACL to send the metric specified by streamMetricName. </td></tr>
+    <tr><td class="paramname">streamMetricName.</td><td>A required metric name for ACL to submit when the threshold is met. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a78858e1d0c2e637c97aecba08ccf4e23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78858e1d0c2e637c97aecba08ccf4e23">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +328,19 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html#aef0454cedb3c097a3c2701fee718ef38">MessageRequestResolveFunction</a>&#160;</td>
-          <td class="paramname"><em>resolver</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>resolver</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int&#160;</td>
+          <td class="paramname"><em>threshold</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>streamMetricName</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -283,6 +357,8 @@ Protected Attributes</h2></td></tr>
     <tr><td class="paramname">uriPathExtension</td><td>An optional uri path extension which will be appended to the base url of the AVS. </td></tr>
     <tr><td class="paramname">headers</td><td>key/value pairs of extra HTTP headers to use with this request. endpoint. If not specified, the default AVS path extension should be used by the sender implementation. </td></tr>
     <tr><td class="paramname">resolver</td><td>Function to resolve message. Null if message doesn't need resolving. Resolving function aims to support the use case that one message request will be sent to multiple places with some fields having different values for different destinations. In such use cases, <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request.html">MessageRequest</a></code> works as a container with all required info to build different versions of requests. The resolving function contains the logic to build the target message request based on the info in the original request, and provided resolveKey. </td></tr>
+    <tr><td class="paramname">threshold.</td><td>An optional threshold to ACL to send the metric specified by streamMetricName. If this isn't specified no metric will be recorded. </td></tr>
+    <tr><td class="paramname">streamMetricName.</td><td>An optional metric name for ACL to submit when the threshold is met. If this isn't specified no metric will be recorded. </td></tr>
   </table>
   </dd>
 </dl>
@@ -290,7 +366,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="ab93eed92b60d6e2681db5f6500b99a89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab93eed92b60d6e2681db5f6500b99a89">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab93eed92b60d6e2681db5f6500b99a89">&#9670;&nbsp;</a></span>MessageRequest() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -536,6 +612,42 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Retrieves the JSON content to be sent to AVS.</p>
 <dl class="section return"><dt>Returns</dt><dd>The JSON content to be sent to AVS. </dd></dl>
+
+</div>
+</div>
+<a id="a5b5e3ddd4980d432b6572ca93f20e37b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b5e3ddd4980d432b6572ca93f20e37b">&#9670;&nbsp;</a></span>getStreamBytesThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int alexaClientSDK::avsCommon::avs::MessageRequest::getStreamBytesThreshold </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the stream bytes threshold, to determine when we should record the stream metric. </p><dl class="section return"><dt>Returns</dt><dd>m_threshold </dd></dl>
+
+</div>
+</div>
+<a id="afc2ba4b1b576aad958c06f6f0f19a5a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc2ba4b1b576aad958c06f6f0f19a5a4">&#9670;&nbsp;</a></span>getStreamMetricName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::avs::MessageRequest::getStreamMetricName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the name for the bytes stream metric. </p><dl class="section return"><dt>Returns</dt><dd>m_streamMetricName </dd></dl>
 
 </div>
 </div>
@@ -862,6 +974,54 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ae492e9449889da0a71fd45a2bca2d44b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae492e9449889da0a71fd45a2bca2d44b">&#9670;&nbsp;</a></span>m_streamBytesThreshold</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int alexaClientSDK::avsCommon::avs::MessageRequest::m_streamBytesThreshold</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The threshold for the number of bytes for when we should record the stream metric. </p>
+
+</div>
+</div>
+<a id="a77f401088d3a01b0a1f25ff6db28bc24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77f401088d3a01b0a1f25ff6db28bc24">&#9670;&nbsp;</a></span>m_streamMetricName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::avs::MessageRequest::m_streamMetricName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name for the stream byte metric. </p>
+
+</div>
+</div>
 <a id="a23cd79d5ac89983f17b6c1d90a8942bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a23cd79d5ac89983f17b6c1d90a8942bf">&#9670;&nbsp;</a></span>m_uriPathExtension</h2>
 
@@ -894,7 +1054,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

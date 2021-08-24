@@ -105,6 +105,7 @@ digraph "/workplace/avs-device-sdk/Integration/src/TestSpeechSynthesizerObserver
   Node38 [label="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_player_state_8h.html"];
   Node38 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node38 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node39 [label="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_playback_attributes_8h.html"];
   Node39 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -124,11 +125,15 @@ digraph "/workplace/avs-device-sdk/Integration/src/TestSpeechSynthesizerObserver
   Node44 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node44 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node44 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node45 [label="AVSCommon/Utils/MediaType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_type_8h.html"];
-  Node45 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node45 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 [label="AVSCommon/Utils/AudioAnalyzer\l/AudioAnalyzerState.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_analyzer_state_8h.html"];
-  Node46 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="AVSCommon/Utils/MediaPlayer\l/MediaDescription.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_description_8h.html"];
+  Node45 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node9 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="AVSCommon/Utils/MediaType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_type_8h.html"];
+  Node47 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="AVSCommon/Utils/AudioAnalyzer\l/AudioAnalyzerState.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_analyzer_state_8h.html"];
+  Node48 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,6 +81,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1fafda59965055f9c1db94da737bc216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43f5320bc9aafdf47503d77c4867e597"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html#a43f5320bc9aafdf47503d77c4867e597">format</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">Level</a> level, std::chrono::system_clock::time_point time, const char *threadMoniker, const char *text)</td></tr>
 <tr class="separator:a43f5320bc9aafdf47503d77c4867e597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2411fbf2c66e479d9effeaa986295487"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html#a2411fbf2c66e479d9effeaa986295487">getDateTimeString</a> (std::chrono::system_clock::time_point time)</td></tr>
+<tr class="separator:a2411fbf2c66e479d9effeaa986295487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4f483c92f14715108a84906963ee7c1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html#ae4f483c92f14715108a84906963ee7c1">getMillisecondString</a> (std::chrono::system_clock::time_point time)</td></tr>
+<tr class="separator:ae4f483c92f14715108a84906963ee7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class used to format log strings. </p>
@@ -154,6 +158,58 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2411fbf2c66e479d9effeaa986295487"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2411fbf2c66e479d9effeaa986295487">&#9670;&nbsp;</a></span>getDateTimeString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::logger::LogStringFormatter::getDateTimeString </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transforms a time_point into a string representing the date and time.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>The time_point. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representing the time_point in "%Y-%m-%d %H:%M:%S" format, or an empty string if failure. </dd></dl>
+
+</div>
+</div>
+<a id="ae4f483c92f14715108a84906963ee7c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4f483c92f14715108a84906963ee7c1">&#9670;&nbsp;</a></span>getMillisecondString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::avsCommon::utils::logger::LogStringFormatter::getMillisecondString </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::system_clock::time_point&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transforms a time_point into a string representing the milliseconds.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>The time_point. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representing the number of milliseconds, or an empty string if failure. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/<a class="el" href="_log_string_formatter_8h_source.html">LogStringFormatter.h</a></li>
 <li>/workplace/avs-device-sdk/AVSCommon/Utils/src/Logger/<a class="el" href="_log_string_formatter_8cpp.html">LogStringFormatter.cpp</a></li>
@@ -162,7 +218,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

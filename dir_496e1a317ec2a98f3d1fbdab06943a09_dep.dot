@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/DefaultEndpoint" 
   dir_496e1a317ec2a98f3d1fbdab06943a09 [shape=box, label="DefaultEndpoint", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_496e1a317ec2a98f3d1fbdab06943a09.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_496e1a317ec2a98f3d1fbdab06943a09->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000534_000017.html"];
+  dir_496e1a317ec2a98f3d1fbdab06943a09->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000583_000017.html"];
 }

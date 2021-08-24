@@ -8,5 +8,4 @@ digraph "alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverI
   Node1 [label="alexaClientSDK::kwd\l::test::MockStateObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_state_observer.html",tooltip="A test observer that mocks out the KeyWordDetectorStateObserverInterface#onStateChanged() call..."];
   Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="alexaClientSDK::kwd\l::test::testStateObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1kwd_1_1test_1_1test_state_observer.html",tooltip="A test observer that mocks out the KeyWordDetectorStateObserverInterface#onStateChanged() call..."];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

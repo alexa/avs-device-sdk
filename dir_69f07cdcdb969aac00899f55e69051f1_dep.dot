@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/SDKComponent/src" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_c6c91765eb832e33b7519ffca04eccaa [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_c6c91765eb832e33b7519ffca04eccaa.html"];
-  dir_69f07cdcdb969aac00899f55e69051f1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000120_000017.html"];
-  dir_69f07cdcdb969aac00899f55e69051f1->dir_c6c91765eb832e33b7519ffca04eccaa [headlabel="1", labeldistance=1.5 headhref="dir_000120_000118.html"];
-  dir_c6c91765eb832e33b7519ffca04eccaa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000118_000017.html"];
+  dir_69f07cdcdb969aac00899f55e69051f1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000136_000017.html"];
+  dir_69f07cdcdb969aac00899f55e69051f1->dir_c6c91765eb832e33b7519ffca04eccaa [headlabel="1", labeldistance=1.5 headhref="dir_000136_000134.html"];
+  dir_c6c91765eb832e33b7519ffca04eccaa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000134_000017.html"];
 }

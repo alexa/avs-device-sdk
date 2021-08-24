@@ -17,9 +17,11 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Power
   Node2 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
   Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="chrono",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node6 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node6 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node8 [label="chrono",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node6 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node6 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

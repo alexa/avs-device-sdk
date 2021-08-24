@@ -110,6 +110,7 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Media
   Node39 [label="AVSCommon/Utils/MediaPlayer\l/MediaPlayerState.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_player_state_8h.html"];
   Node39 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node39 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node14 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node40 [label="AVSCommon/Utils/MediaPlayer\l/PlaybackAttributes.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_playback_attributes_8h.html"];
   Node40 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -129,14 +130,18 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Media
   Node45 -> Node33 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 [label="AVSCommon/Utils/MediaType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_type_8h.html"];
-  Node46 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node46 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 [label="AVSCommon/Utils/Requires\lShutdown.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_requires_shutdown_8h.html"];
-  Node47 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="AVSCommon/Utils/MediaPlayer\l/MediaDescription.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_description_8h.html"];
+  Node46 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node14 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="AVSCommon/Utils/MediaType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_type_8h.html"];
+  Node48 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="AVSCommon/Utils/Requires\lShutdown.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_requires_shutdown_8h.html"];
+  Node49 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

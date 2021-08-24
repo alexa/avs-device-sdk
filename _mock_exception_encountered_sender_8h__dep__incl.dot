@@ -28,7 +28,7 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInt
   Node5 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ApiGateway/test/ApiGatewayCapability\lAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_api_gateway_capability_agent_test_8cpp.html"];
   Node5 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/InteractionModel/test\l/InteractionModelCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_interaction_model_capability_agent_test_8cpp.html"];
+  Node18 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/InteractionModel/acsdkInteraction\lModel/test/InteractionModelCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_interaction_model_capability_agent_test_8cpp.html"];
   Node5 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node19 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ModeController/test/ModeController\lCapabilityAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mode_controller_capability_agent_test_8cpp.html"];
   Node5 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

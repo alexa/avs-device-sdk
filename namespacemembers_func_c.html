@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -68,7 +68,8 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1diagnostics.html#a32e49425910ff986a33f617bdcbd7705">alexaClientSDK::diagnostics</a>
 </li>
 <li>calculateTimeToRetry()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a67e943b6595cb6a6064e7f53f81646f9">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#ab0a3edb417bc4148a31ad35801c1f24c">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a67e943b6595cb6a6064e7f53f81646f9">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>callConnectedRingtoneFactory()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio.html#a8d08c9ae5405babe8507be87d3968a54">alexaClientSDK::applicationUtilities::resources::audio</a>
@@ -81,9 +82,6 @@ $(function() {
 </li>
 <li>callSafeCTimeFunction()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test.html#a948430a7c06f41026907e741fc1b3971">alexaClientSDK::avsCommon::utils::timing::test</a>
-</li>
-<li>cast()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a38dd175f2b12b50e3808514ca27f9771">alexaClientSDK::kwd</a>
 </li>
 <li>CHANGE_REPORT()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a09b1bf2ba6dcbd7ab5b93f5d7b3ac9a0">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
@@ -143,6 +141,9 @@ $(function() {
 <li>COMPONENT_NAME()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#ac66f70cb9f8d49c8367ea11e0d5f698c">alexaClientSDK::capabilityAgents::aip::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aeec51f887f12769ce05fc9c41ddb58f7">alexaClientSDK::capabilityAgents::speechSynthesizer::test</a>
+</li>
+<li>computeStartOfSpeechTimestamp()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ac0fecc0d371feb3ca9acd73591d1a1b1">alexaClientSDK::sampleApp</a>
 </li>
 <li>connectMockTransport()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acl_1_1transport_1_1test.html#a3cd409ef5ef14b4f44e5cb6cc8efdc7e">alexaClientSDK::acl::transport::test</a>
@@ -239,7 +240,7 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test.html#a17132e24fa38191eea2232c346734bf3">alexaClientSDK::capabilityAgents::toggleController::test</a>
 </li>
 <li>createAB()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a9f7751574c358c32bd7011802aea73a3">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a1234c7202db007405a21df7c4edeae1b">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createAB1()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a79ca80f05009fbe68057c5785006cca4">alexaClientSDK::acsdkManufactory::test</a>
@@ -251,13 +252,13 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#aed8378242ec9dd5155a02d2167975982">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createABSubclass()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#ae22f4006519fce9dc69997f67e930a03">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a6f8032fb297480a2f1b79a2ee317a090">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createAdapterState()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#a40b69694882c8c4c9323c20a6518a5cc">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>createAFromAB()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a2554bd2f32b01c43992af45e7ccb13c0">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#ab302be91d5674e66511eb4e4ea615d5d">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createAlertAssetPlayOrderItemsTable()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3762feba7e3dee2547d09b282ff66ea0">alexaClientSDK::acsdkAlerts::storage</a>
@@ -278,7 +279,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_1_1test.html#ab3e25bed5def78b1967e0ebd787e121d">alexaClientSDK::acsdkExternalMediaPlayer::test</a>
 </li>
 <li>createBFromAB()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#afb743e30b088095976d742a90b1f0388">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a05ba2e9bdc82a1b2e1ccfba80b852971">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createCapabilityConfiguration()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1test.html#a193a0b2b518f9be36ddb69efdb6ee5c0">alexaClientSDK::capabilitiesDelegate::test</a>
@@ -290,10 +291,10 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k.html#ae2ea41402c9bd3b315f0564f529573e2">alexaClientSDK</a>
 </li>
 <li>createCyclicA()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a8d75332fc6f06806a0d39c722893e703">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a1b5779b8226f1c09b2ce8f160a5ab000">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createCyclicB()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a3c902cace618e48ba28e8922897297d6">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a8b42abf53268048d2d4f574135b05035">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createDirective()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ac99e8d00ae65717f101edd115236dfe8">alexaClientSDK::capabilityAgents::system::test</a>
@@ -369,7 +370,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_preview_alexa_client.html#a02f11ab4993946cade2fbb6608e40368">alexaClientSDK::acsdkPreviewAlexaClient</a>
 </li>
 <li>createSharedAB()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a54c1cf1c307da601a4f4c79aa75e74e2">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#ab5f4b6db93559e9139fae476f414b52d">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createSQLiteDatabase()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a62feeb7961c4b55b43ac35b2fe66cdf0">alexaClientSDK::storage::sqliteStorage</a>
@@ -391,7 +392,7 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#aafe78a5e12f57ef923ca8dd52977dba6">alexaClientSDK::acsdkSampleApplication</a>
 </li>
 <li>createUniqueA()
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#aca4b5707a2921df5aae8434c70db4144">alexaClientSDK::acsdkManufactory::test</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_manufactory_1_1test.html#a40b3d07108ef727bc0c2052251af8e55">alexaClientSDK::acsdkManufactory::test</a>
 </li>
 <li>createVisualFocusManager()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1afml.html#a4ea4647769c3514f05a388775534d41e">alexaClientSDK::afml</a>
@@ -404,7 +405,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

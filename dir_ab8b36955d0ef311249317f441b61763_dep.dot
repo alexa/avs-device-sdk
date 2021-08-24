@@ -8,8 +8,8 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/src/Bluetooth" {
   }
   dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
   dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
-  dir_97afc8111b754cf401b73024f872f45d->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="39", labeldistance=1.5 headhref="dir_000018_000176.html"];
-  dir_ab8b36955d0ef311249317f441b61763->dir_97afc8111b754cf401b73024f872f45d [headlabel="7", labeldistance=1.5 headhref="dir_000208_000018.html"];
-  dir_ab8b36955d0ef311249317f441b61763->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="1", labeldistance=1.5 headhref="dir_000208_000176.html"];
-  dir_957fc395b73dfe8b64ee3f74464f588a->dir_97afc8111b754cf401b73024f872f45d [headlabel="20", labeldistance=1.5 headhref="dir_000176_000018.html"];
+  dir_97afc8111b754cf401b73024f872f45d->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="41", labeldistance=1.5 headhref="dir_000018_000192.html"];
+  dir_ab8b36955d0ef311249317f441b61763->dir_97afc8111b754cf401b73024f872f45d [headlabel="7", labeldistance=1.5 headhref="dir_000224_000018.html"];
+  dir_ab8b36955d0ef311249317f441b61763->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="1", labeldistance=1.5 headhref="dir_000224_000192.html"];
+  dir_957fc395b73dfe8b64ee3f74464f588a->dir_97afc8111b754cf401b73024f872f45d [headlabel="20", labeldistance=1.5 headhref="dir_000192_000018.html"];
 }

@@ -4,15 +4,13 @@ digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetooth/include
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node19 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/SQLiteBluetoothStorage.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node19 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node20 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node20 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
   Node19 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node21 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
+  Node21 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/SQLiteBluetooth\lStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_q_lite_bluetooth_storage_8cpp.html"];
   Node19 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/SQLiteBluetooth\lStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_q_lite_bluetooth_storage_8cpp.html"];
+  Node22 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_test_8cpp.html"];
   Node19 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node23 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_test_8cpp.html"];
+  Node23 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/SQLiteBluetooth\lStorageTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_q_lite_bluetooth_storage_test_8cpp.html"];
   Node19 -> Node24 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/SQLiteBluetooth\lStorageTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_q_lite_bluetooth_storage_test_8cpp.html"];
-  Node19 -> Node25 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node25 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node24 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
 }

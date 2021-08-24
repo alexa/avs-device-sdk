@@ -13,8 +13,8 @@ digraph "/workplace/avs-device-sdk/shared/acsdkShutdownManagerInterfaces" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [shape=box label="acsdkNotifierInterfaces" fillcolor="white" style="filled" color="red" URL="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html"];
-  dir_caf6419431fffe79348c7b671327a13b->dir_28cc11924150c940675c4653a704057f [headlabel="1", labeldistance=1.5 headhref="dir_000575_000573.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000017_000560.html"];
-  dir_28cc11924150c940675c4653a704057f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000573_000017.html"];
-  dir_28cc11924150c940675c4653a704057f->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000573_000560.html"];
+  dir_caf6419431fffe79348c7b671327a13b->dir_28cc11924150c940675c4653a704057f [headlabel="1", labeldistance=1.5 headhref="dir_000624_000622.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000017_000609.html"];
+  dir_28cc11924150c940675c4653a704057f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000622_000017.html"];
+  dir_28cc11924150c940675c4653a704057f->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000622_000609.html"];
 }

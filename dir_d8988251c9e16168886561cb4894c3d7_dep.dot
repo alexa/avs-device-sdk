@@ -12,7 +12,7 @@ digraph "/workplace/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExterna
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_db8faf67bc188ba549922d93d84b2b07->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000307_000017.html"];
-  dir_db8faf67bc188ba549922d93d84b2b07->dir_3491af9c7a0337dc87347d0c47f83a8a [headlabel="2", labeldistance=1.5 headhref="dir_000307_000305.html"];
-  dir_3491af9c7a0337dc87347d0c47f83a8a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000305_000017.html"];
+  dir_db8faf67bc188ba549922d93d84b2b07->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000336_000017.html"];
+  dir_db8faf67bc188ba549922d93d84b2b07->dir_3491af9c7a0337dc87347d0c47f83a8a [headlabel="2", labeldistance=1.5 headhref="dir_000336_000334.html"];
+  dir_3491af9c7a0337dc87347d0c47f83a8a->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000334_000017.html"];
 }

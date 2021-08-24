@@ -59,8 +59,6 @@ digraph "/workplace/avs-device-sdk/Endpoints/include/Endpoints/Endpoint.h"
   Node21 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node14 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node22 [label="AVSCommon/Utils/Logger\l/LogEntry.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_log_entry_8h.html"];
-  Node22 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node23 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node22 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node22 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node14 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -165,10 +163,21 @@ digraph "/workplace/avs-device-sdk/Endpoints/include/Endpoints/Endpoint.h"
   Node55 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node55 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node55 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node56 [label="AVSCommon/Utils/Requires\lShutdown.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_requires_shutdown_8h.html"];
-  Node56 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="AVSCommon/SDKInterfaces\l/Endpoints/EndpointModification\lData.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_endpoint_modification_data_8h.html"];
+  Node56 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node56 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node56 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node56 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="AVSCommon/Utils/Requires\lShutdown.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_requires_shutdown_8h.html"];
+  Node57 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

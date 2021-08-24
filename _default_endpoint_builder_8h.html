@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,10 +74,12 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;<a class="el" href="_annotated_8h_source.html">acsdkManufactory/Annotated.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_interface_message_sender_8h_source.html">Alexa/AlexaInterfaceMessageSender.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_interface_message_sender_internal_interface_8h_source.html">Alexa/AlexaInterfaceMessageSenderInternalInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_discovery_endpoint_attributes_8h_source.html">AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_alexa_interface_message_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/AlexaInterfaceMessageSenderInterface.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_default_endpoint_annotation_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h</a>&quot;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_builder_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_registration_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationManagerInterface.h</a>&gt;</code><br />
@@ -94,45 +96,6 @@ Include dependency graph for DefaultEndpointBuilder.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_default_endpoint_builder_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_endpoints_2include_2_endpoints_2_default_endpoint_builder_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_endpoints_2include_2_endpoints_2_default_endpoint_builder_8h" id="_2workplace_2avs-device-sdk_2_endpoints_2include_2_endpoints_2_default_endpoint_builder_8h">
-<area shape="rect" id="node4" href="_alexa_interface_message_sender_8h.html" title="Alexa/AlexaInterfaceMessage\lSender.h" alt="" coords="4343,191,4539,233"/>
-<area shape="rect" id="node7" href="_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="4043,503,4232,545"/>
-<area shape="rect" id="node10" href="_alexa_interface_message_sender_internal_interface_8h.html" title="Alexa/AlexaInterfaceMessage\lSenderInternalInterface.h" alt="" coords="2809,295,3005,337"/>
-<area shape="rect" id="node11" href="_alexa_interface_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaInterfaceMessageSender\lInterface.h" alt="" coords="2867,392,3071,448"/>
-<area shape="rect" id="node15" href="_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="995,607,1191,634"/>
-<area shape="rect" id="node18" href="_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="4748,399,4940,441"/>
-<area shape="rect" id="node24" href="_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="4000,295,4192,337"/>
-<area shape="rect" id="node27" href="_a_v_s_discovery_endpoint_attributes_8h.html" title="AVSCommon/AVS/AVSDiscovery\lEndpointAttributes.h" alt="" coords="2565,503,2787,545"/>
-<area shape="rect" id="node29" href="_endpoint_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointBuilderInterface.h" alt="" coords="1186,191,1427,233"/>
-<area shape="rect" id="node30" href="_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="3095,399,3318,441"/>
-<area shape="rect" id="node35" href="_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="3949,399,4209,441"/>
-<area shape="rect" id="node37" href="_endpoint_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointInterface.h" alt="" coords="2015,295,2217,337"/>
-<area shape="rect" id="node46" href="_endpoint_registration_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointRegistration\lManagerInterface.h" alt="" coords="2647,184,2857,240"/>
-<area shape="rect" id="node48" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1403,407,1613,433"/>
-<area shape="rect" id="node50" href="_endpoint_builder_8h.html" title="Endpoints/EndpointBuilder.h" alt="" coords="2920,109,3107,136"/>
-<area shape="rect" id="node6" href="_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="4282,399,4505,441"/>
-<area shape="rect" id="node21" href="_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="4816,503,5011,545"/>
-<area shape="rect" id="node23" href="_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="4469,295,4712,337"/>
-<area shape="rect" id="node25" href="_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="5035,503,5229,545"/>
-<area shape="rect" id="node12" href="_alexa_response_type_8h.html" title="AVSCommon/AVS/AlexaResponse\lType.h" alt="" coords="768,503,997,545"/>
-<area shape="rect" id="node13" href="_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="2862,503,3079,545"/>
-<area shape="rect" id="node16" href="_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1588,689,1764,731"/>
-<area shape="rect" id="node19" href="_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="4256,503,4451,545"/>
-<area shape="rect" id="node20" href="_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="4526,503,4741,545"/>
-<area shape="rect" id="node22" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1868,600,2068,641"/>
-<area shape="rect" id="node32" href="_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="3408,503,3600,545"/>
-<area shape="rect" id="node33" href="_endpoint_capabilities_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lBuilderInterface.h" alt="" coords="3414,288,3621,344"/>
-<area shape="rect" id="node36" href="_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="3131,288,3338,344"/>
-<area shape="rect" id="node39" href="_mode_controller_attributes_8h.html" title="AVSCommon/SDKInterfaces\l/ModeController/ModeController\lAttributes.h" alt="" coords="1267,496,1474,552"/>
-<area shape="rect" id="node40" href="_mode_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ModeController/ModeController\lInterface.h" alt="" coords="291,392,498,448"/>
-<area shape="rect" id="node41" href="_power_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerController/PowerController\lInterface.h" alt="" coords="523,392,739,448"/>
-<area shape="rect" id="node42" href="_range_controller_attributes_8h.html" title="AVSCommon/SDKInterfaces\l/RangeController/RangeController\lAttributes.h" alt="" coords="43,288,261,344"/>
-<area shape="rect" id="node43" href="_range_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RangeController/RangeController\lInterface.h" alt="" coords="763,392,981,448"/>
-<area shape="rect" id="node44" href="_toggle_controller_attributes_8h.html" title="AVSCommon/SDKInterfaces\l/ToggleController/ToggleController\lAttributes.h" alt="" coords="286,288,506,344"/>
-<area shape="rect" id="node45" href="_toggle_controller_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ToggleController/ToggleController\lInterface.h" alt="" coords="1006,392,1226,448"/>
-<area shape="rect" id="node31" href="_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="2005,503,2200,545"/>
-<area shape="rect" id="node38" href="_endpoint_modification_data_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointModification\lData.h" alt="" coords="2481,392,2690,448"/>
-<area shape="rect" id="node47" href="_endpoint_registration_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointRegistration\lObserverInterface.h" alt="" coords="1993,392,2202,448"/>
-<area shape="rect" id="node49" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2275,503,2490,545"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -140,9 +103,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_default_endpoint_builder_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_endpoints_2include_2_endpoints_2_default_endpoint_builder_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_endpoints_2include_2_endpoints_2_default_endpoint_builder_8hdep" id="_2workplace_2avs-device-sdk_2_endpoints_2include_2_endpoints_2_default_endpoint_builder_8hdep">
-<area shape="rect" id="node2" href="_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="5,109,209,180"/>
-<area shape="rect" id="node3" href="_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="234,117,399,173"/>
-<area shape="rect" id="node4" href="_default_endpoint_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/src/DefaultEndpoint\lBuilder.cpp" alt="" coords="424,117,652,173"/>
 </map>
 </div>
 </div>
@@ -165,7 +125,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

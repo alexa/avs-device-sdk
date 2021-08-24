@@ -85,6 +85,8 @@ digraph "/workplace/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExterna
   Node28 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node29 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node29 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node29 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node29 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node29 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

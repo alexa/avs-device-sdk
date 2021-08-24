@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/core/acsdkRegistrationManagerInterfaces/test/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f7a050c3c9388056037b74e87f72b24 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="test" fontname="Helvetica", fontsize="10", URL="dir_1f7a050c3c9388056037b74e87f72b24.html"]
+  subgraph clusterdir_6d214fcd21bd67777c32041aff5b06f4 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_6d214fcd21bd67777c32041aff5b06f4.html"];
+    dir_6d214fcd21bd67777c32041aff5b06f4 [shape=plaintext label="include"];
+    dir_3da89654778aaccbf8ec35ce8128310e [shape=box label="RegistrationManager" color="black" fillcolor="white" style="filled" URL="dir_3da89654778aaccbf8ec35ce8128310e.html"];
+  }
+  }
+  dir_ea71a0f92b3a6b19a5724167c78652cc [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_ea71a0f92b3a6b19a5724167c78652cc.html"];
+  dir_3da89654778aaccbf8ec35ce8128310e->dir_ea71a0f92b3a6b19a5724167c78652cc [headlabel="1", labeldistance=1.5 headhref="dir_000489_000485.html"];
+}

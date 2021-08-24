@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -196,6 +196,9 @@ $(function() {
 </li>
 <li>PLAY_AUDIO_INDICATOR_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_notifications.html#a727e904978295001c83943e68fb91f90">alexaClientSDK::acsdkNotifications</a>
+</li>
+<li>PLAY_BEHAVIOR
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ad4da9e3234c7519161f50b73e7d0feb3">alexaClientSDK::avsCommon::utils::mediaPlayer</a>
 </li>
 <li>PLAY_BITS_PER_SAMPLE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#aa14f0b5e8e3fe2588131b3d2130c3480">alexaClientSDK::avsCommon::utils</a>
@@ -481,37 +484,47 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#adec3a551d8205aadd6a5226b6ab9cae0">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a>
 </li>
 <li>POST_KEY_CLIENT_ID
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#adc5fce43ae5f24577ad616e46d19f086">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#addfc5b3a8d6a2b6ccd13bf8192ce6f31">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#adc5fce43ae5f24577ad616e46d19f086">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_DEVICE_CODE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a0e5f001899d9f001edf7f696d34c6cb8">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#afd875410b5496264a81cb59fb4b60da3">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a0e5f001899d9f001edf7f696d34c6cb8">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_GRANT_TYPE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#aa1bd552cd00000ebef4699143d4fe9ab">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a2af3c94c3583d0ad43d53621d1c4693a">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#aa1bd552cd00000ebef4699143d4fe9ab">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_REFRESH_TOKEN
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a51543ecff645641f74a8d0d4b7220f60">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a220bc4757079d005397466b9d36279e8">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a51543ecff645641f74a8d0d4b7220f60">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_RESPONSE_TYPE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#add92f4813a6e44e9943ac83458ea4031">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a543705cbe432da6cb7fe6e5b94ecb4e3">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#add92f4813a6e44e9943ac83458ea4031">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_SCOPE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#ab129529910f947b742580f412474eacd">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a503c3260918b252b826a1e5c248b72b7">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#ab129529910f947b742580f412474eacd">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_SCOPE_DATA
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a876de4801812e00e5d64a9d4cf9f5689">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#aea44bf4d0c5ebd59c8723116d5d036da">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a876de4801812e00e5d64a9d4cf9f5689">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_KEY_USER_CODE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a4dbe5476c55f334ab145ab6823088eb1">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a489999ac72c8070aed7ccfac1e76561f">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a4dbe5476c55f334ab145ab6823088eb1">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_VALUE_ALEXA_ALL
 : <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#ae3e16d5dd9f2cd6fd742731a1db2e891">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_VALUE_DEVICE_CODE
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a60576fa14bee8bfa10d259dbaa46e292">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a554aac775c746b6af1864c4a64cafbfb">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a60576fa14bee8bfa10d259dbaa46e292">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POST_VALUE_REFRESH_TOKEN
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a9ac9db643956ab8202f02a0dd4d48cc4">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a5c2cb2b4caf95f70760fb1b7982538aa">alexaClientSDK::acsdkAuthorization::lwa</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#a9ac9db643956ab8202f02a0dd4d48cc4">alexaClientSDK::authorization::cblAuthDelegate</a>
 </li>
 <li>POWER_RESOURCE_COMPONENT_NAME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aa11df0dd9eea2ae51cbe86b3bc5edfa8">alexaClientSDK::capabilityAgents::aip</a>
@@ -611,6 +624,9 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1afml_1_1test.html#ae9800e932c8997b89809bdac7dc6dc22">alexaClientSDK::afml::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#aa7bbfb67f8af8b90bf83dfde87ae2743">alexaClientSDK::capabilityAgents::speechSynthesizer::test</a>
 </li>
+<li>PROXY_CONFIG_KEY
+: <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a98a05d7bddfea22125747b7351cbb47a">alexaClientSDK::avsCommon::utils::libcurlUtils</a>
+</li>
 <li>PROXY_DEFAULT_TIMEOUT
 : <a class="el" href="namespacealexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z.html#af74465aafe1a5180a6c89c464837c27f">alexaClientSDK::bluetoothImplementations::blueZ</a>
 </li>
@@ -619,7 +635,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -43,7 +43,6 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDK
   Node50 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_test_8cpp.html"];
   Node33 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BasicDeviceConnectionRule.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_basic_device_connection_rule_8h.html"];
-  Node51 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BasicDeviceConnection\lRule.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_basic_device_connection_rule_8cpp.html"];
   Node51 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

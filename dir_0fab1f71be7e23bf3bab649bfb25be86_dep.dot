@@ -11,6 +11,6 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/Resources/Audio/include"
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_e4daa45b0c4bfed0c6bb560c92d357d6 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000114.html"];
-  dir_e4daa45b0c4bfed0c6bb560c92d357d6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000114_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_e4daa45b0c4bfed0c6bb560c92d357d6 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000130.html"];
+  dir_e4daa45b0c4bfed0c6bb560c92d357d6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000130_000017.html"];
 }

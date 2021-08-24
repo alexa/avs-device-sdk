@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/applications/acsdkSampleApplicationCBLAuthReq
   dir_96a53f32ff8d5e2deacdff8b423f8006 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_96a53f32ff8d5e2deacdff8b423f8006.html"];
   }
   dir_81dea7f558d5f2775a4ee1b40d718b20 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_81dea7f558d5f2775a4ee1b40d718b20.html"];
-  dir_96a53f32ff8d5e2deacdff8b423f8006->dir_81dea7f558d5f2775a4ee1b40d718b20 [headlabel="1", labeldistance=1.5 headhref="dir_000093_000091.html"];
+  dir_96a53f32ff8d5e2deacdff8b423f8006->dir_81dea7f558d5f2775a4ee1b40d718b20 [headlabel="1", labeldistance=1.5 headhref="dir_000109_000107.html"];
 }

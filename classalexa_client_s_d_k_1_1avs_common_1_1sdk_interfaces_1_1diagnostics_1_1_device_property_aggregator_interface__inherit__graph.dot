@@ -20,6 +20,10 @@ digraph "alexaClientSDK::avsCommon::sdkInterfaces::diagnostics::DevicePropertyAg
   Node7 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html"];
   Node8 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DialogUXState\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html",tooltip="A dialog specific UX state observer. "];
-  Node0 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="alexaClientSDK::diagnostics\l::DevicePropertyAggregator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html"];
+  Node9 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::rangeController\l::RangeControllerObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_observer_interface.html"];
+  Node10 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::powerController\l::PowerControllerObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_observer_interface.html"];
+  Node0 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="alexaClientSDK::diagnostics\l::DevicePropertyAggregator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html"];
 }

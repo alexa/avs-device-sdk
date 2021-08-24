@@ -4,13 +4,11 @@ digraph "/workplace/avs-device-sdk/capabilities/Equalizer/acsdkEqualizerImplemen
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node15 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/include/acsdkEqualizerImplementations\l/MiscDBEqualizerStorage.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node15 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node16 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node16 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/EqualizerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_component_8cpp.html"];
   Node15 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/EqualizerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_component_8cpp.html"];
+  Node17 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/MiscDBEqualizerStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_misc_d_b_equalizer_storage_8cpp.html"];
   Node15 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/MiscDBEqualizerStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_misc_d_b_equalizer_storage_8cpp.html"];
+  Node18 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/test/MiscDBEqualizerStorageTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_misc_d_b_equalizer_storage_test_8cpp.html"];
   Node15 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/test/MiscDBEqualizerStorageTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_misc_d_b_equalizer_storage_test_8cpp.html"];
-  Node15 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node20 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node19 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
 }

@@ -22,6 +22,8 @@ var searchData=
   ['testexceptionencounteredsender_2eh',['TestExceptionEncounteredSender.h',['../_test_exception_encountered_sender_8h.html',1,'']]],
   ['testmediaplayer_2ecpp',['TestMediaPlayer.cpp',['../_test_media_player_8cpp.html',1,'']]],
   ['testmediaplayer_2eh',['TestMediaPlayer.h',['../_test_media_player_8h.html',1,'']]],
+  ['testmessagerequestobserver_2ecpp',['TestMessageRequestObserver.cpp',['../_test_message_request_observer_8cpp.html',1,'']]],
+  ['testmessagerequestobserver_2eh',['TestMessageRequestObserver.h',['../_test_message_request_observer_8h.html',1,'']]],
   ['testmessagesender_2ecpp',['TestMessageSender.cpp',['../_test_message_sender_8cpp.html',1,'']]],
   ['testmessagesender_2eh',['TestMessageSender.h',['../_test_message_sender_8h.html',1,'']]],
   ['testspeechsynthesizerobserver_2ecpp',['TestSpeechSynthesizerObserver.cpp',['../_test_speech_synthesizer_observer_8cpp.html',1,'']]],

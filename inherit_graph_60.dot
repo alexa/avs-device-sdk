@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::ContainsType\< std\l::tuple\< ContainedTypes... \>,\l Type \>::IsFalse\< InType \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_type_3_01std_1_1tuple_3_04f930d33359a7e30a2331090bfdf498e.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::FactorySequencer\< ResultType,\l PrecursorTypes... \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_factory_sequencer_3_01_result_type_00_01_precursor_types_8_8_8_01_4.html"];
 }

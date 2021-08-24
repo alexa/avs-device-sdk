@@ -2,13 +2,13 @@ digraph "/workplace/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Initializ
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node13 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Initialization\l/InitializationParametersBuilder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
-  Node13 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node15 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/AlexaClientSDKInit.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alexa_client_s_d_k_init_8cpp.html"];
-  Node13 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node16 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/Initialization/Initialization\lParametersBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_initialization_parameters_builder_8cpp.html"];
-  Node13 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node14 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/include\l/AVSCommon/AVS/Initialization\l/InitializationParametersBuilder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node14 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node14 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/AlexaClientSDKInit.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alexa_client_s_d_k_init_8cpp.html"];
+  Node14 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/Initialization/Initialization\lParametersBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_initialization_parameters_builder_8cpp.html"];
+  Node14 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
 }

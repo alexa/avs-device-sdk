@@ -14,11 +14,11 @@ digraph "/workplace/avs-device-sdk/KWD/Sensory" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_8dea89c1bb4f7e14d42e016f897bd2de [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_8dea89c1bb4f7e14d42e016f897bd2de.html"];
-  dir_53b42e3f321e6fe3756d7d815e459c61->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000488_000017.html"];
-  dir_53b42e3f321e6fe3756d7d815e459c61->dir_8dea89c1bb4f7e14d42e016f897bd2de [headlabel="1", labeldistance=1.5 headhref="dir_000488_000476.html"];
-  dir_3abaeb56ab788975b0ae99f6ffd3fd54->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000491_000488.html"];
-  dir_3abaeb56ab788975b0ae99f6ffd3fd54->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000491_000017.html"];
-  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000490_000488.html"];
-  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000490_000017.html"];
-  dir_8dea89c1bb4f7e14d42e016f897bd2de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000476_000017.html"];
+  dir_53b42e3f321e6fe3756d7d815e459c61->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000542_000017.html"];
+  dir_53b42e3f321e6fe3756d7d815e459c61->dir_8dea89c1bb4f7e14d42e016f897bd2de [headlabel="1", labeldistance=1.5 headhref="dir_000542_000535.html"];
+  dir_3abaeb56ab788975b0ae99f6ffd3fd54->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000545_000542.html"];
+  dir_3abaeb56ab788975b0ae99f6ffd3fd54->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000545_000017.html"];
+  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000544_000542.html"];
+  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000544_000017.html"];
+  dir_8dea89c1bb4f7e14d42e016f897bd2de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000535_000017.html"];
 }

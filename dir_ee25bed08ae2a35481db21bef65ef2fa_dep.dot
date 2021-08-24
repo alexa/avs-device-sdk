@@ -1,0 +1,19 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkAudioInputStream/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6e5fdab6be803ed5b8181c38b7c94800 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkAudioInputStream" fontname="Helvetica", fontsize="10", URL="dir_6e5fdab6be803ed5b8181c38b7c94800.html"]
+  dir_ee25bed08ae2a35481db21bef65ef2fa [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_ee25bed08ae2a35481db21bef65ef2fa.html"];
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_0464f53126df424e7d5af87c487f0960 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_0464f53126df424e7d5af87c487f0960.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000598_000017.html"];
+  dir_0464f53126df424e7d5af87c487f0960->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000047_000598.html"];
+  dir_0464f53126df424e7d5af87c487f0960->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="6", labeldistance=1.5 headhref="dir_000047_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000598.html"];
+  dir_ee25bed08ae2a35481db21bef65ef2fa->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000049_000598.html"];
+  dir_ee25bed08ae2a35481db21bef65ef2fa->dir_0464f53126df424e7d5af87c487f0960 [headlabel="5", labeldistance=1.5 headhref="dir_000049_000047.html"];
+  dir_ee25bed08ae2a35481db21bef65ef2fa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000049_000017.html"];
+}

@@ -1,0 +1,17 @@
+digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorizationInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d8c81fbdbaec70618b3a60c1302fdb21 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Authorization" fontname="Helvetica", fontsize="10", URL="dir_d8c81fbdbaec70618b3a60c1302fdb21.html"]
+  subgraph clusterdir_32ae0c4bcc468b279bfc4fd15a7e63dc {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_32ae0c4bcc468b279bfc4fd15a7e63dc.html"];
+    dir_32ae0c4bcc468b279bfc4fd15a7e63dc [shape=plaintext label="acsdkAuthorizationInterfaces"];
+    dir_73f9c219508e92a12acd7900d076a251 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_73f9c219508e92a12acd7900d076a251.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_ebd8ea06bd6775daf5a25f413a4a4aa2 [shape=box label="acsdkRegistrationManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_ebd8ea06bd6775daf5a25f413a4a4aa2.html"];
+  dir_73f9c219508e92a12acd7900d076a251->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000506_000017.html"];
+  dir_73f9c219508e92a12acd7900d076a251->dir_ebd8ea06bd6775daf5a25f413a4a4aa2 [headlabel="1", labeldistance=1.5 headhref="dir_000506_000484.html"];
+}

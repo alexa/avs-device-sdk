@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -112,15 +112,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afb2d6d5d5907d32e6035b561dd544874"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:afb2d6d5d5907d32e6035b561dd544874"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt; Type, Parameters... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#afb2d6d5d5907d32e6035b561dd544874">addInstance</a> (Type instance)</td></tr>
 <tr class="separator:afb2d6d5d5907d32e6035b561dd544874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75159ce305fb40cd0d7619b2977970f5"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
+<tr class="memitem:a75159ce305fb40cd0d7619b2977970f5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_make_optional.html">internal::MakeOptional</a>&lt; Type &gt;, Parameters... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#a75159ce305fb40cd0d7619b2977970f5">makeImportOptional</a> ()</td></tr>
+<tr class="separator:a75159ce305fb40cd0d7619b2977970f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5126416c9e2cf2c89569337a2250b52"><td class="memTemplParams" colspan="2">template&lt;typename... SubComponentParameters&gt; </td></tr>
 <tr class="memitem:ac5126416c9e2cf2c89569337a2250b52"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt; SubComponentParameters..., Parameters... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#ac5126416c9e2cf2c89569337a2250b52">addComponent</a> (const <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html">Component</a>&lt; SubComponentParameters... &gt; &amp;component)</td></tr>
 <tr class="separator:ac5126416c9e2cf2c89569337a2250b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ea43e08899a4b5d4eb7235ecec27fb7"><td class="memTemplParams" colspan="2">template&lt;typename Type , typename... Dependencies&gt; </td></tr>
-<tr class="memitem:a8ea43e08899a4b5d4eb7235ecec27fb7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">Import</a>&lt; Dependencies &gt;..., Type, Parameters... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#a8ea43e08899a4b5d4eb7235ecec27fb7">overrideFactory</a> (Type(*factory)(Dependencies...))</td></tr>
-<tr class="separator:a8ea43e08899a4b5d4eb7235ecec27fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accdc8734529354c4b1bdba81ef19ec8d"><td class="memTemplParams" colspan="2">template&lt;typename Type &gt; </td></tr>
-<tr class="memitem:accdc8734529354c4b1bdba81ef19ec8d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt; Type, Parameters... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#accdc8734529354c4b1bdba81ef19ec8d">overrideInstance</a> (Type instance)</td></tr>
-<tr class="separator:accdc8734529354c4b1bdba81ef19ec8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename... Parameters&gt;<br />
@@ -697,45 +694,8 @@ template&lt;typename Type , typename... Dependencies&gt; </div>
 
 </div>
 </div>
-<a id="a8ea43e08899a4b5d4eb7235ecec27fb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ea43e08899a4b5d4eb7235ecec27fb7">&#9670;&nbsp;</a></span>overrideFactory()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Parameters&gt; </div>
-<div class="memtemplate">
-template&lt;typename Type , typename... Dependencies&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt;<a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_import.html">Import</a>&lt;Dependencies&gt;..., Type, Parameters...&gt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">alexaClientSDK::acsdkManufactory::ComponentAccumulator</a>&lt; Parameters &gt;::overrideFactory </td>
-          <td>(</td>
-          <td class="paramtype">Type(*)(Dependencies...)&#160;</td>
-          <td class="paramname"><em>factory</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Override the factory specified as the source of instances of an type.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Type</td><td>The type whose factory is being overriden. </td></tr>
-    <tr><td class="paramname">Dependencies</td><td>The arguments to the factory method creating <code>Type</code>, which also specifies the Types that this factory depends upon. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">factory</td><td>The factory function to use when creating instances of <code>type</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Return a new <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a> whose type includes the additional exports and imports. </dd></dl>
-
-</div>
-</div>
-<a id="accdc8734529354c4b1bdba81ef19ec8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accdc8734529354c4b1bdba81ef19ec8d">&#9670;&nbsp;</a></span>overrideInstance()</h2>
+<a id="a75159ce305fb40cd0d7619b2977970f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75159ce305fb40cd0d7619b2977970f5">&#9670;&nbsp;</a></span>makeImportOptional()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -743,26 +703,27 @@ template&lt;typename Type , typename... Dependencies&gt; </div>
 template&lt;typename... Parameters&gt; </div>
 <div class="memtemplate">
 template&lt;typename Type &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt;Type, Parameters...&gt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">alexaClientSDK::acsdkManufactory::ComponentAccumulator</a>&lt; Parameters &gt;::overrideInstance </td>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">ComponentAccumulator</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_make_optional.html">internal::MakeOptional</a>&lt; Type &gt;, Parameters... &gt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html">alexaClientSDK::acsdkManufactory::ComponentAccumulator</a>&lt; Parameters &gt;::makeImportOptional </td>
           <td>(</td>
-          <td class="paramtype">Type&#160;</td>
-          <td class="paramname"><em>instance</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Override the instance used as the source of instances of <code>Type</code>.</p>
+<p>Make an import optional for this component accumulator.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Type</td><td>The type for which an instance is being specified </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance</td><td>The instance that will be used to satisfy requests for the type Type. </td></tr>
+    <tr><td class="paramname">Type</td><td>The type that will be marked as optional. </td></tr>
   </table>
   </dd>
 </dl>
@@ -779,7 +740,7 @@ template&lt;typename Type &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

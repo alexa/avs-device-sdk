@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/KWD/Sensory/src" {
   }
   dir_53b42e3f321e6fe3756d7d815e459c61 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_53b42e3f321e6fe3756d7d815e459c61.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_53b42e3f321e6fe3756d7d815e459c61->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000488_000017.html"];
-  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000490_000488.html"];
-  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000490_000017.html"];
+  dir_53b42e3f321e6fe3756d7d815e459c61->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000542_000017.html"];
+  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_53b42e3f321e6fe3756d7d815e459c61 [headlabel="1", labeldistance=1.5 headhref="dir_000544_000542.html"];
+  dir_3c316e71beb4eb0ded4d5f6e3309707d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000544_000017.html"];
 }

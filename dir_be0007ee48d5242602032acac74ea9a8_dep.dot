@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/capabilities/Equalizer/acsdkEqualizerInterfac
   dir_be0007ee48d5242602032acac74ea9a8 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_be0007ee48d5242602032acac74ea9a8.html"];
   }
   dir_7c0d3db0d246bbf21ef4b4501fddbc0c [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_7c0d3db0d246bbf21ef4b4501fddbc0c.html"];
-  dir_be0007ee48d5242602032acac74ea9a8->dir_7c0d3db0d246bbf21ef4b4501fddbc0c [headlabel="1", labeldistance=1.5 headhref="dir_000297_000295.html"];
+  dir_be0007ee48d5242602032acac74ea9a8->dir_7c0d3db0d246bbf21ef4b4501fddbc0c [headlabel="1", labeldistance=1.5 headhref="dir_000326_000324.html"];
 }

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -109,6 +109,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1test_1_1_configuration_node_test.html#a62e290fb177c7d262281695638194832">alexaClientSDK::avsCommon::utils::configuration::test::ConfigurationNodeTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_logger_test.html#a11ddd8c2be9c22b16d4feb6ed3bef130">alexaClientSDK::avsCommon::utils::logger::test::LoggerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1test_1_1_a_v_s_gateway_manager_storage_test.html#a2a53c50698081272713b8f29ebd7fff5">alexaClientSDK::avsGatewayManager::storage::test::AVSGatewayManagerStorageTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_auth_refreshed_observer_test.html#a70f652a04134acaa75d1ae5851de3b2f">alexaClientSDK::avsGatewayManager::test::AuthRefreshedObserverTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_a_v_s_gateway_manager_test.html#ae653c9521ac6115237800970e77f59a6">alexaClientSDK::avsGatewayManager::test::AVSGatewayManagerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_post_connect_verify_gateway_sender_test.html#ac5f61f78c9e0d1ca0decf412062b325c">alexaClientSDK::avsGatewayManager::test::PostConnectVerifyGatewaySenderTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_environment.html#acd84b66a388cd4d872268f1e8201b584">alexaClientSDK::bluetoothImplementations::blueZ::test::Environment</a>
@@ -274,6 +275,9 @@ $(function() {
 <li>TestNotificationsObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_observer.html#aea25422c1e3968d88763a0ef9cebc36d">alexaClientSDK::acsdkNotifications::test::TestNotificationsObserver</a>
 </li>
+<li>testNotRetryable()
+: <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#a9abdf3211540e866b662d040740e5247">alexaClientSDK::certifiedSender::test::CertifiedSenderTest</a>
+</li>
 <li>TestObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_test_observer.html#a6df13f1a6095c8e9d4c272e08a7dfc04">alexaClientSDK::avsCommon::test::TestObserver</a>
 </li>
@@ -300,6 +304,9 @@ $(function() {
 </li>
 <li>testRequestEncodingAudioFormatsSucceeds()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#a19ee0326dd0a62c9c4d66cee690a4e49">alexaClientSDK::capabilityAgents::aip::test::AudioInputProcessorTest</a>
+</li>
+<li>testRetryable()
+: <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#adc0d546082fb43ed8bae33ca92d1373d">alexaClientSDK::certifiedSender::test::CertifiedSenderTest</a>
 </li>
 <li>testsendExceptionEncounteredAndReportFailed()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_mock_capability_agent.html#aa9afebd2fa943b92e3caad6345de3861">alexaClientSDK::avsCommon::test::MockCapabilityAgent</a>
@@ -433,7 +440,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_toggle_command.html#ab9234283ed1507c08b57d85b2f1652cb">alexaClientSDK::capabilityAgents::playbackController::ToggleCommand</a>
 </li>
 <li>ToggleControllerAttributes()
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html#a88c32c0199d2895523cab76844815380">alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributes</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html#a1c7885e4a1238d88267842442d8b9787">alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributes</a>
 </li>
 <li>ToggleControllerCapabilityAgentTest()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_toggle_controller_capability_agent_test.html#a3c182b0662b6f6d7d01d76e1d2e522f7">alexaClientSDK::capabilityAgents::toggleController::test::ToggleControllerCapabilityAgentTest</a>
@@ -531,7 +538,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#af99f8694e53fbfa4fd3e291f53f7ef55">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
 </li>
 <li>TransportInterface()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#ae5872af72ef57864abc0a5f8a82ed365">alexaClientSDK::acl::TransportInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">alexaClientSDK::acl::TransportInterface</a>
 </li>
 <li>TrueValues
 : <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_types_3_01_container_00_01_types_8_8_8_01_4.html#a078f72f7b70a887edbcbaf5ea4189068">alexaClientSDK::acsdkManufactory::internal::ContainsTypes&lt; Container, Types... &gt;</a>
@@ -553,8 +560,13 @@ $(function() {
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_fold_1_1_apply_3_01_operation_00_06954c7991cb931041903c63967f38c57.html#abc31db9378f2a65a69301d72393af541">alexaClientSDK::acsdkManufactory::internal::Fold::Apply&lt; Operation, Result0, A1, A2, A3, A4, An... &gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_fold_tuple_types_1_1_apply_3_01_op2412a07306a072c6e0aa3371a53fdb92.html#a63f526c0a169ab3cc519271b26478475">alexaClientSDK::acsdkManufactory::internal::FoldTupleTypes::Apply&lt; Operation, Result0, std::tuple&lt; Types... &gt; &gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ex6adecd1f4b45736dea8d6781cb845a31.html#a2fb522be75d7e5d61a1e96abb2636410">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetExportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a>
-, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_imfe7bcfe70079ed8edbc0b1868d855104.html#a6415234f174b5035739b944e16a6cfdf">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Import&lt; Type &gt; &gt;</a>
-, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_imca4cd9ac669dc96e10e905a570e0df86.html#ae16e5a575ce518f275b0265fdee34b5a">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma5de9a0d95ac305a6c7567be459c13750.html#accbc94404f7fbdcd2b034c4c3363c7fd">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetMakeOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, MakeOptional&lt; Type &gt; &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma583a59ff3c84ffad68c7e508556f5505.html#a7972d9ddc9d19c071310bdf7ad692f80">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetMakeOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_op49c067d8ce3010204e62ef27a5ff1aa3.html#ad53cd0fbc72936146680f2af661cacf1">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, MakeOptional&lt; Type &gt; &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_opf22bd56bc67a1aabf711d95ee1842125.html#a18ea8155b9c6ece51d3f9baeee1de192">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, OptionalImport&lt; Type &gt; &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_op12859f12d22ecc2ca7c88a046950b441.html#a4ddd239579304d2f88f86f3374eae8f8">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetOptionalImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_re7a64155bfb76f23b8ec7693b3eb47406.html#a361cd219ca0d5cde8de6f48f7b11c1f8">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetRequiredImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Import&lt; Type &gt; &gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_rea39eea3433e99a45e792e6b5d531a21a.html#a27827a007bdfa78e67e079e9aa5f8b92">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::GetRequiredImportsOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_remove_cvref.html#ac9b2135f45630a3b820217c929d6972a">alexaClientSDK::acsdkManufactory::internal::RemoveCvref&lt; Type &gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_remove_types_3_01std_1_1tuple_3_01e72f522da8ec3de49a4d30408e026989.html#aa1e2dad38e4beedde90243e8ca564564">alexaClientSDK::acsdkManufactory::internal::RemoveTypes&lt; std::tuple&lt; Types... &gt;, std::tuple&lt; Unwanted... &gt; &gt;::RemoveTypesOperation::Apply&lt; std::tuple&lt; ResultTypes... &gt;, Type &gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_remove_types_3_01std_1_1tuple_3_01a88a5e6b38efab53bb684f884f0438bd.html#add97551af643c036c0a7a10482cddc0d">alexaClientSDK::acsdkManufactory::internal::RemoveTypes&lt; std::tuple&lt; Types... &gt;, std::tuple&lt; Unwanted... &gt; &gt;</a>
@@ -582,16 +594,17 @@ $(function() {
 </li>
 <li>Type
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_exception_encountered_sender_1_1_exception_params.html#a9237f75ca3f262bf75e5eedda1275fd5">alexaClientSDK::integration::test::TestExceptionEncounteredSender::ExceptionParams</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859ed">alexaClientSDK::integration::test::TestMessageSender::SendParams</a>
 </li>
 <li>type
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a9fcee0be8a517010c0b2dd44f4e00834">alexaClientSDK::integration::test::TestMessageSender::SendParams</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_play_item.html#a10d40da99f995133ec827c1ddbbcaee3">alexaClientSDK::playlistParser::PlayItem</a>
 </li>
 <li>Type
-: <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender_1_1_send_params.html#a54c389020d1074712ead473e1fa859ed">alexaClientSDK::integration::test::TestMessageSender::SendParams</a>
-, <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_play_item.html#af44b43d7806455ea2ec85941c77cd246">alexaClientSDK::playlistParser::PlayItem</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_play_item.html#af44b43d7806455ea2ec85941c77cd246">alexaClientSDK::playlistParser::PlayItem</a>
 </li>
-<li>type
-: <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_play_item.html#a10d40da99f995133ec827c1ddbbcaee3">alexaClientSDK::playlistParser::PlayItem</a>
+<li>Type1()
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_type1.html#a0fba0ca6885e5bedc78110ff97182378">alexaClientSDK::acsdkManufactory::test::Type1</a>
 </li>
 <li>TYPE_ALL_FLAG
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a4fdbfff9111d0c785492ea8a2cd74c3eaf1cfcc01132de97aff96c219b8dd503f">alexaClientSDK::avsCommon::sdkInterfaces::PowerResourceManagerInterface</a>
@@ -637,7 +650,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

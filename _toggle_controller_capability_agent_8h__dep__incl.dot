@@ -2,9 +2,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/ToggleController/include/Tog
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node110 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/include\l/ToggleController/ToggleController\lCapabilityAgent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node110 -> Node111 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node111 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/src\l/ToggleControllerCapabilityAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_toggle_controller_capability_agent_8cpp.html"];
-  Node110 -> Node112 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node112 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/test\l/ToggleControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_toggle_controller_capability_agent_test_8cpp.html"];
+  Node111 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/include\l/ToggleController/ToggleController\lCapabilityAgent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node111 -> Node112 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node112 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/src\l/ToggleControllerCapabilityAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_toggle_controller_capability_agent_8cpp.html"];
+  Node111 -> Node113 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node113 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/test\l/ToggleControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_toggle_controller_capability_agent_test_8cpp.html"];
 }

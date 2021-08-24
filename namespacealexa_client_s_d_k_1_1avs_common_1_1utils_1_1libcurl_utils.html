@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -88,6 +88,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_content_fetcher_factory.html">HTTPContentFetcherFactory</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_get_interface.html">HttpGetInterface</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimal interface for making HTTP GET requests.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_get_interface.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html">HttpPost</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIBCURL based implementation of <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html" title="Minimal interface for making Http POST requests. ">HttpPostInterface</a>.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +122,8 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ae20c6835cf1bb6f0a644fab384c33126"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#ae20c6835cf1bb6f0a644fab384c33126">prepareForTLS</a> (CURL *handle)</td></tr>
 <tr class="separator:ae20c6835cf1bb6f0a644fab384c33126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26852ea42ffb4fd42267c8f827064d9f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a26852ea42ffb4fd42267c8f827064d9f">prepareForProxy</a> (CURL *handle)</td></tr>
+<tr class="separator:a26852ea42ffb4fd42267c8f827064d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12cbf33344a8ab199d28126044c0b029"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a12cbf33344a8ab199d28126044c0b029">TAG</a> (&quot;CallbackData&quot;)</td></tr>
 <tr class="memdesc:a12cbf33344a8ab199d28126044c0b029"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a12cbf33344a8ab199d28126044c0b029">More...</a><br /></td></tr>
 <tr class="separator:a12cbf33344a8ab199d28126044c0b029"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,9 +149,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a5105a7c7c50d2f069944ae6e79c9e007"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a5105a7c7c50d2f069944ae6e79c9e007">TAG</a> (&quot;LibcurlHTTP2Connection&quot;)</td></tr>
 <tr class="memdesc:a5105a7c7c50d2f069944ae6e79c9e007"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a5105a7c7c50d2f069944ae6e79c9e007">More...</a><br /></td></tr>
 <tr class="separator:a5105a7c7c50d2f069944ae6e79c9e007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa278a197e87deca298650f15a12cedc"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#aaa278a197e87deca298650f15a12cedc">WAIT_FOR_ACTIVITY_TIMEOUT</a> (100)</td></tr>
-<tr class="memdesc:aaa278a197e87deca298650f15a12cedc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for curl_multi_wait.  <a href="#aaa278a197e87deca298650f15a12cedc">More...</a><br /></td></tr>
-<tr class="separator:aaa278a197e87deca298650f15a12cedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78517baa1f6a94a139352c35d36b088e"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a78517baa1f6a94a139352c35d36b088e">WAIT_FOR_ACTIVITY_TIMEOUT</a> (50)</td></tr>
+<tr class="memdesc:a78517baa1f6a94a139352c35d36b088e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for curl_multi_wait.  <a href="#a78517baa1f6a94a139352c35d36b088e">More...</a><br /></td></tr>
+<tr class="separator:a78517baa1f6a94a139352c35d36b088e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb9fdea8054ecd291e91e1787188ed1a"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#abb9fdea8054ecd291e91e1787188ed1a">WAIT_FOR_ACTIVITY_WHILE_STREAMS_PAUSED_TIMEOUT</a> (10)</td></tr>
 <tr class="memdesc:abb9fdea8054ecd291e91e1787188ed1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout for curl_multi_wait while all non-intermittent HTTP/2 streams are paused.  <a href="#abb9fdea8054ecd291e91e1787188ed1a">More...</a><br /></td></tr>
 <tr class="separator:abb9fdea8054ecd291e91e1787188ed1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,6 +212,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ad2a2e611a4cff4532186ef2f406c57e7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#ad2a2e611a4cff4532186ef2f406c57e7">CAINFO_CONFIG_KEY</a> = &quot;CURLOPT_CAINFO&quot;</td></tr>
 <tr class="memdesc:ad2a2e611a4cff4532186ef2f406c57e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for looking up a configuration value for <code>CURLOPT_CAINFO</code>.  <a href="#ad2a2e611a4cff4532186ef2f406c57e7">More...</a><br /></td></tr>
 <tr class="separator:ad2a2e611a4cff4532186ef2f406c57e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98a05d7bddfea22125747b7351cbb47a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a98a05d7bddfea22125747b7351cbb47a">PROXY_CONFIG_KEY</a> = &quot;CURLOPT_PROXY&quot;</td></tr>
+<tr class="memdesc:a98a05d7bddfea22125747b7351cbb47a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for looking up a configuration value for <code>CURLOPT_PROXY</code>.  <a href="#a98a05d7bddfea22125747b7351cbb47a">More...</a><br /></td></tr>
+<tr class="separator:a98a05d7bddfea22125747b7351cbb47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b622fcccbae1b42feafde78346af7d2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils.html#a5b622fcccbae1b42feafde78346af7d2">VERIFY_HOSTS_AND_PEERS_CONFIG_KEY</a> = &quot;verifyHostsAndPeers&quot;</td></tr>
 <tr class="memdesc:a5b622fcccbae1b42feafde78346af7d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for looking up a configuration value for verifying hosts and peers.  <a href="#a5b622fcccbae1b42feafde78346af7d2">More...</a><br /></td></tr>
 <tr class="separator:a5b622fcccbae1b42feafde78346af7d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +243,35 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>This function logs a warning if the version of curl is not recent enough for use with the ACL. </p><dl class="section return"><dt>Returns</dt><dd>true if check passes, false if it fails </dd></dl>
+
+</div>
+</div>
+<a id="a26852ea42ffb4fd42267c8f827064d9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26852ea42ffb4fd42267c8f827064d9f">&#9670;&nbsp;</a></span>prepareForProxy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::libcurlUtils::prepareForProxy </td>
+          <td>(</td>
+          <td class="paramtype">CURL *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepare a CURL handle to set the proxy to use for the upcoming request.</p>
+<p>The 'libCurlUtils' sub-component of the global configuration supports the following options:</p><ul>
+<li>CURLOPT_PROXY If present, specifies a value for the libcurl property CURLOPT_PROXY.</li>
+</ul>
+<p>Here is an example configuration: </p><div class="fragment"><div class="line">{</div><div class="line">    <span class="stringliteral">&quot;libcurlUtils&quot;</span> : {</div><div class="line">        <span class="stringliteral">&quot;CURLOPT_PROXY&quot;</span> : <span class="stringliteral">&quot;http://proxy:1080&quot;</span></div><div class="line">    }</div><div class="line">    <span class="comment">// Other configuration nodes</span></div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The libcurl handle to prepare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the operation was successful. </dd></dl>
 
 </div>
 </div>
@@ -502,36 +539,8 @@ template&lt;typename ValueType &gt; </div>
 
 </div>
 </div>
-<a id="aef6b66ee97f91a2a4637237487469a10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef6b66ee97f91a2a4637237487469a10">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/11]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static const std::string alexaClientSDK::avsCommon::utils::libcurlUtils::TAG </td>
-          <td>(</td>
-          <td class="paramtype">&quot;HttpPost&quot;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>String to identify log entries originating from this file. </p>
-
-</div>
-</div>
 <a id="ac6c329873a88a6d4f1fcc99de0966f81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6c329873a88a6d4f1fcc99de0966f81">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6c329873a88a6d4f1fcc99de0966f81">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -558,8 +567,8 @@ template&lt;typename ValueType &gt; </div>
 
 </div>
 </div>
-<a id="a12cbf33344a8ab199d28126044c0b029"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12cbf33344a8ab199d28126044c0b029">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/11]</span></h2>
+<a id="aef6b66ee97f91a2a4637237487469a10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef6b66ee97f91a2a4637237487469a10">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -570,7 +579,7 @@ template&lt;typename ValueType &gt; </div>
         <tr>
           <td class="memname">static const std::string alexaClientSDK::avsCommon::utils::libcurlUtils::TAG </td>
           <td>(</td>
-          <td class="paramtype">&quot;CallbackData&quot;&#160;</td>
+          <td class="paramtype">&quot;HttpPost&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -587,7 +596,7 @@ template&lt;typename ValueType &gt; </div>
 </div>
 </div>
 <a id="a5105a7c7c50d2f069944ae6e79c9e007"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5105a7c7c50d2f069944ae6e79c9e007">&#9670;&nbsp;</a></span>TAG() <span class="overload">[8/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5105a7c7c50d2f069944ae6e79c9e007">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -599,6 +608,34 @@ template&lt;typename ValueType &gt; </div>
           <td class="memname">static const std::string alexaClientSDK::avsCommon::utils::libcurlUtils::TAG </td>
           <td>(</td>
           <td class="paramtype">&quot;LibcurlHTTP2Connection&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+<a id="a12cbf33344a8ab199d28126044c0b029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12cbf33344a8ab199d28126044c0b029">&#9670;&nbsp;</a></span>TAG() <span class="overload">[8/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::avsCommon::utils::libcurlUtils::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;CallbackData&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -698,8 +735,8 @@ template&lt;typename ValueType &gt; </div>
 
 </div>
 </div>
-<a id="aaa278a197e87deca298650f15a12cedc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa278a197e87deca298650f15a12cedc">&#9670;&nbsp;</a></span>WAIT_FOR_ACTIVITY_TIMEOUT()</h2>
+<a id="a78517baa1f6a94a139352c35d36b088e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78517baa1f6a94a139352c35d36b088e">&#9670;&nbsp;</a></span>WAIT_FOR_ACTIVITY_TIMEOUT()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -710,7 +747,7 @@ template&lt;typename ValueType &gt; </div>
         <tr>
           <td class="memname">static const std::chrono::milliseconds alexaClientSDK::avsCommon::utils::libcurlUtils::WAIT_FOR_ACTIVITY_TIMEOUT </td>
           <td>(</td>
-          <td class="paramtype">100&#160;</td>
+          <td class="paramtype">50&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1042,6 +1079,30 @@ template&lt;typename ValueType &gt; </div>
 
 </div>
 </div>
+<a id="a98a05d7bddfea22125747b7351cbb47a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98a05d7bddfea22125747b7351cbb47a">&#9670;&nbsp;</a></span>PROXY_CONFIG_KEY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::avsCommon::utils::libcurlUtils::PROXY_CONFIG_KEY = &quot;CURLOPT_PROXY&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Key for looking up a configuration value for <code>CURLOPT_PROXY</code>. </p>
+
+</div>
+</div>
 <a id="aec2416d5a1025b96be723531fb5d92e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aec2416d5a1025b96be723531fb5d92e8">&#9670;&nbsp;</a></span>TIMEOUT_CONNECTION</h2>
 
@@ -1141,7 +1202,7 @@ template&lt;typename ValueType &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

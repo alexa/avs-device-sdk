@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/AVSGatewayManager/include/AVSGatewayManager/AuthRefreshedObserver.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node54 [label="/workplace/avs-device\l-sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/AuthRefreshedObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node54 -> Node55 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="/workplace/avs-device\l-sdk/AVSGatewayManager\l/src/AuthRefreshedObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_auth_refreshed_observer_8cpp.html"];
+  Node54 -> Node56 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="/workplace/avs-device\l-sdk/AVSGatewayManager\l/src/AVSGatewayManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_a_v_s_gateway_manager_8cpp.html"];
+  Node54 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="/workplace/avs-device\l-sdk/AVSGatewayManager\l/test/AuthRefreshedObserverTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_auth_refreshed_observer_test_8cpp.html"];
+  Node54 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="/workplace/avs-device\l-sdk/AVSGatewayManager\l/test/AVSGatewayManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_a_v_s_gateway_manager_test_8cpp.html"];
+}

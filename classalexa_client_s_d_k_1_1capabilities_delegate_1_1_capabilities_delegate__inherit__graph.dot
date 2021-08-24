@@ -20,6 +20,8 @@ digraph "alexaClientSDK::capabilitiesDelegate::CapabilitiesDelegate"
   Node7 [label="alexaClientSDK::capabilities\lDelegate::DiscoveryStatusObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_status_observer_interface.html"];
   Node8 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="alexaClientSDK::registration\lManager::CustomerDataHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html"];
-  Node9 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="std::enable_shared\l_from_this\< CapabilitiesDelegate \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node9 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="alexaClientSDK::registration\lManager::CustomerDataHandlerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html"];
+  Node10 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="std::enable_shared\l_from_this\< CapabilitiesDelegate \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

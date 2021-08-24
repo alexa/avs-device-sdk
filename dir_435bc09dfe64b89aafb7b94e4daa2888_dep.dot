@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/Metrics/SampleMetricSink/include/Metrics" {
   dir_435bc09dfe64b89aafb7b94e4daa2888 [shape=box, label="Metrics", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_435bc09dfe64b89aafb7b94e4daa2888.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_435bc09dfe64b89aafb7b94e4daa2888->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000512_000017.html"];
+  dir_435bc09dfe64b89aafb7b94e4daa2888->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000566_000017.html"];
 }

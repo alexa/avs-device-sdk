@@ -131,6 +131,8 @@ digraph "/workplace/avs-device-sdk/Metrics/MetricRecorder/include/Metrics/Metric
   Node44 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node44 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node45 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node45 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

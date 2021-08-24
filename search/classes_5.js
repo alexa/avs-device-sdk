@@ -25,5 +25,6 @@ var searchData=
   ['foo',['Foo',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_foo.html',1,'alexaClientSDK::acsdkManufactory::internal']]],
   ['formattedaudiostreamadapter',['FormattedAudioStreamAdapter',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_formatted_audio_stream_adapter.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['formattedaudiostreamadapterlistener',['FormattedAudioStreamAdapterListener',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_formatted_audio_stream_adapter_listener.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
+  ['fullstate',['FullState',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface_1_1_full_state.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface']]],
   ['futurepromisepair',['FuturePromisePair',['../structalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_future_promise_pair.html',1,'alexaClientSDK::acsdkNotifications::test']]]
 ];

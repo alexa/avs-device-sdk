@@ -11,5 +11,5 @@ digraph "/workplace/avs-device-sdk/shared/acsdkNotifier/include" {
   }
   }
   dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [shape=box label="acsdkNotifierInterfaces" fillcolor="white" style="filled" color="red" URL="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html"];
-  dir_b170ce45316ac9f00b9eaf5564266dfb->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000558_000560.html"];
+  dir_b170ce45316ac9f00b9eaf5564266dfb->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000607_000609.html"];
 }

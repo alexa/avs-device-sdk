@@ -53,9 +53,11 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Threa
   Node16 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node16 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node17 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node17 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node17 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node17 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

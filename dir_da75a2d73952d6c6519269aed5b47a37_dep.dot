@@ -11,6 +11,6 @@ digraph "/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayerInte
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_6044d1f8f3214b88c65bc2b391e9dcbd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000262_000017.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_6044d1f8f3214b88c65bc2b391e9dcbd [headlabel="1", labeldistance=1.5 headhref="dir_000017_000262.html"];
+  dir_6044d1f8f3214b88c65bc2b391e9dcbd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000280_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_6044d1f8f3214b88c65bc2b391e9dcbd [headlabel="1", labeldistance=1.5 headhref="dir_000017_000280.html"];
 }

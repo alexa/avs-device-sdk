@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['todo_20list',['Todo List',['../todo.html',1,'']]]
+  ['security_20policy_20for_20device_20sdks',['Security Policy for Device SDKs',['../md__workplace_avs-device-sdk__s_e_c_u_r_i_t_y.html',1,'']]]
 ];

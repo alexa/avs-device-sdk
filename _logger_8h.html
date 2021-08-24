@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -89,13 +89,6 @@ Include dependency graph for Logger.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_logger_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_logger_2_logger_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_logger_2_logger_8h" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_logger_2_logger_8h">
-<area shape="rect" id="node7" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="393,213,607,255"/>
-<area shape="rect" id="node14" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="632,213,808,255"/>
-<area shape="rect" id="node15" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="929,124,1105,165"/>
-<area shape="rect" id="node22" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="514,124,707,165"/>
-<area shape="rect" id="node23" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="91,124,267,165"/>
-<area shape="rect" id="node18" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="976,213,1152,255"/>
-<area shape="rect" id="node20" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="981,303,1157,344"/>
 </map>
 </div>
 </div>
@@ -136,6 +129,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a614ffd9777cb70214e150c407db1157d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the get&lt;type&gt;Logger function name for whatever <code>Logger</code> logs will be sent to.  <a href="#a614ffd9777cb70214e150c407db1157d">More...</a><br /></td></tr>
 <tr class="separator:a614ffd9777cb70214e150c407db1157d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff9739000a127870cf563ba2991ec9d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#aff9739000a127870cf563ba2991ec9d4">ACSDK_LOG</a>(level,  entry)</td></tr>
+<tr class="memdesc:aff9739000a127870cf563ba2991ec9d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define log macro if logging is enabled. Else do nothing with params to avoid unused variable error.  <a href="#aff9739000a127870cf563ba2991ec9d4">More...</a><br /></td></tr>
 <tr class="separator:aff9739000a127870cf563ba2991ec9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7676fafe14eaf2964e7a7475db7eaa94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#a7676fafe14eaf2964e7a7475db7eaa94">ACSDK_DEBUG9</a>(entry)</td></tr>
 <tr class="separator:a7676fafe14eaf2964e7a7475db7eaa94"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,8 +166,8 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ada0657f974207d172dbd460967bc1d0d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Logger &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#ada0657f974207d172dbd460967bc1d0d">alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_SINK_LOGGER</a> ()</td></tr>
 <tr class="separator:ada0657f974207d172dbd460967bc1d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ce242645803838bd3900d45974565d6"><td class="memItemLeft" align="right" valign="top">Logger &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a8ce242645803838bd3900d45974565d6">alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION</a> ()</td></tr>
-<tr class="separator:a8ce242645803838bd3900d45974565d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71524aff44d602363f7f4648c3c6bb2f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Logger &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a71524aff44d602363f7f4648c3c6bb2f">alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION</a> ()</td></tr>
+<tr class="separator:a71524aff44d602363f7f4648c3c6bb2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a8c5e76dd516f4638a4d60761b565077b"></a>
@@ -678,12 +672,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                                                                                              \</div><div class="line">        auto&amp; loggerInstance = <a class="code" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a8ce242645803838bd3900d45974565d6">alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION</a>(); \</div><div class="line">        if (loggerInstance.shouldLog(level)) {                                                        \</div><div class="line">            loggerInstance.log(level, entry);                                                         \</div><div class="line">        }                                                                                             \</div><div class="line">    } <span class="keywordflow">while</span> (<span class="keyword">false</span>)</div><div class="ttc" id="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_html_a8ce242645803838bd3900d45974565d6"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a8ce242645803838bd3900d45974565d6">alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION</a></div><div class="ttdeci">Logger &amp; ACSDK_GET_LOGGER_FUNCTION()</div><div class="ttdef"><b>Definition:</b> Logger.h:334</div></div>
-</div><!-- fragment --><p>Common implementation for sending entries to the log.</p>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                        \</div><div class="line">        (void)level;            \</div><div class="line">        (void)entry;            \</div><div class="line">    } <span class="keywordflow">while</span> (<span class="keyword">false</span>)</div></div><!-- fragment -->
+<p>Define log macro if logging is enabled. Else do nothing with params to avoid unused variable error. </p>
+<p>Null implementation for sending entries to the log.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">level</td><td>The log level to associate with the log line. </td></tr>
-    <tr><td class="paramname">entry</td><td>The text (or builder of the text) for the log entry. </td></tr>
+    <tr><td class="paramname">level</td><td>Unused. </td></tr>
+    <tr><td class="paramname">entry</td><td>Unused. </td></tr>
   </table>
   </dd>
 </dl>
@@ -784,7 +779,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

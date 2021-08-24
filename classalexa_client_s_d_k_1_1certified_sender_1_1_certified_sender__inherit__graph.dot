@@ -12,4 +12,6 @@ digraph "alexaClientSDK::certifiedSender::CertifiedSender"
   Node3 [label="std::enable_shared\l_from_this\< CertifiedSender \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node4 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="alexaClientSDK::registration\lManager::CustomerDataHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="alexaClientSDK::registration\lManager::CustomerDataHandlerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html"];
 }

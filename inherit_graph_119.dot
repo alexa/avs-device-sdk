@@ -3,7 +3,9 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkNotifier\l::test::TestObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1test_1_1_test_observer_interface.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkNotifier\l::test::MockTestObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1test_1_1_mock_test_observer.html"];
+  Node897 [label="false_type",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node897 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::IsImport\< Type \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_import_3_01_type_01_4.html"];
+  Node897 -> Node899 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node899 [label="alexaClientSDK::acsdkManufactory\l::internal::IsRequiredImport\< Type \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_required_import_3_01_type_01_4.html"];
 }

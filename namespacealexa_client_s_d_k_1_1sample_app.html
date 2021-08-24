@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -198,6 +198,11 @@ Functions</h2></td></tr>
 <tr class="memitem:ad572f78221770c87e14f4f705c3e7208"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ad572f78221770c87e14f4f705c3e7208">TAG</a> (&quot;InteractionManager&quot;)</td></tr>
 <tr class="memdesc:ad572f78221770c87e14f4f705c3e7208"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ad572f78221770c87e14f4f705c3e7208">More...</a><br /></td></tr>
 <tr class="separator:ad572f78221770c87e14f4f705c3e7208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0cebb18422c460c5ad9b83b1380afe3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ae0cebb18422c460c5ad9b83b1380afe3">TAG</a> (&quot;KeywordObserver&quot;)</td></tr>
+<tr class="memdesc:ae0cebb18422c460c5ad9b83b1380afe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ae0cebb18422c460c5ad9b83b1380afe3">More...</a><br /></td></tr>
+<tr class="separator:ae0cebb18422c460c5ad9b83b1380afe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0fecc0d371feb3ca9acd73591d1a1b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ac0fecc0d371feb3ca9acd73591d1a1b1">computeStartOfSpeechTimestamp</a> (const avsCommon::avs::AudioInputStream::Index wakewordBeginIndex, const avsCommon::avs::AudioInputStream::Index wakewordEndIndex, const int sampleRateHz, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">avsCommon::avs::AudioInputStream</a> &gt; &amp;stream, std::chrono::steady_clock::time_point &amp;startOfSpeechTimestamp)</td></tr>
+<tr class="separator:ac0fecc0d371feb3ca9acd73591d1a1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7f3e69e99f8634f8a8115a0558197cc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ad7f3e69e99f8634f8a8115a0558197cc">notifyObservers</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_interface.html#aef138bd89362774427bd94a7fe5a0c1e">ModeControllerInterface::ModeState</a> &amp;modeState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a389764b4196f860c311e928929519112">avsCommon::sdkInterfaces::AlexaStateChangeCauseType</a> cause, const std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_observer_interface.html">ModeControllerObserverInterface</a> &gt;&gt; &amp;observers)</td></tr>
 <tr class="separator:ad7f3e69e99f8634f8a8115a0558197cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36eec3973c3f5c9b1a60fc255988acdc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a36eec3973c3f5c9b1a60fc255988acdc">notifyObservers</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_interface.html#a1ec49a6018047aa23640335d8772e751">avsCommon::sdkInterfaces::powerController::PowerControllerInterface::PowerState</a> &amp;powerState, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a389764b4196f860c311e928929519112">avsCommon::sdkInterfaces::AlexaStateChangeCauseType</a> cause, const std::list&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_observer_interface.html">avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface</a> &gt;&gt; &amp;observers)</td></tr>
@@ -311,12 +316,6 @@ Variables</h2></td></tr>
 <tr class="separator:ad3f5acfedfc52408374087f8ac610a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f634e1b21b2f54f1f4b783f1ae802ab"><td class="memItemLeft" align="right" valign="top">static const unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a5f634e1b21b2f54f1f4b783f1ae802ab">PREFERRED_SAMPLES_PER_CALLBACK</a> = paFramesPerBufferUnspecified</td></tr>
 <tr class="separator:a5f634e1b21b2f54f1f4b783f1ae802ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3c9cdecad3d78e57a93020fe6fd5b15"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#af3c9cdecad3d78e57a93020fe6fd5b15">SAMPLE_RATE_HZ</a> = 16000</td></tr>
-<tr class="memdesc:af3c9cdecad3d78e57a93020fe6fd5b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sample rate of microphone audio data.  <a href="#af3c9cdecad3d78e57a93020fe6fd5b15">More...</a><br /></td></tr>
-<tr class="separator:af3c9cdecad3d78e57a93020fe6fd5b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47beec732d20ca836fadc4acc399a7d5"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a47beec732d20ca836fadc4acc399a7d5">NUM_CHANNELS</a> = 1</td></tr>
-<tr class="memdesc:a47beec732d20ca836fadc4acc399a7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of audio channels.  <a href="#a47beec732d20ca836fadc4acc399a7d5">More...</a><br /></td></tr>
-<tr class="separator:a47beec732d20ca836fadc4acc399a7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0b1ba88b9639c43484210f76bc47fed"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#ae0b1ba88b9639c43484210f76bc47fed">WORD_SIZE</a> = 2</td></tr>
 <tr class="memdesc:ae0b1ba88b9639c43484210f76bc47fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of each word within the stream.  <a href="#ae0b1ba88b9639c43484210f76bc47fed">More...</a><br /></td></tr>
 <tr class="separator:ae0b1ba88b9639c43484210f76bc47fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -328,9 +327,6 @@ Variables</h2></td></tr>
 <tr class="memitem:a09d5a0cb89682330ad5a59a5ce6435f3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a09d5a0cb89682330ad5a59a5ce6435f3">AMOUNT_OF_AUDIO_DATA_IN_BUFFER</a> = std::chrono::seconds(15)</td></tr>
 <tr class="memdesc:a09d5a0cb89682330ad5a59a5ce6435f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The amount of audio data to keep in the ring buffer.  <a href="#a09d5a0cb89682330ad5a59a5ce6435f3">More...</a><br /></td></tr>
 <tr class="separator:a09d5a0cb89682330ad5a59a5ce6435f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7000af47c2ae793dc096ed260dd03816"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a7000af47c2ae793dc096ed260dd03816">BUFFER_SIZE_IN_SAMPLES</a> = (<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#af3c9cdecad3d78e57a93020fe6fd5b15">SAMPLE_RATE_HZ</a>)*AMOUNT_OF_AUDIO_DATA_IN_BUFFER.count()</td></tr>
-<tr class="memdesc:a7000af47c2ae793dc096ed260dd03816"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the ring buffer.  <a href="#a7000af47c2ae793dc096ed260dd03816">More...</a><br /></td></tr>
-<tr class="separator:a7000af47c2ae793dc096ed260dd03816"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bcf0440d6ce10d4bfcc5abfd44463a6"><td class="memItemLeft" align="right" valign="top">static const std::set&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6">alexaClientSDK::avsCommon::utils::logger::Level</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a4bcf0440d6ce10d4bfcc5abfd44463a6">allLevels</a></td></tr>
 <tr class="memdesc:a4bcf0440d6ce10d4bfcc5abfd44463a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A set of all log levels.  <a href="#a4bcf0440d6ce10d4bfcc5abfd44463a6">More...</a><br /></td></tr>
 <tr class="separator:a4bcf0440d6ce10d4bfcc5abfd44463a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -741,6 +737,71 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac0fecc0d371feb3ca9acd73591d1a1b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0fecc0d371feb3ca9acd73591d1a1b1">&#9670;&nbsp;</a></span>computeStartOfSpeechTimestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::sampleApp::computeStartOfSpeechTimestamp </td>
+          <td>(</td>
+          <td class="paramtype">const avsCommon::avs::AudioInputStream::Index&#160;</td>
+          <td class="paramname"><em>wakewordBeginIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const avsCommon::avs::AudioInputStream::Index&#160;</td>
+          <td class="paramname"><em>wakewordEndIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>sampleRateHz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">avsCommon::avs::AudioInputStream</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::steady_clock::time_point &amp;&#160;</td>
+          <td class="paramname"><em>startOfSpeechTimestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Compute the start of speech timestamp used in UPL calculations. This is calculated by taking the time detected on wakeword to the time and subtracting the duration of the wakeword uttered to determine time at the start of the wakeword. <code>startOfSpeechTimestamp</code> must be set to the time on wakeword detected for this calculation to work. If wakeword duration can not be calculated start of speech timestamp is left as the time on wakeword detected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wakewordBeingIndex</td><td>The begin index of the first part of the keyword found within the <code>stream</code>. </td></tr>
+    <tr><td class="paramname">wakewordEndIndex</td><td>The end index of the last part of the keyword within the <code>stream</code>. </td></tr>
+    <tr><td class="paramname">sampleRateHz</td><td>The SampleRate in Hz of the <code>stream</code>. </td></tr>
+    <tr><td class="paramname">stream</td><td>The stream in which the keyword was detected. </td></tr>
+    <tr><td class="paramname">startOfSpeechTimestamp</td><td>Moment in time to calculate when user started talking to Alexa. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1518,8 +1579,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae0cebb18422c460c5ad9b83b1380afe3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0cebb18422c460c5ad9b83b1380afe3">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::sampleApp::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;KeywordObserver&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="abcbe90788ef526883acfe6550a9e8f07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcbe90788ef526883acfe6550a9e8f07">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abcbe90788ef526883acfe6550a9e8f07">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1547,7 +1636,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad572f78221770c87e14f4f705c3e7208"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad572f78221770c87e14f4f705c3e7208">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad572f78221770c87e14f4f705c3e7208">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1575,7 +1664,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0894730ded079fe22493e530dd48460e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0894730ded079fe22493e530dd48460e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0894730ded079fe22493e530dd48460e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1603,7 +1692,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a64582891a4e32a65a5b31cee7c97c433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64582891a4e32a65a5b31cee7c97c433">&#9670;&nbsp;</a></span>TAG() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a64582891a4e32a65a5b31cee7c97c433">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1631,7 +1720,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a31154355aa77254b23d6dd621bc7ec7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31154355aa77254b23d6dd621bc7ec7d">&#9670;&nbsp;</a></span>TAG() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a31154355aa77254b23d6dd621bc7ec7d">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1659,7 +1748,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8877f57a2bdb7c67cc02e92d57c72b0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8877f57a2bdb7c67cc02e92d57c72b0d">&#9670;&nbsp;</a></span>TAG() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8877f57a2bdb7c67cc02e92d57c72b0d">&#9670;&nbsp;</a></span>TAG() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1988,30 +2077,6 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;| Status : Unrecoverable authorization failure.                              |\n&quot;</span></div></div><!-- fragment -->
-</div>
-</div>
-<a id="a7000af47c2ae793dc096ed260dd03816"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7000af47c2ae793dc096ed260dd03816">&#9670;&nbsp;</a></span>BUFFER_SIZE_IN_SAMPLES</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const size_t alexaClientSDK::sampleApp::BUFFER_SIZE_IN_SAMPLES = (<a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#af3c9cdecad3d78e57a93020fe6fd5b15">SAMPLE_RATE_HZ</a>)*AMOUNT_OF_AUDIO_DATA_IN_BUFFER.count()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The size of the ring buffer. </p>
-
 </div>
 </div>
 <a id="afcf594ee67abe52cc2e4f74f9fd726a0"></a>
@@ -3072,30 +3137,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a47beec732d20ca836fadc4acc399a7d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47beec732d20ca836fadc4acc399a7d5">&#9670;&nbsp;</a></span>NUM_CHANNELS</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const unsigned int alexaClientSDK::sampleApp::NUM_CHANNELS = 1</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The number of audio channels. </p>
-
-</div>
-</div>
 <a id="a7eaeae64032a9d5823ed0e77ec5d43ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7eaeae64032a9d5823ed0e77ec5d43ca">&#9670;&nbsp;</a></span>NUM_INPUT_CHANNELS</h2>
 
@@ -3690,30 +3731,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af3c9cdecad3d78e57a93020fe6fd5b15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3c9cdecad3d78e57a93020fe6fd5b15">&#9670;&nbsp;</a></span>SAMPLE_RATE_HZ</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const unsigned int alexaClientSDK::sampleApp::SAMPLE_RATE_HZ = 16000</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The sample rate of microphone audio data. </p>
-
-</div>
-</div>
 <a id="a00a421d9345a45c00e08405c0d6135d3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00a421d9345a45c00e08405c0d6135d3">&#9670;&nbsp;</a></span>SETTING_CONFIGURATION_ROOT_KEY</h2>
 
@@ -4214,7 +4231,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

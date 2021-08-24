@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -106,6 +106,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1test_1_1_configuration_node_test.html#a62e290fb177c7d262281695638194832">alexaClientSDK::avsCommon::utils::configuration::test::ConfigurationNodeTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_logger_test.html#a11ddd8c2be9c22b16d4feb6ed3bef130">alexaClientSDK::avsCommon::utils::logger::test::LoggerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1storage_1_1test_1_1_a_v_s_gateway_manager_storage_test.html#a2a53c50698081272713b8f29ebd7fff5">alexaClientSDK::avsGatewayManager::storage::test::AVSGatewayManagerStorageTest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_auth_refreshed_observer_test.html#a70f652a04134acaa75d1ae5851de3b2f">alexaClientSDK::avsGatewayManager::test::AuthRefreshedObserverTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_a_v_s_gateway_manager_test.html#ae653c9521ac6115237800970e77f59a6">alexaClientSDK::avsGatewayManager::test::AVSGatewayManagerTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_post_connect_verify_gateway_sender_test.html#ac5f61f78c9e0d1ca0decf412062b325c">alexaClientSDK::avsGatewayManager::test::PostConnectVerifyGatewaySenderTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_environment.html#acd84b66a388cd4d872268f1e8201b584">alexaClientSDK::bluetoothImplementations::blueZ::test::Environment</a>
@@ -262,6 +263,9 @@ $(function() {
 <li>TestNotificationsObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_test_notifications_observer.html#aea25422c1e3968d88763a0ef9cebc36d">alexaClientSDK::acsdkNotifications::test::TestNotificationsObserver</a>
 </li>
+<li>testNotRetryable()
+: <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#a9abdf3211540e866b662d040740e5247">alexaClientSDK::certifiedSender::test::CertifiedSenderTest</a>
+</li>
 <li>TestObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_test_observer.html#a6df13f1a6095c8e9d4c272e08a7dfc04">alexaClientSDK::avsCommon::test::TestObserver</a>
 </li>
@@ -285,6 +289,9 @@ $(function() {
 </li>
 <li>testRequestEncodingAudioFormatsSucceeds()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_audio_input_processor_test.html#a19ee0326dd0a62c9c4d66cee690a4e49">alexaClientSDK::capabilityAgents::aip::test::AudioInputProcessorTest</a>
+</li>
+<li>testRetryable()
+: <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#adc0d546082fb43ed8bae33ca92d1373d">alexaClientSDK::certifiedSender::test::CertifiedSenderTest</a>
 </li>
 <li>testsendExceptionEncounteredAndReportFailed()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_mock_capability_agent.html#aa9afebd2fa943b92e3caad6345de3861">alexaClientSDK::avsCommon::test::MockCapabilityAgent</a>
@@ -375,7 +382,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1playback_controller_1_1_toggle_command.html#ab9234283ed1507c08b57d85b2f1652cb">alexaClientSDK::capabilityAgents::playbackController::ToggleCommand</a>
 </li>
 <li>ToggleControllerAttributes()
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html#a1c7885e4a1238d88267842442d8b9787">alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributes</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_controller_attributes.html#a88c32c0199d2895523cab76844815380">alexaClientSDK::avsCommon::sdkInterfaces::toggleController::ToggleControllerAttributes</a>
 </li>
 <li>ToggleControllerCapabilityAgentTest()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_toggle_controller_capability_agent_test.html#a3c182b0662b6f6d7d01d76e1d2e522f7">alexaClientSDK::capabilityAgents::toggleController::test::ToggleControllerCapabilityAgentTest</a>
@@ -416,12 +423,15 @@ $(function() {
 <li>TransportInterface()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_interface.html#a21b0b623af40d2eb6dc3716e03c22aaf">alexaClientSDK::acl::TransportInterface</a>
 </li>
+<li>Type1()
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1test_1_1_type1.html#a0fba0ca6885e5bedc78110ff97182378">alexaClientSDK::acsdkManufactory::test::Type1</a>
+</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

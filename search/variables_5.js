@@ -53,7 +53,7 @@ var searchData=
   ['format_5fieee_5ffloat',['FORMAT_IEEE_FLOAT',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a1a8575002d600d9d2a217135ae0d09d6',1,'alexaClientSDK::avsCommon::utils']]],
   ['format_5fkey',['FORMAT_KEY',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a75e0e68b050058b87d12bb7cd0b07d1c',1,'alexaClientSDK::capabilityAgents::aip']]],
   ['format_5fpcm',['FORMAT_PCM',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#ab65fe67428373f79e96368ff1ec868c4',1,'alexaClientSDK::avsCommon::utils']]],
-  ['four_5falexas_5faudio_5ffile',['FOUR_ALEXAS_AUDIO_FILE',['../namespacealexa_client_s_d_k_1_1kwd_1_1test.html#abca096b7665de28e4dc2916dd8c74ce7',1,'alexaClientSDK::kwd::test::FOUR_ALEXAS_AUDIO_FILE()'],['../namespacealexa_client_s_d_k_1_1kwd_1_1test.html#abca096b7665de28e4dc2916dd8c74ce7',1,'alexaClientSDK::kwd::test::FOUR_ALEXAS_AUDIO_FILE()']]],
+  ['four_5falexas_5faudio_5ffile',['FOUR_ALEXAS_AUDIO_FILE',['../namespacealexa_client_s_d_k_1_1kwd_1_1test.html#abca096b7665de28e4dc2916dd8c74ce7',1,'alexaClientSDK::kwd::test']]],
   ['frame_5flength',['FRAME_LENGTH',['../namespacealexa_client_s_d_k_1_1speechencoder.html#ae9ba25b83ad115d04d4c8bd91479ee9f',1,'alexaClientSDK::speechencoder']]],
   ['frame_5fsize',['FRAME_SIZE',['../namespacealexa_client_s_d_k_1_1speechencoder.html#aee722a0bdc5db5592bf73348339e0c47',1,'alexaClientSDK::speechencoder']]],
   ['frame_5fwordsize',['FRAME_WORDSIZE',['../namespacealexa_client_s_d_k_1_1speechencoder_1_1test.html#a5e67a027818217cfedecbb87ebe5620b',1,'alexaClientSDK::speechencoder::test']]],

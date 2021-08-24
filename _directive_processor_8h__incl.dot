@@ -86,6 +86,8 @@ digraph "/workplace/avs-device-sdk/ADSL/include/ADSL/DirectiveProcessor.h"
   Node47 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 [label="AVSCommon/AVS/BlockingPolicy.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_blocking_policy_8h.html"];
+  Node48 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node48 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 [label="AVSCommon/AVS/DirectiveRouting\lRule.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_directive_routing_rule_8h.html"];
@@ -115,6 +117,7 @@ digraph "/workplace/avs-device-sdk/ADSL/include/ADSL/DirectiveProcessor.h"
   Node56 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node56 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node57 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -171,9 +174,6 @@ digraph "/workplace/avs-device-sdk/ADSL/include/ADSL/DirectiveProcessor.h"
   Node66 -> Node69 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node69 [label="AVSCommon/Utils/Metrics\l/MetricEventBuilder.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_metric_event_builder_8h.html"];
   Node69 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node69 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node70 [label="AVSCommon/Utils/Metrics\l/DataPoint.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_data_point_8h.html"];
-  Node70 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node66 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node74 [label="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_metric_recorder_interface_8h.html"];
 }

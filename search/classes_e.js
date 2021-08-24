@@ -25,5 +25,6 @@ var searchData=
   ['optional_3c_20int_20_3e',['Optional&lt; int &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20sdkinterfaces_3a_3alocaleassetsmanagerinterface_3a_3alocale_20_3e',['Optional&lt; sdkInterfaces::LocaleAssetsManagerInterface::Locale &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
   ['optional_3c_20std_3a_3astring_20_3e',['Optional&lt; std::string &gt;',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html',1,'alexaClientSDK::avsCommon::utils']]],
+  ['optionalimport',['OptionalImport',['../structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_optional_import.html',1,'alexaClientSDK::acsdkManufactory']]],
   ['opusencodercontext',['OpusEncoderContext',['../classalexa_client_s_d_k_1_1speechencoder_1_1_opus_encoder_context.html',1,'alexaClientSDK::speechencoder']]]
 ];

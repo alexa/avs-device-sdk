@@ -148,13 +148,13 @@ digraph "/workplace/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExterna
   Node122 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node122 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node122 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node56 -> Node154 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node154 [label="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_media_player_interface_8h.html"];
-  Node154 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node154 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node155 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node155 [label="AVSCommon/Utils/MediaPlayer\l/MediaPlayerInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_media_player_interface_8h.html"];
+  Node155 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node155 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node56 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node56 -> Node209 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node209 [label="acsdkExternalMediaPlayer\l/StaticExternalMediaPlayerAdapter\lHandler.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_static_external_media_player_adapter_handler_8h.html"];
-  Node209 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node209 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node212 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node212 [label="acsdkExternalMediaPlayer\l/StaticExternalMediaPlayerAdapter\lHandler.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_static_external_media_player_adapter_handler_8h.html"];
+  Node212 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node212 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,11 +72,10 @@ $(function() {
 , <a class="el" href="namespacealexa_client_s_d_k_1_1speechencoder.html#a42c35c6e4fc3220d068dfbfffeacba1f">alexaClientSDK::speechencoder</a>
 </li>
 <li>SAMPLE_RATE_HZ
-: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_preview_alexa_client.html#a92df64bb8d73ee55e804bc2988a8a1a5">alexaClientSDK::acsdkPreviewAlexaClient</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_input_stream.html#abe41ab4925310319d01b4523f8c8575c">alexaClientSDK::acsdkAudioInputStream</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test.html#aa3e40944f5694d96e1f7e422f4085719">alexaClientSDK::applicationUtilities::androidUtilities::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test.html#a6db4bd70d2c0da0c05dd79717abec91e">alexaClientSDK::capabilityAgents::aip::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#acceb0be2a04db5d05b0e79f466451fc3">alexaClientSDK::mediaPlayer::android</a>
-, <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#af3c9cdecad3d78e57a93020fe6fd5b15">alexaClientSDK::sampleApp</a>
 </li>
 <li>SAMPLE_RATE_OFFSET
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a58249b5a4db7bb897f5932a638a2ae03">alexaClientSDK::avsCommon::utils</a>
@@ -139,6 +138,9 @@ $(function() {
 <li>SCHED_TIME
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a28a2d26efedd843fc8e99ad67483dd81">alexaClientSDK::acsdkAlerts::test</a>
 </li>
+<li>SCOPE_ALEXA_ALL
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#adf9720e6d74db46f92ade4ebc98fc9b5">alexaClientSDK::acsdkAuthorization::lwa</a>
+</li>
 <li>SCOPE_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a32e4029b34738363bd69dffff6612d7e">alexaClientSDK::capabilitiesDelegate::utils</a>
 </li>
@@ -147,6 +149,12 @@ $(function() {
 </li>
 <li>SCOPE_PARTITION_KEY_STRING
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0baad281738d474e41671960925f4ca9">alexaClientSDK::avsCommon::avs</a>
+</li>
+<li>SCOPE_PROFILE
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#ab27d64e39a2295ec24b1fe8404214978">alexaClientSDK::acsdkAuthorization::lwa</a>
+</li>
+<li>SCOPE_PROFILE_USER_ID
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a069384de10edd5a35e21bae0d8417515">alexaClientSDK::acsdkAuthorization::lwa</a>
 </li>
 <li>SCOPE_TOKEN_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capabilities_delegate_1_1utils.html#a60b737a443a23fe4e3613b59908ba88a">alexaClientSDK::capabilitiesDelegate::utils</a>
@@ -374,7 +382,7 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_device_settings_manager.html#abf1baf663ffe58b0b78942888deb601e">alexaClientSDK::acsdkDeviceSettingsManager</a>
 </li>
 <li>SETTINGS_DEFAULT_SETTINGS_ROOT_KEY
-: <a class="el" href="namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#aebc48e61e4e8a6b3a37069272f975cb9">alexaClientSDK::authorization::cblAuthDelegate</a>
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a93a1cd14b7c8829b3523d36db357798b">alexaClientSDK::acsdkAuthorization::lwa</a>
 </li>
 <li>SETTINGS_MESSAGE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1sample_app.html#a7c997795106a5eaa91685e52fc86b4ed">alexaClientSDK::sampleApp</a>
@@ -564,6 +572,9 @@ $(function() {
 </li>
 <li>STABILITY_CHECK_ITERATIONS
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_equalizer_1_1test.html#a582b6d82f544f26c15a4ae9111c4c3af">alexaClientSDK::acsdkEqualizer::test</a>
+</li>
+<li>START_EVENT_SENT_TO_CLOUD
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acl.html#a6595ee05050a56c26b89d168bf09325b">alexaClientSDK::acl</a>
 </li>
 <li>START_INDEX_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a90336aeeac4edbe1bde7273b885bf610">alexaClientSDK::capabilityAgents::aip</a>
@@ -798,7 +809,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

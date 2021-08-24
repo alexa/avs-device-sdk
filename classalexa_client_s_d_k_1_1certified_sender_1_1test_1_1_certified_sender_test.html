@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a71fae2d38ca539739d61172739d1e95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a988076ad2ffa1503eda1b53df018ca11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#a988076ad2ffa1503eda1b53df018ca11">TearDown</a> () override</td></tr>
 <tr class="separator:a988076ad2ffa1503eda1b53df018ca11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9abdf3211540e866b662d040740e5247"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#a9abdf3211540e866b662d040740e5247">testNotRetryable</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a> status)</td></tr>
+<tr class="separator:a9abdf3211540e866b662d040740e5247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc0d546082fb43ed8bae33ca92d1373d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html#adc0d546082fb43ed8bae33ca92d1373d">testRetryable</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a> status)</td></tr>
+<tr class="separator:adc0d546082fb43ed8bae33ca92d1373d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -160,6 +164,76 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9abdf3211540e866b662d040740e5247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9abdf3211540e866b662d040740e5247">&#9670;&nbsp;</a></span>testNotRetryable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::certifiedSender::test::CertifiedSenderTest::testNotRetryable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a>&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to test that messages that receive a non-retryable status response are not retried. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>The (non-retryable) status. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the test succeeded. </dd></dl>
+<p>wait for requests to get sent out. </p>
+
+</div>
+</div>
+<a id="adc0d546082fb43ed8bae33ca92d1373d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc0d546082fb43ed8bae33ca92d1373d">&#9670;&nbsp;</a></span>testRetryable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::certifiedSender::test::CertifiedSenderTest::testRetryable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a29e40517f71dfc83e3159a8f0f489d7b">MessageRequestObserverInterface::Status</a>&#160;</td>
+          <td class="paramname"><em>status</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Utility function to test that messages that receive a retryable status response are retried.</p>
+<dl class="section note"><dt>Note</dt><dd>A long timeout must be used because the first retry will happen only 10s after the first attempt. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>The (retryable) status. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the test succeeded. </dd></dl>
+<p>wait for requests to get sent out. </p>
 
 </div>
 </div>
@@ -290,7 +364,7 @@ Protected Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

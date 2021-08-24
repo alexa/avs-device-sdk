@@ -142,6 +142,8 @@ digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/PeripheralEndpoin
   Node45 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node45 -> Node46 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node46 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node46 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node46 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node46 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node46 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

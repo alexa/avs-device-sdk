@@ -13,9 +13,9 @@ digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetoothInterfac
   }
   dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000549_000017.html"];
-  dir_51151b4f914b95f599bec8a21269e6ad->dir_cbaa0c2bd1e08c672f344a40c1ff8458 [headlabel="1", labeldistance=1.5 headhref="dir_000272_000270.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000549.html"];
-  dir_cbaa0c2bd1e08c672f344a40c1ff8458->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000270_000549.html"];
-  dir_cbaa0c2bd1e08c672f344a40c1ff8458->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000270_000017.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000598_000017.html"];
+  dir_51151b4f914b95f599bec8a21269e6ad->dir_cbaa0c2bd1e08c672f344a40c1ff8458 [headlabel="1", labeldistance=1.5 headhref="dir_000290_000288.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000598.html"];
+  dir_cbaa0c2bd1e08c672f344a40c1ff8458->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000288_000598.html"];
+  dir_cbaa0c2bd1e08c672f344a40c1ff8458->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000288_000017.html"];
 }

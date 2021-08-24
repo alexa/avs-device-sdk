@@ -2,11 +2,11 @@ digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetooth/include
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node156 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BluetoothComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node156 -> Node157 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node157 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
-  Node156 -> Node158 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node158 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
-  Node156 -> Node159 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node159 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_component_8cpp.html"];
+  Node161 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BluetoothComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node161 -> Node162 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node162 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
+  Node161 -> Node163 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node163 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
+  Node161 -> Node164 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node164 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_component_8cpp.html"];
 }

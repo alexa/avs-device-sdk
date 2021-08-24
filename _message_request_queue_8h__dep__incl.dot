@@ -98,7 +98,6 @@ digraph "/workplace/avs-device-sdk/ACL/include/ACL/Transport/MessageRequestQueue
   Node84 [label="/workplace/avs-device\l-sdk/ACL/include/ACL\l/Transport/HTTP2TransportFactory.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_transport_factory_8h.html"];
   Node84 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 -> Node69 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node84 -> Node56 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 -> Node71 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 -> Node82 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 -> Node61 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

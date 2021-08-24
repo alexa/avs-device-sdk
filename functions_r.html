@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -99,7 +99,6 @@ $(function() {
 <li>readAudioFromFile()
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html#a0cc91995cb21e6a71e3a61c03453a0be">alexaClientSDK::integration::test::AlertsTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_player_test.html#a76f94e3b7c13102ddc2d04089c3fd4f1">alexaClientSDK::integration::test::AudioPlayerTest</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_kitt_ai_key_word_test.html#a1124f95648a286558e9bde07a77e6573">alexaClientSDK::kwd::test::KittAiKeyWordTest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_sensory_keyword_test.html#afd4ee60e1d7d7da3208c85a40f1e69a6">alexaClientSDK::kwd::test::SensoryKeywordTest</a>
 </li>
 <li>readChannelConfiguration()
@@ -297,7 +296,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#aad88ae7235470c6ef085e30eb7684239">alexaClientSDK::defaultClient::DefaultClient</a>
 </li>
 <li>removeAuthObserver()
-: <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html#ad9c4e36ecd1310564e2bcb0950e52b52">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthDelegate</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager.html#af82d87bc997453b6a79119a90cbe5b1f">alexaClientSDK::acsdkAuthorization::AuthorizationManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html#ad9c4e36ecd1310564e2bcb0950e52b52">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthDelegate</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html#acba7bf24a550d8009a0d9adbb72955b0">alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface</a>
 </li>
 <li>removeBluetoothDeviceObserver()
@@ -353,6 +353,9 @@ $(function() {
 <li>removeDiscoveryStatusObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender.html#a20aedb23f7c08b4ab688662f34dc02d8">alexaClientSDK::capabilitiesDelegate::DiscoveryEventSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender_interface.html#a050166179db45eab787387d1b7a82404">alexaClientSDK::capabilitiesDelegate::DiscoveryEventSenderInterface</a>
+</li>
+<li>removeDtmfObserver()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html#abc57bb30d772eff96a7fbff2be12c2db">alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface</a>
 </li>
 <li>removeEndpointRegistrationManagerObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_default_client.html#ad202c47a9892d6f1d3aaeb53f0df72a5">alexaClientSDK::defaultClient::DefaultClient</a>
@@ -529,13 +532,15 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_adapter_handler.html#a38208330546690fcb9f7aa24c632d8cb">alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaAdapterHandler</a>
 </li>
 <li>reportMockPlayers()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#ac2c2fcf53e00b0435f0cd2023e73169b">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#ad509cb881860df29573ffedfa04d59c3">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
 </li>
 <li>reportResponseCode()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_request.html#a98c794fe8b0c3d81d6ffa301d8878298">alexaClientSDK::avsCommon::utils::libcurlUtils::LibcurlHTTP2Request</a>
 </li>
 <li>reportStateChange()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#ae61f21ad0e8c5fe911d8080aaac69284">alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager.html#ad7dba008e8d704a0c65ce630ac904c83">alexaClientSDK::acsdkAuthorization::AuthorizationManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_manager_interface.html#a4b26445d7393ae4e46069a9e4aae4572">alexaClientSDK::acsdkAuthorizationInterfaces::AuthorizationManagerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html#ae61f21ad0e8c5fe911d8080aaac69284">alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html#a42fcc86a48079d837d0c29696ab140eb">alexaClientSDK::contextManager::ContextManager</a>
 </li>
 <li>request
@@ -561,6 +566,12 @@ $(function() {
 <li>REQUIRED
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_abstract_recipe.html#a29efa1c299b1df9f87edbcba08a19cc3a5ae6c927bfc2afc8e17e971916153841">alexaClientSDK::acsdkManufactory::internal::AbstractRecipe</a>
 </li>
+<li>required
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1type.html#a0b26238f049bccf160867fe6d1d0d75b">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::type</a>
+</li>
+<li>RequiredImports
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports.html#aa00755799e755918e84575e6cc0a17e3">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;</a>
+</li>
 <li>requiresFullyRead()
 : <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_encoder_context.html#aeafe28f79ddfadf0bc40c68c3c454c0d">alexaClientSDK::speechencoder::EncoderContext</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_opus_encoder_context.html#a1e5c6d91cf1769d25dab7f4a05318539">alexaClientSDK::speechencoder::OpusEncoderContext</a>
@@ -580,6 +591,8 @@ $(function() {
 <li>reset()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_message_router_observer.html#aea896ac9caa6a40a9567f1ee1fafe947">alexaClientSDK::acl::transport::test::MockMessageRouterObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a0c71f076a29e11c65c57d2bfa8c6173c">alexaClientSDK::acsdkAlerts::Alert</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_adapter.html#a08584de4f6a0c51617c97c1144eac9e4">alexaClientSDK::acsdkAuthorization::lwa::LWAAuthorizationAdapter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_adapter_interface.html#a03288e6f31008b7f2f0dacd22946263d">alexaClientSDK::acsdkAuthorizationInterfaces::AuthorizationAdapterInterface</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html#a9edd73d50f9ea4ada3c223b14c68dd1b">alexaClientSDK::acsdkManufactory::Annotated&lt; Annotation, Type &gt;</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_s_d_k_primitives_provider.html#af799b9531054ecd5590f0553cad49810">alexaClientSDK::avsCommon::avs::initialization::SDKPrimitivesProvider</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#acd7a5620cab205fed83b29d51fcddef5">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
@@ -739,7 +752,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_transport_defines.html#a601fde894452853b71f066e9d350e1e7">alexaClientSDK::acl::TransportDefines</a>
 </li>
 <li>RetryTimer()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#a85a25778f3fc95ec6710ea21199258a3">alexaClientSDK::avsCommon::utils::RetryTimer</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_retry_timer.html#a7b467ac3f236cc4183f047861aed12f6">alexaClientSDK::avsCommon::utils::RetryTimer</a>
 </li>
 <li>RevertChangeFunction
 : <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1_setting_protocol_interface.html#a0fa0729b0ab81f0a7500777b0015c378">alexaClientSDK::settings::SettingProtocolInterface</a>
@@ -767,9 +780,6 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_sample_application.html#af3c1ba5d29a88d3439fa1d70c5467e31">alexaClientSDK::sampleApp::SampleApplication</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_user_input_manager.html#a78419bff185de02cbd3fcf3d6f1bb2a2">alexaClientSDK::sampleApp::UserInputManager</a>
 </li>
-<li>RunDetection()
-: <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_snowboy_wrapper.html#ae4386bdd8b405fa4f962bdcebff67702">alexaClientSDK::kwd::SnowboyWrapper</a>
-</li>
 <li>RuntimeManufactory()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_runtime_manufactory.html#af56ecadef018a4d3faa4d70685b969f6">alexaClientSDK::acsdkManufactory::internal::RuntimeManufactory</a>
 </li>
@@ -778,7 +788,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

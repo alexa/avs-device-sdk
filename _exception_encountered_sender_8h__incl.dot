@@ -90,6 +90,8 @@ digraph "/workplace/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Exception
   Node30 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node30 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 [label="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_resource_manager_interface_8h.html"];
+  Node31 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="bitset",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node31 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

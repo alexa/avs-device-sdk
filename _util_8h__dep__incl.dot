@@ -1,0 +1,10 @@
+digraph "/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/include/acsdkAudioPlayer/Util.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node2 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/Util.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/src/AudioPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_8cpp.html"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/src/Util.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_util_8cpp.html"];
+}

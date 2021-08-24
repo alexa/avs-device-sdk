@@ -2,13 +2,13 @@ digraph "/workplace/avs-device-sdk/Integration/include/Integration/TestSpeechSyn
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node46 [label="/workplace/avs-device\l-sdk/Integration/include\l/Integration/TestSpeechSynthesizer\lObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node46 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 [label="/workplace/avs-device\l-sdk/Integration/src\l/TestSpeechSynthesizerObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_test_speech_synthesizer_observer_8cpp.html"];
-  Node46 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 [label="/workplace/avs-device\l-sdk/Integration/test\l/AlertsIntegrationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_integration_test_8cpp.html"];
-  Node46 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node49 [label="/workplace/avs-device\l-sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_integration_test_8cpp.html"];
-  Node46 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node50 [label="/workplace/avs-device\l-sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speech_synthesizer_integration_test_8cpp.html"];
+  Node48 [label="/workplace/avs-device\l-sdk/Integration/include\l/Integration/TestSpeechSynthesizer\lObserver.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node48 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="/workplace/avs-device\l-sdk/Integration/src\l/TestSpeechSynthesizerObserver.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_test_speech_synthesizer_observer_8cpp.html"];
+  Node48 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="/workplace/avs-device\l-sdk/Integration/test\l/AlertsIntegrationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_integration_test_8cpp.html"];
+  Node48 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="/workplace/avs-device\l-sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_integration_test_8cpp.html"];
+  Node48 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="/workplace/avs-device\l-sdk/Integration/test\l/SpeechSynthesizerIntegration\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speech_synthesizer_integration_test_8cpp.html"];
 }

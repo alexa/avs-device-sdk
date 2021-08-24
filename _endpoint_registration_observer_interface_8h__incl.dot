@@ -75,5 +75,13 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDK
   Node10 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 [label="AVSCommon/Utils/Logger\l/SinkObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sink_observer_interface_8h.html"];
   Node28 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="AVSCommon/AVS/Capability\lConfiguration.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_capability_configuration_8h.html"];
+  Node29 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node29 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

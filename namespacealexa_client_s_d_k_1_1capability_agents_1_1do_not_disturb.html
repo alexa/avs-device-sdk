@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -96,6 +96,9 @@ Functions</h2></td></tr>
 <tr class="separator:a63f96f9c55d26f4fd1a42c4a1f516cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a012ec8b8741cb3038b46aae4af2562d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a012ec8b8741cb3038b46aae4af2562d3">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;eventName, const std::string &amp;settingsKey, uint64_t count)</td></tr>
 <tr class="separator:a012ec8b8741cb3038b46aae4af2562d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a882fd8b16c5de36ded225f4bfff4bab3"><td class="memItemLeft" align="right" valign="top">static const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a882fd8b16c5de36ded225f4bfff4bab3">HTTP_RESPONSE_TIMEOUT</a> (15)</td></tr>
+<tr class="memdesc:a882fd8b16c5de36ded225f4bfff4bab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A timeout for an HTTP response when sending change events.  <a href="#a882fd8b16c5de36ded225f4bfff4bab3">More...</a><br /></td></tr>
+<tr class="separator:a882fd8b16c5de36ded225f4bfff4bab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bd2df54b5fa192d585e5e2801a45fcd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1do_not_disturb.html#a9bd2df54b5fa192d585e5e2801a45fcd">parseDirectivePayload</a> (const std::string &amp;payload, Document *document)</td></tr>
 <tr class="separator:a9bd2df54b5fa192d585e5e2801a45fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -151,6 +154,34 @@ Variables</h2></td></tr>
 <tr class="separator:acaa58028eb21b7c2678788a719390e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a882fd8b16c5de36ded225f4bfff4bab3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a882fd8b16c5de36ded225f4bfff4bab3">&#9670;&nbsp;</a></span>HTTP_RESPONSE_TIMEOUT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::chrono::seconds alexaClientSDK::capabilityAgents::doNotDisturb::HTTP_RESPONSE_TIMEOUT </td>
+          <td>(</td>
+          <td class="paramtype">15&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A timeout for an HTTP response when sending change events. </p>
+
+</div>
+</div>
 <a id="a9bd2df54b5fa192d585e5e2801a45fcd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9bd2df54b5fa192d585e5e2801a45fcd">&#9670;&nbsp;</a></span>parseDirectivePayload()</h2>
 
@@ -670,7 +701,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

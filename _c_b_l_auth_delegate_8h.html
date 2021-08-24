@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -86,7 +86,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_device_info_8h_source.html">AVSCommon/Utils/DeviceInfo.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_retry_timer_8h_source.html">AVSCommon/Utils/RetryTimer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_customer_data_handler_8h_source.html">RegistrationManager/CustomerDataHandler.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_c_b_l_auth_delegate_configuration_8h_source.html">CBLAuthDelegate/CBLAuthDelegateConfiguration.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_l_w_a_authorization_configuration_8h_source.html">acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_c_b_l_auth_delegate_storage_interface_8h_source.html">CBLAuthDelegate/CBLAuthDelegateStorageInterface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_c_b_l_auth_requester_interface_8h_source.html">CBLAuthDelegate/CBLAuthRequesterInterface.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -94,20 +94,6 @@ Include dependency graph for CBLAuthDelegate.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_c_b_l_auth_delegate_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_c_b_l_auth_delegate_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_c_b_l_auth_delegate_8h" id="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_c_b_l_auth_delegate_8h">
-<area shape="rect" id="node9" href="_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1157,124,1349,165"/>
-<area shape="rect" id="node10" href="_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="509,213,701,255"/>
-<area shape="rect" id="node12" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="776,213,991,255"/>
-<area shape="rect" id="node18" href="_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="255,124,458,165"/>
-<area shape="rect" id="node21" href="_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1375,131,1586,158"/>
-<area shape="rect" id="node23" href="_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="42,221,255,247"/>
-<area shape="rect" id="node24" href="_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2025,124,2192,165"/>
-<area shape="rect" id="node27" href="_c_b_l_auth_delegate_configuration_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lConfiguration.h" alt="" coords="844,124,1080,165"/>
-<area shape="rect" id="node28" href="_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="1796,213,2032,255"/>
-<area shape="rect" id="node29" href="_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="2107,213,2351,255"/>
-<area shape="rect" id="node20" href="_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1168,221,1295,247"/>
-<area shape="rect" id="node22" href="_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1522,213,1722,255"/>
-<area shape="rect" id="node25" href="_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="2353,303,2571,344"/>
-<area shape="rect" id="node26" href="_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="2425,213,2648,255"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -115,13 +101,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_c_b_l_auth_delegate_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_c_b_l_auth_delegate_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_c_b_l_auth_delegate_8hdep" id="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_c_b_l_auth_delegate_8hdep">
-<area shape="rect" id="node2" href="_authorization_delegate_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCBLAuthorization\lDelegate/src/AuthorizationDelegateComponent.cpp" alt="" coords="5,131,325,187"/>
-<area shape="rect" id="node3" href="_default_sample_application_options_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/src\l/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="350,124,663,195"/>
-<area shape="rect" id="node4" href="_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="688,131,840,187"/>
-<area shape="rect" id="node5" href="_auth_delegate_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/AuthDelegateTestContext.cpp" alt="" coords="864,131,1067,187"/>
-<area shape="rect" id="node6" href="_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="1091,131,1330,187"/>
-<area shape="rect" id="node7" href="_c_b_l_auth_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/src/CBLAuthDelegate.cpp" alt="" coords="1354,131,1641,187"/>
-<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1665,139,1943,180"/>
 </map>
 </div>
 </div>
@@ -146,7 +125,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

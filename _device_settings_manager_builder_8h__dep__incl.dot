@@ -2,9 +2,9 @@ digraph "/workplace/avs-device-sdk/applications/acsdkDefaultDeviceSettingsManage
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node152 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lDeviceSettingsManager/include\l/acsdkDeviceSettingsManager/DeviceSettings\lManagerBuilder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node152 -> Node153 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node153 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_settings_manager_builder_8cpp.html"];
-  Node152 -> Node154 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node154 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_settings_manager_component_8cpp.html"];
+  Node159 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lDeviceSettingsManager/include\l/acsdkDeviceSettingsManager/DeviceSettings\lManagerBuilder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node159 -> Node160 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node160 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_settings_manager_builder_8cpp.html"];
+  Node159 -> Node161 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node161 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lDeviceSettingsManager/src\l/DeviceSettingsManagerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_settings_manager_component_8cpp.html"];
 }

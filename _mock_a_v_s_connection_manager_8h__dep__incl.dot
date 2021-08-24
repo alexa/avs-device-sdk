@@ -18,7 +18,7 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInt
   Node27 -> Node29 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node29 [label="/workplace/avs-device\l-sdk/CertifiedSender\l/test/Common/MockCertifiedSender.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mock_certified_sender_8cpp.html"];
   Node22 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node30 [label="/workplace/avs-device\l-sdk/RegistrationManager\l/test/RegistrationManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_registration_manager_test_8cpp.html"];
+  Node30 [label="/workplace/avs-device\l-sdk/core/acsdkRegistration\lManager/test/RegistrationManager\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_registration_manager_test_8cpp.html"];
   Node22 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 [label="/workplace/avs-device\l-sdk/Settings/test/SettingEvent\lSenderTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_setting_event_sender_test_8cpp.html"];
   Node22 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -36,8 +36,8 @@ var searchData=
   ['captiontimingadapterinterface',['CaptionTimingAdapterInterface',['../classalexa_client_s_d_k_1_1captions_1_1_caption_timing_adapter_interface.html',1,'alexaClientSDK::captions']]],
   ['captiontimingadaptertest',['CaptionTimingAdapterTest',['../classalexa_client_s_d_k_1_1captions_1_1test_1_1_caption_timing_adapter_test.html',1,'alexaClientSDK::captions::test']]],
   ['cblauthdelegate',['CBLAuthDelegate',['../classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
-  ['cblauthdelegateconfiguration',['CBLAuthDelegateConfiguration',['../classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate_configuration.html',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
   ['cblauthdelegatestorageinterface',['CBLAuthDelegateStorageInterface',['../classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate_storage_interface.html',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
+  ['cblauthorizationobserverinterface',['CBLAuthorizationObserverInterface',['../classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_c_b_l_authorization_observer_interface.html',1,'alexaClientSDK::acsdkAuthorizationInterfaces::lwa']]],
   ['cblauthrequesterinterface',['CBLAuthRequesterInterface',['../classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html',1,'alexaClientSDK::authorization::cblAuthDelegate']]],
   ['certifiedsender',['CertifiedSender',['../classalexa_client_s_d_k_1_1certified_sender_1_1_certified_sender.html',1,'alexaClientSDK::certifiedSender']]],
   ['certifiedsendertest',['CertifiedSenderTest',['../classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_certified_sender_test.html',1,'alexaClientSDK::certifiedSender::test']]],
@@ -54,6 +54,7 @@ var searchData=
   ['cloudcontrolledsettingprotocol',['CloudControlledSettingProtocol',['../classalexa_client_s_d_k_1_1settings_1_1_cloud_controlled_setting_protocol.html',1,'alexaClientSDK::settings']]],
   ['communicationsaudiofactory',['CommunicationsAudioFactory',['../classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_communications_audio_factory.html',1,'alexaClientSDK::applicationUtilities::resources::audio']]],
   ['communicationsaudiofactoryinterface',['CommunicationsAudioFactoryInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_communications_audio_factory_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::audio']]],
+  ['compatibleaudioformat',['CompatibleAudioFormat',['../classalexa_client_s_d_k_1_1acsdk_audio_input_stream_1_1_compatible_audio_format.html',1,'alexaClientSDK::acsdkAudioInputStream']]],
   ['component',['Component',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component.html',1,'alexaClientSDK::acsdkManufactory']]],
   ['componentaccumulator',['ComponentAccumulator',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html',1,'alexaClientSDK::acsdkManufactory']]],
   ['componentconfiguration',['ComponentConfiguration',['../structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_component_configuration.html',1,'alexaClientSDK::avsCommon::avs']]],
@@ -96,5 +97,6 @@ var searchData=
   ['customerdatamanager',['CustomerDataManager',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html',1,'alexaClientSDK::registrationManager']]],
   ['customerdatamanagerfactory',['CustomerDataManagerFactory',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_factory.html',1,'alexaClientSDK::registrationManager']]],
   ['customerdatamanagerinterface',['CustomerDataManagerInterface',['../classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_interface.html',1,'alexaClientSDK::registrationManager']]],
-  ['customerdatamanagertest',['CustomerDataManagerTest',['../classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_customer_data_manager_test.html',1,'alexaClientSDK::registrationManager::test']]]
+  ['customerdatamanagertest',['CustomerDataManagerTest',['../classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_customer_data_manager_test.html',1,'alexaClientSDK::registrationManager::test']]],
+  ['customerprofile',['CustomerProfile',['../structalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_c_b_l_authorization_observ6de810847ef3e79d54420bea29b48823.html',1,'alexaClientSDK::acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface']]]
 ];

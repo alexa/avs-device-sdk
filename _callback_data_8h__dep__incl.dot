@@ -7,4 +7,6 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Libcu
   Node4 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/CallbackData.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_callback_data_8cpp.html"];
   Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/LibcurlUtils/HttpPut.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_http_put_8cpp.html"];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/src\l/LWA/LWAAuthorizationAdapter.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_8cpp.html"];
 }

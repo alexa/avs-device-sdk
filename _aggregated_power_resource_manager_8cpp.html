@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,24 +74,14 @@ $(function() {
 <div class="title">AggregatedPowerResourceManager.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="_aggregated_power_resource_manager_8h_source.html">AVSCommon/Utils/Power/AggregatedPowerResourceManager.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;<a class="el" href="_aggregated_power_resource_manager_8h_source.html">AVSCommon/Utils/Power/AggregatedPowerResourceManager.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AggregatedPowerResourceManager.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="_aggregated_power_resource_manager_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_power_2_aggregated_power_resource_manager_8cpp" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_power_2_aggregated_power_resource_manager_8cpp" id="_2workplace_2avs-device-sdk_2_a_v_s_common_2_utils_2src_2_power_2_aggregated_power_resource_manager_8cpp">
-<area shape="rect" id="node2" href="_aggregated_power_resource_manager_8h.html" title="AVSCommon/Utils/Power\l/AggregatedPowerResourceManager.h" alt="" coords="393,213,640,255"/>
-<area shape="rect" id="node15" href="_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1126,124,1302,165"/>
-<area shape="rect" id="node7" href="hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="5,303,199,344"/>
-<area shape="rect" id="node11" href="_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="325,303,556,344"/>
-<area shape="rect" id="node19" href="_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1511,303,1725,344"/>
-<area shape="rect" id="node24" href="_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1259,303,1435,344"/>
-<area shape="rect" id="node25" href="_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="865,213,1041,255"/>
-<area shape="rect" id="node30" href="_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1252,213,1445,255"/>
-<area shape="rect" id="node31" href="_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="665,213,841,255"/>
-<area shape="rect" id="node27" href="_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="867,303,1043,344"/>
-<area shape="rect" id="node28" href="_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="875,392,1051,433"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -123,6 +113,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a3711d306ba2e6e39335b475756c59dd3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1power.html#a3711d306ba2e6e39335b475756c59dd3">alexaClientSDK::avsCommon::utils::power::PREFIX</a> = &quot;ACSDK_&quot;</td></tr>
 <tr class="memdesc:a3711d306ba2e6e39335b475756c59dd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prefix to uniquely identify the resource.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1power.html#a3711d306ba2e6e39335b475756c59dd3">More...</a><br /></td></tr>
 <tr class="separator:a3711d306ba2e6e39335b475756c59dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0708af5972ac1778f87ee2d4165788c6"><td class="memItemLeft" align="right" valign="top">static const std::chrono::minutes&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1power.html#a0708af5972ac1778f87ee2d4165788c6">alexaClientSDK::avsCommon::utils::power::LOG_INTERVAL</a> {10}</td></tr>
+<tr class="memdesc:a0708af5972ac1778f87ee2d4165788c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The timeout to use for logging active power resources.  <a href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1power.html#a0708af5972ac1778f87ee2d4165788c6">More...</a><br /></td></tr>
+<tr class="separator:a0708af5972ac1778f87ee2d4165788c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -154,7 +147,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

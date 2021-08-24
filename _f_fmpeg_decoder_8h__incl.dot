@@ -43,4 +43,8 @@ digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/An
   Node18 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node17 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="AVSCommon/Utils/MediaPlayer\l/MediaDescription.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_media_description_8h.html"];
+  Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

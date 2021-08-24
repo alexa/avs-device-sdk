@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,10 +81,6 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::AlexaInterface
 <div class="dyncontent">
 <div class="center"><img src="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface__inherit__graph.png" border="0" usemap="#alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface_inherit__map" id="alexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface_inherit__map">
-<area shape="rect" id="node2" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_alexa_interface_message_sender.html" title="Mock class that implements the AlexaInterfaceResponseSender. " alt="" coords="262,5,494,61"/>
-<area shape="rect" id="node3" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender_internal_interface.html" title="alexaClientSDK::capability\lAgents::alexa::AlexaInterfaceMessage\lSenderInternalInterface" alt="" coords="255,85,501,141"/>
-<area shape="rect" id="node4" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html" title="alexaClientSDK::capability\lAgents::alexa::AlexaInterfaceMessage\lSender" alt="" coords="549,45,796,101"/>
-<area shape="rect" id="node5" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html" title="A mock MockAlexaInterfaceMessageSenderInternal. " alt="" coords="567,125,778,181"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -128,8 +124,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a228df410007405f003ce1e36f6bfe6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac72fc1400e8c2c99f304ee1af0c92fe0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html#ac72fc1400e8c2c99f304ee1af0c92fe0">sendResponseEvent</a> (const std::string &amp;instance, const std::string &amp;correlationToken, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">avsCommon::avs::AVSMessageEndpoint</a> &amp;endpoint, const std::string &amp;jsonPayload=&quot;{}&quot;)=0</td></tr>
 <tr class="separator:ac72fc1400e8c2c99f304ee1af0c92fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b4d0e8089b3ef342ac3da0e7cc9ab6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html#a25b4d0e8089b3ef342ac3da0e7cc9ab6">sendResponseEvent</a> (const std::string &amp;instance, const std::string &amp;correlationToken, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">avsCommon::avs::AVSMessageEndpoint</a> &amp;endpoint, const std::string &amp;responseNamespace, const std::string &amp;responseName, const std::string &amp;jsonPayload=&quot;{}&quot;)=0</td></tr>
+<tr class="separator:a25b4d0e8089b3ef342ac3da0e7cc9ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fba06f601827acbe08025a8a904e863"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html#a6fba06f601827acbe08025a8a904e863">sendErrorResponseEvent</a> (const std::string &amp;instance, const std::string &amp;correlationToken, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">avsCommon::avs::AVSMessageEndpoint</a> &amp;endpoint, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html#aa680618f321bc4787b908d6d30e98b39">ErrorResponseType</a> errorType, const std::string &amp;errorMessage=&quot;&quot;)=0</td></tr>
 <tr class="separator:a6fba06f601827acbe08025a8a904e863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac20e144f65a684c3e4c782592e33e6bc"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html#ac20e144f65a684c3e4c782592e33e6bc">sendErrorResponseEvent</a> (const std::string &amp;instance, const std::string &amp;correlationToken, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">avsCommon::avs::AVSMessageEndpoint</a> &amp;endpoint, const std::string &amp;responseNamespace, const std::string &amp;jsonPayload=&quot;{}&quot;)=0</td></tr>
+<tr class="separator:ac20e144f65a684c3e4c782592e33e6bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37503109f076ee053a860a6fc4ecd3f4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_alexa_interface_message_sender_interface.html#a37503109f076ee053a860a6fc4ecd3f4">sendDeferredResponseEvent</a> (const std::string &amp;instance, const std::string &amp;correlationToken, const int estimatedDeferralInSeconds=0)=0</td></tr>
 <tr class="separator:a37503109f076ee053a860a6fc4ecd3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -326,7 +326,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6fba06f601827acbe08025a8a904e863"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fba06f601827acbe08025a8a904e863">&#9670;&nbsp;</a></span>sendErrorResponseEvent()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fba06f601827acbe08025a8a904e863">&#9670;&nbsp;</a></span>sendErrorResponseEvent() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -387,14 +387,82 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if the message was sent successfully, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the message was enqueued successfully, false otherwise. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#a619e5827fde7851e5667ab295e47a9c6">alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender</a>.</p>
 
 </div>
 </div>
+<a id="ac20e144f65a684c3e4c782592e33e6bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac20e144f65a684c3e4c782592e33e6bc">&#9670;&nbsp;</a></span>sendErrorResponseEvent() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::sdkInterfaces::AlexaInterfaceMessageSenderInterface::sendErrorResponseEvent </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>correlationToken</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">avsCommon::avs::AVSMessageEndpoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>endpoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>responseNamespace</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>jsonPayload</em> = <code>&quot;{}&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send an error response event for namespace and name. The message is enqueued for sending and this method returns immediately (non-blocking).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>The instance ID of the responding capability. </td></tr>
+    <tr><td class="paramname">correlationToken</td><td>The correlation token from the directive to which we are responding. </td></tr>
+    <tr><td class="paramname">endpoint</td><td>The <code>AVSMessageEndpoint</code> to identify the endpoint related to this event. </td></tr>
+    <tr><td class="paramname">responseNamespace</td><td>a string containing the namespace for this response. </td></tr>
+    <tr><td class="paramname">jsonPayload</td><td>a payload containing the error type and message (optional). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the message was enqueued successfully, false otherwise. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#afc4945164cce3cc9a881b1bf3d523761">alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender</a>.</p>
+
+</div>
+</div>
 <a id="ac72fc1400e8c2c99f304ee1af0c92fe0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac72fc1400e8c2c99f304ee1af0c92fe0">&#9670;&nbsp;</a></span>sendResponseEvent()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac72fc1400e8c2c99f304ee1af0c92fe0">&#9670;&nbsp;</a></span>sendResponseEvent() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -454,6 +522,81 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a25b4d0e8089b3ef342ac3da0e7cc9ab6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25b4d0e8089b3ef342ac3da0e7cc9ab6">&#9670;&nbsp;</a></span>sendResponseEvent() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool alexaClientSDK::avsCommon::sdkInterfaces::AlexaInterfaceMessageSenderInterface::sendResponseEvent </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>correlationToken</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_message_endpoint.html">avsCommon::avs::AVSMessageEndpoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>endpoint</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>responseNamespace</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>responseName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>jsonPayload</em> = <code>&quot;{}&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Send an Response event. Since these events require context, the event will be enqueued and this method will return immediately (non-blocking). The message will be sent once context has been received from ContextManager.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>The instance ID of the responding capability. </td></tr>
+    <tr><td class="paramname">correlationToken</td><td>The correlation token from the directive to which we are responding. </td></tr>
+    <tr><td class="paramname">endpoint</td><td>The <code>AVSMessageEndpoint</code> to identify the endpoint related to this event. </td></tr>
+    <tr><td class="paramname">responseNamespace</td><td>The namespace of response event </td></tr>
+    <tr><td class="paramname">responseName</td><td>The name of response event </td></tr>
+    <tr><td class="paramname">jsonPayload</td><td>a JSON string representing the payload for the response event (optional). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the event was successfuly enqueued, false on failure. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#a8b5a4e85552b4c4dc5524ac3a931ec26">alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_alexa_interface_message_sender_interface_8h_source.html">AlexaInterfaceMessageSenderInterface.h</a></li>
 </ul>
@@ -461,7 +604,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

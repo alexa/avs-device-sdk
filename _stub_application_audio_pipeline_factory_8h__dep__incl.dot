@@ -2,15 +2,15 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/DefaultClient/include/De
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node74 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/StubApplicationAudioPipelineFactory.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node74 -> Node75 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node75 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8h.html"];
+  Node75 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/StubApplicationAudioPipelineFactory.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node75 -> Node76 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node76 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_8cpp.html"];
+  Node76 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClientComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8h.html"];
+  Node76 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_8cpp.html"];
+  Node76 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
   Node75 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node77 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
-  Node74 -> Node76 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node74 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node74 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node78 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/StubApplication\lAudioPipelineFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_stub_application_audio_pipeline_factory_8cpp.html"];
+  Node75 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node75 -> Node79 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/StubApplication\lAudioPipelineFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_stub_application_audio_pipeline_factory_8cpp.html"];
 }

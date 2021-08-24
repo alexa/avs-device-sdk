@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,11 +67,11 @@ $(function() {
 <li>obfuscatePrivateData()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html#a442d26ae3adc1d2a5f87b22458a56e20">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>
 </li>
-<li>Object()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_object.html#a2395ec5463f682bcd256793259028d44">alexaClientSDK::avsCommon::utils::test::Object</a>
-</li>
 <li>object
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_object.html#a6dac2a06e5ec12ea2700f512aa1d0bc0">alexaClientSDK::avsCommon::utils::test::Object</a>
+</li>
+<li>Object()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_object.html#a2395ec5463f682bcd256793259028d44">alexaClientSDK::avsCommon::utils::test::Object</a>
 </li>
 <li>OBJECT_MANAGER_INTERFACE
 : <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_constants.html#aeef7f3f17e82ab6c26bc0462db98012a">alexaClientSDK::bluetoothImplementations::blueZ::BlueZConstants</a>
@@ -148,12 +148,20 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_test_event_processed_observer.html#af6d1cbe6897a5a2ab402618fd60e17ea">alexaClientSDK::capabilityAgents::alexa::test::TestEventProcessedObserver</a>
 </li>
 <li>onAuthFailure()
-: <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html#a633e5f9dd987fac530edf5fbb443ec3f">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthDelegate</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager.html#a235901b28290ce6a1b9afa7ebcf588c7">alexaClientSDK::acsdkAuthorization::AuthorizationManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_adapter.html#a015d54d18bceb06e7669c07dfd75ddee">alexaClientSDK::acsdkAuthorization::lwa::LWAAuthorizationAdapter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_adapter_interface.html#af88d88d0b14f10c0dccf0a07752c168a">alexaClientSDK::acsdkAuthorizationInterfaces::AuthorizationAdapterInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html#a633e5f9dd987fac530edf5fbb443ec3f">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthDelegate</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html#a593db990b9dffa41a6d101be30c1ed70">alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface</a>
+</li>
+<li>onAuthorizationManagerReady()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_adapter.html#ac205936234e8474d93598fe6f91fcec4">alexaClientSDK::acsdkAuthorization::lwa::LWAAuthorizationAdapter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_adapter_interface.html#aa511e306f34827881fb1fbe86e49103a">alexaClientSDK::acsdkAuthorizationInterfaces::AuthorizationAdapterInterface</a>
 </li>
 <li>onAuthStateChange()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#a501cc17c475e3c79be13b7c3c765fdf9">alexaClientSDK::acl::HTTP2Transport</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html#ab0acbdf84a21ccb348d1e71623add26f">alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1_auth_refreshed_observer.html#a9c0ab1ef53d14c33e9c0f11360594ca6">alexaClientSDK::avsGatewayManager::AuthRefreshedObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1_discovery_event_sender.html#aa3954aa4554eca7dfc07f351564c994d">alexaClientSDK::capabilitiesDelegate::DiscoveryEventSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html#ad646259de06f111922271da59a84f0ff">alexaClientSDK::diagnostics::DevicePropertyAggregator</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1_auth_observer.html#a0f3e9fa5e1a969df5a2719e3b1693632">alexaClientSDK::integration::AuthObserver</a>
@@ -216,7 +224,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_caption_presenter.html#a5d1152701850b17cae2b25458fdf0626">alexaClientSDK::sampleApp::CaptionPresenter</a>
 </li>
 <li>onCheckingForAuthorization()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_sample_application_c_b_l_auth_requester_1_1_sample_application_c_b_l_auth_requester.html#a4dc63322b9b3e2d8a40112cbd40c649c">alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_c_b_l_authorization_observer_interface.html#adbda1769d46a08e6def8ba020b146386">alexaClientSDK::acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_sample_application_c_b_l_auth_requester_1_1_sample_application_c_b_l_auth_requester.html#a4dc63322b9b3e2d8a40112cbd40c649c">alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html#afa92dc8d02d23f8ad158042d49f06646">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthRequesterInterface</a>
 </li>
 <li>onClearConfiguration()
@@ -267,6 +276,10 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#a8ef1295381fa72e73246ea6cd8ae41b9">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html#a6ffb90541aaf3a86424d096993c9d410">alexaClientSDK::diagnostics::DevicePropertyAggregator</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1synchronize_state_sender_1_1_post_connect_synchronize_state_sender.html#a9abcc300b99989352f9a1f886bf24690">alexaClientSDK::synchronizeStateSender::PostConnectSynchronizeStateSender</a>
+</li>
+<li>onCustomerProfileAvailable()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_c_b_l_authorization_observer_interface.html#a658ef8cc83af46cae7a5e1513a63ff1a">alexaClientSDK::acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_sample_application_c_b_l_auth_requester_1_1_sample_application_c_b_l_auth_requester.html#ae1d68da141afe769a5a8c70d5835ea64">alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester</a>
 </li>
 <li>onDeregistered()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html#aaf00278e2f78fb7b13e240929e17010a">alexaClientSDK::acsdkAlerts::AlertsCapabilityAgent</a>
@@ -323,6 +336,9 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_h_t_t_p2_transport.html#a9e0923ead250dfea05711a0cc32bf8c7">alexaClientSDK::acl::HTTP2Transport</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_exchange_handler_context.html#afcb2f890d6b6fffd243f95d929f146a8">alexaClientSDK::acl::transport::test::MockExchangeHandlerContext</a>
 </li>
+<li>onDtmfTonesSent()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dtmf_observer_interface.html#a8e840018218c417aaef68ffe803207b4">alexaClientSDK::avsCommon::sdkInterfaces::DtmfObserverInterface</a>
+</li>
 <li>onEndMimePart()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1_mime_response_sink.html#a88d43803ad537821857c53990a49ad3c">alexaClientSDK::acl::MimeResponseSink</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_mime_response_sink.html#ab667924a84983b56622b343fcb1bb6f9">alexaClientSDK::acl::test::MockMimeResponseSink</a>
@@ -357,8 +373,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_pulse_audio_bluetooth_initializer.html#a541fc5b6a1a0ac138829f860593737cc">alexaClientSDK::bluetoothImplementations::blueZ::PulseAudioBluetoothInitializer</a>
 </li>
 <li>onExceptionReceived()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_test_message_request_observer.html#a730b5827444834f7b151fb2aab4eaa12">alexaClientSDK::acl::transport::test::TestMessageRequestObserver</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#aab527606e4e69cf4be8155feaaa16b92">alexaClientSDK::avsCommon::sdkInterfaces::MessageRequestObserverInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#aab527606e4e69cf4be8155feaaa16b92">alexaClientSDK::avsCommon::sdkInterfaces::MessageRequestObserverInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1observer_1_1test_1_1_test_message_request_observer.html#a2d899c523d856a87bfcd495d4ea3d886">alexaClientSDK::avsCommon::utils::observer::test::TestMessageRequestObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a509001408419ff468e442c7be5d4b9b1">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#a5983cdc852ff2b5a79ffa8f8141a7197">alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_send_request.html#aee9e224d0e204f85e215f589ab2454e1">alexaClientSDK::capabilityAgents::system::SoftwareInfoSendRequest</a>
@@ -567,6 +583,7 @@ $(function() {
 <li>onPowerStateChanged()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_observer_interface.html#af305bf2a5d27e24c7966c0fb3c5654e7">alexaClientSDK::avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1_power_controller_capability_agent.html#acad8f75b4c5a9b08ad37e956a7facca8">alexaClientSDK::capabilityAgents::powerController::PowerControllerCapabilityAgent</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html#a160cb891517fa0d3f9594ac5bed847c9">alexaClientSDK::diagnostics::DevicePropertyAggregator</a>
 </li>
 <li>onPrefetchStatusChange()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_android_s_l_e_s_media_player.html#a470683824c5d9fbbc13ca2389a4024c5">alexaClientSDK::mediaPlayer::android::AndroidSLESMediaPlayer</a>
@@ -646,7 +663,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html#ad4542dceb6122c318e27c076d1e4a09e">alexaClientSDK::capabilityAgents::templateRuntime::TemplateRuntime</a>
 </li>
 <li>onRequestAuthorization()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_sample_application_c_b_l_auth_requester_1_1_sample_application_c_b_l_auth_requester.html#a04da671b4dc8a36b85536740faa1e0af">alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_c_b_l_authorization_observer_interface.html#a3a47fdb09954395405c2f7b320f8b64a">alexaClientSDK::acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_sample_application_c_b_l_auth_requester_1_1_sample_application_c_b_l_auth_requester.html#a04da671b4dc8a36b85536740faa1e0af">alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html#a622e997f21710171bea7a6d282d7fa8f">alexaClientSDK::authorization::cblAuthDelegate::CBLAuthRequesterInterface</a>
 </li>
 <li>onRequestEnqueued()
@@ -693,8 +711,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_media_endpoint.html#a75b927eb9e40f9bc3409c2f19eec5f51">alexaClientSDK::bluetoothImplementations::blueZ::MediaEndpoint</a>
 </li>
 <li>onSendCompleted()
-: <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_test_message_request_observer.html#aba54dc5e961b42f4ca72880df723f8c8">alexaClientSDK::acl::transport::test::TestMessageRequestObserver</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a2ef03c8d93590f362758fafcc22c2b72">alexaClientSDK::avsCommon::sdkInterfaces::MessageRequestObserverInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_request_observer_interface.html#a2ef03c8d93590f362758fafcc22c2b72">alexaClientSDK::avsCommon::sdkInterfaces::MessageRequestObserverInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1observer_1_1test_1_1_test_message_request_observer.html#a332821a27cf1aee9c415c88d369f053e">alexaClientSDK::avsCommon::utils::observer::test::TestMessageRequestObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#a093fa10358a5754ce3ca205b2ae0bf52">alexaClientSDK::capabilityAgents::aip::AudioInputProcessor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1_alexa_interface_message_sender.html#aac09d49918c2fbddba979701197fa5a6">alexaClientSDK::capabilityAgents::alexa::AlexaInterfaceMessageSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1_software_info_send_request.html#ab766335fc0af21571db67e69e0e5b8e8">alexaClientSDK::capabilityAgents::system::SoftwareInfoSendRequest</a>
@@ -747,7 +765,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html#a246548eabae6d53547019a863f62a767">alexaClientSDK::sampleApp::UIManager</a>
 </li>
 <li>onStateChanged()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#ac06115a6d72e9bb8efe095af0f63db5e">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html#a899c2ae495b5f5a0e38837354000ee08">alexaClientSDK::avsCommon::avs::DialogUXStateAggregator</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_audio_input_processor_observer_interface.html#a8c6aff677e2bf9c0240f46096bd51f8d">alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_observer_interface.html#a942df4568c653520611acbc16d0ccd99">alexaClientSDK::avsCommon::sdkInterfaces::ContextManagerObserverInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html#ae926818923ec68489d21cc4f6caa1021">alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface</a>
@@ -823,6 +841,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a94c97e3e48eba2acc89ccc5bd5e153df">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html#a7ae7dcfc39d1de809c52259c5b49354d">alexaClientSDK::acsdkAlerts::test::StubAlertStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_message_storage.html#a691c8b6d51d3feb0e889a68df69a294c">alexaClientSDK::acsdkAlerts::test::StubMessageStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_s_q_lite_l_w_a_authorization_storage.html#aa16c00655968a69d86f5bb1fa107032f">alexaClientSDK::acsdkAuthorization::lwa::SQLiteLWAAuthorizationStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html#a3e1191c9276c5f937c9cda4769af5b23">alexaClientSDK::acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_s_q_lite_bluetooth_storage.html#a9e2606ff5db037908f29948cd2558d61">alexaClientSDK::acsdkBluetooth::SQLiteBluetoothStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_storage_interface.html#a7c2b7ae3731917351fc90fb9c663d188">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_s_q_lite_notifications_storage.html#a2c8af253cad23b1488d8e0c9e2e463d8">alexaClientSDK::acsdkNotifications::SQLiteNotificationsStorage</a>
@@ -840,6 +860,10 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html#a7733e56145916f7ff265c5c950add492">alexaClientSDK::settings::storage::SQLiteDeviceSettingStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html#a7a57d712fedb9e827181f28259429e6a">alexaClientSDK::storage::sqliteStorage::SQLiteDatabase</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#afba9914d8884ee5c21d6c742da8b02e8">alexaClientSDK::storage::sqliteStorage::SQLiteMiscStorage</a>
+</li>
+<li>openOrCreate()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_s_q_lite_l_w_a_authorization_storage.html#adb2b1a87638456f94632747b7656cfa2">alexaClientSDK::acsdkAuthorization::lwa::SQLiteLWAAuthorizationStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html#afced524a1b5fb7b9e4e801477d87d982">alexaClientSDK::acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface</a>
 </li>
 <li>openSlEngine
 : <a class="el" href="structalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_platform_specific_values.html#a2574863b55b95cd177057088d4267899">alexaClientSDK::applicationUtilities::androidUtilities::PlatformSpecificValues</a>
@@ -877,10 +901,12 @@ $(function() {
 : <a class="el" href="structalexa_client_s_d_k_1_1acl_1_1_post_connect_operation_priority_compare.html#a930c3ac07984ca2341110ede15a06135">alexaClientSDK::acl::PostConnectOperationPriorityCompare</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_asset_order_item_compare.html#a3e5f91d512904a5f91311b27371dde19">alexaClientSDK::acsdkAlerts::storage::AssetOrderItemCompare</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1_time_comparator.html#af210d5149333d536a3d1c246c07f0151">alexaClientSDK::acsdkAlerts::TimeComparator</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_export_3_4.html#af04a42f04bbbb42b218c132a1a871968">alexaClientSDK::acsdkManufactory::internal::PrintMissingExport&lt;&gt;</a>
+, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_print_missing_import_3_4.html#a7e3987f64f54dd64541fbbf6fa5a8be8">alexaClientSDK::acsdkManufactory::internal::PrintMissingImport&lt;&gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_type_hash.html#a37706f1884118959f30a0b2637a47b11">alexaClientSDK::avsCommon::utils::bluetooth::BluetoothEventTypeHash</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1functional_1_1_enum_class_hash.html#a4c49126aa03f33869ab3d4ceae3c0459">alexaClientSDK::avsCommon::utils::functional::EnumClassHash</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1test_1_1_example_functor.html#a0e6bb5837663f86066033557903612f4">alexaClientSDK::avsCommon::utils::threading::test::ExampleFunctor</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_deleter.html#a36f71d0286e9a2462d50786aa1d006c6">alexaClientSDK::mediaPlayer::android::FFmpegDeleter&lt; ObjectT &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_deleter.html#ab2c89572120dea11e350a6cbd16aee22">alexaClientSDK::mediaPlayer::android::FFmpegDeleter&lt; ObjectT &gt;</a>
 , <a class="el" href="structalexa_client_s_d_k_1_1playlist_parser_1_1_e_v_p___c_i_p_h_e_r___c_t_x___deleter.html#a2fa3b8d974f2dc52c8ae82f1d5d97a97">alexaClientSDK::playlistParser::EVP_CIPHER_CTX_Deleter</a>
 , <a class="el" href="structstd_1_1hash_3_01alexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_type_index_01_4.html#ad9183e3d3fa9c85735b531fdbe187b70">std::hash&lt; alexaClientSDK::acsdkManufactory::internal::TypeIndex &gt;</a>
 , <a class="el" href="structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration_01_4.html#afdd9f4378e7144803539daf772b121b0">std::hash&lt; alexaClientSDK::avsCommon::avs::CapabilityConfiguration &gt;</a>
@@ -958,9 +984,15 @@ $(function() {
 <li>operator[]()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html#ad76b6f6a0e8fb991debbec9fe9af58b0">alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode</a>
 </li>
+<li>optional
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1type.html#a525c5edfc7c19fd626a24e53e4625cbe">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;::type</a>
+</li>
 <li>Optional()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html#a16dc316047c4e38d6374f9bbb289324e">alexaClientSDK::avsCommon::utils::Optional&lt; ValueT &gt;</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html#af326bb8106bae7f37e650dc6def246ea">alexaClientSDK::avsCommon::utils::Optional&lt; ValueT &gt;</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html#af4a3beb538af43d23068895955f6ca91">alexaClientSDK::settings::types::NetworkInfo</a>
+</li>
+<li>OptionalImports
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports.html#a649320a5ad3622ecbc6845e53291b87f">alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports&lt; Types &gt;</a>
 </li>
 <li>OpusEncoderContext()
 : <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1_opus_encoder_context.html#a0f660c673a1dba88ae1afb4b9623467f">alexaClientSDK::speechencoder::OpusEncoderContext</a>
@@ -981,18 +1013,12 @@ $(function() {
 <li>overflow()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry_buffer.html#a497dfc9a330c33e3567ca6754a407119">alexaClientSDK::avsCommon::utils::logger::LogEntryBuffer</a>
 </li>
-<li>overrideFactory()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#a8ea43e08899a4b5d4eb7235ecec27fb7">alexaClientSDK::acsdkManufactory::ComponentAccumulator&lt; Parameters &gt;</a>
-</li>
-<li>overrideInstance()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_component_accumulator.html#accdc8734529354c4b1bdba81ef19ec8d">alexaClientSDK::acsdkManufactory::ComponentAccumulator&lt; Parameters &gt;</a>
-</li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

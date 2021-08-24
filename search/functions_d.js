@@ -89,6 +89,5 @@ var searchData=
   ['notifyseekcomplete',['notifySeekComplete',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test.html#a61a819e5157002e1a9c6be9c25d2688c',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::test']]],
   ['now',['now',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html#a2e3524c782c5490aac64e27f0887e23e',1,'alexaClientSDK::avsCommon::utils::timing::TimePoint']]],
   ['null',['null',['../structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html#a8bb6d6ed0a65c27e2eabac7e869c698a',1,'alexaClientSDK::capabilityAgents::aip::AudioProvider']]],
-  ['numberchannels',['numberChannels',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#a637503ca05db6b73861d4554f1d74096',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
-  ['numchannels',['NumChannels',['../classalexa_client_s_d_k_1_1kwd_1_1_snowboy_wrapper.html#a0af48fef7a71dc3a08051a4ba9451b9a',1,'alexaClientSDK::kwd::SnowboyWrapper']]]
+  ['numberchannels',['numberChannels',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#a637503ca05db6b73861d4554f1d74096',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]]
 ];

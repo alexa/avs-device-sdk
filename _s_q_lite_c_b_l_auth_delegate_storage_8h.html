@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -72,19 +72,16 @@ $(function() {
 <div class="title">SQLiteCBLAuthDelegateStorage.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;mutex&gt;</code><br />
+<div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;sqlite3.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="_s_q_lite_database_8h_source.html">SQLiteStorage/SQLiteDatabase.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_l_w_a_authorization_storage_interface_8h_source.html">acsdkAuthorizationInterfaces/LWA/LWAAuthorizationStorageInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_configuration_node_8h_source.html">AVSCommon/Utils/Configuration/ConfigurationNode.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_c_b_l_auth_delegate_storage_interface_8h_source.html">CBLAuthDelegate/CBLAuthDelegateStorageInterface.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SQLiteCBLAuthDelegateStorage.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="_s_q_lite_c_b_l_auth_delegate_storage_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_s_q_lite_c_b_l_auth_delegate_storage_8h" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_s_q_lite_c_b_l_auth_delegate_storage_8h" id="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_s_q_lite_c_b_l_auth_delegate_storage_8h">
-<area shape="rect" id="node5" href="_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="467,131,685,158"/>
-<area shape="rect" id="node10" href="_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="89,124,325,165"/>
-<area shape="rect" id="node8" href="_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="531,213,754,240"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -92,13 +89,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="_s_q_lite_c_b_l_auth_delegate_storage_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_s_q_lite_c_b_l_auth_delegate_storage_8hdep" alt=""/></div>
 <map name="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_s_q_lite_c_b_l_auth_delegate_storage_8hdep" id="_2workplace_2avs-device-sdk_2_sample_app_2_authorization_2_c_b_l_auth_delegate_2include_2_c_b_l_auth_delegate_2_s_q_lite_c_b_l_auth_delegate_storage_8hdep">
-<area shape="rect" id="node2" href="_authorization_delegate_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkCBLAuthorization\lDelegate/src/AuthorizationDelegateComponent.cpp" alt="" coords="5,131,325,187"/>
-<area shape="rect" id="node3" href="_default_sample_application_options_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkDefault\lSampleApplicationOptions/src\l/DefaultSampleApplicationOptionsComponent.cpp" alt="" coords="350,124,663,195"/>
-<area shape="rect" id="node4" href="_auth_delegate_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/AuthDelegateTestContext.cpp" alt="" coords="688,131,891,187"/>
-<area shape="rect" id="node5" href="_alexa_authorization_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaAuthorizationDelegateTest.cpp" alt="" coords="915,131,1154,187"/>
-<area shape="rect" id="node6" href="_alexa_communications_library_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlexaCommunicationsLibraryTest.cpp" alt="" coords="1178,131,1425,187"/>
-<area shape="rect" id="node7" href="_s_q_lite_c_b_l_auth_delegate_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/Authorization\l/CBLAuthDelegate/src/SQLiteCBLAuth\lDelegateStorage.cpp" alt="" coords="1449,124,1700,195"/>
-<area shape="rect" id="node8" href="_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1724,139,2001,180"/>
 </map>
 </div>
 </div>
@@ -123,7 +113,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.24.0</span>
+   &#160;<span id="projectnumber">1.25.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -1054,7 +1054,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Testing cancelDirective after calling Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that <code>acquireChannel</code> is called once. On Focus Changed to foreground, audio should play. Call cancel directive. Expect the <code>ContextManager</code> <code>setState</code> is called when the state changes to <code>PLAYING</code> and then to <code>INTERRUPTED</code>. Expect <code>sendMessage</code> is called twice (SpeechStarted and SpeechInterrupted). </p>
+<p>Testing cancelDirective after calling Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that <code>acquireChannel</code> is called once. On Focus Changed to foreground, audio should play. Call cancel directive. Expect the <code>ContextManager</code> <code>setState</code> is called when the state changes to <code>PLAYING</code> and then to <code>INTERRUPTED</code>. Expect <code>sendMessage</code> is called twice (SpeechStarted and SpeechInterrupted). Expect <code>setFailed()</code> is never called. </p>
 
 </div>
 </div>
@@ -1465,7 +1465,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Test <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html">SpeechSynthesizer</a> REPLACE_ALL when there is an ongoing speech.</p>
-<p>Expect the speech synthesizer to cancel the active speech, send an interrupted event and play the new speech. </p>
+<p>Expect the speech synthesizer to cancel the active speech, send a completed event and play the new speech. </p>
 
 </div>
 </div>
@@ -2098,7 +2098,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.24.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
