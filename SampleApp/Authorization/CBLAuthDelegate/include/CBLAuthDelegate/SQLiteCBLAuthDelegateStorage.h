@@ -16,12 +16,11 @@
 #ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_AUTHORIZATION_CBLAUTHDELEGATE_INCLUDE_CBLAUTHDELEGATE_SQLITECBLAUTHDELEGATESTORAGE_H_
 #define ALEXA_CLIENT_SDK_SAMPLEAPP_AUTHORIZATION_CBLAUTHDELEGATE_INCLUDE_CBLAUTHDELEGATE_SQLITECBLAUTHDELEGATESTORAGE_H_
 
-#include <mutex>
+#include <memory>
 #include <string>
 
-#include <sqlite3.h>
-
-#include <SQLiteStorage/SQLiteDatabase.h>
+#include <acsdkAuthorizationInterfaces/LWA/LWAAuthorizationStorageInterface.h>
+#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 
 #include "CBLAuthDelegate/CBLAuthDelegateStorageInterface.h"
 
@@ -75,18 +74,11 @@ private:
     /**
      * Constructor.
      */
-    SQLiteCBLAuthDelegateStorage(const std::string& databaseFilePath);
+    SQLiteCBLAuthDelegateStorage(
+        const std::shared_ptr<acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface>& lwaStorage);
 
-    /**
-     * Close the database.
-     */
-    void close();
-
-    /// Mutex with which to serialize database operations.
-    std::mutex m_mutex;
-
-    /// The underlying database class.
-    alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_database;
+    /// LWAAuthorizationStorageInterface instance that contains all of the database logic.
+    std::shared_ptr<acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface> m_lwaStorage;
 };
 
 }  // namespace cblAuthDelegate

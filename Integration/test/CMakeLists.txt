@@ -3,8 +3,6 @@ find_package(GTest ${GTEST_PACKAGE_CONFIG})
 set(INCLUDE_PATH "${ACL_SOURCE_DIR}/include"
      "${GTEST_INCLUDE_DIRS}"
      "${KWD_SOURCE_DIR}/include"
-     "${KITTAI_SOURCE_DIR}/include"
-     "${KITTAI_KEY_WORD_DETECTOR_INCLUDE_DIR}"
      "${SENSORY_SOURCE_DIR}/include"
      "${SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR}"
      "${AIP_SOURCE_DIR}/include"
@@ -43,9 +41,6 @@ set(LINK_PATH ACL
         acsdkManufactory
         acsdkShutdownManager)
 
-if(KITTAI_KEY_WORD_DETECTOR)
-    SET(LINK_PATH ${LINK_PATH} KITTAI)
-endif()
 if(SENSORY_KEY_WORD_DETECTOR)
     SET(LINK_PATH ${LINK_PATH} SENSORY)
 endif()

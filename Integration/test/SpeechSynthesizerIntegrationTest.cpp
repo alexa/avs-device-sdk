@@ -560,69 +560,6 @@ protected:
 };
 
 /**
- * Test ability for the SpeechSynthesizer to handle one Speak directive.
- *
- * This test is intended to test the SpeechSynthesizer's ability to receive one directive, play it using a MediaPlayer
- * then return to a finished state.
- *
- */
-TEST_F(SpeechSynthesizerTest, DISABLED_test_handleOneSpeech) {
-    // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
-
-    // Send audio of "Joke" that will prompt SetMute and Speak.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = g_inputPath + RECOGNIZE_JOKE_AUDIO_FILE_NAME;
-    setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON,
-        file,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
-        SEND_EVENT_TIMEOUT_DURATION);
-
-    TestMessageSender::SendParams sendRecognizeParams = m_avsConnectionManager->waitForNext(DIRECTIVE_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendRecognizeParams, NAME_RECOGNIZE));
-
-    // Wait for the directive to route through to our handler.
-    TestDirectiveHandler::DirectiveParams params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::PREHANDLE);
-    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::HANDLE);
-
-    // Unblock the queue so SpeechSynthesizer can do its work.
-    params.result->setCompleted();
-
-    // SpeechSynthesizer is now playing.
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS);
-
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING);
-
-    // Check that SS grabs the channel focus by seeing that the test client has been backgrounded.
-    ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::BACKGROUND);
-
-    // SpeechStarted was sent.
-    TestMessageSender::SendParams sendStartedParams = m_avsConnectionManager->waitForNext(DIRECTIVE_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
-
-    // Media Player has finished.
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
-
-    // SpeechFinished is sent here.
-    TestMessageSender::SendParams sendFinishedParams = m_avsConnectionManager->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
-
-    // Alerts channel regains the foreground.
-    ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
-}
-
-/**
  * Test ability for the SpeechSynthesizer to handle multiple consecutive Speak directives.
  *
  * This test is intended to test the SpeechSynthesizer's ability to receive multiple directives, play each using a
@@ -1058,65 +995,6 @@ TEST_F(SpeechSynthesizerTest, test_multiturnScenario) {
 
     // Alerts channel regains the foreground.
     ASSERT_EQ(m_testClient->waitForFocusChange(WAIT_FOR_TIMEOUT_DURATION), FocusState::FOREGROUND);
-}
-
-/**
- * Test ability for the SpeechSynthesizer to handle no directives.
- *
- * This test is intended to test the SpeechSynthesizer's ability to do nothing when there are no Speak directives. A
- * Recognize event with audio of "Volume up" is sent to AVS to prompt a AdjustVolume directive but no Speak directives.
- */
-TEST_F(SpeechSynthesizerTest, DISABLED_test_handleNoSpeakDirectives) {
-    // SpeechSynthesizerObserverInterface defaults to a FINISHED state.
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WAIT_FOR_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
-
-    // Send audio of "Volume up" that will prompt an adjustVolume directive.
-    m_directiveSequencer->setDialogRequestId(FIRST_DIALOG_REQUEST_ID);
-    std::string file = g_inputPath + RECOGNIZE_VOLUME_UP_AUDIO_FILE_NAME;
-    setupMessageWithAttachmentAndSend(
-        CT_FIRST_RECOGNIZE_EVENT_JSON,
-        file,
-        avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status::SUCCESS,
-        SEND_EVENT_TIMEOUT_DURATION);
-
-    TestMessageSender::SendParams sendRecognizeParams = m_avsConnectionManager->waitForNext(DIRECTIVE_TIMEOUT_DURATION);
-    ASSERT_TRUE(checkSentEventName(sendRecognizeParams, NAME_RECOGNIZE));
-
-    // Wait for the directive to route through to our handler.
-    TestDirectiveHandler::DirectiveParams params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::PREHANDLE);
-    params = m_directiveHandler->waitForNext(WAIT_FOR_TIMEOUT_DURATION);
-    ASSERT_EQ(params.type, TestDirectiveHandler::DirectiveParams::Type::HANDLE);
-    ASSERT_EQ(params.directive->getName(), NAME_ADJUST_VOLUME);
-
-    // Unblock the queue so SS can do its work.
-    params.result->setCompleted();
-
-    // SpeechSynthesizer just defaults to Playing state.
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WANTING_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
-
-    // Check that the test client is still in the foreground.
-    ASSERT_EQ(m_testClient->waitForFocusChange(WANTING_TIMEOUT_DURATION), FocusState::FOREGROUND);
-
-    // SpeechStarted is not sent.
-    TestMessageSender::SendParams sendStartedParams = m_avsConnectionManager->waitForNext(WANTING_TIMEOUT_DURATION);
-    ASSERT_FALSE(checkSentEventName(sendStartedParams, NAME_SPEECH_STARTED));
-
-    // Media Player has not changed.
-    ASSERT_EQ(
-        m_speechSynthesizerObserver->waitForNext(WANTING_TIMEOUT_DURATION),
-        SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED);
-
-    // SpeechFinished is not sent.
-    TestMessageSender::SendParams sendFinishedParams = m_avsConnectionManager->waitForNext(WANTING_TIMEOUT_DURATION);
-    ASSERT_FALSE(checkSentEventName(sendFinishedParams, NAME_SPEECH_FINISHED));
-
-    // Alerts channel regains the foreground.
-    ASSERT_EQ(m_testClient->waitForFocusChange(WANTING_TIMEOUT_DURATION), FocusState::FOREGROUND);
 }
 
 /**

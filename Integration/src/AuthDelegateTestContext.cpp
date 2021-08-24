@@ -18,8 +18,8 @@
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
 #ifdef ACSDK_ACS_UTILS
-#include <acsdkFFSAuthDelegate/FFSAuthDelegate.h>
 #include <acsdkFFSAuthDelegate/ACSFFSAuthDelegateStorage.h>
+#include <acsdkFFSAuthDelegate/FFSAuthDelegate.h>
 #else
 #include <CBLAuthDelegate/CBLAuthDelegate.h>
 #include <CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h>
@@ -35,7 +35,7 @@ namespace test {
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
 #ifdef ACSDK_ACS_UTILS
-using namespace authorization::acsffsAuthDelegate;
+using namespace acsdkffsAuthDelegate;
 #else
 using namespace authorization::cblAuthDelegate;
 #endif
@@ -59,12 +59,17 @@ AuthDelegateTestContext::~AuthDelegateTestContext() {
     m_sdkTestContext.reset();
 }
 
+#ifdef ACSDK_ACS_UTILS
+void AuthDelegateTestContext::AuthRequester::onRequestFFS() {
+}
+#else
 void AuthDelegateTestContext::AuthRequester::onRequestAuthorization(const std::string& url, const std::string& code) {
     ASSERT_FALSE(true) << "FATAL ERROR: Authorization required before running integration test";
 }
 
 void AuthDelegateTestContext::AuthRequester::onCheckingForAuthorization() {
 }
+#endif
 
 bool AuthDelegateTestContext::isValid() const {
     return m_customerDataManager && m_authDelegate;
@@ -101,7 +106,7 @@ AuthDelegateTestContext::AuthDelegateTestContext(const std::string& filePath, co
     }
 
 #ifdef ACSDK_ACS_UTILS
-    auto storage = ACSFFSAuthDelegateStorage::createFFSAuthDelegateStorageInterface(config);
+    auto storage = ACSFFSAuthDelegateStorage::createFFSAuthDelegateStorageInterface();
     EXPECT_TRUE(storage);
     if (!storage) {
         return;

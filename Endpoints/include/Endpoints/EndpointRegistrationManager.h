@@ -34,6 +34,7 @@
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationObserverInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
 namespace endpoints {
@@ -41,7 +42,9 @@ namespace endpoints {
 /**
  * Class responsible for managing endpoints that are registered with AVS and that can be controlled by this client.
  */
-class EndpointRegistrationManager : public avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface {
+class EndpointRegistrationManager
+        : public avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface
+        , public avsCommon::utils::RequiresShutdown {
 public:
     /// @name Aliases to improve readability.
     /// @{
@@ -84,6 +87,12 @@ public:
     std::future<DeregistrationResult> deregisterEndpoint(const EndpointIdentifier& endpointId) override;
     void addObserver(std::shared_ptr<EndpointRegistrationObserverInterface> observer) override;
     void removeObserver(const std::shared_ptr<EndpointRegistrationObserverInterface>& observer) override;
+    /// @}
+
+protected:
+    /// @name @c RequiresShutdown methods.
+    /// @{
+    void doShutdown() override;
     /// @}
 
 private:

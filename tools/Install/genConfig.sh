@@ -180,6 +180,9 @@ SDK_CERTIFIED_SENDER_DATABASE_FILE_PATH=$CONFIG_DB_PATH/certifiedSender.db
 # Variables for notifications
 SDK_NOTIFICATIONS_DATABASE_FILE_PATH=$CONFIG_DB_PATH/notifications.db
 
+# Variables for LWA based auth
+SDK_LWA_AUTHORIZATION_ADAPTER_DATABASE_FILE_PATH=$CONFIG_DB_PATH/lwaAuthorizationAdapter.db
+
 # Variables for device info
 SDK_CONFIG_MANUFACTURER_NAME=${extra_variables[${INDEX_MANUFACTURER_NAME}]}
 SDK_CONFIG_DEVICE_DESCRIPTION=${extra_variables[${INDEX_DEVICE_DESCRIPTION}]}

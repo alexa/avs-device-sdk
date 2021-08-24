@@ -106,7 +106,16 @@ bool AlexaClientSDKInit::initialize(const std::shared_ptr<InitializationParamete
         return false;
     }
 
-    if (!(curl_version_info(CURLVERSION_NOW)->features & CURL_VERSION_HTTP2)) {
+    // Pointer to static struct, does not need to be freed.
+    auto curlVersion = curl_version_info(CURLVERSION_NOW);
+    if (!curlVersion) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullCurlVersionInfo"));
+        return false;
+    }
+
+    ACSDK_INFO(LX(__func__).d("curlVersion", curlVersion->version));
+
+    if (!(curlVersion->features & CURL_VERSION_HTTP2)) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "curlDoesNotSupportHTTP2"));
         return false;
     }

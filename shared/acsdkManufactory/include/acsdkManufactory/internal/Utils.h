@@ -20,6 +20,9 @@
 #include <type_traits>
 
 #include "acsdkManufactory/Import.h"
+#include "acsdkManufactory/OptionalImport.h"
+#include "acsdkManufactory/internal/CookBook.h"
+#include "acsdkManufactory/internal/MakeOptional.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -227,7 +230,7 @@ struct ContainsTupleTypes<std::tuple<ContainerTypes...>, std::tuple<TupleTypes..
         : ContainsTypes<std::tuple<ContainerTypes...>, TupleTypes...> {};
 
 /**
- * Template for determining if a type is an imported type (i.e. Import<...>).
+ * Template for determining if a type is an imported type (i.e. Import<...> or OptionalImport<...>).
  *
  * If the specified type (Type) is an Import<type>, IsImport<Type>::value is true.
  *
@@ -240,17 +243,36 @@ template <typename Type>
 struct IsImport<Import<Type>> : std::true_type {};
 
 template <typename Type>
+struct IsImport<OptionalImport<Type>> : std::true_type {};
+
+template <typename Type>
 struct IsImport<Type> : std::false_type {};
 
 /**
- * Template to determine if a parameter pack contains any imports (i.e. Import<Type>) types.
+ * Template for determining if a type is a required import type (i.e. Import<...> and not OptionalImport<...>).
  *
- * If the parameter pack Types... includes any imports, HasImport<Types...>::value is true.
+ * If the specified type (Type) is an Import<type>, IsImport<Type>::value is true.
+ *
+ * @tparam ... Template parameters of the form <Type>.
+ */
+template <typename...>
+struct IsRequiredImport;
+
+template <typename Type>
+struct IsRequiredImport<Import<Type>> : std::true_type {};
+
+template <typename Type>
+struct IsRequiredImport<Type> : std::false_type {};
+
+/**
+ * Template to determine if a parameter pack contains any required imports types.
+ *
+ * If the parameter pack Types... includes any imports, HasRequiredImport<Types...>::value is true.
  *
  * @tparam ... Template parameters of the form <Types...>.  Where Types... is the parameter pack to inspect.
  */
 template <typename... Types>
-struct HasImport {
+struct HasRequiredImport {
     template <typename InType>
     struct IsFalse {
         constexpr static const bool value = false;
@@ -260,7 +282,7 @@ struct HasImport {
     struct BoolValues;
 
     using FalseValues = BoolValues<IsFalse<Types>::value...>;
-    using IsImportValues = BoolValues<IsImport<Types>::value...>;
+    using IsImportValues = BoolValues<IsRequiredImport<Types>::value...>;
     constexpr static const bool value = !std::is_same<FalseValues, IsImportValues>::value;
 };
 
@@ -349,7 +371,51 @@ struct GetImportsAndExports {
 
     using Exports = typename FoldTupleTypes::Apply<GetExportsOperation, std::tuple<>, UniqueParameters>::type;
 
-    struct GetImportsOperation {
+    struct GetMakeOptionalImportsOperation {
+        template <typename...>
+        struct Apply;
+
+        template <typename... ResultTypes, typename Type>
+        struct Apply<std::tuple<ResultTypes...>, MakeOptional<Type>> {
+            using type = std::tuple<ResultTypes..., Type>;
+        };
+
+        template <typename... ResultTypes, typename Type>
+        struct Apply<std::tuple<ResultTypes...>, Type> {
+            using type = std::tuple<ResultTypes...>;
+        };
+    };
+
+    using MakeOptionalImports =
+        typename FoldTupleTypes::Apply<GetMakeOptionalImportsOperation, std::tuple<>, UniqueParameters>::type;
+
+    struct GetOptionalImportsOperation {
+        template <typename...>
+        struct Apply;
+
+        template <typename... ResultTypes, typename Type>
+        struct Apply<std::tuple<ResultTypes...>, OptionalImport<Type>> {
+            using type = std::tuple<ResultTypes..., Type>;
+        };
+
+        template <typename... ResultTypes, typename Type>
+        struct Apply<std::tuple<ResultTypes...>, MakeOptional<Type>> {
+            using type = std::tuple<ResultTypes..., Type>;
+        };
+
+        template <typename... ResultTypes, typename Type>
+        struct Apply<std::tuple<ResultTypes...>, Type> {
+            using type = std::tuple<ResultTypes...>;
+        };
+    };
+
+    /**
+     * Set of optional imports is everything marked with MakeOptional<> and OptionalImport<> tags.
+     */
+    using OptionalImports =
+        typename FoldTupleTypes::Apply<GetOptionalImportsOperation, std::tuple<>, UniqueParameters>::type;
+
+    struct GetRequiredImportsOperation {
         template <typename...>
         struct Apply;
 
@@ -364,32 +430,126 @@ struct GetImportsAndExports {
         };
     };
 
-    using AllImports = typename FoldTupleTypes::Apply<GetImportsOperation, std::tuple<>, UniqueParameters>::type;
+    /**
+     * Set of required imports is everything marked with Import<> tag that hasn't been marked with MakeOptional<>.
+     */
+    using DeclaredRequiredImports =
+        typename FoldTupleTypes::Apply<GetRequiredImportsOperation, std::tuple<>, UniqueParameters>::type;
 
-    using UnsatisfiedImports = typename RemoveTypes<AllImports, Exports>::type;
+    using RequiredImports = typename RemoveTypes<DeclaredRequiredImports, MakeOptionalImports>::type;
+
+    /**
+     * Set of unsatisfied required imports is the set of required imports that are not being exported.
+     */
+    using UnsatisfiedRequiredImports = typename RemoveTypes<RequiredImports, Exports>::type;
+
+    /**
+     * Set of unsatisfied optional imports is the set of optional imports that are not being exported and that's not
+     * required.
+     */
+    using UnsatisfiedOptionalImports =
+        typename RemoveTypes<typename RemoveTypes<OptionalImports, Exports>::type, UnsatisfiedRequiredImports>::type;
 
     struct type {
         using exports = Exports;
-        using imports = UnsatisfiedImports;
+        using required = UnsatisfiedRequiredImports;
+        using optional = UnsatisfiedOptionalImports;
     };
 };
 
 /**
- * Assert at compile time that two types are the same.
+ * This structure instantiate empty instances for the provided types and add them to the given cook book.
  *
- * @param LHS The "left hand side" type for the is_same test.
- * @param RHS The "right hand side" type for the is_same test.
- * @param message The message to display if the assertion fails.
+ * This structure is used to implement optional import when the dependency is not available.
+ * @tparam Types The types that will be inspected. The default values will be added only to types that match
+ * OptionalImport<...>.
  */
-#define ACSDK_STATIC_ASSERT_IS_SAME(LHS, RHS, message)                              \
-    {                                                                               \
-        /* This assigment is intended to generate useful compiler error messages */ \
-        LHS* lhs = nullptr;                                                         \
-        RHS* rhs = nullptr;                                                         \
-        lhs = rhs;                                                                  \
-        (void)lhs;                                                                  \
-        static_assert(std::is_same<LHS, RHS>::value, message);                      \
+template <typename... Types>
+struct DefaultValues;
+
+template <typename Type, typename... Types>
+struct DefaultValues<OptionalImport<Type>, Types...> {
+    /**
+     * Apply the default value for the optional @c Type provided, and continue to inspect the remainder types.
+     *
+     * @param cookBook The cook book that will hold the new empty instance.
+     */
+    static inline void apply(internal::CookBook& cookBook) {
+        cookBook.addInstance(Type());
+        DefaultValues<Types...>::apply(cookBook);
     }
+};
+
+template <typename Type, typename... Types>
+struct DefaultValues<Type, Types...> {
+    /**
+     * Skip @c Type since it's not optional, and continue to inspect the remainder types.
+     *
+     * @param cookBook The cook book that will hold any new empty instance.
+     */
+    static inline void apply(internal::CookBook& cookBook) {
+        DefaultValues<Types...>::apply(cookBook);
+    }
+};
+
+template <>
+struct DefaultValues<> {
+    /**
+     * This is the base case that is used to finish the type inspection.
+     *
+     * @param cookBook The cook book that may have been modified to carry any new empty instance.
+     */
+    static inline void apply(internal::CookBook& cookBook) {
+    }
+};
+
+/**
+ * This class and its specializations can be used to print missing export types as a compilation error.
+ *
+ * Usage:
+ *   PrintMissingExport<ListOfTypes...>()();
+ *   PrintMissingExport<std::tuple<ListOfTypes>>()();
+ *
+ * Both cases will be a no-op if ListOfTypes resolves to an empty list; otherwise, compiler will fail since operator()
+ * is not defined in the generic class.
+ *
+ * @tparam Types List of missing exports.
+ */
+template <typename... Types>
+struct PrintMissingExport {};
+
+template <>
+struct PrintMissingExport<> {
+    void operator()() {
+    }
+};
+
+template <>
+struct PrintMissingExport<std::tuple<>> : PrintMissingExport<> {};
+
+/**
+ * This class and its specializations can be used to print missing import types as a compilation error.
+ *
+ * Usage:
+ *   PrintMissingImport<ListOfTypes...>()();
+ *   PrintMissingImport<std::tuple<ListOfTypes>>()();
+ *
+ * Both cases will be a no-op if ListOfTypes resolves to an empty list; otherwise, compiler will fail since operator()
+ * is not defined in the generic class.
+ *
+ * @tparam Types List of missing exports.
+ */
+template <typename... Types>
+struct PrintMissingImport {};
+
+template <>
+struct PrintMissingImport<> {
+    void operator()() {
+    }
+};
+
+template <>
+struct PrintMissingImport<std::tuple<>> : PrintMissingImport<> {};
 
 }  // namespace internal
 }  // namespace acsdkManufactory

@@ -291,12 +291,6 @@ public:
     std::shared_ptr<AVSConnectionManager> m_avsConnectionManager;
 };
 
-/// Test connecting and disconnecting from AVS.
-TEST_F(AlexaCommunicationsLibraryTest, test_connectAndDisconnect) {
-    // Connect is called in SetUp and disconnect is called in TearDown. Simply check that we are connected.
-    ASSERT_TRUE(m_avsConnectionManager->isConnected());
-}
-
 /**
  * Test sending an Event to AVS.
  *

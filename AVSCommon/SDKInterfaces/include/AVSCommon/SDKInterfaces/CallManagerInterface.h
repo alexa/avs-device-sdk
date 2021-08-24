@@ -31,6 +31,7 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace sdkInterfaces {
 
+class DtmfObserverInterface;
 /**
  * This class provides an interface to the @c CallManager.
  */
@@ -90,6 +91,20 @@ public:
     virtual void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::CallStateObserverInterface> observer) = 0;
 
     /**
+     * Adds a DtmfObserver to the group of observers.
+     *
+     * @param observer The observer to add.
+     */
+    virtual void addDtmfObserver(std::shared_ptr<DtmfObserverInterface> observer);
+
+    /**
+     * Removes a DtmfObserver from the group of observers.
+     *
+     * @param observer The observer to remove.
+     */
+    virtual void removeDtmfObserver(std::shared_ptr<DtmfObserverInterface> observer);
+
+    /**
      * Accepts an incoming call.
      */
     virtual void acceptCall() = 0;
@@ -147,6 +162,14 @@ inline void CallManagerInterface::enableVideo() {
 }
 
 inline void CallManagerInterface::disableVideo() {
+    return;
+}
+
+inline void CallManagerInterface::addDtmfObserver(std::shared_ptr<DtmfObserverInterface> observer) {
+    return;
+}
+
+inline void CallManagerInterface::removeDtmfObserver(std::shared_ptr<DtmfObserverInterface> observer) {
     return;
 }
 

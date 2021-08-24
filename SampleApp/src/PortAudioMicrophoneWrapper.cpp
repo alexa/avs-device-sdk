@@ -86,7 +86,7 @@ bool PortAudioMicrophoneWrapper::initialize() {
         return false;
     }
 
-    PaTime suggestedLatency;
+    PaTime suggestedLatency = -1;
     bool latencyInConfig = getConfigSuggestedLatency(suggestedLatency);
 
     if (!latencyInConfig) {
@@ -102,6 +102,10 @@ bool PortAudioMicrophoneWrapper::initialize() {
     } else {
         ACSDK_INFO(
             LX("PortAudio suggestedLatency has been configured to ").d("Seconds", std::to_string(suggestedLatency)));
+        if (suggestedLatency < 0) {
+            ACSDK_CRITICAL(LX("Failed to configure PortAudio invalid suggestedLatency"));
+            return false;
+        }
 
         PaStreamParameters inputParameters;
         std::memset(&inputParameters, 0, sizeof(inputParameters));

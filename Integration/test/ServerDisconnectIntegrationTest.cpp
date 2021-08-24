@@ -266,56 +266,6 @@ void ServerDisconnectIntegrationTest::TearDown() {
 }
 
 /**
- * Test if server side disconnect occurs by trying to connect to AVS using the same configuration
- * using two different @c AVSConnectionManager.
- *
- * @note Disabling this test until it can be updated to reflect server side changes.
- */
-TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_connect) {
-    m_firstAvsCommunication->connect();
-    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
-        ConnectionStatusObserverInterface::Status::CONNECTED));
-
-    m_secondAvsCommunication->connect();
-    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
-        ConnectionStatusObserverInterface::Status::PENDING));
-    EXPECT_TRUE(m_firstAvsCommunication->checkForServerSideDisconnect());
-
-    m_firstAvsCommunication->disconnect();
-    m_secondAvsCommunication->disconnect();
-}
-
-/**
- * Test if server side disconnect occurs by trying to connect to AVS using the same configuration
- * using two different @c AVSConnectionManager and reconnecting one of the connections.
- *
- * @note Disabling this test until it can be updated to reflect server side changes.
- */
-TEST_F(ServerDisconnectIntegrationTest, DISABLED_test_reConnect) {
-    m_firstAvsCommunication->connect();
-    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
-        ConnectionStatusObserverInterface::Status::CONNECTED));
-
-    m_secondAvsCommunication->connect();
-    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
-        ConnectionStatusObserverInterface::Status::PENDING));
-    EXPECT_TRUE(m_firstAvsCommunication->checkForServerSideDisconnect());
-
-    m_firstAvsCommunication->disconnect();
-    m_secondAvsCommunication->disconnect();
-
-    m_firstAvsCommunication->connect();
-    ASSERT_TRUE(m_firstAvsCommunication->getConnectionStatusObserver()->waitFor(
-        ConnectionStatusObserverInterface::Status::CONNECTED));
-    m_firstAvsCommunication->disconnect();
-
-    m_secondAvsCommunication->connect();
-    ASSERT_TRUE(m_secondAvsCommunication->getConnectionStatusObserver()->waitFor(
-        ConnectionStatusObserverInterface::Status::CONNECTED));
-    m_secondAvsCommunication->disconnect();
-}
-
-/**
  * Test sending a message while having a server side disconnect. The send fails to return the expected
  * status of SUCCESS.
  *

@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
-#define ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
 
 #include <chrono>
 #include <set>
@@ -513,7 +513,7 @@ public:
         const std::string& navigation,
         bool preload,
         const avsCommon::avs::PlayRequestor& playRequestor,
-        std::string playbackTarget = "") = 0;
+        const std::string& playbackTarget) = 0;
 
     /**
      * Method to initiate the different types of play control like
@@ -521,8 +521,10 @@ public:
      *
      * @param requestType The type of REQUEST. Will always be
      * PLAY/PAUSE/RESUME/NEXT...
+     * @param playbackTarget The @c PlaybackTarget is used to specify the targeted device
+     * that will handle the play control.
      */
-    virtual void handlePlayControl(RequestType requestType) = 0;
+    virtual void handlePlayControl(RequestType requestType, const std::string& playbackTarget) = 0;
 
     /**
      * Method to seek to the given offset.
@@ -792,4 +794,4 @@ inline std::string REPEAT_STATUS_STRING(bool repeatEnabled) {
 }  // namespace acsdkExternalMediaPlayerInterfaces
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERINTERFACE_H_

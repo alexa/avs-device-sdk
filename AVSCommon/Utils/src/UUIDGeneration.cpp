@@ -213,10 +213,10 @@ const std::string generateUUID() {
         if (currentEntropy > ENTROPY_THRESHOLD) {
             g_seedNeeded = false;
         } else {
-            ACSDK_WARN(LX("low entropy on call to generate UUID").d("current entropy", currentEntropy));
+            ACSDK_INFO(LX("low entropy on call to generate UUID").d("current entropy", currentEntropy));
             if (consistentEntropyReports > ENTROPY_REPEAT_THRESHOLD) {
                 g_seedNeeded = false;
-                ACSDK_WARN(LX("multiple repeat values for entropy")
+                ACSDK_INFO(LX("multiple repeat values for entropy")
                                .d("current entropy", currentEntropy)
                                .d("consistent entropy reports", consistentEntropyReports));
             }

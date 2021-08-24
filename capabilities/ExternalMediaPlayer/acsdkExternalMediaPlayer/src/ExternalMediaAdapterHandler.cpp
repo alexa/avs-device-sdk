@@ -123,7 +123,7 @@ bool ExternalMediaAdapterHandler::play(
     const std::string& navigation,
     bool preload,
     const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-    std::string playbackTarget) {
+    const std::string& playbackTarget) {
     if (!validatePlayer(localPlayerId)) {
         ACSDK_WARN(LX("playFailed")
                        .d("reason", "player is not configured or not authorized")
@@ -151,7 +151,8 @@ bool ExternalMediaAdapterHandler::play(
 
 bool ExternalMediaAdapterHandler::playControl(
     const std::string& localPlayerId,
-    acsdkExternalMediaPlayerInterfaces::RequestType requestType) {
+    acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+    const std::string& playbackTarget) {
     if (!validatePlayer(localPlayerId)) {
         ACSDK_WARN(LX("playControlFailed")
                        .d("reason", "player is not configured or not authorized")
@@ -159,7 +160,7 @@ bool ExternalMediaAdapterHandler::playControl(
         return false;
     }
 
-    return handlePlayControl(localPlayerId, requestType);
+    return handlePlayControl(localPlayerId, requestType, playbackTarget);
 }
 
 bool ExternalMediaAdapterHandler::seek(const std::string& localPlayerId, std::chrono::milliseconds offset) {

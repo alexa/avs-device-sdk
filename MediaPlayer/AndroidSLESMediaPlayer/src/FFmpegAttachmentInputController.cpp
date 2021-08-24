@@ -97,7 +97,7 @@ std::unique_ptr<FFmpegAttachmentInputController> FFmpegAttachmentInputController
 
         AVDictionary* dictionary = nullptr;
         av_dict_set_int(&dictionary, "channels", format->numChannels, 0);
-        av_dict_set_int(&dictionary, "framerate", format->sampleRateHz, 0);
+        av_dict_set_int(&dictionary, "sample_rate", format->sampleRateHz, 0);
         inputOptions = std::shared_ptr<AVDictionary>(dictionary, AVDictionaryDeleter());
     }
 

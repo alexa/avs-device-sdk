@@ -213,6 +213,16 @@ bool AlexaInterfaceMessageSender::sendResponseEvent(
     return sendCommonResponseEvent(EVENT_NAME_RESPONSE_STRING, instance, correlationToken, endpoint, jsonPayload);
 }
 
+bool AlexaInterfaceMessageSender::sendResponseEvent(
+    const std::string& instance,
+    const std::string& correlationToken,
+    const AVSMessageEndpoint& endpoint,
+    const std::string& responseNamespace,
+    const std::string& responseName,
+    const std::string& jsonPayload) {
+    return sendCommonResponseEvent(responseName, instance, correlationToken, endpoint, jsonPayload, responseNamespace);
+}
+
 bool AlexaInterfaceMessageSender::sendErrorResponseEvent(
     const std::string& instance,
     const std::string& correlationToken,
@@ -244,6 +254,20 @@ bool AlexaInterfaceMessageSender::sendErrorResponseEvent(
     return true;
 }
 
+bool AlexaInterfaceMessageSender::sendErrorResponseEvent(
+    const std::string& instance,
+    const std::string& correlationToken,
+    const AVSMessageEndpoint& endpoint,
+    const std::string& responseNamespace,
+    const std::string& jsonPayload) {
+    AVSMessageHeader eventHeader = AVSMessageHeader::createAVSEventHeader(
+        responseNamespace, EVENT_NAME_ERROR_RESPONSE_STRING, "", correlationToken, ALEXA_INTERFACE_VERSION, instance);
+
+    auto jsonString = buildJsonEventString(eventHeader, Optional<AVSMessageEndpoint>(endpoint), jsonPayload);
+    sendEvent(jsonString);
+    return true;
+}
+
 bool AlexaInterfaceMessageSender::sendDeferredResponseEvent(
     const std::string& instance,
     const std::string& correlationToken,
@@ -270,12 +294,14 @@ AlexaInterfaceMessageSender::ResponseData::ResponseData(
     const std::string& instanceIn,
     const std::string& correlationTokenIn,
     const AVSMessageEndpoint& endpointIn,
-    const std::string& jsonPayloadIn) :
+    const std::string& jsonPayloadIn,
+    const std::string& responseNamespaceIn) :
         type(typeIn),
         instance(instanceIn),
         correlationToken(correlationTokenIn),
         endpoint(endpointIn),
-        jsonPayload(jsonPayloadIn) {
+        jsonPayload(jsonPayloadIn),
+        responseNamespace{responseNamespaceIn} {
 }
 
 AlexaInterfaceMessageSender::ChangeReportData::ChangeReportData(
@@ -292,8 +318,15 @@ bool AlexaInterfaceMessageSender::sendCommonResponseEvent(
     const std::string& instance,
     const std::string& correlationToken,
     const AVSMessageEndpoint& endpoint,
-    const std::string& jsonPayload) {
-    auto event = std::make_shared<ResponseData>(type, instance, correlationToken, endpoint, jsonPayload);
+    const std::string& jsonPayload,
+    const std::string& responseNamespace) {
+    auto event = std::make_shared<ResponseData>(
+        type,
+        instance,
+        correlationToken,
+        endpoint,
+        jsonPayload,
+        responseNamespace == "" ? ALEXA_INTERFACE_NAME : responseNamespace);
     m_executor.submit([this, event]() {
         // Start collecting context for this endpoint.
         auto token = m_contextManager->getContext(shared_from_this(), event->endpoint.endpointId);
@@ -307,7 +340,7 @@ void AlexaInterfaceMessageSender::completeResponseEvent(
     const std::shared_ptr<ResponseData>& event,
     const Optional<AVSContext>& context) {
     AVSMessageHeader eventHeader = AVSMessageHeader::createAVSEventHeader(
-        ALEXA_INTERFACE_NAME, event->type, "", event->correlationToken, ALEXA_INTERFACE_VERSION, event->instance);
+        event->responseNamespace, event->type, "", event->correlationToken, ALEXA_INTERFACE_VERSION, event->instance);
 
     auto jsonString = buildJsonEventString(
         eventHeader, Optional<AVSMessageEndpoint>(event->endpoint), event->jsonPayload, Optional<AVSContext>(context));

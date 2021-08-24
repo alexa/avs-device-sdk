@@ -153,9 +153,9 @@ static const avsCommon::utils::AudioFormat::Endianness COMPATIBLE_ENDIANNESS =
     avsCommon::utils::AudioFormat::Endianness::LITTLE;
 /// The compatible sample rate for AIP.
 static const unsigned int COMPATIBLE_SAMPLE_RATE = 16000;
-/// The compatible bits per sample for Kitt.ai.
+/// The compatible bits per sample.
 static const unsigned int COMPATIBLE_SAMPLE_SIZE_IN_BITS = 16;
-/// The compatible number of channels for Kitt.ai
+/// The compatible number of channels
 static const unsigned int COMPATIBLE_NUM_CHANNELS = 1;
 
 /// JSON key to get the event object of a message.

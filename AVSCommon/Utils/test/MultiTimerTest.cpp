@@ -61,6 +61,7 @@ TEST(MultiTimerTest, test_executionOrderFollowExpirationTime) {
         EXPECT_TRUE(false);
     });
 
+    sleep(1);
     timer.submitTask(std::chrono::milliseconds(10), [&calledEvent, &counter] {
         // This function is due first and should be called first.
         counter++;

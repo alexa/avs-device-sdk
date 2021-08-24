@@ -295,8 +295,12 @@ void SpeechSynthesizer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void SpeechSynthesizer::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG9(LX("cancelDirective").d("messageId", info->directive->getMessageId()));
-    m_executor.submit([this, info]() { executeCancel(info); });
+    if (info && info->directive) {
+        ACSDK_DEBUG9(LX("cancelDirective").d("messageId", info->directive->getMessageId()));
+        m_executor.submit([this, info]() { executeCancel(info); });
+    } else {
+        ACSDK_WARN(LX("cancelDirective").d("reason", "infoNotAvailable"));
+    }
 }
 
 void SpeechSynthesizer::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
@@ -447,20 +451,7 @@ void SpeechSynthesizer::onPlaybackError(
 void SpeechSynthesizer::onPlaybackStopped(SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG9(LX("onPlaybackStopped").d("callbackSourceId", id));
 
-    // MediaPlayer is for some reason stopping the playback of the speech.  Call setFailed if isSetFailedCalled flag is
-    // not set yet.
-    m_executor.submit([this, id]() {
-        if (m_currentInfo && m_mediaSourceId == id) {
-            m_currentInfo->sendCompletedMessage = false;
-            if (m_currentInfo->result && !m_currentInfo->isSetFailedCalled) {
-                m_currentInfo->result->setFailed("Stopped due to MediaPlayer stopping.");
-                m_currentInfo->isSetFailedCalled = true;
-            }
-            executePlaybackFinished();
-        } else {
-            executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "UnexpectedId");
-        }
-    });
+    m_executor.submit([this, id]() { executePlaybackStopped(id); });
 }
 
 void SpeechSynthesizer::onBufferUnderrun(SourceId id, const MediaPlayerState&) {
@@ -479,6 +470,7 @@ SpeechSynthesizer::SpeakDirectiveInfo::SpeakDirectiveInfo(std::shared_ptr<Direct
         isSetFailedCalled{false},
         isPlaybackInitiated{false},
         isHandled{false},
+        isCancelInitiated(false),
         playBehavior{PlayBehavior::REPLACE_ALL} {
 }
 
@@ -489,6 +481,7 @@ void SpeechSynthesizer::SpeakDirectiveInfo::clear() {
     sendCompletedMessage = false;
     isSetFailedCalled = false;
     isPlaybackInitiated = false;
+    isCancelInitiated = false;
 }
 
 SpeechSynthesizer::SpeechSynthesizer(
@@ -823,10 +816,10 @@ void SpeechSynthesizer::executeCancel(std::shared_ptr<DirectiveInfo> info) {
         ACSDK_ERROR(LX("executeCancel").d("reason", "invalidDirectiveInfo"));
         return;
     }
-    executeCancel(speakInfo);
+    executeCancel(speakInfo, false);
 }
 
-void SpeechSynthesizer::executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakInfo) {
+void SpeechSynthesizer::executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakInfo, bool internalCancel) {
     if (!speakInfo) {
         ACSDK_ERROR(LX("executeCancelFailed").d("reason", "invalidDirectiveInfo"));
         return;
@@ -853,9 +846,11 @@ void SpeechSynthesizer::executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakI
                      .d("result", "cancelCurrentDirective")
                      .d("state", m_currentState)
                      .d("desiredState", m_desiredState)
-                     .d("isPlaybackInitiated", m_currentInfo->isPlaybackInitiated));
+                     .d("isPlaybackInitiated", m_currentInfo->isPlaybackInitiated)
+                     .d("internalCancel", internalCancel));
     m_currentInfo->sendPlaybackStartedMessage = false;
     m_currentInfo->sendCompletedMessage = false;
+    m_currentInfo->isCancelInitiated = !internalCancel;
     if (m_currentInfo->isPlaybackInitiated) {
         stopPlaying();
     } else {
@@ -1004,6 +999,44 @@ void SpeechSynthesizer::executePlaybackFinished() {
     resetMediaSourceId();
 }
 
+void SpeechSynthesizer::executePlaybackStopped(SourceId id) {
+    ACSDK_DEBUG(
+        LX("executePlaybackStopped").d("callbackSourceId", id).d("sourceId", id).d("desiredState", m_desiredState));
+
+    // MediaPlayer is for some reason stopping the playback of the speech.
+
+    if (m_currentInfo && m_mediaSourceId == id) {
+        // Playback stop can happen in a number of cases, including:
+        // - CA shutdown.
+        //   In this case all events are suppressed and we don't deliver any notifications.
+        // - Cancel request
+        //   In this case we do not notify that playback has finished. It is not an error.
+        // - New directive with REPLACE_ALL flag
+        //   In this case we do notify that playback has finished. It is not an error.
+        // - User intervention or another issue
+        //   In this case we notify that there is an error (due to unexpected stop), and that playback has finished.
+        if (m_desiredState == SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED) {
+            // Interrupted state indicates we are executing "cancelPlayback", "shutdown", or REPLACE_ALL sequence.
+            // We do not report failure in this case
+            if (m_currentInfo->result && m_currentInfo->isSetFailedCalled) {
+                // Focus loss - we report this as an error
+            } else {
+                // Normal stop - we report this as a success, unless it is a cancel call.
+                m_currentInfo->sendCompletedMessage = !m_currentInfo->isCancelInitiated;
+            }
+        } else if (m_currentInfo->result && !m_currentInfo->isSetFailedCalled) {
+            // Unexpected player stop, can be user intervention or another reason.
+            // Call setFailed if isSetFailedCalled flag is not set yet.
+            m_currentInfo->sendCompletedMessage = false;
+            m_currentInfo->result->setFailed("Stopped due to MediaPlayer stopping.");
+            m_currentInfo->isSetFailedCalled = true;
+        }
+        executePlaybackFinished();
+    } else {
+        executePlaybackError(ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR, "UnexpectedId");
+    }
+}
+
 void SpeechSynthesizer::executePlaybackError(const avsCommon::utils::mediaPlayer::ErrorType& type, std::string error) {
     ACSDK_DEBUG(LX("executePlaybackError").d("type", type).d("error", error));
     if (!m_currentInfo) {
@@ -1077,8 +1110,13 @@ std::string SpeechSynthesizer::buildPayload(std::string& token) {
 
 void SpeechSynthesizer::startPlaying() {
     ACSDK_DEBUG9(LX("startPlaying"));
-    std::shared_ptr<AttachmentReader> attachmentReader = std::move(m_currentInfo->attachmentReader);
-    m_mediaSourceId = m_speechPlayer->setSource(std::move(attachmentReader));
+    std::shared_ptr<AttachmentReader> attachmentReader;
+    if (m_currentInfo && m_currentInfo->attachmentReader) {
+        attachmentReader = std::move(m_currentInfo->attachmentReader);
+        m_mediaSourceId = m_speechPlayer->setSource(std::move(attachmentReader));
+    } else {
+        m_mediaSourceId = MediaPlayerInterface::ERROR;
+    }
     if (m_captionManager && m_captionManager->isEnabled() && m_currentInfo->captionData.isValid()) {
         m_captionManager->onCaption(m_mediaSourceId, m_currentInfo->captionData);
     }
@@ -1148,14 +1186,15 @@ void SpeechSynthesizer::setDesiredState(SpeechSynthesizerObserverInterface::Spee
     m_desiredState = desiredState;
 }
 
-void SpeechSynthesizer::resetCurrentInfo(std::shared_ptr<SpeakDirectiveInfo> speakInfo) {
-    if (m_currentInfo != speakInfo) {
-        if (m_currentInfo) {
-            removeSpeakDirectiveInfo(m_currentInfo->directive->getMessageId());
-            removeDirective(m_currentInfo->directive->getMessageId());
-            m_currentInfo->clear();
+void SpeechSynthesizer::resetCurrentInfo() {
+    if (m_currentInfo) {
+        auto directive = m_currentInfo->directive;
+        if (directive) {
+            removeSpeakDirectiveInfo(directive->getMessageId());
+            removeDirective(directive->getMessageId());
         }
-        m_currentInfo = speakInfo;
+        m_currentInfo->clear();
+        m_currentInfo.reset();
     }
 }
 
@@ -1323,7 +1362,7 @@ void SpeechSynthesizer::addToDirectiveQueue(std::shared_ptr<SpeakDirectiveInfo> 
             m_speakInfoQueue.push_back(speakInfo);
             if (m_currentInfo) {
                 lock.unlock();
-                executeCancel(m_currentInfo);
+                executeCancel(m_currentInfo, true);
                 lock.lock();
             }
             break;

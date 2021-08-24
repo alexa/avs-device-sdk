@@ -4,6 +4,7 @@ if (BUILD_TESTING)
     add_library(ACLTransportCommonTestLib
         MockHTTP2Connection.cpp
         MockHTTP2Request.cpp
+        TestMessageRequestObserver.cpp
         MockMimeResponseSink.cpp)
     target_include_directories(ACLTransportCommonTestLib PUBLIC
         "${ACL_SOURCE_DIR}/include"

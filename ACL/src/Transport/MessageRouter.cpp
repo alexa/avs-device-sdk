@@ -121,17 +121,15 @@ void MessageRouter::enable() {
 
 void MessageRouter::doShutdown() {
     disable();
-
     // The above call will release all the transports. If m_requestQueue is non-empty once all of the transports
     // have been released, any outstanding MessageRequest instances must receive an onCompleted(NOT_CONNECTED)
     // notification.
     std::unique_lock<std::mutex> lock{m_connectionMutex};
-    if (!m_requestQueue->empty()) {
+    while (!m_requestQueue->empty()) {
         auto request = m_requestQueue->dequeueOldestRequest();
         if (request != nullptr) {
             request->sendCompleted(MessageRequestObserverInterface::Status::NOT_CONNECTED);
         }
-        m_requestQueue->clear();
     }
     lock.unlock();
 

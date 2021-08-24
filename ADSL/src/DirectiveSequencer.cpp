@@ -101,7 +101,9 @@ bool DirectiveSequencer::onDirective(std::shared_ptr<AVSDirective> directive) {
                        .d("reason", m_isShuttingDown ? "isShuttingDown" : "disabled"));
         return false;
     }
-    ACSDK_INFO(LX("onDirective").d("directive", directive->getHeaderAsString()));
+    ACSDK_INFO(LX("onDirective")
+                   .d("directive", directive->getHeaderAsString())
+                   .sensitive("raw", directive->getUnparsedDirective()));
     m_receivingQueue.push_back(directive);
     m_wakeReceivingLoop.notifyOne();
     return true;

@@ -185,9 +185,17 @@ SetSettingResult Setting<ValueT>::setLocalChange(const ValueType& value) {
 
 template <typename ValueT>
 bool Setting<ValueT>::clearData(const ValueType& value) {
-    std::lock_guard<std::mutex> lock{m_mutex};
+    std::unique_lock<std::mutex> lock{m_mutex};
     this->m_value = value;
-    return m_protocol->clearData();
+    // Clear customer's data before restoring the initial value
+    auto result = m_protocol->clearData();
+    lock.unlock();
+    if (result) {
+        // this->m_value (initial value) is restored
+        // as databaseValue.empty() == true
+        restore();
+    }
+    return result;
 }
 
 template <typename ValueT>

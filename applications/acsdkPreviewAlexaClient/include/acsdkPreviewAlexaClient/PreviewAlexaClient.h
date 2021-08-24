@@ -37,6 +37,11 @@
 #include <SampleApp/SampleApplicationReturnCodes.h>
 #include <SampleApp/UserInputManager.h>
 
+#ifdef AUTH_MANAGER
+#include <acsdkAuthorization/AuthorizationManager.h>
+#include <acsdkAuthorization/LWA/LWAAuthorizationAdapter.h>
+#endif
+
 #ifdef KWD
 #include <KWD/AbstractKeywordDetector.h>
 #endif
@@ -212,6 +217,14 @@ private:
 #ifdef MODE_CONTROLLER
     /// The @c PeripheralEndpointModeControllerHandler used by @c InteractionManager
     std::shared_ptr<sampleApp::PeripheralEndpointModeControllerHandler> m_peripheralEndpointModeHandler;
+#endif
+
+#ifdef AUTH_MANAGER
+    /// The @c AuthorizationManager instance that can be used to dynamically authorize with different methods.
+    std::shared_ptr<acsdkAuthorization::AuthorizationManager> m_authManager;
+
+    /// The adapter that supports authorizing with LWA based methods.
+    std::shared_ptr<acsdkAuthorization::lwa::LWAAuthorizationAdapter> m_lwaAdapter;
 #endif
 };
 

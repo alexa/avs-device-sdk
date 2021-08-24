@@ -75,8 +75,25 @@ public:
      * @param jsonContent The message to be sent to AVS.
      * @param uriPathExtension An optional uri path extension which will be appended to the base url of the AVS.
      * endpoint.  If not specified, the default AVS path extension should be used by the sender implementation.
+     * @param threshold. An optional threshold to ACL to send the metric specified by streamMetricName. If this isn't
+     * specified no metric will be recorded.
+     * @param streamMetricName. An optional metric name for ACL to submit when the threshold is met. If this isn't
+     * specified no metric will be recorded.
      */
-    MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension = "");
+    MessageRequest(
+        const std::string& jsonContent,
+        const std::string& uriPathExtension = "",
+        const unsigned int threshold = 0,
+        const std::string& streamMetricName = "");
+
+    /**
+     * Constructor.
+     *
+     * @param jsonContent The message to be sent to AVS.
+     * @param threshold. A required threshold to ACL to send the metric specified by streamMetricName.
+     * @param streamMetricName. A required metric name for ACL to submit when the threshold is met.
+     */
+    MessageRequest(const std::string& jsonContent, const unsigned int threshold, const std::string& streamMetricName);
 
     /**
      * Constructor.
@@ -91,13 +108,19 @@ public:
      * values for different destinations. In such use cases, @c MessageRequest works as a container with all required
      * info to build different versions of requests. The resolving function contains the logic to build the target
      * message request based on the info in the original request, and provided resolveKey.
+     * @param threshold. An optional threshold to ACL to send the metric specified by streamMetricName. If this isn't
+     * specified no metric will be recorded.
+     * @param streamMetricName. An optional metric name for ACL to submit when the threshold is met. If this isn't
+     * specified no metric will be recorded.
      */
     MessageRequest(
         const std::string& jsonContent,
         bool isSerialized,
         const std::string& uriPathExtension = "",
         std::vector<std::pair<std::string, std::string>> headers = {},
-        MessageRequestResolveFunction resolver = nullptr);
+        MessageRequestResolveFunction resolver = nullptr,
+        const unsigned int threshold = 0,
+        const std::string& streamMetricName = "");
 
     /**
      * Constructor to construct a MessageRequest which contains a copy of the data in @c MessageRequest.
@@ -213,6 +236,18 @@ public:
      */
     std::shared_ptr<MessageRequest> resolveRequest(const std::string& resolveKey) const;
 
+    /**
+     * Get the stream bytes threshold, to determine when we should record the stream metric.
+     * @return m_threshold
+     */
+    unsigned int getStreamBytesThreshold() const;
+
+    /**
+     * Get the name for the bytes stream metric.
+     * @return m_streamMetricName
+     */
+    std::string getStreamMetricName() const;
+
 protected:
     /// Mutex to guard access of m_observers.
     std::mutex m_observerMutex;
@@ -237,6 +272,12 @@ protected:
 
     /// Resolver function to resolve current message request to a valid state. Null if message is already resolved.
     MessageRequestResolveFunction m_resolver;
+
+    /// The name for the stream byte metric.
+    std::string m_streamMetricName;
+
+    /// The threshold for the number of bytes for when we should record the stream metric.
+    unsigned int m_streamBytesThreshold;
 };
 
 }  // namespace avs

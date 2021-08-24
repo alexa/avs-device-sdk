@@ -18,6 +18,7 @@
 #include "AVSGatewayManager/AVSGatewayManager.h"
 
 #include <AVSGatewayManager/PostConnectVerifyGatewaySender.h>
+#include <AVSGatewayManager/AuthRefreshedObserver.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 namespace alexaClientSDK {
@@ -48,6 +49,7 @@ static const std::string DEFAULT_AVS_GATEWAY = "https://alexa.na.gateway.devices
 std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGatewayManager::
     createAVSGatewayManagerInterface(
         std::unique_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::shared_ptr<
@@ -61,7 +63,12 @@ std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGateway
         ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "nullProviderRegistrar"));
         return nullptr;
     }
-    auto gatewayManager = create(std::move(avsGatewayManagerStorage), customerDataManager, *configurationRoot);
+    if (!authDelegate) {
+        ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "nullAuthDelegater"));
+        return nullptr;
+    }
+    auto gatewayManager =
+        create(std::move(avsGatewayManagerStorage), customerDataManager, *configurationRoot, authDelegate);
     if (!gatewayManager) {
         ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "createFailed"));
         return nullptr;
@@ -76,7 +83,8 @@ std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGateway
 std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
     std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
-    const ConfigurationNode& configurationRoot) {
+    const ConfigurationNode& configurationRoot,
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate) {
     ACSDK_DEBUG5(LX(__func__));
     if (!avsGatewayManagerStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAvsGatewayManagerStorage"));
@@ -95,7 +103,7 @@ std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
         }
 
         auto avsGatewayManager = std::shared_ptr<AVSGatewayManager>(
-            new AVSGatewayManager(avsGatewayManagerStorage, customerDataManager, avsGateway));
+            new AVSGatewayManager(avsGatewayManagerStorage, customerDataManager, authDelegate, avsGateway));
         if (avsGatewayManager->init()) {
             return avsGatewayManager;
         } else {
@@ -107,10 +115,12 @@ std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
 
 AVSGatewayManager::AVSGatewayManager(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
+    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
     const std::string& defaultAVSGateway) :
-        CustomerDataHandler{customerDataManager},
-        m_avsGatewayStorage{avsGatewayManagerStorage},
+        CustomerDataHandler{std::move(customerDataManager)},
+        m_avsGatewayStorage{std::move(avsGatewayManagerStorage)},
+        m_authDelegate{std::move(authDelegate)},
         m_currentState{defaultAVSGateway, false} {
 }
 
@@ -126,7 +136,19 @@ std::shared_ptr<PostConnectOperationInterface> AVSGatewayManager::createPostConn
     /// Create a PostConnectOperation only when required.
     if (!m_currentState.isVerified) {
         auto callback = std::bind(&AVSGatewayManager::onGatewayVerified, this, std::placeholders::_1);
-        m_currentVerifyGatewaySender = PostConnectVerifyGatewaySender::create(callback);
+        std::shared_ptr<PostConnectVerifyGatewaySender> verifyGatewaySender =
+            PostConnectVerifyGatewaySender::create(callback);
+        m_currentVerifyGatewaySender = verifyGatewaySender;
+
+        if (m_authDelegate) {
+            std::function<void()> onAuthRefreshedCallback = [verifyGatewaySender]() {
+                verifyGatewaySender->wakeOperation();
+            };
+            std::shared_ptr<AuthRefreshedObserver> authRefreshedObserver =
+                AuthRefreshedObserver::create(onAuthRefreshedCallback);
+            m_authDelegate->addAuthObserver(authRefreshedObserver);
+        }
+
         return m_currentVerifyGatewaySender;
     }
     ACSDK_DEBUG5(LX(__func__).m("Gateway already verified, skipping gateway verification step"));

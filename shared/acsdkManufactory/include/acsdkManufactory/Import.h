@@ -23,9 +23,9 @@ namespace acsdkManufactory {
  * Template for tagging a type as a dependency (an import) vs an export in a parameter pack that specifies the
  * imports and exports of a @c Container or @c ContainerAccumulator.
  *
- * @tparam ... Template parameters of the form <Type>, where @c Type is the type to be imported.
+ * @tparam Types Template parameters of the form <Type>+, where @c Types is a list of types to be imported.
  */
-template <typename...>
+template <typename... Types>
 class Import {};
 
 }  // namespace acsdkManufactory

@@ -122,12 +122,25 @@ public:
         const std::string& correlationToken,
         const avsCommon::avs::AVSMessageEndpoint& endpoint,
         const std::string& jsonPayload = "{}") override;
+    virtual bool sendResponseEvent(
+        const std::string& instance,
+        const std::string& correlationToken,
+        const avsCommon::avs::AVSMessageEndpoint& endpoint,
+        const std::string& responseNamespace,
+        const std::string& responseName,
+        const std::string& jsonPayload = "{}") override;
     virtual bool sendErrorResponseEvent(
         const std::string& instance,
         const std::string& correlationToken,
         const avsCommon::avs::AVSMessageEndpoint& endpoint,
         const ErrorResponseType errorType,
         const std::string& errorMessage = "") override;
+    bool sendErrorResponseEvent(
+        const std::string& instance,
+        const std::string& correlationToken,
+        const avsCommon::avs::AVSMessageEndpoint& endpoint,
+        const std::string& responseNamespace,
+        const std::string& jsonPayload = "{}") override;
     virtual bool sendDeferredResponseEvent(
         const std::string& instance,
         const std::string& correlationToken,
@@ -151,7 +164,8 @@ private:
             const std::string& instance,
             const std::string& correlationToken,
             const avsCommon::avs::AVSMessageEndpoint& endpoint,
-            const std::string& jsonPayload);
+            const std::string& jsonPayload,
+            const std::string& responseNamespace);
 
         /// The type of response event.
         const std::string type;
@@ -167,6 +181,9 @@ private:
 
         /// JSON string representing the payload for the response event.
         const std::string jsonPayload;
+
+        /// The namespace of response event.
+        const std::string responseNamespace;
     };
 
     // Hold Alexa.ChangeReport event details until we have context.
@@ -230,7 +247,8 @@ private:
         const std::string& instance,
         const std::string& correlationToken,
         const avsCommon::avs::AVSMessageEndpoint& endpoint,
-        const std::string& jsonPayload = "{}");
+        const std::string& jsonPayload = "{}",
+        const std::string& responseNamespace = "");
 
     /**
      * Complete sending of an Alexa.Response event.  Called from the executor context.  If there was a fatal error

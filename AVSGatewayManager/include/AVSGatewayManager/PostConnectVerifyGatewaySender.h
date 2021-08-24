@@ -51,6 +51,12 @@ public:
         const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) override;
     void abortOperation() override;
     /// @}
+
+    /**
+     * Wakes the @c PostConnectVerifyGatewaySender if it is on wait state
+     */
+    void wakeOperation();
+
 private:
     /**
      * Return codes for the @c sendVerifyGateway method.
@@ -71,7 +77,7 @@ private:
      *
      * @param gatewayVerifiedCallback The callback method that should be called on successful gateway verification.
      */
-    PostConnectVerifyGatewaySender(
+    explicit PostConnectVerifyGatewaySender(
         std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> gatewayVerifiedCallback);
 
     /**
@@ -88,6 +94,11 @@ private:
      * @return True if the operation is stopping, else false.
      */
     bool isStopping();
+
+    /**
+     * Thread safe method to put the process in wait state
+     */
+    void wait(int retryAttempt);
 
     /// The Callback function that will be called after successful response to @c VerifyGateway event.
     std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> m_gatewayVerifiedCallback;

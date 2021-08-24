@@ -20,6 +20,7 @@
 
 #include <acsdkSampleApplicationInterfaces/UIManagerInterface.h>
 #include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
+#include <acsdkAuthorizationInterfaces/LWA/CBLAuthorizationObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkSampleApplicationCBLAuthRequester {
@@ -27,7 +28,9 @@ namespace acsdkSampleApplicationCBLAuthRequester {
 /**
  * Implementation of CBLAuthRequesterInterface.
  */
-class SampleApplicationCBLAuthRequester : public authorization::cblAuthDelegate::CBLAuthRequesterInterface {
+class SampleApplicationCBLAuthRequester
+        : public authorization::cblAuthDelegate::CBLAuthRequesterInterface
+        , public acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface {
 public:
     /**
      * Create a new instance of @c CBLAuthRequesterInterface.
@@ -38,10 +41,27 @@ public:
     static std::shared_ptr<CBLAuthRequesterInterface> createCBLAuthRequesterInterface(
         const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager);
 
+    /**
+     * Create a new instance of @c CBLAuthorizationObserverInterface.
+     *
+     * @param uiManager The instance of @c UIManagerInterface to use to message the user.
+     * @return A new instance of @c CBLAuthorizationObserverInterface.
+     */
+    static std::shared_ptr<acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface>
+    createCBLAuthorizationObserverInterface(
+        const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager);
+
     /// @name CBLAuthDelegateRequester methods
     /// @{
     void onRequestAuthorization(const std::string& url, const std::string& code) override;
     void onCheckingForAuthorization() override;
+    /// @}
+
+    /// @name CBLAuthorizationObserverInterface methods
+    /// @{
+    void onCustomerProfileAvailable(
+        const acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface::CustomerProfile& customerProfile)
+        override;
     /// @}
 
 private:

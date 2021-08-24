@@ -111,6 +111,17 @@ private:
      */
     void reportMessageRequestFinished();
 
+    /**
+     * Record a stream metric once when a specific threshold of bytes have been read from the stream.
+     * The stream metric name and threshold will be specified in the MessageRequest.
+     */
+    void recordStreamMetric(int bytes);
+
+    /**
+     * Record the metric that specifics the start of sending the Message Event to the cloud.
+     */
+    void recordStartOfEventMetric();
+
     /// The MessageRequest that this handler is servicing.
     std::shared_ptr<avsCommon::avs::MessageRequest> m_messageRequest;
 
@@ -146,6 +157,12 @@ private:
 
     /// Status to be reported back to the @c MessageRequest.
     avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status m_resultStatus;
+
+    /// The number of bytes that have been read from the stream.
+    unsigned int m_streamBytesRead;
+
+    /// If the stream metric has already been recorded.
+    bool m_recordedStreamMetric;
 };
 
 }  // namespace acl

@@ -341,11 +341,22 @@ void DevicePropertyAggregator::updateSpeakerSettingsInPropertyMap(
 }
 
 void DevicePropertyAggregator::onRangeChanged(const RangeState& rangeState, const AlexaStateChangeCauseType cause) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX(__func__).d("range value", rangeState.value));
     m_executor.submit([this, rangeState]() {
         std::stringstream ss;
         ss << rangeState.value;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::RANGE_CONTROLLER_STATUS] = ss.str();
+    });
+}
+
+void DevicePropertyAggregator::onPowerStateChanged(
+    const PowerState& powerState,
+    const AlexaStateChangeCauseType cause) {
+    ACSDK_DEBUG5(LX(__func__).d("power state", powerState.powerState));
+    m_executor.submit([this, powerState]() {
+        std::stringstream ss;
+        ss << powerState.powerState;
+        m_asyncPropertyMap[DevicePropertyAggregatorInterface::POWER_CONTROLLER_STATUS] = ss.str();
     });
 }
 

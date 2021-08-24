@@ -74,6 +74,9 @@ static const std::string ACL_METRIC_SOURCE_PREFIX = "ACL-";
 /// Metric identifier for send mime data error
 static const std::string SEND_DATA_ERROR = "ERROR.SEND_DATA_ERROR";
 
+/// Metric identifier for start of Mime data event being sent to the cloud.
+static const std::string START_EVENT_SENT_TO_CLOUD = "START_EVENT_SENT_TO_CLOUD";
+
 /// Read status tag
 static const std::string READ_STATUS_TAG = "READ_STATUS";
 
@@ -165,6 +168,53 @@ static void submitMessageSendErrorMetric(
     recordMetric(metricRecorder, metricEvent);
 }
 
+void MessageRequestHandler::recordStreamMetric(int bytes) {
+    if (m_messageRequest == nullptr) {
+        return;
+    }
+
+    if (m_metricRecorder == nullptr) {
+        return;
+    }
+    if (m_recordedStreamMetric) {
+        return;
+    }
+    m_streamBytesRead += bytes;
+    std::string metricName{m_messageRequest->getStreamMetricName()};
+    auto threshold = m_messageRequest->getStreamBytesThreshold();
+    if (metricName == "" || threshold == 0) {
+        return;
+    }
+    if (threshold <= m_streamBytesRead) {
+        auto metricEvent = MetricEventBuilder{}
+                               .setActivityName(ACL_METRIC_SOURCE_PREFIX + metricName)
+                               .addDataPoint(DataPointCounterBuilder{}.setName(metricName).increment(1).build())
+                               .build();
+        if (!metricEvent) {
+            ACSDK_ERROR(LX("recordStreamMetric").m("submitMetricFailed").d("reason", "invalid metric event"));
+            return;
+        }
+        recordMetric(m_metricRecorder, metricEvent);
+        m_recordedStreamMetric = true;
+    }
+}
+
+void MessageRequestHandler::recordStartOfEventMetric() {
+    if (!m_metricRecorder) {
+        return;
+    }
+    auto metricEvent =
+        MetricEventBuilder{}
+            .setActivityName(ACL_METRIC_SOURCE_PREFIX + START_EVENT_SENT_TO_CLOUD)
+            .addDataPoint(DataPointCounterBuilder{}.setName(START_EVENT_SENT_TO_CLOUD).increment(1).build())
+            .build();
+    if (!metricEvent) {
+        ACSDK_ERROR(LX("recordStartOfEventMetric").m("submitMetricFailed").d("reason", "invalid metric event"));
+        return;
+    }
+    recordMetric(m_metricRecorder, metricEvent);
+}
+
 MessageRequestHandler::~MessageRequestHandler() {
     reportMessageRequestAcknowledged();
     reportMessageRequestFinished();
@@ -250,7 +300,9 @@ MessageRequestHandler::MessageRequestHandler(
         m_wasMessageRequestFinishedReported{false},
         m_responseCode{0},
         m_powerResource{powerResource},
-        m_resultStatus{MessageRequestObserverInterface::Status::PENDING} {
+        m_resultStatus{MessageRequestObserverInterface::Status::PENDING},
+        m_streamBytesRead{0},
+        m_recordedStreamMetric{false} {
     ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (m_powerResource) {
@@ -321,6 +373,7 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
             std::copy(m_jsonNext, m_jsonNext + countToCopy, bytes);
             m_jsonNext += countToCopy;
             m_countOfJsonBytesLeft -= countToCopy;
+            recordStartOfEventMetric();
             return HTTP2SendDataResult(countToCopy);
         } else {
             m_countOfPartsSent++;
@@ -329,6 +382,7 @@ HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_
     } else if (m_namedReader) {
         auto readStatus = AttachmentReader::ReadStatus::OK;
         auto bytesRead = m_namedReader->reader->read(bytes, size, &readStatus);
+        recordStreamMetric(bytesRead);
         ACSDK_DEBUG9(LX("attachmentRead").d("readStatus", (int)readStatus).d("bytesRead", bytesRead));
         switch (readStatus) {
             // The good cases.

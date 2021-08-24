@@ -232,6 +232,9 @@ private:
         /// A flag to indicate the directive has been handled.
         bool isHandled;
 
+        /// A flag to indicate cancel has been initiated.
+        bool isCancelInitiated;
+
         /// The play behavior of this directive.
         avsCommon::avs::PlayBehavior playBehavior;
 
@@ -329,8 +332,9 @@ private:
     /**
      * Cancel execution of a SpeechSynthesize @c Speak directive (on the @c m_executor thread).
      * @param speakInfo The speakInfoDirective to cancel.
+     * @param internalCancel Flag if cancelled active directive shall be reported as completed.
      */
-    void executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakInfo);
+    void executeCancel(std::shared_ptr<SpeakDirectiveInfo> speakInfo, bool internalCancel);
 
     /**
      * Execute a change of state (on the @c m_executor thread). If the @c m_desiredState is @c PLAYING, playing the
@@ -358,6 +362,13 @@ private:
      * Handle (on the @c m_executor thread) notification that speech playback has finished.
      */
     void executePlaybackFinished();
+
+    /**
+     * Handle (on the @c m_executor thread) notification that speech playback has stopped.
+     *
+     * @param id The id of the source to which this event corresponds to.
+     */
+    void executePlaybackStopped(SourceId id);
 
     /**
      * Handle (on the @c m_executor thread) notification that speech playback encountered an error.
@@ -446,10 +457,8 @@ private:
     /**
      * Reset @c m_currentInfo, cleaning up any @c SpeechSynthesizer resources and removing from CapabilityAgent's
      * map of active @c AVSDirectives.
-     *
-     * @param info The @c DirectiveInfo instance to make current (defaults to @c nullptr).
      */
-    void resetCurrentInfo(std::shared_ptr<SpeakDirectiveInfo> info = nullptr);
+    void resetCurrentInfo();
 
     /**
      * Send the handling completed notification and clean up the resources of @c m_currentInfo.

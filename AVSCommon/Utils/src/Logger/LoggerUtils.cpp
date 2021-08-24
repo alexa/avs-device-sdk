@@ -86,8 +86,8 @@ void acsdkCritical(const LogEntry& entry) {
 }
 
 void logEntry(Level level, const LogEntry& entry) {
-    Logger& loggerInstance = ACSDK_GET_LOGGER_FUNCTION();
-    loggerInstance.log(level, entry);
+    auto loggerInstance = ACSDK_GET_LOGGER_FUNCTION();
+    loggerInstance->log(level, entry);
 }
 
 void dumpBytesToStream(std::ostream& stream, const char* prefix, size_t width, const unsigned char* data, size_t size) {

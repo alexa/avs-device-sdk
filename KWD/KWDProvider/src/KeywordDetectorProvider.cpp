@@ -15,21 +15,8 @@
 
 #include "KWDProvider/KeywordDetectorProvider.h"
 
-#ifdef KWD_KITTAI
-#include <KittAi/KittAiKeyWordDetector.h>
-#elif KWD_SENSORY
+#ifdef KWD_SENSORY
 #include <Sensory/SensoryKeywordDetector.h>
-#endif
-
-#ifdef KWD_KITTAI
-/// The sensitivity of the Kitt.ai engine.
-static const double KITT_AI_SENSITIVITY = 0.6;
-
-/// The audio amplifier level of the Kitt.ai engine.
-static const float KITT_AI_AUDIO_GAIN = 2.0;
-
-/// Whether Kitt.ai should apply front end audio processing.
-static const bool KITT_AI_APPLY_FRONT_END_PROCESSING = true;
 #endif
 
 using namespace alexaClientSDK;
@@ -42,18 +29,7 @@ std::unique_ptr<kwd::AbstractKeywordDetector> KeywordDetectorProvider::create(
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
         keyWordDetectorStateObservers,
     const std::string& pathToInputFolder) {
-#if defined(KWD_KITTAI)
-    return alexaClientSDK::kwd::KittAiKeyWordDetector::create(
-        stream,
-        audioFormat,
-        keyWordObservers,
-        keyWordDetectorStateObservers,
-        pathToInputFolder + "/common.res",
-        {{pathToInputFolder + "/alexa.umdl", "ALEXA", KITT_AI_SENSITIVITY}},
-        KITT_AI_AUDIO_GAIN,
-        KITT_AI_APPLY_FRONT_END_PROCESSING);
-
-#elif defined(KWD_SENSORY)
+#if defined(KWD_SENSORY)
     return kwd::SensoryKeywordDetector::create(
         stream,
         audioFormat,

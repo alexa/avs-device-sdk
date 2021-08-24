@@ -31,6 +31,8 @@
 #include "ACL/Transport/MessageRouter.h"
 #include "ACL/Transport/MessageConsumerInterface.h"
 
+#include "TestMessageRequestObserver.h"
+
 namespace alexaClientSDK {
 namespace acl {
 namespace test {
@@ -40,6 +42,9 @@ using namespace transport::test;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils::threading;
 using namespace avsCommon::utils::memory;
+using namespace alexaClientSDK::avsCommon::sdkInterfaces;
+using namespace avsCommon::utils;
+using namespace avsCommon::utils::observer::test;
 
 using namespace ::testing;
 
@@ -69,6 +74,10 @@ public:
         auto future = m_executor.submit([]() { ; });
         auto status = future.wait_for(millisecondsToWait);
         return status == std::future_status::ready;
+    }
+
+    bool isExecutorActive() {
+        return !m_executor.isShutdown();
     }
 
     /// Short amount of time to allow for an automatic reconnect before notifying of a server side disconnect.
@@ -117,18 +126,25 @@ public:
     }
 
     void TearDown() {
-        // Wait on MessageRouter to ensure everything is finished
-        waitOnMessageRouter(SHORT_TIMEOUT_MS);
+        if (m_router->isExecutorActive()) {
+            // Wait on MessageRouter to ensure everything is finished
+            waitOnMessageRouter(SHORT_TIMEOUT_MS);
+        }
     }
 
     std::shared_ptr<avsCommon::avs::MessageRequest> createMessageRequest() {
         return std::make_shared<avsCommon::avs::MessageRequest>(MESSAGE);
     }
+
+    std::shared_ptr<TestMessageRequestObserver> createObserver() {
+        return std::make_shared<TestMessageRequestObserver>();
+    }
+
     void waitOnMessageRouter(std::chrono::milliseconds millisecondsToWait) {
         auto status = m_router->isExecutorReady(millisecondsToWait);
-
         ASSERT_EQ(true, status);
     }
+
     void setupStateToPending() {
         initializeMockTransport(m_mockTransport.get());
         m_router->enable();

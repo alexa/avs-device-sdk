@@ -6,13 +6,20 @@ message(WARNING "\nWARNING! Default SQLiteCBLAuthDelegateStorage is NOT encrypte
 
 add_library(CBLAuthDelegate SHARED
     CBLAuthDelegate.cpp
-    CBLAuthDelegateConfiguration.cpp
     SQLiteCBLAuthDelegateStorage.cpp)
 target_include_directories(CBLAuthDelegate PUBLIC
     "${CBLAuthDelegate_SOURCE_DIR}/include")
 target_include_directories(CBLAuthDelegate PRIVATE
     "${RAPIDJSON_INCLUDE_DIR}")
-target_link_libraries(CBLAuthDelegate AVSCommon RegistrationManager SQLiteStorage ${CURL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(
+    CBLAuthDelegate
+    AVSCommon
+    RegistrationManager
+    SQLiteStorage
+    acsdkAuthorization
+    acsdkAuthorizationInterfaces
+    ${CURL_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT})
 
 # install target
 asdk_install()

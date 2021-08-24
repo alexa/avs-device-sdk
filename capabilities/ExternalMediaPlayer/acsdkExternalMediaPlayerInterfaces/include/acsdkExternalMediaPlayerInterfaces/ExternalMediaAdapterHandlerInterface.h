@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERHANDLERINTERFACE_H_
-#define ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERHANDLERINTERFACE_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERHANDLERINTERFACE_H_
+#define ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERHANDLERINTERFACE_H_
 
 #include <chrono>
 #include <string>
@@ -119,6 +119,7 @@ public:
      * @param preload If true, this Play directive is intended to preload the identified content only but not begin
      * playback.
      * @param playRequestor The @c PlayRequestor object that is used to distinguish if it's a music alarm or not.
+     * @param playbackTarget Playback target to play
      * @return True if the call was handled
      */
     virtual bool play(
@@ -131,18 +132,20 @@ public:
         const std::string& navigation,
         bool preload,
         const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-        std::string playbackTarget) = 0;
+        const std::string& playbackTarget) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...
      *
      * @param localPlayerId The localPlayerId that this play control is targeted at
      * @param requestType The type of REQUEST. Will always be PLAY/PAUSE/RESUME/NEXT...
+     * @param playbackTarget Playback target to handle play control with
      * @return True if the call was handled
      */
     virtual bool playControl(
         const std::string& localPlayerId,
-        acsdkExternalMediaPlayerInterfaces::RequestType requestType) = 0;
+        acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+        const std::string& playbackTarget) = 0;
 
     /**
      * Method to seek to the given offset.
@@ -200,4 +203,4 @@ inline ExternalMediaAdapterHandlerInterface::ExternalMediaAdapterHandlerInterfac
 }  // namespace acsdkExternalMediaPlayerInterfaces
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERHANDLERINTERFACE_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_EXTERNALMEDIAADAPTERHANDLERINTERFACE_H_

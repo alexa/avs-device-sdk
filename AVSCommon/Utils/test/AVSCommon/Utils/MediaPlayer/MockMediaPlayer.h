@@ -136,6 +136,7 @@ public:
         avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>(SourceId));
     MOCK_METHOD0(getPlaybackAttributes, avsCommon::utils::Optional<PlaybackAttributes>());
     MOCK_METHOD0(getPlaybackReports, std::vector<PlaybackReport>());
+    MOCK_METHOD0(getFingerprint, Optional<Fingerprint>());
 
     /// @name RequiresShutdown overrides
     /// @{

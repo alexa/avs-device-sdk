@@ -84,6 +84,12 @@ void Logger::setLevel(Level level) {
 }
 
 void Logger::addLogLevelObserver(LogLevelObserverInterface* observer) {
+    if (!observer) {
+        // Log without ACSDK_* macros to avoid recursive invocation of constructor.
+        log(Level::ERROR, LogEntry("Logger", "addLogLevelObserver").m("nullObserver"));
+        return;
+    }
+
     {
         std::lock_guard<std::mutex> lock(m_observersMutex);
         m_observers.push_back(observer);
@@ -118,6 +124,14 @@ void Logger::logAtExit(Level level, const LogEntry& entry) {
     if (shouldLog(level)) {
         emit(level, std::chrono::system_clock::now(), AT_EXIT_THREAD_ID, entry.c_str());
     }
+}
+
+void Logger::emit(
+    Level level,
+    std::chrono::system_clock::time_point time,
+    const char* threadMoniker,
+    const char* text) {
+    // no-op.
 }
 
 }  // namespace logger

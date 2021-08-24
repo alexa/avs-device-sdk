@@ -140,8 +140,13 @@ AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
     std::chrono::milliseconds offsetAdjustment,
     const avsCommon::utils::AudioFormat* format,
     const avsCommon::utils::mediaPlayer::SourceConfig& config) {
-    m_offsetAdjustment = offsetAdjustment;
-    return ERROR;
+    auto input = FFmpegAttachmentInputController::create(attachmentReader, format);
+    auto newId = configureNewRequest(std::move(input), config, nullptr, offsetAdjustment);
+    if (ERROR == newId) {
+        ACSDK_ERROR(
+            LX("setSourceFailed").d("name", RequiresShutdown::name()).d("type", "attachment").d("format", format));
+    }
+    return newId;
 }
 
 AndroidSLESMediaPlayer::SourceId AndroidSLESMediaPlayer::setSource(
@@ -600,8 +605,7 @@ AndroidSLESMediaPlayer::AndroidSLESMediaPlayer(
         m_player{playInterface},
         m_config{config},
         m_almostDone{false},
-        m_hasShutdown{false},
-        m_offsetAdjustment{std::chrono::milliseconds::zero()} {
+        m_hasShutdown{false} {
 }
 
 void AndroidSLESMediaPlayer::onQueueEvent(

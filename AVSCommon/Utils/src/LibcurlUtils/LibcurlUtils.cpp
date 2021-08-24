@@ -46,6 +46,9 @@ static const std::string CAPATH_CONFIG_KEY = "CURLOPT_CAPATH";
 /// Key for looking up a configuration value for @c CURLOPT_CAINFO
 static const std::string CAINFO_CONFIG_KEY = "CURLOPT_CAINFO";
 
+/// Key for looking up a configuration value for @c CURLOPT_PROXY
+static const std::string PROXY_CONFIG_KEY = "CURLOPT_PROXY";
+
 /// Key for looking up a configuration value for verifying hosts and peers.
 static const std::string VERIFY_HOSTS_AND_PEERS_CONFIG_KEY = "verifyHostsAndPeers";
 
@@ -124,6 +127,24 @@ bool prepareForTLS(CURL* handle) {
         ACSDK_WARN(LX("verificationOfHostsAndPeersDisabled"));
     }
 #endif
+
+    return true;
+}
+
+bool prepareForProxy(CURL* handle) {
+    if (!handle) {
+        ACSDK_ERROR(LX("prepareForProxyFailed").d("reason", "nullHandle"));
+        return false;
+    }
+
+    auto config = configuration::ConfigurationNode::getRoot()[LIBCURLUTILS_CONFIG_KEY];
+
+    std::string proxy;
+    if (config.getString(PROXY_CONFIG_KEY, &proxy) &&
+        !setopt(handle, CURLOPT_PROXY, proxy.c_str(), "CURLOPT_PROXY", proxy.c_str())) {
+        ACSDK_ERROR(LX("prepareForProxyFailed").d("reason", "CURLOPT_PROXY setopt Failed"));
+        return false;
+    }
 
     return true;
 }

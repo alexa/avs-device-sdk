@@ -66,15 +66,6 @@ static const std::string TEST_EVENT_STRING = "[Some_Event_Worth_Logging]";
 /// Metadata value with characters that must be escaped, to exercise the code that escapes metadata values.
 static const std::string UNESCAPED_METADATA_VALUE = R"(reserved_chars['\' ',' ':' '='])";
 
-/// String used to test that the message component is logged
-static const std::string TEST_MESSAGE_STRING = "Hello World!";
-/// Another String used to test that the message component is logged
-static const std::string TEST_MESSAGE_STRING_1 = "World Hello!";
-/// A const char* nullptr to verify the logger won't crash in degenerate cases
-static const char* TEST_MESSAGE_CONST_NULL_CHAR_PTR = nullptr;
-/// A char* nullptr to verify the logger won't crash in degenerate cases
-static char* TEST_MESSAGE_NULL_CHAR_PTR = nullptr;
-
 /**
  * Mock derivation of Logger for verifying calls and parameters to those calls.
  */
@@ -240,7 +231,7 @@ void LoggerTest::TearDown() {
 }
 
 void LoggerTest::setLevelExpectations(Level level) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(level);
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(level);
 
     switch (level) {
         case Level::UNKNOWN:
@@ -276,10 +267,17 @@ void LoggerTest::setLevelExpectations(Level level) {
             break;
     }
 
+// Determine what logs should be emitted based on if Logging is enabled and if Debug logging is enabled.
+#ifdef ACSDK_LOG_ENABLED
+#define LOG_COUNT 1
 #ifdef ACSDK_DEBUG_LOG_ENABLED
 #define DEBUG_COUNT 1
 #else
 #define DEBUG_COUNT 0
+#endif
+#else
+#define DEBUG_COUNT 0
+#define LOG_COUNT 0
 #endif
 
     switch (level) {
@@ -304,13 +302,13 @@ void LoggerTest::setLevelExpectations(Level level) {
         case Level::DEBUG0:
             EXPECT_CALL(*(g_log.get()), emit(Level::DEBUG0, _, _, _)).Times(DEBUG_COUNT);
         case Level::INFO:
-            EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+            EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(LOG_COUNT);
         case Level::WARN:
-            EXPECT_CALL(*(g_log.get()), emit(Level::WARN, _, _, _)).Times(1);
+            EXPECT_CALL(*(g_log.get()), emit(Level::WARN, _, _, _)).Times(LOG_COUNT);
         case Level::ERROR:
-            EXPECT_CALL(*(g_log.get()), emit(Level::ERROR, _, _, _)).Times(1);
+            EXPECT_CALL(*(g_log.get()), emit(Level::ERROR, _, _, _)).Times(LOG_COUNT);
         case Level::CRITICAL:
-            EXPECT_CALL(*(g_log.get()), emit(Level::CRITICAL, _, _, _)).Times(1);
+            EXPECT_CALL(*(g_log.get()), emit(Level::CRITICAL, _, _, _)).Times(LOG_COUNT);
         case Level::NONE:
         case Level::UNKNOWN:
             break;
@@ -470,167 +468,6 @@ TEST_F(LoggerTest, test_logNoneLevel) {
 }
 
 /**
- * Test to ensure that logger usage with possible nullptr inputs is robust.  As some functionality is templated,
- * we must test both char* and const char* variants, for LogEntry construction, and the .d() and .m() functionality.
- */
-TEST_F(LoggerTest, test_nullInputs) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(13);
-
-    // The good case.
-    ACSDK_INFO(LX("testEntryName").d("key", "value"));
-
-    // Test the constructors.
-    ACSDK_INFO(LX(TEST_MESSAGE_CONST_NULL_CHAR_PTR).m("testEventNameConstNullPtr"));
-    ACSDK_INFO(LX(TEST_MESSAGE_NULL_CHAR_PTR).m("testEventNameNullPtr"));
-
-    // Test the .d() bad variants, both params.
-    ACSDK_INFO(LX("testEntryName").d("key", TEST_MESSAGE_CONST_NULL_CHAR_PTR));
-    ACSDK_INFO(LX("testEntryName").d("key", TEST_MESSAGE_NULL_CHAR_PTR));
-    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, "value"));
-    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, "value"));
-    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, TEST_MESSAGE_CONST_NULL_CHAR_PTR));
-    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, TEST_MESSAGE_NULL_CHAR_PTR));
-    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, TEST_MESSAGE_CONST_NULL_CHAR_PTR));
-    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, TEST_MESSAGE_NULL_CHAR_PTR));
-
-    // Test the .m() variants.
-    ACSDK_INFO(LX("testEntryName").m(TEST_MESSAGE_CONST_NULL_CHAR_PTR));
-    ACSDK_INFO(LX("testEntryName").m(TEST_MESSAGE_NULL_CHAR_PTR));
-}
-
-/**
- * Test delivery of appropriate time values from the logging system.  This test captures the current time
- * both before and after an invocation of ACDK_LOG_INFO and verifies that the time value passed to the
- * emit() method is between (inclusive) the before and after times.
- */
-TEST_F(LoggerTest, test_verifyTime) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
-    auto beforeTime = std::chrono::system_clock::now();
-    ACSDK_INFO(LX("testing time"));
-    auto afterTime = std::chrono::system_clock::now();
-    ASSERT_LE(beforeTime, g_log->m_lastTime);
-    ASSERT_LE(g_log->m_lastTime, afterTime);
-}
-
-/**
- * Test delivery of appropriate thread moniker values from the logging system.  This test invokes ACSDK_INFO from
- * two threads and verifies that the thread moniker values passed to the emit() method are in fact different.
- */
-TEST_F(LoggerTest, test_verifyThreadMoniker) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(2);
-    ACSDK_INFO(LX("testing threadMoniker (1 of 2)"));
-    auto firstThreadMoniker = g_log->m_lastThreadMoniker;
-    std::thread secondThread([firstThreadMoniker]() {
-        ACSDK_INFO(LX("testing threadMoniker (2 of 2)"));
-        ASSERT_NE(firstThreadMoniker, g_log->m_lastThreadMoniker);
-    });
-    secondThread.join();
-}
-
-/**
- * Test passing the source name through the logging system.  The source name is a parameter of the LogEntry
- * constructor.  Expect that the source parameter passed to the LogEntry constructor is included in the text
- * passed to the emit() method.
- */
-TEST_F(LoggerTest, test_verifySource) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
-    ACSDK_INFO(LX("random_event"));
-    ASSERT_NE(g_log->m_lastText.find(TEST_SOURCE_STRING), std::string::npos);
-}
-
-/**
- * Test passing the event name through the logging system.  The event name is a parameter of the LogEntry
- * constructor.  Expect that the event parameter passed to the LogEntry constructor is included in the text
- * passed to the emit() method.
- */
-TEST_F(LoggerTest, test_verifyEvent) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
-    std::string event(TEST_EVENT_STRING);
-    ACSDK_INFO(LX(event));
-    ASSERT_NE(g_log->m_lastText.find(TEST_EVENT_STRING), std::string::npos);
-}
-
-/**
- * Test passing a metadata parameter to the logging system.  Invokes ACSDK_INFO with a metadata parameter.
- * Expects that that metadata is constructed properly (including the escaping of reserved characters) and that
- * both the key and escaped value are included in the text passed to the emit() method.
- */
-TEST_F(LoggerTest, test_verifyMetadata) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
-    ACSDK_INFO(LX("testing metadata")
-                   .d(METADATA_KEY, UNESCAPED_METADATA_VALUE)
-                   .d(METADATA_KEY_TRUE, true)
-                   .d(METADATA_KEY_FALSE, false));
-    ASSERT_NE(g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE), std::string::npos);
-    ASSERT_NE(g_log->m_lastText.find(METADATA_EXPECTED_BOOLEANS), std::string::npos);
-}
-
-/**
- * Test passing a message parameter to the logging system.  Invokes ACSDK_INFO with a message parameter.
- * Expects that the message is included in text passed to the emit() method.
- */
-TEST_F(LoggerTest, test_verifyMessage) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
-    std::string message(TEST_MESSAGE_STRING);
-    ACSDK_INFO(LX("testing message").m(message));
-    ASSERT_NE(g_log->m_lastText.find(TEST_MESSAGE_STRING), std::string::npos);
-}
-
-/**
- * Test passing sensitive data to the logging system.  It should only be emitted in DEBUG builds.
- */
-TEST_F(LoggerTest, test_sensitiveDataSuppressed) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
-    ACSDK_INFO(LX("testing metadata").sensitive(METADATA_KEY, UNESCAPED_METADATA_VALUE));
-    auto result = g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE) != std::string::npos;
-#ifdef ACSDK_EMIT_SENSITIVE_LOGS
-    ASSERT_TRUE(result);
-#else
-    ASSERT_FALSE(result);
-#endif
-}
-
-TEST_F(LoggerTest, test_obfuscatedDataIsMangled) {
-    ACSDK_GET_LOGGER_FUNCTION().setLevel(Level::INFO);
-    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(3);
-
-    // generic, not private labels should still show up in logs
-    ACSDK_INFO(LX("testing metadata obfuscation").obfuscatePrivateData(METADATA_KEY, TEST_MESSAGE_STRING));
-    auto presentInOriginalForm = g_log->m_lastText.find(TEST_MESSAGE_STRING) != std::string::npos;
-    ASSERT_TRUE(presentInOriginalForm);
-
-    // a private value should not appear, the denylist word itself should
-    ACSDK_INFO(LX("testing metadata obfuscation")
-                   .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
-    auto lastLineAfterPrivateSubmission = g_log->m_lastText;
-    auto privateDataWasHidden =
-        lastLineAfterPrivateSubmission.find("I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER") == std::string::npos;
-    ASSERT_TRUE(privateDataWasHidden);
-    auto privateLabelWasPresent = lastLineAfterPrivateSubmission.find("ESSID") != std::string::npos;
-    ASSERT_TRUE(privateLabelWasPresent);
-
-    // key itself should be present
-    auto keyIsPresent = g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR) != std::string::npos;
-    ASSERT_TRUE(keyIsPresent);
-
-    // two of the same input should result in same output
-    ACSDK_INFO(LX("testing metadata obfuscation")
-                   .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
-    auto lastLineAfterSecondSubmission = g_log->m_lastText;
-    ASSERT_EQ(lastLineAfterSecondSubmission, lastLineAfterPrivateSubmission);
-}
-
-/**
  * Test observer mechanism in the MockModuleLogger.  Expects that when the logLevel changes for the sink, the
  * callback of the MockModuleLogger is triggered.  Also make sure any changes to sink's logLevel is ignored
  * after the MockModuleLogger's logLevel has been set.
@@ -669,6 +506,178 @@ TEST_F(LoggerTest, test_multipleModuleLoggerObservers) {
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::NONE);
 }
 
+#ifdef ACSDK_LOG_ENABLED
+
+/// String used to test that the message component is logged
+static const std::string TEST_MESSAGE_STRING = "Hello World!";
+/// Another String used to test that the message component is logged
+static const std::string TEST_MESSAGE_STRING_1 = "World Hello!";
+/// A const char* nullptr to verify the logger won't crash in degenerate cases
+static const char* TEST_MESSAGE_CONST_NULL_CHAR_PTR = nullptr;
+/// A char* nullptr to verify the logger won't crash in degenerate cases
+static char* TEST_MESSAGE_NULL_CHAR_PTR = nullptr;
+
+/**
+ * Test to ensure that logger usage with possible nullptr inputs is robust.  As some functionality is templated,
+ * we must test both char* and const char* variants, for LogEntry construction, and the .d() and .m() functionality.
+ */
+TEST_F(LoggerTest, test_nullInputs) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(13);
+
+    // The good case.
+    ACSDK_INFO(LX("testEntryName").d("key", "value"));
+
+    // Test the constructors.
+    ACSDK_INFO(LX(TEST_MESSAGE_CONST_NULL_CHAR_PTR).m("testEventNameConstNullPtr"));
+    ACSDK_INFO(LX(TEST_MESSAGE_NULL_CHAR_PTR).m("testEventNameNullPtr"));
+
+    // Test the .d() bad variants, both params.
+    ACSDK_INFO(LX("testEntryName").d("key", TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d("key", TEST_MESSAGE_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, "value"));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, "value"));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_CONST_NULL_CHAR_PTR, TEST_MESSAGE_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").d(TEST_MESSAGE_NULL_CHAR_PTR, TEST_MESSAGE_NULL_CHAR_PTR));
+
+    // Test the .m() variants.
+    ACSDK_INFO(LX("testEntryName").m(TEST_MESSAGE_CONST_NULL_CHAR_PTR));
+    ACSDK_INFO(LX("testEntryName").m(TEST_MESSAGE_NULL_CHAR_PTR));
+}
+
+/**
+ * Test delivery of appropriate time values from the logging system.  This test captures the current time
+ * both before and after an invocation of ACDK_LOG_INFO and verifies that the time value passed to the
+ * emit() method is between (inclusive) the before and after times.
+ */
+TEST_F(LoggerTest, test_verifyTime) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    auto beforeTime = std::chrono::system_clock::now();
+    ACSDK_INFO(LX("testing time"));
+    auto afterTime = std::chrono::system_clock::now();
+    ASSERT_LE(beforeTime, g_log->m_lastTime);
+    ASSERT_LE(g_log->m_lastTime, afterTime);
+}
+
+/**
+ * Test delivery of appropriate thread moniker values from the logging system.  This test invokes ACSDK_INFO from
+ * two threads and verifies that the thread moniker values passed to the emit() method are in fact different.
+ */
+TEST_F(LoggerTest, test_verifyThreadMoniker) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(2);
+    ACSDK_INFO(LX("testing threadMoniker (1 of 2)"));
+    auto firstThreadMoniker = g_log->m_lastThreadMoniker;
+    std::thread secondThread([firstThreadMoniker]() {
+        ACSDK_INFO(LX("testing threadMoniker (2 of 2)"));
+        ASSERT_NE(firstThreadMoniker, g_log->m_lastThreadMoniker);
+    });
+    secondThread.join();
+}
+
+/**
+ * Test passing the source name through the logging system.  The source name is a parameter of the LogEntry
+ * constructor.  Expect that the source parameter passed to the LogEntry constructor is included in the text
+ * passed to the emit() method.
+ */
+TEST_F(LoggerTest, test_verifySource) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    ACSDK_INFO(LX("random_event"));
+    ASSERT_NE(g_log->m_lastText.find(TEST_SOURCE_STRING), std::string::npos);
+}
+
+/**
+ * Test passing the event name through the logging system.  The event name is a parameter of the LogEntry
+ * constructor.  Expect that the event parameter passed to the LogEntry constructor is included in the text
+ * passed to the emit() method.
+ */
+TEST_F(LoggerTest, test_verifyEvent) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    std::string event(TEST_EVENT_STRING);
+    ACSDK_INFO(LX(event));
+    ASSERT_NE(g_log->m_lastText.find(TEST_EVENT_STRING), std::string::npos);
+}
+
+/**
+ * Test passing a metadata parameter to the logging system.  Invokes ACSDK_INFO with a metadata parameter.
+ * Expects that that metadata is constructed properly (including the escaping of reserved characters) and that
+ * both the key and escaped value are included in the text passed to the emit() method.
+ */
+TEST_F(LoggerTest, test_verifyMetadata) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    ACSDK_INFO(LX("testing metadata")
+                   .d(METADATA_KEY, UNESCAPED_METADATA_VALUE)
+                   .d(METADATA_KEY_TRUE, true)
+                   .d(METADATA_KEY_FALSE, false));
+    ASSERT_NE(g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE), std::string::npos);
+    ASSERT_NE(g_log->m_lastText.find(METADATA_EXPECTED_BOOLEANS), std::string::npos);
+}
+
+/**
+ * Test passing a message parameter to the logging system.  Invokes ACSDK_INFO with a message parameter.
+ * Expects that the message is included in text passed to the emit() method.
+ */
+TEST_F(LoggerTest, test_verifyMessage) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    std::string message(TEST_MESSAGE_STRING);
+    ACSDK_INFO(LX("testing message").m(message));
+    ASSERT_NE(g_log->m_lastText.find(TEST_MESSAGE_STRING), std::string::npos);
+}
+
+/**
+ * Test passing sensitive data to the logging system.  It should only be emitted in DEBUG builds.
+ */
+TEST_F(LoggerTest, test_sensitiveDataSuppressed) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(1);
+    ACSDK_INFO(LX("testing metadata").sensitive(METADATA_KEY, UNESCAPED_METADATA_VALUE));
+    auto result = g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR ESCAPED_METADATA_VALUE) != std::string::npos;
+#ifdef ACSDK_EMIT_SENSITIVE_LOGS
+    ASSERT_TRUE(result);
+#else
+    ASSERT_FALSE(result);
+#endif
+}
+
+TEST_F(LoggerTest, test_obfuscatedDataIsMangled) {
+    ACSDK_GET_LOGGER_FUNCTION()->setLevel(Level::INFO);
+    EXPECT_CALL(*(g_log.get()), emit(Level::INFO, _, _, _)).Times(3);
+
+    // generic, not private labels should still show up in logs
+    ACSDK_INFO(LX("testing metadata obfuscation").obfuscatePrivateData(METADATA_KEY, TEST_MESSAGE_STRING));
+    auto presentInOriginalForm = g_log->m_lastText.find(TEST_MESSAGE_STRING) != std::string::npos;
+    ASSERT_TRUE(presentInOriginalForm);
+
+    // a private value should not appear, the denylist word itself should
+    ACSDK_INFO(LX("testing metadata obfuscation")
+                   .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
+    auto lastLineAfterPrivateSubmission = g_log->m_lastText;
+    auto privateDataWasHidden =
+        lastLineAfterPrivateSubmission.find("I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER") == std::string::npos;
+    ASSERT_TRUE(privateDataWasHidden);
+    auto privateLabelWasPresent = lastLineAfterPrivateSubmission.find("ESSID") != std::string::npos;
+    ASSERT_TRUE(privateLabelWasPresent);
+
+    // key itself should be present
+    auto keyIsPresent = g_log->m_lastText.find(METADATA_KEY KEY_VALUE_SEPARATOR) != std::string::npos;
+    ASSERT_TRUE(keyIsPresent);
+
+    // two of the same input should result in same output
+    ACSDK_INFO(LX("testing metadata obfuscation")
+                   .obfuscatePrivateData(METADATA_KEY, "{\"ESSID\"\\:\"I_NAME_MY_SSID_AFTER_MY_CREDIT_CARD_NUMBER\"}"));
+    auto lastLineAfterSecondSubmission = g_log->m_lastText;
+    ASSERT_EQ(lastLineAfterSecondSubmission, lastLineAfterPrivateSubmission);
+}
+
 /**
  * Test changing of sink logger using the LoggerSinkManager.  Expect the sink in
  * ModuleLoggers will be changed.
@@ -695,6 +704,7 @@ TEST_F(LoggerTest, test_changeSinkLogger) {
     // reset to the default sink to avoid messing up with subsequent tests
     LoggerSinkManager::instance().initialize(getLoggerTestLogger());
 }
+#endif  // ACSDK_LOG_ENABLED
 
 }  // namespace test
 }  // namespace logger

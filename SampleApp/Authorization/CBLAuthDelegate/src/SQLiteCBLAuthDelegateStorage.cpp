@@ -13,12 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#include <SQLiteStorage/SQLiteStatement.h>
-#include <SQLiteStorage/SQLiteUtils.h>
-#include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
-#include <AVSCommon/Utils/File/FileUtils.h>
+#include <acsdkAuthorization/LWA/SQLiteLWAAuthorizationStorage.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/String/StringUtils.h>
 
 #include "CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h"
 
@@ -26,10 +22,9 @@ namespace alexaClientSDK {
 namespace authorization {
 namespace cblAuthDelegate {
 
+using namespace acsdkAuthorization::lwa;
+using namespace acsdkAuthorizationInterfaces;
 using namespace avsCommon::utils::logger;
-using namespace avsCommon::utils::string;
-using namespace avsCommon::utils::file;
-using namespace alexaClientSDK::storage::sqliteStorage;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("SQLiteCBLAuthDelegateStorage");
@@ -44,193 +39,68 @@ static const std::string TAG("SQLiteCBLAuthDelegateStorage");
 /// Name of @c ConfigurationNode for CBLAuthDelegate
 static const std::string CONFIG_KEY_CBL_AUTH_DELEGATE = "cblAuthDelegate";
 
-/// Name of @c databaseFilePath value in in CBLAuthDelegate's @c ConfigurationNode.
-static const std::string CONFIG_KEY_DB_FILE_PATH_KEY = "databaseFilePath";
-
-/// The name of the refreshToken table.
-#define REFRESH_TOKEN_TABLE_NAME "refreshToken"
-
-/// The name of the refreshToken column.
-#define REFRESH_TOKEN_COLUMN_NAME "refreshToken"
-
-/// String for creating the refreshToken table
-static const std::string CREATE_REFRESH_TOKEN_TABLE_SQL_STRING =
-    "CREATE TABLE " REFRESH_TOKEN_TABLE_NAME " (" REFRESH_TOKEN_COLUMN_NAME " TEXT);";
-
 std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(
     const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRootPtr) {
     if (!configurationRootPtr) {
         ACSDK_ERROR(LX("createCBLAuthDelegateStorageInterfaceFailed").d("reason", "nullConfigurationRoot"));
         return nullptr;
     }
-    return create(*configurationRootPtr);
+
+    auto lwaStorage = SQLiteLWAAuthorizationStorage::createLWAAuthorizationStorageInterface(
+        configurationRootPtr, CONFIG_KEY_CBL_AUTH_DELEGATE);
+
+    if (!lwaStorage) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "createLWAStorageFailed"));
+        return nullptr;
+    }
+
+    return std::shared_ptr<SQLiteCBLAuthDelegateStorage>(new SQLiteCBLAuthDelegateStorage(lwaStorage));
 }
 
 std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::create(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
-    auto cblAuthDelegateConfigurationRoot = configurationRoot[CONFIG_KEY_CBL_AUTH_DELEGATE];
-    if (!cblAuthDelegateConfigurationRoot) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_CBL_AUTH_DELEGATE));
-        return nullptr;
-    }
-
-    std::string databaseFilePath;
-    if (!cblAuthDelegateConfigurationRoot.getString(CONFIG_KEY_DB_FILE_PATH_KEY, &databaseFilePath) ||
-        databaseFilePath.empty()) {
-        ACSDK_ERROR(LX("createFailed").d("reason", "missingConfigurationValue").d("key", CONFIG_KEY_DB_FILE_PATH_KEY));
-        return nullptr;
-    }
-
-    return std::shared_ptr<SQLiteCBLAuthDelegateStorage>(new SQLiteCBLAuthDelegateStorage(databaseFilePath));
+    return createCBLAuthDelegateStorageInterface(
+        std::make_shared<avsCommon::utils::configuration::ConfigurationNode>(configurationRoot));
 }
 
 SQLiteCBLAuthDelegateStorage::~SQLiteCBLAuthDelegateStorage() {
     ACSDK_DEBUG5(LX("~SQLiteCBLAuthDelegateStorage"));
-
-    close();
+    m_lwaStorage.reset();
 }
 
 bool SQLiteCBLAuthDelegateStorage::createDatabase() {
     ACSDK_DEBUG5(LX("createDatabase"));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    if (!m_database.initialize()) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "SQLiteCreateDatabaseFailed"));
-        return false;
-    }
-
-    if (!m_database.performQuery(CREATE_REFRESH_TOKEN_TABLE_SQL_STRING)) {
-        ACSDK_ERROR(LX("createDatabaseFailed").d("reason", "failed to create refreshToken table"));
-        close();
-        return false;
-    }
-
-    return true;
+    return m_lwaStorage->createDatabase();
 }
 
 bool SQLiteCBLAuthDelegateStorage::open() {
     ACSDK_DEBUG5(LX("open"));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    if (!m_database.open()) {
-        ACSDK_DEBUG0(LX("openFailed").d("reason", "openSQLiteDatabaseFailed"));
-        return false;
-    }
-
-    if (!m_database.tableExists(REFRESH_TOKEN_TABLE_NAME)) {
-        ACSDK_ERROR(LX("openFailed").d("reason", "missingTable").d("name", REFRESH_TOKEN_TABLE_NAME));
-        return false;
-    }
-
-    return true;
+    return m_lwaStorage->open();
 }
 
 bool SQLiteCBLAuthDelegateStorage::setRefreshToken(const std::string& refreshToken) {
     ACSDK_DEBUG5(LX("setRefreshToken"));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    if (refreshToken.empty()) {
-        ACSDK_ERROR(LX("setRefreshTokenFailed").d("reason", "refreshTokenIsEmpty"));
-        return false;
-    }
-
-    if (!m_database.clearTable(REFRESH_TOKEN_TABLE_NAME)) {
-        ACSDK_ERROR(LX("setRefreshTokenFailed").d("reason", "clearTableFailed"));
-        return false;
-    }
-
-    std::string sqlString = "INSERT INTO " REFRESH_TOKEN_TABLE_NAME " (" REFRESH_TOKEN_COLUMN_NAME ") VALUES (?);";
-    auto statement = m_database.createStatement(sqlString);
-
-    if (!statement) {
-        ACSDK_ERROR(LX("setRefreshToken").d("reason", "createStatementFailed"));
-        return false;
-    }
-
-    if (!statement->bindStringParameter(1, refreshToken)) {
-        ACSDK_ERROR(LX("setRefreshToken").d("reason", "bindStringParameter"));
-        return false;
-    }
-
-    if (!statement->step()) {
-        ACSDK_ERROR(LX("setRefreshToken").d("reason", "stepFailed"));
-        return false;
-    }
-
-    return true;
+    return m_lwaStorage->setRefreshToken(refreshToken);
 }
 
 bool SQLiteCBLAuthDelegateStorage::clearRefreshToken() {
     ACSDK_DEBUG5(LX("clearRefreshToken"));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    if (!m_database.clearTable(REFRESH_TOKEN_TABLE_NAME)) {
-        ACSDK_ERROR(LX("clearRefreshTokenFailed").d("reason", "clearTableFailed"));
-        return false;
-    }
-
-    return true;
+    return m_lwaStorage->clearRefreshToken();
 }
 
 bool SQLiteCBLAuthDelegateStorage::getRefreshToken(std::string* refreshToken) {
     ACSDK_DEBUG5(LX("getRefreshToken"));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    if (!refreshToken) {
-        ACSDK_ERROR(LX("getRefreshTokenFailed").d("reason", "nullRefreshToken"));
-        return false;
-    }
-
-    std::string sqlString = "SELECT * FROM " REFRESH_TOKEN_TABLE_NAME ";";
-    auto statement = m_database.createStatement(sqlString);
-
-    if (!statement) {
-        ACSDK_ERROR(LX("getRefreshTokenFailed").d("reason", "createStatementFailed"));
-        return false;
-    }
-
-    if (!statement->step()) {
-        ACSDK_ERROR(LX("getRefreshTokenFailed").d("reason", "stepFailed"));
-        return false;
-    }
-
-    if (statement->getStepResult() != SQLITE_ROW) {
-        ACSDK_DEBUG0(LX("getRefreshTokenFailed").d("reason", "stepResultWasNotRow"));
-        return false;
-    }
-
-    std::string columnName = statement->getColumnName(0);
-    if (columnName != REFRESH_TOKEN_COLUMN_NAME) {
-        ACSDK_ERROR(LX("getRefreshTokenFailed").d("reason", "unexpectedColumnName"));
-        return false;
-    }
-
-    auto text = statement->getColumnText(0);
-    *refreshToken = text;
-    return true;
+    return m_lwaStorage->getRefreshToken(refreshToken);
 }
 
 bool SQLiteCBLAuthDelegateStorage::clear() {
     ACSDK_DEBUG5(LX("clear"));
-
-    return clearRefreshToken();
+    return m_lwaStorage->clear();
 }
 
-void SQLiteCBLAuthDelegateStorage::close() {
-    ACSDK_DEBUG5(LX("close"));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-
-    m_database.close();
-}
-
-SQLiteCBLAuthDelegateStorage::SQLiteCBLAuthDelegateStorage(const std::string& databaseFilePath) :
-        m_database{databaseFilePath} {
+SQLiteCBLAuthDelegateStorage::SQLiteCBLAuthDelegateStorage(
+    const std::shared_ptr<acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface>& lwaStorage) :
+        m_lwaStorage{lwaStorage} {
 }
 
 }  // namespace cblAuthDelegate

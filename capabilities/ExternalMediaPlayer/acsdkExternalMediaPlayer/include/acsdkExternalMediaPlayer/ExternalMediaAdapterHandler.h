@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKEXTERNALMEDIAPLAYER_EXTERNALMEDIAADAPTERHANDLER_H_
-#define ACSDKEXTERNALMEDIAPLAYER_EXTERNALMEDIAADAPTERHANDLER_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYER_INCLUDE_ACSDKEXTERNALMEDIAPLAYER_EXTERNALMEDIAADAPTERHANDLER_H_
+#define ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYER_INCLUDE_ACSDKEXTERNALMEDIAPLAYER_EXTERNALMEDIAADAPTERHANDLER_H_
 
 #include <functional>
 #include <memory>
@@ -157,6 +157,7 @@ protected:
      * @param preload If true, this Play directive is intended to preload the identified content only but not begin
      * playback.
      * @param playRequestor The @c PlayRequestor object that is used to distinguish if it's a music alarm or not.
+     * @param playbackTarget Target for handling play
      * @return true if successful
      */
     virtual bool handlePlay(
@@ -169,18 +170,20 @@ protected:
         const acsdkExternalMediaPlayerInterfaces::Navigation& navigation,
         bool preload,
         const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-        std::string playbackTarget) = 0;
+        const std::string& playbackTarget) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...
      *
      * @param localPlayerId The player ID to control
      * @param requestType The type of REQUEST. Will always be PLAY/PAUSE/RESUME/NEXT...
+     * @param playbackTarget Target for handling play control
      * @return
      */
     virtual bool handlePlayControl(
         const std::string& localPlayerId,
-        acsdkExternalMediaPlayerInterfaces::RequestType requestType) = 0;
+        acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+        const std::string& playbackTarget) = 0;
 
     /**
      * Method to seek to the given offset.
@@ -258,9 +261,11 @@ public:
         const std::string& navigation,
         bool preload,
         const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-        std::string playbackTarget) override;
-    bool playControl(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType)
-        override;
+        const std::string& playbackTarget) override;
+    bool playControl(
+        const std::string& localPlayerId,
+        acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+        const std::string& playbackTarget) override;
     bool seek(const std::string& localPlayerId, std::chrono::milliseconds offset) override;
     bool adjustSeek(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset) override;
     acsdkExternalMediaPlayerInterfaces::AdapterState getAdapterState(const std::string& localPlayerId) override;
@@ -301,4 +306,4 @@ private:
 }  // namespace acsdkExternalMediaPlayer
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKEXTERNALMEDIAPLAYER_EXTERNALMEDIAADAPTERHANDLER_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYER_INCLUDE_ACSDKEXTERNALMEDIAPLAYER_EXTERNALMEDIAADAPTERHANDLER_H_

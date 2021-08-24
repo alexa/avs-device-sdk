@@ -13,34 +13,36 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ALEXA_CLIENT_SDK_SAMPLEAPP_AUTHORIZATION_CBLAUTHDELEGATE_INCLUDE_CBLAUTHDELEGATE_CBLAUTHDELEGATECONFIGURATION_H_
-#define ALEXA_CLIENT_SDK_SAMPLEAPP_AUTHORIZATION_CBLAUTHDELEGATE_INCLUDE_CBLAUTHDELEGATE_CBLAUTHDELEGATECONFIGURATION_H_
+#ifndef ACSDKAUTHORIZATION_LWA_LWAAUTHORIZATIONCONFIGURATION_H_
+#define ACSDKAUTHORIZATION_LWA_LWAAUTHORIZATIONCONFIGURATION_H_
 
-#include <chrono>
 #include <memory>
 #include <string>
 
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSCommon/Utils/DeviceInfo.h>
 
 namespace alexaClientSDK {
-namespace authorization {
-namespace cblAuthDelegate {
+namespace acsdkAuthorization {
+namespace lwa {
 
 /**
- * Class encapsulating configuration parameters for a CBLAuthDelegate.
+ * Class encapsulating configuration parameters for @c LWAAuthorizationAdapter.
  */
-class CBLAuthDelegateConfiguration {
+class LWAAuthorizationConfiguration {
 public:
     /**
-     * Create a CBLAuthDelegateConfiguration instance
+     * Create an instance.
      *
      * @param configuration The ConfigurationNode containing the configuration parameters for the new instance.
      * @param deviceInfo The deviceInfo instance.
-     * @return the CBLAuthDelegateConfiguration instance if successful, else a nullptr.
+     * @param configRootKey The config root to use.
+     * @return the LWAAuthorizationConfiguration instance if successful, else a nullptr.
      */
-    static std::unique_ptr<CBLAuthDelegateConfiguration> create(
+    static std::unique_ptr<LWAAuthorizationConfiguration> create(
         const avsCommon::utils::configuration::ConfigurationNode& configuration,
-        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+        const std::string& configRootKey = "");
 
     /**
      * Get the client ID.
@@ -112,17 +114,26 @@ public:
      */
     std::string getScopeData() const;
 
+    /**
+     * Get the URL to use when getting the user profile.
+     *
+     * @return The URL to use when getting the user profile.
+     */
+    std::string getCustomerProfileUrl() const;
+
 private:
     /**
      * Initialize the new instance.
      *
      * @param root The root level node of the raw configuration from which to populate this instance.
      * @param deviceInfo The deviceInfo instance.
+     * @param configRootKey The config root to use.
      * @return Whether or not the operation was successful.
      */
     bool init(
         const avsCommon::utils::configuration::ConfigurationNode& configuration,
-        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo);
+        const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+        const std::string& configRootKey = "");
 
     /**
      * Initialize m_scopeData.
@@ -156,8 +167,8 @@ private:
     std::string m_scopeData;
 };
 
-}  // namespace cblAuthDelegate
-}  // namespace authorization
+}  // namespace lwa
+}  // namespace acsdkAuthorization
 }  // namespace alexaClientSDK
 
-#endif  // ALEXA_CLIENT_SDK_SAMPLEAPP_AUTHORIZATION_CBLAUTHDELEGATE_INCLUDE_CBLAUTHDELEGATE_CBLAUTHDELEGATECONFIGURATION_H_
+#endif  // ACSDKAUTHORIZATION_LWA_LWAAUTHORIZATIONCONFIGURATION_H_

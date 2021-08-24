@@ -19,10 +19,12 @@
 #include <memory>
 #include <string>
 
+#include <acsdkManufactory/Annotated.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
 #include <Alexa/AlexaInterfaceMessageSenderInternalInterface.h>
 #include <AVSCommon/AVS/AVSDiscoveryEndpointAttributes.h>
 #include <AVSCommon/SDKInterfaces/AlexaInterfaceMessageSenderInterface.h>
+#include "AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h"
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointRegistrationManagerInterface.h>

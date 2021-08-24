@@ -563,7 +563,7 @@ private:
      *
      * @param jsonContext The full system context to send with the event.
      */
-    void executeOnContextAvailable(const std::string jsonContext);
+    void executeOnContextAvailable(const std::string& jsonContext);
 
     /**
      * This function is called when a context request fails.  Context requests are initiated by @c executeRecognize()
@@ -933,6 +933,19 @@ private:
      * Mutex to synchronize updates to @c m_encodingAudioFormats.
      */
     mutable std::mutex m_encodingFormatMutex;
+
+    /**
+     * The number of audio bytes sent to the cloud that we will trigger the wake word upload metric.
+     */
+    unsigned int m_audioBytesForMetricThreshold;
+
+    /**
+     * The name of the wake word upload metric.
+     */
+    std::string m_uploadMetricName;
+
+    /// A @c PowerResourceId used for wakelock logic.
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceId> m_powerResourceId;
 
     /**
      * @c Executor which queues up operations from asynchronous API calls.

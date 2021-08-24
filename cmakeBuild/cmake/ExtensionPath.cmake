@@ -18,7 +18,7 @@ option(EXTENSION_PATH
 "A semi-colon separated list of paths to search for CMake projects.\
  DEPRECATED: Use EXTENSION_PATHS instead.")
 
-set(EXTENSION_PATHS "${CMAKE_SOURCE_DIR}/capabilities" CACHE STRING
+ set(EXTENSION_PATHS "${AVS_CORE}/capabilities" CACHE STRING
     "A semi-colon separated list of PATHSs to search for CMake projects")
 
 macro(add_extension_projects)

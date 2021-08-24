@@ -196,7 +196,7 @@ public:
     void logAtExit(Level level, const LogEntry& entry);
 
     /**
-     * Emit a log entry.
+     * Emit a log entry. Default implementation is no-op.
      * NOTE: This method must be thread-safe.
      * NOTE: Delays in returning from this method may hold up calls to Logger::log().
      *
@@ -209,7 +209,7 @@ public:
         Level level,
         std::chrono::system_clock::time_point time,
         const char* threadMoniker,
-        const char* text) = 0;
+        const char* text);
 
     /**
      * Add an observer to this object.
@@ -309,8 +309,9 @@ namespace logger {
 /**
  * Inline method to get the logger for the module specified by @c ACSDK_LOG_MODULE.
  */
-inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
-    static ModuleLogger moduleLogger(ACSDK_STRINGIFY(ACSDK_LOG_MODULE));
+inline std::shared_ptr<Logger> ACSDK_GET_LOGGER_FUNCTION() {
+    static std::shared_ptr<ModuleLogger> moduleLogger =
+        std::make_shared<ModuleLogger>(ACSDK_STRINGIFY(ACSDK_LOG_MODULE));
     return moduleLogger;
 }
 
@@ -331,9 +332,9 @@ namespace logger {
  * In this case @c ACSDK_LOG_MODULE was not defined, so logs are sent to the @c Logger returned by
  * @c get<ACSDK_LOG_SINK>Logger().
  */
-inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
+inline std::shared_ptr<Logger> ACSDK_GET_LOGGER_FUNCTION() {
     static std::shared_ptr<Logger> logger = ACSDK_GET_SINK_LOGGER();
-    return *logger;
+    return logger;
 }
 
 }  // namespace logger
@@ -343,19 +344,34 @@ inline Logger& ACSDK_GET_LOGGER_FUNCTION() {
 
 #endif
 
+/// Define log macro if logging is enabled. Else do nothing with params to avoid unused variable error.
+#ifdef ACSDK_LOG_ENABLED
 /**
  * Common implementation for sending entries to the log.
  *
  * @param level The log level to associate with the log line.
  * @param entry The text (or builder of the text) for the log entry.
  */
-#define ACSDK_LOG(level, entry)                                                                       \
-    do {                                                                                              \
-        auto& loggerInstance = alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION(); \
-        if (loggerInstance.shouldLog(level)) {                                                        \
-            loggerInstance.log(level, entry);                                                         \
-        }                                                                                             \
+#define ACSDK_LOG(level, entry)                                                                      \
+    do {                                                                                             \
+        auto loggerInstance = alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION(); \
+        if (loggerInstance->shouldLog(level)) {                                                      \
+            loggerInstance->log(level, entry);                                                       \
+        }                                                                                            \
     } while (false)
+#else
+   /**
+    * Null implementation for sending entries to the log.
+    *
+    * @param level Unused.
+    * @param entry Unused.
+    */
+#define ACSDK_LOG(level, entry) \
+    do {                        \
+        (void)level;            \
+        (void)entry;            \
+    } while (false)
+#endif
 
 #ifdef ACSDK_DEBUG_LOG_ENABLED
 

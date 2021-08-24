@@ -23,14 +23,27 @@
     "alertsCapabilityAgent":{
         "databaseFilePath":"${SDK_SQLITE_DATABASE_FILE_PATH}"
     },
+    "lwaAuthorization":{
+        "databaseFilePath":"${SDK_LWA_AUTHORIZATION_ADAPTER_DATABASE_FILE_PATH}"
+    },
     "deviceSettings":{
         "databaseFilePath":"${SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH}",
         "locales":["en-US","en-GB","de-DE","en-IN","en-CA","ja-JP","en-AU","fr-FR","it-IT","es-ES","es-MX","fr-CA",
-            "es-US", "hi-IN", "pt-BR"],
+            "es-US", "hi-IN", "pt-BR", "ar-SA"],
         "defaultLocale":"en-US",
         "localeCombinations":[
             ["en-US", "es-US"],
             ["es-US", "en-US"],
+            ["en-US", "fr-FR"],
+            ["fr-FR", "en-US"],
+            ["en-US", "de-DE"],
+            ["de-DE", "en-US"],
+            ["en-US", "ja-JP"],
+            ["ja-JP", "en-US"],
+            ["en-US", "it-IT"],
+            ["it-IT", "en-US"],
+            ["en-US", "es-ES"],
+            ["es-ES", "en-US"],
             ["en-IN", "hi-IN"],
             ["hi-IN", "en-IN"],
             ["fr-CA", "en-CA"],

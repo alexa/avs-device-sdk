@@ -82,6 +82,9 @@ static const char JSON_KEY_REFRESH_TOKEN[] = "refresh_token";
 /// Key for error values in JSON returned by @c LWA
 static const char JSON_KEY_ERROR[] = "error";
 
+/// Key for the the root config.
+static const std::string CONFIG_ROOT_KEY = "cblAuthDelegate";
+
 /// Expected token_type value returned from token requests to @c LWA.
 static const std::string JSON_VALUE_BEARER = "bearer";
 
@@ -455,7 +458,8 @@ CBLAuthDelegate::CBLAuthDelegate(
 bool CBLAuthDelegate::init(const ConfigurationNode& configuration, const std::shared_ptr<DeviceInfo>& deviceInfo) {
     ACSDK_DEBUG5(LX("init"));
 
-    m_configuration = CBLAuthDelegateConfiguration::create(configuration, deviceInfo);
+    m_configuration =
+        acsdkAuthorization::lwa::LWAAuthorizationConfiguration::create(configuration, deviceInfo, CONFIG_ROOT_KEY);
     if (!m_configuration) {
         ACSDK_ERROR(LX("initFailed").d("reason", "createCBLAuthDelegateConfigurationFailed"));
         return false;

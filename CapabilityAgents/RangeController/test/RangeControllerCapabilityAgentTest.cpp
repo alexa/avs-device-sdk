@@ -455,7 +455,9 @@ TEST_F(RangeControllerCapabilityAgentTest, test_setRangeValueDirective_errorCase
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto rangeControllerCapabilityAgent =
         createCapabilityAgentAndSetExpects(rangeControllerAttributes.value(), true, true, false);
@@ -525,7 +527,9 @@ TEST_F(RangeControllerCapabilityAgentTest, test_adjustRangeValueDirective_errorC
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto rangeControllerCapabilityAgent =
         createCapabilityAgentAndSetExpects(rangeControllerAttributes.value(), true, true, false);

@@ -222,6 +222,7 @@ TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayRetriesWhen503IsRe
             request->sendCompleted(MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2);
             static int count = 0;
             count++;
+
             if (TEST_RETRY_COUNT == count) {
                 retryCountPromise.set_value(count);
 
@@ -236,6 +237,41 @@ TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayRetriesWhen503IsRe
     ASSERT_FALSE(m_postConnectVerifyGatewaySender->performOperation(m_mockPostConnectSendMessage));
     EXPECT_EQ(retryCountPromise.get_future().get(), TEST_RETRY_COUNT);
     ASSERT_FALSE(m_callbackCheck);
+}
+
+/**
+ * Test if performOperation wakes up from wait when it receives a wake up call while waiting to retry
+ */
+TEST_F(PostConnectVerifyGatewaySenderTest, test_performGatewayWakesUpAndWaitingToRetry) {
+    std::promise<int> retryCountPromise;
+    auto sendMessageLambda = [this, &retryCountPromise](std::shared_ptr<MessageRequest> request) {
+        if (m_mockPostConnectSenderThread.joinable()) {
+            m_mockPostConnectSenderThread.join();
+        }
+
+        m_mockPostConnectSenderThread = std::thread([this, request, &retryCountPromise]() {
+            EXPECT_TRUE(validateEvent(request->getJsonContent()));
+
+            static int count = 0;
+            if (count == 0) {
+                request->sendCompleted(MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2);
+            }
+            count++;
+            if (TEST_RETRY_COUNT == count) {
+                retryCountPromise.set_value(count);
+                std::thread localThread([this, request]() { m_postConnectVerifyGatewaySender->wakeOperation(); });
+                request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT);
+
+                if (localThread.joinable()) {
+                    localThread.join();
+                }
+            }
+        });
+    };
+    EXPECT_CALL(*m_mockPostConnectSendMessage, sendMessage(_)).WillRepeatedly(Invoke(sendMessageLambda));
+    ASSERT_TRUE(m_postConnectVerifyGatewaySender->performOperation(m_mockPostConnectSendMessage));
+    EXPECT_EQ(retryCountPromise.get_future().get(), TEST_RETRY_COUNT);
+    ASSERT_TRUE(m_callbackCheck);
 }
 
 }  // namespace test

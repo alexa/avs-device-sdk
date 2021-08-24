@@ -13,7 +13,6 @@
  * permissions and limitations under the License.
  */
 
-#include <fstream>
 #include <string>
 
 #include <gmock/gmock.h>
@@ -22,12 +21,14 @@
 #include <AVSCommon/SDKInterfaces/MockAVSGatewayAssigner.h>
 #include <AVSCommon/SDKInterfaces/MockAVSGatewayObserver.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSGatewayManager/AuthRefreshedObserver.h>
 #include <RegistrationManager/MockCustomerDataManager.h>
 
 namespace alexaClientSDK {
 namespace avsGatewayManager {
 namespace test {
 
+using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils::configuration;
 using namespace ::testing;
@@ -78,6 +79,14 @@ public:
     MOCK_METHOD0(clear, void());
 };
 
+class MockAuthDelegate : public avsCommon::sdkInterfaces::AuthDelegateInterface {
+public:
+    MOCK_METHOD1(addAuthObserver, void(std::shared_ptr<AuthObserverInterface>));
+    MOCK_METHOD1(removeAuthObserver, void(std::shared_ptr<AuthObserverInterface>));
+    MOCK_METHOD0(getAuthToken, std::string());
+    MOCK_METHOD1(onAuthFailure, void(const std::string&));
+};
+
 /**
  * Test harness for @c AVSGatewayManager class.
  */
@@ -110,6 +119,9 @@ protected:
 
     /// The instance of the @c AVSGatewayManagerStorage that will be used in the tests.
     std::shared_ptr<AVSGatewayManager> m_avsGatewayManager;
+
+    /// The instance of the @c AuthDelegateInterface that will be used to add the Authorization observer
+    std::shared_ptr<MockAuthDelegate> m_mockAuthDelegate;
 };
 
 void AVSGatewayManagerTest::SetUp() {
@@ -117,6 +129,7 @@ void AVSGatewayManagerTest::SetUp() {
     m_mockAVSGatewayAssigner = std::make_shared<NiceMock<MockAVSGatewayAssigner>>();
     m_mockAVSGatewayObserver = std::make_shared<NiceMock<MockAVSGatewayObserver>>();
     m_customerDataManager = std::make_shared<NiceMock<registrationManager::MockCustomerDataManager>>();
+    m_mockAuthDelegate = std::make_shared<NiceMock<MockAuthDelegate>>();
 }
 
 void AVSGatewayManagerTest::TearDown() {
@@ -346,8 +359,8 @@ TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationMultipleTimesWhenDB
         return true;
     }));
 
-    m_avsGatewayManager =
-        AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
+    m_avsGatewayManager = AVSGatewayManager::create(
+        m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot(), m_mockAuthDelegate);
 
     ASSERT_NE(m_avsGatewayManager, nullptr);
 
@@ -387,8 +400,8 @@ TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationRetunrsNullIfDBCont
         return true;
     }));
 
-    m_avsGatewayManager =
-        AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
+    m_avsGatewayManager = AVSGatewayManager::create(
+        m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot(), m_mockAuthDelegate);
 
     ASSERT_NE(m_avsGatewayManager, nullptr);
 
@@ -430,8 +443,8 @@ TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationSequenceAfterSetGat
         return true;
     }));
 
-    m_avsGatewayManager =
-        AVSGatewayManager::create(m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot());
+    m_avsGatewayManager = AVSGatewayManager::create(
+        m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot(), m_mockAuthDelegate);
     ASSERT_NE(m_avsGatewayManager, nullptr);
 
     m_avsGatewayManager->setAVSGatewayAssigner(m_mockAVSGatewayAssigner);
@@ -466,6 +479,29 @@ TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationSequenceAfterSetGat
     /// Subsequent call to createPostConnectOperation() when gateway is verified.
     auto thirdPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
     ASSERT_EQ(thirdPostConnectOperation, nullptr);
+}
+
+/**
+ * Test if a call to @c createPostConnectOperation() adds an AuthRefreshedObserver to the AuthDelegate
+ */
+TEST_F(AVSGatewayManagerTest, test_createPostConnectOperationHasAuthObserver) {
+    initializeConfigRoot(AVS_GATEWAY_MANAGER_JSON);
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, init()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockAVSGatewayManagerStorage, loadState(_)).WillOnce(Invoke([](GatewayVerifyState* state) {
+        EXPECT_EQ(state->avsGatewayURL, TEST_AVS_GATEWAY);
+        EXPECT_EQ(state->isVerified, false);
+        return true;
+    }));
+    EXPECT_CALL(*m_mockAuthDelegate, addAuthObserver(_)).Times(1);
+
+    m_avsGatewayManager = AVSGatewayManager::create(
+        m_mockAVSGatewayManagerStorage, m_customerDataManager, ConfigurationNode::getRoot(), m_mockAuthDelegate);
+
+    ASSERT_NE(m_avsGatewayManager, nullptr);
+
+    /// First call to createPostConnectOperation() when database is empty.
+    auto firstPostConnectOperation = m_avsGatewayManager->createPostConnectOperation();
+    ASSERT_NE(firstPostConnectOperation, nullptr);
 }
 
 }  // namespace test

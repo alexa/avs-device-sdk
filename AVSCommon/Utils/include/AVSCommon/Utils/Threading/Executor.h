@@ -173,7 +173,15 @@ auto Executor::submitToFront(Task task, Args&&... args) -> std::future<decltype(
  */
 template <typename T>
 inline static void forwardPromise(std::shared_ptr<std::promise<T>> promise, std::future<T>* future) {
-    promise->set_value(future->get());
+#if __cpp_exceptions || defined(__EXCEPTIONS)
+    try {
+#endif
+        promise->set_value(future->get());
+#if __cpp_exceptions || defined(__EXCEPTIONS)
+    } catch (...) {
+        promise->set_exception(std::current_exception());
+    }
+#endif
 }
 
 /**
@@ -184,8 +192,16 @@ inline static void forwardPromise(std::shared_ptr<std::promise<T>> promise, std:
  */
 template <>
 inline void forwardPromise<void>(std::shared_ptr<std::promise<void>> promise, std::future<void>* future) {
-    future->get();
-    promise->set_value();
+#if __cpp_exceptions || defined(__EXCEPTIONS)
+    try {
+#endif
+        future->get();
+        promise->set_value();
+#if __cpp_exceptions || defined(__EXCEPTIONS)
+    } catch (...) {
+        promise->set_exception(std::current_exception());
+    }
+#endif
 }
 
 template <typename Task, typename... Args>

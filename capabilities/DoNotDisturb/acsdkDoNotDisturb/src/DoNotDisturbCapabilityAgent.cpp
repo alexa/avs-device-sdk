@@ -13,6 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
+
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
@@ -70,6 +72,9 @@ static const std::string DND_JSON_INTERFACE_VERSION = "1.0";
 
 /// Name for "enabled" JSON branch.
 static constexpr char JSON_KEY_ENABLED[] = "enabled";
+
+/// A timeout for an HTTP response when sending change events.
+static const std::chrono::seconds HTTP_RESPONSE_TIMEOUT(15);
 
 std::shared_ptr<DoNotDisturbCapabilityAgent> DoNotDisturbCapabilityAgent::createDoNotDisturbCapabilityAgent(
     const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
@@ -292,6 +297,7 @@ void DoNotDisturbCapabilityAgent::doShutdown() {
         m_connectionManager->removeConnectionStatusObserver(shared_from_this());
     }
 
+    m_executor.waitForSubmittedTasks();
     m_executor.shutdown();
     m_dndModeSetting.reset();
 }
@@ -332,13 +338,14 @@ std::shared_future<MessageRequestObserverInterface::Status> DoNotDisturbCapabili
 }
 
 std::shared_future<bool> DoNotDisturbCapabilityAgent::sendChangedEvent(const std::string& value) {
-    std::promise<bool> promise;
+    ACSDK_DEBUG5(LX(__func__));
+    std::shared_ptr<std::promise<bool>> promise = std::make_shared<std::promise<bool>>();
     {
         std::lock_guard<std::mutex> guard(m_connectedStateMutex);
         if (!m_isConnected) {
             m_hasOfflineChanges = true;
-            promise.set_value(false);
-            return promise.get_future();
+            promise->set_value(false);
+            return promise->get_future();
         }
         m_hasOfflineChanges = false;
     }
@@ -348,17 +355,52 @@ std::shared_future<bool> DoNotDisturbCapabilityAgent::sendChangedEvent(const std
     auto dndModeSetting = m_dndModeSetting;
 
     // Sequentialize event processing so that no directive or another event would be handled while we sending this event
-    m_executor.submit([this, value, dndModeSetting]() {
-        MessageRequestObserverInterface::Status status = sendDNDEvent(EVENT_DONOTDISTURBCHANGED.name, value).get();
-        bool isSucceeded = MessageRequestObserverInterface::Status::SUCCESS == status ||
-                           MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT == status;
+    m_executor.submit([this, value, dndModeSetting, promise]() {
+        auto future = sendDNDEvent(EVENT_DONOTDISTURBCHANGED.name, value);
+        if (future.wait_for(HTTP_RESPONSE_TIMEOUT) == std::future_status::ready) {
+            auto httpResponse = future.get();
+            std::ostringstream oss;
+            oss << httpResponse;
+            ACSDK_DEBUG5(
+                LX("sendChangedEventExecutor").d("eventName", EVENT_DONOTDISTURBCHANGED.name).d("status", oss.str()));
 
-        if (!isSucceeded) {
+            switch (httpResponse) {
+                case MessageRequestObserverInterface::Status::THROTTLED:
+                case MessageRequestObserverInterface::Status::SERVER_OTHER_ERROR:
+                case MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2:
+                case MessageRequestObserverInterface::Status::TIMEDOUT:
+                case MessageRequestObserverInterface::Status::INTERNAL_ERROR:
+                    // retry once but don't wait for response
+                    sendDNDEvent(EVENT_REPORTDONOTDISTURB.name, dndModeSetting->get() ? "true" : "false");
+                    promise->set_value(true);
+                    break;
+
+                case MessageRequestObserverInterface::Status::SUCCESS:
+                case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
+                case MessageRequestObserverInterface::Status::SUCCESS_NO_CONTENT:
+                    promise->set_value(true);
+                    break;
+
+                case MessageRequestObserverInterface::Status::CANCELED:
+                case MessageRequestObserverInterface::Status::BAD_REQUEST:
+                case MessageRequestObserverInterface::Status::PENDING:
+                case MessageRequestObserverInterface::Status::NOT_CONNECTED:
+                case MessageRequestObserverInterface::Status::NOT_SYNCHRONIZED:
+                case MessageRequestObserverInterface::Status::PROTOCOL_ERROR:
+                case MessageRequestObserverInterface::Status::REFUSED:
+                case MessageRequestObserverInterface::Status::INVALID_AUTH:
+                default:
+                    promise->set_value(false);
+                    break;
+            }
+        } else {
+            ACSDK_WARN(LX("sendChangedEventExecutor").m("sendEventFailed").d("reason", "noHTTPResponse"));
+            // retry once but don't wait for response
             sendDNDEvent(EVENT_REPORTDONOTDISTURB.name, dndModeSetting->get() ? "true" : "false");
+            promise->set_value(true);
         }
     });
-    promise.set_value(true);
-    return promise.get_future();
+    return promise->get_future();
 }
 
 std::shared_future<bool> DoNotDisturbCapabilityAgent::sendReportEvent(const std::string& value) {

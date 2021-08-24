@@ -7,6 +7,7 @@ target_include_directories(acsdkSampleApplicationCBLAuthRequester PUBLIC
 
 target_link_libraries(acsdkSampleApplicationCBLAuthRequester PUBLIC
     acsdkSampleApplicationInterfaces
+    acsdkAuthorizationInterfaces
     CBLAuthDelegate)
 
 # install target

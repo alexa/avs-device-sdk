@@ -342,6 +342,19 @@ static rapidjson::Document parseJson(const std::string& json) {
     return document;
 }
 
+/// A matcher to compare PowerResourceId.
+MATCHER_P(
+    IsSamePowerResource,
+    /* std::string */ id,
+    "") {
+    std::shared_ptr<PowerResourceManagerInterface::PowerResourceId> actual = arg;
+    if (!actual) {
+        return false;
+    }
+
+    return actual->getResourceId() == id;
+}
+
 /// Utility function to look up a JSON string in a container.
 static std::string getJsonString(const rapidjson::Value& container, const std::string& key) {
     auto member = container.FindMember(key);
@@ -1068,6 +1081,19 @@ void AudioInputProcessorTest::SetUp() {
             return {SUPPORTED_WAKE_WORDS};
         }));
 
+    EXPECT_CALL(
+        *m_mockPowerResourceManager,
+        create(
+            COMPONENT_NAME,
+            false,
+            avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_HIGH))
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([](const std::string& resourceId, bool isRefCounted, const PowerResourceLevel level) {
+            return std::make_shared<avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceId>(
+                resourceId);
+        }));
+    EXPECT_CALL(*m_mockPowerResourceManager, close(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
+
     m_audioInputProcessor = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
@@ -1162,6 +1188,9 @@ void AudioInputProcessorTest::TearDown() {
     resetAudioInputProcessor();
     m_dialogUXStateAggregator->removeObserver(m_dialogUXStateObserver);
     m_capabilityChangeNotifier->removeObserver(m_mockCapabilityConfigurationChangeObserver);
+    if (m_audioInputProcessor) {
+        m_audioInputProcessor->shutdown();
+    }
 }
 
 bool AudioInputProcessorTest::testRecognizeFails(
@@ -1242,8 +1271,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
             }
             return true;
         }));
-        EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
-            .Times(AtLeast(1));
+        EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
     }
     m_mockDirectiveSequencer->setDialogRequestId("dialogRequestId");
     {
@@ -1293,7 +1321,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
                 done = true;
                 conditionVariable.notify_one();
             }));
-        EXPECT_CALL(*m_mockPowerResourceManager, releasePowerResource(COMPONENT_NAME)).Times(AtLeast(1));
+        EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
     }
 
     auto sentFuture = m_recognizeEvent->send(m_audioInputProcessor);
@@ -1331,7 +1359,7 @@ bool AudioInputProcessorTest::testStopCaptureSucceeds() {
             done = true;
             conditionVariable.notify_one();
         }));
-    EXPECT_CALL(*m_mockPowerResourceManager, releasePowerResource(COMPONENT_NAME)).Times(AtLeast(1));
+    EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
 
     auto stopCaptureResult = m_audioInputProcessor->stopCapture();
     m_dialogUXStateAggregator->onRequestProcessingStarted();
@@ -1363,9 +1391,8 @@ bool AudioInputProcessorTest::testContextFailure(avsCommon::sdkInterfaces::Conte
             done = true;
             conditionVariable.notify_one();
         }));
-    EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
-        .Times(AtLeast(1));
-    EXPECT_CALL(*m_mockPowerResourceManager, releasePowerResource(COMPONENT_NAME)).Times(AtLeast(1));
+    EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
+    EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
 
     if (recognize.send(m_audioInputProcessor).get()) {
         std::unique_lock<std::mutex> lock(mutex);
@@ -1394,7 +1421,7 @@ bool AudioInputProcessorTest::testStopCaptureDirectiveSucceeds(bool withDialogRe
             done = true;
             conditionVariable.notify_one();
         }));
-    EXPECT_CALL(*m_mockPowerResourceManager, releasePowerResource(COMPONENT_NAME)).Times(AtLeast(1));
+    EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
 
     if (!withDialogRequestId) {
         directiveHandler->handleDirectiveImmediately(avsDirective);
@@ -1444,8 +1471,7 @@ bool AudioInputProcessorTest::testExpectSpeechSucceeds(bool withDialogRequestId)
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
     EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
-    EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
-        .Times(AtLeast(1));
+    EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
     }
@@ -1489,9 +1515,8 @@ bool AudioInputProcessorTest::testExpectSpeechWaits(bool withDialogRequestId, bo
                 done = true;
                 conditionVariable.notify_one();
             }));
-        EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
-            .Times(AtLeast(1));
-        EXPECT_CALL(*m_mockPowerResourceManager, releasePowerResource(COMPONENT_NAME)).Times(AtLeast(1));
+        EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
+        EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
     } else {
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH))
             .WillOnce(InvokeWithoutArgs([&] {
@@ -1499,8 +1524,7 @@ bool AudioInputProcessorTest::testExpectSpeechWaits(bool withDialogRequestId, bo
                 done = true;
                 conditionVariable.notify_one();
             }));
-        EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
-            .Times(AtLeast(1));
+        EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
     }
 
     if (!withDialogRequestId) {
@@ -1634,8 +1658,7 @@ bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withIn
     EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
         .WillOnce(Return(CONTEXT_REQUEST_TOKEN));
-    EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::ACTIVE_HIGH))
-        .Times(AtLeast(1));
+    EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
 
     // Set AIP to a sane state.
     directiveHandler->preHandleDirective(avsDirective, std::move(result));
@@ -1887,8 +1910,7 @@ void AudioInputProcessorTest::testAIPStateTransitionOnEventResponse(
 
 /// Function to verify that @c AudioInputProcessor::create() errors out with an invalid @c DirectiveSequencerInterface.
 TEST_F(AudioInputProcessorTest, test_createWithoutDirectiveSequencer) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         nullptr,
         m_mockMessageSender,
         m_mockContextManager,
@@ -1906,13 +1928,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutDirectiveSequencer) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() errors out with an invalid @c MessageSenderInterface.
 TEST_F(AudioInputProcessorTest, test_createWithoutMessageSender) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         nullptr,
         m_mockContextManager,
@@ -1930,13 +1951,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutMessageSender) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() errors out with an invalid @c ContextManagerInterface.
 TEST_F(AudioInputProcessorTest, test_createWithoutContextManager) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         nullptr,
@@ -1954,13 +1974,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutContextManager) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() errors out with an invalid @c FocusManagerInterface.
 TEST_F(AudioInputProcessorTest, test_createWithoutFocusManager) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -1978,13 +1997,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutFocusManager) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() errors out with an invalid @c DialogUXStateAggregator.
 TEST_F(AudioInputProcessorTest, test_createWithoutStateAggregator) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2002,7 +2020,7 @@ TEST_F(AudioInputProcessorTest, test_createWithoutStateAggregator) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /**
@@ -2010,8 +2028,7 @@ TEST_F(AudioInputProcessorTest, test_createWithoutStateAggregator) {
  * @c ExceptionEncounteredSenderInterface.
  */
 TEST_F(AudioInputProcessorTest, test_createWithoutExceptionSender) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2029,7 +2046,7 @@ TEST_F(AudioInputProcessorTest, test_createWithoutExceptionSender) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /**
@@ -2037,8 +2054,7 @@ TEST_F(AudioInputProcessorTest, test_createWithoutExceptionSender) {
  * @c UserInactivityMonitorInterface.
  */
 TEST_F(AudioInputProcessorTest, test_createWithoutUserInactivityMonitor) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2056,13 +2072,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutUserInactivityMonitor) {
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() errors out with an invalid @c CapabilityChangeNotifier.
 TEST_F(AudioInputProcessorTest, test_createWithoutCapabilityChangeNotifier) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2080,13 +2095,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutCapabilityChangeNotifier) {
         AudioProvider::null(),
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_EQ(m_audioInputProcessor, nullptr);
+    EXPECT_EQ(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() succeeds with a null @c AudioProvider.
 TEST_F(AudioInputProcessorTest, test_createWithoutAudioProvider) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2104,13 +2118,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutAudioProvider) {
         AudioProvider::null(),
         m_mockPowerResourceManager,
         m_metricRecorder);
-    EXPECT_NE(m_audioInputProcessor, nullptr);
+    EXPECT_NE(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() succeeds with a null @c PowerResourceManagerInterface.
 TEST_F(AudioInputProcessorTest, test_createWithoutPowerResourceManager) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2128,13 +2141,12 @@ TEST_F(AudioInputProcessorTest, test_createWithoutPowerResourceManager) {
         AudioProvider::null(),
         nullptr,
         m_metricRecorder);
-    EXPECT_NE(m_audioInputProcessor, nullptr);
+    EXPECT_NE(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::create() succeeds with a null @c MetricRecorderInterface.
 TEST_F(AudioInputProcessorTest, test_createWithoutMetricRecorder) {
-    m_audioInputProcessor->removeObserver(m_dialogUXStateAggregator);
-    m_audioInputProcessor = AudioInputProcessor::create(
+    auto aip = AudioInputProcessor::create(
         m_mockDirectiveSequencer,
         m_mockMessageSender,
         m_mockContextManager,
@@ -2152,7 +2164,7 @@ TEST_F(AudioInputProcessorTest, test_createWithoutMetricRecorder) {
         AudioProvider::null(),
         m_mockPowerResourceManager,
         nullptr);
-    EXPECT_NE(m_audioInputProcessor, nullptr);
+    EXPECT_NE(aip, nullptr);
 }
 
 /// Function to verify that @c AudioInputProcessor::getconfiguration() returns the expected configuration data.

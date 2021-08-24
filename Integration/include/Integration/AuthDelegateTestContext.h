@@ -94,7 +94,7 @@ private:
     class AuthRequester : public acsdkffsAuthDelegate::FFSAuthRequesterInterface {
     public:
         void onRequestFFS() override;
-    }
+    };
 #else
     /**
      * Implementation of @c CBLAuthRequesterInterface used to detect the case where the user

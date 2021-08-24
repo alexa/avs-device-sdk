@@ -44,6 +44,27 @@ namespace libcurlUtils {
  */
 bool prepareForTLS(CURL* handle);
 
+/**
+ * Prepare a CURL handle to set the proxy to use for the upcoming request.
+ *
+ * The 'libCurlUtils' sub-component of the global configuration supports the following options:
+ * - CURLOPT_PROXY If present, specifies a value for the libcurl property CURLOPT_PROXY.
+ *
+ * Here is an example configuration:
+ * @code
+ * {
+ *     "libcurlUtils" : {
+ *         "CURLOPT_PROXY" : "http://proxy:1080"
+ *     }
+ *     // Other configuration nodes
+ * }
+ * @endcode
+ *
+ * @param handle The libcurl handle to prepare.
+ * @return Whether the operation was successful.
+ */
+bool prepareForProxy(CURL* handle);
+
 }  // namespace libcurlUtils
 }  // namespace utils
 }  // namespace avsCommon

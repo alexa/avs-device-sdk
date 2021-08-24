@@ -469,6 +469,18 @@ public:
     void printDiagnostic();
 
 private:
+    /**
+     * Returns the alert's scheduled time in Unix.
+     *
+     * @return The alert's scheduled time in Unix.
+     */
+    int64_t getScheduledTime_UnixLocked() const;
+
+    /**
+     * Returns the alert's scheduled time in ISO 8601.
+     *
+     * @return The alert's scheduled time in ISO 8601.
+     */
     std::string getScheduledTime_ISO_8601Locked() const;
 
     /**

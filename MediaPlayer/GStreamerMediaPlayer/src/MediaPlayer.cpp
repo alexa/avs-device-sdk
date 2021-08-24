@@ -222,7 +222,7 @@ MediaPlayer::SourceId MediaPlayer::setSource(
     const avsCommon::utils::AudioFormat* audioFormat,
     const SourceConfig& config) {
     m_offsetAdjustment = offsetAdjustment;
-    return ERROR_SOURCE_ID;
+    return setSource(reader, audioFormat, config);
 }
 
 MediaPlayer::SourceId MediaPlayer::setSource(
@@ -1719,7 +1719,7 @@ std::chrono::milliseconds MediaPlayer::getCurrentStreamOffset() {
                          .d("offsetInMilliseconds", offsetInMilliseconds.count()));
     }
 
-    return offsetInMilliseconds;
+    return offsetInMilliseconds + m_offsetAdjustment;
 }
 
 void MediaPlayer::handleAddObserver(

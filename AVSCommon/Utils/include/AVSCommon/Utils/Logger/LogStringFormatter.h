@@ -48,6 +48,22 @@ public:
         const char* threadMoniker,
         const char* text);
 
+    /**
+     * Transforms a time_point into a string representing the date and time.
+     *
+     * @param time The time_point.
+     * @return A string representing the time_point in "%Y-%m-%d %H:%M:%S" format, or an empty string if failure.
+     */
+    std::string getDateTimeString(std::chrono::system_clock::time_point time);
+
+    /**
+     * Transforms a time_point into a string representing the milliseconds.
+     *
+     * @param time The time_point.
+     * @return A string representing the number of milliseconds, or an empty string if failure.
+     */
+    std::string getMillisecondString(std::chrono::system_clock::time_point time);
+
 private:
     std::shared_ptr<timing::SafeCTimeAccess> m_safeCTimeAccess;
 };

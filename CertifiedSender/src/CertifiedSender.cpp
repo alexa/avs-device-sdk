@@ -63,21 +63,21 @@ CertifiedSender::CertifiedMessageRequest::CertifiedMessageRequest(
         m_isRequestShuttingDown{false} {
 }
 
-void CertifiedSender::CertifiedMessageRequest::exceptionReceived(const std::string& exceptionMessage) {
-    std::lock_guard<std::mutex> lock(m_requestMutex);
-    m_sendMessageStatus = MessageRequestObserverInterface::Status::SERVER_INTERNAL_ERROR_V2;
-    m_responseReceived = true;
-    m_requestCv.notifyAll();
-}
-
 void CertifiedSender::CertifiedMessageRequest::sendCompleted(
     MessageRequestObserverInterface::Status sendMessageStatus) {
     std::lock_guard<std::mutex> lock(m_requestMutex);
+    ACSDK_DEBUG(LX(__func__).d("status", sendMessageStatus));
     if (!m_responseReceived) {
         m_sendMessageStatus = sendMessageStatus;
         m_responseReceived = true;
         m_requestCv.notifyAll();
     }
+}
+
+void CertifiedSender::CertifiedMessageRequest::exceptionReceived(const std::string& exceptionMessage) {
+    // Log error, but only set status in CertifiedMessageRequest::sendCompleted() since that is when we get the actual
+    // status code.
+    ACSDK_ERROR(LX(__func__).m(exceptionMessage));
 }
 
 MessageRequestObserverInterface::Status CertifiedSender::CertifiedMessageRequest::waitForCompletion() {

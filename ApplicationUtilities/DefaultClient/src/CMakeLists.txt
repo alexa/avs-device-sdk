@@ -63,7 +63,8 @@ target_link_libraries(DefaultClient
     acsdkSystemClockMonitorInterfaces
     acsdkDeviceSetup
     acsdkDeviceSetupInterfaces
-    )
+    acsdkAuthorization
+    acsdkAuthorizationInterfaces)
 
 if (CAPTIONS)
     target_link_libraries(DefaultClient CaptionsLib)
@@ -71,6 +72,10 @@ endif()
 
 if (PCC)
     target_link_libraries(DefaultClient PhoneCallController)
+endif()
+
+if (MC)
+    target_link_libraries(DefaultClient acsdkMessagingController)
 endif()
 
 if (MCC)

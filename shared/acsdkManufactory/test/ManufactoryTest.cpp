@@ -23,6 +23,7 @@
 #include "acsdkManufactory/Component.h"
 #include "acsdkManufactory/ComponentAccumulator.h"
 #include "acsdkManufactory/Manufactory.h"
+#include "acsdkManufactory/OptionalImport.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -30,6 +31,7 @@ namespace test {
 
 using namespace ::testing;
 using namespace acsdkManufactory;
+using namespace std;
 
 class ManufactoryTest : public ::testing::Test {
 public:
@@ -50,7 +52,7 @@ public:
      *
      * @param input The new value for the string.
      */
-    virtual void setString(const std::string& input) = 0;
+    virtual void setString(const string& input) = 0;
 };
 
 /**
@@ -75,7 +77,7 @@ public:
      *
      * @return The string value of the object.
      */
-    virtual std::string getString() const = 0;
+    virtual string getString() const = 0;
 };
 
 /**
@@ -100,11 +102,11 @@ public:
         return m_id;
     }
 
-    void setString(const std::string& input) override {
+    void setString(const string& input) override {
         m_state = input;
     };
 
-    std::string getString() const override {
+    string getString() const override {
         return m_state;
     };
 
@@ -116,7 +118,7 @@ private:
     const int m_id;
 
     /// The string value of this instance of AB.
-    std::string m_state;
+    string m_state;
 };
 
 int AB::m_nextId = 1;
@@ -143,26 +145,26 @@ class ABSubclass : public AB {};
 // ----- test_manufactureUnique ----- //
 
 /**
- * Factory for creating a new instance of InterfaceA and returning it via std::unique_ptr<InterfaceA>.
+ * Factory for creating a new instance of InterfaceA and returning it via unique_ptr<InterfaceA>.
  *
  * @return A new instance of InterfaceA.
  */
-std::unique_ptr<InterfaceA> createUniqueA() {
-    return std::unique_ptr<InterfaceA>(new AB());
+unique_ptr<InterfaceA> createUniqueA() {
+    return unique_ptr<InterfaceA>(new AB());
 }
 
 /**
- * Test manufacture of an instances returned via std::unique_ptr.  Verify that multiple instances of the same
+ * Test manufacture of an instances returned via unique_ptr.  Verify that multiple instances of the same
  * interface are indeed distinct instances.
  */
 TEST_F(ManufactoryTest, test_manufactureUnique) {
-    Component<std::unique_ptr<InterfaceA>> component(ComponentAccumulator<>().addUniqueFactory(createUniqueA));
-    auto manufactory = Manufactory<std::unique_ptr<InterfaceA>>::create(component);
+    Component<unique_ptr<InterfaceA>> component(ComponentAccumulator<>().addUniqueFactory(createUniqueA));
+    auto manufactory = Manufactory<unique_ptr<InterfaceA>>::create(component);
     ASSERT_TRUE(manufactory);
 
-    auto a1 = manufactory->get<std::unique_ptr<InterfaceA>>();
+    auto a1 = manufactory->get<unique_ptr<InterfaceA>>();
     ASSERT_TRUE(a1);
-    auto a2 = manufactory->get<std::unique_ptr<InterfaceA>>();
+    auto a2 = manufactory->get<unique_ptr<InterfaceA>>();
     ASSERT_TRUE(a2);
     ASSERT_NE(a1, a2);
 }
@@ -170,30 +172,30 @@ TEST_F(ManufactoryTest, test_manufactureUnique) {
 // ----- test_manufactureShared ----- //
 
 /**
- * Factory for creating a new instance of InterfaceAB and returning it via std::shared_ptr<InterfaceAB>.
+ * Factory for creating a new instance of InterfaceAB and returning it via shared_ptr<InterfaceAB>.
  *
  * @return A new instance of InterfaceAB.
  */
-std::shared_ptr<InterfaceAB> createSharedAB() {
-    return std::make_shared<AB>();
+shared_ptr<InterfaceAB> createSharedAB() {
+    return make_shared<AB>();
 }
 
 /**
- * Test manufacture of an 'unloadable' instance returned via std::shared_ptr.  Verify that while an instance
+ * Test manufacture of an 'unloadable' instance returned via shared_ptr.  Verify that while an instance
  * is still referenced, manufacture of the same interface will provide the same instance.  Also verify that
  * when all references have been deleted, the next manufacture will create a new instance.
  */
 TEST_F(ManufactoryTest, test_manufactureShared) {
-    Component<std::shared_ptr<InterfaceAB>> component(ComponentAccumulator<>().addUnloadableFactory(createSharedAB));
-    auto manufactory = Manufactory<std::shared_ptr<InterfaceAB>>::create(component);
+    Component<shared_ptr<InterfaceAB>> component(ComponentAccumulator<>().addUnloadableFactory(createSharedAB));
+    auto manufactory = Manufactory<shared_ptr<InterfaceAB>>::create(component);
     ASSERT_TRUE(manufactory);
 
     // Verify created instances are shared...
 
-    auto ab1 = manufactory->get<std::shared_ptr<InterfaceAB>>();
+    auto ab1 = manufactory->get<shared_ptr<InterfaceAB>>();
     ASSERT_TRUE(ab1);
     ASSERT_TRUE(ab1->getString().empty());
-    auto ab2 = manufactory->get<std::shared_ptr<InterfaceAB>>();
+    auto ab2 = manufactory->get<shared_ptr<InterfaceAB>>();
     ASSERT_TRUE(ab2);
     ASSERT_EQ(ab1, ab2);
     ab1->setString("something");
@@ -202,7 +204,7 @@ TEST_F(ManufactoryTest, test_manufactureShared) {
 
     ab1.reset();
     ab2.reset();
-    auto ab3 = manufactory->get<std::shared_ptr<InterfaceAB>>();
+    auto ab3 = manufactory->get<shared_ptr<InterfaceAB>>();
     ASSERT_TRUE(ab3);
     ASSERT_TRUE(ab3->getString().empty());
 }
@@ -216,7 +218,7 @@ TEST_F(ManufactoryTest, test_manufactureShared) {
  * @param ab The instance of InterfaceAB to use to create an InterfaceA.
  * @return The InterfaceA portion of the InterfaceAB that was provided.
  */
-std::shared_ptr<InterfaceA> createAFromAB(const std::shared_ptr<InterfaceAB>& ab) {
+shared_ptr<InterfaceA> createAFromAB(const shared_ptr<InterfaceAB>& ab) {
     return ab;
 }
 
@@ -227,7 +229,7 @@ std::shared_ptr<InterfaceA> createAFromAB(const std::shared_ptr<InterfaceAB>& ab
  * @param ab The instance of InterfaceAB to use to create an InterfaceB.
  * @return The InterfaceB portion of the InterfaceAB that was provided.
  */
-std::shared_ptr<InterfaceB> createBFromAB(const std::shared_ptr<InterfaceAB>& ab) {
+shared_ptr<InterfaceB> createBFromAB(const shared_ptr<InterfaceAB>& ab) {
     return ab;
 }
 
@@ -236,15 +238,15 @@ std::shared_ptr<InterfaceB> createBFromAB(const std::shared_ptr<InterfaceAB>& ab
  *
  * @return An instance of InterfaceAB.
  */
-std::shared_ptr<InterfaceAB> createAB() {
-    return std::make_shared<AB>();
+shared_ptr<InterfaceAB> createAB() {
+    return make_shared<AB>();
 }
 
 /**
  * Definition of a component that exports implementations of InterfaceA and InterfaceB.
  * @return
  */
-Component<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>> getABComponent() {
+Component<shared_ptr<InterfaceA>, shared_ptr<InterfaceB>> getABComponent() {
     ComponentAccumulator<> accumulator;
     return accumulator.addUnloadableFactory(createAFromAB)
         .addUnloadableFactory(createBFromAB)
@@ -256,12 +258,12 @@ Component<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>> getABCompone
  */
 TEST_F(ManufactoryTest, test_multipleInhertance) {
     auto component = getABComponent();
-    auto manufactory = Manufactory<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>>::create(component);
+    auto manufactory = Manufactory<shared_ptr<InterfaceA>, shared_ptr<InterfaceB>>::create(component);
     ASSERT_TRUE(manufactory);
 
-    auto a = manufactory->get<std::shared_ptr<InterfaceA>>();
+    auto a = manufactory->get<shared_ptr<InterfaceA>>();
     ASSERT_TRUE(a);
-    auto b = manufactory->get<std::shared_ptr<InterfaceB>>();
+    auto b = manufactory->get<shared_ptr<InterfaceB>>();
     ASSERT_TRUE(b);
 
     // Make sure b's string is empty.
@@ -371,7 +373,7 @@ TEST_F(ManufactoryTest, test_annotatedManufacture) {
  *
  * @return A Component that exports 'retained' (not unloadable) instances of InterfaceAB.
  */
-Component<std::shared_ptr<InterfaceAB>> getRetainedABComponent() {
+Component<shared_ptr<InterfaceAB>> getRetainedABComponent() {
     ComponentAccumulator<> accumulator;
     return accumulator.addRetainedFactory(createAB);
 }
@@ -386,13 +388,13 @@ TEST_F(ManufactoryTest, test_retainedManufacture) {
 
     int id1 = 0;
     {
-        auto manufactory = Manufactory<std::shared_ptr<InterfaceAB>>::create(component);
+        auto manufactory = Manufactory<shared_ptr<InterfaceAB>>::create(component);
         ASSERT_TRUE(manufactory);
 
-        auto ab1 = manufactory->get<std::shared_ptr<InterfaceAB>>();
+        auto ab1 = manufactory->get<shared_ptr<InterfaceAB>>();
         ASSERT_TRUE(ab1);
         id1 = ab1->getId();
-        auto ab2 = manufactory->get<std::shared_ptr<InterfaceAB>>();
+        auto ab2 = manufactory->get<shared_ptr<InterfaceAB>>();
         ASSERT_TRUE(ab2);
         auto id2 = ab2->getId();
         ASSERT_EQ(ab1, ab2);
@@ -403,10 +405,10 @@ TEST_F(ManufactoryTest, test_retainedManufacture) {
     // are released.
 
     {
-        auto manufactory = Manufactory<std::shared_ptr<InterfaceAB>>::create(component);
+        auto manufactory = Manufactory<shared_ptr<InterfaceAB>>::create(component);
         ASSERT_TRUE(manufactory);
 
-        auto ab3 = manufactory->get<std::shared_ptr<InterfaceAB>>();
+        auto ab3 = manufactory->get<shared_ptr<InterfaceAB>>();
         ASSERT_TRUE(ab3);
         auto id3 = ab3->getId();
         ASSERT_NE(id1, id3);
@@ -473,8 +475,8 @@ TEST_F(ManufactoryTest, test_requiredManufacture) {
  * @return A new instance of ABSubclass<X>.
  */
 template <int X>
-static std::shared_ptr<ABSubclass<X>> createABSubclass() {
-    return std::make_shared<ABSubclass<X>>();
+static shared_ptr<ABSubclass<X>> createABSubclass() {
+    return make_shared<ABSubclass<X>>();
 }
 
 /**
@@ -483,8 +485,7 @@ static std::shared_ptr<ABSubclass<X>> createABSubclass() {
  *
  * @return A  component that includes both primary and required types.
  */
-Component<std::shared_ptr<ABSubclass<1>>, std::shared_ptr<ABSubclass<2>>, std::shared_ptr<ABSubclass<3>>>
-getPrimaryTestComponent() {
+Component<shared_ptr<ABSubclass<1>>, shared_ptr<ABSubclass<2>>, shared_ptr<ABSubclass<3>>> getPrimaryTestComponent() {
     return ComponentAccumulator<>()
         .addRequiredFactory(createABSubclass<1>)
         .addPrimaryFactory(createABSubclass<2>)
@@ -497,15 +498,14 @@ getPrimaryTestComponent() {
 TEST_F(ManufactoryTest, test_primeManufacture) {
     auto component = getPrimaryTestComponent();
     auto manufactory =
-        Manufactory<std::shared_ptr<ABSubclass<1>>, std::shared_ptr<ABSubclass<2>>, std::shared_ptr<ABSubclass<3>>>::
-            create(component);
+        Manufactory<shared_ptr<ABSubclass<1>>, shared_ptr<ABSubclass<2>>, shared_ptr<ABSubclass<3>>>::create(component);
     ASSERT_TRUE(manufactory);
 
-    auto v1 = manufactory->get<std::shared_ptr<ABSubclass<1>>>();
+    auto v1 = manufactory->get<shared_ptr<ABSubclass<1>>>();
     ASSERT_TRUE(v1);
-    auto v3 = manufactory->get<std::shared_ptr<ABSubclass<3>>>();
+    auto v3 = manufactory->get<shared_ptr<ABSubclass<3>>>();
     ASSERT_TRUE(v3);
-    auto v2 = manufactory->get<std::shared_ptr<ABSubclass<2>>>();
+    auto v2 = manufactory->get<shared_ptr<ABSubclass<2>>>();
     ASSERT_TRUE(v2);
 
     // Because ABSubclass<2> is 'primary', so it should be instantiated first.
@@ -523,42 +523,38 @@ TEST_F(ManufactoryTest, test_primeManufacture) {
  * @return A function to create a std:functions that creates a distinct subclasses of AB.
  */
 template <int X, typename... Dependencies>
-std::function<std::shared_ptr<ABSubclass<X>>(Dependencies...)> getFunctionFactory() {
-    return [](Dependencies... dependencies) { return std::make_shared<ABSubclass<X>>(); };
+function<shared_ptr<ABSubclass<X>>(Dependencies...)> getFunctionFactory() {
+    return [](Dependencies... dependencies) { return make_shared<ABSubclass<X>>(); };
 }
 
-Component<
-    std::shared_ptr<ABSubclass<1>>,
-    std::shared_ptr<ABSubclass<2>>,
-    std::shared_ptr<ABSubclass<3>>,
-    std::shared_ptr<ABSubclass<4>>>
+Component<shared_ptr<ABSubclass<1>>, shared_ptr<ABSubclass<2>>, shared_ptr<ABSubclass<3>>, shared_ptr<ABSubclass<4>>>
 getFunctionTestComponent() {
     return ComponentAccumulator<>()
         .addPrimaryFactory(getFunctionFactory<1>())
-        .addRequiredFactory(getFunctionFactory<2, const std::shared_ptr<ABSubclass<3>>&>())
+        .addRequiredFactory(getFunctionFactory<2, const shared_ptr<ABSubclass<3>>&>())
         .addRetainedFactory(getFunctionFactory<3>())
         .addUnloadableFactory(getFunctionFactory<4>());
 }
 
 /**
- * Verify that std::function factories work and are invoked in the correct order.
+ * Verify that function factories work and are invoked in the correct order.
  */
 TEST_F(ManufactoryTest, test_functionManufacture) {
     auto component = getFunctionTestComponent();
     auto manufactory = Manufactory<
-        std::shared_ptr<ABSubclass<1>>,
-        std::shared_ptr<ABSubclass<2>>,
-        std::shared_ptr<ABSubclass<3>>,
-        std::shared_ptr<ABSubclass<4>>>::create(component);
+        shared_ptr<ABSubclass<1>>,
+        shared_ptr<ABSubclass<2>>,
+        shared_ptr<ABSubclass<3>>,
+        shared_ptr<ABSubclass<4>>>::create(component);
     ASSERT_TRUE(manufactory);
 
-    auto v2 = manufactory->get<std::shared_ptr<ABSubclass<2>>>();
+    auto v2 = manufactory->get<shared_ptr<ABSubclass<2>>>();
     ASSERT_TRUE(v2);
-    auto v3 = manufactory->get<std::shared_ptr<ABSubclass<3>>>();
+    auto v3 = manufactory->get<shared_ptr<ABSubclass<3>>>();
     ASSERT_TRUE(v3);
-    auto v4 = manufactory->get<std::shared_ptr<ABSubclass<4>>>();
+    auto v4 = manufactory->get<shared_ptr<ABSubclass<4>>>();
     ASSERT_TRUE(v4);
-    auto v1 = manufactory->get<std::shared_ptr<ABSubclass<1>>>();
+    auto v1 = manufactory->get<shared_ptr<ABSubclass<1>>>();
     ASSERT_TRUE(v1);
 
     // ABSubclass<1> is primary, so it should be instantiated first.
@@ -577,7 +573,7 @@ TEST_F(ManufactoryTest, test_functionManufacture) {
  * @return A function to create a std:functions that creates a distinct subclasses of AB.
  */
 template <typename Annotation, typename... Dependencies>
-std::function<Annotated<Annotation, AB>(Dependencies...)> getAnnotatedFunctionFactory() {
+function<Annotated<Annotation, AB>(Dependencies...)> getAnnotatedFunctionFactory() {
     return [](Dependencies... dependencies) { return Annotated<Annotation, AB>(new AB); };
 }
 
@@ -596,7 +592,7 @@ getAnnotatedFunctionTestComponent() {
 }
 
 /**
- * Verify that std::function factories work and are invoked in the correct order.
+ * Verify that function factories work and are invoked in the correct order.
  */
 TEST_F(ManufactoryTest, test_anotatedFunctionManufacture) {
     auto component = getAnnotatedFunctionTestComponent();
@@ -633,7 +629,7 @@ TEST_F(ManufactoryTest, test_anotatedFunctionManufacture) {
  *
  * @return An instance of InterfaceA.
  */
-std::shared_ptr<InterfaceA> createCyclicA(const std::shared_ptr<InterfaceB>&) {
+shared_ptr<InterfaceA> createCyclicA(const shared_ptr<InterfaceB>&) {
     return createAB();
 }
 
@@ -642,7 +638,7 @@ std::shared_ptr<InterfaceA> createCyclicA(const std::shared_ptr<InterfaceB>&) {
  *
  * @return An instance of InterfaceB.
  */
-std::shared_ptr<InterfaceB> createCyclicB(const std::shared_ptr<InterfaceA>&) {
+shared_ptr<InterfaceB> createCyclicB(const shared_ptr<InterfaceA>&) {
     return createAB();
 }
 
@@ -651,7 +647,7 @@ std::shared_ptr<InterfaceB> createCyclicB(const std::shared_ptr<InterfaceA>&) {
  *
  * @return A component with a cyclic dependency graph.
  */
-Component<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>> getCyclicComponent() {
+Component<shared_ptr<InterfaceA>, shared_ptr<InterfaceB>> getCyclicComponent() {
     ComponentAccumulator<> accumulator;
     return accumulator.addUnloadableFactory(createCyclicA).addUnloadableFactory(createCyclicB);
 };
@@ -662,7 +658,7 @@ Component<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>> getCyclicCom
  */
 TEST_F(ManufactoryTest, test_checkCyclicDependencies) {
     auto component = getCyclicComponent();
-    auto manufactory = Manufactory<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>>::create(component);
+    auto manufactory = Manufactory<shared_ptr<InterfaceA>, shared_ptr<InterfaceB>>::create(component);
     ASSERT_FALSE(manufactory);
 }
 
@@ -674,21 +670,61 @@ TEST_F(ManufactoryTest, test_checkCyclicDependencies) {
  */
 TEST_F(ManufactoryTest, test_subManufactory) {
     auto component = getABComponent();
-    auto manufactory = Manufactory<std::shared_ptr<InterfaceA>, std::shared_ptr<InterfaceB>>::create(component);
+    auto manufactory = Manufactory<shared_ptr<InterfaceA>, shared_ptr<InterfaceB>>::create(component);
     ASSERT_TRUE(manufactory);
 
-    auto a = manufactory->get<std::shared_ptr<InterfaceA>>();
+    auto a = manufactory->get<shared_ptr<InterfaceA>>();
     ASSERT_TRUE(a);
-    auto b = manufactory->get<std::shared_ptr<InterfaceB>>();
+    auto b = manufactory->get<shared_ptr<InterfaceB>>();
     ASSERT_TRUE(b);
     ASSERT_TRUE(b->getString().empty());
     a->setString("something");
     ASSERT_FALSE(b->getString().empty());
 
-    auto subsetManufactory = manufactory->createSubsetManufactory<std::shared_ptr<InterfaceB>>();
-    auto subB = subsetManufactory->get<std::shared_ptr<InterfaceB>>();
+    auto subsetManufactory = manufactory->createSubsetManufactory<shared_ptr<InterfaceB>>();
+    auto subB = subsetManufactory->get<shared_ptr<InterfaceB>>();
     ASSERT_TRUE(subB);
     ASSERT_EQ(b, subB);
+}
+
+// ------ test_optionalImport -----
+class Dependency {};
+struct Type1 {
+    static shared_ptr<Type1> create(shared_ptr<Dependency> dependency = nullptr) {
+        return make_shared<Type1>(dependency);
+    }
+
+    Type1(shared_ptr<Dependency> dependency = nullptr) : m_dependency{dependency} {
+    }
+    shared_ptr<Dependency> m_dependency;
+};
+
+Component<shared_ptr<Type1>, OptionalImport<shared_ptr<Dependency>>> getOptional() {
+    return ComponentAccumulator<>().addRetainedFactory(Type1::create).makeImportOptional<shared_ptr<Dependency>>();
+}
+
+/**
+ * Test that we are able to build manufactory from a component that has unsatisfied Optional dependency. Expect
+ * manufactory to just wire nullptr to that dependency.
+ */
+TEST_F(ManufactoryTest, test_missingOptionalImportUsesEmptyObject) {
+    auto manufactory = Manufactory<shared_ptr<Type1>>::create(getOptional());
+    ASSERT_NE(manufactory, nullptr);
+    ASSERT_NE(manufactory->get<shared_ptr<Type1>>(), nullptr);
+    EXPECT_EQ(manufactory->get<shared_ptr<Type1>>()->m_dependency, nullptr);
+}
+
+/**
+ * Test that if the user provides a recipe for an optional dependency, the recipe is used.
+ */
+TEST_F(ManufactoryTest, test_withOptionalImportUsesProvidedImplementation) {
+    auto myDependency = make_shared<Dependency>();
+    Component<shared_ptr<Type1>> component =
+        ComponentAccumulator<>().addInstance(myDependency).addComponent(getOptional());
+    auto manufactory = Manufactory<shared_ptr<Type1>>::create(component);
+    ASSERT_NE(manufactory, nullptr);
+    ASSERT_NE(manufactory->get<shared_ptr<Type1>>(), nullptr);
+    EXPECT_EQ(manufactory->get<shared_ptr<Type1>>()->m_dependency, myDependency);
 }
 
 }  // namespace test

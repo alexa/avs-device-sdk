@@ -21,16 +21,16 @@
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "CBLAuthDelegate/CBLAuthDelegateConfiguration.h"
+#include "acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h"
 
 namespace alexaClientSDK {
-namespace authorization {
-namespace cblAuthDelegate {
+namespace acsdkAuthorization {
+namespace lwa {
 
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CBLAuthDelegateConfiguration");
+static const std::string TAG("LWAAuthorizationConfiguration");
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -39,8 +39,8 @@ static const std::string TAG("CBLAuthDelegateConfiguration");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-/// Name of @c ConfigurationNode for CBLAuthDelegate
-static const std::string CONFIG_KEY_CBL_AUTH_DELEGATE = "cblAuthDelegate";
+/// Name of @c ConfigurationNode for LWAAuthorization
+static const std::string CONFIG_KEY_LWA_AUTHORIZATION = "lwaAuthorization";
 
 /// Name of lwaURL value in CBLAuthDelegate's @c ConfigurationNode.
 static const std::string CONFIG_KEY_LWA_URL = "lwaUrl";
@@ -93,13 +93,17 @@ static const std::string REQUEST_TOKEN_PATH = "token";
 /// Path suffix for URl used in token refresh requests to @c LWA.
 static const std::string REFRESH_TOKEN_PATH = "token";
 
-std::unique_ptr<CBLAuthDelegateConfiguration> CBLAuthDelegateConfiguration::create(
+/// Default for configured base URL for @c LWA requests.
+static const std::string CUSTOMER_PROFILE_URL = "https://api.amazon.com/user/profile";
+
+std::unique_ptr<LWAAuthorizationConfiguration> LWAAuthorizationConfiguration::create(
     const avsCommon::utils::configuration::ConfigurationNode& configuration,
-    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) {
-    std::unique_ptr<CBLAuthDelegateConfiguration> instance(new CBLAuthDelegateConfiguration());
+    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+    const std::string& configRootKey) {
+    std::unique_ptr<LWAAuthorizationConfiguration> instance(new LWAAuthorizationConfiguration());
     ACSDK_DEBUG5(LX("create"));
 
-    if (instance->init(configuration, deviceInfo)) {
+    if (instance->init(configuration, deviceInfo, configRootKey)) {
         return instance;
     }
 
@@ -107,15 +111,18 @@ std::unique_ptr<CBLAuthDelegateConfiguration> CBLAuthDelegateConfiguration::crea
     return nullptr;
 }
 
-bool CBLAuthDelegateConfiguration::init(
+bool LWAAuthorizationConfiguration::init(
     const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
-    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) {
+    const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo,
+    const std::string& configRootKey) {
     ACSDK_DEBUG5(LX("init"));
 
-    auto configuration = configurationRoot[CONFIG_KEY_CBL_AUTH_DELEGATE];
+    std::string key = configRootKey.empty() ? CONFIG_KEY_LWA_AUTHORIZATION : configRootKey;
+
+    auto configuration = configurationRoot[key];
 
     if (!configuration) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "emptyConfiguration").d("key", CONFIG_KEY_CBL_AUTH_DELEGATE));
+        ACSDK_ERROR(LX("initFailed").d("reason", "emptyConfiguration").d("key", key));
         return false;
     }
 
@@ -146,47 +153,51 @@ bool CBLAuthDelegateConfiguration::init(
     return true;
 }
 
-std::string CBLAuthDelegateConfiguration::getClientId() const {
+std::string LWAAuthorizationConfiguration::getClientId() const {
     return m_deviceInfo->getClientId();
 }
 
-std::string CBLAuthDelegateConfiguration::getProductId() const {
+std::string LWAAuthorizationConfiguration::getProductId() const {
     return m_deviceInfo->getProductId();
 }
 
-std::string CBLAuthDelegateConfiguration::getDeviceSerialNumber() const {
+std::string LWAAuthorizationConfiguration::getDeviceSerialNumber() const {
     return m_deviceInfo->getDeviceSerialNumber();
 }
 
-std::chrono::seconds CBLAuthDelegateConfiguration::getRequestTimeout() const {
+std::chrono::seconds LWAAuthorizationConfiguration::getRequestTimeout() const {
     return m_requestTimeout;
 }
 
-std::chrono::seconds CBLAuthDelegateConfiguration::getAccessTokenRefreshHeadStart() const {
+std::chrono::seconds LWAAuthorizationConfiguration::getAccessTokenRefreshHeadStart() const {
     return m_accessTokenRefreshHeadStart;
 }
 
-std::string CBLAuthDelegateConfiguration::getLocale() const {
+std::string LWAAuthorizationConfiguration::getLocale() const {
     return m_locale;
 }
 
-std::string CBLAuthDelegateConfiguration::getRequestCodePairUrl() const {
+std::string LWAAuthorizationConfiguration::getRequestCodePairUrl() const {
     return m_requestCodePairUrl;
 }
 
-std::string CBLAuthDelegateConfiguration::getRequestTokenUrl() const {
+std::string LWAAuthorizationConfiguration::getRequestTokenUrl() const {
     return m_requestTokenUrl;
 }
 
-std::string CBLAuthDelegateConfiguration::getRefreshTokenUrl() const {
+std::string LWAAuthorizationConfiguration::getRefreshTokenUrl() const {
     return m_refreshTokenUrl;
 }
 
-std::string CBLAuthDelegateConfiguration::getScopeData() const {
+std::string LWAAuthorizationConfiguration::getScopeData() const {
     return m_scopeData;
 }
 
-bool CBLAuthDelegateConfiguration::initScopeData() {
+std::string LWAAuthorizationConfiguration::getCustomerProfileUrl() const {
+    return CUSTOMER_PROFILE_URL;
+}
+
+bool LWAAuthorizationConfiguration::initScopeData() {
     ACSDK_DEBUG5(LX("initScopeData"));
 
     Document scopeData;
@@ -212,6 +223,6 @@ bool CBLAuthDelegateConfiguration::initScopeData() {
     return true;
 }
 
-}  // namespace cblAuthDelegate
-}  // namespace authorization
+}  // namespace lwa
+}  // namespace acsdkAuthorization
 }  // namespace alexaClientSDK

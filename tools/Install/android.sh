@@ -59,7 +59,7 @@ NDK_PACKAGE=${NDK_PACKAGE:-"android-ndk-r22"}
 ADB=${ADB:-"adb"}
 
 # Dependency Versions
-CURL_VER=7.67.0
+CURL_VER=${CURL_DEFAULT_VERSION:-7.67.0}
 # OpenSSL should update to 1.1.1 when build issue with NDK 22 is fixed
 # https://github.com/openssl/openssl/pull/13694
 OPENSSL_VER=1_1_0h
@@ -567,7 +567,6 @@ install_dependencies() {
                   --disable-file \
                   --disable-ldap \
                   --disable-rtsp \
-                  --disable-proxy \
                   --disable-dict \
                   --disable-telnet \
                   --disable-tftp \

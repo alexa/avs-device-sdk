@@ -11,6 +11,7 @@ macro(UseDefaultIfNotSet var default)
 endmacro()
 
 UseDefaultIfNotSet(ACSDKALEXACOMMUNICATIONS_LIB acsdkLibcurlAlexaCommunications)
+UseDefaultIfNotSet(ACSDKAUDIOINPUTSTREAM_LIB acsdkAudioInputStream)
 UseDefaultIfNotSet(ACSDKAUTHORIZATIONDELEGATE_LIB acsdkCBLAuthorizationDelegate)
 UseDefaultIfNotSet(ACSDKDEVICESETTINGSMANAGER_LIB acsdkDefaultDeviceSettingsManager)
 UseDefaultIfNotSet(ACSDKHTTPCONTENTFETCHER_LIB acsdkLibcurlHTTPContentFetcher)

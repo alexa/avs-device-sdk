@@ -696,7 +696,7 @@ TEST_F(SpeechSynthesizerTest, test_callingCancel) {
  * Call preHandle with a valid SPEAK directive. Then call handleDirective. Expected result is that @c acquireChannel
  * is called once. On Focus Changed to foreground, audio should play. Call cancel directive. Expect the
  * @c ContextManager @c setState is called when the state changes to @c PLAYING and then to @c INTERRUPTED.
- * Expect @c sendMessage is called twice (SpeechStarted and SpeechInterrupted).
+ * Expect @c sendMessage is called twice (SpeechStarted and SpeechInterrupted). Expect @c setFailed() is never called.
  */
 TEST_F(SpeechSynthesizerTest, test_callingCancelAfterHandle) {
     auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
@@ -730,9 +730,7 @@ TEST_F(SpeechSynthesizerTest, test_callingCancelAfterHandle) {
     EXPECT_CALL(*(m_mockFocusManager.get()), releaseChannel(CHANNEL_NAME, _))
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnReleaseChannel));
-    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setFailed(_))
-        .Times(1)
-        .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetFailed));
+    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setFailed(_)).Times(0);
     EXPECT_CALL(*m_mockPowerResourceManager, acquirePowerResource(COMPONENT_NAME, PowerResourceLevel::STANDBY_MED))
         .Times(AtLeast(1));
 
@@ -866,9 +864,7 @@ TEST_F(SpeechSynthesizerTest, testTimer_bargeInWhilePlaying) {
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(IsStartedEvent()))
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSendMessage));
-    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setFailed(_))
-        .Times(1)
-        .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetFailed));
+    EXPECT_CALL(*(m_mockDirHandlerResult.get()), setFailed(_)).Times(0);
     EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(IsInterruptedEvent()))
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSendMessage));
@@ -1576,14 +1572,15 @@ TEST_F(SpeechSynthesizerTest, test_replaceAllWithNonEmptyQueue) {
 /**
  * Test SpeechSynthesizer REPLACE_ALL when there is an ongoing speech.
  *
- * Expect the speech synthesizer to cancel the active speech, send an interrupted event and play the new speech.
+ * Expect the speech synthesizer to cancel the active speech, send a completed event and play the new speech.
  */
 TEST_F(SpeechSynthesizerTest, test_replaceAllStopActiveSpeech) {
     auto active = generateSpeakInfo(PlayBehavior::ENQUEUE);
     {
         SCOPED_TRACE("Setup Queue");
         auto mockEnqueuedResultHandler = std::unique_ptr<MockDirectiveHandlerResult>(new MockDirectiveHandlerResult());
-        EXPECT_CALL(*mockEnqueuedResultHandler, setFailed(_));
+        EXPECT_CALL(*mockEnqueuedResultHandler, setFailed(_)).Times(0);
+        EXPECT_CALL(*mockEnqueuedResultHandler, setCompleted()).Times(1);
         ASSERT_TRUE(setupActiveSpeech(std::move(mockEnqueuedResultHandler), active));
     }
 

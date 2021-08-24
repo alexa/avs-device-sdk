@@ -12,7 +12,6 @@ if(BUILD_TESTING)
     target_include_directories(Integration PUBLIC "${AudioPlayer_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${AVSSystem_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${RegistrationManager_SOURCE_DIR}/include")
-    target_include_directories(Integration PUBLIC "${KITTAI_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${SQLiteStorage_SOURCE_DIR}/include")
     target_include_directories(Integration PUBLIC "${SynchronizeStateSender_SOURCE_DIR}/include")
 
@@ -26,4 +25,7 @@ if(BUILD_TESTING)
             RegistrationManager
             SynchronizeStateSender
             acsdkAlerts)
+    if(ACS_UTILS)
+        target_link_libraries(Integration acsdkFFSAuthDelegate)
+    endif()
 endif()

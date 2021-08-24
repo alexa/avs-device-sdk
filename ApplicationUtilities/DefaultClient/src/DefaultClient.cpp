@@ -1682,6 +1682,10 @@ DefaultClient::~DefaultClient() {
         m_shutdownObjects.pop_back();
     }
 
+    if (m_endpointRegistrationManager) {
+        ACSDK_DEBUG5(LX("EndpointRegistrationManagerShutdown"));
+        m_endpointRegistrationManager->shutdown();
+    }
     if (m_templateRuntime) {
         ACSDK_DEBUG5(LX("TemplateRuntimeShutdown"));
         m_templateRuntime->shutdown();

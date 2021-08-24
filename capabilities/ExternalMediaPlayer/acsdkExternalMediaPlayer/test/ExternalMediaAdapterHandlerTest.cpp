@@ -85,10 +85,13 @@ public:
             const acsdkExternalMediaPlayerInterfaces::Navigation& navigation,
             bool preload,
             const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-            std::string playbackTarget));
-    MOCK_METHOD2(
+            const std::string& playbackTarget));
+    MOCK_METHOD3(
         handlePlayControl,
-        bool(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType));
+        bool(
+            const std::string& localPlayerId,
+            acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+            const std::string& playbackTarget));
     MOCK_METHOD2(handleSeek, bool(const std::string& localPlayerId, std::chrono::milliseconds offset));
     MOCK_METHOD2(handleAdjustSeek, bool(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset));
     MOCK_METHOD2(
@@ -217,8 +220,9 @@ TEST_F(ExternalMediaPlayerTest, testHandlePlayControl) {
     authorizePlayer();
     EXPECT_CALL(
         *m_externalMediaPlayerAdapterHandler,
-        handlePlayControl(PLAYER_ID, acsdkExternalMediaPlayerInterfaces::RequestType::NONE));
-    m_externalMediaPlayerAdapterHandler->playControl(PLAYER_ID, acsdkExternalMediaPlayerInterfaces::RequestType::NONE);
+        handlePlayControl(PLAYER_ID, acsdkExternalMediaPlayerInterfaces::RequestType::NONE, _));
+    m_externalMediaPlayerAdapterHandler->playControl(
+        PLAYER_ID, acsdkExternalMediaPlayerInterfaces::RequestType::NONE, "");
 }
 
 /**

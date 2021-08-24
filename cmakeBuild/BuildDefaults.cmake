@@ -73,6 +73,9 @@ include_once(Comms)
 # Setup PCC variables.
 include_once(PCC)
 
+# Setup MC variables.
+include_once(MC)
+
 # Setup MCC variables.
 include_once(MCC)
 
@@ -129,3 +132,6 @@ include_once(ExternalMediaPlayerAdapters)
 
 # Setup ducking options.
 include_once(LocalDucking)
+
+# Setup AuthorizationManager
+include_once(AuthorizationManager)

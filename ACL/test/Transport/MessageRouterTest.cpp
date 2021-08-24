@@ -14,7 +14,6 @@
  */
 
 #include "MessageRouterTest.h"
-
 #include <gtest/gtest.h>
 
 namespace alexaClientSDK {
@@ -150,12 +149,39 @@ TEST_F(MessageRouterTest, test_sendMessageDoesNotSendAfterDisconnected) {
     m_router->sendMessage(messageRequest);
 }
 
-TEST_F(MessageRouterTest, test_disconnectDisconnectsConnectedTransports) {
+TEST_F(MessageRouterTest, test_shutdownCalledWithMultipleMessages) {
     setupStateToConnected();
 
-    EXPECT_CALL(*m_mockTransport, doShutdown()).Times(1);
+    // wait for the result to propagate by scheduling a task on the client executor
+    waitOnMessageRouter(SHORT_TIMEOUT_MS);
 
-    m_router->disable();
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(), ConnectionStatusObserverInterface::Status::CONNECTED);
+
+    auto firstRequest = createMessageRequest();
+    auto otherRequest = createMessageRequest();
+
+    auto firstObserver = createObserver();
+    auto otherObserver = createObserver();
+
+    firstRequest->addObserver(firstObserver);
+    otherRequest->addObserver(otherObserver);
+
+    m_router->sendMessage(firstRequest);
+    m_router->sendMessage(otherRequest);
+
+    m_router->shutdown();
+
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionStatus(),
+        ConnectionStatusObserverInterface::Status::DISCONNECTED);
+
+    ASSERT_EQ(
+        m_mockMessageRouterObserver->getLatestConnectionChangedReason(),
+        ConnectionStatusObserverInterface::ChangedReason::ACL_CLIENT_REQUEST);
+
+    ASSERT_EQ(firstObserver->m_status.getValue(), MessageRequestObserverInterface::Status::NOT_CONNECTED);
+    ASSERT_EQ(otherObserver->m_status.getValue(), MessageRequestObserverInterface::Status::NOT_CONNECTED);
 }
 
 TEST_F(MessageRouterTest, test_serverSideDisconnectWithLongDelayedReconnectReportsPending) {

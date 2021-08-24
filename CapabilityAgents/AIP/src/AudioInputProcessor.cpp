@@ -191,6 +191,12 @@ static const std::string METRIC_ACTIVITY_NAME_PREFIX_AIP = "AIP-";
 static const std::string START_OF_UTTERANCE = "START_OF_UTTERANCE";
 static const std::string START_OF_UTTERANCE_ACTIVITY_NAME = METRIC_ACTIVITY_NAME_PREFIX_AIP + START_OF_UTTERANCE;
 
+/// Name of audio bytes stream metric Opus
+static const std::string WAKEWORD_DETECTION_SEGMENT_UPLOADED_OPUS = "AIP_WAKEWORD_DETECTION_SEGMENT_UPLOADED_OPUS";
+
+/// Name of audio bytes stream metric PCM
+static const std::string WAKEWORD_DETECTION_SEGMENT_UPLOADED_PCM = "AIP_WAKEWORD_DETECTION_SEGMENT_UPLOADED_PCM";
+
 /// Recognize EVENT is built for AIP metric source
 static const std::string RECOGNIZE_START_SEND_MESSAGE = "RECOGNIZE_EVENT_IS_BUILT";
 
@@ -231,6 +237,11 @@ static const std::string DEFAULT_RESOLVE_KEY = "DEFAULT_RESOLVE_KEY";
 static const std::chrono::milliseconds PREROLL_DURATION = std::chrono::milliseconds(500);
 
 static const int MILLISECONDS_PER_SECOND = 1000;
+
+/// Threshold number of bytes for OPUS Encoded Wakeword detection
+static const int WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_OPUS = 5209;
+/// Threshold number of bytes for PCM Encoded Wakeword detection
+static const int WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_PCM = 40480;
 
 /**
  * Helper function to get string values of encoding audio format, which are used in Recognize event.
@@ -644,6 +655,15 @@ AudioInputProcessor::AudioInputProcessor(
         m_messageRequestResolver{nullptr},
         m_encodingAudioFormats{{DEFAULT_RESOLVE_KEY, AudioFormat::Encoding::LPCM}} {
     m_capabilityConfigurations.insert(capabilitiesConfiguration);
+
+    if (m_powerResourceManager) {
+        m_powerResourceId = m_powerResourceManager->create(
+            POWER_RESOURCE_COMPONENT_NAME, false, PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_HIGH);
+        if (!m_powerResourceId) {
+            ACSDK_ERROR(
+                LX(__func__).d("reason", "createRawPowerResourceFailed").d("name", POWER_RESOURCE_COMPONENT_NAME));
+        }
+    }
 }
 
 /**
@@ -706,6 +726,9 @@ void AudioInputProcessor::doShutdown() {
     m_userInactivityMonitor.reset();
     m_observers.clear();
     m_expectSpeechTimeoutHandler.reset();
+    if (m_powerResourceManager && m_powerResourceId) {
+        m_powerResourceManager->close(m_powerResourceId);
+    }
 }
 
 bool resolveMessageRequest(
@@ -965,8 +988,9 @@ bool AudioInputProcessor::executeRecognize(
                                 .d("sampleSize", provider.format.sampleSizeInBits));
                 return false;
             }
-
             avsEncodingFormat = encodingFormatToString(provider.format.encoding);
+            m_audioBytesForMetricThreshold = WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_PCM;
+            m_uploadMetricName = WAKEWORD_DETECTION_SEGMENT_UPLOADED_PCM;
             break;
         case avsCommon::utils::AudioFormat::Encoding::OPUS:
             itSampleRateAVSEncoding = mapSampleRatesAVSEncoding.find(provider.format.sampleRateHz);
@@ -978,6 +1002,8 @@ bool AudioInputProcessor::executeRecognize(
             }
 
             avsEncodingFormat = encodingFormatToString(provider.format.encoding);
+            m_audioBytesForMetricThreshold = WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_OPUS;
+            m_uploadMetricName = WAKEWORD_DETECTION_SEGMENT_UPLOADED_OPUS;
             break;
         default:
             ACSDK_ERROR(LX("executeRecognizeFailed")
@@ -1134,12 +1160,16 @@ bool AudioInputProcessor::executeRecognize(
                         m_metricRecorder,
                         metricEvent.addDataPoint(
                             DataPointCounterBuilder{}.setName(AUDIO_ENCODING_FORMAT_OPUS).increment(1).build()));
+                    m_audioBytesForMetricThreshold = WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_OPUS;
+                    m_uploadMetricName = WAKEWORD_DETECTION_SEGMENT_UPLOADED_OPUS;
                     break;
                 case avsCommon::utils::AudioFormat::Encoding::LPCM:
                     submitMetric(
                         m_metricRecorder,
                         metricEvent.addDataPoint(
                             DataPointCounterBuilder{}.setName(AUDIO_ENCODING_FORMAT_LPCM).increment(1).build()));
+                    m_audioBytesForMetricThreshold = WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_PCM;
+                    m_uploadMetricName = WAKEWORD_DETECTION_SEGMENT_UPLOADED_PCM;
                     break;
                 default:
                     ACSDK_WARN(LX("executeRecognize")
@@ -1233,7 +1263,7 @@ bool AudioInputProcessor::executeRecognize(
     return true;
 }
 
-void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContext) {
+void AudioInputProcessor::executeOnContextAvailable(const std::string& jsonContext) {
     ACSDK_DEBUG(LX("executeOnContextAvailable").sensitive("jsonContext", jsonContext));
 
     // Should already be RECOGNIZING if we get here.
@@ -1283,9 +1313,12 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
             true,
             "",
             std::vector<std::pair<std::string, std::string>>{},
-            m_messageRequestResolver);
+            m_messageRequestResolver,
+            m_audioBytesForMetricThreshold,
+            m_uploadMetricName);
     } else {
-        m_recognizeRequest = std::make_shared<MessageRequest>(msgIdAndJsonEvent.second);
+        m_recognizeRequest = std::make_shared<MessageRequest>(
+            msgIdAndJsonEvent.second, m_audioBytesForMetricThreshold, m_uploadMetricName);
         // Only add attachment readers for resolved MessageRequest. For unresolved one, attachment readers will be
         // passed to the resolver function.
         if (!m_attachmentReaders.empty() && !m_attachmentReaders.begin()->second.empty()) {
@@ -1294,7 +1327,6 @@ void AudioInputProcessor::executeOnContextAvailable(const std::string jsonContex
             }
         }
     }
-
     // If we already have focus, there won't be a callback to send the message, so send it now.
     if (avsCommon::avs::FocusState::FOREGROUND == m_focusState) {
         sendRequestNow();
@@ -1428,6 +1460,7 @@ void AudioInputProcessor::executeResetState() {
     }
     m_focusState = avsCommon::avs::FocusState::NONE;
     setState(ObserverInterface::State::IDLE);
+    m_audioBytesForMetricThreshold = 0;
 }
 
 bool AudioInputProcessor::executeExpectSpeech(milliseconds timeout, std::shared_ptr<DirectiveInfo> info) {
@@ -1599,7 +1632,6 @@ void AudioInputProcessor::onSendCompleted(MessageRequestObserverInterface::Statu
         executeResetState();
     });
 }
-
 std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> AudioInputProcessor::
     getCapabilityConfigurations() {
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -1756,7 +1788,7 @@ bool AudioInputProcessor::handleSetWakeWords(std::shared_ptr<DirectiveInfo> info
 }
 
 void AudioInputProcessor::managePowerResource(ObserverInterface::State newState) {
-    if (!m_powerResourceManager) {
+    if (!m_powerResourceId) {
         return;
     }
 
@@ -1764,14 +1796,13 @@ void AudioInputProcessor::managePowerResource(ObserverInterface::State newState)
     switch (newState) {
         case ObserverInterface::State::RECOGNIZING:
         case ObserverInterface::State::EXPECTING_SPEECH:
-            m_powerResourceManager->acquirePowerResource(
-                POWER_RESOURCE_COMPONENT_NAME, PowerResourceManagerInterface::PowerResourceLevel::ACTIVE_HIGH);
+            m_powerResourceManager->acquire(m_powerResourceId);
             m_timeSinceLastResumeMS = m_powerResourceManager->getTimeSinceLastResumeMS();
             m_timeSinceLastPartialMS = m_powerResourceManager->getTimeSinceLastPartialMS(POWER_RESOURCE_COMPONENT_NAME);
             break;
         case ObserverInterface::State::BUSY:
         case ObserverInterface::State::IDLE:
-            m_powerResourceManager->releasePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            m_powerResourceManager->release(m_powerResourceId);
             break;
     }
 }

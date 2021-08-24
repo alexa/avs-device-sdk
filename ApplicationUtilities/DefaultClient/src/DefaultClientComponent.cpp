@@ -22,6 +22,9 @@
 #include <acsdkExternalMediaPlayer/ExternalMediaPlayerComponent.h>
 #include <acsdkInteractionModel/InteractionModelComponent.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
+#ifdef ENABLE_MC
+#include <acsdkMessagingController/MessagingControllerComponent.h>
+#endif
 #include <acsdkNotifications/NotificationsComponent.h>
 #include <acsdkShared/SharedComponent.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
@@ -298,6 +301,9 @@ DefaultClientComponent getComponent(
         .addComponent(acsdkDoNotDisturb::getComponent())
         .addComponent(acsdkExternalMediaPlayer::getBackwardsCompatibleComponent(adapterCreationMap))
         .addComponent(acsdkInteractionModel::getComponent())
+#ifdef ENABLE_MC
+        .addComponent(acsdkMessagingController::getComponent())
+#endif
         .addComponent(acsdkNotifications::getComponent())
         .addComponent(capabilityAgents::playbackController::getComponent())
         .addComponent(capabilityAgents::speakerManager::getComponent())

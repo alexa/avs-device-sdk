@@ -13,6 +13,8 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
+
 #include <AVSCommon/Utils/Power/AggregatedPowerResourceManager.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
@@ -29,6 +31,9 @@ static const std::string TAG("AggregatedPowerResourceManager");
 /// Prefix to uniquely identify the resource.
 static const std::string PREFIX = "ACSDK_";
 
+/// The timeout to use for logging active power resources.
+static const std::chrono::minutes LOG_INTERVAL{10};
+
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -41,7 +46,12 @@ AggregatedPowerResourceManager::PowerResourceInfo::PowerResourceInfo(
     avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceLevel level) :
         isRefCounted{isRefCounted},
         level{level},
-        refCount{0} {
+        refCount{0},
+        lastAcquired{std::chrono::system_clock::time_point::min()} {
+}
+
+void AggregatedPowerResourceManager::PowerResourceInfo::updateLastAcquiredTimepoint() {
+    lastAcquired = std::chrono::system_clock::now();
 }
 
 std::shared_ptr<AggregatedPowerResourceManager> AggregatedPowerResourceManager::create(
@@ -57,6 +67,7 @@ std::shared_ptr<AggregatedPowerResourceManager> AggregatedPowerResourceManager::
 }
 
 AggregatedPowerResourceManager::~AggregatedPowerResourceManager() {
+    m_timer.stop();
     std::lock_guard<std::mutex> lock(m_mutex);
     for (auto it : m_aggregatedPowerResources) {
         auto id = it.second;
@@ -67,6 +78,12 @@ AggregatedPowerResourceManager::~AggregatedPowerResourceManager() {
 AggregatedPowerResourceManager::AggregatedPowerResourceManager(
     std::shared_ptr<PowerResourceManagerInterface> powerResourceManager) :
         m_appPowerResourceManager{powerResourceManager} {
+    m_timer.start(
+        LOG_INTERVAL,
+        LOG_INTERVAL,
+        avsCommon::utils::timing::Timer::PeriodType::RELATIVE,
+        avsCommon::utils::timing::Timer::getForever(),
+        std::bind(&AggregatedPowerResourceManager::logActivePowerResources, this));
 }
 
 void AggregatedPowerResourceManager::acquirePowerResource(
@@ -114,7 +131,7 @@ std::shared_ptr<PowerResourceManagerInterface::PowerResourceId> AggregatedPowerR
     const std::string& resourceId,
     bool isRefCounted,
     const PowerResourceManagerInterface::PowerResourceLevel level) {
-    ACSDK_DEBUG9(LX(__func__).d("id", resourceId));
+    ACSDK_DEBUG5(LX(__func__).d("id", resourceId).d("isRefCounted", isRefCounted).d("level", level));
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
@@ -160,6 +177,7 @@ bool AggregatedPowerResourceManager::acquire(
     // Do not dedupe  acquire calls if refcount enabled. Let the application PowerResourceManagerInterface
     // handle that if desired.
     if (callerPowerResourceInfo.isRefCounted || callerPowerResourceInfo.refCount == 0) {
+        callerPowerResourceInfo.updateLastAcquiredTimepoint();
         callerPowerResourceInfo.refCount++;
         m_appPowerResourceManager->acquire(aggregatedPowerResourceId);
     }
@@ -174,7 +192,7 @@ bool AggregatedPowerResourceManager::release(const std::shared_ptr<PowerResource
     }
 
     std::lock_guard<std::mutex> lock(m_mutex);
-    ACSDK_DEBUG9(LX(__func__).d("id", id->getResourceId()));
+    ACSDK_DEBUG9(LX(__func__).d("id", id->getResourceId()).d("total resources", m_ids.size()));
 
     auto callerIt = m_ids.find(id->getResourceId());
     if (m_ids.end() == callerIt) {
@@ -202,7 +220,7 @@ bool AggregatedPowerResourceManager::close(const std::shared_ptr<PowerResourceId
 
     std::lock_guard<std::mutex> lock(m_mutex);
     const std::string idString = id->getResourceId();
-    ACSDK_DEBUG9(LX(__func__).d("id", id->getResourceId()));
+    ACSDK_DEBUG5(LX(__func__).d("id", id->getResourceId()));
 
     auto callerIt = m_ids.find(idString);
     if (m_ids.end() == callerIt) {
@@ -224,6 +242,27 @@ bool AggregatedPowerResourceManager::close(const std::shared_ptr<PowerResourceId
     m_ids.erase(idString);
 
     return true;
+}
+
+void AggregatedPowerResourceManager::logActivePowerResources() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    std::stringstream log;
+    size_t numActive = 0;
+    for (const auto& id : m_ids) {
+        if (id.second.refCount > 0) {
+            auto dateTime = m_logFormatter.getDateTimeString(id.second.lastAcquired);
+            auto milliseconds = m_logFormatter.getMillisecondString(id.second.lastAcquired);
+            log << id.first << " acquired " << (dateTime.empty() ? "ERROR: Date and time not logged." : dateTime) << "."
+                << (milliseconds.empty() ? "ERROR: Milliseconds not logged." : milliseconds) << ",";
+
+            numActive++;
+        }
+    }
+
+    log << "total active=" << numActive;
+
+    ACSDK_INFO(LX(__func__).m(log.str()));
 }
 
 }  // namespace power

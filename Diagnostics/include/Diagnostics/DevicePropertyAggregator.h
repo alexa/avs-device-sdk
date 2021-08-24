@@ -109,6 +109,13 @@ public:
         avsCommon::sdkInterfaces::AlexaStateChangeCauseType cause) override;
     /// @}
 
+    /// @name PowerControllerObserverInterface Functions
+    /// @{
+    void onPowerStateChanged(
+        const avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface::PowerState& powerState,
+        avsCommon::sdkInterfaces::AlexaStateChangeCauseType cause) override;
+    /// @}
+
 private:
     /**
      * Constructor.

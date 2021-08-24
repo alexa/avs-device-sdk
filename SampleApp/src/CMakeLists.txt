@@ -69,6 +69,7 @@ target_include_directories(LibSampleApp PUBLIC
 target_link_libraries(LibSampleApp
         acsdkCore
         acsdkManufactory
+        acsdkAudioInputStream
         DefaultClient
         AVSCommon
         AVSGatewayManager
@@ -135,6 +136,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     target_link_libraries(LibSampleApp
             rt m pthread asound atomic)
+endif()
+
+if (AUTH_MANAGER)
+    target_link_libraries(LibSampleApp acsdkAuthorization)
 endif()
 
 add_rpath_to_target("LibSampleApp")

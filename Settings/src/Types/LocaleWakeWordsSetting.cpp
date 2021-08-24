@@ -359,7 +359,14 @@ bool LocaleWakeWordsSetting::clearData(const DeviceLocales& locales) {
     m_pendingRequest.reset();
     m_localeStatus = SettingStatus::NOT_AVAILABLE;
     LocalesSetting::m_value = locales;
-    return m_storage->deleteSetting(LOCALE_KEY);
+    // Clear customer's data before restoring the initial value
+    auto result = m_storage->deleteSetting(LOCALE_KEY);
+    if (result) {
+        // As m_localeStatus == SettingStatus::NOT_AVAILABLE restoreInitialValue()
+        // calls LocalesSetting::get() which returns LocalesSetting::m_value
+        restoreInitialValue();
+    }
+    return result;
 }
 
 bool LocaleWakeWordsSetting::clearData(const WakeWords& wakeWords) {
@@ -368,7 +375,14 @@ bool LocaleWakeWordsSetting::clearData(const WakeWords& wakeWords) {
     m_pendingRequest.reset();
     m_wakeWordsStatus = SettingStatus::NOT_AVAILABLE;
     WakeWordsSetting::m_value = wakeWords;
-    return m_storage->deleteSetting(WAKE_WORDS_KEY);
+    // Clear customer's data before restoring the initial value
+    auto result = m_storage->deleteSetting(WAKE_WORDS_KEY);
+    if (result) {
+        // As m_wakeWordsStatus == SettingStatus::NOT_AVAILABLE restoreInitialValue()
+        // calls WakeWordsSetting::get() which returns WakeWordsSetting::m_value
+        restoreInitialValue();
+    }
+    return result;
 }
 
 void LocaleWakeWordsSetting::restoreInitialValue() {

@@ -286,7 +286,7 @@ DeviceSettingStorageInterface::SettingStatusAndValue SQLiteDeviceSettingStorage:
 
     if (statement->getStepResult() != SQLITE_ROW) {
         const std::string error = "Retrieving row from database failed.";
-        ACSDK_ERROR(LX("loadSettingFailed").d("reason", error).d("sql", sqlString));
+        ACSDK_WARN(LX("loadSettingFailed").d("reason", error).d("sql", sqlString));
         return std::make_pair(SettingStatus::NOT_AVAILABLE, error);
     }
 

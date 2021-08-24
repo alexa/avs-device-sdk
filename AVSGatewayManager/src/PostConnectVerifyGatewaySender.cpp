@@ -107,8 +107,8 @@ bool PostConnectVerifyGatewaySender::performOperation(const std::shared_ptr<Mess
         }
 
         if (m_wakeEvent.wait(RETRY_TIMER.calculateTimeToRetry(retryAttempt++))) {
-            ACSDK_DEBUG5(LX(__func__).m("aborting operation"));
-            return false;
+            ACSDK_DEBUG5(LX(__func__).m("Wait aborted"));
+            m_wakeEvent.reset();
         }
     }
 
@@ -118,6 +118,11 @@ bool PostConnectVerifyGatewaySender::performOperation(const std::shared_ptr<Mess
 bool PostConnectVerifyGatewaySender::isStopping() {
     std::lock_guard<std::mutex> lock{m_mutex};
     return m_isStopping;
+}
+
+void PostConnectVerifyGatewaySender::wakeOperation() {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    m_wakeEvent.wakeUp();
 }
 
 void PostConnectVerifyGatewaySender::abortOperation() {

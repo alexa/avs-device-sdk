@@ -32,6 +32,17 @@ std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface> Sampl
         new SampleApplicationCBLAuthRequester(uiManager));
 }
 
+std::shared_ptr<acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface>
+SampleApplicationCBLAuthRequester::createCBLAuthorizationObserverInterface(
+    const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager) {
+    if (!uiManager) {
+        return nullptr;
+    }
+
+    return std::shared_ptr<acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface>(
+        new SampleApplicationCBLAuthRequester(uiManager));
+}
+
 void SampleApplicationCBLAuthRequester::onRequestAuthorization(const std::string& url, const std::string& code) {
     m_authCheckCounter = 0;
     m_uiManager->printMessage("NOT YET AUTHORIZED");
@@ -43,6 +54,14 @@ void SampleApplicationCBLAuthRequester::onRequestAuthorization(const std::string
 void SampleApplicationCBLAuthRequester::onCheckingForAuthorization() {
     std::ostringstream oss;
     oss << "Checking for authorization (" << ++m_authCheckCounter << ")...";
+    m_uiManager->printMessage(oss.str());
+}
+
+void SampleApplicationCBLAuthRequester::onCustomerProfileAvailable(
+    const acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface::CustomerProfile& customerProfile) {
+    std::ostringstream oss;
+    oss << "Name: " << customerProfile.name << " "
+        << " Email: " << customerProfile.email;
     m_uiManager->printMessage(oss.str());
 }
 

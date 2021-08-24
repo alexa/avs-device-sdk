@@ -124,7 +124,7 @@ bool StaticExternalMediaPlayerAdapterHandler::play(
     const std::string& navigation,
     bool preload,
     const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-    std::string playbackTarget) {
+    const std::string& playbackTarget) {
     auto player = getAdapterByLocalPlayerId(localPlayerId);
     if (!player) {
         return false;
@@ -147,14 +147,15 @@ bool StaticExternalMediaPlayerAdapterHandler::play(
 
 bool StaticExternalMediaPlayerAdapterHandler::playControl(
     const std::string& localPlayerId,
-    acsdkExternalMediaPlayerInterfaces::RequestType requestType) {
+    acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+    const std::string& playbackTarget) {
     auto player = getAdapterByLocalPlayerId(localPlayerId);
     if (!player) {
         return false;
     }
 
-    ACSDK_DEBUG5(LX(__func__).d("localPlayerId", localPlayerId));
-    player->handlePlayControl(requestType);
+    ACSDK_DEBUG5(LX(__func__).d("localPlayerId", localPlayerId).sensitive("playbackTarget", playbackTarget));
+    player->handlePlayControl(requestType, playbackTarget);
     return true;
 }
 

@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKEXTERNALMEDIAPLAYER_STATICEXTERNALMEDIAPLAYERADAPTERHANDLER_H_
-#define ACSDKEXTERNALMEDIAPLAYER_STATICEXTERNALMEDIAPLAYERADAPTERHANDLER_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYER_INCLUDE_ACSDKEXTERNALMEDIAPLAYER_STATICEXTERNALMEDIAPLAYERADAPTERHANDLER_H_
+#define ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYER_INCLUDE_ACSDKEXTERNALMEDIAPLAYER_STATICEXTERNALMEDIAPLAYERADAPTERHANDLER_H_
 
 #include <unordered_map>
 
@@ -66,9 +66,11 @@ public:
         const std::string& navigation,
         bool preload,
         const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-        std::string playbackTarget) override;
-    bool playControl(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType)
-        override;
+        const std::string& playbackTarget) override;
+    bool playControl(
+        const std::string& localPlayerId,
+        acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+        const std::string& playbackTarget) override;
     bool seek(const std::string& localPlayerId, std::chrono::milliseconds offset) override;
     bool adjustSeek(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset) override;
     acsdkExternalMediaPlayerInterfaces::AdapterState getAdapterState(const std::string& localPlayerId) override;
@@ -99,4 +101,4 @@ private:
 
 }  // namespace acsdkExternalMediaPlayer
 }  // namespace alexaClientSDK
-#endif  // ACSDKEXTERNALMEDIAPLAYER_STATICEXTERNALMEDIAPLAYERADAPTERHANDLER_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYER_INCLUDE_ACSDKEXTERNALMEDIAPLAYER_STATICEXTERNALMEDIAPLAYERADAPTERHANDLER_H_

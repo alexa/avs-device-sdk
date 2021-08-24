@@ -413,7 +413,9 @@ TEST_F(ToggleControllerCapabilityAgentTest, test_turnOnDirective_errorCase) {
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto toggleControllerCapabilityAgent =
         createCapabilityAgentAndSetExpects(toggleControllerAttributes.value(), true, true, false);
@@ -482,7 +484,9 @@ TEST_F(ToggleControllerCapabilityAgentTest, test_turnOffDirective_errorCase) {
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto toggleControllerCapabilityAgent =
         createCapabilityAgentAndSetExpects(toggleControllerAttributes.value(), true, true, false);

@@ -33,23 +33,42 @@ static const std::string TAG("MessageRequest");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-MessageRequest::MessageRequest(const std::string& jsonContent, const std::string& uriPathExtension) :
+MessageRequest::MessageRequest(
+    const std::string& jsonContent,
+    const std::string& uriPathExtension,
+    const unsigned int threshold,
+    const std::string& streamMetricName) :
         m_jsonContent{jsonContent},
         m_isSerialized{true},
-        m_uriPathExtension{uriPathExtension} {
+        m_uriPathExtension{uriPathExtension},
+        m_streamMetricName{streamMetricName},
+        m_streamBytesThreshold{threshold} {
 }
-
+MessageRequest::MessageRequest(
+    const std::string& jsonContent,
+    const unsigned int threshold,
+    const std::string& streamMetricName) :
+        m_jsonContent{jsonContent},
+        m_isSerialized{true},
+        m_uriPathExtension{""},
+        m_streamMetricName{streamMetricName},
+        m_streamBytesThreshold{threshold} {
+}
 MessageRequest::MessageRequest(
     const std::string& jsonContent,
     bool isSerialized,
     const std::string& uriPathExtension,
     std::vector<std::pair<std::string, std::string>> headers,
-    MessageRequestResolveFunction resolver) :
+    MessageRequestResolveFunction resolver,
+    const unsigned int threshold,
+    const std::string& streamMetricName) :
         m_jsonContent{jsonContent},
         m_isSerialized{isSerialized},
         m_uriPathExtension{uriPathExtension},
         m_headers(std::move(headers)),
-        m_resolver{resolver} {
+        m_resolver{resolver},
+        m_streamMetricName{streamMetricName},
+        m_streamBytesThreshold{threshold} {
 }
 
 MessageRequest::MessageRequest(const MessageRequest& messageRequest) :
@@ -58,7 +77,9 @@ MessageRequest::MessageRequest(const MessageRequest& messageRequest) :
         m_uriPathExtension{messageRequest.m_uriPathExtension},
         m_readers{messageRequest.m_readers},
         m_headers{messageRequest.m_headers},
-        m_resolver{messageRequest.m_resolver} {
+        m_resolver{messageRequest.m_resolver},
+        m_streamMetricName{messageRequest.m_streamMetricName},
+        m_streamBytesThreshold{messageRequest.m_streamBytesThreshold} {
 }
 
 MessageRequest::~MessageRequest() {
@@ -91,6 +112,12 @@ std::string MessageRequest::getUriPathExtension() const {
 int MessageRequest::attachmentReadersCount() const {
     return m_readers.size();
 }
+std::string MessageRequest::getStreamMetricName() const {
+    return m_streamMetricName;
+}
+unsigned int MessageRequest::getStreamBytesThreshold() const {
+    return m_streamBytesThreshold;
+}
 
 std::shared_ptr<MessageRequest::NamedReader> MessageRequest::getAttachmentReader(size_t index) const {
     if (m_readers.size() <= index) {
@@ -120,7 +147,6 @@ void MessageRequest::sendCompleted(avsCommon::sdkInterfaces::MessageRequestObser
         observer->onSendCompleted(status);
     }
 }
-
 void MessageRequest::exceptionReceived(const std::string& exceptionMessage) {
     ACSDK_ERROR(LX("onExceptionReceived").d("exception", exceptionMessage));
 

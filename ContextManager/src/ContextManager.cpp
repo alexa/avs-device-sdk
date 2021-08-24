@@ -191,7 +191,8 @@ SetStateResult ContextManager::setState(
                 if (requestIt != m_pendingStateRequest.end()) {
                     requestIt->second.erase(capabilityIdentifier);
                 }
-                contextAvailableCallback = getContextAvailableCallbackIfReadyLocked(stateRequestToken, "");
+                contextAvailableCallback =
+                    getContextAvailableCallbackIfReadyLocked(stateRequestToken, capabilityIdentifier.endpointId);
             }
             /// Callback method should be called outside the lock.
             contextAvailableCallback();
@@ -532,7 +533,21 @@ void ContextManager::updateCapabilityState(
     auto& endpointId = capabilityIdentifier.endpointId.empty() ? m_defaultEndpointId : capabilityIdentifier.endpointId;
     auto& capabilitiesState = m_endpointsState[endpointId];
     auto& stateProvider = capabilitiesState[capabilityIdentifier].stateProvider;
+    ACSDK_INFO(LX(__func__)
+                   .sensitive("endpointId", endpointId)
+                   .sensitive("identifier", capabilityIdentifier)
+                   .sensitive("state", capabilityState.valuePayload));
     capabilitiesState[capabilityIdentifier] = StateInfo(stateProvider, capabilityState);
+    for (const auto& provider : m_endpointsState[endpointId]) {
+        (void)provider;  // To avoid compiler warning in RELEASE builds where DEBUG log is compiled out
+        ACSDK_DEBUG5(LX("updateCapabilityStateDetailed")
+                         .sensitive("endpointId", provider.first)
+                         .sensitive(
+                             "value",
+                             provider.second.capabilityState.hasValue()
+                                 ? provider.second.capabilityState.value().valuePayload
+                                 : "none"));
+    }
 }
 
 void ContextManager::updateCapabilityState(
@@ -543,7 +558,21 @@ void ContextManager::updateCapabilityState(
     auto& endpointId = capabilityIdentifier.endpointId.empty() ? m_defaultEndpointId : capabilityIdentifier.endpointId;
     auto& capabilityInfo = m_endpointsState[endpointId];
     auto& stateProvider = capabilityInfo[capabilityIdentifier].stateProvider;
+    ACSDK_INFO(LX(__func__)
+                   .sensitive("endpointId", endpointId)
+                   .sensitive("identifier", capabilityIdentifier)
+                   .sensitive("state", jsonState));
     capabilityInfo[capabilityIdentifier] = StateInfo(stateProvider, jsonState, refreshPolicy);
+    for (const auto& provider : m_endpointsState[endpointId]) {
+        (void)provider;  // To avoid compiler warning in RELEASE builds where DEBUG log is compiled out
+        ACSDK_DEBUG5(LX("updateCapabilityStateDetailed")
+                         .sensitive("endpointId", provider.first)
+                         .sensitive(
+                             "value",
+                             provider.second.capabilityState.hasValue()
+                                 ? provider.second.capabilityState.value().valuePayload
+                                 : "none"));
+    }
 }
 
 ContextManager::StateInfo::StateInfo(

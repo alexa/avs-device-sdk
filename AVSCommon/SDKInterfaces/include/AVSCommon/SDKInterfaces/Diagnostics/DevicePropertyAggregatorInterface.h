@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/PowerController/PowerControllerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/RangeController/RangeControllerObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
@@ -49,7 +50,8 @@ class DevicePropertyAggregatorInterface
         , public acsdkNotificationsInterfaces::NotificationsObserverInterface
         , public avsCommon::sdkInterfaces::SpeakerManagerObserverInterface
         , public avsCommon::sdkInterfaces::DialogUXStateObserverInterface
-        , public avsCommon::sdkInterfaces::rangeController::RangeControllerObserverInterface {
+        , public avsCommon::sdkInterfaces::rangeController::RangeControllerObserverInterface
+        , public avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface {
 public:
     /// Property Key to get Device Context. The Property Value is the json string containing the device context.
     static constexpr const char* DEVICE_CONTEXT = "DeviceContext";
@@ -107,6 +109,10 @@ public:
     /// Property Key for Range Controller status. The Property Value is a string representing the range value of an
     /// instance. Ex: Instance FanSpeed: "7".
     static constexpr const char* RANGE_CONTROLLER_STATUS = "RangeControllerStatus";
+
+    /// Property Key for Power Controller status. The Property Value is a string representing if power status is ON. Ex:
+    /// "true".
+    static constexpr const char* POWER_CONTROLLER_STATUS = "PowerControllerStatus";
 
     /**
      * Gets the property for the given property key.

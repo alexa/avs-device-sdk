@@ -314,6 +314,66 @@ TEST_F(ExecutorTest, testTimer_shutdownCancelJob) {
     // Executed should still be false.
     EXPECT_FALSE(executed);
 }
+
+TEST_F(ExecutorTest, test_forwardPromise) {
+    // Should forward the value
+    {
+        std::promise<int> src;
+        src.set_value(42);
+
+        auto future = src.get_future();
+        auto dst = std::make_shared<std::promise<int>>();
+        forwardPromise(dst, &future);
+        EXPECT_EQ(dst->get_future().get(), 42);
+    }
+    // Should forward the void value
+    {
+        std::promise<void> src;
+        src.set_value();
+
+        auto future = src.get_future();
+        auto dst = std::make_shared<std::promise<void>>();
+        forwardPromise(dst, &future);
+        EXPECT_NO_THROW(dst->get_future().get());
+    }
+    // Should forward the exception
+    {
+        std::promise<int> src;
+        src.set_exception(std::make_exception_ptr(std::exception()));
+
+        auto future = src.get_future();
+        auto dst = std::make_shared<std::promise<int>>();
+        forwardPromise(dst, &future);
+        EXPECT_THROW(dst->get_future().get(), std::exception);
+    }
+    // Should forward the exception
+    {
+        std::promise<void> src;
+        src.set_exception(std::make_exception_ptr(std::exception()));
+
+        auto future = src.get_future();
+        auto dst = std::make_shared<std::promise<void>>();
+        forwardPromise(dst, &future);
+        EXPECT_THROW(dst->get_future().get(), std::exception);
+    }
+}
+
+TEST_F(ExecutorTest, test_taskException) {
+    {
+        auto future = executor.submit([] { throw std::exception(); });
+        EXPECT_THROW(future.get(), std::exception);
+    }
+    {
+        auto future = executor.submit(
+            [](int param) -> int {
+                throw std::runtime_error("catch me");
+                return param;
+            },
+            42);
+        EXPECT_THROW(future.get(), std::runtime_error);
+    }
+}
+
 }  // namespace test
 }  // namespace threading
 }  // namespace utils

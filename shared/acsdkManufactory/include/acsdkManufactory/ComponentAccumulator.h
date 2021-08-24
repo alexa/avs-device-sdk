@@ -20,6 +20,7 @@
 
 #include "acsdkManufactory/Component.h"
 #include "acsdkManufactory/Import.h"
+#include "acsdkManufactory/internal/MakeOptional.h"
 #include "acsdkManufactory/internal/CookBook.h"
 #include "acsdkManufactory/internal/TypeTraitsHelper.h"
 
@@ -177,6 +178,15 @@ public:
     ComponentAccumulator<Type, Parameters...> addInstance(Type instance);
 
     /**
+     * Make an import optional for this component accumulator.
+     *
+     * @tparam Type The type that will be marked as optional.
+     * @return Return a new ComponentAccumulator whose type includes the additional exports
+     */
+    template <typename Type>
+    ComponentAccumulator<internal::MakeOptional<Type>, Parameters...> makeImportOptional();
+
+    /**
      * Add the declarations from a @c Component to this @c ComponentAccumulator.
      *
      * @tparam SubComponentParameters The @c Parameters... defining the type of @c Component whose declarations
@@ -187,29 +197,6 @@ public:
     template <typename... SubComponentParameters>
     ComponentAccumulator<SubComponentParameters..., Parameters...> addComponent(
         const Component<SubComponentParameters...>& component);
-
-    /**
-     * Override the factory specified as the source of instances of an type.
-     *
-     * @tparam Type The type whose factory is being overriden.
-     * @tparam Dependencies The arguments to the factory method creating @c Type, which also specifies the
-     * Types that this factory depends upon.
-     * @param factory The factory function to use when creating instances of @c type.
-     * @return Return a new ComponentAccumulator whose type includes the additional exports and imports.
-     */
-    template <typename Type, typename... Dependencies>
-    ComponentAccumulator<Import<Dependencies>..., Type, Parameters...> overrideFactory(
-        Type (*factory)(Dependencies...));
-
-    /**
-     * Override the instance used as the source of instances of @c Type.
-     *
-     * @tparam Type The type for which an instance is being specified
-     * @param instance The instance that will be used to satisfy requests for the type Type.
-     * @return Return a new ComponentAccumulator whose type includes the additional exports
-     */
-    template <typename Type>
-    ComponentAccumulator<Type, Parameters...> overrideInstance(Type instance);
 
 private:
     // Provide Component access to getCookBook().

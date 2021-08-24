@@ -39,7 +39,9 @@ public:
         /// Authorization has expired.
         EXPIRED,
         /// Authorization failed in a manner that cannot be corrected by retry.
-        UNRECOVERABLE_ERROR
+        UNRECOVERABLE_ERROR,
+        /// Currently in the process of authorizing, such as requesting or refreshing a token.
+        AUTHORIZING
     };
 
     /// The enum Error encodes possible errors which may occur when changing state.
@@ -74,6 +76,28 @@ public:
         INVALID_CBL_CLIENT_ID
     };
 
+    /// An aggregated structure to simplify working with @c State and @c Error.
+    struct FullState {
+        /// The state.
+        avsCommon::sdkInterfaces::AuthObserverInterface::State state;
+
+        /// The error.
+        avsCommon::sdkInterfaces::AuthObserverInterface::Error error;
+
+        /// Constructor.
+        FullState();
+
+        /**
+         * Constructor.
+         *
+         * @param pState The state.
+         * @param pError The error.
+         */
+        FullState(
+            avsCommon::sdkInterfaces::AuthObserverInterface::State pState,
+            avsCommon::sdkInterfaces::AuthObserverInterface::Error pError);
+    };
+
     /**
      * Virtual destructor to assure proper cleanup of derived types.
      */
@@ -90,6 +114,30 @@ public:
      */
     virtual void onAuthStateChange(State newState, Error error) = 0;
 };
+
+inline AuthObserverInterface::FullState::FullState() {
+    state = avsCommon::sdkInterfaces::AuthObserverInterface::State::UNINITIALIZED;
+    error = avsCommon::sdkInterfaces::AuthObserverInterface::Error::SUCCESS;
+}
+
+inline AuthObserverInterface::FullState::FullState(
+    avsCommon::sdkInterfaces::AuthObserverInterface::State pState,
+    avsCommon::sdkInterfaces::AuthObserverInterface::Error pError) {
+    state = pState;
+    error = pError;
+}
+
+/**
+ * Operator overload to compare two FullState objects.
+ *
+ * @param lhs The object to compare.
+ * @param rhs Another object to compare.
+ *
+ * @retun Whether the two objects are considered equivalent.
+ */
+inline bool operator==(const AuthObserverInterface::FullState& lhs, const AuthObserverInterface::FullState& rhs) {
+    return lhs.state == rhs.state && lhs.error == rhs.error;
+}
 
 /**
  * Write a @c State value to an @c ostream as a string.
@@ -108,6 +156,8 @@ inline std::ostream& operator<<(std::ostream& stream, const AuthObserverInterfac
             return stream << "EXPIRED";
         case AuthObserverInterface::State::UNRECOVERABLE_ERROR:
             return stream << "UNRECOVERABLE_ERROR";
+        case AuthObserverInterface::State::AUTHORIZING:
+            return stream << "AUTHORIZING";
     }
     return stream << "Unknown AuthObserverInterface::State!: " << state;
 }

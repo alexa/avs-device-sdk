@@ -24,7 +24,9 @@
 #include <acsdkPostConnectOperationProviderRegistrarInterfaces/PostConnectOperationProviderRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayAssignerInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSGatewayManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/PostConnectOperationProviderInterface.h>
+#include <AVSGatewayManager/PostConnectVerifyGatewaySender.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h>
 #include <RegistrationManager/CustomerDataHandler.h>
@@ -51,6 +53,7 @@ public:
      * Creates an instance of the @c AVSGatewayManagerInterface.
      *
      * @param avsGatewayManagerStorage The @c AVSGatewayManagerInterface to store avs gateway information.
+     * @param authDelegate The @c AuthDelegateInterface to add AuthObservers to take action once Auth state changes
      * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
      * @param configurationRoot The @c ConfigurationNode to get AVS gateway information from the config file.
      * @param providerRegistrar Object with which to register the new instance as a post connect operation provider.
@@ -58,6 +61,7 @@ public:
      */
     static std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> createAVSGatewayManagerInterface(
         std::unique_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::shared_ptr<
@@ -71,12 +75,14 @@ public:
      * @param avsGatewayManagerStorage The @c AVSGatewayManagerInterface to store avs gateway information.
      * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
      * @param configurationRoot The @c ConfigurationNode to get AVS gateway information from the config file.
+     * @param authDelegate The @c AuthDelegateInterface to add AuthObservers to take action once Auth state changes
      * @return A new instance of the @c AVSGatewayManager.
      */
     static std::shared_ptr<AVSGatewayManager> create(
         std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
         std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
-        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
+        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate = nullptr);
 
     /// @name AVSGatewayManagerInterface Functions
     /// @{
@@ -122,7 +128,8 @@ private:
      */
     AVSGatewayManager(
         std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
+        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::string& defaultGateway);
 
     /**
@@ -151,6 +158,9 @@ private:
 
     /// The current @c PostConnectVerifyGateway sender used to send the verify gateway event.
     std::shared_ptr<avsCommon::sdkInterfaces::PostConnectOperationInterface> m_currentVerifyGatewaySender;
+
+    /// An @c AuthDelegateInterface used to add observers for authorization status change
+    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
     /// The current AVS Gateway Verification state.
     GatewayVerifyState m_currentState;

@@ -482,6 +482,7 @@ EndpointRegistrationManager::EndpointRegistrationManager(
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> directiveSequencer,
     std::shared_ptr<avsCommon::sdkInterfaces::CapabilitiesDelegateInterface> capabilitiesDelegate,
     const EndpointIdentifier& defaultEndpointId) :
+        RequiresShutdown("EndpointRegistrationManager"),
         m_directiveSequencer{directiveSequencer},
         m_capabilitiesDelegate{capabilitiesDelegate},
         m_defaultEndpointId{defaultEndpointId},
@@ -495,6 +496,10 @@ EndpointRegistrationManager::EndpointRegistrationManager(
 }
 
 EndpointRegistrationManager::~EndpointRegistrationManager() {
+    shutdown();
+}
+
+void EndpointRegistrationManager::doShutdown() {
     m_executor.shutdown();
 
     auto registrationResult = RegistrationResult::INTERNAL_ERROR;
@@ -568,6 +573,11 @@ EndpointRegistrationManager::~EndpointRegistrationManager() {
     }
 
     m_capabilitiesDelegate->removeCapabilitiesObserver(m_capabilityRegistrationProxy);
+
+    m_endpoints.clear();
+    m_pendingRegistrations.clear();
+    m_pendingDeregistrations.clear();
+    m_pendingUpdates.clear();
 }
 
 void EndpointRegistrationManager::CapabilityRegistrationProxy::onCapabilitiesStateChange(

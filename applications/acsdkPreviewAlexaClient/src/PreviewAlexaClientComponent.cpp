@@ -17,6 +17,7 @@
 #include <acsdkAlerts/Storage/SQLiteAlertStorage.h>
 #include <acsdkAlexaCommunications/AlexaCommunicationsComponent.h>
 #include <acsdkApplicationAudioPipelineFactory/ApplicationAudioPipelineFactoryComponent.h>
+#include <acsdkAudioInputStream/AudioInputStreamComponent.h>
 #include <acsdkAudioPlayer/AudioPlayerComponent.h>
 #include <acsdkAuthorizationDelegate/AuthorizationDelegateComponent.h>
 #include <acsdkBluetooth/BasicDeviceConnectionRulesProvider.h>
@@ -33,6 +34,9 @@
 #include <acsdkInteractionModel/InteractionModelComponent.h>
 #include <acsdkInternetConnectionMonitor/InternetConnectionMonitorComponent.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
+#ifdef ENABLE_MC
+#include <acsdkMessagingController/MessagingControllerComponent.h>
+#endif
 #include <acsdkMetricRecorder/MetricRecorderComponent.h>
 #include <acsdkNotifications/NotificationsComponent.h>
 #include <acsdkNotifications/SQLiteNotificationsStorage.h>
@@ -181,6 +185,7 @@ PreviewAlexaClientComponent getComponent(
          */
         .addComponent(acsdkAlexaCommunications::getComponent())
         .addComponent(acsdkApplicationAudioPipelineFactory::getComponent())
+        .addComponent(acsdkAudioInputStream::getComponent())
         .addComponent(acsdkAuthorizationDelegate::getComponent())
         .addComponent(acsdkBluetoothImplementation::getComponent())
         .addComponent(acsdkMetricRecorder::getComponent())
@@ -241,6 +246,9 @@ PreviewAlexaClientComponent getComponent(
         .addComponent(acsdkEqualizer::getComponent())
         .addComponent(acsdkExternalMediaPlayer::getComponent())
         .addComponent(acsdkInteractionModel::getComponent())
+#ifdef ENABLE_MC
+        .addComponent(acsdkMessagingController::getComponent())
+#endif
         .addComponent(acsdkNotifications::getComponent())
         .addComponent(capabilityAgents::playbackController::getComponent())
         .addComponent(capabilityAgents::speakerManager::getComponent())

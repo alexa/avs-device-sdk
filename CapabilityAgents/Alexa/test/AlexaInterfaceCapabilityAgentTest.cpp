@@ -188,6 +188,15 @@ public:
             const std::string& correlationToken,
             const avsCommon::avs::AVSMessageEndpoint& endpoint,
             const std::string& jsonPayload));
+    MOCK_METHOD6(
+        sendResponseEvent,
+        bool(
+            const std::string& instance,
+            const std::string& correlationToken,
+            const avsCommon::avs::AVSMessageEndpoint& endpoint,
+            const std::string& responseNamespace,
+            const std::string& responseName,
+            const std::string& jsonPayload));
     MOCK_METHOD5(
         sendErrorResponseEvent,
         bool(
@@ -196,6 +205,14 @@ public:
             const avsCommon::avs::AVSMessageEndpoint& endpoint,
             const ErrorResponseType errorType,
             const std::string& errorMessage));
+    MOCK_METHOD5(
+        sendErrorResponseEvent,
+        bool(
+            const std::string& instance,
+            const std::string& correlationToken,
+            const avsCommon::avs::AVSMessageEndpoint& endpoint,
+            const std::string& responseNamespace,
+            const std::string& payload));
     MOCK_METHOD3(
         sendDeferredResponseEvent,
         bool(const std::string& instance, const std::string& correlationToken, const int estimatedDeferralInSeconds));
@@ -403,7 +420,11 @@ TEST_F(AlexaInterfaceCapabilityAgentTest, testValidReportStateDirective) {
     ASSERT_THAT(directive, NotNull());
 
     EXPECT_CALL(*m_mockExceptionSender, sendExceptionEncountered(_, _, _)).Times(Exactly(0));
-    EXPECT_CALL(*m_mockAlexaMessageSender, sendErrorResponseEvent(_, _, _, _, _)).Times(Exactly(0));
+    EXPECT_CALL(
+        *m_mockAlexaMessageSender,
+        sendErrorResponseEvent(
+            _, _, _, Matcher<AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType>(testing::_), _))
+        .Times(Exactly(0));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .WillOnce(InvokeWithoutArgs(this, &AlexaInterfaceCapabilityAgentTest::wakeOnSetCompleted));
     EXPECT_CALL(*m_mockAlexaMessageSender, sendStateReportEvent(_, _, _))
@@ -433,7 +454,12 @@ TEST_F(AlexaInterfaceCapabilityAgentTest, testValidReportStateDirectiveReportSta
     EXPECT_CALL(
         *m_mockAlexaMessageSender,
         sendErrorResponseEvent(
-            _, _, _, Eq(AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType::INTERNAL_ERROR), _));
+            _,
+            _,
+            _,
+            Matcher<AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType>(
+                AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType::INTERNAL_ERROR),
+            _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .WillOnce(InvokeWithoutArgs(this, &AlexaInterfaceCapabilityAgentTest::wakeOnSetCompleted));
     EXPECT_CALL(*m_mockAlexaMessageSender, sendStateReportEvent(_, _, _)).WillOnce(Return(false));
@@ -455,7 +481,12 @@ TEST_F(AlexaInterfaceCapabilityAgentTest, testInvalidReportStateDirectiveNoEndpo
     EXPECT_CALL(
         *m_mockAlexaMessageSender,
         sendErrorResponseEvent(
-            _, _, _, Eq(AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType::INVALID_DIRECTIVE), _));
+            _,
+            _,
+            _,
+            Matcher<AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType>(
+                AlexaInterfaceMessageSenderInternalInterface::ErrorResponseType::INVALID_DIRECTIVE),
+            _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .WillOnce(InvokeWithoutArgs(this, &AlexaInterfaceCapabilityAgentTest::wakeOnSetCompleted));
 

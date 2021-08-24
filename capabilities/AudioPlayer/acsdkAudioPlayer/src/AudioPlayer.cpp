@@ -248,6 +248,20 @@ static const std::string TRACK_PLAYLIST_TYPE = "TrackType";
 /// Hash of the domain name of the track url, meta data sent with metric
 static const std::string TRACK_DOMAIN_NAME_HASH = "TrackDomainNameHash";
 
+/// Keys for entry metric specific fields
+static const std::string METRIC_KEY_SEGMENT_ID = "segment_id";
+static const std::string METRIC_KEY_ACTOR = "actor";
+static const std::string METRIC_KEY_ENTRY_TYPE = "entry_type";
+static const std::string METRIC_KEY_ENTRY_NAME = "entry_name";
+static const std::string METRIC_KEY_ERROR_DESCRIPTION = "error_description";
+static const std::string METRIC_KEY_ERROR_RECOVERABLE = "error_recoverable";
+
+static const std::string METRIC_INSTANCE_RECEIVE_DIRECTIVE = "ReceiveDirective";
+static const std::string METRIC_INSTANCE_STATE_CHANGED = "PlaybackStateChanged";
+static const std::string METRIC_META_KEY_NAMESPACE = "namespace";
+static const std::string METRIC_META_KEY_NAME = "name";
+static const std::string METRIC_META_KEY_ISPREPARE_BOOL = "isPreparePhase";
+
 /**
  * Compare two URLs up to the 'query' portion, if one exists.
  *
@@ -347,6 +361,31 @@ static void submitAnnotatedMetric(
         "");
 }
 
+static void submitInstanceMetric(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    const std::string& segmentId,
+    const std::string& name,
+    const std::map<std::string, std::string>& metadata = {}) {
+    if (segmentId.empty() || name.empty()) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Unable to create instance metric").d("segmentId", segmentId).d("name", name));
+        return;
+    }
+    auto metricBuilder = MetricEventBuilder{}.setActivityName(AUDIO_PLAYER_METRIC_PREFIX + "ENTRY");
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(METRIC_KEY_SEGMENT_ID).setValue(segmentId).build());
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(METRIC_KEY_ACTOR).setValue("AudioPlayerCA").build());
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(METRIC_KEY_ENTRY_NAME).setValue(name).build());
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(METRIC_KEY_ENTRY_TYPE).setValue("INSTANCE").build());
+    for (auto const& pair : metadata) {
+        metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(pair.first).setValue(pair.second).build());
+    }
+    auto metric = metricBuilder.build();
+    if (metric == nullptr) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Error creating metric."));
+        return;
+    }
+    recordMetric(metricRecorder, metric);
+}
+
 inline bool messageSentSuccessfully(MessageRequestObserverInterface::Status status) {
     switch (status) {
         case MessageRequestObserverInterface::Status::SUCCESS:
@@ -399,11 +438,13 @@ void AudioPlayer::MessageRequestObserver::sendCompleted(MessageRequestObserverIn
     }
 }
 
-AudioPlayer::PlayDirectiveInfo::PlayDirectiveInfo(const std::string& messageId) :
+AudioPlayer::PlayDirectiveInfo::PlayDirectiveInfo(const std::string& messageId, const std::string& dialogRequestId) :
         messageId{messageId},
+        dialogRequestId{dialogRequestId},
         playBehavior{PlayBehavior::ENQUEUE},
         sourceId{ERROR_SOURCE_ID},
         isBuffered{false},
+        isPNFSent(false),
         normalizationEnabled{false} {
 }
 
@@ -531,6 +572,17 @@ void AudioPlayer::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
 
     ACSDK_DEBUG5(LX(__func__).d("name", info->directive->getName()).d("messageId", info->directive->getMessageId()));
 
+    if (!info->directive->getDialogRequestId().empty()) {
+        m_lastDialogRequestId = info->directive->getDialogRequestId();
+    }
+    submitInstanceMetric(
+        m_metricRecorder,
+        info->directive->getDialogRequestId().empty() ? m_lastDialogRequestId : info->directive->getDialogRequestId(),
+        METRIC_INSTANCE_RECEIVE_DIRECTIVE,
+        std::map<std::string, std::string>{{METRIC_META_KEY_ISPREPARE_BOOL, "true"},
+                                           {METRIC_META_KEY_NAMESPACE, info->directive->getNamespace()},
+                                           {METRIC_META_KEY_NAME, info->directive->getName()}});
+
     if (info->directive->getName() == PLAY.name) {
         preHandlePlayDirective(info);
     } else if (info->directive->getName() == CLEAR_QUEUE.name) {
@@ -557,6 +609,15 @@ void AudioPlayer::handleDirective(std::shared_ptr<DirectiveInfo> info) {
     }
     ACSDK_DEBUG5(
         LX("handleDirective").d("name", info->directive->getName()).d("messageId", info->directive->getMessageId()));
+
+    submitInstanceMetric(
+        m_metricRecorder,
+        info->directive->getDialogRequestId().empty() ? m_lastDialogRequestId : info->directive->getDialogRequestId(),
+        METRIC_INSTANCE_RECEIVE_DIRECTIVE,
+        std::map<std::string, std::string>{{METRIC_META_KEY_ISPREPARE_BOOL, "false"},
+                                           {METRIC_META_KEY_NAMESPACE, info->directive->getNamespace()},
+                                           {METRIC_META_KEY_NAME, info->directive->getName()}});
+
     if (info->directive->getName() == PLAY.name) {
         handlePlayDirective(info);
     } else if (info->directive->getName() == STOP.name) {
@@ -908,7 +969,7 @@ AudioPlayer::AudioPlayer(
         m_metricRecorder{metricRecorder},
         m_currentState{AudioPlayerState::IDLE},
         m_focus{FocusState::NONE},
-        m_currentlyPlaying(std::make_shared<PlayDirectiveInfo>("")),
+        m_currentlyPlaying(std::make_shared<PlayDirectiveInfo>("", "")),
         m_offset{std::chrono::milliseconds{std::chrono::milliseconds::zero()}},
         m_playNextItemAfterStopped{false},
         m_isStopCalled{false},
@@ -1041,7 +1102,9 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
     if (!info || !parseDirectivePayload(info, &payload)) {
         return;
     }
-    std::shared_ptr<PlayDirectiveInfo> playItem = std::make_shared<PlayDirectiveInfo>(info->directive->getMessageId());
+    std::shared_ptr<PlayDirectiveInfo> playItem = std::make_shared<PlayDirectiveInfo>(
+        info->directive->getMessageId(),
+        info->directive->getDialogRequestId().empty() ? m_lastDialogRequestId : info->directive->getDialogRequestId());
 
     if (!jsonUtils::retrieveValue(payload, "playBehavior", &playItem->playBehavior)) {
         playItem->playBehavior = PlayBehavior::ENQUEUE;
@@ -1794,6 +1857,7 @@ void AudioPlayer::executeOnPlaybackStarted(SourceId id, const MediaPlayerState& 
 
     if (m_mediaResourceProvider->isMediaPlayerAvailable() && m_currentlyPlaying->isBuffered) {
         sendPlaybackNearlyFinishedEvent(state);
+        m_okToRequestNextTrack = false;
     } else {
         m_okToRequestNextTrack = true;
     }
@@ -2229,6 +2293,10 @@ void AudioPlayer::clearPlayQueue(const bool stopCurrentPlayer) {
     m_audioPlayQueue.clear();
     if (stopCurrentPlayer) {
         stopAndReleaseMediaPlayer(m_currentlyPlaying);
+
+        // Play queue and currently playing item are stopped and released.
+        // Do not send PNF anymore.
+        m_okToRequestNextTrack = false;
     }
     // If we were in buffering state before this, then the stop will not trigger any other events,
     // so go back to IDLE here
@@ -2364,6 +2432,17 @@ void AudioPlayer::executePrePlay(std::shared_ptr<PlayDirectiveInfo> info) {
         }
     }
 
+    if (info->audioItem.stream.expectedPreviousToken == m_currentlyPlaying->audioItem.stream.token &&
+        info->playBehavior == PlayBehavior::ENQUEUE && m_currentState == AudioPlayerState::STOPPED &&
+        m_currentlyPlaying->isPNFSent) {
+        // It looks like we're executing pre-play for an ENQUEUE directive sent in response to a
+        // PNF sent from the current track, before the current track was stopped.
+        // If this had arrived while still playing, then stopped, this item would not be played,
+        // so we'll throw it away here
+        ACSDK_WARN(LX(__func__).m("Enqueue PlayDirective for Stopped track - ignore"));
+        return;
+    }
+
     // check for 'next' case by comparing AudioItemId with next queued track
     bool isNextItem = false;
 
@@ -2439,6 +2518,7 @@ void AudioPlayer::executePrePlay(std::shared_ptr<PlayDirectiveInfo> info) {
             break;
     }
     if (changeToBuffering) {
+        m_itemPendingPlaybackStart = info;
         changeState(AudioPlayerState::BUFFERING);
     }
 }
@@ -2459,11 +2539,7 @@ void AudioPlayer::executePlay(const std::string& messageId) {
 
     if (playItem->playBehavior == PlayBehavior::REPLACE_ALL) {
         ACSDK_INFO(LX("executePlay").d("reason", "NewPlayQueue"));
-        if (m_currentState == AudioPlayerState::BUFFERING) {
-            m_playNextItemAfterStopped = true;
-        } else {
-            executeStop("", true);
-        }
+        executeStop("", true);
     }
 
     // Determine Mixability of the item we are about to play.
@@ -2525,6 +2601,7 @@ void AudioPlayer::playNextItem() {
     ACSDK_DEBUG1(LX(__func__).d("m_audioPlayQueue.size", m_audioPlayQueue.size()));
     // Cancel any existing progress timer.  The new timer will start when playback starts.
     m_progressTimer.stop();
+    m_itemPendingPlaybackStart = nullptr;
     if (m_audioPlayQueue.empty()) {
         sendPlaybackFailedEvent(
             m_currentlyPlaying->audioItem.stream.token,
@@ -2843,6 +2920,13 @@ void AudioPlayer::changeState(AudioPlayerState state) {
         m_playbackTimeMetricData.startDurationTimer();
     }
     executeProvideState();
+    auto& playItem = (m_itemPendingPlaybackStart ? m_itemPendingPlaybackStart : m_currentlyPlaying);
+    submitInstanceMetric(
+        m_metricRecorder,
+        playItem->dialogRequestId,
+        METRIC_INSTANCE_STATE_CHANGED,
+        std::map<std::string, std::string>{{ACTIVITY_KEY, playerStateToString(state)},
+                                           {TOKEN_KEY, playItem->audioItem.id}});
     notifyObserver();
 }
 
@@ -2890,7 +2974,10 @@ void AudioPlayer::sendPlaybackStartedEvent(const MediaPlayerState& state) {
 }
 
 void AudioPlayer::sendPlaybackNearlyFinishedEvent(const MediaPlayerState& state) {
-    sendEventWithTokenAndOffset("PlaybackNearlyFinished", false, state.offset);
+    if (!m_currentlyPlaying->isPNFSent) {
+        m_currentlyPlaying->isPNFSent = true;
+        sendEventWithTokenAndOffset("PlaybackNearlyFinished", false, state.offset);
+    }
 }
 
 void AudioPlayer::sendPlaybackStutterStartedEvent(const MediaPlayerState& state) {

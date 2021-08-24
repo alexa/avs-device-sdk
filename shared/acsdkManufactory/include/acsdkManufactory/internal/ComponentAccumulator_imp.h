@@ -112,6 +112,13 @@ inline ComponentAccumulator<Type, Parameters...> ComponentAccumulator<Parameters
 }
 
 template <typename... Parameters>
+template <typename Type>
+inline ComponentAccumulator<internal::MakeOptional<Type>, Parameters...> ComponentAccumulator<
+    Parameters...>::makeImportOptional() {
+    return *this;
+}
+
+template <typename... Parameters>
 template <typename... SubComponentParameters>
 inline ComponentAccumulator<SubComponentParameters..., Parameters...> ComponentAccumulator<Parameters...>::addComponent(
     const Component<SubComponentParameters...>& component) {

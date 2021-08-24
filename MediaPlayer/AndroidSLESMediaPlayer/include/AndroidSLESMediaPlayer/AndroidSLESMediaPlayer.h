@@ -320,9 +320,6 @@ private:
     /// Flag that indicates that the media player has been shutdown. Once shutdown is completed, playback control
     /// operations will fail.
     bool m_hasShutdown;
-
-    /// Adjustment made to offset reported
-    std::chrono::milliseconds m_offsetAdjustment;
 };
 
 }  // namespace android

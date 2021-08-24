@@ -119,6 +119,27 @@ public:
         const std::string& jsonPayload = "{}") = 0;
 
     /**
+     * Send an Response event. Since these events require context, the event will be enqueued and this method
+     * will return immediately (non-blocking).  The message will be sent once context has been received from
+     * ContextManager.
+     *
+     * @param instance The instance ID of the responding capability.
+     * @param correlationToken The correlation token from the directive to which we are responding.
+     * @param endpoint The @c AVSMessageEndpoint to identify the endpoint related to this event.
+     * @param responseNamespace The namespace of response event
+     * @param responseName The name of response event
+     * @param jsonPayload a JSON string representing the payload for the response event (optional).
+     * @return true if the event was successfuly enqueued, false on failure.
+     */
+    virtual bool sendResponseEvent(
+        const std::string& instance,
+        const std::string& correlationToken,
+        const avsCommon::avs::AVSMessageEndpoint& endpoint,
+        const std::string& responseNamespace,
+        const std::string& responseName,
+        const std::string& jsonPayload = "{}") = 0;
+
+    /**
      * Send an Alexa.ErrorResponse event.  The message is enqueued for sending and this method returns immediately
      * (non-blocking).
      *
@@ -127,7 +148,7 @@ public:
      * @param endpoint The @c AVSMessageEndpoint to identify the endpoint related to this event.
      * @param errorType the error type.
      * @param errorMessage a string containing the error message (optional).
-     * @return true if the message was sent successfully, false otherwise.
+     * @return true if the message was enqueued successfully, false otherwise.
      */
     virtual bool sendErrorResponseEvent(
         const std::string& instance,
@@ -135,6 +156,24 @@ public:
         const avsCommon::avs::AVSMessageEndpoint& endpoint,
         const ErrorResponseType errorType,
         const std::string& errorMessage = "") = 0;
+
+    /**
+     * Send an error response event for namespace and name. The message is enqueued for sending and this method
+     * returns immediately (non-blocking).
+     *
+     * @param instance The instance ID of the responding capability.
+     * @param correlationToken The correlation token from the directive to which we are responding.
+     * @param endpoint The @c AVSMessageEndpoint to identify the endpoint related to this event.
+     * @param responseNamespace a string containing the namespace for this response.
+     * @param jsonPayload a payload containing the error type and message (optional).
+     * @return true if the message was enqueued successfully, false otherwise.
+     */
+    virtual bool sendErrorResponseEvent(
+        const std::string& instance,
+        const std::string& correlationToken,
+        const avsCommon::avs::AVSMessageEndpoint& endpoint,
+        const std::string& responseNamespace,
+        const std::string& jsonPayload = "{}") = 0;
 
     /**
      * Send an Alexa.DeferredResponse event.  The message is enqueued for sending and this method returns immediately

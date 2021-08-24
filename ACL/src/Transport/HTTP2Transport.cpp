@@ -508,6 +508,8 @@ void HTTP2Transport::onAuthStateChange(
             ACSDK_ERROR(LX_P("shuttingDown").d("reason", "unrecoverableAuthError"));
             setStateLocked(State::SHUTDOWN, ConnectionStatusObserverInterface::ChangedReason::UNRECOVERABLE_ERROR);
             return;
+        case AuthObserverInterface::State::AUTHORIZING:
+            return;
     }
 
     ACSDK_ERROR(LX_P("shuttingDown").d("reason", "unknownAuthStatus").d("newState", static_cast<int>(newState)));

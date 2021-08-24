@@ -321,6 +321,11 @@ bool CurlEasyHandleWrapper::setDefaultOptions() {
             break;
         }
 
+        if (!prepareForProxy(m_handle)) {
+            ACSDK_ERROR(LX("setDefaultOptions").d("reason", "prepareForProxy failed"));
+            break;
+        }
+
         /*
          * The documentation from libcurl recommends setting CURLOPT_NOSIGNAL to 1 for multi-threaded applications.
          * https://curl.haxx.se/libcurl/c/threadsafe.html

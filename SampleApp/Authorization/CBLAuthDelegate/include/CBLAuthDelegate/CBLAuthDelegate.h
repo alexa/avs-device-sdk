@@ -31,8 +31,8 @@
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/RetryTimer.h>
 #include <RegistrationManager/CustomerDataHandler.h>
+#include <acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h>
 
-#include "CBLAuthDelegate/CBLAuthDelegateConfiguration.h"
 #include "CBLAuthDelegate/CBLAuthDelegateStorageInterface.h"
 #include "CBLAuthDelegate/CBLAuthRequesterInterface.h"
 
@@ -327,7 +327,7 @@ private:
     std::shared_ptr<CBLAuthRequesterInterface> m_authRequester;
 
     /// Configuration parameters
-    std::unique_ptr<CBLAuthDelegateConfiguration> m_configuration;
+    std::unique_ptr<acsdkAuthorization::lwa::LWAAuthorizationConfiguration> m_configuration;
 
     /// Whether or not @c threadFunction() is stopping.
     bool m_isStopping;

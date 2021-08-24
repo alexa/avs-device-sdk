@@ -601,6 +601,8 @@ void ExternalMediaPlayer::createAdapters(
             m_adapterHandlers.insert(handler);
             updateDiscoveredPlayers(discoveredPlayers, {});
         });
+    } else {
+        handler->shutdown();
     }
 }
 
@@ -730,7 +732,7 @@ avsCommon::utils::Optional<ExternalMediaPlayer::LocalPlayerIdHandler> ExternalMe
 }
 
 void ExternalMediaPlayer::handleAuthorizeDiscoveredPlayers(std::shared_ptr<DirectiveInfo> info, RequestType request) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_INFO(LX(__func__));
 
     rapidjson::Document payload;
 
@@ -1227,12 +1229,18 @@ void ExternalMediaPlayer::handlePlayControl(std::shared_ptr<DirectiveInfo> info,
         ACSDK_WARN(LX("handlePlayControlFailed").d("reason", "nullPlaybackSessionId"));
     }
 
-    m_executor.submit([this, info, playerId, request, playbackSessionId]() {
+    std::string alias;
+    if (!jsonUtils::retrieveValue(payload, "aliasName", &alias)) {
+        ACSDK_INFO(LX(__FUNCTION__).m("NoAliasName"));
+        // fall through, alias name is not required
+    }
+
+    m_executor.submit([this, info, playerId, request, playbackSessionId, alias]() {
         std::string sessId = playbackSessionId;
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
-            if (handler.adapterHandler->playControl(handler.localPlayerId, request)) {
+            if (handler.adapterHandler->playControl(handler.localPlayerId, request, alias)) {
                 if (request == RequestType::STOP || request == RequestType::PAUSE) {
                     if (sessId.empty()) {
                         auto state = handler.adapterHandler->getAdapterState(handler.localPlayerId);
@@ -1296,13 +1304,13 @@ bool ExternalMediaPlayer::localOperation(PlaybackOperation op) {
 
         switch (op) {
             case PlaybackOperation::STOP_PLAYBACK:
-                adapterHandler->playControl(localPlayerId, RequestType::STOP);
+                adapterHandler->playControl(localPlayerId, RequestType::STOP, "");
                 break;
             case PlaybackOperation::PAUSE_PLAYBACK:
-                adapterHandler->playControl(localPlayerId, RequestType::PAUSE);
+                adapterHandler->playControl(localPlayerId, RequestType::PAUSE, "");
                 break;
             case PlaybackOperation::RESUME_PLAYBACK:
-                adapterHandler->playControl(localPlayerId, RequestType::RESUME);
+                adapterHandler->playControl(localPlayerId, RequestType::RESUME, "");
                 break;
         }
         return true;
@@ -1474,7 +1482,7 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
             auto maybeHandler = getHandlerFromPlayerId(playerInFocus);
             if (maybeHandler.hasValue()) {
                 const auto& handler = maybeHandler.value();
-                handler.adapterHandler->playControl(handler.localPlayerId, buttonIt->second);
+                handler.adapterHandler->playControl(handler.localPlayerId, buttonIt->second, "");
             }
         }
     });
@@ -1501,9 +1509,9 @@ void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
             if (maybeHandler.hasValue()) {
                 const auto& handler = maybeHandler.value();
                 if (action) {
-                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.first);
+                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.first, "");
                 } else {
-                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.second);
+                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.second, "");
                 }
             }
         }
@@ -1519,6 +1527,8 @@ void ExternalMediaPlayer::doShutdown() {
     }
     m_adapterHandlers.clear();
     m_staticAdapters.clear();
+    m_authorizedAdapters.clear();
+    m_directiveToHandlerMap.clear();
 
     // Check result too, to catch cases where DirectiveInfo was created locally, without a nullptr result.
     // In those cases there is no messageId to remove because no result was expected.
@@ -1690,7 +1700,7 @@ void ExternalMediaPlayer::sendReportDiscoveredPlayersEvent(const std::vector<Dis
     {
         std::lock_guard<std::mutex> lock{m_onStartupHasBeenCalledMutex};
         if (!m_onStartupHasBeenCalled) {
-            ACSDK_DEBUG9(LX("sendReportDiscoveredPlayersEventDeferred").d("reason", "startup not called yet"));
+            ACSDK_INFO(LX("sendReportDiscoveredPlayersEventDeferred").d("reason", "startup not called yet"));
             return;
         }
     }
@@ -1864,7 +1874,7 @@ void ExternalMediaPlayer::removeAdapterHandler(std::shared_ptr<ExternalMediaAdap
 }
 
 bool ExternalMediaPlayer::startup() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     {
         std::lock_guard<std::mutex> lock{m_onStartupHasBeenCalledMutex};
         if (m_onStartupHasBeenCalled) {

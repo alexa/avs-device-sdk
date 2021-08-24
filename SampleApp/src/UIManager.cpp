@@ -687,6 +687,8 @@ void UIManager::onAuthStateChange(AuthObserverInterface::State newState, AuthObs
         if (m_authState != newState) {
             m_authState = newState;
             switch (m_authState) {
+                case AuthObserverInterface::State::AUTHORIZING:
+                    break;
                 case AuthObserverInterface::State::UNINITIALIZED:
                     break;
                 case AuthObserverInterface::State::REFRESHED:

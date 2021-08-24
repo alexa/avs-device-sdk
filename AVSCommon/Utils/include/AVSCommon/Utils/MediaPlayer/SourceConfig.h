@@ -20,6 +20,8 @@
 #include <chrono>
 #include <ostream>
 
+#include <AVSCommon/Utils/MediaPlayer/MediaDescription.h>
+
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
@@ -73,6 +75,9 @@ struct SourceConfig {
     /// End offset for where playback should be stopped
     std::chrono::milliseconds endOffset;
 
+    /// Media description information.
+    MediaDescription mediaDescription;
+
     /**
      * Builds a Source Config object with fade in enabled.
      *
@@ -91,8 +96,10 @@ struct SourceConfig {
  * @return a Source Config object without fade in
  */
 inline SourceConfig emptySourceConfig() {
-    return SourceConfig{
-        {100, 100, std::chrono::milliseconds::zero(), false}, {false}, std::chrono::milliseconds::zero()};
+    return SourceConfig{{100, 100, std::chrono::milliseconds::zero(), false},
+                        {false},
+                        std::chrono::milliseconds::zero(),
+                        emptyMediaDescription()};
 }
 
 /**
@@ -110,7 +117,10 @@ inline SourceConfig SourceConfig::createWithFadeIn(
     const std::chrono::milliseconds& duration) {
     short validStartGain = std::max(MIN_GAIN, std::min(MAX_GAIN, startGain));
     short validEndGain = std::max(MIN_GAIN, std::min(MAX_GAIN, endGain));
-    return SourceConfig{{validStartGain, validEndGain, duration, true}, {false}, std::chrono::milliseconds::zero()};
+    return SourceConfig{{validStartGain, validEndGain, duration, true},
+                        {false},
+                        std::chrono::milliseconds::zero(),
+                        emptyMediaDescription()};
 }
 
 /**
@@ -127,7 +137,8 @@ inline std::ostream& operator<<(std::ostream& stream, const SourceConfig& config
                   << ", duration(ms):" << config.fadeInConfig.duration.count() << "}"
                   << ", normalization{"
                   << " enabled: " << config.audioNormalizationConfig.enabled << "}"
-                  << ", endOffset(ms): " << config.endOffset.count();
+                  << ", endOffset(ms): " << config.endOffset.count()
+                  << ", MediaDescription: " << config.mediaDescription;
 }
 
 }  // namespace mediaPlayer

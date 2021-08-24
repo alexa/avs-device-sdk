@@ -22,6 +22,8 @@
 #include <unordered_map>
 
 #include <AVSCommon/Utils/functional/hash.h>
+#include <AVSCommon/Utils/Logger/LogStringFormatter.h>
+#include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/SDKInterfaces/PowerResourceManagerInterface.h>
 
 namespace alexaClientSDK {
@@ -99,6 +101,11 @@ private:
             bool isRefCounted,
             avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceLevel level);
 
+        /**
+         * Update lastAcquired time point with current system clock time.
+         */
+        void updateLastAcquiredTimepoint();
+
         /// Whether this resource is reference counted.
         const bool isRefCounted;
 
@@ -107,6 +114,9 @@ private:
 
         /// The current refCount.
         uint64_t refCount;
+
+        /// When this PowerResourceInfo was last acquired, for logging purposes.
+        std::chrono::system_clock::time_point lastAcquired;
     };
 
     /**
@@ -116,6 +126,11 @@ private:
      */
     AggregatedPowerResourceManager(
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager);
+
+    /**
+     * Log all active power resource identifiers, without aggregation.
+     */
+    void logActivePowerResources();
 
     /**
      * Generates a @c PowerResourceId for the given power level. If it already exists, this function will return
@@ -138,6 +153,12 @@ private:
 
     /// The map of @c PowerResourceId objects that are grouped by level.
     AggregatedPowerResourceMap m_aggregatedPowerResources;
+
+    /// Timer that periodically logs active power resources.
+    avsCommon::utils::timing::Timer m_timer;
+
+    /// Object to format log strings correctly.
+    avsCommon::utils::logger::LogStringFormatter m_logFormatter;
 };
 
 }  // namespace power

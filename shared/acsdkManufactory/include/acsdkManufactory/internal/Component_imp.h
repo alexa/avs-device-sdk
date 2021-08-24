@@ -31,19 +31,33 @@ inline Component<Parameters...>::Component(
 
     using ComponentTypes = typename internal::GetImportsAndExports<Parameters...>::type;
 
+    // Check if any export is missing. If missing, assertion will fail and PrintMissingExport will print a compilation
+    // error with the name of the types missing.
     using MissingExports =
         typename internal::RemoveTypes<typename ComponentTypes::exports, typename AccumulatorTypes::exports>::type;
+    static_assert(
+        std::tuple_size<MissingExports>() == 0, "One or more exports declared by this Component was not provided.");
+    internal::PrintMissingExport<MissingExports>()();
 
-    // coverity[set_but_not_used]
-    ACSDK_STATIC_ASSERT_IS_SAME(
-        std::tuple<>, MissingExports, "One or more export declared by this Component was not provided.");
+    // Check if any required import that has not been satisfied is missing from the component declaration. If missing,
+    // the assertion below will fail and PrintMissingImport statement will print a compilation error with the name of
+    // the types missing.
+    using MissingRequiredImports =
+        typename internal::RemoveTypes<typename AccumulatorTypes::required, typename ComponentTypes::required>::type;
+    static_assert(
+        std::tuple_size<MissingRequiredImports>() == 0,
+        "One or more required import wasn't declared by this Component.");
+    internal::PrintMissingImport<MissingRequiredImports>()();
 
-    using MissingImports =
-        typename internal::RemoveTypes<typename AccumulatorTypes::imports, typename ComponentTypes::imports>::type;
-
-    // coverity[set_but_not_used]
-    ACSDK_STATIC_ASSERT_IS_SAME(
-        std::tuple<>, MissingImports, "One or more Import<Type> was not declared by this Component.");
+    // Check if any import that has not been satisfied is missing from the component declaration. If missing,
+    // the assertion below will fail and PrintMissingImport statement will print a compilation error with the name of
+    // the types missing.
+    using MissingOptionalImports =
+        typename internal::RemoveTypes<typename AccumulatorTypes::optional, typename ComponentTypes::optional>::type;
+    static_assert(
+        std::tuple_size<MissingOptionalImports>() == 0,
+        "One or more optional import wasn't declared by this Component.");
+    internal::PrintMissingImport<MissingOptionalImports>()();
 }
 
 template <typename... Parameters>

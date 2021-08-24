@@ -141,6 +141,7 @@ TEST_F(SettingTest, test_clearData) {
 
     setting->clearData(INIT_VALUE);
     EXPECT_TRUE(protocolSpy->isDataCleared());
+    EXPECT_EQ(setting->get(), INIT_VALUE);
 }
 
 /// Test observer notification.

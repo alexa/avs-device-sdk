@@ -323,6 +323,9 @@ private:
         /// MessageId from the @c PLAY directive.
         const std::string messageId;
 
+        /// DialogRequestId from the PLAY directive.
+        const std::string dialogRequestId;
+
         /// MessageId from the @c STOP directive for this item.
         std::string stopMessageId;
 
@@ -358,6 +361,9 @@ private:
         /// so if we get the 'buffer complete' notification before the track is playing, cache the info here
         bool isBuffered;
 
+        /// True if PlaybackNearlyFinished has been sent for this track
+        bool isPNFSent;
+
         /// True if audio normalization should be enabled for this track
         bool normalizationEnabled;
 
@@ -370,9 +376,10 @@ private:
         /**
          * Constructor.
          *
-         * @param messageId The message ID of the @c PLAY directive.
+         * @param messageId The message Id of the @c PLAY directive.
+         * @param dialogRequestId The dialog request Id of the @c PLAY directive.
          */
-        PlayDirectiveInfo(const std::string& messageId);
+        PlayDirectiveInfo(const std::string& messageId, const std::string& dialogRequestId);
     };
 
     /**
@@ -1067,6 +1074,12 @@ private:
      */
     std::shared_ptr<PlayDirectiveInfo> m_currentlyPlaying;
 
+    /**
+     * The PlayDirectiveInfo object containing information about an item being prepared to play next. Only present
+     * between preHandle and playback.
+     */
+    std::shared_ptr<PlayDirectiveInfo> m_itemPendingPlaybackStart;
+
     /// When in the @c BUFFER_UNDERRUN state, this records the time at which the state was entered.
     std::chrono::steady_clock::time_point m_bufferUnderrunTimestamp;
 
@@ -1175,6 +1188,12 @@ private:
      *     before the Executor Thread Variables are destroyed.
      */
     avsCommon::utils::threading::Executor m_executor;
+
+    /**
+     * The last dialogRequestId received. If a directive does not have a new DialogRequestId, assume it was sent as part
+     * of the same flow that triggered the previous dialog request id.
+     */
+    std::string m_lastDialogRequestId;
 };
 
 }  // namespace acsdkAudioPlayer

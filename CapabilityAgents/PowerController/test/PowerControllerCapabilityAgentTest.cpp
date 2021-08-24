@@ -295,7 +295,9 @@ TEST_F(PowerControllerCapabilityAgentTest, test_turnOnDirective_errorCase) {
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto powerControllerCapabilityAgent = createCapabilityAgentAndSetExpects(true, true);
     ASSERT_THAT(powerControllerCapabilityAgent, NotNull());

@@ -10,9 +10,5 @@ if(SENSORY_KEY_WORD_DETECTOR)
     target_link_libraries(KeywordDetectorProvider SENSORY)
 endif()
 
-if(KITTAI_KEY_WORD_DETECTOR)
-    target_link_libraries(KeywordDetectorProvider KITTAI)
-endif()
-
 # install target
 asdk_install()

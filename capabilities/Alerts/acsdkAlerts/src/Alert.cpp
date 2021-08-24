@@ -541,6 +541,10 @@ std::string Alert::getToken() const {
 
 int64_t Alert::getScheduledTime_Unix() const {
     std::lock_guard<std::mutex> lock(m_mutex);
+    return getScheduledTime_UnixLocked();
+}
+
+int64_t Alert::getScheduledTime_UnixLocked() const {
     return m_dynamicData.timePoint.getTime_Unix();
 }
 
@@ -820,8 +824,8 @@ void Alert::printDiagnostic() {
        << " ** Alert | id:" << std::to_string(m_staticData.dbId) << std::endl
        << "          | type:" << getTypeName() << std::endl
        << "          | token:" << m_staticData.token << std::endl
-       << "          | scheduled time (8601):" << getScheduledTime_ISO_8601() << std::endl
-       << "          | scheduled time (Unix):" << getScheduledTime_Unix() << std::endl
+       << "          | scheduled time (8601):" << getScheduledTime_ISO_8601Locked() << std::endl
+       << "          | scheduled time (Unix):" << getScheduledTime_UnixLocked() << std::endl
        << "          | state:" << stateToString(m_dynamicData.state) << std::endl
        << "          | number assets:" << m_dynamicData.assetConfiguration.assets.size() << std::endl
        << "          | number assets play order items:" << m_dynamicData.assetConfiguration.assetPlayOrderItems.size()

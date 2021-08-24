@@ -324,6 +324,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
     if (!parseDirectivePayload(info, &payload)) {
         ACSDK_ERROR(LX("handleSetIndicatorDirectiveFailed").d("reason", "could not parse directive payload"));
         sendExceptionEncounteredAndReportFailed(info, "failed to parse directive");
+        submitMetric(m_metricRecorder, "setIndicatorBadJsonFailed");
         return;
     }
 
@@ -335,6 +336,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
                         .d("reason", "payload missing persistVisualIndicator")
                         .d("messageId", info->directive->getMessageId()));
         sendExceptionEncounteredAndReportFailed(info, "missing persistVisualIndicator");
+        submitMetric(m_metricRecorder, "setIndicatorBadJsonFailed");
         return;
     }
 
@@ -344,6 +346,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
                         .d("reason", "payload missing playAudioIndicator")
                         .d("messageId", info->directive->getMessageId()));
         sendExceptionEncounteredAndReportFailed(info, "missing playAudioIndicator");
+        submitMetric(m_metricRecorder, "setIndicatorBadJsonFailed");
         return;
     }
 
@@ -357,6 +360,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
                             .d("reason", "payload missing asset")
                             .d("messageId", info->directive->getMessageId()));
             sendExceptionEncounteredAndReportFailed(info, "missing asset");
+            submitMetric(m_metricRecorder, "setIndicatorBadJsonFailed");
             return;
         }
 
@@ -365,6 +369,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
                             .d("reason", "payload missing assetId")
                             .d("messageId", info->directive->getMessageId()));
             sendExceptionEncounteredAndReportFailed(info, "missing assetId");
+            submitMetric(m_metricRecorder, "setIndicatorBadJsonFailed");
             return;
         }
 
@@ -373,6 +378,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
                             .d("reason", "payload missing url")
                             .d("messageId", info->directive->getMessageId()));
             sendExceptionEncounteredAndReportFailed(info, "missing url");
+            submitMetric(m_metricRecorder, "setIndicatorBadJsonFailed");
             return;
         }
     }
@@ -439,6 +445,7 @@ void NotificationsCapabilityAgent::executeSetIndicator(
             if (!m_notificationsStorage->enqueue(nextNotificationIndicator)) {
                 ACSDK_ERROR(LX("executeSetIndicatorFailed").d("reason", "failed to enqueue notification indicator"));
                 sendExceptionEncounteredAndReportFailed(info, "failed to store notification indicator in the queue");
+                submitMetric(m_metricRecorder, "setIndicatorFailed");
                 return;
             }
             executePossibleIndicatorStateChange(intToIndicatorState(nextNotificationIndicator.persistVisualIndicator));
@@ -501,6 +508,7 @@ void NotificationsCapabilityAgent::executeClearIndicator(std::shared_ptr<Directi
                 ACSDK_ERROR(
                     LX(__func__).m("failed to cancel notification rendering as a "
                                    "result of ClearIndicator directive"));
+                submitMetric(m_metricRecorder, "clearIndicatorFailed");
             }
             break;
         case NotificationsCapabilityAgentState::CANCELING_PLAY:
@@ -521,6 +529,7 @@ void NotificationsCapabilityAgent::executeClearIndicator(std::shared_ptr<Directi
     if (!m_notificationsStorage->clearNotificationIndicators()) {
         ACSDK_ERROR(LX("executeClearIndicatorFailed").d("reason", "could not clear storage of NotificationIndicators"));
         sendExceptionEncounteredAndReportFailed(info, "failed to clear out NotificationIndicators");
+        submitMetric(m_metricRecorder, "clearIndicatorFailed");
     }
 
     setHandlingCompleted(info);

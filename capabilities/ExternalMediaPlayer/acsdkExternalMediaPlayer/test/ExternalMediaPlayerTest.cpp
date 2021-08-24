@@ -334,8 +334,8 @@ public:
             const std::string& navigation,
             bool preload,
             const avsCommon::avs::PlayRequestor& playRequestor,
-            std::string playbackTarget));
-    MOCK_METHOD1(handlePlayControl, void(RequestType requestType));
+            const std::string& playbackTarget));
+    MOCK_METHOD2(handlePlayControl, void(RequestType requestType, const std::string& playbackTarget));
     MOCK_METHOD1(handleSeek, void(std::chrono::milliseconds offset));
     MOCK_METHOD1(handleAdjustSeek, void(std::chrono::milliseconds deltaOffset));
     MOCK_METHOD3(
@@ -423,10 +423,13 @@ public:
             const Navigation& navigation,
             bool preload,
             const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-            std::string playbackTarget));
-    MOCK_METHOD2(
+            const std::string& playbackTarget));
+    MOCK_METHOD3(
         handlePlayControl,
-        bool(const std::string& localPlayerId, acsdkExternalMediaPlayerInterfaces::RequestType requestType));
+        bool(
+            const std::string& localPlayerId,
+            acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+            const std::string& playbackTarget));
     MOCK_METHOD2(handleSeek, bool(const std::string& localPlayerId, std::chrono::milliseconds offset));
     MOCK_METHOD2(handleAdjustSeek, bool(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset));
     MOCK_METHOD2(
@@ -1882,7 +1885,7 @@ TEST_F(ExternalMediaPlayerTest, test_play) {
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
 
     m_externalMediaPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_externalMediaPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
@@ -1900,7 +1903,7 @@ TEST_F(ExternalMediaPlayerTest, test_pause) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -1921,7 +1924,7 @@ TEST_F(ExternalMediaPlayerTest, testStop) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -1942,7 +1945,7 @@ TEST_F(ExternalMediaPlayerTest, test_stop) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -1963,7 +1966,7 @@ TEST_F(ExternalMediaPlayerTest, test_next) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -1984,7 +1987,7 @@ TEST_F(ExternalMediaPlayerTest, test_previous) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2005,7 +2008,7 @@ TEST_F(ExternalMediaPlayerTest, test_startOver) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2026,7 +2029,7 @@ TEST_F(ExternalMediaPlayerTest, test_rewind) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2047,7 +2050,7 @@ TEST_F(ExternalMediaPlayerTest, test_fastForward) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2068,7 +2071,7 @@ TEST_F(ExternalMediaPlayerTest, test_enableRepeatOne) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2089,7 +2092,7 @@ TEST_F(ExternalMediaPlayerTest, test_enableRepeat) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2110,7 +2113,7 @@ TEST_F(ExternalMediaPlayerTest, test_disableRepeat) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2131,7 +2134,7 @@ TEST_F(ExternalMediaPlayerTest, test_enableShuffle) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2152,7 +2155,7 @@ TEST_F(ExternalMediaPlayerTest, test_disableShuffle) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2173,7 +2176,7 @@ TEST_F(ExternalMediaPlayerTest, test_favorite) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));
@@ -2194,7 +2197,7 @@ TEST_F(ExternalMediaPlayerTest, test_unfavorite) {
     std::shared_ptr<AVSDirective> directive =
         AVSDirective::create("", avsMessageHeader, createPayloadWithPlayerId(MSP1_PLAYER_ID), m_attachmentManager, "");
 
-    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_));
+    EXPECT_CALL(*(MockExternalMediaPlayerAdapter::m_currentActiveMediaPlayerAdapter), handlePlayControl(_, _));
     EXPECT_CALL(*m_mockDirectiveHandlerResult, setCompleted())
         .Times(1)
         .WillOnce(InvokeWithoutArgs(this, &ExternalMediaPlayerTest::wakeOnSetComplete));

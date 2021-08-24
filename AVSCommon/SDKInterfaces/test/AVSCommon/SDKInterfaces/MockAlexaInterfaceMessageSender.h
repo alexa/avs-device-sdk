@@ -36,6 +36,15 @@ public:
             const std::string& correlationToken,
             const avsCommon::avs::AVSMessageEndpoint& endpoint,
             const std::string& jsonPayload));
+    MOCK_METHOD6(
+        sendResponseEvent,
+        bool(
+            const std::string& instance,
+            const std::string& correlationToken,
+            const avsCommon::avs::AVSMessageEndpoint& endpoint,
+            const std::string& responseNamespace,
+            const std::string& responseName,
+            const std::string& jsonPayload));
     MOCK_METHOD5(
         sendErrorResponseEvent,
         bool(
@@ -44,6 +53,14 @@ public:
             const avsCommon::avs::AVSMessageEndpoint& endpoint,
             const ErrorResponseType errorType,
             const std::string& errorMessage));
+    MOCK_METHOD5(
+        sendErrorResponseEvent,
+        bool(
+            const std::string& instance,
+            const std::string& correlationToken,
+            const avsCommon::avs::AVSMessageEndpoint& endpoint,
+            const std::string& responseNamespace,
+            const std::string& payload));
     MOCK_METHOD3(
         sendDeferredResponseEvent,
         bool(const std::string& instance, const std::string& correlationToken, const int estimatedDeferralInSeconds));

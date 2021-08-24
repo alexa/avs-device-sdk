@@ -21,8 +21,12 @@
 
 #include <iostream>
 #include <memory>
+#include <tuple>
+
+#include <gtest/gtest.h>
 
 #include "acsdkManufactory/Import.h"
+#include "acsdkManufactory/OptionalImport.h"
 #include "acsdkManufactory/internal/Utils.h"
 
 namespace alexaClientSDK {
@@ -42,7 +46,7 @@ public:
 /**
  * Function used to invoke compile time utilities.
  */
-void manufactoryUtilsTest() {
+TEST(ManufactoryUtilsTest, manufactoryUtilsFunctions) {
     // Test ContainsType
 
     static_assert(!ContainsType<std::tuple<>, Foo<1>>::value, "test");
@@ -84,21 +88,29 @@ void manufactoryUtilsTest() {
     static_assert(!ContainsTupleTypes<std::tuple<Foo<1>, Foo<2>>, std::tuple<Foo<2>, Foo<3>>>::value, "test");
     static_assert(!ContainsTupleTypes<std::tuple<Foo<1>, Foo<2>>, std::tuple<Foo<3>, Foo<2>>>::value, "test");
 
-    // Test HasImport
+    // Test HasRequiredImport
 
-    static_assert(!HasImport<>::value, "test");
-    static_assert(!HasImport<Foo<1>>::value, "test");
-    static_assert(HasImport<Import<Foo<1>>>::value, "test");
-    static_assert(!HasImport<Foo<1>, Foo<2>>::value, "test");
-    static_assert(HasImport<Import<Foo<1>>, Foo<2>>::value, "test");
-    static_assert(HasImport<Import<Foo<1>>, Import<Foo<2>>>::value, "test");
-    static_assert(HasImport<Foo<1>, Import<Foo<2>>>::value, "test");
-    static_assert(!HasImport<Foo<1>, Foo<2>, Foo<3>>::value, "test");
-    static_assert(HasImport<Import<Foo<1>>, Foo<2>, Foo<3>>::value, "test");
-    static_assert(HasImport<Import<Foo<1>>, Import<Foo<2>, Foo<3>>>::value, "test");
-    static_assert(HasImport<Foo<1>, Import<Foo<2>>, Foo<3>>::value, "test");
-    static_assert(!HasImport<Foo<1>, Foo<1>>::value, "test");
-    static_assert(HasImport<Import<Foo<1>>, Import<Foo<1>>>::value, "test");
+    static_assert(!HasRequiredImport<>::value, "test");
+    static_assert(!HasRequiredImport<Foo<1>>::value, "test");
+    static_assert(HasRequiredImport<Import<Foo<1>>>::value, "test");
+    static_assert(!HasRequiredImport<Foo<1>, Foo<2>>::value, "test");
+    static_assert(HasRequiredImport<Import<Foo<1>>, Foo<2>>::value, "test");
+    static_assert(HasRequiredImport<Import<Foo<1>>, Import<Foo<2>>>::value, "test");
+    static_assert(HasRequiredImport<Foo<1>, Import<Foo<2>>>::value, "test");
+    static_assert(!HasRequiredImport<Foo<1>, Foo<2>, Foo<3>>::value, "test");
+    static_assert(HasRequiredImport<Import<Foo<1>>, Foo<2>, Foo<3>>::value, "test");
+    static_assert(HasRequiredImport<Import<Foo<1>>, Import<Foo<2>, Foo<3>>>::value, "test");
+    static_assert(HasRequiredImport<Foo<1>, Import<Foo<2>>, Foo<3>>::value, "test");
+    static_assert(!HasRequiredImport<Foo<1>, Foo<1>>::value, "test");
+    static_assert(HasRequiredImport<Import<Foo<1>>, Import<Foo<1>>>::value, "test");
+    static_assert(!HasRequiredImport<OptionalImport<Foo<1>>, Foo<1>>::value, "test");
+    static_assert(!HasRequiredImport<OptionalImport<Foo<1>, Foo<1>>>::value, "test");
+    static_assert(HasRequiredImport<OptionalImport<Foo<1>>, Import<Foo<1>>>::value, "test");
+
+    // Test IsRequiredImport
+    static_assert(!IsRequiredImport<Foo<1>>::value, "test");
+    static_assert(IsRequiredImport<Import<Foo<1>>>::value, "test");
+    static_assert(!IsRequiredImport<OptionalImport<Foo<1>>>::value, "test");
 
     // Test DedupTypes
 
@@ -133,27 +145,75 @@ void manufactoryUtilsTest() {
     // Test GetImportsAndExports
 
     GetImportsAndExports<>::type::exports x21 = {};
-    GetImportsAndExports<>::type::imports x22 = {};
+    GetImportsAndExports<>::type::required x22 = {};
     GetImportsAndExports<Foo<1>>::type::exports x23((Foo<1>()));
-    GetImportsAndExports<Foo<1>>::type::imports x24 = {};
+    GetImportsAndExports<Foo<1>>::type::required x24 = {};
     GetImportsAndExports<Foo<1>, Foo<1>>::type::exports x25((Foo<1>()));
-    GetImportsAndExports<Foo<1>, Foo<1>>::type::imports x26 = {};
+    GetImportsAndExports<Foo<1>, Foo<1>>::type::required x26 = {};
     GetImportsAndExports<Foo<1>, Foo<2>>::type::exports x27((Foo<1>()), (Foo<2>()));
-    GetImportsAndExports<Foo<1>, Foo<2>>::type::imports x28 = {};
+    GetImportsAndExports<Foo<1>, Foo<2>>::type::required x28 = {};
     GetImportsAndExports<Foo<1>, Foo<2>, Foo<3>>::type::exports x29((Foo<1>()), (Foo<2>()), (Foo<3>()));
-    GetImportsAndExports<Foo<1>, Foo<2>, Foo<3>>::type::imports x30 = {};
+    GetImportsAndExports<Foo<1>, Foo<2>, Foo<3>>::type::required x30 = {};
     GetImportsAndExports<Import<Foo<1>>, Foo<2>, Foo<3>>::type::exports x31((Foo<2>()), (Foo<3>()));
-    GetImportsAndExports<Import<Foo<1>>, Foo<2>, Foo<3>>::type::imports x32((Foo<1>()));
+    GetImportsAndExports<Import<Foo<1>>, Foo<2>, Foo<3>>::type::required x32((Foo<1>()));
     GetImportsAndExports<Import<Foo<1>>, Import<Foo<2>>, Foo<3>>::type::exports x33((Foo<3>()));
-    GetImportsAndExports<Import<Foo<1>>, Import<Foo<2>>, Foo<3>>::type::imports x34((Foo<1>()), (Foo<2>()));
+    GetImportsAndExports<Import<Foo<1>>, Import<Foo<2>>, Foo<3>>::type::required x34((Foo<1>()), (Foo<2>()));
     GetImportsAndExports<Import<Foo<1>>, Import<Foo<2>>, Import<Foo<3>>>::type::exports x35 = {};
-    GetImportsAndExports<Import<Foo<1>>, Import<Foo<2>>, Import<Foo<3>>>::type::imports x36(
+    GetImportsAndExports<Import<Foo<1>>, Import<Foo<2>>, Import<Foo<3>>>::type::required x36(
         (Foo<1>()), (Foo<2>()), (Foo<3>()));
     GetImportsAndExports<Foo<1>, Import<Foo<2>>, Import<Foo<3>>>::type::exports x37((Foo<1>()));
-    GetImportsAndExports<Foo<1>, Import<Foo<2>>, Import<Foo<3>>>::type::imports x38((Foo<2>()), (Foo<3>()));
+    GetImportsAndExports<Foo<1>, Import<Foo<2>>, Import<Foo<3>>>::type::required x38((Foo<2>()), (Foo<3>()));
     // Avoid annoying "unused variable" warnings.
     std::cout << &x21 << &x22 << &x23 << &x24 << &x25 << &x26 << &x27 << &x28 << &x29 << &x30;
     std::cout << &x31 << &x32 << &x33 << &x34 << &x35 << &x36 << &x37 << &x38;
+
+    // Test Required x Optional Import / Exports
+    static_assert(std::tuple_size<GetImportsAndExports<>::type::optional>() == 0, "test");
+    static_assert(std::tuple_size<GetImportsAndExports<Foo<1>>::type::optional>() == 0, "test");
+    static_assert(std::tuple_size<GetImportsAndExports<Foo<1>, Foo<1>>::type::optional>() == 0, "test");
+    static_assert(std::tuple_size<GetImportsAndExports<Foo<1>, Foo<2>>::type::optional>() == 0, "test");
+    static_assert(std::tuple_size<GetImportsAndExports<Foo<1>, Foo<2>, Foo<3>>::type::optional>() == 0, "test");
+    static_assert(std::tuple_size<GetImportsAndExports<Import<Foo<1>>, Foo<2>, Foo<3>>::type::optional>() == 0, "test");
+
+    // Test static_assert(std::tuple_size<GetImportsAndExports with OptionalImport
+    static_assert(ContainsType<GetImportsAndExports<OptionalImport<Foo<1>>>::type::optional, Foo<1>>::value, "test");
+    static_assert(!ContainsType<GetImportsAndExports<OptionalImport<Foo<1>>>::type::required, Foo<1>>::value, "test");
+    // With export
+    static_assert(
+        !ContainsType<GetImportsAndExports<Foo<1>, OptionalImport<Foo<1>>>::type::optional, Foo<1>>::value, "test");
+    static_assert(
+        !ContainsType<GetImportsAndExports<Foo<1>, Import<Foo<1>>, OptionalImport<Foo<1>>>::type::optional, Foo<1>>::
+            value,
+        "test");
+
+    // Different combinations of Import and OptionalImport.
+    static_assert(
+        !ContainsType<GetImportsAndExports<Import<Foo<1>>, OptionalImport<Foo<1>>>::type::optional, Foo<1>>::value,
+        "test");
+    static_assert(
+        ContainsType<GetImportsAndExports<Import<Foo<1>>, OptionalImport<Foo<1>>>::type::required, Foo<1>>::value,
+        "test");
+
+    static_assert(
+        !ContainsType<GetImportsAndExports<Import<Foo<1>>, OptionalImport<Foo<2>>>::type::optional, Foo<1>>::value,
+        "test");
+    static_assert(
+        ContainsType<GetImportsAndExports<Import<Foo<1>>, OptionalImport<Foo<2>>>::type::optional, Foo<2>>::value,
+        "test");
+    static_assert(
+        ContainsType<GetImportsAndExports<Import<Foo<1>>, OptionalImport<Foo<2>>>::type::required, Foo<1>>::value,
+        "test");
+    static_assert(
+        !ContainsType<GetImportsAndExports<Import<Foo<1>>, OptionalImport<Foo<2>>>::type::required, Foo<2>>::value,
+        "test");
+
+    // Test make optional import.
+    static_assert(
+        ContainsType<GetImportsAndExports<Import<Foo<1>>, MakeOptional<Foo<1>>>::type::optional, Foo<1>>::value,
+        "test");
+    static_assert(
+        !ContainsType<GetImportsAndExports<Import<Foo<1>>, MakeOptional<Foo<1>>>::type::required, Foo<1>>::value,
+        "test");
 
     // Test that large numbers of template parameters don't trigger degenerate compiler behavior.
     GetImportsAndExports<
@@ -186,12 +246,13 @@ void manufactoryUtilsTest() {
         Foo<27>,
         Foo<28>,
         Import<std::shared_ptr<Foo<29>>>,
-        Import<std::shared_ptr<Foo<30>>>,
-        Import<Foo<31>>,
+        OptionalImport<std::shared_ptr<Foo<30>>>,
+        OptionalImport<Foo<31>>,
         Import<Foo<32>>,
         Import<Foo<33>>,
         Foo<34>,
         std::shared_ptr<Foo<35>>,
+        MakeOptional<std::shared_ptr<Foo<36>>>,
         Import<std::shared_ptr<Foo<36>>>,
         Foo<37>,
         std::shared_ptr<Foo<38>>,

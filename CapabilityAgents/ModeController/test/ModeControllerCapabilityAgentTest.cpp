@@ -441,7 +441,9 @@ TEST_F(ModeControllerCapabilityAgentTest, test_setModeDirective_errorCase) {
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto modeControllerCapabilityAgent =
         createCapabilityAgentAndSetExpects(modeControllerAttributes.value(), true, true, false);
@@ -510,7 +512,9 @@ TEST_F(ModeControllerCapabilityAgentTest, test_adjustModeValueDirective_errorCas
             return std::make_pair(AlexaResponseType::ENDPOINT_UNREACHABLE, "TestEndpointNotReachable");
         })));
 
-    EXPECT_CALL(*m_mockResponseSender, sendErrorResponseEvent(_, _, _, _, _));
+    EXPECT_CALL(
+        *m_mockResponseSender,
+        sendErrorResponseEvent(_, _, _, Matcher<AlexaInterfaceMessageSenderInterface::ErrorResponseType>(_), _));
 
     auto modeControllerCapabilityAgent =
         createCapabilityAgentAndSetExpects(modeControllerAttributes.value(), true, true, false);

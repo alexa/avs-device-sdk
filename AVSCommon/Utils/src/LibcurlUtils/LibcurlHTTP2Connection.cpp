@@ -39,7 +39,7 @@ static const std::string TAG("LibcurlHTTP2Connection");
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Timeout for curl_multi_wait
-const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT(100);
+const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT(50);
 /// Timeout for curl_multi_wait while all non-intermittent HTTP/2 streams are paused.
 const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_WHILE_STREAMS_PAUSED_TIMEOUT(10);
 

@@ -58,30 +58,48 @@ std::string LogStringFormatter::format(
     std::chrono::system_clock::time_point time,
     const char* threadMoniker,
     const char* text) {
+    auto dateTimeString = getDateTimeString(time);
+    auto millisecondString = getMillisecondString(time);
+
+    std::stringstream stringToEmit;
+    stringToEmit << (dateTimeString.empty() ? "ERROR: Date and time not logged." : dateTimeString)
+                 << TIME_AND_MILLIS_SEPARATOR
+                 << (millisecondString.empty() ? " ERROR: Milliseconds not logged." : millisecondString)
+                 << MILLIS_AND_THREAD_SEPARATOR << threadMoniker << THREAD_AND_LEVEL_SEPARATOR
+                 << convertLevelToChar(level) << LEVEL_AND_TEXT_SEPARATOR << text;
+    return stringToEmit.str();
+}
+
+std::string LogStringFormatter::getDateTimeString(std::chrono::system_clock::time_point time) {
     bool dateTimeFailure = false;
-    bool millisecondFailure = false;
     char dateTimeString[DATE_AND_TIME_STRING_SIZE];
     auto timeAsTime_t = std::chrono::system_clock::to_time_t(time);
     std::tm timeAsTm;
+
     if (!m_safeCTimeAccess->getGmtime(timeAsTime_t, &timeAsTm) ||
         0 == strftime(dateTimeString, sizeof(dateTimeString), STRFTIME_FORMAT_STRING, &timeAsTm)) {
         dateTimeFailure = true;
     }
+
+    std::string dateTime = dateTimeFailure ? "" : dateTimeString;
+
+    return dateTime;
+}
+
+std::string LogStringFormatter::getMillisecondString(std::chrono::system_clock::time_point time) {
+    bool millisecondFailure = false;
+    char millisString[MILLIS_STRING_SIZE];
+
     auto timeMillisPart = static_cast<int>(
         std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() %
         MILLISECONDS_PER_SECOND);
-    char millisString[MILLIS_STRING_SIZE];
     if (snprintf(millisString, sizeof(millisString), MILLIS_FORMAT_STRING, timeMillisPart) < 0) {
         millisecondFailure = true;
     }
 
-    std::stringstream stringToEmit;
-    stringToEmit << (dateTimeFailure ? "ERROR: strftime() failed.  Date and time not logged." : dateTimeString)
-                 << TIME_AND_MILLIS_SEPARATOR
-                 << (millisecondFailure ? "ERROR: snprintf() failed.  Milliseconds not logged." : millisString)
-                 << MILLIS_AND_THREAD_SEPARATOR << threadMoniker << THREAD_AND_LEVEL_SEPARATOR
-                 << convertLevelToChar(level) << LEVEL_AND_TEXT_SEPARATOR << text;
-    return stringToEmit.str();
+    std::string milliseconds = millisecondFailure ? "" : millisString;
+
+    return milliseconds;
 }
 
 }  // namespace logger
