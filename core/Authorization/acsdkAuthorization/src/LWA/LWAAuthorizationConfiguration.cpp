@@ -19,25 +19,21 @@
 #include <rapidjson/writer.h>
 
 #include <AVSCommon/Utils/DeviceInfo.h>
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h"
+#include <acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h>
+#include <acsdkAuthorization/private/Logging.h>
 
 namespace alexaClientSDK {
 namespace acsdkAuthorization {
 namespace lwa {
 
+using namespace avsCommon::utils::json::jsonUtils;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("LWAAuthorizationConfiguration");
-
-/**
- * Create a LogEntry using this file's TAG and the specified event string.
- *
- * @param The event string for this @c LogEntry.
- */
-#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Name of @c ConfigurationNode for LWAAuthorization
 static const std::string CONFIG_KEY_LWA_AUTHORIZATION = "lwaAuthorization";
@@ -62,6 +58,9 @@ static const std::string CONFIG_KEY_DEFAULT_LOCALE = "defaultLocale";
 
 /// Default value for settings.locale.
 static const std::string CONFIG_VALUE_DEFAULT_LOCALE = "en-US";
+
+/// Index for primary locale in a multilingual locales vector.
+static const int PRIMARY_LOCALE_INDEX = 0;
 
 /// Key for alexa:all values in JSON sent to @c LWA
 static const char JSON_KEY_ALEXA_ALL[] = "alexa:all";
@@ -136,8 +135,21 @@ bool LWAAuthorizationConfiguration::init(
         &m_accessTokenRefreshHeadStart,
         DEFAULT_ACCESS_TOKEN_REFRESH_HEAD_START);
 
-    configurationRoot[CONFIG_KEY_DEVICE_SETTINGS].getString(
-        CONFIG_KEY_DEFAULT_LOCALE, &m_locale, CONFIG_VALUE_DEFAULT_LOCALE);
+    /// Check if default locale is multilingual.
+    auto localesArray = configurationRoot[CONFIG_KEY_DEVICE_SETTINGS].getArray(CONFIG_KEY_DEFAULT_LOCALE);
+    if (localesArray) {
+        /// The first value in a multilingual locale denotes the primary locale.
+        auto localesStringArray = retrieveStringArray<std::vector<std::string>>(localesArray.serialize());
+        if (PRIMARY_LOCALE_INDEX < localesStringArray.size()) {
+            m_locale = localesStringArray[PRIMARY_LOCALE_INDEX];
+        }
+    }
+
+    /// Fallback if the default locale is not multilingual.
+    if (m_locale.empty()) {
+        configurationRoot[CONFIG_KEY_DEVICE_SETTINGS].getString(
+            CONFIG_KEY_DEFAULT_LOCALE, &m_locale, CONFIG_VALUE_DEFAULT_LOCALE);
+    }
 
     if (!initScopeData()) {
         ACSDK_ERROR(LX("initFailed").d("reason", "initScopeDataFailed"));

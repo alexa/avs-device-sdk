@@ -20,6 +20,7 @@ namespace alexaClientSDK {
 namespace acsdkExternalMediaPlayer {
 
 using acsdkExternalMediaPlayerInterfaces::PlayerInfo;
+using HandlePlayParams = acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterInterface::HandlePlayParams;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("StaticExternalMediaPlayerAdapterHandler");
@@ -114,40 +115,38 @@ bool StaticExternalMediaPlayerAdapterHandler::logout(const std::string& localPla
     return true;
 }
 
-bool StaticExternalMediaPlayerAdapterHandler::play(
-    const std::string& localPlayerId,
-    const std::string& playContextToken,
-    int64_t index,
-    std::chrono::milliseconds offset,
-    const std::string& skillToken,
-    const std::string& playbackSessionId,
-    const std::string& navigation,
-    bool preload,
-    const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-    const std::string& playbackTarget) {
-    auto player = getAdapterByLocalPlayerId(localPlayerId);
+bool StaticExternalMediaPlayerAdapterHandler::play(const PlayParams& params) {
+    auto player = getAdapterByLocalPlayerId(params.localPlayerId);
     if (!player) {
         return false;
     }
 
-    ACSDK_DEBUG5(LX(__func__).d("localPlayerId", localPlayerId));
-    std::string playContextTokenCopy = playContextToken;
-    player->handlePlay(
-        playContextTokenCopy,
-        index,
-        offset,
-        skillToken,
-        playbackSessionId,
-        navigation,
-        preload,
-        playRequestor,
-        playbackTarget);
+    ACSDK_DEBUG5(LX(__func__).d("localPlayerId", params.localPlayerId));
+    HandlePlayParams handlePlayParams(
+        params.playContextToken,
+        params.index,
+        params.offset,
+        params.skillToken,
+        params.playbackSessionId,
+        params.navigation,
+        params.preload,
+        params.playRequestor,
+#ifdef MEDIA_PORTABILITY_ENABLED
+        params.mediaSessionId,
+        params.correlationToken,
+#endif
+        params.playbackTarget);
+    player->handlePlay(handlePlayParams);
     return true;
 }
 
 bool StaticExternalMediaPlayerAdapterHandler::playControl(
     const std::string& localPlayerId,
     acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+#ifdef MEDIA_PORTABILITY_ENABLED
+    const std::string& mediaSessionId,
+    const std::string& correlationToken,
+#endif
     const std::string& playbackTarget) {
     auto player = getAdapterByLocalPlayerId(localPlayerId);
     if (!player) {
@@ -155,7 +154,11 @@ bool StaticExternalMediaPlayerAdapterHandler::playControl(
     }
 
     ACSDK_DEBUG5(LX(__func__).d("localPlayerId", localPlayerId).sensitive("playbackTarget", playbackTarget));
+#ifdef MEDIA_PORTABILITY_ENABLED
+    player->handlePlayControl(requestType, mediaSessionId, correlationToken, playbackTarget);
+#else
     player->handlePlayControl(requestType, playbackTarget);
+#endif
     return true;
 }
 

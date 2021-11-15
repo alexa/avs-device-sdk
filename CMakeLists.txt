@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 # Set project information
-project(AlexaClientSDK VERSION 1.25.0 LANGUAGES CXX)
+project(AlexaClientSDK VERSION 1.26.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")
 
 # This variable should be used by extension packages to include cmake files from this project.
 get_filename_component(AVS_CORE . ABSOLUTE)
+get_filename_component(AVS_CORE_BINARY ${PROJECT_BINARY_DIR} ABSOLUTE)
 
 # This variable should be used to get the cmake build files.
 get_filename_component(AVS_CMAKE_BUILD cmakeBuild ABSOLUTE)
@@ -18,8 +19,13 @@ include(${AVS_CMAKE_BUILD}/cmake/PrepareInstall.cmake)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKVersion.h.in"
-	"${PROJECT_SOURCE_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKVersion.h"
+	"${PROJECT_BINARY_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKVersion.h"
 	)
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKConfig.h.in"
+	"${PROJECT_BINARY_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKConfig.h"
+)
 
 # Add utils under ThirdParty first so extensions can also utilize them
 add_subdirectory("ThirdParty")
@@ -49,7 +55,6 @@ if (DIAGNOSTICS)
 endif()
 add_subdirectory("InterruptModel")
 add_subdirectory("PlaylistParser")
-add_subdirectory("KWD")
 add_subdirectory("CapabilityAgents")
 if (NOT MSVC)
     add_subdirectory("Integration")

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkStartupManager")
-add_library(acsdkStartupManager SHARED
+add_library(acsdkStartupManager
     StartupManager.cpp
     StartupNotifier.cpp)
 

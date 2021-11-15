@@ -1,4 +1,4 @@
-add_library(MetricRecorder SHARED MetricRecorder.cpp)
+add_library(MetricRecorder MetricRecorder.cpp)
 
 target_include_directories(MetricRecorder	PUBLIC
 	"${MetricRecorder_SOURCE_DIR}/include"

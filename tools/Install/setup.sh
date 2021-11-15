@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright 2018-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
 CURL_VER=7.67.0
 CURL_DOWNLOAD_URL="https://github.com/curl/curl/releases/download/curl-7_67_0/curl-${CURL_VER}.tar.gz"
 
-TEST_MODEL_DOWNLOAD="https://github.com/Sensory/alexa-rpi/blob/master/models/spot-alexa-rpi-31000.snsr"
-
 BUILD_TESTS=${BUILD_TESTS:-'true'}
 
 CURRENT_DIR="$(pwd)"
@@ -44,8 +42,6 @@ BUILD_PATH="$INSTALL_BASE/$BUILD_FOLDER"
 SOUNDS_PATH="$INSTALL_BASE/$SOUNDS_FOLDER"
 DB_PATH="$INSTALL_BASE/$DB_FOLDER"
 CONFIG_DB_PATH="$DB_PATH"
-UNIT_TEST_MODEL_PATH="$INSTALL_BASE/avs-device-sdk/KWD/inputs/SensoryModels/"
-UNIT_TEST_MODEL="$THIRD_PARTY_PATH/alexa-rpi/models/spot-alexa-rpi-31000.snsr"
 INPUT_CONFIG_FILE="$SOURCE_PATH/avs-device-sdk/Integration/AlexaClientSDKConfig.json"
 OUTPUT_CONFIG_FILE="$BUILD_PATH/Integration/AlexaClientSDKConfig.json"
 TEMP_CONFIG_FILE="$BUILD_PATH/Integration/tmp_AlexaClientSDKConfig.json"
@@ -63,6 +59,12 @@ DEVICE_MANUFACTURER_NAME=${DEVICE_MANUFACTURER_NAME:-"Test Manufacturer"}
 DEVICE_DESCRIPTION=${DEVICE_DESCRIPTION:-"Test Device"}
 
 GSTREAMER_AUDIO_SINK="autoaudiosink"
+
+# Defaults for HSM integration
+ACSDK_PKCS11_MODULE=
+ACSDK_PKCS11_KEY=
+ACSDK_PKCS11_PIN=
+ACSDK_PKCS11_TOKEN=
 
 build_port_audio() {
   # build port audio
@@ -108,6 +110,10 @@ show_help() {
   echo  '  -a <file-name>      The file that contains Android installation configurations (e.g. androidConfig.txt)'
   echo  '  -d <description>    The description of the device.'
   echo  '  -m <manufacturer>   The device manufacturer name.'
+  echo  '  -p <module-path>    Absolute path to PKCS#11 interface library.'
+  echo  '  -t <token-name>     PKCS#11 token name.'
+  echo  '  -i <user-pin>       PKCS#11 user pin to access key object functions.'
+  echo  '  -k <key-name>       PKCS#11 key object label.'
   echo  '  -h                  Display this help and exit'
 }
 
@@ -124,7 +130,7 @@ if [ ! -f "$CONFIG_JSON_FILE" ]; then
 fi
 shift 1
 
-OPTIONS=s:a:m:d:h
+OPTIONS=s:a:m:d:hp:k:i:t:
 while getopts "$OPTIONS" opt ; do
     case $opt in
         s )
@@ -148,6 +154,18 @@ while getopts "$OPTIONS" opt ; do
             show_help
             exit 1
             ;;
+        p )
+            ACSDK_PKCS11_MODULE="$OPTARG"
+            ;;
+        k )
+            ACSDK_PKCS11_KEY="$OPTARG"
+            ;;
+        i )
+            ACSDK_PKCS11_PIN="$OPTARG"
+            ;;
+        t )
+            ACSDK_PKCS11_TOKEN="$OPTARG"
+            ;;
     esac
 done
 
@@ -155,6 +173,49 @@ if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]; then
    echo 'Device serial number is invalid!'
    exit 1
 fi
+
+if [ -z "$ACSDK_PKCS11_MODULE" ] && [ -z "$ACSDK_PKCS11_KEY" ] && [ -z "$ACSDK_PKCS11_PIN" ] && [ -z "$ACSDK_PKCS11_TOKEN" ]
+then
+  echo "PKCS11 parameters are not specified. Hardware security module integration is disabled."
+  ACSDK_PKCS11=OFF
+  ACSDK_PKCS11_MODULE=__undefined__
+  ACSDK_PKCS11_KEY=__undefined__
+  ACSDK_PKCS11_PIN=__undefined__
+  ACSDK_PKCS11_TOKEN=__undefined__
+else
+  echo "PKCS11 parameters are specified. Hardware security module integration is enabled."
+  ACSDK_PKCS11=ON
+
+  if [ -z "$ACSDK_PKCS11_MODULE" ]
+  then
+    echo "PKCS11 module path is not specified, but other PKCS11 parameters are present."
+    exit 1
+  elif [ ! -f "$ACSDK_PKCS11_MODULE" ]
+  then
+    echo "PKCS11 module path is specified, but library is not found."
+    exit 1
+  fi
+
+  if [ -z "$ACSDK_PKCS11_KEY" ]
+  then
+    echo "PKCS11 key name is not specified, but other PKCS11 parameters are present."
+    exit 1
+  fi
+
+  if [ -z "$ACSDK_PKCS11_PIN" ]
+  then
+    echo "PKCS11 pin is not specified, but other PKCS11 parameters are present."
+    exit 1
+  fi
+
+  if [ -z "$ACSDK_PKCS11_TOKEN" ]
+  then
+    echo "PKCS11 token name is not specified, but other PKCS11 parameters are present."
+    exit 1
+  fi
+
+fi
+
 
 # The target platform for the build.
 PLATFORM=${PLATFORM:-$(get_platform)}
@@ -258,33 +319,32 @@ then
   cd $BUILD_PATH
   cmake "$SOURCE_PATH/avs-device-sdk" \
       -DCMAKE_BUILD_TYPE=DEBUG \
+      -DPKCS11=$ACSDK_PKCS11 \
       "${CMAKE_PLATFORM_SPECIFIC[@]}"
 
   cd $BUILD_PATH
   make SampleApp -j2
   make PreviewAlexaClient -j2
+  make all -j2
 
 else
   cd $BUILD_PATH
   make SampleApp -j2
   make PreviewAlexaClient -j2
+  make all -j2
 fi
 
 echo
 echo "==============> SAVING CONFIGURATION FILE =============="
 echo
 
-GSTREAMER_CONFIG=$(cat <<-END
- {
-    "gstreamerMediaPlayer":{
-        "audioSink":"$GSTREAMER_AUDIO_SINK"
-    },
-END
-)
+GSTREAMER_CONFIG="{\\n    \"gstreamerMediaPlayer\":{\\n        \"audioSink\":\"$GSTREAMER_AUDIO_SINK\"\\n    },"
 
 cd $INSTALL_BASE
 bash genConfig.sh config.json $DEVICE_SERIAL_NUMBER $CONFIG_DB_PATH $SOURCE_PATH/avs-device-sdk $TEMP_CONFIG_FILE \
-  -DSDK_CONFIG_MANUFACTURER_NAME="$DEVICE_MANUFACTURER_NAME" -DSDK_CONFIG_DEVICE_DESCRIPTION="$DEVICE_DESCRIPTION"
+  -DSDK_CONFIG_MANUFACTURER_NAME="$DEVICE_MANUFACTURER_NAME" -DSDK_CONFIG_DEVICE_DESCRIPTION="$DEVICE_DESCRIPTION" \
+  -DPKCS11_MODULE_PATH=$ACSDK_PKCS11_MODULE -DPKCS11_TOKEN_NAME=$ACSDK_PKCS11_TOKEN \
+  -DPKCS11_USER_PIN=$ACSDK_PKCS11_PIN -DPKCS11_KEY_NAME=$ACSDK_PKCS11_KEY
 
 # Replace the first opening bracket in the AlexaClientSDKConfig.json file with GSTREAMER_CONFIG variable.
 awk -v config="$GSTREAMER_CONFIG" 'NR==1,/{/{sub(/{/,config)}1' $TEMP_CONFIG_FILE > $OUTPUT_CONFIG_FILE

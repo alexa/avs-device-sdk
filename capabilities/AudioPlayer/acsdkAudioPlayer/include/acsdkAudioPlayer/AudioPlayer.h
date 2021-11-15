@@ -373,11 +373,15 @@ private:
         /// Cached metadata.
         std::shared_ptr<const VectorOfTags> cachedMetadata;
 
+        /// Analyzers data.
+        std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState> analyzersData;
+
         /**
          * Constructor.
          *
          * @param messageId The message Id of the @c PLAY directive.
          * @param dialogRequestId The dialog request Id of the @c PLAY directive.
+         * @param correlationToken The message Id of the @c PLAY directive.
          */
         PlayDirectiveInfo(const std::string& messageId, const std::string& dialogRequestId);
     };
@@ -808,6 +812,7 @@ private:
      *
      * @param eventName The name of the event to be include in the header.
      * @param dialogRequestIdString The value associated with the "dialogRequestId" key.
+     * @param correlationToken The correlation toekn of the event to be included in the header.
      * @param payload The payload value associated with the "payload" key.
      * @param context Optional @c context to be sent with the event message.
      */
@@ -823,6 +828,7 @@ private:
      * @param audioItem item associated with the metadata
      * @param vectorOfTags Pointer to vector of tags that should be sent to AVS.
      * @param state Metadata about the media player state
+     * @param correlationToken correlation token of the event
      */
     void sendStreamMetadataExtractedEvent(
         AudioItem& audioItem,

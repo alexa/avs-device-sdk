@@ -64,7 +64,7 @@ private:
         uplCalculators;
 
     /// MetricRecorder to publish UPL metrics.
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+    std::weak_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 };
 
 }  // namespace implementations

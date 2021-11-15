@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=opusEncoderContext")
 
-add_library(OpusEncoderContext SHARED
+add_library(OpusEncoderContext
 OpusEncoderContext.cpp)
 
 find_path(OPUS_INCLUDE_DIR opus)

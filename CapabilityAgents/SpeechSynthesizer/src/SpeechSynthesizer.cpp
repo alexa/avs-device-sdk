@@ -157,6 +157,15 @@ static const std::string DIALOG_REQUEST_ID_KEY = "DIALOG_REQUEST_ID";
 /// Metric to emit on TTS buffer underrrun
 static const std::string BUFFER_UNDERRUN = "ERROR.TTS_BUFFER_UNDERRUN";
 
+/// Keys for instance entry metric specific fields
+static const std::string ENTRY_METRIC_ACTOR_NAME = "SpeechSynthesizer";
+static const std::string ENTRY_METRIC_ACTIVITY_NAME = SPEECH_SYNTHESIZER_METRIC_PREFIX + ENTRY_METRIC_ACTOR_NAME;
+static const std::string ENTRY_METRIC_KEY_SEGMENT_ID = "segment_id";
+static const std::string ENTRY_METRIC_KEY_ACTOR = "actor";
+static const std::string ENTRY_METRIC_KEY_ENTRY_TYPE = "entry_type";
+static const std::string ENTRY_METRIC_KEY_ENTRY_NAME = "entry_name";
+static const std::string ENTRY_METRIC_NAME_STATE_CHANGE = "StateChange";
+
 /**
  * Creates the SpeechSynthesizer capability configuration.
  *
@@ -410,6 +419,7 @@ void SpeechSynthesizer::onPlaybackStarted(SourceId id, const MediaPlayerState&) 
                                                .setName(DIALOG_REQUEST_ID_KEY)
                                                .setValue(m_currentInfo->directive->getDialogRequestId())
                                                .build()));
+            submitInstanceEntryMetric(m_currentInfo->directive->getDialogRequestId(), TTS_STARTED);
             executePlaybackStarted();
         }
     });
@@ -434,6 +444,7 @@ void SpeechSynthesizer::onPlaybackFinished(SourceId id, const MediaPlayerState&)
                                                .setName(DIALOG_REQUEST_ID_KEY)
                                                .setValue(m_currentInfo->directive->getDialogRequestId())
                                                .build()));
+            submitInstanceEntryMetric(m_currentInfo->directive->getDialogRequestId(), TTS_FINISHED);
             executePlaybackFinished();
         }
     });
@@ -510,6 +521,14 @@ SpeechSynthesizer::SpeechSynthesizer(
         m_initialDialogUXStateReceived{false},
         m_powerResourceManager{powerResourceManager} {
     m_capabilityConfigurations.insert(getSpeechSynthesizerCapabilityConfiguration());
+
+    if (m_powerResourceManager) {
+        m_powerResourceId = m_powerResourceManager->create(
+            POWER_RESOURCE_COMPONENT_NAME, false, PowerResourceManagerInterface::PowerResourceLevel::STANDBY_MED);
+        if (!m_powerResourceId) {
+            ACSDK_ERROR(LX(__func__).d("reason", "createPowerResourceFailed").d("name", POWER_RESOURCE_COMPONENT_NAME));
+        }
+    }
 }
 
 std::shared_ptr<CapabilityConfiguration> getSpeechSynthesizerCapabilityConfiguration() {
@@ -566,6 +585,12 @@ void SpeechSynthesizer::doShutdown() {
     m_focusManager.reset();
     m_contextManager.reset();
     m_observers.clear();
+
+    if (m_powerResourceManager && m_powerResourceId) {
+        m_powerResourceManager->close(m_powerResourceId);
+    }
+    m_powerResourceManager.reset();
+    m_powerResourceId.reset();
 }
 
 void SpeechSynthesizer::init() {
@@ -1424,19 +1449,56 @@ void SpeechSynthesizer::submitMetric(MetricEventBuilder& metricEventBuilder) {
     }
 }
 
+void SpeechSynthesizer::submitInstanceEntryMetric(
+    const std::string& segmentId,
+    const std::string& name,
+    const std::map<std::string, std::string>& metadata) {
+    if (!m_metricRecorder) {
+        return;
+    }
+    if (segmentId.empty() || name.empty()) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Unable to create instance metric").d("segmentId", segmentId).d("name", name));
+        return;
+    }
+
+    auto metricBuilder = MetricEventBuilder{}.setActivityName(ENTRY_METRIC_ACTIVITY_NAME);
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_SEGMENT_ID).setValue(segmentId).build());
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_ACTOR).setValue(ENTRY_METRIC_ACTOR_NAME).build());
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_ENTRY_NAME).setValue(name).build());
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_ENTRY_TYPE).setValue("INSTANCE").build());
+    for (auto const& pair : metadata) {
+        metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(pair.first).setValue(pair.second).build());
+    }
+    if (m_currentInfo) {
+        metricBuilder.addDataPoint(DataPointStringBuilder{}
+                                       .setName("DIRECTIVE_MESSAGE_ID")
+                                       .setValue(m_currentInfo->directive->getMessageId())
+                                       .build());
+    }
+    auto metric = metricBuilder.build();
+    if (metric == nullptr) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Error creating instance entry metric."));
+        return;
+    }
+    recordMetric(m_metricRecorder, metric);
+}
+
 void SpeechSynthesizer::managePowerResource(SpeechSynthesizerObserverInterface::SpeechSynthesizerState newState) {
-    if (!m_powerResourceManager) {
+    if (!m_powerResourceId || !m_powerResourceManager) {
         return;
     }
 
     ACSDK_DEBUG5(LX(__func__).d("state", newState));
     switch (newState) {
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
-            m_powerResourceManager->acquirePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            m_powerResourceManager->acquire(m_powerResourceId);
             break;
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED:
         case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::INTERRUPTED:
-            m_powerResourceManager->releasePowerResource(POWER_RESOURCE_COMPONENT_NAME);
+            m_powerResourceManager->release(m_powerResourceId);
             break;
         default:
             // no-op for focus change

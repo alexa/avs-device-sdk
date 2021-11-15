@@ -98,7 +98,7 @@ static const std::string HTTP_KEY_VALUE_SEPARATOR = ": ";
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -232,7 +232,7 @@ std::shared_ptr<MessageRequestHandler> MessageRequestHandler::create(
     std::shared_ptr<MetricRecorderInterface> metricRecorder,
     std::shared_ptr<avsCommon::sdkInterfaces::EventTracerInterface> eventTracer,
     const std::shared_ptr<PowerResource>& powerResource) {
-    ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
+    ACSDK_DEBUG7(LX("create").d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (!context) {
         ACSDK_CRITICAL(LX("MessageRequestHandlerCreateFailed").d("reason", "nullHttp2Transport"));
@@ -303,7 +303,7 @@ MessageRequestHandler::MessageRequestHandler(
         m_resultStatus{MessageRequestObserverInterface::Status::PENDING},
         m_streamBytesRead{0},
         m_recordedStreamMetric{false} {
-    ACSDK_DEBUG7(LX(__func__).d("context", context.get()).d("messageRequest", messageRequest.get()));
+    ACSDK_DEBUG7(LX("init").d("context", context.get()).d("messageRequest", messageRequest.get()));
 
     if (m_powerResource) {
         m_powerResource->acquire();
@@ -311,7 +311,7 @@ MessageRequestHandler::MessageRequestHandler(
 }
 
 void MessageRequestHandler::reportMessageRequestAcknowledged() {
-    ACSDK_DEBUG7(LX(__func__));
+    ACSDK_DEBUG7(LX("reportMessageRequestAcknowledged"));
     if (!m_wasMessageRequestAcknowledgeReported) {
         m_wasMessageRequestAcknowledgeReported = true;
         m_context->onMessageRequestAcknowledged(m_messageRequest);
@@ -319,7 +319,7 @@ void MessageRequestHandler::reportMessageRequestAcknowledged() {
 }
 
 void MessageRequestHandler::reportMessageRequestFinished() {
-    ACSDK_DEBUG7(LX(__func__));
+    ACSDK_DEBUG7(LX("reportMessageRequestFinished"));
     if (!m_wasMessageRequestFinishedReported) {
         m_wasMessageRequestFinishedReported = true;
         m_context->onMessageRequestFinished();
@@ -327,7 +327,7 @@ void MessageRequestHandler::reportMessageRequestFinished() {
 }
 
 std::vector<std::string> MessageRequestHandler::getRequestHeaderLines() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_DEBUG9(LX("getRequestHeaderLines"));
 
     m_context->onActivity();
 
@@ -341,7 +341,7 @@ std::vector<std::string> MessageRequestHandler::getRequestHeaderLines() {
 }
 
 HTTP2GetMimeHeadersResult MessageRequestHandler::getMimePartHeaderLines() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_DEBUG9(LX("getMimePartHeaderLines"));
 
     m_context->onActivity();
 
@@ -363,7 +363,7 @@ HTTP2GetMimeHeadersResult MessageRequestHandler::getMimePartHeaderLines() {
 }
 
 HTTP2SendDataResult MessageRequestHandler::onSendMimePartData(char* bytes, size_t size) {
-    ACSDK_DEBUG9(LX(__func__).d("size", size));
+    ACSDK_DEBUG9(LX("onSendMimePartData").d("size", size));
 
     m_context->onActivity();
 
@@ -426,7 +426,7 @@ void MessageRequestHandler::onActivity() {
 }
 
 bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
-    ACSDK_DEBUG7(LX(__func__).d("responseCode", responseCode));
+    ACSDK_DEBUG7(LX("onReceiveResponseCode").d("responseCode", responseCode));
 
     reportMessageRequestAcknowledged();
 
@@ -463,7 +463,7 @@ bool MessageRequestHandler::onReceiveResponseCode(long responseCode) {
 }
 
 void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus status, const std::string& nonMimeBody) {
-    ACSDK_DEBUG7(LX(__func__).d("status", status).d("responseCode", m_responseCode));
+    ACSDK_DEBUG7(LX("onResponseFinished").d("status", status).d("responseCode", m_responseCode));
 
     if (HTTP2ResponseFinishedStatus::TIMEOUT == status) {
         m_context->onMessageRequestTimeout();

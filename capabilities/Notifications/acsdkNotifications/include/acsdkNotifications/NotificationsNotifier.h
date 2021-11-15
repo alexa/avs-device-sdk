@@ -20,7 +20,7 @@
 
 #include <acsdkNotificationsInterfaces/NotificationsNotifierInterface.h>
 #include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkNotifications {

@@ -28,9 +28,16 @@ static const std::string TAG("AbstractAVSConnectionManager");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/**
+ * Create a LogEntry using this file's TAG, the specified event string, and pointer to disambiguate the instance.
+ *
+ * @param event The event string for this @c LogEntry.
+ */
+#define LX_P(event) LX(event).p("this", this)
 
 AbstractAVSConnectionManager::AbstractAVSConnectionManager(
     std::unordered_set<std::shared_ptr<ConnectionStatusObserverInterface>> observers) :
@@ -46,7 +53,7 @@ AbstractAVSConnectionManager::AbstractAVSConnectionManager(
 void AbstractAVSConnectionManager::addConnectionStatusObserver(
     std::shared_ptr<ConnectionStatusObserverInterface> observer) {
     if (!observer) {
-        ACSDK_ERROR(LX("addConnectionStatusObserverFailed").d("reason", "nullObserver"));
+        ACSDK_ERROR(LX_P("addConnectionStatusObserverFailed").d("reason", "nullObserver"));
         return;
     }
 
@@ -60,7 +67,7 @@ void AbstractAVSConnectionManager::addConnectionStatusObserver(
         // call new onConnectionStatusChanged API
         for (auto engineStatus : localEngineConnectionStatuses) {
             (void)engineStatus;
-            ACSDK_DEBUG9(LX(__func__)
+            ACSDK_DEBUG9(LX_P("addConnectionStatusObserver")
                              .d("engineType", engineStatus.engineType)
                              .d("status", engineStatus.status)
                              .d("reason", engineStatus.reason));
@@ -79,7 +86,7 @@ void AbstractAVSConnectionManager::addConnectionStatusObserver(
 void AbstractAVSConnectionManager::removeConnectionStatusObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface> observer) {
     if (!observer) {
-        ACSDK_ERROR(LX("removeConnectionStatusObserverFailed").d("reason", "nullObserver"));
+        ACSDK_ERROR(LX_P("removeConnectionStatusObserverFailed").d("reason", "nullObserver"));
         return;
     }
 
@@ -116,7 +123,7 @@ void AbstractAVSConnectionManager::notifyObservers(bool avsConnectionStatusChang
 
     for (auto engineStatus : localEngineConnectionStatuses) {
         (void)engineStatus;
-        ACSDK_DEBUG5(LX(__func__)
+        ACSDK_DEBUG5(LX_P("notifyObservers")
                          .m("EngineConnectionStatusDetail")
                          .d("engineType", engineStatus.engineType)
                          .d("status", engineStatus.status)

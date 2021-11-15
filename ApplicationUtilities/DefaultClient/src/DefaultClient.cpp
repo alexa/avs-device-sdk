@@ -187,7 +187,7 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface> alertStorage,
     std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
-    std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
+    std::shared_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface> bluetoothStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
     std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
@@ -606,6 +606,16 @@ bool DefaultClient::initialize(
     if (!m_alertsCapabilityAgent) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateAlertsCapabilityAgent"));
         return false;
+    }
+
+    m_bluetoothLocal = manufactory->get<std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>>();
+    if (!m_bluetoothLocal) {
+#ifdef BLUETOOTH_ENABLED
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateBluetoothLocal"));
+        return false;
+#else
+        ACSDK_DEBUG5(LX("nullBluetooth").m("Bluetooth disabled"));
+#endif
     }
 
     m_bluetoothNotifier = manufactory->get<std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>>();
@@ -1100,7 +1110,8 @@ bool DefaultClient::initialize(
 #endif
             powerResourceManager,
             m_softwareReporterCapabilityAgent,
-            m_playbackRouter);
+            m_playbackRouter,
+            m_endpointRegistrationManager);
         for (auto& capability : externalCapabilities.first) {
             if (capability.configuration.hasValue()) {
                 m_defaultEndpointBuilder->withCapability(capability.configuration.value(), capability.directiveHandler);
@@ -1672,6 +1683,10 @@ std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface> Defaul
 
 std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface> DefaultClient::getDeviceSetup() {
     return m_deviceSetup;
+}
+
+std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface> DefaultClient::getBluetoothLocal() {
+    return m_bluetoothLocal;
 }
 
 DefaultClient::~DefaultClient() {

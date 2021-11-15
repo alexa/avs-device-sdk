@@ -49,7 +49,7 @@
 #ifdef AUTH_MANAGER
 #include <acsdkAuthorization/AuthorizationManager.h>
 #include <acsdkAuthorization/LWA/LWAAuthorizationAdapter.h>
-#include <acsdkAuthorization/LWA/SQLiteLWAAuthorizationStorage.h>
+#include <acsdkAuthorization/LWA/LWAAuthorizationStorage.h>
 #include <acsdkAuthorizationInterfaces/AuthorizationManagerInterface.h>
 #include <acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h>
 #endif
@@ -65,10 +65,6 @@
 #ifdef ENABLE_MCC
 #include <SampleApp/CalendarClient.h>
 #include <SampleApp/MeetingClient.h>
-#endif
-
-#ifdef KWD
-#include <KWDProvider/KeywordDetectorProvider.h>
 #endif
 
 #ifdef PORTAUDIO
@@ -167,12 +163,14 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>,
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
     std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
     std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
     std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>,
+    std::shared_ptr<acsdkKWDImplementations::AbstractKeywordDetector>,
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
@@ -219,7 +217,9 @@ using PreviewAlexaClientManufactory = Manufactory<
     std::shared_ptr<sampleApp::UIManager>,
     std::shared_ptr<settings::DeviceSettingsManager>,
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
-    std::shared_ptr<speechencoder::SpeechEncoder>>;
+    std::shared_ptr<speechencoder::SpeechEncoder>,
+    std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>,
+    std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("PreviewAlexaClient");
@@ -673,11 +673,10 @@ buildModeControllerAttributes(
 std::unique_ptr<PreviewAlexaClient> PreviewAlexaClient::create(
     std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
     const std::vector<std::string>& configFiles,
-    const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     auto clientApplication = std::unique_ptr<PreviewAlexaClient>(new PreviewAlexaClient);
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics)) {
+    if (!clientApplication->initialize(consoleReader, configFiles, logLevel, diagnostics)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -713,7 +712,6 @@ PreviewAlexaClient::~PreviewAlexaClient() {
 bool PreviewAlexaClient::initialize(
     std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
     const std::vector<std::string>& configFiles,
-    const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
@@ -1068,31 +1066,13 @@ bool PreviewAlexaClient::initialize(
      * stream is used since this sample application will only have one microphone.
      */
 
-    // Creating tap to talk audio provider
-    bool tapAlwaysReadable = true;
-    bool tapCanOverride = true;
-    bool tapCanBeOverridden = true;
+    // Creating tap to talk audio provider.
+    auto tapToTalkAudioProvider = alexaClientSDK::capabilityAgents::aip::AudioProvider::TapAudioProvider(
+        sharedDataStream, *compatibleAudioFormat);
 
-    alexaClientSDK::capabilityAgents::aip::AudioProvider tapToTalkAudioProvider(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::NEAR_FIELD,
-        tapAlwaysReadable,
-        tapCanOverride,
-        tapCanBeOverridden);
-
-    // Creating hold to talk audio provider
-    bool holdAlwaysReadable = false;
-    bool holdCanOverride = true;
-    bool holdCanBeOverridden = false;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider holdToTalkAudioProvider(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::CLOSE_TALK,
-        holdAlwaysReadable,
-        holdCanOverride,
-        holdCanBeOverridden);
+    // Creating hold to talk audio provider.
+    auto holdToTalkAudioProvider = alexaClientSDK::capabilityAgents::aip::AudioProvider::HoldAudioProvider(
+        sharedDataStream, *compatibleAudioFormat);
 
     /*
      * Creating the DefaultClient - this component serves as an out-of-box default object that instantiates and "glues"
@@ -1221,35 +1201,26 @@ bool PreviewAlexaClient::initialize(
     client->registerEndpoint(std::move(peripheralEndpoint));
 #endif
 
-// Creating wake word audio provider, if necessary
+    // Create null wake word audio provider and replace with wake word audio provider if KWD is on.
+    auto wakeWordAudioProvider = alexaClientSDK::capabilityAgents::aip::AudioProvider::null();
 #ifdef KWD
-    bool wakeAlwaysReadable = true;
-    bool wakeCanOverride = false;
-    bool wakeCanBeOverridden = true;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider wakeWordAudioProvider(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::NEAR_FIELD,
-        wakeAlwaysReadable,
-        wakeCanOverride,
-        wakeCanBeOverridden);
-
-    // This observer is notified any time a keyword is detected and notifies the DefaultClient to start recognizing.
-    auto keywordObserver = std::make_shared<alexaClientSDK::sampleApp::KeywordObserver>(client, wakeWordAudioProvider);
-
-    m_keywordDetector = alexaClientSDK::kwd::KeywordDetectorProvider::create(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        {keywordObserver},
-        std::unordered_set<
-            std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>(),
-        pathToInputFolder);
-    if (!m_keywordDetector) {
-        ACSDK_CRITICAL(LX("Failed to create keyword detector!"));
+    // Check if keywordDetector was provided to manufactory and create wakeWordAudioProvider and keywordObserver if that
+    // is the case.
+    m_keywordDetector =
+        manufactory->get<std::shared_ptr<alexaClientSDK::acsdkKWDImplementations::AbstractKeywordDetector>>();
+    if (m_keywordDetector) {
+        wakeWordAudioProvider = alexaClientSDK::capabilityAgents::aip::AudioProvider::WakeAudioProvider(
+            sharedDataStream, *compatibleAudioFormat);
+        auto keywordObserver =
+            alexaClientSDK::sampleApp::KeywordObserver::create(client, wakeWordAudioProvider, m_keywordDetector);
+    } else {
+        ACSDK_CRITICAL(LX("Failed to create KWD"));
+        return false;
     }
+#endif
 
-    // If wake word is enabled, then creating the interaction manager with a wake word audio provider.
+    // clang-format off
+    // Create InteractionManager
     m_interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
         client,
         micWrapper,
@@ -1284,45 +1255,7 @@ bool PreviewAlexaClient::initialize(
         ,
         nullptr,
         diagnostics);
-#else
-    // clang-format off
-    // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.
-    m_interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
-        client,
-        micWrapper,
-        userInterfaceManager,
-#ifdef ENABLE_PCC
-        phoneCaller,
-#endif
-#ifdef ENABLE_MCC
-        meetingClient,
-        calendarClient,
-#endif
-        holdToTalkAudioProvider,
-        tapToTalkAudioProvider,
-        m_guiRenderer,
-        capabilityAgents::aip::AudioProvider::null()
-#ifdef POWER_CONTROLLER
-        ,
-        m_peripheralEndpointPowerHandler
-#endif
-#ifdef TOGGLE_CONTROLLER
-        ,
-        m_peripheralEndpointToggleHandler
-#endif
-#ifdef RANGE_CONTROLLER
-        ,
-        m_peripheralEndpointRangeHandler
-#endif
-#ifdef MODE_CONTROLLER
-        ,
-        m_peripheralEndpointModeHandler
-#endif
-        ,
-        nullptr,
-        diagnostics);
     // clang-format on
-#endif
 
     m_shutdownRequiredList.push_back(m_interactionManager);
     client->addAlexaDialogStateObserver(m_interactionManager);
@@ -1350,12 +1283,15 @@ bool PreviewAlexaClient::initialize(
 #ifdef AUTH_MANAGER
     m_authManager->setRegistrationManager(client->getRegistrationManager());
 
+    auto cryptoFactory = manufactory->get<std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>>();
+    auto keyStore = manufactory->get<std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>();
     auto httpPost = avsCommon::utils::libcurlUtils::HttpPost::createHttpPostInterface();
     m_lwaAdapter = acsdkAuthorization::lwa::LWAAuthorizationAdapter::create(
         configPtr,
         std::move(httpPost),
         deviceInfo,
-        acsdkAuthorization::lwa::SQLiteLWAAuthorizationStorage::createLWAAuthorizationStorageInterface(configPtr));
+        acsdkAuthorization::lwa::LWAAuthorizationStorage::createLWAAuthorizationStorageInterface(
+            configPtr, "", cryptoFactory, keyStore));
 
     if (!m_lwaAdapter) {
         ACSDK_CRITICAL(LX("Failed to create LWA Adapter!"));
@@ -1654,6 +1590,13 @@ bool PreviewAlexaClient::addControllersToPeripheralEndpoint(
         false);
 #endif
 
+    return true;
+}
+#endif
+
+#ifdef DIAGNOSTICS
+bool PreviewAlexaClient::initiateRestart() {
+    m_userInputManager->onLogout();
     return true;
 }
 #endif

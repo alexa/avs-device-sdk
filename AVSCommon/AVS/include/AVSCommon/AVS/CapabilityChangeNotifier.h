@@ -16,7 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYCHANGENOTIFIER_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYCHANGENOTIFIER_H_
 
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationChangeObserverInterface.h>
 
 namespace alexaClientSDK {

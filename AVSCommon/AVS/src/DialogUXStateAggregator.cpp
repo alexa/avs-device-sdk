@@ -23,6 +23,7 @@ namespace avs {
 
 using namespace sdkInterfaces;
 using namespace avsCommon::utils::metrics;
+using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("DialogUXStateAggregator");
@@ -30,7 +31,7 @@ static const std::string TAG("DialogUXStateAggregator");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -74,7 +75,7 @@ std::shared_ptr<DialogUXStateAggregator> DialogUXStateAggregator::createDialogUX
     const std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>& connectionManager,
     const std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>&
         interactionModelNotifier) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("createDialogUXStateAggregator"));
     if (!connectionManager || !interactionModelNotifier) {
         ACSDK_ERROR(LX("createDialogUXStateAggregatorFailed")
                         .d("isConnectionManagerNull", !connectionManager)
@@ -128,7 +129,7 @@ void DialogUXStateAggregator::removeObserver(std::shared_ptr<DialogUXStateObserv
 }
 
 void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterface::State state) {
-    ACSDK_DEBUG0(LX(__func__).d("AudioInputProcessorState", state));
+    ACSDK_DEBUG0(LX("onStateChanged").d("AudioInputProcessorState", state));
     m_audioInputProcessorState = state;
     m_executor.submit([this, state]() {
         ACSDK_DEBUG0(LX("onStateChangedLambda").d("AudioInputProcessorState", state));
@@ -145,8 +146,7 @@ void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterfac
                 executeSetState(DialogUXStateObserverInterface::DialogUXState::EXPECTING);
                 return;
             case AudioInputProcessorObserverInterface::State::BUSY:
-                if (executeSetState(DialogUXStateObserverInterface::DialogUXState::LISTENING) ||
-                    DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
+                if (DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
                     if (!m_listeningTimeoutTimer
                              .start(
                                  m_timeoutForListeningToIdle,
@@ -166,7 +166,7 @@ void DialogUXStateAggregator::onStateChanged(
     const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId mediaSourceId,
     const avsCommon::utils::Optional<avsCommon::utils::mediaPlayer::MediaPlayerState>& mediaPlayerState,
     const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) {
-    ACSDK_DEBUG0(LX(__func__).d("SpeechSynthesizerState", state));
+    ACSDK_DEBUG0(LX("onStateChanged").d("SpeechSynthesizerState", state));
     m_speechSynthesizerState = state;
     m_executor.submit([this, state]() {
         ACSDK_DEBUG0(LX("onStateChangedLambda").d("SpeechSynthesizerState", state));
@@ -190,7 +190,7 @@ void DialogUXStateAggregator::onStateChanged(
 }
 
 void DialogUXStateAggregator::executeTryExitThinkingState() {
-    ACSDK_DEBUG0(LX(__func__));
+    ACSDK_DEBUG0(LX("executeTryExitThinkingState"));
     if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState &&
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS != m_speechSynthesizerState) {
         ACSDK_DEBUG5(LX("Kicking off short timer").d("shortTimeout in ms", m_shortTimeoutForThinkingToIdle.count()));
@@ -209,8 +209,34 @@ void DialogUXStateAggregator::executeTryExitThinkingState() {
 void DialogUXStateAggregator::onConnectionStatusChanged(
     const ConnectionStatusObserverInterface::Status status,
     const ConnectionStatusObserverInterface::ChangedReason reason) {
-    m_executor.submit([this, status]() {
-        if (status != avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
+    /**
+     * Empty. Either this method should be implemented or the one which takes a vector, never both at the same time
+     * since calling both methods at the same time could cause issues. Keeping this method empty
+     * implementation since this is a pure virtual function which requires to be implemented. This should be remove
+     * once the virtual function can be removed
+     */
+    ACSDK_DEBUG(LX("onConnectionStatusChanged").d("status", status).m("deprecated method. Nothing done."));
+}
+
+void DialogUXStateAggregator::onConnectionStatusChanged(
+    const DialogUXStateAggregator::Status status,
+    const std::vector<DialogUXStateAggregator::EngineConnectionStatus>& engineStatuses) {
+    ACSDK_DEBUG(LX("onConnectionStatusChanged").d("engineAggregatedStatus", status));
+    m_executor.submit([this, engineStatuses]() {
+        bool isDisconnected = true;
+        for (const auto& engineStatus : engineStatuses) {
+            ACSDK_DEBUG(LX("onConnectionStatusChangedLambda")
+                            .d("engineType", engineStatus.engineType)
+                            .d("engineStatus", engineStatus.status));
+            if (Status::CONNECTED == engineStatus.status) {
+                isDisconnected = false;
+                break;
+            }
+        }
+
+        ACSDK_DEBUG(LX("onConnectionStatusChangedLambda").d("isConnected", !isDisconnected));
+        if (isDisconnected) {
+            ACSDK_DEBUG(LX("onConnectionStatusChangedLambda").m("Setting state to idle"));
             executeSetState(DialogUXStateObserverInterface::DialogUXState::IDLE);
         }
     });
@@ -310,43 +336,26 @@ void DialogUXStateAggregator::tryEnterIdleStateOnTimer() {
 }
 
 bool DialogUXStateAggregator::executeSetState(sdkInterfaces::DialogUXStateObserverInterface::DialogUXState newState) {
-    bool validTransition = true;
+    bool validTransition = newState != m_currentState;
 
-    if (newState == m_currentState) {
-        validTransition = false;
-    } else {
-        switch (m_currentState) {
-            case DialogUXStateObserverInterface::DialogUXState::THINKING:
-                if (DialogUXStateObserverInterface::DialogUXState::LISTENING == newState) {
-                    validTransition = false;
-                }
-
-                break;
-            default:
-                break;
-        }
-    }
-
-    ACSDK_DEBUG0(LX(__func__)
+    ACSDK_DEBUG0(LX("executeSetState")
                      .d("from", m_currentState)
                      .d("to", newState)
                      .d("validTransition", validTransition ? "true" : "false"));
 
-    if (!validTransition) {
-        return false;
+    if (validTransition) {
+        m_listeningTimeoutTimer.stop();
+        m_thinkingTimeoutTimer.stop();
+        m_multiturnSpeakingToListeningTimer.stop();
+        m_currentState = newState;
+        notifyObserversOfState();
     }
 
-    m_listeningTimeoutTimer.stop();
-    m_thinkingTimeoutTimer.stop();
-    m_multiturnSpeakingToListeningTimer.stop();
-    m_currentState = newState;
-    notifyObserversOfState();
-
-    return true;
+    return validTransition;
 }
 
 void DialogUXStateAggregator::executeTryEnterIdleState() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("executeTryEnterIdleState"));
     m_thinkingTimeoutTimer.stop();
     m_multiturnSpeakingToListeningTimer.stop();
     if (!m_multiturnSpeakingToListeningTimer

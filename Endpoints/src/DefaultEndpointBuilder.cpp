@@ -83,6 +83,12 @@ DefaultEndpointBuilder& DefaultEndpointBuilder::withDerivedEndpointId(const std:
     return *this;
 }
 
+DefaultEndpointBuilder& DefaultEndpointBuilder::withDeviceRegistration() {
+    ACSDK_DEBUG5(LX(__func__));
+    m_builder->withDeviceRegistration();
+    return *this;
+}
+
 DefaultEndpointBuilder& DefaultEndpointBuilder::withEndpointId(const EndpointIdentifier& endpointId) {
     ACSDK_DEBUG5(LX(__func__));
     m_builder->withEndpointId(endpointId);

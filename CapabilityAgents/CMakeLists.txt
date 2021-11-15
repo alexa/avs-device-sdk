@@ -29,6 +29,10 @@ if (MCC)
     list(APPEND CAPABILITY_AGENTS "MeetingClientController")
 endif()
 
+if (RTCSC)
+    list(APPEND CAPABILITY_AGENTS "RTCSessionController")
+endif()
+
 if (ENDPOINT_CONTROLLERS_POWER_CONTROLLER)
     list(APPEND CAPABILITY_AGENTS "PowerController")
 endif()

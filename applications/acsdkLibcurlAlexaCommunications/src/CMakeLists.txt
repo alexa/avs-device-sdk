@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkLibcurlAlexaCommunications")
-add_library(acsdkLibcurlAlexaCommunications SHARED
+add_library(acsdkLibcurlAlexaCommunications
         AlexaCommunicationsComponent.cpp)
 
 target_include_directories(acsdkLibcurlAlexaCommunications PUBLIC

@@ -28,6 +28,9 @@ include_once(DisallowOutOfSourceBuilds)
 # Setup default build options, like compiler flags and build type.
 include_once(BuildOptions)
 
+# Setup platform dependant variables.
+include_once(Platforms)
+
 # Setup code coverage environment. This must be called after BuildOptions since it uses the variables defined there.
 include_once(CodeCoverage/CodeCoverage)
 
@@ -52,6 +55,9 @@ include_once(MediaPlayer)
 # Setup PortAudio variables.
 include_once(PortAudio)
 
+# Setup PKCS11 variables.
+include_once(PKCS11)
+
 # Setup Curl variables.
 include_once(Curl)
 
@@ -64,9 +70,6 @@ include_once(Crypto)
 # Setup Test Options variables.
 include_once(TestOptions)
 
-# Setup platform dependant variables.
-include_once(Platforms)
-
 # Setup Comms variables.
 include_once(Comms)
 
@@ -78,6 +81,9 @@ include_once(MC)
 
 # Setup MCC variables.
 include_once(MCC)
+
+# Setup RTCSC variables.
+include_once(RTCSC)
 
 # Setup android variables.
 include_once(Android)
@@ -135,3 +141,15 @@ include_once(LocalDucking)
 
 # Setup AuthorizationManager
 include_once(AuthorizationManager)
+
+# Setup FileSystemUtils options.
+include_once(FileSystemUtils)
+
+# Setup InputController options.
+include_once(InputController)
+
+# Setup LibArchive options.
+include_once(LibArchive)
+
+# Setup AssetManager options.
+include_once(AssetManager)

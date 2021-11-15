@@ -53,7 +53,7 @@ static const std::string METRIC_ACTIVITY_NAME_PREFIX = "POSTCONNECT_SYNCHRONIZE_
 
 /// Table with the retry times on subsequent retries.
 static const std::vector<int> RETRY_TABLE = {
-    250,     // Retry 1:  0.25s
+    500,     // Retry 1:  0.5s
     1000,    // Retry 1: 1s
     2000,    // Retry 2: 2s
     4000,    // Retry 3  4s

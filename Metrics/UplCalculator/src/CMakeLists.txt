@@ -1,4 +1,4 @@
-add_library(UplCalculator SHARED
+add_library(UplCalculator
 	BaseUplCalculator.cpp
 	MediaUplCalculator.cpp
 	TtsUplCalculator.cpp

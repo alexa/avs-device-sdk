@@ -14,7 +14,6 @@
  */
 
 #include <acsdkManufactory/ComponentAccumulator.h>
-#include <AVSCommon/SDKInterfaces/ChannelVolumeFactoryInterface.h>
 
 #include "SpeakerManager/SpeakerManager.h"
 #include "SpeakerManager/SpeakerManagerComponent.h"

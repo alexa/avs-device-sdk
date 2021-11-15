@@ -20,7 +20,7 @@
 
 #include <acsdkInteractionModelInterfaces/InteractionModelNotifierInterface.h>
 #include <acsdkInteractionModelInterfaces/InteractionModelRequestProcessingObserverInterface.h>
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkInteractionModel {

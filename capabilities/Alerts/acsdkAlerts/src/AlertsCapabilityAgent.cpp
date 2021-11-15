@@ -553,19 +553,13 @@ void AlertsCapabilityAgent::onFocusChanged(const std::string& channelName, avsCo
     }
 }
 
-void AlertsCapabilityAgent::onAlertStateChange(
-    const std::string& alertToken,
-    const std::string& alertType,
-    AlertObserverInterface::State state,
-    const std::string& reason) {
+void AlertsCapabilityAgent::onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
     ACSDK_DEBUG9(LX("onAlertStateChange")
-                     .d("alertToken", alertToken)
-                     .d("alertType", alertType)
-                     .d("state", state)
-                     .d("reason", reason));
-    m_executor.submit([this, alertToken, alertType, state, reason]() {
-        executeOnAlertStateChange(alertToken, alertType, state, reason);
-    });
+                     .d("alertToken", alertInfo.token)
+                     .d("alertType", alertInfo.type)
+                     .d("state", alertInfo.state)
+                     .d("reason", alertInfo.reason));
+    m_executor.submit([this, alertInfo]() { executeOnAlertStateChange(alertInfo); });
 }
 
 void AlertsCapabilityAgent::addObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -806,11 +800,13 @@ bool AlertsCapabilityAgent::handleSetAlert(
         }
 
         // Pass the scheduled time to the observers as the reason for the alert created
-        executeNotifyObservers(
+        executeNotifyObservers(AlertObserverInterface::AlertInfo(
             parsedAlert->getToken(),
-            parsedAlert->getTypeName(),
+            parsedAlert->getType(),
             State::SCHEDULED_FOR_LATER,
-            parsedAlert->getScheduledTime_ISO_8601());
+            parsedAlert->getScheduledTime_Utc_TimePoint(),
+            parsedAlert->getOriginalTime(),
+            parsedAlert->getLabel()));
         submitMetric(m_metricRecorder, FAILED_SNOOZE_ALERT, 0);
         submitMetric(m_metricRecorder, "alarmSnoozeCount", 1);
         return true;
@@ -822,11 +818,13 @@ bool AlertsCapabilityAgent::handleSetAlert(
     }
     submitMetric(m_metricRecorder, FAILED_SCHEDULE_ALERT, 0);
 
-    executeNotifyObservers(
+    executeNotifyObservers(AlertObserverInterface::AlertInfo(
         parsedAlert->getToken(),
-        parsedAlert->getTypeName(),
+        parsedAlert->getType(),
         State::SCHEDULED_FOR_LATER,
-        parsedAlert->getScheduledTime_ISO_8601());
+        parsedAlert->getScheduledTime_Utc_TimePoint(),
+        parsedAlert->getOriginalTime(),
+        parsedAlert->getLabel()));
 
     updateContextManager();
 
@@ -1160,23 +1158,20 @@ void AlertsCapabilityAgent::executeOnConnectionStatusChanged(const Status status
     }
 }
 
-void AlertsCapabilityAgent::executeOnAlertStateChange(
-    const std::string& alertToken,
-    const std::string& alertType,
-    AlertObserverInterface::State state,
-    const std::string& reason) {
-    ACSDK_DEBUG1(LX("executeOnAlertStateChange").d("alertToken", alertToken).d("state", state).d("reason", reason));
+void AlertsCapabilityAgent::executeOnAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
+    ACSDK_INFO(LX("executeOnAlertStateChange").d("state", alertInfo.state).d("reason", alertInfo.reason));
+    ACSDK_DEBUG1(LX("executeOnAlertStateChange").d("alertToken", alertInfo.token));
 
     bool alertIsActive = false;
     int alertVolume;
 
-    switch (state) {
+    switch (alertInfo.state) {
         case AlertObserverInterface::State::READY:
             acquireChannel();
             break;
 
         case AlertObserverInterface::State::STARTED:
-            sendEvent(ALERT_STARTED_EVENT_NAME, alertToken, true, reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STARTED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
             alertVolume = getAlertVolume();
             if ((alertVolume != -1) && (alertVolume < ALERT_VOLUME_METRIC_LIMIT)) {
                 submitMetric(m_metricRecorder, ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME, 1);
@@ -1184,7 +1179,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
                     submitMetric(m_metricRecorder, ALERT_RINGING_ZERO_VOLUME, 1);
                 }
             }
-            submitAlertStartedMetricWithMetadata(alertToken, alertType);
+            submitAlertStartedMetricWithMetadata(alertInfo.token, AlertObserverInterface::typeToString(alertInfo.type));
             updateContextManager();
             alertIsActive = true;
             break;
@@ -1195,13 +1190,13 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             break;
 
         case AlertObserverInterface::State::STOPPED:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true, reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
             releaseChannel();
             updateContextManager();
             break;
 
         case AlertObserverInterface::State::COMPLETED:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true, reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
             releaseChannel();
             updateContextManager();
             break;
@@ -1212,18 +1207,19 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
             break;
 
         case AlertObserverInterface::State::PAST_DUE:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertToken, true, reason, currentISO8601TimeUTC());
-            submitAlertCanceledMetricWithMetadata(alertToken, alertType, reason);
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
+            submitAlertCanceledMetricWithMetadata(
+                alertInfo.token, AlertObserverInterface::typeToString(alertInfo.type), alertInfo.reason);
             break;
 
         case AlertObserverInterface::State::FOCUS_ENTERED_FOREGROUND:
             alertIsActive = true;
-            sendEvent(ALERT_ENTERED_FOREGROUND_EVENT_NAME, alertToken);
+            sendEvent(ALERT_ENTERED_FOREGROUND_EVENT_NAME, alertInfo.token);
             break;
 
         case AlertObserverInterface::State::FOCUS_ENTERED_BACKGROUND:
             alertIsActive = true;
-            sendEvent(ALERT_ENTERED_BACKGROUND_EVENT_NAME, alertToken);
+            sendEvent(ALERT_ENTERED_BACKGROUND_EVENT_NAME, alertInfo.token);
             break;
         case AlertObserverInterface::State::SCHEDULED_FOR_LATER:
         case AlertObserverInterface::State::DELETED:
@@ -1263,9 +1259,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(
         }
     }
 
-    m_executor.submit([this, alertToken, alertType, state, reason]() {
-        executeNotifyObservers(alertToken, alertType, state, reason);
-    });
+    m_executor.submit([this, alertInfo]() { executeNotifyObservers(alertInfo); });
 }
 
 void AlertsCapabilityAgent::executeAddObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -1278,18 +1272,14 @@ void AlertsCapabilityAgent::executeRemoveObserver(std::shared_ptr<AlertObserverI
     m_observers.erase(observer);
 }
 
-void AlertsCapabilityAgent::executeNotifyObservers(
-    const std::string& alertToken,
-    const std::string& alertType,
-    AlertObserverInterface::State state,
-    const std::string& reason) {
+void AlertsCapabilityAgent::executeNotifyObservers(const AlertObserverInterface::AlertInfo& alertInfo) {
     ACSDK_DEBUG1(LX("executeNotifyObservers")
-                     .d("alertToken", alertToken)
-                     .d("alertType", alertType)
-                     .d("state", state)
-                     .d("reason", reason));
+                     .d("alertToken", alertInfo.token)
+                     .d("alertType", alertInfo.type)
+                     .d("state", alertInfo.state)
+                     .d("reason", alertInfo.reason));
     for (auto observer : m_observers) {
-        observer->onAlertStateChange(alertToken, alertType, state, reason);
+        observer->onAlertStateChange(alertInfo);
     }
 }
 

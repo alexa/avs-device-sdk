@@ -50,6 +50,8 @@ std::shared_ptr<PostConnectSequencer> PostConnectSequencer::create(
 PostConnectSequencer::PostConnectSequencer(const PostConnectOperationsSet& postConnectOperations) :
         m_isStopping{false},
         m_postConnectOperations{postConnectOperations} {
+    ACSDK_DEBUG5(LX("init"));
+
     m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_mainLoop");
 
     if (m_mainLoopPowerResource) {
@@ -58,14 +60,14 @@ PostConnectSequencer::PostConnectSequencer(const PostConnectOperationsSet& postC
 }
 
 PostConnectSequencer::~PostConnectSequencer() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("destroy"));
     stop();
 }
 
 bool PostConnectSequencer::doPostConnect(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("doPostConnect"));
 
     if (!postConnectSender) {
         ACSDK_ERROR(LX("doPostConnectFailed").d("reason", "nullPostConnectSender"));
@@ -92,7 +94,7 @@ bool PostConnectSequencer::doPostConnect(
 void PostConnectSequencer::mainLoop(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("mainLoop"));
 
     PowerMonitor::getInstance()->assignThreadPowerResource(m_mainLoopPowerResource);
 
@@ -118,7 +120,7 @@ void PostConnectSequencer::mainLoop(
             /// Set the current post connect operation.
             std::lock_guard<std::mutex> lock{m_mutex};
             if (m_isStopping) {
-                ACSDK_DEBUG5(LX(__func__).m("stop called, exiting mainloop"));
+                ACSDK_DEBUG5(LX("mainLoop").m("stop called, exiting mainloop"));
                 return;
             }
             m_currentPostConnectOperation = postConnectOperation;
@@ -130,7 +132,7 @@ void PostConnectSequencer::mainLoop(
                 postConnectObserver->onUnRecoverablePostConnectFailure();
             }
             resetCurrentOperation();
-            ACSDK_ERROR(LX(__func__).m("performOperation failed, exiting mainloop"));
+            ACSDK_ERROR(LX("mainLoop").m("performOperation failed, exiting mainloop"));
             return;
         }
     }
@@ -146,7 +148,7 @@ void PostConnectSequencer::mainLoop(
 }
 
 void PostConnectSequencer::onDisconnect() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("onDisconnect"));
     stop();
 }
 
@@ -161,7 +163,7 @@ bool PostConnectSequencer::isStopping() {
 }
 
 void PostConnectSequencer::stop() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("stop"));
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         if (m_isStopping) {

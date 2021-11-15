@@ -31,6 +31,18 @@ static const std::string TAG("KeywordObserver");
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
+std::shared_ptr<KeywordObserver> KeywordObserver::create(
+    std::shared_ptr<defaultClient::DefaultClient> client,
+    capabilityAgents::aip::AudioProvider audioProvider,
+    std::shared_ptr<acsdkKWDImplementations::AbstractKeywordDetector> keywordDetector) {
+    auto keywordObserver = std::make_shared<KeywordObserver>(client, audioProvider);
+    if (keywordDetector) {
+        keywordDetector->addKeyWordObserver(keywordObserver);
+    }
+
+    return keywordObserver;
+}
+
 KeywordObserver::KeywordObserver(
     std::shared_ptr<defaultClient::DefaultClient> client,
     capabilityAgents::aip::AudioProvider audioProvider) :

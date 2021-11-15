@@ -44,7 +44,7 @@ static const std::string TAG("AVSContext");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) utils::logger::LogEntry(TAG, event)
 
@@ -84,11 +84,11 @@ std::string AVSContext::toJson() const {
             jsonGenerator.addMember(UNCERTAINTY_KEY_STRING, state.uncertaintyInMilliseconds);
             jsonGenerator.finishArrayElement();
         } else {
-            ACSDK_DEBUG0(LX(__func__).d("stateIgnored", identifier.nameSpace + "::" + identifier.name));
+            ACSDK_DEBUG0(LX("toJson").d("stateIgnored", identifier.nameSpace + "::" + identifier.name));
         }
     }
     jsonGenerator.finishArray();
-    ACSDK_DEBUG5(LX(__func__).sensitive("context", jsonGenerator.toString()));
+    ACSDK_DEBUG5(LX("toJson").sensitive("context", jsonGenerator.toString()));
     return jsonGenerator.toString();
 }
 }  // namespace avs

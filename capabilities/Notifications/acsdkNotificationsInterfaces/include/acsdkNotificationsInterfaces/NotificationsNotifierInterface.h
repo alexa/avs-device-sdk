@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifierInterfaces/NotifierInterface.h>
+#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
 
 #include "acsdkNotificationsInterfaces/NotificationsObserverInterface.h"
 

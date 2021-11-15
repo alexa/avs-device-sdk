@@ -1,6 +1,6 @@
 add_subdirectory("Transport")
 
-set(LIBRARIES ACL ${CMAKE_THREAD_LIBS_INIT} ACLTransportCommonTestLib SDKInterfacesTests)
+set(LIBRARIES ACL ${CMAKE_THREAD_LIBS_INIT} ACLTransportCommonTestLib SDKInterfacesTests UtilsCommonTestLib)
 set(INCLUDE_PATH
     "${AVSCommon_INCLUDE_DIRS}"
     "${ACL_SOURCE_DIR}/include"

@@ -84,11 +84,15 @@ private:
      * Private constructor used in create() method.
      *
      * @param connection Raw @c GDBusConnection pointer to attach to.
+     * @param connectionType A @c GBusType of the connection.
      */
-    explicit DBusConnection(GDBusConnection* connection);
+    explicit DBusConnection(GDBusConnection* connection, GBusType connectionType);
 
     /// Raw @c GDBusConnection* pointer used for operations
     GDBusConnection* m_connection;
+
+    /// GBusType of the connection.
+    const GBusType m_connectionType;
 
     /// Mutex to guard subscriptions
     std::mutex m_subscriptionsMutex;

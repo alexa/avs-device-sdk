@@ -79,6 +79,9 @@ static const std::set<std::string> SUPPORTED_LOCALES{ENGLISH_CANADA_VALUE, FRENC
 /// A vector of locales that contains only en-CA.
 static const std::vector<std::string> ENGLISH_LOCALES{ENGLISH_CANADA_VALUE};
 
+/// A vector of locales that contains only fr-CA.
+static const std::vector<std::string> FRENCH_LOCALES{FRENCH_CANADA_VALUE};
+
 /// The database key to be used to save wake words.
 static const std::string WAKE_WORDS_KEY = "SpeechRecognizer.wakeWords";
 
@@ -143,7 +146,7 @@ void LocaleWakeWordsSettingTest::SetUp() {
     m_localeObserver = std::make_shared<MockSettingObserver<LocalesSetting>>();
     m_wakeWordsObserver = std::make_shared<MockSettingObserver<WakeWordsSetting>>();
 
-    EXPECT_CALL(*m_assetsManagerMock, getDefaultLocale()).WillRepeatedly(Return(ENGLISH_CANADA_VALUE));
+    EXPECT_CALL(*m_assetsManagerMock, getDefaultLocales()).WillRepeatedly(Return(ENGLISH_LOCALES));
     EXPECT_CALL(*m_assetsManagerMock, getSupportedLocales()).WillRepeatedly(Return(SUPPORTED_LOCALES));
     EXPECT_CALL(*m_assetsManagerMock, getDefaultSupportedWakeWords())
         .WillRepeatedly(Return(SUPPORTED_WAKE_WORDS_COMBINATION));
@@ -180,7 +183,7 @@ void LocaleWakeWordsSettingTest::initializeSetting(
     const WakeWordsSetting::ValueType wakeWords) {
     WaitEvent e;
 
-    EXPECT_CALL(*m_assetsManagerMock, getDefaultLocale()).WillOnce(Return(FRENCH_CANADA_VALUE));
+    EXPECT_CALL(*m_assetsManagerMock, getDefaultLocales()).WillOnce(Return(FRENCH_LOCALES));
     EXPECT_CALL(*m_storageMock, loadSetting(LOCALES_KEY))
         .WillOnce(Return(
             std::make_pair(SettingStatus::SYNCHRONIZED, settings::toSettingString<DeviceLocales>(locales).second)));
@@ -435,7 +438,7 @@ TEST_F(LocaleWakeWordsSettingTest, test_AVSChangeLocaleRequestSendEventFailed) {
 
 /// Test restore when no value is available in the database. This should run local change to both wake words and locale.
 TEST_F(LocaleWakeWordsSettingTest, test_restoreValueNotAvailable) {
-    EXPECT_CALL(*m_assetsManagerMock, getDefaultLocale()).WillOnce(Return(FRENCH_CANADA_VALUE));
+    EXPECT_CALL(*m_assetsManagerMock, getDefaultLocales()).WillOnce(Return(FRENCH_LOCALES));
     EXPECT_CALL(*m_storageMock, loadSetting(LOCALES_KEY))
         .WillOnce(Return(std::make_pair(SettingStatus::NOT_AVAILABLE, "")));
     EXPECT_CALL(*m_storageMock, loadSetting(WAKE_WORDS_KEY))

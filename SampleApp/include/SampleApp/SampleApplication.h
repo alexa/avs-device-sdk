@@ -24,6 +24,8 @@
 #include <utility>
 #include <vector>
 
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/SDKInterfaces/ApplicationMediaInterfaces.h>
 #include <AVSCommon/SDKInterfaces/ChannelVolumeInterface.h>
@@ -46,7 +48,7 @@
 #include "UserInputManager.h"
 
 #ifdef KWD
-#include <KWD/AbstractKeywordDetector.h>
+#include <acsdkKWDImplementations/AbstractKeywordDetector.h>
 #endif
 
 #ifdef GSTREAMER_MEDIA_PLAYER
@@ -70,16 +72,14 @@ public:
      *
      * @param consoleReader The @c ConsoleReader to read inputs from console.
      * @param configFiles The vector of configuration files.
-     * @param pathToInputFolder The path to the inputs folder containing data files needed by this application.
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
-     * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
+     * @param diagnostics An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
      * @return A new @c SampleApplication, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<SampleApplication> create(
         std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
         const std::vector<std::string>& configFiles,
-        const std::string& pathToInputFolder,
         const std::string& logLevel = "",
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
 
@@ -90,8 +90,26 @@ public:
      */
     SampleAppReturnCode run();
 
+#ifdef DIAGNOSTICS
+    /**
+     * Initiates application stop for restart sequence. This method notifies event loop that the application
+     * should be terminated with subsequent restart, in other words, if the application is running, it should
+     * return SampleAppReturnCode::RESTART code.
+     *
+     * @return True if restart has been successfully initiated, false on error or if operation is not supported.
+     */
+    bool initiateRestart();
+#endif
+
     /// Destructor which manages the @c SampleApplication shutdown sequence.
     ~SampleApplication();
+
+    /**
+     * Exposes the default client.
+     *
+     * @return Returns a reference to the @c DefaultClient.
+     */
+    std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> getDefaultClient();
 
     /**
      * Method to create mediaPlayers for the optional music provider adapters plugged into the SDK.
@@ -146,16 +164,14 @@ private:
      *
      * @param consoleReader The @c ConsoleReader to read inputs from console.
      * @param configFiles The vector of configuration files.
-     * @param pathToInputFolder The path to the inputs folder containing data files needed by this application.
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
-     * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
+     * @param diagnostics An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
      * @return @c true if initialization succeeded, else @c false.
      */
     bool initialize(
         std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
         const std::vector<std::string>& configFiles,
-        const std::string& pathToInputFolder,
         const std::string& logLevel,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics);
 
@@ -204,6 +220,9 @@ private:
 
     /// Object to manage lifecycle of Alexa Client SDK initialization.
     std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit> m_sdkInit;
+
+    /// The @c DefaultClient which "glues" together all other modules.
+    std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> m_client;
 
     /// The @c InteractionManager which perform user requests.
     std::shared_ptr<InteractionManager> m_interactionManager;
@@ -268,7 +287,7 @@ private:
 
 #ifdef KWD
     /// The Wakeword Detector which can wake up the client using audio input.
-    std::unique_ptr<kwd::AbstractKeywordDetector> m_keywordDetector;
+    std::shared_ptr<acsdkKWDImplementations::AbstractKeywordDetector> m_keywordDetector;
 #endif
 
 #if defined(ANDROID_MEDIA_PLAYER) || defined(ANDROID_MICROPHONE)

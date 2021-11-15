@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=RegistrationManager")
 
-add_library(RegistrationManager SHARED
+add_library(RegistrationManager
         CustomerDataHandler.cpp
         CustomerDataManager.cpp
         CustomerDataManagerFactory.cpp

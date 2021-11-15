@@ -29,7 +29,7 @@ static const std::string TAG("HTTPContentFetcherFactory");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -51,7 +51,7 @@ std::unique_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterface> HTTPConte
         setCurlOptionsCallback = m_setCurlOptionsCallbackFactory->createSetCurlOptionsCallback();
     }
 
-    ACSDK_DEBUG9(LX(__func__).sensitive("URL", url).m("Creating a new http content fetcher"));
+    ACSDK_DEBUG9(LX("create").sensitive("URL", url).m("Creating a new http content fetcher"));
     return avsCommon::utils::memory::make_unique<LibCurlHttpContentFetcher>(url, setCurlOptionsCallback);
 }
 

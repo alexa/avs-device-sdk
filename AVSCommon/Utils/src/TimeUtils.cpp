@@ -137,60 +137,92 @@ bool TimeUtils::convertToUtcTimeT(const std::tm* utcTm, std::time_t* ret) {
     return true;
 }
 
+bool TimeUtils::convert8601TimeStringToUtcTimePoint(
+    const std::string& iso8601TimeString,
+    std::chrono::system_clock::time_point* tp) {
+    if (!tp) {
+        ACSDK_ERROR(LX("convert8601TimeStringToUtcTimePoint").m("tp was nullptr."));
+        return false;
+    }
+    std::time_t timeT;
+    if (!convert8601TimeStringToTimeT(iso8601TimeString, &timeT)) {
+        ACSDK_ERROR(LX("convert8601TimeStringToUtcTimePointFailed").m("convert8601TimeStringToTimeT failed"));
+        return false;
+    }
+    *tp = std::chrono::system_clock::from_time_t(timeT);
+    return true;
+}
+
 bool TimeUtils::convert8601TimeStringToUnix(const std::string& timeString, int64_t* convertedTime) {
+    if (!convertedTime) {
+        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("convertedTime was nullptr."));
+        return false;
+    }
+    std::time_t timeT;
+    if (!convert8601TimeStringToTimeT(timeString, &timeT)) {
+        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("convert8601TimeStringToTimeT failed"));
+        return false;
+    }
+
+    *convertedTime = static_cast<int64_t>(timeT);
+    return true;
+}
+
+bool TimeUtils::convert8601TimeStringToTimeT(const std::string& iso8601TimeString, std::time_t* timeT) {
     // TODO : Use std::get_time once we only support compilers that implement this function (GCC 5.1+ / Clang 3.3+)
 
-    if (!convertedTime) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("convertedTime parameter was nullptr."));
+    if (!timeT) {
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("timeT parameter was nullptr."));
         return false;
     }
 
     std::tm timeInfo;
 
-    if (timeString.length() != ENCODED_TIME_STRING_EXPECTED_LENGTH) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").d("unexpected time string length:", timeString.length()));
+    if (iso8601TimeString.length() != ENCODED_TIME_STRING_EXPECTED_LENGTH) {
+        ACSDK_ERROR(
+            LX("convert8601TimeStringToTimeTFailed").d("unexpected time string length:", iso8601TimeString.length()));
         return false;
     }
 
     if (!stringToInt(
-            timeString.substr(ENCODED_TIME_STRING_YEAR_OFFSET, ENCODED_TIME_STRING_YEAR_STRING_LENGTH),
+            iso8601TimeString.substr(ENCODED_TIME_STRING_YEAR_OFFSET, ENCODED_TIME_STRING_YEAR_STRING_LENGTH),
             &(timeInfo.tm_year))) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing year. Input:" + timeString));
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("error parsing year. Input:" + iso8601TimeString));
         return false;
     }
 
     if (!stringToInt(
-            timeString.substr(ENCODED_TIME_STRING_MONTH_OFFSET, ENCODED_TIME_STRING_MONTH_STRING_LENGTH),
+            iso8601TimeString.substr(ENCODED_TIME_STRING_MONTH_OFFSET, ENCODED_TIME_STRING_MONTH_STRING_LENGTH),
             &(timeInfo.tm_mon))) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing month. Input:" + timeString));
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("error parsing month. Input:" + iso8601TimeString));
         return false;
     }
 
     if (!stringToInt(
-            timeString.substr(ENCODED_TIME_STRING_DAY_OFFSET, ENCODED_TIME_STRING_DAY_STRING_LENGTH),
+            iso8601TimeString.substr(ENCODED_TIME_STRING_DAY_OFFSET, ENCODED_TIME_STRING_DAY_STRING_LENGTH),
             &(timeInfo.tm_mday))) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing day. Input:" + timeString));
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("error parsing day. Input:" + iso8601TimeString));
         return false;
     }
 
     if (!stringToInt(
-            timeString.substr(ENCODED_TIME_STRING_HOUR_OFFSET, ENCODED_TIME_STRING_HOUR_STRING_LENGTH),
+            iso8601TimeString.substr(ENCODED_TIME_STRING_HOUR_OFFSET, ENCODED_TIME_STRING_HOUR_STRING_LENGTH),
             &(timeInfo.tm_hour))) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing hour. Input:" + timeString));
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("error parsing hour. Input:" + iso8601TimeString));
         return false;
     }
 
     if (!stringToInt(
-            timeString.substr(ENCODED_TIME_STRING_MINUTE_OFFSET, ENCODED_TIME_STRING_MINUTE_STRING_LENGTH),
+            iso8601TimeString.substr(ENCODED_TIME_STRING_MINUTE_OFFSET, ENCODED_TIME_STRING_MINUTE_STRING_LENGTH),
             &(timeInfo.tm_min))) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing minute. Input:" + timeString));
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("error parsing minute. Input:" + iso8601TimeString));
         return false;
     }
 
     if (!stringToInt(
-            timeString.substr(ENCODED_TIME_STRING_SECOND_OFFSET, ENCODED_TIME_STRING_SECOND_STRING_LENGTH),
+            iso8601TimeString.substr(ENCODED_TIME_STRING_SECOND_OFFSET, ENCODED_TIME_STRING_SECOND_STRING_LENGTH),
             &(timeInfo.tm_sec))) {
-        ACSDK_ERROR(LX("convert8601TimeStringToUnixFailed").m("error parsing second. Input:" + timeString));
+        ACSDK_ERROR(LX("convert8601TimeStringToTimeTFailed").m("error parsing second. Input:" + iso8601TimeString));
         return false;
     }
 
@@ -198,14 +230,7 @@ bool TimeUtils::convert8601TimeStringToUnix(const std::string& timeString, int64
     timeInfo.tm_year -= 1900;
     timeInfo.tm_mon -= 1;
 
-    std::time_t convertedTimeT;
-    bool ok = convertToUtcTimeT(&timeInfo, &convertedTimeT);
-
-    if (!ok) {
-        return false;
-    }
-    *convertedTime = static_cast<int64_t>(convertedTimeT);
-    return true;
+    return convertToUtcTimeT(&timeInfo, timeT);
 }
 
 bool TimeUtils::getCurrentUnixTime(int64_t* currentTime) {

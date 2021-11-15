@@ -39,7 +39,7 @@ static const std::string VALUE_COLUMN_NAME = "value";
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -150,7 +150,11 @@ std::unique_ptr<SQLiteMiscStorage> SQLiteMiscStorage::create(const Configuration
         return nullptr;
     }
 
-    return std::unique_ptr<SQLiteMiscStorage>(new SQLiteMiscStorage(miscDbFilePath));
+    return create(miscDbFilePath);
+}
+
+std::unique_ptr<SQLiteMiscStorage> SQLiteMiscStorage::create(const std::string& databasePath) {
+    return std::unique_ptr<SQLiteMiscStorage>(new SQLiteMiscStorage(databasePath));
 }
 
 SQLiteMiscStorage::SQLiteMiscStorage(const std::string& dbFilePath) : m_db{dbFilePath} {
@@ -558,8 +562,7 @@ bool SQLiteMiscStorage::deleteTableLocked(const std::string& componentName, cons
         return false;
     }
 
-    const std::string sqlString = "DROP TABLE IF EXISTS " + dbTableName + ";";
-    if (!m_db.performQuery(sqlString)) {
+    if (!m_db.dropTable(dbTableName)) {
         ACSDK_ERROR(LX(errorEvent).d("Could not delete table", tableName));
         return false;
     }
@@ -1049,6 +1052,10 @@ bool SQLiteMiscStorage::isOpened() {
 
 bool SQLiteMiscStorage::isOpenedLocked() {
     return m_db.isDatabaseReady();
+}
+
+SQLiteDatabase& SQLiteMiscStorage::getDatabase() {
+    return m_db;
 }
 
 }  // namespace sqliteStorage

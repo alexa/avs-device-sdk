@@ -668,6 +668,10 @@ void BluetoothTest::TearDown() {
     if (fileExists(TEST_DATABASE)) {
         remove(TEST_DATABASE.c_str());
     }
+
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_3, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 
 void BluetoothTest::wakeOnSetCompleted() {
@@ -1128,9 +1132,6 @@ TEST_F(BluetoothTest, test_handleConnectByDeviceIdsDirectiveWithOnePhoneOneGadge
     // Verify the connection result.
     ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
     ASSERT_TRUE(m_mockBluetoothDevice2->isConnected());
-    // Reset the device category info stored in the database.
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 
 /**
@@ -1229,6 +1230,40 @@ TEST_F(BluetoothTest, test_handleConnectByProfileWithMatchedProfileName) {
 }
 
 /**
+ * Test call to handle the local connect() method.
+ *
+ * Assumption:
+ * A @c DeviceManager contains m_mockBluetoothDevice1. The device belongs to
+ * DeviceCategory::UNKNOWN. The device is in disconnected state.
+ * Use case:
+ * A local connect() call is made with the MAC address of m_mockBluetoothDevice1.
+ * Expected result:
+ * 1) m_mockBluetoothDevice1 connects.
+ * 2) The observer should be notified of device connection once.
+ * 3) One @c ConnectByDeviceIdsSucceed event.
+ */
+TEST_F(BluetoothTest, test_handleConnectLocal) {
+    EXPECT_CALL(*m_mockBluetoothDeviceObserver, onActiveDeviceConnected(_)).Times(Exactly(1));
+    EXPECT_CALL(*m_mockContextManager, setState(BLUETOOTH_STATE, _, StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
+    std::vector<std::string> events = {CONNECT_BY_DEVICE_IDS_SUCCEEDED};
+    ASSERT_TRUE(verifyMessagesSentInOrder(events, [this]() {
+        // Call connect()
+        m_Bluetooth->connect(TEST_BLUETOOTH_DEVICE_MAC);
+
+        /*
+         * Mimic the @c DeviceStateChangedEvent which should happen after device connection status changes.
+         * In order to guarantee that all @c DeviceStateChangedEvent happen after the corresponding device connection
+         * status changes, force the test to wait EVENT_PROCESS_DELAY_MS.
+         */
+        std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY_MS));
+        m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::CONNECTED));
+    }));
+
+    // Verify the connection result.
+    ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
+}
+
+/**
  * Test call to handle PairDevices directive with matched device UUIDs.
  * Assumption:
  * A @c DeviceManager contains m_mockBluetoothDevice1 and m_mockBluetoothDevice2.
@@ -1307,10 +1342,43 @@ TEST_F(BluetoothTest, DISABLED_test_handlePairDevices) {
     ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
     ASSERT_TRUE(m_mockBluetoothDevice2->isPaired());
     ASSERT_FALSE(m_mockBluetoothDevice2->isConnected());
+}
 
-    // Reset device categories.
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
+/**
+ * Test call to handle the local pair() method.
+ * Assumption:
+ * A @c DeviceManager contains m_mockBluetoothDevice1.
+ * m_mockBluetoothDevice1 belongs to DeviceCategory::PHONE, which follows @c BasicDeviceConnectionRule.
+ * Use case:
+ * A local pair() call is made with the MAC address of m_mockBluetoothDevice1.
+ * Expected result:
+ * 1) m_mockBluetoothDevice1 pairs and connects.
+ * 2) The observer should be notified of device connection once.
+ * 3) One @c PairDevicesSucceeded and one @c ConnectByDeviceIdsSucceed event.
+ */
+TEST_F(BluetoothTest, test_handlePairLocal) {
+    // Initially, all devices are stored as DeviceCategory::UNKNOWN. Need to manually update device category in order
+    // to test.
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::PHONE));
+
+    std::vector<std::string> events = {PAIR_DEVICES_SUCCEEDED, CONNECT_BY_DEVICE_IDS_SUCCEEDED};
+    ASSERT_TRUE(verifyMessagesSentInOrder(events, [this]() {
+        // Call pair()
+        m_Bluetooth->pair(TEST_BLUETOOTH_DEVICE_MAC);
+
+        /*
+         * Mimic the @c DeviceStateChangedEvent which should happen after device connection status changes.
+         * In order to guarantee that all @c DeviceStateChangedEvent happen after the corresponding device connection
+         * status changes, force the test to wait EVENT_PROCESS_DELAY_MS.
+         */
+        std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY_MS * 5));
+        m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::PAIRED));
+        m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::CONNECTED));
+    }));
+
+    // Verify the pair result.
+    ASSERT_TRUE(m_mockBluetoothDevice1->isPaired());
+    ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
 }
 
 /**
@@ -1384,10 +1452,48 @@ TEST_F(BluetoothTest, test_handleUnpairDevices) {
     ASSERT_FALSE(m_mockBluetoothDevice1->isConnected());
     ASSERT_FALSE(m_mockBluetoothDevice2->isPaired());
     ASSERT_FALSE(m_mockBluetoothDevice2->isConnected());
+}
 
-    // Reset device categories.
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
+/**
+ * Test call to handle the local unpair() method.
+ * Assumption:
+ * A @c DeviceManager contains m_mockBluetoothDevice1.
+ * m_mockBluetoothDevice1 belongs to DeviceCategory::PHONE, which follows @c BasicDeviceConnectionRule.
+ * Use case:
+ * A local unpair() call is made with the MAC address of m_mockBluetoothDevice1.
+ * Expected result:
+ * 1) m_mockBluetoothDevice1 disconnects and unpairs.
+ * 2) The observer should be notified of device disconnection once.
+ * 3) One @c DisconnectDevicesSucceeded and one @c UnpairDevicesSucceeded event.
+ */
+TEST_F(BluetoothTest, test_handleUnpairLocal) {
+    // Initially, all devices are stored as DeviceCategory::UNKNOWN. Need to manually update device category in order
+    // to test.
+    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::PHONE));
+
+    // Assume all devices are paired and connected before.
+    m_mockBluetoothDevice1->pair();
+    m_mockBluetoothDevice1->connect();
+    ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
+
+    std::vector<std::string> events = {DISCONNECT_DEVICES_SUCCEEDED, UNPAIR_DEVICES_SUCCEEDED};
+    ASSERT_TRUE(verifyMessagesSentInOrder(events, [this]() {
+        // Call unpair()
+        m_Bluetooth->unpair(TEST_BLUETOOTH_DEVICE_MAC);
+
+        /*
+         * Mimic the @c DeviceStateChangedEvent which should happen after device connection status changes.
+         * In order to guarantee that all @c DeviceStateChangedEvent happen after the corresponding device connection
+         * status changes, force the test to wait EVENT_PROCESS_DELAY_MS.
+         */
+        std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY_MS));
+        m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::DISCONNECTED));
+        m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::UNPAIRED));
+    }));
+
+    // Verify the unpair result.
+    ASSERT_FALSE(m_mockBluetoothDevice1->isPaired());
+    ASSERT_FALSE(m_mockBluetoothDevice1->isConnected());
 }
 
 /**
@@ -1441,6 +1547,45 @@ TEST_F(BluetoothTest, test_handleDisconnectDevices) {
 }
 
 /**
+ * Test call to handle the local disconnect() method.
+ *
+ * Assumption:
+ * A @c DeviceManager contains m_mockBluetoothDevice1. The device belongs to
+ * DeviceCategory::UNKNOWN. The device is in connected state.
+ * Use case:
+ * A local disconnect() call is made with the MAC address of m_mockBluetoothDevice1.
+ * Expected result:
+ * 1) m_mockBluetoothDevice1 disconnects.
+ * 2) The observer should be notified of device disconnection once.
+ * 3) One @c DisconnectDevicesSucceeded event.
+ */
+TEST_F(BluetoothTest, test_handleDisconnectLocal) {
+    // Assume all devices are paired and connected before.
+    m_mockBluetoothDevice1->pair();
+    m_mockBluetoothDevice1->connect();
+    ASSERT_TRUE(m_mockBluetoothDevice1->isConnected());
+
+    EXPECT_CALL(*m_mockBluetoothDeviceObserver, onActiveDeviceDisconnected(_)).Times(Exactly(1));
+    EXPECT_CALL(*m_mockContextManager, setState(BLUETOOTH_STATE, _, StateRefreshPolicy::NEVER, _)).Times(Exactly(1));
+    std::vector<std::string> events = {DISCONNECT_DEVICES_SUCCEEDED};
+    ASSERT_TRUE(verifyMessagesSentInOrder(events, [this]() {
+        // Call disconnect()
+        m_Bluetooth->disconnect(TEST_BLUETOOTH_DEVICE_MAC);
+
+        /*
+         * Mimic the @c DeviceStateChangedEvent which should happen after device connection status changes.
+         * In order to guarantee that all @c DeviceStateChangedEvent happen after the corresponding device connection
+         * status changes, force the test to wait EVENT_PROCESS_DELAY_MS.
+         */
+        std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY_MS));
+        m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice1, DeviceState::DISCONNECTED));
+    }));
+
+    // Verify the disconnection result.
+    ASSERT_FALSE(m_mockBluetoothDevice1->isConnected());
+}
+
+/**
  * Test call to handle SetDeviceCategories directive with matched device UUID.
  *
  * Assumption:
@@ -1480,10 +1625,6 @@ TEST_F(BluetoothTest, test_handleSetDeviceCategories) {
     m_bluetoothStorage->getCategory(TEST_BLUETOOTH_UUID_2, &category2);
     ASSERT_EQ(deviceCategoryToString(DeviceCategory::PHONE), category1);
     ASSERT_EQ(deviceCategoryToString(DeviceCategory::GADGET), category2);
-
-    // Reset device categories.
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 
 TEST_F(BluetoothTest, test_contentDucksUponReceivingBackgroundFocus) {
@@ -1574,10 +1715,6 @@ TEST_F(BluetoothTest, test_streamingStateChange) {
     // m_mockBluetoothDevice2 initiates connection.
     m_mockBluetoothDevice2->connect();
     m_eventBus->sendEvent(DeviceStateChangedEvent(m_mockBluetoothDevice2, DeviceState::CONNECTED));
-
-    // Reset device categories.
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID, deviceCategoryToString(DeviceCategory::UNKNOWN));
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_2, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 
 /**
@@ -1617,8 +1754,6 @@ TEST_F(BluetoothTest, test_focusStateChange) {
     m_eventBus->sendEvent(MediaStreamingStateChangedEvent(
         MediaStreamingState::IDLE, A2DPRole::SINK, m_mockBluetoothDevice3));
     m_wakeSetCompletedFuture.wait_for(WAIT_TIMEOUT_MS);
-
-    m_bluetoothStorage->updateByCategory(TEST_BLUETOOTH_UUID_3, deviceCategoryToString(DeviceCategory::UNKNOWN));
 }
 }  // namespace test
 }  // namespace acsdkBluetooth

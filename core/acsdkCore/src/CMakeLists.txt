@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkCore")
-add_library(acsdkCore SHARED
+add_library(acsdkCore
     CoreComponent.cpp)
 
 target_include_directories(acsdkCore PUBLIC

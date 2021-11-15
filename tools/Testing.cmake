@@ -1,3 +1,5 @@
+include(CheckCXXCompilerFlag)
+
 if(POLICY CMP0057)
     cmake_policy(SET CMP0057 NEW)
 endif()
@@ -25,6 +27,10 @@ macro(discover_unit_tests includes libraries)
             get_filename_component(testname ${testsourcefile} NAME_WE)
             add_executable(${testname} ${testsourcefile})
             add_dependencies(unit ${testname})
+            CHECK_CXX_COMPILER_FLAG("-Wno-deprecated-declarations" HAS_NO_DEPRECATED_DECLARATIONS)
+            if (HAS_NO_DEPRECATED_DECLARATIONS)
+                target_compile_options(${testname} PRIVATE -Wno-deprecated-declarations)
+            endif()
             target_include_directories(${testname} PRIVATE ${includes})
             # Do not include gtest_main due to double free issue
             # - https://github.com/google/googletest/issues/930

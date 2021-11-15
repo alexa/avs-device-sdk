@@ -295,8 +295,12 @@ void MediaUplCalculator::calculateMediaUpl(MediaUplType type) {
                                         .setName(DIALOG_REQUEST_ID_TAG)
                                         .setValue(m_uplData->getStringData(DIALOG_REQUEST_ID_TAG))
                                         .build());
-
-    m_metricRecorder->recordMetric(metricEventBuilder.build());
+    auto metricRecorder = m_metricRecorder.lock();
+    if (metricRecorder) {
+        metricRecorder->recordMetric(metricEventBuilder.build());
+    } else {
+        ACSDK_ERROR(LX("calculateMediaUplFailed").d("reason", "nullMetricRecorder"));
+    }
     inhibitSubmission();
 }
 

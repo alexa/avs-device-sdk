@@ -207,7 +207,10 @@ void UserInactivityMonitor::onUserActive() {
     std::unique_lock<std::mutex> timeLock(m_mutex, std::defer_lock);
 
     m_eventTimer.stop();
+    ACSDK_DEBUG5(LX(__func__).m("Timer stopped"));
+
     startTimer();
+    ACSDK_DEBUG5(LX(__func__).m("Timer started"));
 
     if (timeLock.try_lock()) {
         m_lastTimeActive = std::chrono::steady_clock::now();

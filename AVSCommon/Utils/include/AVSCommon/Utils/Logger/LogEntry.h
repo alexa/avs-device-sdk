@@ -54,16 +54,8 @@ public:
      * @param value The value to add to this LogEntry.
      * @return This instance to facilitate adding more information to this log entry.
      */
-    LogEntry& d(const std::string& key, const char* value);
-
-    /**
-     * Add a @c key, @c value pair to the metadata of this log entry.
-     *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
-     * @return This instance to facilitate adding more information to this log entry.
-     */
-    LogEntry& d(const char* key, char* value);
+    template <typename ValueType>
+    LogEntry& d(const std::string& key, const ValueType& value);
 
     /**
      * Add a @c key, @c value pair to the metadata of this log entry.
@@ -80,25 +72,7 @@ public:
      * @param value The value to add to this LogEntry.
      * @return This instance to facilitate adding more information to this log entry.
      */
-    LogEntry& d(const std::string& key, const std::string& value);
-
-    /**
-     * Add data (hence the name 'd') in the form of a @c key, @c value pair to the metadata of this log entry.
-     *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
-     * @return This instance to facilitate adding more information to this log entry.
-     */
     LogEntry& d(const char* key, const std::string& value);
-
-    /**
-     * Add data (hence the name 'd') in the form of a @c key, @c value pair to the metadata of this log entry.
-     *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The boolean value to add to this LogEntry.
-     * @return This instance to facilitate adding more information to this log entry.
-     */
-    LogEntry& d(const std::string& key, bool value);
 
     /**
      * Add data (hence the name 'd') in the form of a @c key, @c value pair to the metadata of this log entry.
@@ -179,7 +153,7 @@ public:
      * @param ptr The raw pointer of the object to add to this LogEntry.
      * @return This instance to facilitate adding more information to this log entry.
      */
-    LogEntry& p(const char* key, void* ptr);
+    LogEntry& p(const char* key, const void* ptr);
 
     /**
      * Get the rendered text of this LogEntry.
@@ -221,6 +195,11 @@ private:
     /// A stream with which to accumulate the text for this LogEntry.
     LogEntryStream m_stream;
 };
+
+template <typename ValueType>
+inline LogEntry& LogEntry::d(const std::string& key, const ValueType& value) {
+    return d(key.c_str(), value);
+}
 
 template <typename ValueType>
 LogEntry& LogEntry::d(const char* key, const ValueType& value) {

@@ -4,3 +4,4 @@ project(acsdkAuthorization LANGUAGES CXX)
 include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
 
 add_subdirectory("src")
+add_subdirectory("test")

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkNullMetricRecorder")
-add_library(acsdkNullMetricRecorder SHARED
+add_library(acsdkNullMetricRecorder
     MetricRecorderComponent.cpp)
 
 target_include_directories(acsdkNullMetricRecorder PUBLIC

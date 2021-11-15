@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkNullSpeechEncoder")
-add_library(acsdkNullSpeechEncoder SHARED
+add_library(acsdkNullSpeechEncoder
         SpeechEncoderComponent.cpp)
 
 target_include_directories(acsdkNullSpeechEncoder PUBLIC

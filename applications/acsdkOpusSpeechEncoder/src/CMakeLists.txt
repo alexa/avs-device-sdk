@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkOpusSpeechEncoder")
-add_library(acsdkOpusSpeechEncoder SHARED
+add_library(acsdkOpusSpeechEncoder
         SpeechEncoderComponent.cpp)
 
 target_include_directories(acsdkOpusSpeechEncoder PUBLIC

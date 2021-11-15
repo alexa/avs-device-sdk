@@ -28,7 +28,7 @@ static const std::string TAG("ComponentConfiguration");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -46,19 +46,21 @@ static bool isValidConfiguration(std::string name, std::string version) {
         const unsigned char& c = *it;
 
         if (!std::isalnum(c) && c != '.') {
-            ACSDK_ERROR(LX(__func__).m("invalid component version").d("name", name).d("version", version));
+            ACSDK_ERROR(
+                LX("isValidConfiguration").m("invalid component version").d("name", name).d("version", version));
             return false;
         }
         // Version must have characters between dots
         if (c == '.' && it + 1 != version.end() && *(it + 1) == '.') {
-            ACSDK_ERROR(LX(__func__).m("invalid component version").d("name", name).d("version", version));
+            ACSDK_ERROR(
+                LX("isValidConfiguration").m("invalid component version").d("name", name).d("version", version));
             return false;
         }
     }
 
     // Valid if configuration is not empty
     if (name.length() == 0 || version.length() == 0) {
-        ACSDK_ERROR(LX(__func__).m("component can not be empty").d("name", name).d("version", version));
+        ACSDK_ERROR(LX("isValidConfiguration").m("component can not be empty").d("name", name).d("version", version));
         return false;
     }
 

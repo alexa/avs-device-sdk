@@ -34,6 +34,12 @@ std::string HTTPResponse::serialize() {
     return serializedValue;
 }
 
+HTTPResponse::HTTPResponse(long pCode, const std::string& pBody) : code{pCode}, body{pBody} {
+}
+
+HTTPResponse::HTTPResponse() : code{0} {
+}
+
 }  // namespace libcurlUtils
 }  // namespace utils
 }  // namespace avsCommon

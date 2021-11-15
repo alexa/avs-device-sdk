@@ -155,6 +155,9 @@ public:
      * Acquires the time since latest partial low power mode state change.
      * This API should only be called after a power resource has been acquired.
      * @param component component name.
+     * @param resourceFlags in/out parameter to get resource flags which exit lpm state last.
+     * This parameter is passed by the caller of this API and it gets updated with the bit
+     * pattern which represents one bit position for each resource type.Ref:enum PowerResourceTypeIndex
      * @param partialState the partial low power mode state (PowerResourceTypeFlags) to check.
      * The state type is determined based on the bits that are passed in. For example, if
      * TYPE_CPU is passed in then the time since the most recent CPU low power mode state will
@@ -166,6 +169,7 @@ public:
      */
     virtual std::chrono::milliseconds getTimeSinceLastPartialMS(
         const std::string& component,
+        PartialStateBitSet& resourceFlags,
         PartialStateBitSet partialState = PowerResourceTypeFlag::TYPE_ALL_FLAG);
 
     /**
@@ -244,11 +248,13 @@ inline std::chrono::milliseconds PowerResourceManagerInterface::getTimeSinceLast
 /**
  * Provides the default @c PowerResourceManagerInterface time since last partial in MS.
  * @param component component name.
+ * @param resourceFlags in/out parameter to get resource flags which exit lpm state last.
  * @param partialState the partial low power mode state (PowerResourceTypeFlags) to check.
  * @return Return default value of 0 milliseconds in the form of std::chrono::milliseconds.
  */
 inline std::chrono::milliseconds PowerResourceManagerInterface::getTimeSinceLastPartialMS(
     const std::string& component,
+    PartialStateBitSet& resourceFlags,
     PartialStateBitSet partialState) {
     return std::chrono::milliseconds::zero();
 }

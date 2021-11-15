@@ -14,17 +14,10 @@
  */
 
 #include <acsdkAuthorization/AuthorizationManager.h>
-#include <AVSCommon/Utils/Logger/Logger.h>
+#include <acsdkAuthorization/private/Logging.h>
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"AuthorizationManager"};
-
-/**
- * Create a LogEntry using this file's TAG and the specified event string.
- *
- * @param The event string for this @c LogEntry.
- */
-#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 namespace alexaClientSDK {
 namespace acsdkAuthorization {
@@ -34,10 +27,10 @@ using namespace avsCommon::sdkInterfaces;
 
 void AuthorizationManager::setRegistrationManager(
     const std::shared_ptr<registrationManager::RegistrationManagerInterface> regManager) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("setRegistrationManager"));
 
     if (!regManager) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullRegManager"));
+        ACSDK_ERROR(LX("setRegistrationManagerFailed").d("reason", "nullRegManager"));
     } else {
         m_registrationManager = regManager;
     }
@@ -46,7 +39,7 @@ void AuthorizationManager::setRegistrationManager(
 std::shared_ptr<acsdkAuthorization::AuthorizationManager> AuthorizationManager::create(
     const std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>& storage,
     const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("create"));
 
     if (!storage || !customerDataManager) {
         ACSDK_ERROR(
@@ -61,6 +54,7 @@ std::shared_ptr<acsdkAuthorization::AuthorizationManager> AuthorizationManager::
 
     auto authMgr = std::shared_ptr<AuthorizationManager>(new AuthorizationManager(authMgrStorage, customerDataManager));
     if (!authMgr->init()) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "authMgrInitFailed"));
         return nullptr;
     }
 
@@ -73,24 +67,24 @@ AuthorizationManager::AuthorizationManager(
         RequiresShutdown{"AuthorizationManager"},
         CustomerDataHandler{customerDataManager},
         m_storage{storage} {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("AuthorizationManager"));
 }
 
 bool AuthorizationManager::init() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("init"));
 
-    if (!m_storage->load(&m_activeAdapterId, &m_activeUserId)) {
-        ACSDK_ERROR(LX(__func__));
+    if (!m_storage->load(m_activeAdapterId, m_activeUserId)) {
+        ACSDK_ERROR(LX("initFailed").d("reason", ""));
         return false;
     }
 
-    ACSDK_INFO(LX(__func__).d("activeAuthAdapter", m_activeAdapterId).sensitive("activeUserId", m_activeUserId));
+    ACSDK_INFO(LX("init").d("activeAuthAdapter", m_activeAdapterId).sensitive("activeUserId", m_activeUserId));
 
     return true;
 }
 
 void AuthorizationManager::clearDataLocked() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("clearDataLocked"));
 
     if (m_activeAdapter) {
         m_activeAdapter->reset();
@@ -104,7 +98,7 @@ void AuthorizationManager::clearDataLocked() {
 }
 
 void AuthorizationManager::clearData() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("clearData"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     clearDataLocked();
@@ -114,10 +108,10 @@ void AuthorizationManager::reportStateChange(
     const avsCommon::sdkInterfaces::AuthObserverInterface::FullState& state,
     const std::string& authId,
     const std::string& userId) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("reportStateChange"));
 
     if (authId.empty()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "emptyAuthId"));
+        ACSDK_ERROR(LX("reportStateChangeFailed").d("reason", "emptyAuthId"));
         return;
     }
 
@@ -126,11 +120,12 @@ void AuthorizationManager::reportStateChange(
 
 void AuthorizationManager::setStateLocked(const avsCommon::sdkInterfaces::AuthObserverInterface::FullState& state) {
     if (state.state == m_authState.state) {
-        ACSDK_DEBUG5(LX(__func__).d("reason", "sameState").d("state", state.state).d("action", "skipping"));
+        ACSDK_DEBUG5(
+            LX("setStateLockedFailed").d("reason", "sameState").d("state", state.state).d("action", "skipping"));
         return;
     }
 
-    ACSDK_DEBUG5(LX(__func__)
+    ACSDK_DEBUG5(LX("setStateLocked")
                      .d("fromState", m_authState.state)
                      .d("toState", state.state)
                      .d("fromError", m_authState.error)
@@ -145,11 +140,11 @@ void AuthorizationManager::setStateLocked(const avsCommon::sdkInterfaces::AuthOb
 }
 
 void AuthorizationManager::setActiveLocked(const std::string& adapterId, const std::string& userId) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("setActiveLocked"));
 
     auto it = m_adapters.find(adapterId);
     if (it == m_adapters.end()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "adapterNotRegistered").d("adapterId", adapterId));
+        ACSDK_ERROR(LX("setActiveLockedFailed").d("reason", "adapterNotRegistered").d("adapterId", adapterId));
         return;
     }
 
@@ -160,7 +155,7 @@ void AuthorizationManager::setActiveLocked(const std::string& adapterId, const s
 
 void AuthorizationManager::persist(const std::string& adapterId, const std::string& userId) {
     if (!m_storage->store(adapterId, userId)) {
-        ACSDK_CRITICAL(LX(__func__)
+        ACSDK_CRITICAL(LX("persist")
                            .d("reason", "failedToStoreAuthIdentifiers")
                            .d("adapter", m_activeAdapterId)
                            .sensitive("userId", m_activeUserId));
@@ -171,13 +166,13 @@ void AuthorizationManager::handleTransition(
     const avsCommon::sdkInterfaces::AuthObserverInterface::FullState& newState,
     const std::string& authId,
     const std::string& userId) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleTransition"));
 
     std::unique_lock<std::mutex> lock(m_mutex);
 
     auto it = m_adapters.find(authId);
     if (m_adapters.end() == it) {
-        ACSDK_ERROR(LX(__func__).d("reason", "unrecognizedAdapter").d("authId", authId));
+        ACSDK_ERROR(LX("handleTransitionFailed").d("reason", "unrecognizedAdapter").d("authId", authId));
         return;
     }
 
@@ -186,7 +181,7 @@ void AuthorizationManager::handleTransition(
     bool interruptingAuthorization = false;
     if ((!m_activeAdapterId.empty() && m_activeAdapterId != authId) ||
         (!m_activeUserId.empty() && m_activeUserId != userId)) {
-        ACSDK_INFO(LX(__func__)
+        ACSDK_INFO(LX("handleTransitionInterrupted")
                        .d("reason", "interruptingAuthorizationDetected")
                        .d("activeAdapterId", m_activeAdapterId)
                        .sensitive("activeUserId", m_activeUserId)
@@ -207,7 +202,7 @@ void AuthorizationManager::handleTransition(
              * an inconsistent state in authorization. Force a logout to protect
              * customer data.
              */
-            ACSDK_ERROR(LX(__func__)
+            ACSDK_ERROR(LX("handleTransitionFailed")
                             .d("reason", "mismatchingAdapter")
                             .d("activeAdapterId", m_activeAdapterId)
                             .d("incomingAdapterId", authId));
@@ -216,7 +211,7 @@ void AuthorizationManager::handleTransition(
             logoutHelper(lock);
             return;
         } else {
-            ACSDK_WARN(LX(__func__)
+            ACSDK_WARN(LX("handleTransitionFailed")
                            .d("reason", "invalidStateNewAuth")
                            .d("authId", authId)
                            .sensitive("userId", userId)
@@ -228,7 +223,10 @@ void AuthorizationManager::handleTransition(
 
     // From this point on the authorization interruption has been handled.
     if (newState.state == m_authState.state) {
-        ACSDK_DEBUG0(LX(__func__).d("reason", "sameState").d("authId", m_activeAdapter).d("state", newState.state));
+        ACSDK_DEBUG0(LX("handleTransitionFailed")
+                         .d("reason", "sameState")
+                         .d("authId", m_activeAdapter)
+                         .d("state", newState.state));
         return;
     }
 
@@ -265,7 +263,7 @@ void AuthorizationManager::handleTransition(
     };
 
     if (!valid) {
-        ACSDK_ERROR(LX(__func__)
+        ACSDK_ERROR(LX("handleTransitionFailed")
                         .d("reason", "invalidTransition")
                         .d("adapterId", authId)
                         .d("from", m_authState.state)
@@ -277,10 +275,10 @@ void AuthorizationManager::handleTransition(
 
 void AuthorizationManager::add(
     const std::shared_ptr<acsdkAuthorizationInterfaces::AuthorizationAdapterInterface>& adapter) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("add"));
 
     if (!adapter) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullAdapter"));
+        ACSDK_ERROR(LX("addFailed").d("reason", "nullAdapter"));
         return;
     }
 
@@ -290,14 +288,14 @@ void AuthorizationManager::add(
     }
 
     if (adapterId.empty()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "emptyAuthAdapterId"));
+        ACSDK_ERROR(LX("addFailed").d("reason", "emptyAuthAdapterId"));
         return;
     }
 
     std::unique_lock<std::mutex> lock(m_mutex);
 
     if (m_adapters.count(adapterId) != 0) {
-        ACSDK_ERROR(LX(__func__).d("reason", "alreadyAdded").d("adapterId", adapterId));
+        ACSDK_ERROR(LX("addFailed").d("reason", "alreadyAdded").d("adapterId", adapterId));
         return;
     }
 
@@ -318,17 +316,17 @@ void AuthorizationManager::add(
 }
 
 void AuthorizationManager::logout() {
-    ACSDK_INFO(LX(__func__));
+    ACSDK_INFO(LX("logout"));
 
     if (m_registrationManager) {
         m_registrationManager->logout();
     } else {
-        ACSDK_CRITICAL(LX(__func__).d("reason", "nullRegistrationManager").m("Unable to Complete Logout"));
+        ACSDK_CRITICAL(LX("logoutFailed").d("reason", "nullRegistrationManager").m("Unable to Complete Logout"));
     }
 }
 
 void AuthorizationManager::logoutHelper(std::unique_lock<std::mutex>& lock) {
-    ACSDK_INFO(LX(__func__));
+    ACSDK_INFO(LX("logoutHelper"));
 
     lock.unlock();
     logout();
@@ -336,15 +334,15 @@ void AuthorizationManager::logoutHelper(std::unique_lock<std::mutex>& lock) {
 }
 
 avsCommon::sdkInterfaces::AuthObserverInterface::State AuthorizationManager::getState() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getState"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
-    ACSDK_DEBUG5(LX(__func__).d("state", m_authState.state));
+    ACSDK_DEBUG5(LX("getState").d("state", m_authState.state));
     return m_authState.state;
 }
 
 std::string AuthorizationManager::getActiveAuthorization() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getActiveAuthorization"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     std::string activeAdapterId;
@@ -356,10 +354,10 @@ std::string AuthorizationManager::getActiveAuthorization() {
 }
 
 void AuthorizationManager::addAuthObserver(std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("addAuthObserver"));
 
     if (!observer) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullObserver"));
+        ACSDK_ERROR(LX("addAuthObserverFailed").d("reason", "nullObserver"));
         return;
     }
 
@@ -378,10 +376,10 @@ void AuthorizationManager::addAuthObserver(std::shared_ptr<avsCommon::sdkInterfa
 
 void AuthorizationManager::removeAuthObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> observer) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("removeAuthObserver"));
 
     if (!observer) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullObserver"));
+        ACSDK_ERROR(LX("removeAuthObserverFailed").d("reason", "nullObserver"));
         return;
     }
 
@@ -390,7 +388,7 @@ void AuthorizationManager::removeAuthObserver(
 }
 
 std::string AuthorizationManager::getAuthToken() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getAuthToken"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     std::string authToken;
@@ -398,16 +396,16 @@ std::string AuthorizationManager::getAuthToken() {
     if (m_activeAdapter && AuthObserverInterface::State::REFRESHED == m_authState.state) {
         authToken = m_activeAdapter->getAuthToken();
     } else {
-        ACSDK_WARN(LX(__func__).d("reason", "noActiveAdapter"));
+        ACSDK_WARN(LX("getAuthTokenFailed").d("reason", "noActiveAdapter"));
     }
 
-    ACSDK_DEBUG0(LX(__func__).sensitive("token", authToken));
+    ACSDK_DEBUG0(LX("getAuthToken").sensitive("token", authToken));
 
     return authToken;
 }
 
 void AuthorizationManager::onAuthFailure(const std::string& token) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("onAuthFailure"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_activeAdapter) {
@@ -416,7 +414,7 @@ void AuthorizationManager::onAuthFailure(const std::string& token) {
 }
 
 void AuthorizationManager::doShutdown() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("doShutdown"));
 
     m_executor.shutdown();
 

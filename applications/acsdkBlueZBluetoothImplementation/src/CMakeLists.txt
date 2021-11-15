@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=BluetoothImplementation")
 
-add_library(acsdkBlueZBluetoothImplementation SHARED
+add_library(acsdkBlueZBluetoothImplementation
         BluetoothImplementationComponent.cpp)
 
 target_include_directories(acsdkBlueZBluetoothImplementation PUBLIC

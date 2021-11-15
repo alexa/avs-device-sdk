@@ -1,7 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=bluetooth")
 
 add_library(
-    acsdkBluetooth SHARED
+    acsdkBluetooth
     BasicDeviceConnectionRule.cpp
     BasicDeviceConnectionRulesProvider.cpp
     Bluetooth.cpp

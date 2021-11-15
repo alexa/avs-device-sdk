@@ -64,14 +64,6 @@ LogEntry::LogEntry(const std::string& source, const std::string& event) : m_hasM
     m_stream << source << SECTION_SEPARATOR << event;
 }
 
-LogEntry& LogEntry::d(const std::string& key, const char* value) {
-    return d(key.c_str(), value);
-}
-
-LogEntry& LogEntry::d(const char* key, char* value) {
-    return d(key, static_cast<const char*>(value));
-}
-
 LogEntry& LogEntry::d(const char* key, const char* value) {
     prefixKeyValuePair();
     if (!key) {
@@ -82,16 +74,8 @@ LogEntry& LogEntry::d(const char* key, const char* value) {
     return *this;
 }
 
-LogEntry& LogEntry::d(const std::string& key, const std::string& value) {
-    return d(key.c_str(), value.c_str());
-}
-
 LogEntry& LogEntry::d(const char* key, const std::string& value) {
     return d(key, value.c_str());
-}
-
-LogEntry& LogEntry::d(const std::string& key, bool value) {
-    return d(key.c_str(), value);
 }
 
 LogEntry& LogEntry::d(const char* key, bool value) {
@@ -112,7 +96,7 @@ LogEntry& LogEntry::m(const std::string& message) {
     return *this;
 }
 
-LogEntry& LogEntry::p(const char* key, void* ptr) {
+LogEntry& LogEntry::p(const char* key, const void* ptr) {
     return d(key, ptr);
 }
 

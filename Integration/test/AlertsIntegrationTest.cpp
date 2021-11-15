@@ -439,7 +439,7 @@ protected:
         auto alertsAudioFactory = std::make_shared<applicationUtilities::resources::audio::AlertsAudioFactory>();
 
         m_alertStorage = acsdkAlerts::storage::SQLiteAlertStorage::create(
-            avsCommon::utils::configuration::ConfigurationNode::getRoot(), alertsAudioFactory);
+            avsCommon::utils::configuration::ConfigurationNode::getRoot(), alertsAudioFactory, m_metricRecorder);
 
         m_alertObserver = std::make_shared<TestAlertObserver>();
 

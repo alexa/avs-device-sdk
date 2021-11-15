@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 
+#include <AVSCommon/AVS/PlayRequestor.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 #include "acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterInterface.h"
@@ -28,25 +29,10 @@
 namespace alexaClientSDK {
 namespace acsdkExternalMediaPlayerInterfaces {
 
+/// DEE-267369: Avoid cyclic dependency by having ExternalMediaPlayerInterface and
+/// ExternalMediaAdapeExternalMediaAdapterHandlerInterface depend on a separate interface,
+/// and limit the scope of adapters to change EMP.
 class ExternalMediaPlayerInterface;
-
-/**
- * Type of navigation when external media player app is first invoked via AVS
- */
-enum class Navigation {
-    /**
-     * Source dependant behavior
-     */
-    DEFAULT,
-    /**
-     * No navigation should occur
-     */
-    NONE,
-    /**
-     * External app should take foreground
-     */
-    FOREGROUND
-};
 
 /**
  * The ExternalMediaAdapterHandlerInterface specifies the interface of adapter handler objects which interact with third
@@ -70,6 +56,82 @@ public:
      * Destructor
      */
     virtual ~ExternalMediaAdapterHandlerInterface() = default;
+
+    /// PlayParams  is a struct that contains the parameters for the play method
+    struct PlayParams {
+        /// Local player id to play with
+        std::string localPlayerId;
+        /// Play context token for specifying what to play
+        std::string playContextToken;
+        /// Index for track
+        int64_t index;
+        /// Offset to play from
+        std::chrono::milliseconds offset;
+        /// Associated skillToken
+        std::string skillToken;
+        /// Playback session id for identifying the session
+        std::string playbackSessionId;
+        /// Navigation for indicating foreground or not
+        Navigation navigation;
+        /// Whether or not to preload first
+        bool preload;
+        /// PlayRequestor for indicating who requested playback
+        alexaClientSDK::avsCommon::avs::PlayRequestor playRequestor;
+#ifdef MEDIA_PORTABILITY_ENABLED
+        /// mediaSessionId used to track media playback
+        std::string mediaSessionId;
+        /// correlationToken used to opaquely plumb routing info
+        std::string correlationToken;
+#endif
+        /// Playback target to play on
+        std::string playbackTarget;
+
+        /**
+         * Construct PlayParams
+         *
+         * @param localPlayerId The localPlayerId that this play control is targeted at
+         * @param playContextToken Play context {Track/playlist/album/artist/station/podcast} identifier.
+         * @param index The index of the media item in the container, if the container is indexable.
+         * @param offset The offset position within media item, in milliseconds.
+         * @param skillToken An opaque token for the domain or skill that is presently associated with this player.
+         * @param playbackSessionId A universally unique identifier (UUID) generated to the RFC 4122 specification.
+         * @param navigation Communicates desired visual display behavior for the app associated with playback.
+         * @param preload If true, this Play directive is intended to preload the identified content only but not begin
+         * playback.
+         * @param playRequestor The @c PlayRequestor object that is used to distinguish if it's a music alarm or not.
+         * @param playbackTarget Playback target to play
+         */
+        PlayParams(
+            const std::string& localPlayerId,
+            const std::string& playContextToken,
+            int64_t index,
+            std::chrono::milliseconds offset,
+            const std::string& skillToken,
+            const std::string& playbackSessionId,
+            Navigation navigation,
+            bool preload,
+            const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
+#ifdef MEDIA_PORTABILITY_ENABLED
+            const std::string& mediaSessionId,
+            const std::string& correlationToken,
+#endif
+            const std::string& playbackTarget) :
+                localPlayerId{localPlayerId},
+                playContextToken{playContextToken},
+                index{index},
+                offset{offset},
+                skillToken{skillToken},
+                playbackSessionId{playbackSessionId},
+                navigation{navigation},
+                preload{preload},
+                playRequestor(playRequestor),
+#ifdef MEDIA_PORTABILITY_ENABLED
+                mediaSessionId{mediaSessionId},
+                correlationToken{correlationToken},
+#endif
+                playbackTarget{playbackTarget} {
+        }
+    };
 
     /**
      * Method to notify the handler that the cloud status of given players has been updated.
@@ -109,30 +171,10 @@ public:
     /**
      * Method to allow a user to initiate play from a third party music service provider based on a play context.
      *
-     * @param localPlayerId The localPlayerId that this play control is targeted at
-     * @param playContextToken Play context {Track/playlist/album/artist/station/podcast} identifier.
-     * @param index The index of the media item in the container, if the container is indexable.
-     * @param offset The offset position within media item, in milliseconds.
-     * @param skillToken An opaque token for the domain or skill that is presently associated with this player.
-     * @param playbackSessionId A universally unique identifier (UUID) generated to the RFC 4122 specification.
-     * @param navigation Communicates desired visual display behavior for the app associated with playback.
-     * @param preload If true, this Play directive is intended to preload the identified content only but not begin
-     * playback.
-     * @param playRequestor The @c PlayRequestor object that is used to distinguish if it's a music alarm or not.
-     * @param playbackTarget Playback target to play
+     * @param params Play parameters required for playback
      * @return True if the call was handled
      */
-    virtual bool play(
-        const std::string& localPlayerId,
-        const std::string& playContextToken,
-        int64_t index,
-        std::chrono::milliseconds offset,
-        const std::string& skillToken,
-        const std::string& playbackSessionId,
-        const std::string& navigation,
-        bool preload,
-        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-        const std::string& playbackTarget) = 0;
+    virtual bool play(const PlayParams& params) = 0;
 
     /**
      * Method to initiate the different types of play control like PLAY/PAUSE/RESUME/NEXT/...
@@ -145,6 +187,12 @@ public:
     virtual bool playControl(
         const std::string& localPlayerId,
         acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+#ifdef MEDIA_PORTABILITY_ENABLED
+        /// @param mediaSessionId The optional @c mediaSessionId used to track media playback
+        /// @param correlationToken The optional @c correlationToken used to opaquely plumb routing info
+        const std::string& mediaSessionId,
+        const std::string& correlationToken,
+#endif
         const std::string& playbackTarget) = 0;
 
     /**

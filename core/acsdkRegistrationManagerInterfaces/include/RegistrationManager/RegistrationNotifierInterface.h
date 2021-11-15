@@ -15,7 +15,7 @@
 #ifndef REGISTRATIONMANAGER_REGISTRATIONNOTIFIERINTERFACE_H_
 #define REGISTRATIONMANAGER_REGISTRATIONNOTIFIERINTERFACE_H_
 
-#include <acsdkNotifierInterfaces/NotifierInterface.h>
+#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
 
 #include "RegistrationManager/RegistrationObserverInterface.h"
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=defaultClient")
-add_library(DefaultClient SHARED
+add_library(DefaultClient
     ConnectionRetryTrigger.cpp
     DefaultClient.cpp
     DefaultClientComponent.cpp
@@ -75,7 +75,10 @@ if (PCC)
 endif()
 
 if (MC)
-    target_link_libraries(DefaultClient acsdkMessagingController)
+    target_link_libraries(DefaultClient
+        acsdkMessenger
+        acsdkMessagingController
+    )
 endif()
 
 if (MCC)

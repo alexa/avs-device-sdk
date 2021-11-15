@@ -79,6 +79,18 @@ public:
     bool convert8601TimeStringToUnix(const std::string& timeString, int64_t* unixTime);
 
     /**
+     * Converts a ISO 8601 date-time string to a timepoint. Referring to function @c convert8601TimeStringToUnix for
+     * details of the string representation in ISO 8601 format.
+     *
+     * @param iso8601TimeString The time string in a ISO 8601 format.
+     * @param[out] tp The converted time into UTC time point format.
+     * @return Whether the conversion was successful.
+     */
+    bool convert8601TimeStringToUtcTimePoint(
+        const std::string& iso8601TimeString,
+        std::chrono::system_clock::time_point* tp);
+
+    /**
      * Gets the current time in Unix epoch time, as a 64 bit integer.
      *
      * @param[out] currentTime The current time in Unix epoch time, as a 64 bit integer.
@@ -101,6 +113,16 @@ public:
         std::string* iso8601TimeString);
 
 private:
+    /**
+     * Utility function to convert 8601TimeStringToTimeT. Referring to function @c convert8601TimeStringToUnix for
+     * details of the string representation in ISO 8601 format.
+     *
+     * @param iso8601TimeString The time string in a ISO 8601 format.
+     * @param[out] The converted time since epoch.
+     * @return Whether the conversion was successful.
+     */
+    bool convert8601TimeStringToTimeT(const std::string& iso8601TimeString, std::time_t* timeT);
+
     /**
      * Calculate localtime offset in std::time_t.
      *

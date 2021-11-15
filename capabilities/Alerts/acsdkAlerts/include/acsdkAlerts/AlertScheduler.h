@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKALERTS_ALERTSCHEDULER_H_
-#define ACSDKALERTS_ALERTSCHEDULER_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERTSCHEDULER_H_
+#define ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERTSCHEDULER_H_
 
 #include "acsdkAlerts/Storage/AlertStorageInterface.h"
 
@@ -62,11 +62,10 @@ public:
         std::chrono::seconds alertPastDueTimeLimitSeconds,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
-    void onAlertStateChange(
-        const std::string& alertToken,
-        const std::string& alertType,
-        State state,
-        const std::string& reason = "") override;
+    /// @name AlertObserverInterface function.
+    /// @{
+    void onAlertStateChange(const AlertInfo& alertInfo) override;
+    /// @}
 
     /**
      * Initialization.
@@ -225,12 +224,9 @@ private:
     /**
      * A handler function which will be called by our internal executor when a managed alert changes state.
      *
-     * @param alertToken The AVS token identifying the alert.
-     * @param alertType The type of alert.
-     * @param state The state of the alert.
-     * @param reason The reason the the state changed, if applicable.
+     * @param alertInfo The information of the alert.
      */
-    void executeOnAlertStateChange(std::string alertToken, std::string alertType, State state, std::string reason);
+    void executeOnAlertStateChange(const AlertInfo& alertInfo);
 
     /**
      * Update an alert with the new Dynamic Data (scheduled time, assets). This function cannot update an active alert
@@ -250,30 +246,16 @@ private:
     /**
      * A utility function which wraps the executor submission to notify our observer.
      *
-     * @param alertToken The AVS token identifying the alert.
-     * @param alertType The type of the alert.
-     * @param state The state of the alert.
-     * @param reason The reason the the state changed, if applicable.
+     * @param alertInfo The information of the alert.
      */
-    void notifyObserver(
-        const std::string& alertToken,
-        const std::string& alertType,
-        acsdkAlertsInterfaces::AlertObserverInterface::State state,
-        const std::string& reason = "");
+    void notifyObserver(const acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo& alertInfo);
 
     /**
      * A handler function which will be called by our internal executor when a managed alert changes state.
      *
-     * @param alertToken The AVS token identifying the alert.
-     * @param alertType The type of the alert.
-     * @param state The state of the alert.
-     * @param reason The reason the the state changed, if applicable.
+     * @param alertInfo The information of the alert.
      */
-    void executeNotifyObserver(
-        const std::string& alertToken,
-        const std::string& alertType,
-        acsdkAlertsInterfaces::AlertObserverInterface::State state,
-        const std::string& reason = "");
+    void executeNotifyObserver(const acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo& alertInfo);
 
     /**
      * Utility function to set the timer for the next scheduled alert.  This function requires @c m_mutex be locked.
@@ -293,10 +275,9 @@ private:
     /**
      * Utility function to be called when an alert is ready to activate.
      *
-     * @param alertToken The AVS token of the alert that should become active.
-     * @param alertType The type of the alert.
+     * @param alertInfo The information of the alert.
      */
-    void onAlertReady(const std::string& alertToken, const std::string& alertType);
+    void onAlertReady(const acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo& alertInfo);
 
     /**
      * Utility function to query if a given alert is active.  This function requires @c m_mutex be locked.
@@ -388,4 +369,4 @@ private:
 }  // namespace acsdkAlerts
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKALERTS_ALERTSCHEDULER_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERTSCHEDULER_H_

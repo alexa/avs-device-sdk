@@ -1,7 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=settings")
 
 
-add_library(DeviceSettings SHARED
+add_library(DeviceSettings
         CloudControlledSettingProtocol.cpp
         DeviceControlledSettingProtocol.cpp
         SettingEventSender.cpp

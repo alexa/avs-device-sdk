@@ -57,7 +57,9 @@ static acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>>,
     acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>>
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>>
 getAuthDelegateComponent(const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate) {
     /// If a custom authDelegate is provided, add that implementation. Otherwise, use defaults.
     if (authDelegate) {

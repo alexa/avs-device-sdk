@@ -15,7 +15,11 @@
 
 #include <acsdkAudioInputStream/AudioInputStreamFactory.h>
 #include <acsdkAudioInputStream/CompatibleAudioFormat.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCrypto/CryptoFactory.h>
 #include <acsdkManufactory/Manufactory.h>
+#include <acsdkPkcs11/KeyStoreFactory.h>
 #include <ACL/Transport/HTTP2TransportFactory.h>
 #include <ACL/Transport/PostConnectSequencerFactory.h>
 #include <AVSCommon/AVS/CapabilitySemantics/CapabilitySemantics.h>
@@ -37,7 +41,7 @@
 #ifdef AUTH_MANAGER
 #include <acsdkAuthorization/AuthorizationManager.h>
 #include <acsdkAuthorization/LWA/LWAAuthorizationAdapter.h>
-#include <acsdkAuthorization/LWA/SQLiteLWAAuthorizationStorage.h>
+#include <acsdkAuthorization/LWA/LWAAuthorizationStorage.h>
 #include <acsdkAuthorizationInterfaces/AuthorizationManagerInterface.h>
 #include <acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h>
 #endif
@@ -669,11 +673,10 @@ buildModeControllerAttributes(
 std::unique_ptr<SampleApplication> SampleApplication::create(
     std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
     const std::vector<std::string>& configFiles,
-    const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     auto clientApplication = std::unique_ptr<SampleApplication>(new SampleApplication);
-    if (!clientApplication->initialize(consoleReader, configFiles, pathToInputFolder, logLevel, diagnostics)) {
+    if (!clientApplication->initialize(consoleReader, configFiles, logLevel, diagnostics)) {
         ACSDK_CRITICAL(LX("Failed to initialize SampleApplication"));
         return nullptr;
     }
@@ -711,6 +714,13 @@ SampleAppReturnCode SampleApplication::run() {
     return m_userInputManager->run();
 }
 
+#ifdef DIAGNOSTICS
+bool SampleApplication::initiateRestart() {
+    m_userInputManager->onLogout();
+    return true;
+}
+#endif
+
 SampleApplication::~SampleApplication() {
     if (m_shutdownManager) {
         m_shutdownManager->shutdown();
@@ -723,11 +733,16 @@ SampleApplication::~SampleApplication() {
     for (auto& shutdownable : m_shutdownRequiredList) {
         if (!shutdownable) {
             ACSDK_ERROR(LX("shutdownFailed").m("Component requiring shutdown was null"));
+        } else {
+            shutdownable->shutdown();
         }
-        shutdownable->shutdown();
     }
 
     m_sdkInit.reset();
+}
+
+std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> SampleApplication::getDefaultClient() {
+    return m_client;
 }
 
 bool SampleApplication::createMediaPlayersForAdapters(
@@ -757,7 +772,6 @@ bool SampleApplication::createMediaPlayersForAdapters(
 bool SampleApplication::initialize(
     std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
     const std::vector<std::string>& configFiles,
-    const std::string& pathToInputFolder,
     const std::string& logLevel,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics) {
     avsCommon::utils::logger::Level logLevelValue = avsCommon::utils::logger::Level::UNKNOWN;
@@ -832,6 +846,8 @@ bool SampleApplication::initialize(
      * auto sampleAppComponent = acsdkSampleApplication::getComponent(
      *     std::move(initParams),
      *     m_shutdownRequiredList,
+     *     m_cryptoFactory,
+     *     m_keyStore,
      *     myCustomAuthDelegate,
      *     myCustomMetricRecorder,
      *     myCustomLogger);
@@ -848,7 +864,11 @@ bool SampleApplication::initialize(
         std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
         std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
+        std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>,
+        std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>,
         std::shared_ptr<UIManager>>::create(sampleAppComponent);
+
+    auto metricRecorder = manufactory->get<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>();
 
     m_sdkInit = manufactory->get<std::shared_ptr<avsCommon::avs::initialization::AlexaClientSDKInit>>();
     if (!m_sdkInit) {
@@ -1052,8 +1072,8 @@ bool SampleApplication::initialize(
     auto audioFactory = std::make_shared<alexaClientSDK::applicationUtilities::resources::audio::AudioFactory>();
 
     // Creating the alert storage object to be used for rendering and storing alerts.
-    auto alertStorage =
-        alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage::create(config, audioFactory->alerts());
+    auto alertStorage = alexaClientSDK::acsdkAlerts::storage::SQLiteAlertStorage::create(
+        config, audioFactory->alerts(), metricRecorder);
 
     // Creating the message storage object to be used for storing message to be sent later.
     auto messageStorage = alexaClientSDK::certifiedSender::SQLiteMessageStorage::create(config);
@@ -1294,122 +1314,103 @@ bool SampleApplication::initialize(
      */
 
     // Creating tap to talk audio provider
-    bool tapAlwaysReadable = true;
-    bool tapCanOverride = true;
-    bool tapCanBeOverridden = true;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider tapToTalkAudioProvider(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::NEAR_FIELD,
-        tapAlwaysReadable,
-        tapCanOverride,
-        tapCanBeOverridden);
+    alexaClientSDK::capabilityAgents::aip::AudioProvider tapToTalkAudioProvider =
+        alexaClientSDK::capabilityAgents::aip::AudioProvider::AudioProvider::TapAudioProvider(
+            sharedDataStream, *compatibleAudioFormat);
 
     // Creating hold to talk audio provider
-    bool holdAlwaysReadable = false;
-    bool holdCanOverride = true;
-    bool holdCanBeOverridden = false;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider holdToTalkAudioProvider(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::CLOSE_TALK,
-        holdAlwaysReadable,
-        holdCanOverride,
-        holdCanBeOverridden);
-
-    auto metricRecorder = manufactory->get<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>();
+    alexaClientSDK::capabilityAgents::aip::AudioProvider holdToTalkAudioProvider =
+        alexaClientSDK::capabilityAgents::aip::AudioProvider::AudioProvider::HoldAudioProvider(
+            sharedDataStream, *compatibleAudioFormat);
 
     /*
      * Creating the DefaultClient - this component serves as an out-of-box default object that instantiates and "glues"
      * together all the modules.
      */
-    std::shared_ptr<alexaClientSDK::defaultClient::DefaultClient> client =
-        alexaClientSDK::defaultClient::DefaultClient::create(
-            deviceInfo,
-            customerDataManager,
-            m_externalMusicProviderMediaPlayersMap,
-            m_externalMusicProviderSpeakersMap,
-            m_adapterToCreateFuncMap,
-            m_speakMediaPlayer,
-            std::move(audioMediaPlayerFactory),
-            m_alertsMediaPlayer,
-            m_notificationsMediaPlayer,
-            m_bluetoothMediaPlayer,
-            m_ringtoneMediaPlayer,
-            m_systemSoundMediaPlayer,
-            speakerMediaInterfaces->speaker,
-            audioSpeakers,
-            alertsMediaInterfaces->speaker,
-            notificationMediaInterfaces->speaker,
-            bluetoothMediaInterfaces->speaker,
-            ringtoneMediaInterfaces->speaker,
-            systemSoundMediaInterfaces->speaker,
-            {},
+    m_client = alexaClientSDK::defaultClient::DefaultClient::create(
+        deviceInfo,
+        customerDataManager,
+        m_externalMusicProviderMediaPlayersMap,
+        m_externalMusicProviderSpeakersMap,
+        m_adapterToCreateFuncMap,
+        m_speakMediaPlayer,
+        std::move(audioMediaPlayerFactory),
+        m_alertsMediaPlayer,
+        m_notificationsMediaPlayer,
+        m_bluetoothMediaPlayer,
+        m_ringtoneMediaPlayer,
+        m_systemSoundMediaPlayer,
+        speakerMediaInterfaces->speaker,
+        audioSpeakers,
+        alertsMediaInterfaces->speaker,
+        notificationMediaInterfaces->speaker,
+        bluetoothMediaInterfaces->speaker,
+        ringtoneMediaInterfaces->speaker,
+        systemSoundMediaInterfaces->speaker,
+        {},
 #ifdef ENABLE_PCC
-            phoneSpeaker,
-            phoneCaller,
+        phoneSpeaker,
+        phoneCaller,
 #endif
 #ifdef ENABLE_MCC
-            meetingSpeaker,
-            meetingClient,
-            calendarClient,
+        meetingSpeaker,
+        meetingClient,
+        calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
-            m_commsMediaPlayer,
-            commsSpeaker,
-            sharedDataStream,
+        m_commsMediaPlayer,
+        commsSpeaker,
+        sharedDataStream,
 #endif
-            equalizerRuntimeSetup,
-            audioFactory,
-            authDelegate,
-            std::move(alertStorage),
-            std::move(messageStorage),
-            std::move(notificationsStorage),
-            std::move(deviceSettingsStorage),
-            std::move(bluetoothStorage),
-            miscStorage,
-            {userInterfaceManager},
-            {userInterfaceManager},
-            std::move(internetConnectionMonitor),
-            displayCardsSupported,
-            m_capabilitiesDelegate,
-            contextManager,
-            transportFactory,
-            avsGatewayManager,
-            localeAssetsManager,
-            enabledConnectionRules,
-            /* systemTimezone*/ nullptr,
-            firmwareVersion,
-            true,
-            nullptr,
-            std::move(bluetoothDeviceManager),
-            metricRecorder,
+        equalizerRuntimeSetup,
+        audioFactory,
+        authDelegate,
+        std::move(alertStorage),
+        std::move(messageStorage),
+        std::move(notificationsStorage),
+        std::move(deviceSettingsStorage),
+        std::move(bluetoothStorage),
+        miscStorage,
+        {userInterfaceManager},
+        {userInterfaceManager},
+        std::move(internetConnectionMonitor),
+        displayCardsSupported,
+        m_capabilitiesDelegate,
+        contextManager,
+        transportFactory,
+        avsGatewayManager,
+        localeAssetsManager,
+        enabledConnectionRules,
+        /* systemTimezone*/ nullptr,
+        firmwareVersion,
+        true,
+        nullptr,
+        std::move(bluetoothDeviceManager),
+        metricRecorder,
 #ifdef ENABLE_LPM
-            powerResourceManager,
+        powerResourceManager,
 #else
-            nullptr,
+        nullptr,
 #endif
-            diagnostics,
-            std::make_shared<alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder>(deviceInfo),
-            std::make_shared<alexaClientSDK::capabilityAgents::speakerManager::DefaultChannelVolumeFactory>(),
-            true,
-            std::make_shared<alexaClientSDK::acl::MessageRouterFactory>(),
-            nullptr,
-            tapToTalkAudioProvider);
-    if (!client) {
+        diagnostics,
+        std::make_shared<alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder>(deviceInfo),
+        std::make_shared<alexaClientSDK::capabilityAgents::speakerManager::DefaultChannelVolumeFactory>(),
+        true,
+        std::make_shared<alexaClientSDK::acl::MessageRouterFactory>(),
+        nullptr,
+        tapToTalkAudioProvider);
+    if (!m_client) {
         ACSDK_CRITICAL(LX("Failed to create default SDK client!"));
         return false;
     }
 
-    client->addSpeakerManagerObserver(userInterfaceManager);
+    m_client->addSpeakerManagerObserver(userInterfaceManager);
 
-    client->addNotificationsObserver(userInterfaceManager);
+    m_client->addNotificationsObserver(userInterfaceManager);
 
-    client->addBluetoothDeviceObserver(userInterfaceManager);
+    m_client->addBluetoothDeviceObserver(userInterfaceManager);
 
-    m_shutdownManager = client->getShutdownManager();
+    m_shutdownManager = m_client->getShutdownManager();
     if (!m_shutdownManager) {
         ACSDK_CRITICAL(LX("Failed to get ShutdownManager!"));
         return false;
@@ -1418,18 +1419,18 @@ bool SampleApplication::initialize(
 #ifdef ENABLE_CAPTIONS
     std::vector<std::shared_ptr<MediaPlayerInterface>> captionableMediaSources = m_audioMediaPlayerPool;
     captionableMediaSources.emplace_back(m_speakMediaPlayer);
-    client->addCaptionPresenter(captionPresenter);
-    client->setCaptionMediaPlayers(captionableMediaSources);
+    m_client->addCaptionPresenter(captionPresenter);
+    m_client->setCaptionMediaPlayers(captionableMediaSources);
 #endif
 
-    userInterfaceManager->configureSettingsNotifications(client->getSettingsManager());
+    userInterfaceManager->configureSettingsNotifications(m_client->getSettingsManager());
 
     /*
      * Add GUI Renderer as an observer if display cards are supported.
      */
     if (displayCardsSupported) {
         m_guiRenderer = std::make_shared<GuiRenderer>();
-        client->addTemplateRuntimeObserver(m_guiRenderer);
+        m_client->addTemplateRuntimeObserver(m_guiRenderer);
     }
 
 #ifdef PORTAUDIO
@@ -1460,14 +1461,14 @@ bool SampleApplication::initialize(
 
 #ifdef ENABLE_ENDPOINT_CONTROLLERS
     // Default Endpoint
-    if (!addControllersToDefaultEndpoint(client->getDefaultEndpointBuilder())) {
+    if (!addControllersToDefaultEndpoint(m_client->getDefaultEndpointBuilder())) {
         ACSDK_CRITICAL(LX("Failed to add controllers to default endpoint!"));
         return false;
     }
 
     // Peripheral Endpoint
     std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface> peripheralEndpointBuilder =
-        client->createEndpointBuilder();
+        m_client->createEndpointBuilder();
     if (!peripheralEndpointBuilder) {
         ACSDK_CRITICAL(LX("Failed to create peripheral endpoint Builder!"));
         return false;
@@ -1497,41 +1498,32 @@ bool SampleApplication::initialize(
         return false;
     }
 
-    client->registerEndpoint(std::move(peripheralEndpoint));
+    m_client->registerEndpoint(std::move(peripheralEndpoint));
 #endif
 
 // Creating wake word audio provider, if necessary
 #ifdef KWD
-    bool wakeAlwaysReadable = true;
-    bool wakeCanOverride = false;
-    bool wakeCanBeOverridden = true;
-
-    alexaClientSDK::capabilityAgents::aip::AudioProvider wakeWordAudioProvider(
-        sharedDataStream,
-        *compatibleAudioFormat,
-        alexaClientSDK::capabilityAgents::aip::ASRProfile::NEAR_FIELD,
-        wakeAlwaysReadable,
-        wakeCanOverride,
-        wakeCanBeOverridden);
-
-    // This observer is notified any time a keyword is detected and notifies the DefaultClient to start recognizing.
-    auto keywordObserver = std::make_shared<alexaClientSDK::sampleApp::KeywordObserver>(client, wakeWordAudioProvider);
+    alexaClientSDK::capabilityAgents::aip::AudioProvider wakeWordAudioProvider =
+        alexaClientSDK::capabilityAgents::aip::AudioProvider::WakeAudioProvider(
+            sharedDataStream, *compatibleAudioFormat);
 
     m_keywordDetector = alexaClientSDK::kwd::KeywordDetectorProvider::create(
         sharedDataStream,
         *compatibleAudioFormat,
-        {keywordObserver},
+        std::unordered_set<std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::KeyWordObserverInterface>>(),
         std::unordered_set<
-            std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>(),
-        pathToInputFolder);
+            std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>());
     if (!m_keywordDetector) {
         ACSDK_CRITICAL(LX("Failed to create keyword detector!"));
         return false;
     }
 
+    // // This observer is notified any time a keyword is detected and notifies the DefaultClient to start recognizing.
+    auto keywordObserver = KeywordObserver::create(m_client, wakeWordAudioProvider, m_keywordDetector);
+
     // If wake word is enabled, then creating the interaction manager with a wake word audio provider.
     m_interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
-        client,
+        m_client,
         micWrapper,
         userInterfaceManager,
 #ifdef ENABLE_PCC
@@ -1568,7 +1560,7 @@ bool SampleApplication::initialize(
     // clang-format off
     // If wake word is not enabled, then creating the interaction manager without a wake word audio provider.
     m_interactionManager = std::make_shared<alexaClientSDK::sampleApp::InteractionManager>(
-        client,
+        m_client,
         micWrapper,
         userInterfaceManager,
 #ifdef ENABLE_PCC
@@ -1605,14 +1597,14 @@ bool SampleApplication::initialize(
 #endif
 
     m_shutdownRequiredList.push_back(m_interactionManager);
-    client->addAlexaDialogStateObserver(m_interactionManager);
-    client->addCallStateObserver(m_interactionManager);
+    m_client->addAlexaDialogStateObserver(m_interactionManager);
+    m_client->addCallStateObserver(m_interactionManager);
 
 #ifdef ENABLE_REVOKE_AUTH
     // Creating the revoke authorization observer.
     auto revokeObserver =
-        std::make_shared<alexaClientSDK::sampleApp::RevokeAuthorizationObserver>(client->getRegistrationManager());
-    client->addRevokeAuthorizationObserver(revokeObserver);
+        std::make_shared<alexaClientSDK::sampleApp::RevokeAuthorizationObserver>(m_client->getRegistrationManager());
+    m_client->addRevokeAuthorizationObserver(revokeObserver);
 #endif
 
     // Creating the input observer.
@@ -1624,18 +1616,22 @@ bool SampleApplication::initialize(
     }
 
     authDelegate->addAuthObserver(m_userInputManager);
-    client->addRegistrationObserver(m_userInputManager);
+    m_client->addRegistrationObserver(m_userInputManager);
     m_capabilitiesDelegate->addCapabilitiesObserver(m_userInputManager);
 
 #ifdef AUTH_MANAGER
-    m_authManager->setRegistrationManager(client->getRegistrationManager());
+    m_authManager->setRegistrationManager(m_client->getRegistrationManager());
 
     auto httpPost = avsCommon::utils::libcurlUtils::HttpPost::createHttpPostInterface();
+    auto cryptoFactory = manufactory->get<std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>>();
+    auto keyStore = manufactory->get<std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>();
+
     m_lwaAdapter = acsdkAuthorization::lwa::LWAAuthorizationAdapter::create(
         configPtr,
         std::move(httpPost),
         deviceInfo,
-        acsdkAuthorization::lwa::SQLiteLWAAuthorizationStorage::createLWAAuthorizationStorageInterface(configPtr));
+        acsdkAuthorization::lwa::LWAAuthorizationStorage::createLWAAuthorizationStorageInterface(
+            configPtr, "", cryptoFactory, keyStore));
 
     if (!m_lwaAdapter) {
         ACSDK_CRITICAL(LX("Failed to create LWA Adapter!"));
@@ -1650,7 +1646,7 @@ bool SampleApplication::initialize(
     m_lwaAdapter->authorizeUsingCBL(cblRequest);
 #endif
 
-    client->connect();
+    m_client->connect();
 
     return true;
 }

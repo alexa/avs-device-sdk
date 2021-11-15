@@ -1,5 +1,5 @@
 #
-# Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
@@ -21,12 +21,10 @@ fi
 SOUND_CONFIG="$HOME/.asoundrc"
 START_SCRIPT="$INSTALL_BASE/startsample.sh"
 START_PREVIEW_SCRIPT="$INSTALL_BASE/startpreview.sh"
-CMAKE_PLATFORM_SPECIFIC=(-DSENSORY_KEY_WORD_DETECTOR=ON \
-    -DGSTREAMER_MEDIA_PLAYER=ON -DPORTAUDIO=ON \
+CMAKE_PLATFORM_SPECIFIC=(-DGSTREAMER_MEDIA_PLAYER=ON \
+    -DPORTAUDIO=ON \
     -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
     -DPORTAUDIO_INCLUDE_DIR="$THIRD_PARTY_PATH/portaudio/include" \
-    -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=$THIRD_PARTY_PATH/alexa-rpi/lib/libsnsr.a \
-    -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=$THIRD_PARTY_PATH/alexa-rpi/include \
     -DCURL_INCLUDE_DIR=${THIRD_PARTY_PATH}/curl-${CURL_VER}/include \
     -DCURL_LIBRARY=${THIRD_PARTY_PATH}/curl-${CURL_VER}/lib/.libs/libcurl.so)
 
@@ -40,7 +38,9 @@ install_dependencies() {
 run_os_specifics() {
   build_port_audio
   build_curl
-  build_kwd_engine
+  echo
+  echo "==============> TAP-TO-TALK IS ENABLED =============="
+  echo
   configure_sound
 }
 
@@ -64,17 +64,6 @@ configure_sound() {
 EOF
 }
 
-build_kwd_engine() {
-  #get sensory and build
-  echo
-  echo "==============> CLONING AND BUILDING SENSORY =============="
-  echo
-
-  cd $THIRD_PARTY_PATH
-  git clone git://github.com/Sensory/alexa-rpi.git
-  bash ./alexa-rpi/bin/license.sh
-}
-
 build_curl() {
   #get curl and build
   echo
@@ -93,13 +82,13 @@ generate_start_script() {
   cat << EOF > "$START_SCRIPT"
   cd "$BUILD_PATH/SampleApp/src"
 
-  PA_ALSA_PLUGHW=1 ./SampleApp "$OUTPUT_CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
+  PA_ALSA_PLUGHW=1 ./SampleApp "$OUTPUT_CONFIG_FILE" DEBUG9
 EOF
 
   cat << EOF > "$START_PREVIEW_SCRIPT"
   cd "$BUILD_PATH/applications/acsdkPreviewAlexaClient/src"
 
-  PA_ALSA_PLUGHW=1 ./PreviewAlexaClient "$OUTPUT_CONFIG_FILE" "$THIRD_PARTY_PATH/alexa-rpi/models" DEBUG9
+  PA_ALSA_PLUGHW=1 ./PreviewAlexaClient "$OUTPUT_CONFIG_FILE" DEBUG9
 EOF
 }
 
@@ -108,8 +97,6 @@ generate_test_script() {
   echo
   echo "==============> BUILDING Tests =============="
   echo
-  mkdir -p "$UNIT_TEST_MODEL_PATH"
-  cp "$UNIT_TEST_MODEL" "$UNIT_TEST_MODEL_PATH"
   cd $BUILD_PATH
   make all test -j2
 EOF

@@ -142,6 +142,16 @@ public:
     void onRequestProcessingCompleted() override;
     /// @}
 
+    /// @name ConnectionStatusObserverInterface Functions
+    /// @{
+    void onConnectionStatusChanged(
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
+        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
+
+    void onConnectionStatusChanged(const Status status, const std::vector<EngineConnectionStatus>& engineStatuses)
+        override;
+    /// @}
+
 private:
     /**
      * Notifies all observers of the current state. This should only be used within the internal executor.
@@ -182,10 +192,6 @@ private:
      * are in IDLE state.
      */
     void tryEnterIdleStateOnTimer();
-
-    void onConnectionStatusChanged(
-        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status status,
-        const avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::ChangedReason reason) override;
 
     /**
      * Called internally when some activity starts: Speech is going to be played or voice recognition is about to start.

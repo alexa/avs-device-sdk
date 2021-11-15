@@ -103,7 +103,9 @@ bool Endpoint::update(const std::shared_ptr<EndpointModificationData>& endpointM
     for (const auto& capabilityConfiguration : updatedConfigurations) {
         auto capabilities = getCapabilities();
         for (const auto& currentCapability : capabilities) {
-            if (currentCapability.first.interfaceName.compare(capabilityConfiguration.interfaceName) == 0) {
+            if (currentCapability.first.interfaceName.compare(capabilityConfiguration.interfaceName) == 0 &&
+                currentCapability.first.instanceName.valueOr("").compare(
+                    capabilityConfiguration.instanceName.valueOr("")) == 0) {
                 auto handler = currentCapability.second;
                 if (!removeCapability(currentCapability.first)) {
                     return false;

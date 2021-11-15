@@ -40,7 +40,7 @@ static const std::string TAG("CurlEasyHandleWrapper");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -62,7 +62,7 @@ bool CurlEasyHandleWrapper::m_isInterfaceNameInitialized = false;
 std::mutex CurlEasyHandleWrapper::m_interfaceNameMutex;
 
 #ifdef ACSDK_EMIT_CURL_LOGS
-/// Key under 'acl' configuration node for path/prefix of per-stream log file names.
+/// Key under 'libcurlUtils' configuration node for path/prefix of per-stream log file names.
 static const std::string STREAM_LOG_PREFIX_KEY("streamLogPrefix");
 /// Prefix for per-stream log file names.
 static const std::string STREAM_LOG_NAME_PREFIX("stream-");
@@ -382,7 +382,7 @@ std::string CurlEasyHandleWrapper::getEffectiveUrl() {
 
         if (temp) {
             effectiveUrl = temp;
-            ACSDK_DEBUG7(LX(__func__).d("effectiveURL", effectiveUrl));
+            ACSDK_DEBUG7(LX("getEffectiveUrl").d("effectiveURL", effectiveUrl));
         }
 
     } else {

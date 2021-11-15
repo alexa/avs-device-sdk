@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=interactionModel")
 
-add_library(acsdkInteractionModel SHARED
+add_library(acsdkInteractionModel
         InteractionModelCapabilityAgent.cpp
         InteractionModelComponent.cpp
         InteractionModelNotifier.cpp)

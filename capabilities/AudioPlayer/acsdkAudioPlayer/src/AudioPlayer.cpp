@@ -26,12 +26,15 @@
 #include <rapidjson/error/en.h>
 
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
+#include <AVSCommon/AVS/EventBuilder.h>
 #include <AVSCommon/SDKInterfaces/Audio/MixingBehavior.h>
 #include <AVSCommon/Utils/JSON/JSONGenerator.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
+
 #include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+
 namespace alexaClientSDK {
 namespace acsdkAudioPlayer {
 
@@ -161,6 +164,15 @@ static const char CAPTION_TYPE_KEY[] = "type";
 /// The key under "captionData" containing the caption content
 static const char CAPTION_CONTENT_KEY[] = "content";
 
+/// The "analyzers" key used to retrieve analyzer data from directive.
+static const char KEY_ANALYZERS[] = "analyzers";
+
+/// The key used to retrieve the audio analyzer name from directive.
+static const char KEY_ANALYZERS_INTERFACE[] = "interface";
+
+/// The key used to retrieve the audio analyzer enabled state from directive.
+static const char KEY_ANALYZERS_ENABLED[] = "enabled";
+
 /// The stutter key used in @c AudioPlayer events.
 static const char STUTTER_DURATION_KEY[] = "stutterDurationInMilliseconds";
 
@@ -256,11 +268,18 @@ static const std::string METRIC_KEY_ENTRY_NAME = "entry_name";
 static const std::string METRIC_KEY_ERROR_DESCRIPTION = "error_description";
 static const std::string METRIC_KEY_ERROR_RECOVERABLE = "error_recoverable";
 
+static const std::string METRIC_KEY_ASSOCIATE_FROM = "association_from_id";
+static const std::string METRIC_KEY_ASSOCIATE_TO = "association_to_id";
+
 static const std::string METRIC_INSTANCE_RECEIVE_DIRECTIVE = "ReceiveDirective";
 static const std::string METRIC_INSTANCE_STATE_CHANGED = "PlaybackStateChanged";
+static const std::string METRIC_INSTANCE_FIRST_BYTE_READ = "FirstAudioByteRead";
 static const std::string METRIC_META_KEY_NAMESPACE = "namespace";
 static const std::string METRIC_META_KEY_NAME = "name";
 static const std::string METRIC_META_KEY_ISPREPARE_BOOL = "isPreparePhase";
+
+static const std::string METRIC_INSTANCE_ACQUIRE_MEDIA_PLAYER_START = "AcquireMediaPlayerStart";
+static const std::string METRIC_INSTANCE_ACQUIRE_MEDIA_PLAYER_FINISH = "AcquireMediaPlayerFinish";
 
 /**
  * Compare two URLs up to the 'query' portion, if one exists.
@@ -386,6 +405,30 @@ static void submitInstanceMetric(
     recordMetric(metricRecorder, metric);
 }
 
+static void createAssociation(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    const std::string& associateFrom,
+    const std::string& associateTo) {
+    if (associateFrom.empty() || associateTo.empty()) {
+        ACSDK_ERROR(LX(__func__)
+                        .m("Cannot create association")
+                        .d("associateFrom", associateFrom)
+                        .d("associateTo", associateTo));
+        return;
+    }
+
+    auto metricBuilder = MetricEventBuilder{}.setActivityName(AUDIO_PLAYER_METRIC_PREFIX + "ASSOCIATION");
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(METRIC_KEY_ASSOCIATE_FROM).setValue(associateFrom).build());
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(METRIC_KEY_ASSOCIATE_TO).setValue(associateTo).build());
+    auto metric = metricBuilder.build();
+    if (metric == nullptr) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Error creating metric."));
+        return;
+    }
+    recordMetric(metricRecorder, metric);
+}
+
 inline bool messageSentSuccessfully(MessageRequestObserverInterface::Status status) {
     switch (status) {
         case MessageRequestObserverInterface::Status::SUCCESS:
@@ -445,7 +488,7 @@ AudioPlayer::PlayDirectiveInfo::PlayDirectiveInfo(const std::string& messageId, 
         sourceId{ERROR_SOURCE_ID},
         isBuffered{false},
         isPNFSent(false),
-        normalizationEnabled{false} {
+        normalizationEnabled(false) {
 }
 
 std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface> AudioPlayer::createAudioPlayerInterface(
@@ -760,6 +803,11 @@ void AudioPlayer::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
 
 void AudioPlayer::onFirstByteRead(SourceId id, const MediaPlayerState& state) {
     ACSDK_DEBUG(LX(__func__).d("id", id).d("state", state));
+    submitInstanceMetric(
+        m_metricRecorder,
+        m_currentlyPlaying->dialogRequestId,
+        METRIC_INSTANCE_FIRST_BYTE_READ,
+        std::map<std::string, std::string>{{TOKEN_KEY, m_currentlyPlaying->audioItem.id}});
 }
 
 void AudioPlayer::onPlaybackStarted(SourceId id, const MediaPlayerState& state) {
@@ -1257,32 +1305,29 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
             audioItem.stream.token);
     }
 
-    if (!m_captionManager || !m_captionManager->isEnabled()) {
-        ACSDK_DEBUG5(LX("captionsNotParsed").d("reason", "captions disabled"));
+    rapidjson::Value::ConstMemberIterator captionIterator;
+    if (!jsonUtils::findNode(stream->value, CAPTION_KEY, &captionIterator)) {
+        captionIterator = stream->value.MemberEnd();
+        ACSDK_DEBUG3(LX("captionsNotParsed").d("reason", "keyNotFoundInPayload"));
     } else {
-        rapidjson::Value::ConstMemberIterator captionIterator;
-        if (!jsonUtils::findNode(stream->value, CAPTION_KEY, &captionIterator)) {
-            captionIterator = stream->value.MemberEnd();
-            ACSDK_DEBUG3(LX("captionsNotParsed").d("reason", "keyNotFoundInPayload"));
+        auto captionFormat = captions::CaptionFormat::UNKNOWN;
+        std::string captionFormatString;
+        if (jsonUtils::retrieveValue(captionIterator->value, CAPTION_TYPE_KEY, &captionFormatString)) {
+            captionFormat = captions::avsStringToCaptionFormat(captionFormatString);
         } else {
-            auto captionFormat = captions::CaptionFormat::UNKNOWN;
-            std::string captionFormatString;
-            if (jsonUtils::retrieveValue(captionIterator->value, CAPTION_TYPE_KEY, &captionFormatString)) {
-                captionFormat = captions::avsStringToCaptionFormat(captionFormatString);
-            } else {
-                ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "type"));
-            }
-
-            std::string captionContentString;
-            if (!jsonUtils::retrieveValue(captionIterator->value, CAPTION_CONTENT_KEY, &captionContentString)) {
-                ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "content"));
-            }
-
-            auto captionData = captions::CaptionData(captionFormat, captionContentString);
-            ACSDK_DEBUG5(LX("captionPayloadParsed").d("type", captionData.format));
-            audioItem.captionData = captions::CaptionData(captionFormat, captionContentString);
+            ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "type"));
         }
+
+        std::string captionContentString;
+        if (!jsonUtils::retrieveValue(captionIterator->value, CAPTION_CONTENT_KEY, &captionContentString)) {
+            ACSDK_WARN(LX("captionParsingIncomplete").d("reason", "failedToParseField").d("field", "content"));
+        }
+
+        auto captionData = captions::CaptionData(captionFormat, captionContentString);
+        ACSDK_DEBUG5(LX("captionPayloadParsed").d("type", captionData.format));
+        audioItem.captionData = captions::CaptionData(captionFormat, captionContentString);
     }
+
     rapidjson::Value::ConstMemberIterator playRequestorJson;
     if (jsonUtils::findNode(payload, "playRequestor", &playRequestorJson)) {
         if (!jsonUtils::retrieveValue(playRequestorJson->value, "type", &playItem->playRequestor.type)) {
@@ -1298,6 +1343,29 @@ void AudioPlayer::preHandlePlayDirective(std::shared_ptr<DirectiveInfo> info) {
                             .d("messageId", info->directive->getMessageId()));
             sendExceptionEncounteredAndReportFailed(info, "missing playRequestor id field");
             return;
+        }
+    }
+
+    // Populate audio analyzers state from directive to play info
+    auto analyzerIterator = payload.FindMember(KEY_ANALYZERS);
+    if (payload.MemberEnd() != analyzerIterator) {
+        const rapidjson::Value& analyzersPayload = payload[KEY_ANALYZERS];
+        if (!analyzersPayload.IsArray()) {
+            ACSDK_WARN(LX("audioAnalyzerParsingIncomplete").d("reason", "NotAnArray").d("field", "analyzers"));
+        } else {
+            std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState> analyzersData;
+            for (auto itr = analyzersPayload.Begin(); itr != analyzersPayload.End(); ++itr) {
+                const rapidjson::Value& analyzerStatePayload = *itr;
+                auto nameIterator = analyzerStatePayload.FindMember(KEY_ANALYZERS_INTERFACE);
+                auto stateIterator = analyzerStatePayload.FindMember(KEY_ANALYZERS_ENABLED);
+                if (analyzerStatePayload.MemberEnd() != nameIterator &&
+                    analyzerStatePayload.MemberEnd() != stateIterator) {
+                    audioAnalyzer::AudioAnalyzerState state(
+                        nameIterator->value.GetString(), stateIterator->value.GetString());
+                    analyzersData.push_back(state);
+                }
+            }
+            playItem->analyzersData = analyzersData;
         }
     }
 
@@ -2341,8 +2409,13 @@ bool AudioPlayer::isMessageInQueue(const std::string& messageId) {
 
 bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playbackItem) {
     if (!playbackItem->mediaPlayer) {
+        submitInstanceMetric(
+            m_metricRecorder, playbackItem->dialogRequestId, METRIC_INSTANCE_ACQUIRE_MEDIA_PLAYER_START);
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer =
             m_mediaResourceProvider->acquireMediaPlayer();
+        submitInstanceMetric(
+            m_metricRecorder, playbackItem->dialogRequestId, METRIC_INSTANCE_ACQUIRE_MEDIA_PLAYER_FINISH);
+
         AudioPlayer::SourceId sourceId = ERROR_SOURCE_ID;
         if (mediaPlayer == nullptr) {
             ACSDK_ERROR(LX("configureMediaPlayerFailed").d("reason", "nullMediaPlayer"));
@@ -2367,6 +2440,19 @@ bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playb
             SourceConfig cfg = emptySourceConfig();
             cfg.endOffset = playbackItem->audioItem.stream.endOffset;
             cfg.audioNormalizationConfig.enabled = playbackItem->normalizationEnabled;
+
+            auto& mediaDescription = cfg.mediaDescription;
+
+            mediaDescription.mixingBehavior = playbackItem->mixingBehavior;
+            mediaDescription.focusChannel = "Content";
+            mediaDescription.trackId = playbackItem->audioItem.id;
+            mediaDescription.caption.set(playbackItem->audioItem.captionData);
+            mediaDescription.analyzers.set(playbackItem->analyzersData);
+            auto playBehavior = playBehaviorToString(playbackItem->playBehavior);
+            // PLAY_BEHAVIOR is defined in avsCommon::utils::mediaPlayer
+            mediaDescription.additionalData.insert(std::pair<std::string, std::string>(PLAY_BEHAVIOR, playBehavior));
+            mediaDescription.enabled = true;
+
             sourceId = mediaPlayer->setSource(
                 playbackItem->audioItem.stream.url,
                 playbackItem->audioItem.stream.offset,
@@ -2387,6 +2473,7 @@ bool AudioPlayer::configureMediaPlayer(std::shared_ptr<PlayDirectiveInfo>& playb
         ACSDK_DEBUG5(LX(__func__).d("sourceId", sourceId).d("audioItemId", playbackItem->audioItem.id));
         playbackItem->mediaPlayer = mediaPlayer;
         playbackItem->sourceId = sourceId;
+        createAssociation(m_metricRecorder, std::to_string(playbackItem->sourceId), playbackItem->dialogRequestId);
     }
     return true;
 }
@@ -2688,20 +2775,46 @@ void AudioPlayer::playNextItem() {
         m_currentlyPlaying->initialOffset);
 }
 
-void AudioPlayer::executeStop(const std::string& messageId, bool playNextItem) {
+void AudioPlayer::executeStop(const std::string& messageId, bool playNext) {
     ACSDK_DEBUG1(LX("executeStop")
-                     .d("playNextItem", playNextItem)
+                     .d("playNextItem", playNext)
                      .d("m_currentState", playerStateToString(m_currentState))
                      .d("sourceId", m_currentlyPlaying->sourceId));
     m_currentlyPlaying->stopMessageId = messageId;
     // if a 'stop' comes in before the 'start' event from the player, this can still be true
+    bool isStarting = m_isStartingPlayback;
     m_isStartingPlayback = false;
     switch (m_currentState) {
         case AudioPlayerState::IDLE:
+        case AudioPlayerState::FINISHED:
+            // nothing to do here
+            return;
         case AudioPlayerState::BUFFERING:
         case AudioPlayerState::STOPPED:
-        case AudioPlayerState::FINISHED:
-            // If we're already stopped, there's nothing more to do.
+            // This special handling is to handle a race condition where a 'clearQueue' is
+            // sent just before a play.  The current track may be stopped, but the 'onPlaybackStopped'
+            // event not yet received when the play directive is handled.
+            // si, if 'executeStop' is called by executePlay() with 'playNextItem' set to 'true', we
+            // need to make sure here that the next track will play, even if the player state has not quite caught up
+            if (playNext && !isStarting && !m_audioPlayQueue.empty()) {
+                m_okToRequestNextTrack = false;
+                ACSDK_DEBUG1(LX("playNextTest").d("focusState", m_focus));
+                if (avsCommon::avs::FocusState::FOREGROUND == m_focus ||
+                    (avsCommon::avs::FocusState::BACKGROUND == m_focus &&
+                     m_audioPlayQueue.front()->mixingBehavior == audio::MixingBehavior::BEHAVIOR_DUCK &&
+                     MixingBehavior::MAY_DUCK == m_mixingBehavior)) {
+                    ACSDK_DEBUG1(LX(__FUNCTION__).d("action", "playNextItem"));
+
+                    m_playNextItemAfterStopped = false;
+                    playNextItem();
+
+                    // If the last track was non-mixable, then we paused instead of ducked, so we need to make
+                    // sure to start up ducked.
+                    if (avsCommon::avs::FocusState::BACKGROUND == m_focus) {
+                        executeStartDucking();
+                    }
+                }
+            }
             return;
         case AudioPlayerState::PLAYING:
         case AudioPlayerState::PAUSED:
@@ -2709,7 +2822,7 @@ void AudioPlayer::executeStop(const std::string& messageId, bool playNextItem) {
             // Make sure we have the offset cached before stopping.
             getOffset();
             // Set a flag indicating what we want to do in the onPlaybackStopped() call.
-            m_playNextItemAfterStopped = playNextItem;
+            m_playNextItemAfterStopped = playNext;
             // Request to stop.
             if (m_currentlyPlaying->mediaPlayer &&
                 !m_currentlyPlaying->mediaPlayer->stop(m_currentlyPlaying->sourceId)) {
@@ -2806,8 +2919,11 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                         m_currentlyPlaying->initialOffset = getOffset();
                         success.set_value(m_currentlyPlaying->mediaPlayer->play(m_currentlyPlaying->sourceId));
                     }
+                } else if (op == PlaybackOperation::TRANSIENT_PAUSE) {
+                    // Cannot do a transient pause from STOPPED
+                    success.set_value(false);
                 } else {
-                    // we are stopped, so ok...
+                    // STOP or RESUMABLE STOP, so success
                     success.set_value(true);
                 }
                 break;
@@ -2822,11 +2938,38 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                 }
                 break;
 
-            case AudioPlayerState::PLAYING:
             case AudioPlayerState::PAUSED:
+                if (op == PlaybackOperation::RESUME_PLAYBACK) {
+                    if (m_isStopCalled) {
+                        ACSDK_DEBUG1(LX("localOP-ResumeFailed").d("reason", "stoppingAlreadyCannotResume"));
+                        success.set_value(false);
+                        break;
+                    }
+                    if (!m_isStartingPlayback) {
+                        ACSDK_DEBUG1(LX("localOp-Resume"));
+                        if (!m_currentlyPlaying->mediaPlayer->resume(m_currentlyPlaying->sourceId)) {
+                            sendPlaybackFailedEvent(
+                                m_currentlyPlaying->audioItem.stream.token,
+                                ErrorType::MEDIA_ERROR_INTERNAL_DEVICE_ERROR,
+                                "failed to resume media player",
+                                getMediaPlayerState());
+                            ACSDK_ERROR(LX("localOp-ResumeFailed").d("reason", "resumeCallFailed"));
+                            m_focusManager->releaseChannel(CHANNEL_NAME, shared_from_this());
+                            success.set_value(false);
+                            break;
+                        }
+                        m_isStartingPlayback = true;
+                    } else {
+                        // already starting...
+                    }
+                    success.set_value(true);
+                    break;
+                }
+                // Fall through
+            case AudioPlayerState::PLAYING:
             case AudioPlayerState::BUFFER_UNDERRUN:
             case AudioPlayerState::BUFFERING:
-                if (op != PlaybackOperation::RESUME_PLAYBACK) {
+                if (op == PlaybackOperation::STOP_PLAYBACK || op == PlaybackOperation::RESUMABLE_STOP) {
                     // Make sure we have the offset cached before stopping.
                     getOffset();
                     // Request to stop.
@@ -2841,7 +2984,10 @@ void AudioPlayer::executeLocalOperation(PlaybackOperation op, std::promise<bool>
                         clearPlayQueue(false);
                     }
                     success.set_value(m_isStopCalled);
-                } else {
+                } else if (op == PlaybackOperation::TRANSIENT_PAUSE) {
+                    m_isPausingPlayback = m_currentlyPlaying->mediaPlayer->pause(m_currentlyPlaying->sourceId);
+                    success.set_value(m_isPausingPlayback);
+                } else {  // Cannot reach here if in PAUSED state, and op is RESUME
                     success.set_value(true);
                 }
                 break;
@@ -2934,13 +3080,13 @@ void AudioPlayer::sendEventWithTokenAndOffset(
     const std::string& eventName,
     bool includePlaybackReports,
     std::chrono::milliseconds offset) {
-    auto token = m_currentlyPlaying->audioItem.stream.token;
-    if (token.empty() && m_currentState == AudioPlayerState::BUFFERING && !m_audioPlayQueue.empty()) {
-        token = m_audioPlayQueue.front()->audioItem.stream.token;
+    auto token = &m_currentlyPlaying->audioItem.stream.token;
+    if (token->empty() && m_currentState == AudioPlayerState::BUFFERING && !m_audioPlayQueue.empty()) {
+        token = &m_audioPlayQueue.front()->audioItem.stream.token;
     }
 
     rapidjson::Document payload(rapidjson::kObjectType);
-    payload.AddMember(TOKEN_KEY, token, payload.GetAllocator());
+    payload.AddMember(TOKEN_KEY, *token, payload.GetAllocator());
     // Note: offset is an optional parameter, which defaults to MEDIA_PLAYER_INVALID_OFFSET.  Per documentation,
     // this function will use the current MediaPlayer offset is a valid offset was not provided.
     if (MEDIA_PLAYER_INVALID_OFFSET == offset) {
@@ -2958,7 +3104,6 @@ void AudioPlayer::sendEventWithTokenAndOffset(
     if (includePlaybackReports) {
         attachPlaybackReportsIfAvailable(payload, payload.GetAllocator());
     }
-
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     if (!payload.Accept(writer)) {
@@ -3259,8 +3404,18 @@ void AudioPlayer::sendEvent(
     const std::string& dialogRequestIdString,
     const std::string& payload,
     const std::string& context) {
-    auto event = buildJsonEventString(eventName, dialogRequestIdString, payload, context);
-    auto request = std::make_shared<MessageRequestObserver>(m_metricRecorder, event.second, "");
+    AVSMessageHeader header = AVSMessageHeader::createAVSEventHeader(m_namespace, eventName, dialogRequestIdString, "");
+
+    json::JsonGenerator jsonGenerator;
+    if (!context.empty()) {
+        jsonGenerator.addRawJsonMember("context", context);
+    }
+    jsonGenerator.startObject("event");
+    jsonGenerator.addRawJsonMember(avsCommon::avs::constants::HEADER_KEY_STRING, header.toJson());
+    jsonGenerator.addRawJsonMember(avsCommon::avs::constants::PAYLOAD_KEY_STRING, payload);
+    jsonGenerator.finishObject();
+
+    auto request = std::make_shared<MessageRequestObserver>(m_metricRecorder, jsonGenerator.toString(), "");
     m_messageSender->sendMessage(request);
 }
 
@@ -3278,23 +3433,32 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Aud
 void AudioPlayer::attachPlaybackAttributesIfAvailable(
     rapidjson::Value& parent,
     rapidjson::Document::AllocatorType& allocator) {
-    if (!m_currentlyPlaying->mediaPlayer) {
-        return;
-    }
-
-    Optional<PlaybackAttributes> playbackAttributes = m_currentlyPlaying->mediaPlayer->getPlaybackAttributes();
-    if (!playbackAttributes.hasValue()) {
-        return;
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer = m_currentlyPlaying->mediaPlayer;
+    if (!mediaPlayer) {
+        // This is a corner case (failure while buffering, and not playing, for example)
+        if (m_currentState == AudioPlayerState::BUFFERING && !m_audioPlayQueue.empty()) {
+            mediaPlayer = m_audioPlayQueue.front()->mediaPlayer;
+        }
+        if (!mediaPlayer) {
+            ACSDK_ERROR(LX("attachPlaybackAttributesIfAvailableFailed").m("playerMissing"));
+            return;
+        }
     }
 
     rapidjson::Value jsonPlaybackAttributes(rapidjson::kObjectType);
-    jsonPlaybackAttributes.AddMember(NAME_KEY, playbackAttributes.value().name, allocator);
-    jsonPlaybackAttributes.AddMember(CODEC_KEY, playbackAttributes.value().codec, allocator);
+    Optional<PlaybackAttributes> playbackAttributes = mediaPlayer->getPlaybackAttributes();
+    bool hasAttr = playbackAttributes.hasValue();
+
+    // We need to always attach an attributes object, even if empty
+    jsonPlaybackAttributes.AddMember(NAME_KEY, (hasAttr ? playbackAttributes.value().name : ""), allocator);
+    jsonPlaybackAttributes.AddMember(CODEC_KEY, (hasAttr ? playbackAttributes.value().codec : ""), allocator);
     jsonPlaybackAttributes.AddMember(
-        SAMPLING_RATE_IN_HERTZ_KEY, static_cast<int64_t>(playbackAttributes.value().samplingRateInHertz), allocator);
+        SAMPLING_RATE_IN_HERTZ_KEY,
+        (hasAttr ? static_cast<int64_t>(playbackAttributes.value().samplingRateInHertz) : -1),
+        allocator);
     jsonPlaybackAttributes.AddMember(
         DATA_RATE_IN_BITS_PER_SECOND_KEY,
-        static_cast<int64_t>(playbackAttributes.value().dataRateInBitsPerSecond),
+        (hasAttr ? static_cast<int64_t>(playbackAttributes.value().dataRateInBitsPerSecond) : -1),
         allocator);
 
     parent.AddMember(PLAYBACK_ATTRIBUTES_KEY, jsonPlaybackAttributes, allocator);
@@ -3303,33 +3467,42 @@ void AudioPlayer::attachPlaybackAttributesIfAvailable(
 void AudioPlayer::attachPlaybackReportsIfAvailable(
     rapidjson::Value& parent,
     rapidjson::Document::AllocatorType& allocator) {
-    if (!m_currentlyPlaying->mediaPlayer) {
-        return;
+    std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer = m_currentlyPlaying->mediaPlayer;
+    if (!mediaPlayer) {
+        // This is a corner case (failure while buffering, and not playing, for example)
+        if (m_currentState == AudioPlayerState::BUFFERING && !m_audioPlayQueue.empty()) {
+            mediaPlayer = m_audioPlayQueue.front()->mediaPlayer;
+        }
+        if (!mediaPlayer) {
+            ACSDK_ERROR(LX("attachPlaybackReportsIfAvailableFailed").m("playerMissing"));
+            return;
+        }
     }
 
-    std::vector<PlaybackReport> playbackReports = m_currentlyPlaying->mediaPlayer->getPlaybackReports();
-    if (playbackReports.empty()) {
-        return;
-    }
-
+    // We need to attach a report, even if empty
     rapidjson::Value jsonPlaybackReports(rapidjson::kArrayType);
-    for (auto& report : playbackReports) {
-        rapidjson::Value jsonReport(rapidjson::kObjectType);
-        jsonReport.AddMember(START_OFFSET_KEY, static_cast<int64_t>(report.startOffset.count()), allocator);
-        jsonReport.AddMember(END_OFFSET_KEY, static_cast<int64_t>(report.endOffset.count()), allocator);
+    std::vector<PlaybackReport> playbackReports = mediaPlayer->getPlaybackReports();
+    if (!playbackReports.empty()) {
+        for (auto& report : playbackReports) {
+            rapidjson::Value jsonReport(rapidjson::kObjectType);
+            jsonReport.AddMember(START_OFFSET_KEY, static_cast<int64_t>(report.startOffset.count()), allocator);
+            jsonReport.AddMember(END_OFFSET_KEY, static_cast<int64_t>(report.endOffset.count()), allocator);
 
-        rapidjson::Value jsonPlaybackAttributes(rapidjson::kObjectType);
-        jsonPlaybackAttributes.AddMember(NAME_KEY, report.playbackAttributes.name, allocator);
-        jsonPlaybackAttributes.AddMember(CODEC_KEY, report.playbackAttributes.codec, allocator);
-        jsonPlaybackAttributes.AddMember(
-            SAMPLING_RATE_IN_HERTZ_KEY, static_cast<int64_t>(report.playbackAttributes.samplingRateInHertz), allocator);
-        jsonPlaybackAttributes.AddMember(
-            DATA_RATE_IN_BITS_PER_SECOND_KEY,
-            static_cast<int64_t>(report.playbackAttributes.dataRateInBitsPerSecond),
-            allocator);
+            rapidjson::Value jsonPlaybackAttributes(rapidjson::kObjectType);
+            jsonPlaybackAttributes.AddMember(NAME_KEY, report.playbackAttributes.name, allocator);
+            jsonPlaybackAttributes.AddMember(CODEC_KEY, report.playbackAttributes.codec, allocator);
+            jsonPlaybackAttributes.AddMember(
+                SAMPLING_RATE_IN_HERTZ_KEY,
+                static_cast<int64_t>(report.playbackAttributes.samplingRateInHertz),
+                allocator);
+            jsonPlaybackAttributes.AddMember(
+                DATA_RATE_IN_BITS_PER_SECOND_KEY,
+                static_cast<int64_t>(report.playbackAttributes.dataRateInBitsPerSecond),
+                allocator);
 
-        jsonReport.AddMember(PLAYBACK_ATTRIBUTES_KEY, jsonPlaybackAttributes, allocator);
-        jsonPlaybackReports.PushBack(jsonReport, allocator);
+            jsonReport.AddMember(PLAYBACK_ATTRIBUTES_KEY, jsonPlaybackAttributes, allocator);
+            jsonPlaybackReports.PushBack(jsonReport, allocator);
+        }
     }
     parent.AddMember(PLAYBACK_REPORTS_KEY, jsonPlaybackReports, allocator);
 }
@@ -3353,13 +3526,6 @@ void AudioPlayer::parseHeadersFromPlayDirective(const rapidjson::Value& httpHead
                 DataPointCounterBuilder{}.setName(INVALID_HEADER_RECEIVED).increment(1).build(),
                 "",
                 audioItem->stream.token);
-        } else {
-            submitMetric(
-                m_metricRecorder,
-                AUDIO_PLAYER_METRIC_PREFIX + INVALID_HEADER_RECEIVED,
-                DataPointCounterBuilder{}.setName(INVALID_HEADER_RECEIVED).increment(0).build(),
-                "",
-                audioItem->stream.token);
         }
         if (!isValid.second) {
             ACSDK_WARN(LX(__FUNCTION__).m("Malicious data found"));
@@ -3367,13 +3533,6 @@ void AudioPlayer::parseHeadersFromPlayDirective(const rapidjson::Value& httpHead
                 m_metricRecorder,
                 AUDIO_PLAYER_METRIC_PREFIX + MALICIOUS_HEADER_RECEIVED,
                 DataPointCounterBuilder{}.setName(MALICIOUS_HEADER_RECEIVED).increment(1).build(),
-                "",
-                audioItem->stream.token);
-        } else {
-            submitMetric(
-                m_metricRecorder,
-                AUDIO_PLAYER_METRIC_PREFIX + MALICIOUS_HEADER_RECEIVED,
-                DataPointCounterBuilder{}.setName(MALICIOUS_HEADER_RECEIVED).increment(0).build(),
                 "",
                 audioItem->stream.token);
         }

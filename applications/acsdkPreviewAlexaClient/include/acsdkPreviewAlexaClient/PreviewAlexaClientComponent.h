@@ -22,11 +22,15 @@
 
 #include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothLocalInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
 #include <acsdkDeviceSetupInterfaces/DeviceSetupInterface.h>
 #include <acsdkEqualizerInterfaces/EqualizerModeControllerInterface.h>
 #include <acsdkEqualizerInterfaces/EqualizerRuntimeSetupInterface.h>
 #include <acsdkInteractionModelInterfaces/InteractionModelNotifierInterface.h>
+#include <acsdkKWDImplementations/AbstractKeywordDetector.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownManagerInterface.h>
 #include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
@@ -81,12 +85,14 @@ using PreviewAlexaClientComponent = acsdkManufactory::Component<
     std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>,
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
     std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
     std::shared_ptr<acsdkExternalMediaPlayerInterfaces::ExternalMediaPlayerInterface>,
     std::shared_ptr<acsdkInteractionModelInterfaces::InteractionModelNotifierInterface>,
+    std::shared_ptr<acsdkKWDImplementations::AbstractKeywordDetector>,
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsNotifierInterface>,
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>,
     std::shared_ptr<acsdkStartupManagerInterfaces::StartupManagerInterface>,
@@ -132,7 +138,9 @@ using PreviewAlexaClientComponent = acsdkManufactory::Component<
     std::shared_ptr<sampleApp::UIManager>,
     std::shared_ptr<settings::DeviceSettingsManager>,
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
-    std::shared_ptr<speechencoder::SpeechEncoder>>;
+    std::shared_ptr<speechencoder::SpeechEncoder>,
+    std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>,
+    std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>;
 
 /**
  * Get the manufactory @c Component for PreviewAlexaClient.

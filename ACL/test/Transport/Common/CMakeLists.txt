@@ -11,6 +11,5 @@ if (BUILD_TESTING)
         "${ACL_SOURCE_DIR}/test/Transport")
     target_link_libraries(ACLTransportCommonTestLib
         AVSCommon
-        gtest_main
         gmock_main)
 endif()

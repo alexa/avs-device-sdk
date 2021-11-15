@@ -209,6 +209,14 @@ static const std::string WW_DURATION_ACTIVITY_NAME = METRIC_ACTIVITY_NAME_PREFIX
 static const std::string STOP_CAPTURE_RECEIVED = "STOP_CAPTURE";
 static const std::string STOP_CAPTURE_RECEIVED_ACTIVITY_NAME = METRIC_ACTIVITY_NAME_PREFIX_AIP + STOP_CAPTURE_RECEIVED;
 
+/// The duration metric for acquire power resource
+static const std::string ACQUIRE_POWER_RESOURCE = "ACQUIRE_POWER_RESOURCE";
+static const std::string ACQUIRE_POWER_RESOURCE_ACTIVITY = METRIC_ACTIVITY_NAME_PREFIX_AIP + ACQUIRE_POWER_RESOURCE;
+
+/// The duration metric for release power resource
+static const std::string RELEASE_POWER_RESOURCE = "RELEASE_POWER_RESOURCE";
+static const std::string RELEASE_POWER_RESOURCE_ACTIVITY = METRIC_ACTIVITY_NAME_PREFIX_AIP + RELEASE_POWER_RESOURCE;
+
 /// End of Speech Offset Received Activity Name for AIP metric source
 static const std::string END_OF_SPEECH_OFFSET_RECEIVED = "END_OF_SPEECH_OFFSET";
 static const std::string END_OF_SPEECH_OFFSET_RECEIVED_ACTIVITY_NAME =
@@ -232,6 +240,15 @@ static const std::string AUDIO_ENCODING_FORMAT_LPCM = "LPCMAudioEncoding";
 
 /// The default resolveKey used as a placeholder when only one encoding format is configured for @c AudioInputProcessor
 static const std::string DEFAULT_RESOLVE_KEY = "DEFAULT_RESOLVE_KEY";
+
+/// Keys for instance entry metric specific fields
+static const std::string ENTRY_METRIC_ACTOR_NAME = "AudioInputProcessor";
+static const std::string ENTRY_METRIC_ACTIVITY_NAME = METRIC_ACTIVITY_NAME_PREFIX_AIP + ENTRY_METRIC_ACTOR_NAME;
+static const std::string ENTRY_METRIC_KEY_SEGMENT_ID = "segment_id";
+static const std::string ENTRY_METRIC_KEY_ACTOR = "actor";
+static const std::string ENTRY_METRIC_KEY_ENTRY_TYPE = "entry_type";
+static const std::string ENTRY_METRIC_KEY_ENTRY_NAME = "entry_name";
+static const std::string ENTRY_METRIC_NAME_STATE_CHANGE = "StateChange";
 
 /// Preroll duration is a fixed 500ms.
 static const std::chrono::milliseconds PREROLL_DURATION = std::chrono::milliseconds(500);
@@ -314,6 +331,42 @@ static void submitMetric(
         return;
     }
     recordMetric(metricRecorder, metricEvent);
+}
+
+/**
+ * Creates and records an instance entry metric with the given identifiers and metadata.
+ * @param metricRecorder The @c MetricRecorderInterface which records Metric events.
+ * @param segmentId The segmentId corresponding to this metric event.
+ * @param name The name of this metric
+ * @param metadata Any metadata to be associated with this metric; default is empty
+ */
+static void submitInstanceEntryMetric(
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    const std::string& segmentId,
+    const std::string& name,
+    const std::map<std::string, std::string>& metadata = {}) {
+    if (segmentId.empty() || name.empty()) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Unable to create instance metric").d("segmentId", segmentId).d("name", name));
+        return;
+    }
+
+    auto metricBuilder = MetricEventBuilder{}.setActivityName(ENTRY_METRIC_ACTIVITY_NAME);
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_SEGMENT_ID).setValue(segmentId).build());
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_ACTOR).setValue(ENTRY_METRIC_ACTOR_NAME).build());
+    metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_ENTRY_NAME).setValue(name).build());
+    metricBuilder.addDataPoint(
+        DataPointStringBuilder{}.setName(ENTRY_METRIC_KEY_ENTRY_TYPE).setValue("INSTANCE").build());
+    for (auto const& pair : metadata) {
+        metricBuilder.addDataPoint(DataPointStringBuilder{}.setName(pair.first).setValue(pair.second).build());
+    }
+    auto metric = metricBuilder.build();
+    if (metric == nullptr) {
+        ACSDK_ERROR(LX(__FUNCTION__).m("Error creating instance entry metric."));
+        return;
+    }
+    recordMetric(metricRecorder, metric);
 }
 
 /**
@@ -651,6 +704,7 @@ AudioInputProcessor::AudioInputProcessor(
         m_expectSpeechTimeoutHandler{expectSpeechTimeoutHandler},
         m_timeSinceLastResumeMS{std::chrono::milliseconds(0)},
         m_timeSinceLastPartialMS{std::chrono::milliseconds(0)},
+        m_resourceFlags{0},
         m_usingEncoder{false},
         m_messageRequestResolver{nullptr},
         m_encodingAudioFormats{{DEFAULT_RESOLVE_KEY, AudioFormat::Encoding::LPCM}} {
@@ -1224,6 +1278,10 @@ bool AudioInputProcessor::executeRecognize(
                               .setName("TIME_SINCE_PARTIAL_ID")
                               .setValue(std::to_string(m_timeSinceLastPartialMS.count()))
                               .build())
+            .addDataPoint(DataPointStringBuilder{}
+                              .setName("RESOURCE_TYPE_ID")
+                              .setValue(std::to_string(m_resourceFlags.to_ulong()))
+                              .build())
             .addDataPoint(DataPointCounterBuilder{}.setName(START_OF_UTTERANCE).increment(1).build()),
         m_preCachedDialogRequestId);
 
@@ -1259,6 +1317,12 @@ bool AudioInputProcessor::executeRecognize(
             m_preCachedDialogRequestId);
         ACSDK_DEBUG(LX(__func__).d("WW_DURATION(ms)", duration.count()));
     }
+
+    submitInstanceEntryMetric(
+        m_metricRecorder,
+        m_preCachedDialogRequestId,
+        START_OF_UTTERANCE,
+        std::map<std::string, std::string>{{"initiator", !initiatorString.empty() ? initiatorString : "unknown"}});
 
     return true;
 }
@@ -1567,7 +1631,19 @@ void AudioInputProcessor::setState(ObserverInterface::State state) {
 
     // Reset the user inactivity if transitioning to or from `RECOGNIZING` state.
     if (ObserverInterface::State::RECOGNIZING == m_state || ObserverInterface::State::RECOGNIZING == state) {
-        m_userInactivityMonitor->onUserActive();
+        m_executor.submit([this]() { m_userInactivityMonitor->onUserActive(); });
+    }
+
+    auto currentDialogRequestId =
+        m_preCachedDialogRequestId.empty() ? m_directiveSequencer->getDialogRequestId() : m_preCachedDialogRequestId;
+    ACSDK_DEBUG5(LX(__func__).d("currentDialogRequestId", currentDialogRequestId));
+    if (!currentDialogRequestId.empty()) {
+        submitInstanceEntryMetric(
+            m_metricRecorder,
+            currentDialogRequestId,
+            ENTRY_METRIC_NAME_STATE_CHANGE,
+            std::map<std::string, std::string>{{"from", ObserverInterface::stateToString(m_state)},
+                                               {"to", ObserverInterface::stateToString(state)}});
     }
 
     ACSDK_DEBUG(LX("setState").d("from", m_state).d("to", state));
@@ -1791,18 +1867,35 @@ void AudioInputProcessor::managePowerResource(ObserverInterface::State newState)
     if (!m_powerResourceId) {
         return;
     }
-
+    auto startTime = steady_clock::now();
     ACSDK_DEBUG5(LX(__func__).d("state", newState));
     switch (newState) {
         case ObserverInterface::State::RECOGNIZING:
         case ObserverInterface::State::EXPECTING_SPEECH:
             m_powerResourceManager->acquire(m_powerResourceId);
             m_timeSinceLastResumeMS = m_powerResourceManager->getTimeSinceLastResumeMS();
-            m_timeSinceLastPartialMS = m_powerResourceManager->getTimeSinceLastPartialMS(POWER_RESOURCE_COMPONENT_NAME);
+            m_timeSinceLastPartialMS =
+                m_powerResourceManager->getTimeSinceLastPartialMS(POWER_RESOURCE_COMPONENT_NAME, m_resourceFlags);
+            submitMetric(
+                m_metricRecorder,
+                MetricEventBuilder{}
+                    .setActivityName(ACQUIRE_POWER_RESOURCE_ACTIVITY)
+                    .addDataPoint(DataPointDurationBuilder{duration_cast<milliseconds>(steady_clock::now() - startTime)}
+                                      .setName(ACQUIRE_POWER_RESOURCE)
+                                      .build()),
+                m_preCachedDialogRequestId);
             break;
         case ObserverInterface::State::BUSY:
         case ObserverInterface::State::IDLE:
             m_powerResourceManager->release(m_powerResourceId);
+            submitMetric(
+                m_metricRecorder,
+                MetricEventBuilder{}
+                    .setActivityName(RELEASE_POWER_RESOURCE_ACTIVITY)
+                    .addDataPoint(DataPointDurationBuilder{duration_cast<milliseconds>(steady_clock::now() - startTime)}
+                                      .setName(RELEASE_POWER_RESOURCE)
+                                      .build()),
+                m_preCachedDialogRequestId);
             break;
     }
 }

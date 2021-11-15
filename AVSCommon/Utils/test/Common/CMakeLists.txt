@@ -5,11 +5,13 @@ if (BUILD_TESTING)
       MockMediaPlayer.cpp
       MockHTTP2MimeRequestEncodeSource.cpp
       MockHTTP2MimeResponseDecodeSink.cpp
+      MockRequiresShutdown.cpp
       Common.cpp
       MimeUtils.cpp
       TestableAttachmentManager.cpp
       TestableAttachmentWriter.cpp
       TestableMessageObserver.cpp
+      TestTrace.cpp
       Timing/StopTaskTimer.cpp)
     target_include_directories(UtilsCommonTestLib PUBLIC
         "${AVSCommon_INCLUDE_DIRS}"
@@ -17,6 +19,5 @@ if (BUILD_TESTING)
         "${AVSCommon_SOURCE_DIR}/Utils/test")
     target_link_libraries(UtilsCommonTestLib
             AVSCommon
-            gtest_main
             gmock_main)
 endif()

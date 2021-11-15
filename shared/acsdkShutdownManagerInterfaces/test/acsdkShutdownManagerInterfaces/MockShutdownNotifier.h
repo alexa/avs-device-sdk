@@ -32,6 +32,10 @@ public:
 
     MOCK_METHOD1(removeObserver, void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>& observer));
 
+    MOCK_METHOD1(addWeakPtrObserver, void(const std::weak_ptr<avsCommon::utils::RequiresShutdown>& observer));
+
+    MOCK_METHOD1(removeWeakPtrObserver, void(const std::weak_ptr<avsCommon::utils::RequiresShutdown>& observer));
+
     MOCK_METHOD1(
         notifyObservers,
         void(std::function<void(const std::shared_ptr<avsCommon::utils::RequiresShutdown>&)>));

@@ -45,7 +45,7 @@ static const std::string TAG("PingHandler");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -53,7 +53,7 @@ std::shared_ptr<PingHandler> PingHandler::create(
     std::shared_ptr<ExchangeHandlerContextInterface> context,
     const std::string& authToken,
     const std::shared_ptr<PowerResource>& powerResource) {
-    ACSDK_DEBUG5(LX(__func__).d("context", context.get()));
+    ACSDK_DEBUG5(LX("create").d("context", context.get()));
 
     if (!context) {
         ACSDK_CRITICAL(LX("createFailed").d("reason", "nullContext"));
@@ -92,7 +92,7 @@ PingHandler::PingHandler(
         m_wasPingAcknowledgedReported{false},
         m_responseCode{0},
         m_powerResource{powerResource} {
-    ACSDK_DEBUG5(LX(__func__).d("context", context.get()));
+    ACSDK_DEBUG5(LX("init").d("context", context.get()));
 
     if (m_powerResource) {
         m_powerResource->acquire();
@@ -100,13 +100,14 @@ PingHandler::PingHandler(
 }
 
 PingHandler::~PingHandler() {
+    ACSDK_DEBUG5(LX("destroy"));
     if (m_powerResource) {
         m_powerResource->release();
     }
 }
 
 void PingHandler::reportPingAcknowledged() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("reportPingAcknowledged"));
     if (!m_wasPingAcknowledgedReported) {
         m_wasPingAcknowledgedReported = true;
         m_context->onPingRequestAcknowledged(
@@ -115,17 +116,17 @@ void PingHandler::reportPingAcknowledged() {
 }
 
 std::vector<std::string> PingHandler::getRequestHeaderLines() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getRequestHeaderLines"));
     return {m_authHeader};
 }
 
 HTTP2SendDataResult PingHandler::onSendData(char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size));
+    ACSDK_DEBUG5(LX("onSendData").d("size", size));
     return HTTP2SendDataResult::COMPLETE;
 }
 
 bool PingHandler::onReceiveResponseCode(long responseCode) {
-    ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
+    ACSDK_DEBUG5(LX("onReceiveResponseCode").d("responseCode", responseCode));
 
     if (HTTPResponseCode::CLIENT_ERROR_FORBIDDEN == intToHTTPResponseCode(responseCode)) {
         m_context->onForbidden(m_authToken);
@@ -138,19 +139,19 @@ bool PingHandler::onReceiveResponseCode(long responseCode) {
 }
 
 bool PingHandler::onReceiveHeaderLine(const std::string& line) {
-    ACSDK_DEBUG5(LX(__func__).d("line", line));
+    ACSDK_DEBUG5(LX("onReceiveHeaderLine").d("line", line));
     m_context->onActivity();
     return true;
 }
 
 HTTP2ReceiveDataStatus PingHandler::onReceiveData(const char* bytes, size_t size) {
-    ACSDK_DEBUG5(LX(__func__).d("size", size));
+    ACSDK_DEBUG5(LX("onReceiveData").d("size", size));
     m_context->onActivity();
     return HTTP2ReceiveDataStatus::SUCCESS;
 }
 
 void PingHandler::onResponseFinished(HTTP2ResponseFinishedStatus status) {
-    ACSDK_DEBUG5(LX(__func__).d("status", status));
+    ACSDK_DEBUG5(LX("onResponseFinished").d("status", status));
     switch (status) {
         case HTTP2ResponseFinishedStatus::COMPLETE:
             reportPingAcknowledged();

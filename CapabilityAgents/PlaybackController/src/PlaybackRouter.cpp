@@ -147,7 +147,7 @@ bool PlaybackRouter::localOperation(LocalPlaybackHandlerInterface::PlaybackOpera
     if (useFallback) {
         switch (op) {
             case LocalPlaybackHandlerInterface::PlaybackOperation::STOP_PLAYBACK:
-            case LocalPlaybackHandlerInterface::PlaybackOperation::PAUSE_PLAYBACK:
+            case LocalPlaybackHandlerInterface::PlaybackOperation::RESUMABLE_STOP:
                 buttonPressed(PlaybackButton::PAUSE);
                 break;
             case LocalPlaybackHandlerInterface::PlaybackOperation::RESUME_PLAYBACK:

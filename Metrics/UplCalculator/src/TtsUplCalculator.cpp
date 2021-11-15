@@ -174,8 +174,12 @@ void TtsUplCalculator::calculateTtsUpl() {
                                         .setName(DIALOG_REQUEST_ID_TAG)
                                         .setValue(m_uplData->getStringData(DIALOG_REQUEST_ID_TAG))
                                         .build());
-
-    m_metricRecorder->recordMetric(metricEventBuilder.build());
+    auto metricsRecorder = m_metricRecorder.lock();
+    if (metricsRecorder) {
+        metricsRecorder->recordMetric(metricEventBuilder.build());
+    } else {
+        ACSDK_ERROR(LX("calculateTtsUplFailed").d("reason", "nullMetricRecorder"));
+    }
     inhibitSubmission();
 }
 

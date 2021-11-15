@@ -50,6 +50,39 @@ struct AudioProvider {
         bool canBeOverridden);
 
     /**
+     * This function provides an @c AudioProvider for a TapToTalk Interaction.
+     *
+     * @param stream The @c ByteStream to use for audio input.
+     * @param format The @c AudioFormat of the data in @c byteStream.
+     * @return A TapToTalk configured @c AudioProvider.
+     */
+    static AudioProvider TapAudioProvider(
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        const avsCommon::utils::AudioFormat& format);
+
+    /**
+     * This function provides an @c AudioProvider for a Wakeword Interaction.
+     *
+     * @param stream The @c ByteStream to use for audio input.
+     * @param format The @c AudioFormat of the data in @c byteStream.
+     * @return A Wakeword configured @c AudioProvider.
+     */
+    static AudioProvider WakeAudioProvider(
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        const avsCommon::utils::AudioFormat& format);
+
+    /**
+     * This function provides an @c AudioProvider for a HoldToTalk Interaction.
+     *
+     * @param stream The @c ByteStream to use for audio input.
+     * @param format The @c AudioFormat of the data in @c byteStream.
+     * @return A HoldToTalk configured @c AudioProvider.
+     */
+    static AudioProvider HoldAudioProvider(
+        std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+        const avsCommon::utils::AudioFormat& format);
+
+    /**
      * This function provides an invalid AudioProvider which has no stream associated with it.
      *
      * @return An invalid AudioProvider which has no stream associated with it.
@@ -99,6 +132,40 @@ inline AudioProvider::AudioProvider(
         alwaysReadable{alwaysReadable},
         canOverride{canOverride},
         canBeOverridden{canBeOverridden} {
+}
+
+inline AudioProvider AudioProvider::TapAudioProvider(
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    const avsCommon::utils::AudioFormat& format) {
+    bool alwaysReadable = true;
+    bool canOverride = true;
+    bool canBeOverridden = true;
+    AudioProvider tapProvider{stream, format, ASRProfile::NEAR_FIELD, alwaysReadable, canOverride, canBeOverridden};
+
+    return tapProvider;
+}
+
+inline AudioProvider AudioProvider::WakeAudioProvider(
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    const avsCommon::utils::AudioFormat& format) {
+    bool alwaysReadable = true;
+    bool canOverride = false;
+    bool canBeOverridden = true;
+    AudioProvider WakeAudioProvider{
+        stream, format, ASRProfile::NEAR_FIELD, alwaysReadable, canOverride, canBeOverridden};
+
+    return WakeAudioProvider;
+}
+
+inline AudioProvider AudioProvider::HoldAudioProvider(
+    std::shared_ptr<avsCommon::avs::AudioInputStream> stream,
+    const avsCommon::utils::AudioFormat& format) {
+    bool alwaysReadable = false;
+    bool canOverride = true;
+    bool canBeOverridden = false;
+    AudioProvider HoldProvider{stream, format, ASRProfile::CLOSE_TALK, alwaysReadable, canOverride, canBeOverridden};
+
+    return HoldProvider;
 }
 
 inline const AudioProvider& AudioProvider::null() {

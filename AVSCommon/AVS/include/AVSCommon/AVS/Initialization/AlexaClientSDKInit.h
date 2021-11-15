@@ -67,7 +67,7 @@ public:
      */
     ~AlexaClientSDKInit();
 
-    /*
+    /**
      * Checks whether the Alexa Client SDK has been initialized.
      *
      * @return Whether the Alexa Client SDK has been initialized.
@@ -121,6 +121,17 @@ public:
     static void uninitialize();
 
 private:
+    /**
+     * Cleanup resources activated during the initialization of the Alexa Client SDK.
+     *
+     * You should call cleanup() when resources must be released before exiting.
+     *
+     * This function must be called when no other threads in the process are running. this function
+     * is not thread safe. This requirement is present because cleanup() calls functions of other
+     * libraries that have the same requirements and thread safety.
+     */
+    static void cleanup();
+
     /// Tracks whether we've initialized the Alexa Client SDK or not
     static std::atomic_int g_isInitialized;
 };

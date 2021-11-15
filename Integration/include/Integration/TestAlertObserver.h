@@ -30,11 +30,7 @@ namespace test {
 
 class TestAlertObserver : public acsdkAlertsInterfaces::AlertObserverInterface {
 public:
-    void onAlertStateChange(
-        const std::string& alertToken,
-        const std::string& alertType,
-        State state,
-        const std::string& reason) override;
+    void onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) override;
 
     class changedAlert {
     public:

@@ -29,6 +29,7 @@
 #include <AVSCommon/Utils/PromiseFuturePair.h>
 #include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/HTTP2/HTTP2RequestConfig.h>
+#include <AVSCommon/Utils/Logger/TestTrace.h>
 #include <AVSCommon/Utils/Metrics/MockMetricRecorder.h>
 
 #include "MockAuthDelegate.h"
@@ -56,6 +57,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::http;
 using namespace avsCommon::utils::http2;
 using namespace avsCommon::utils::http2::test;
+using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::metrics::test;
 using namespace avsCommon::utils::observer::test;
 using namespace ::testing;
@@ -163,17 +165,6 @@ public:
 
 protected:
     /**
-     * Setup the handlers for the mocked methods @c AuthDelegateInterface::addAuthObserver(), @c
-     * PostConnectFactoryInterface::createPostConnect() , @c  PostConnectInterface::doPostConnect() , @c
-     * TransportObserverInterface::onConnected().
-     *
-     * @param sendOnPostConnected A boolean to specify whether to send onPostConnected() event when @c
-     * PostConnectInterface::doPostConnect() is called.
-     * @param expectConnected Specify that a call to TransportObserverInterface::onConnected() is expected.
-     */
-    void setupHandlers(bool sendOnPostConnected, bool expectConnected);
-
-    /**
      * Helper function to send @c Refreshed Auth State to the @c HTTP2Transport observer.
      * It also checks that a proper Auth observer has been registered by @c HTTP2Transport.
      */
@@ -183,6 +174,26 @@ protected:
      * Helper function to put the @c HTTP2Transport into connected state.
      */
     void authorizeAndConnect();
+
+    /**
+     * Setup expectations that @c HTTP2Transport gets connected.
+     */
+    void expectConnectedNotification();
+
+    /**
+     * Setup authentication expectations.
+     */
+    void expectAuthentication();
+
+    /**
+     * Setup expectations that @c HTTP2Transport goes through post-connect.
+     */
+    void expectOnPostConnect();
+
+    /**
+     * Setup expectations that @c HTTP2Transport enters post connect.
+     */
+    void expectPostConnectStarted();
 
     /// The HTTP2Transport instance to be tested.
     std::shared_ptr<HTTP2Transport> m_http2Transport;
@@ -264,51 +275,55 @@ void HTTP2TransportTest::TearDown() {
     m_http2Transport->shutdown();
 }
 
-void HTTP2TransportTest::setupHandlers(bool sendOnPostConnected, bool expectConnected) {
-    Sequence s1, s2;
-
-    // Enforced ordering of mock method calls:
-    // addAuthObserver should be before onConnected
-    // createPostConnect should be before doPostConnect
-
+void HTTP2TransportTest::expectAuthentication() {
     // Handle AuthDelegateInterface::addAuthObserver() when called.
     EXPECT_CALL(*m_mockAuthDelegate, addAuthObserver(_))
-        .InSequence(s1)
         .WillOnce(Invoke([this](std::shared_ptr<avsCommon::sdkInterfaces::AuthObserverInterface> argAuthObserver) {
             m_authObserverSet.setValue(argAuthObserver);
         }));
+}
 
-    {
-        InSequence dummy;
+void HTTP2TransportTest::expectOnPostConnect() {
+    // Handle PostConnectFactoryInterface::createPostConnect() when called.
+    EXPECT_CALL(*m_mockPostConnectFactory, createPostConnect()).WillOnce(InvokeWithoutArgs([this] {
+        m_createPostConnectCalled.setValue();
+        return m_mockPostConnect;
+    }));
 
-        // Handle PostConnectFactoryInterface::createPostConnect() when called.
-        EXPECT_CALL(*m_mockPostConnectFactory, createPostConnect()).WillOnce(InvokeWithoutArgs([this] {
-            m_createPostConnectCalled.setValue();
-            return m_mockPostConnect;
+    // Handle PostConnectInterface::doPostConnect() when called.
+    EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
+        .WillOnce(Invoke([this](
+                             std::shared_ptr<MessageSenderInterface> postConnectSender,
+                             std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
+            m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
+            postConnectObserver->onPostConnected();
+            return true;
         }));
+}
 
-        // Handle PostConnectInterface::doPostConnect() when called.
-        EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
-            .InSequence(s2)
-            .WillOnce(Invoke([this, sendOnPostConnected](
-                                 std::shared_ptr<MessageSenderInterface> postConnectSender,
-                                 std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
-                m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
-                if (sendOnPostConnected) {
-                    postConnectObserver->onPostConnected();
-                }
-                return true;
-            }));
-    }
+void HTTP2TransportTest::expectPostConnectStarted() {
+    // Handle PostConnectFactoryInterface::createPostConnect() when called.
+    EXPECT_CALL(*m_mockPostConnectFactory, createPostConnect()).WillOnce(InvokeWithoutArgs([this] {
+        m_createPostConnectCalled.setValue();
+        return m_mockPostConnect;
+    }));
 
-    if (expectConnected) {
-        // Handle TransportObserverInterface::onConnected() when called.
-        EXPECT_CALL(*m_mockTransportObserver, onConnected(_))
-            .InSequence(s1, s2)
-            .WillOnce(Invoke([this](std::shared_ptr<TransportInterface> transport) { m_transportConnected.setValue(); })
+    // Handle PostConnectInterface::doPostConnect() when called.
+    EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
+        .WillOnce(Invoke([this](
+                             std::shared_ptr<MessageSenderInterface> postConnectSender,
+                             std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
+            m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
+            return true;
+        }));
+}
 
-            );
-    }
+void HTTP2TransportTest::expectConnectedNotification() {
+    // Handle TransportObserverInterface::onConnected() when called.
+    EXPECT_CALL(*m_mockTransportObserver, onConnected(_))
+        .WillOnce(Invoke([this](std::shared_ptr<TransportInterface> transport) { m_transportConnected.setValue(); })
+
+        );
 }
 
 void HTTP2TransportTest::sendAuthStateRefreshed() {
@@ -328,7 +343,12 @@ void HTTP2TransportTest::sendAuthStateRefreshed() {
 }
 
 void HTTP2TransportTest::authorizeAndConnect() {
-    setupHandlers(true, true);
+    {
+        InSequence sequence;
+        expectAuthentication();
+        expectOnPostConnect();
+        expectConnectedNotification();
+    }
 
     // Call connect().
     m_http2Transport->connect();
@@ -355,7 +375,7 @@ TEST_F(HTTP2TransportTest, testSlow_emptyAuthToken) {
     // Send an empty Auth token.
     m_mockAuthDelegate->setAuthToken("");
 
-    setupHandlers(false, false);
+    expectAuthentication();
 
     m_http2Transport->connect();
 
@@ -375,7 +395,7 @@ TEST_F(HTTP2TransportTest, testSlow_emptyAuthToken) {
  * Test waiting for AuthDelegateInterface.
  */
 TEST_F(HTTP2TransportTest, testSlow_waitAuthDelegateInterface) {
-    setupHandlers(false, false);
+    expectAuthentication();
 
     m_http2Transport->connect();
 
@@ -397,7 +417,7 @@ TEST_F(HTTP2TransportTest, testSlow_waitAuthDelegateInterface) {
  * Test verifying the proper inclusion of bearer token in requests.
  */
 TEST_F(HTTP2TransportTest, test_bearerTokenInRequest) {
-    setupHandlers(false, false);
+    expectAuthentication();
 
     m_mockHttp2Connection->setWaitRequestHeader(HTTP_AUTHORIZATION_HEADER_BEARER);
 
@@ -413,7 +433,11 @@ TEST_F(HTTP2TransportTest, test_bearerTokenInRequest) {
  * Test creation and triggering of post-connect object.
  */
 TEST_F(HTTP2TransportTest, test_triggerPostConnectObject) {
-    setupHandlers(false, false);
+    {
+        InSequence sequence;
+        expectAuthentication();
+        expectPostConnectStarted();
+    }
 
     // Don't expect TransportObserverInterface::onConnected() will be called.
     EXPECT_CALL(*m_mockTransportObserver, onConnected(_)).Times(0);
@@ -439,7 +463,12 @@ TEST_F(HTTP2TransportTest, test_triggerPostConnectObject) {
  * Test delay of connection status until post-connect object created / notifies success.
  */
 TEST_F(HTTP2TransportTest, test_connectionStatusOnPostConnect) {
-    setupHandlers(true, true);
+    {
+        InSequence sequence;
+        expectAuthentication();
+        expectOnPostConnect();
+        expectConnectedNotification();
+    }
 
     // Call connect().
     m_http2Transport->connect();
@@ -463,7 +492,7 @@ TEST_F(HTTP2TransportTest, test_connectionStatusOnPostConnect) {
  * Test retry upon failed downchannel connection.
  */
 TEST_F(HTTP2TransportTest, testSlow_retryOnDownchannelConnectionFailure) {
-    setupHandlers(false, false);
+    expectAuthentication();
 
     EXPECT_CALL(*m_mockTransportObserver, onConnected(_)).Times(0);
 
@@ -486,13 +515,20 @@ TEST_F(HTTP2TransportTest, testSlow_retryOnDownchannelConnectionFailure) {
  * Test sending of MessageRequest content.
  */
 TEST_F(HTTP2TransportTest, test_messageRequestContent) {
-    setupHandlers(false, false);
+    {
+        InSequence sequence;
+        expectAuthentication();
+        expectPostConnectStarted();
+    }
 
     // Call connect().
+    TestTrace trace;
     m_http2Transport->connect();
+    trace.log("connect");
 
     // Deliver a 'REFRESHED' status to observers of AuthDelegateInterface.
     sendAuthStateRefreshed();
+    trace.log("authRefreshed");
 
     ASSERT_TRUE(m_mockHttp2Connection->respondToDownchannelRequests(
         static_cast<long>(HTTPResponseCode::SUCCESS_OK), false, RESPONSE_TIMEOUT));
@@ -506,6 +542,7 @@ TEST_F(HTTP2TransportTest, test_messageRequestContent) {
 
     // Wait for the postConnect message to become HTTP message request and HTTP body to be fully reassembled.
     auto postMessage = m_mockHttp2Connection->waitForPostRequest(LONG_RESPONSE_TIMEOUT);
+
     ASSERT_NE(postMessage, nullptr);
 
     // The number of MIME parts decoded should just be 1.
@@ -529,7 +566,11 @@ TEST_F(HTTP2TransportTest, test_messageRequestWithAttachment) {
         avsCommon::avs::attachment::AttachmentUtils::createAttachmentReader(attachment);
     ASSERT_NE(attachmentReader, nullptr);
 
-    setupHandlers(false, false);
+    {
+        InSequence sequence;
+        expectAuthentication();
+        expectPostConnectStarted();
+    }
 
     // Call connect().
     m_http2Transport->connect();
@@ -570,7 +611,11 @@ TEST_F(HTTP2TransportTest, test_messageRequestWithAttachment) {
  * Test pause of sending message when attachment buffer (SDS) empty but not closed.
  */
 TEST_F(HTTP2TransportTest, test_pauseSendWhenSDSEmpty) {
-    setupHandlers(false, false);
+    {
+        InSequence sequence;
+        expectAuthentication();
+        expectPostConnectStarted();
+    }
 
     // Call connect().
     m_http2Transport->connect();
@@ -1292,20 +1337,24 @@ TEST_F(HTTP2TransportTest, testSlow_avsStreamsLimit) {
  * ChangeReason as UNRECOVERABLE_ERROR
  */
 TEST_F(HTTP2TransportTest, test_onPostConnectFailureInitiatesShutdownAndNotifiesObservers) {
+    TestTrace trace;
     InSequence dummy;
+    expectAuthentication();
 
     // Handle PostConnectFactoryInterface::createPostConnect() when called.
-    EXPECT_CALL(*m_mockPostConnectFactory, createPostConnect()).WillOnce(InvokeWithoutArgs([this] {
+    EXPECT_CALL(*m_mockPostConnectFactory, createPostConnect()).WillOnce(InvokeWithoutArgs([this, &trace] {
+        trace.log("createPostConnect");
         m_createPostConnectCalled.setValue();
         return m_mockPostConnect;
     }));
 
     // Handle PostConnectInterface::doPostConnect() when called.
     EXPECT_CALL(*m_mockPostConnect, doPostConnect(_, _))
-        .WillOnce(Invoke([this](
+        .WillOnce(Invoke([this, &trace](
                              std::shared_ptr<MessageSenderInterface> postConnectSender,
                              std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
             m_doPostConnected.setValue(std::make_pair(postConnectSender, postConnectObserver));
+            trace.log("doPostConnect");
             postConnectObserver->onUnRecoverablePostConnectFailure();
             return true;
         }));
@@ -1322,6 +1371,16 @@ TEST_F(HTTP2TransportTest, test_onPostConnectFailureInitiatesShutdownAndNotifies
         }));
 
     m_http2Transport->connect();
+    trace.log("connect");
+
+    // Deliver a 'REFRESHED' status to observers of AuthDelegateInterface.
+    sendAuthStateRefreshed();
+    trace.log("sendAuthStateRefreshed");
+
+    // The Mock HTTP2Request replies to any downchannel request with 200.
+    ASSERT_TRUE(m_mockHttp2Connection->respondToDownchannelRequests(
+        static_cast<long>(HTTPResponseCode::SUCCESS_OK), false, RESPONSE_TIMEOUT));
+    trace.log("triggerConnectionAck");
 
     ASSERT_TRUE(m_doPostConnected.waitFor(RESPONSE_TIMEOUT));
     ASSERT_TRUE(gotOnDisconnected.waitFor(RESPONSE_TIMEOUT));

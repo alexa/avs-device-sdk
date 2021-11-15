@@ -109,9 +109,18 @@ public:
     /**
      * Get the default locale.
      *
+     * @deprecated Use getDefaultLocales
+     *
      * @return The default locale.
      */
     virtual Locale getDefaultLocale() const = 0;
+
+    /**
+     * Get the default multilingual locales.
+     *
+     * @return The default multilingual locales.
+     */
+    virtual Locales getDefaultLocales() const;
 
     /**
      * Get the default valid concurrent wake words sets.
@@ -175,6 +184,10 @@ public:
      */
     virtual ~LocaleAssetsManagerInterface() = default;
 };
+
+inline LocaleAssetsManagerInterface::Locales LocaleAssetsManagerInterface::getDefaultLocales() const {
+    return {getDefaultLocale()};
+}
 
 }  // namespace sdkInterfaces
 }  // namespace avsCommon

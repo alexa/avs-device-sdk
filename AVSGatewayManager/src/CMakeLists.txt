@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=avsGatewayManager")
-add_library(AVSGatewayManager SHARED
+add_library(AVSGatewayManager
     AVSGatewayManager.cpp
     Storage/AVSGatewayManagerStorage.cpp
     PostConnectVerifyGatewaySender.cpp

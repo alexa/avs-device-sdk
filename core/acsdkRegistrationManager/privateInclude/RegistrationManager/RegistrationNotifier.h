@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 #include <RegistrationManager/RegistrationNotifierInterface.h>
 #include <RegistrationManager/RegistrationObserverInterface.h>
 

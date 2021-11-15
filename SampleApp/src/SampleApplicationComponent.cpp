@@ -13,7 +13,9 @@
  * permissions and limitations under the License.
  */
 
+#include <acsdkCrypto/CryptoFactory.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
+#include <acsdkPkcs11/KeyStoreFactory.h>
 #include <ContextManager/ContextManager.h>
 
 #ifdef ACSDK_ACS_UTILS
@@ -103,7 +105,13 @@ SampleApplicationComponent getComponent(
         .addUniqueFactory(avsCommon::utils::libcurlUtils::HttpPost::createHttpPostInterface)
         .addRetainedFactory(avsCommon::utils::timing::MultiTimer::createMultiTimer)
         .addRetainedFactory(contextManager::ContextManager::createContextManagerInterface)
-        .addRetainedFactory(registrationManager::CustomerDataManagerFactory::createCustomerDataManagerInterface);
+        .addRetainedFactory(registrationManager::CustomerDataManagerFactory::createCustomerDataManagerInterface)
+#ifdef ENABLE_PKCS11
+        .addRetainedFactory(acsdkPkcs11::createKeyStore)
+#else
+        .addInstance(std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>())
+#endif
+        .addRetainedFactory(acsdkCrypto::createCryptoFactory);
 }
 
 }  // namespace acsdkSampleApplication

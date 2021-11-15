@@ -8,5 +8,7 @@ target_include_directories(acsdkNotifierInterfaces INTERFACE
     "${acsdkNotifierInterfaces_SOURCE_DIR}/include"
 )
 
+add_subdirectory("test")
+
 # install interface
 asdk_install_interface()

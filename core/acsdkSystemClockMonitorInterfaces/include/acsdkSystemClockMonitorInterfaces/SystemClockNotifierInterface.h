@@ -16,7 +16,7 @@
 #ifndef ACSDKSYSTEMCLOCKMONITORINTERFACES_SYSTEMCLOCKNOTIFIERINTERFACE_H_
 #define ACSDKSYSTEMCLOCKMONITORINTERFACES_SYSTEMCLOCKNOTIFIERINTERFACE_H_
 
-#include <acsdkNotifierInterfaces/NotifierInterface.h>
+#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
 
 #include "acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h"
 

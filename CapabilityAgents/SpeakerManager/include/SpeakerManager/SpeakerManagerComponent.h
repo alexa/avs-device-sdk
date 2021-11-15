@@ -28,6 +28,7 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 
@@ -40,6 +41,7 @@ namespace speakerManager {
  */
 using SpeakerManagerComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>,
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>>,
     acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>>,

@@ -91,7 +91,7 @@ private:
     void inhibitSubmission();
 
     /// MetricRecorder to publish UPL metrics.
-    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+    std::weak_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// Stop UPL calculations for unwanted cases
     bool m_uplInhibited;

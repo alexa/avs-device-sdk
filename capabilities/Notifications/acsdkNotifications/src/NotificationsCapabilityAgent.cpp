@@ -544,7 +544,7 @@ void NotificationsCapabilityAgent::executeProvideState(bool sendToken, unsigned 
                      .d("sendToken", sendToken)
                      .d("stateRequestToken", stateRequestToken)
                      .d("isEnabled", m_isEnabled));
-    auto policy = StateRefreshPolicy::ALWAYS;
+    auto policy = StateRefreshPolicy::NEVER;
 
     rapidjson::Document state(rapidjson::kObjectType);
     state.AddMember(IS_ENABLED_KEY, m_isEnabled, state.GetAllocator());
@@ -831,6 +831,7 @@ void NotificationsCapabilityAgent::clearData() {
     auto result = m_executor.submit([this]() {
         m_notificationsStorage->clearNotificationIndicators();
         m_notificationsStorage->setIndicatorState(IndicatorState::OFF);
+        executeProvideState();
         notifyObserversOfIndicatorState(IndicatorState::OFF);
     });
 

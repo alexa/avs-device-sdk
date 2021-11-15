@@ -24,6 +24,7 @@
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
+#include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Metrics.h>
@@ -32,6 +33,7 @@
 
 #include "SpeakerManager/SpeakerManagerConstants.h"
 #include "SpeakerManager/SpeakerManager.h"
+#include "SpeakerManager/SpeakerManagerMiscStorage.h"
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -42,6 +44,7 @@ using namespace acsdkShutdownManagerInterfaces;
 using namespace avsCommon::avs;
 using namespace avsCommon::avs::speakerConstants;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::sdkInterfaces::storage;
 using namespace avsCommon::utils::json;
 using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::metrics;
@@ -63,11 +66,6 @@ static const std::vector<int> DEFAULT_RETRY_TABLE = {std::chrono::milliseconds(1
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"SpeakerManager"};
-/// The key in our config file to find the root of speaker manager configuration.
-static const std::string SPEAKERMANAGER_CONFIGURATION_ROOT_KEY = "speakerManagerCapabilityAgent";
-/// The key in our config file to find the minUnmuteVolume value.
-static const std::string SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY = "minUnmuteVolume";
-
 /// prefix for metrics emitted from the SpeakerManager CA
 static const std::string SPEAKER_MANAGER_METRIC_PREFIX = "SPEAKER_MANAGER-";
 
@@ -139,6 +137,7 @@ static void submitMetric(
 static std::shared_ptr<avsCommon::avs::CapabilityConfiguration> getSpeakerCapabilityConfiguration();
 
 std::shared_ptr<SpeakerManagerInterface> SpeakerManager::createSpeakerManagerCapabilityAgent(
+    const std::shared_ptr<MiscStorageInterface>& storage,
     const std::shared_ptr<ContextManagerInterface>& contextManager,
     const std::shared_ptr<MessageSenderInterface>& messageSender,
     const std::shared_ptr<ExceptionEncounteredSenderInterface>& exceptionEncounteredSender,
@@ -154,9 +153,10 @@ std::shared_ptr<SpeakerManagerInterface> SpeakerManager::createSpeakerManagerCap
         return nullptr;
     }
 
+    auto speakerStorage = SpeakerManagerMiscStorage::create(storage);
     std::vector<std::shared_ptr<ChannelVolumeInterface>> speakers;
-    auto speakerManager =
-        SpeakerManager::create(speakers, contextManager, messageSender, exceptionEncounteredSender, metricRecorder);
+    auto speakerManager = SpeakerManager::create(
+        speakerStorage, speakers, contextManager, messageSender, exceptionEncounteredSender, metricRecorder);
 
     if (!speakerManager) {
         ACSDK_ERROR(LX("createSpeakerManagerCapabilityAgentFailed"));
@@ -170,6 +170,7 @@ std::shared_ptr<SpeakerManagerInterface> SpeakerManager::createSpeakerManagerCap
 }
 
 std::shared_ptr<SpeakerManager> SpeakerManager::create(
+    const std::shared_ptr<SpeakerManagerStorageInterface>& storage,
     const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
     std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -184,44 +185,42 @@ std::shared_ptr<SpeakerManager> SpeakerManager::create(
     } else if (!exceptionEncounteredSender) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullExceptionEncounteredSender"));
         return nullptr;
+    } else if (!storage) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "nullStorage"));
+        return nullptr;
     }
 
-    int minUnmuteVolume = MIN_UNMUTE_VOLUME;
-
-    auto configurationRoot = ConfigurationNode::getRoot()[SPEAKERMANAGER_CONFIGURATION_ROOT_KEY];
-    // If key is present, then read and initilize the value from config or set to default.
-    configurationRoot.getInt(SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY, &minUnmuteVolume, MIN_UNMUTE_VOLUME);
-
     auto speakerManager = std::shared_ptr<SpeakerManager>(new SpeakerManager(
-        groupVolumeInterfaces,
-        contextManager,
-        messageSender,
-        exceptionEncounteredSender,
-        minUnmuteVolume,
-        metricRecorder));
+        storage, groupVolumeInterfaces, contextManager, messageSender, exceptionEncounteredSender, metricRecorder));
 
     return speakerManager;
 }
 
 SpeakerManager::SpeakerManager(
+    const std::shared_ptr<SpeakerManagerStorageInterface>& speakerManagerStorage,
     const std::vector<std::shared_ptr<ChannelVolumeInterface>>& groupVolumeInterfaces,
     std::shared_ptr<ContextManagerInterface> contextManager,
     std::shared_ptr<MessageSenderInterface> messageSender,
     std::shared_ptr<ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-    const int minUnmuteVolume,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) :
         CapabilityAgent{NAMESPACE, exceptionEncounteredSender},
         RequiresShutdown{"SpeakerManager"},
+        m_config{speakerManagerStorage},
         m_metricRecorder{metricRecorder},
         m_contextManager{contextManager},
         m_messageSender{messageSender},
-        m_minUnmuteVolume{minUnmuteVolume},
+        m_minUnmuteVolume{MIN_UNMUTE_VOLUME},
         m_retryTimer{DEFAULT_RETRY_TABLE},
         m_maxRetries{DEFAULT_RETRY_TABLE.size()},
-        m_maximumVolumeLimit{AVS_SET_VOLUME_MAX} {
+        m_maximumVolumeLimit{AVS_SET_VOLUME_MAX},
+        m_restoreMuteState{true} {
     for (auto& groupVolume : groupVolumeInterfaces) {
         addChannelVolumeInterfaceIntoSpeakerMap(groupVolume);
     }
+
+    loadConfiguration();      // Load configuration (either from previous run, or from configuration).
+    updateChannelSettings();  // Apply loaded configuration
+
     m_capabilityConfigurations.insert(getSpeakerCapabilityConfiguration());
 }
 
@@ -255,6 +254,7 @@ void SpeakerManager::addChannelVolumeInterfaceIntoSpeakerMap(
             it->second.insert(channelVolumeInterface);
         }
     }
+
     ACSDK_DEBUG(LX(__func__).d("type", type).d("sizeOfSpeakerSet", m_speakerMap[type].size()));
 }
 
@@ -658,6 +658,10 @@ bool SpeakerManager::executeSetVolume(
 
     ACSDK_DEBUG(LX("executeSetVolumeSuccess").d("newVolume", static_cast<int>(settings.volume)));
 
+    if (previousVolume != settings.volume) {
+        executePersistConfiguration();
+    }
+
     updateContextManager(type, settings);
 
     if (properties.notifyObservers) {
@@ -670,6 +674,26 @@ bool SpeakerManager::executeSetVolume(
     }
 
     return true;
+}
+
+void SpeakerManager::convertSettingsToChannelState(
+    avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+    SpeakerManagerStorageState::ChannelState* storageState) {
+    const auto& settings = m_speakerSettings[type];
+    storageState->channelVolume = settings.volume;
+    storageState->channelMuteStatus = settings.mute;
+}
+
+void SpeakerManager::executePersistConfiguration() {
+    SpeakerManagerStorageState state;
+    convertSettingsToChannelState(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, &state.speakerChannelState);
+    convertSettingsToChannelState(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, &state.alertsChannelState);
+
+    if (!m_config.saveState(state)) {
+        ACSDK_ERROR(LX("executePersistConfigurationFailed"));
+    } else {
+        ACSDK_DEBUG(LX("executePersistConfigurationSuccess"));
+    }
 }
 
 bool SpeakerManager::executeRestoreVolume(
@@ -802,6 +826,10 @@ bool SpeakerManager::executeAdjustVolume(
 
     ACSDK_DEBUG(LX("executeAdjustVolumeSuccess").d("newVolume", static_cast<int>(settings.volume)));
 
+    if (previousVolume != settings.volume) {
+        executePersistConfiguration();
+    }
+
     updateContextManager(type, settings);
 
     if (properties.notifyObservers) {
@@ -896,6 +924,8 @@ bool SpeakerManager::executeSetMute(
     }
 
     ACSDK_DEBUG(LX("executeSetMuteSuccess").d("mute", mute));
+
+    executePersistConfiguration();
 
     updateContextManager(type, settings);
 
@@ -1039,8 +1069,7 @@ bool SpeakerManager::executeSetSpeakerSettings(
     return true;
 }
 
-void SpeakerManager::addChannelVolumeInterface(
-    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolumeInterface) {
+void SpeakerManager::addChannelVolumeInterface(std::shared_ptr<ChannelVolumeInterface> channelVolumeInterface) {
     addChannelVolumeInterfaceIntoSpeakerMap(channelVolumeInterface);
 }
 
@@ -1071,6 +1100,84 @@ bool SpeakerManager::retryAndApplySettings(Task task, Args&&... args) {
         attempt++;
     }
     return attempt < m_maxRetries;
+}
+
+int8_t SpeakerManager::adjustVolumeRange(int64_t volume) {
+    auto adjustedVolume = std::min(
+        static_cast<int64_t>(AVS_ADJUST_VOLUME_MAX), std::max(static_cast<int64_t>(AVS_ADJUST_VOLUME_MIN), volume));
+    return static_cast<int8_t>(adjustedVolume);
+}
+
+void SpeakerManager::presetChannelDefaults(
+    ChannelVolumeInterface::Type type,
+    const SpeakerManagerStorageState::ChannelState& state) {
+    auto adjustedVolume = adjustVolumeRange(state.channelVolume);
+
+    if (adjustedVolume != state.channelVolume) {
+        ACSDK_DEBUG9(LX(__func__)
+                         .m("adjusted configured value")
+                         .d("type", type)
+                         .d("configured volume", state.channelVolume)
+                         .d("adjusted volume", adjustedVolume));
+    }
+
+    m_speakerSettings[type].volume = adjustedVolume;
+    if (m_restoreMuteState) {
+        m_speakerSettings[type].mute = state.channelMuteStatus;
+    }
+}
+
+void SpeakerManager::loadConfiguration() {
+    ACSDK_DEBUG5(LX("configureDefaults").m("Loading configuration"));
+
+    m_minUnmuteVolume = m_config.getMinUnmuteVolume();
+    m_restoreMuteState = m_config.getRestoreMuteState();
+
+    SpeakerManagerStorageState state;
+    m_config.loadState(state);
+
+    presetChannelDefaults(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME, state.speakerChannelState);
+    presetChannelDefaults(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, state.alertsChannelState);
+}
+
+void SpeakerManager::updateChannelSettings() {
+    updateChannelSettings(ChannelVolumeInterface::Type::AVS_SPEAKER_VOLUME);
+    updateChannelSettings(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME);
+}
+
+void SpeakerManager::updateChannelSettings(ChannelVolumeInterface::Type type) {
+    auto it = m_speakerMap.find(type);
+    if (it != m_speakerMap.end()) {
+        SpeakerInterface::SpeakerSettings& settings = m_speakerSettings[type];
+
+        auto begin = it->second.begin();
+        auto end = it->second.end();
+        retryAndApplySettings([this, &settings, &begin, end]() -> bool {
+            // Go through list of Speakers with ChannelVolumeInterface::Type equal
+            // to type, and call setVolume.
+            while (begin != end) {
+                ACSDK_DEBUG9(LX(__func__)
+                                 .d("speaker id", (*begin)->getId())
+                                 .d("speaker type", (*begin)->getSpeakerType())
+                                 .d("default volume set to ", settings.volume));
+                if (!(*begin)->setUnduckedVolume(settings.volume)) {
+                    submitMetric(m_metricRecorder, "setVolumeFailed", 1);
+                    return false;
+                }
+                if (!(*begin)->setMute(settings.mute)) {
+                    submitMetric(m_metricRecorder, "setMuteFailed", 1);
+                    return false;
+                }
+                begin++;
+            }
+
+            submitMetric(m_metricRecorder, "setVolumeFailed", 0);
+            submitMetric(m_metricRecorder, "setMuteFailed", 0);
+            return true;
+        });
+
+        executeInitializeSpeakerSettings(type);
+    }
 }
 
 }  // namespace speakerManager

@@ -40,6 +40,15 @@
 #define COMMS_NAMESPACE "com.amazon.avs-comms-adapter"
 #endif
 
+#if ENABLE_INPUT_CONTROLLER
+#include <acsdkInputController/InputControllerFactory.h>
+#include "SampleApp/InputControllerHandler.h"
+#endif
+
+#ifdef ENABLE_RTCSC
+#include <RTCSessionController/RtcscCapabilityAgent.h>
+#endif
+
 namespace alexaClientSDK {
 namespace sampleApp {
 
@@ -124,7 +133,9 @@ ExternalCapabilitiesBuilder::buildCapabilities(
 #endif
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
     std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter,
-    std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter) {
+    std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+    std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface>
+        endpointRegistrationManager) {
     ACSDK_DEBUG5(LX(__func__));
     std::pair<
         std::list<ExternalCapabilitiesBuilder::Capability>,
@@ -249,6 +260,46 @@ ExternalCapabilitiesBuilder::buildCapabilities(
     requireShutdownObjects.push_back(mrmCapabilityAgent);
 
 #endif  // // ENABLE_MRM
+
+#if ENABLE_INPUT_CONTROLLER
+    auto inputControllerHandler = InputControllerHandler::create();
+    if (!inputControllerHandler) {
+        ACSDK_CRITICAL(LX("Failed to create input controller handler!"));
+        return retValue;
+    }
+    auto inputController = acsdkInputController::create(inputControllerHandler, exceptionSender);
+    if (!inputController.hasValue()) {
+        ACSDK_CRITICAL(LX("Failed to create input controller capability agent!"));
+        return retValue;
+    }
+
+    Capability inputControllerCapability;
+    auto inputControllerConfigurations =
+        inputController.value().capabilityConfigurationInterface->getCapabilityConfigurations();
+    inputControllerCapability.directiveHandler = std::move(inputController.value().directiveHandler);
+    for (auto& configurationPtr : inputControllerConfigurations) {
+        inputControllerCapability.configuration = *configurationPtr;
+        capabilities.push_back(inputControllerCapability);
+    }
+#endif
+
+#ifdef ENABLE_RTCSC
+    auto rtcscCapabilityAgent = capabilityAgents::rtcscCapabilityAgent::RtcscCapabilityAgent::create(
+        messageSender, contextManager, exceptionSender);
+    if (!rtcscCapabilityAgent) {
+        ACSDK_ERROR(LX(__func__).m("Unable to create RTCSCCapabilityAgent"));
+        return retValue;
+    }
+
+    Capability rtcscCapability;
+    auto rtcscConfigurations = rtcscCapabilityAgent->getCapabilityConfigurations();
+    rtcscCapability.directiveHandler = std::move(rtcscCapabilityAgent);
+    for (auto& configurationPtr : rtcscConfigurations) {
+        rtcscCapability.configuration = *configurationPtr;
+        capabilities.push_back(rtcscCapability);
+    }
+    requireShutdownObjects.push_back(rtcscCapabilityAgent);
+#endif  // ENABLE_RTCSC
 
     retValue.first.swap(capabilities);
     retValue.second.swap(requireShutdownObjects);

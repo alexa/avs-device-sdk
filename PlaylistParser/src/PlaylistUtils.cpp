@@ -16,11 +16,12 @@
 #include "PlaylistParser/PlaylistUtils.h"
 
 #include <algorithm>
+#include <chrono>
 #include <sstream>
+#include <thread>
 
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterface.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/PlaylistParser/PlaylistParserObserverInterface.h>
 
 namespace alexaClientSDK {
 namespace playlistParser {
@@ -36,7 +37,7 @@ static const std::string TAG("PlaylistUtils");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -143,11 +144,9 @@ bool readFromContentFetcher(
     std::vector<char> buffer(CHUNK_SIZE, 0);
     bool streamClosed = false;
     AttachmentReader::ReadStatus previousStatus = AttachmentReader::ReadStatus::OK_TIMEDOUT;
-    ssize_t bytesReadSoFar = 0;
-    size_t bytesRead = -1;
+    std::size_t bytesRead = static_cast<std::size_t>(-1);
     while (!streamClosed && bytesRead != 0) {
         bytesRead = reader->read(buffer.data(), buffer.size(), &readStatus);
-        bytesReadSoFar += bytesRead;
         if (previousStatus != readStatus) {
             ACSDK_DEBUG9(LX(__func__).d("readStatus", readStatus));
             previousStatus = readStatus;

@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKALERTS_ALERTSCAPABILITYAGENT_H_
-#define ACSDKALERTS_ALERTSCAPABILITYAGENT_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERTSCAPABILITYAGENT_H_
+#define ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERTSCAPABILITYAGENT_H_
 
 #include <chrono>
 #include <set>
@@ -181,12 +181,11 @@ public:
     void onConnectionStatusChanged(const Status status, const ChangedReason reason) override;
 
     void onFocusChanged(avsCommon::avs::FocusState focusState, avsCommon::avs::MixingBehavior behavior) override;
+    /// @}
 
-    void onAlertStateChange(
-        const std::string& token,
-        const std::string& alertType,
-        acsdkAlertsInterfaces::AlertObserverInterface::State state,
-        const std::string& reason) override;
+    /// @name AlertObserverInterface function.
+    /// @{
+    void onAlertStateChange(const AlertInfo& alertInfo) override;
     /// @}
 
     /// @name FocusManagerObserverInterface Functions
@@ -336,16 +335,9 @@ private:
     /**
      * A handler function which will be called by our internal executor when an alert's status changes.
      *
-     * @param alertToken The AVS token identifying the alert.
-     * @param alertType The type of the alert.
-     * @param state The state of the alert.
-     * @param reason The reason the the state changed, if applicable.
+     * @param alertInfo The information of the alert.
      */
-    void executeOnAlertStateChange(
-        const std::string& alertToken,
-        const std::string& alertType,
-        acsdkAlertsInterfaces::AlertObserverInterface::State state,
-        const std::string& reason);
+    void executeOnAlertStateChange(const acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo& alertInfo);
 
     /**
      * A handler function which will be called by our internal executor to add an alert observer.
@@ -364,16 +356,9 @@ private:
     /**
      * A handler function which will be called by our internal executor to notify observers of alert changes.
      *
-     * @param alertToken The AVS token identifying the alert.
-     * @param alertType The type of the alert.
-     * @param state The state of the alert.
-     * @param reason The reason the the state changed, if applicable.
+     * @param alertInfo The information of the alert.
      */
-    void executeNotifyObservers(
-        const std::string& alertToken,
-        const std::string& alertType,
-        acsdkAlertsInterfaces::AlertObserverInterface::State state,
-        const std::string& reason = "");
+    void executeNotifyObservers(const acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo& alertInfo);
 
     /**
      * A handler function which will be called by our internal executor to remove all alerts currently being managed.
@@ -646,4 +631,4 @@ private:
 }  // namespace acsdkAlerts
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKALERTS_ALERTSCAPABILITYAGENT_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERTSCAPABILITYAGENT_H_

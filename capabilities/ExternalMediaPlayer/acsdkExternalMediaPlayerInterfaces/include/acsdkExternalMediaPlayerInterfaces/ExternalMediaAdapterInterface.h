@@ -19,6 +19,7 @@
 #include <chrono>
 #include <set>
 #include <string>
+#include <unordered_map>
 
 #include <AVSCommon/AVS/PlayRequestor.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
@@ -250,6 +251,72 @@ enum class MediaType {
 };
 
 /**
+ * Type of navigation when external media player app is first invoked via AVS
+ */
+enum class Navigation {
+    /**
+     * Source dependant behavior
+     */
+    DEFAULT,
+    /**
+     * No navigation should occur
+     */
+    NONE,
+    /**
+     * External app should take foreground
+     */
+    FOREGROUND
+};
+
+/**
+ * Convert navigation enum to a string
+ *
+ * @param navigation Navigation to convert
+ * @return Navigation in string form
+ */
+inline std::string navigationToString(Navigation navigation) {
+    switch (navigation) {
+        case Navigation::DEFAULT:
+            return "DEFAULT";
+        case Navigation::NONE:
+            return "NONE";
+        case Navigation::FOREGROUND:
+            return "FOREGROUND";
+    }
+    return "";
+}
+
+/**
+ * Write a @c Navigation to an @c ostream.
+ *
+ * @param stream The stream to write the value to.
+ * @param event The @c Navigation value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const Navigation& navigation) {
+    return stream << navigationToString(navigation);
+}
+
+/**
+ * Convert the given string to a Navigation enum
+ *
+ * @param str String to convert
+ * @return Navigation enum
+ */
+inline Navigation stringToNavigation(const std::string& str) {
+    if (str == "DEFAULT") {
+        return Navigation::DEFAULT;
+    } else if (str == "NONE") {
+        return Navigation::NONE;
+    } else if (str == "FOREGROUND") {
+        return Navigation::FOREGROUND;
+    } else {
+        // default to DEFAULT
+        return Navigation::DEFAULT;
+    }
+}
+
+/**
  * struct that represents the session state of an adapter.
  */
 struct AdapterSessionState {
@@ -311,6 +378,15 @@ struct AdapterSessionState {
 
     /// The validity period of the token in milliseconds.
     std::chrono::milliseconds tokenRefreshInterval;
+
+#ifdef MEDIA_PORTABILITY_ENABLED
+    /// A universally unique identifier (UUID) generated to the RFC 4122
+    /// specification used to track media playback
+    std::string mediaSessionId;
+
+    /// A identifier token used to opaquely plumb routing info from directives to events
+    std::string correlationToken;
+#endif
 };
 
 /**
@@ -455,6 +531,86 @@ public:
      */
     virtual ~ExternalMediaAdapterInterface() = default;
 
+    /**
+     * HandlePlayParams is a struct that contains the parameters for the handlePlay method
+     */
+    struct HandlePlayParams {
+        /// Play context token for specifying what to play
+        std::string playContextToken;
+        /// Index for track
+        int64_t index;
+        /// Offset to play from
+        std::chrono::milliseconds offset;
+        /// Associated skillToken
+        std::string skillToken;
+        /// Playback session id for identifying the session
+        std::string playbackSessionId;
+        /// Navigation for indicating foreground or not
+        Navigation navigation;
+        /// Whether or not to preload first
+        bool preload;
+        /// PlayRequestor for indicating who requested playback
+        avsCommon::avs::PlayRequestor playRequestor;
+#ifdef MEDIA_PORTABILITY_ENABLED
+        /// mediaSessionId used to track media playback
+        std::string mediaSessionId;
+        /// correlationToken used to opaquely plumb routing info
+        std::string correlationToken;
+#endif
+        /// Playback target to play on
+        std::string playbackTarget;
+
+        /**
+         * Construct HandlePlayParams
+         *
+         * @param playContextToken Play context
+         * {Track/playlist/album/artist/station/podcast} identifier.
+         * @param index The index of the media item in the container, if the container
+         * is indexable.
+         * @param offset The offset position within media item, in milliseconds.
+         * @param skillToken An opaque token for the domain or skill that is presently
+         * associated with this player.
+         * @param playbackSessionId A universally unique identifier (UUID) generated
+         * to the RFC 4122 specification.
+         * @param navigation Communicates desired visual display behavior for the app
+         * associated with playback.
+         * @param preload If true, this Play directive is intended to preload the
+         * identified content only but not begin playback.
+         * @param playRequestor The @c PlayRequestor object that is used to
+         * distinguish if it's a music alarm or not.
+         * @param playbackTarget The @c PlaybackTarget is used to specify the targeted device
+         * that will handle the playback action.
+         */
+        HandlePlayParams(
+            const std::string& playContextToken,
+            int64_t index,
+            std::chrono::milliseconds offset,
+            const std::string& skillToken,
+            const std::string& playbackSessionId,
+            Navigation navigation,
+            bool preload,
+            const avsCommon::avs::PlayRequestor& playRequestor,
+#ifdef MEDIA_PORTABILITY_ENABLED
+            const std::string& mediaSessionId,
+            const std::string& correlationToken,
+#endif
+            const std::string& playbackTarget) :
+                playContextToken{playContextToken},
+                index{index},
+                offset{offset},
+                skillToken{skillToken},
+                playbackSessionId{playbackSessionId},
+                navigation{navigation},
+                preload{preload},
+                playRequestor(playRequestor),
+#ifdef MEDIA_PORTABILITY_ENABLED
+                mediaSessionId{mediaSessionId},
+                correlationToken{correlationToken},
+#endif
+                playbackTarget{playbackTarget} {
+        }
+    };
+
     /// Method to initialize a third party library.
     virtual void init() = 0;
 
@@ -486,45 +642,28 @@ public:
      * Method to allow a user to initiate play from a third party music service
      * provider based on a play context.
      *
-     * @param playContextToken Play context
-     * {Track/playlist/album/artist/station/podcast} identifier.
-     * @param index The index of the media item in the container, if the container
-     * is indexable.
-     * @param offset The offset position within media item, in milliseconds.
-     * @param skillToken An opaque token for the domain or skill that is presently
-     * associated with this player.
-     * @param playbackSessionId A universally unique identifier (UUID) generated
-     * to the RFC 4122 specification.
-     * @param navigation Communicates desired visual display behavior for the app
-     * associated with playback.
-     * @param preload If true, this Play directive is intended to preload the
-     * identified content only but not begin playback.
-     * @param playRequestor The @c PlayRequestor object that is used to
-     * distinguish if it's a music alarm or not.
-     * @param playbackTarget The @c PlaybackTarget is used to specify the targeted device
-     * that will handle the playback action.
+     * @param params Handle play parameters required for playback
      */
-    virtual void handlePlay(
-        std::string& playContextToken,
-        int64_t index,
-        std::chrono::milliseconds offset,
-        const std::string& skillToken,
-        const std::string& playbackSessionId,
-        const std::string& navigation,
-        bool preload,
-        const avsCommon::avs::PlayRequestor& playRequestor,
-        const std::string& playbackTarget) = 0;
+    virtual void handlePlay(const HandlePlayParams& params) = 0;
 
     /**
      * Method to initiate the different types of play control like
      * PLAY/PAUSE/RESUME/NEXT/...
      *
-     * @param requestType The type of REQUEST. Will always be
-     * PLAY/PAUSE/RESUME/NEXT...
+     * @param requestType The type of REQUEST. Will always be PLAY/PAUSE/RESUME/NEXT...
      * @param playbackTarget The @c PlaybackTarget is used to specify the targeted device
      * that will handle the play control.
+     * @param isLocal Whether play control is locally triggered on device
      */
-    virtual void handlePlayControl(RequestType requestType, const std::string& playbackTarget) = 0;
+    virtual void handlePlayControl(
+        RequestType requestType,
+#ifdef MEDIA_PORTABILITY_ENABLED
+        /// @param mediaSessionId The optional @c mediaSessionId used to track media playback
+        /// @param correlationToken The optional @c correlationToken used to opaquely plumb routing info
+        const std::string& mediaSessionId,
+        const std::string& correlationToken,
+#endif
+        const std::string& playbackTarget) = 0;
 
     /**
      * Method to seek to the given offset.

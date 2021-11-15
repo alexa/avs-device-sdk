@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=powerController")
 
-add_library(PowerController SHARED
+add_library(PowerController
     PowerControllerCapabilityAgent.cpp)
 
 target_include_directories(PowerController

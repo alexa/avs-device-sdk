@@ -20,12 +20,14 @@
 
 #include "acsdkExternalMediaPlayer/ExternalMediaPlayer.h"
 #include "acsdkExternalMediaPlayer/ExternalMediaAdapterHandler.h"
+#include "acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterHandlerInterface.h"
 #include "acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterInterface.h"
 
 namespace alexaClientSDK {
 namespace acsdkExternalMediaPlayer {
 namespace test {
 
+using PlayParams = acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterHandlerInterface::PlayParams;
 using namespace avsCommon::avs;
 
 using namespace ::testing;
@@ -35,8 +37,14 @@ static const std::string PLAY_CONTEXT_TOKEN = "testContextToken";
 static const std::string SKILL_TOKEN = "testSkillToken";
 static const std::string SESSION_ID = "testSessionId";
 static const std::string NAVIGATION_NONE = "NONE";
+static const std::string PLAYBACK_TARGET = "testPlaybackTarget";
 static const PlayRequestor PLAY_REQUESTOR{.type = "ALERT", .id = "123"};
 static const std::chrono::milliseconds PLAY_OFFSET{100};
+
+#ifdef MEDIA_PORTABILITY_ENABLED
+static const std::string MEDIA_SESSION_ID = "testMediaSessionId";
+static const std::string CORRELATION_TOKEN = "testCorrelationToken";
+#endif
 
 class MockExternalMediaPlayer : public ExternalMediaPlayer::ExternalMediaPlayerInterface {
 public:
@@ -73,24 +81,20 @@ public:
             bool forceLogin,
             std::chrono::milliseconds tokenRefreshInterval));
     MOCK_METHOD1(handleLogout, bool(const std::string& localPlayerId));
-    MOCK_METHOD10(
-        handlePlay,
-        bool(
-            const std::string& localPlayerId,
-            const std::string& playContextToken,
-            int64_t index,
-            std::chrono::milliseconds offset,
-            const std::string& skillToken,
-            const std::string& playbackSessionId,
-            const acsdkExternalMediaPlayerInterfaces::Navigation& navigation,
-            bool preload,
-            const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-            const std::string& playbackTarget));
+    MOCK_METHOD1(handlePlay, bool(const PlayParams& params));
+#ifdef MEDIA_PORTABILITY_ENABLED
+    MOCK_METHOD5(
+#else
     MOCK_METHOD3(
+#endif
         handlePlayControl,
         bool(
             const std::string& localPlayerId,
             acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+#ifdef MEDIA_PORTABILITY_ENABLED
+            const std::string& mediaSessionId,
+            const std::string& correlationToken,
+#endif
             const std::string& playbackTarget));
     MOCK_METHOD2(handleSeek, bool(const std::string& localPlayerId, std::chrono::milliseconds offset));
     MOCK_METHOD2(handleAdjustSeek, bool(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset));
@@ -187,30 +191,23 @@ TEST_F(ExternalMediaPlayerTest, testHandleLogout) {
  */
 TEST_F(ExternalMediaPlayerTest, testHandlePlay) {
     authorizePlayer();
-    EXPECT_CALL(
-        *m_externalMediaPlayerAdapterHandler,
-        handlePlay(
-            PLAYER_ID,
-            PLAY_CONTEXT_TOKEN,
-            0,
-            PLAY_OFFSET,
-            SKILL_TOKEN,
-            SESSION_ID,
-            acsdkExternalMediaPlayerInterfaces::Navigation::NONE,
-            false,
-            PLAY_REQUESTOR,
-            ""));
-    m_externalMediaPlayerAdapterHandler->play(
+    const PlayParams params(
         PLAYER_ID,
         PLAY_CONTEXT_TOKEN,
         0,
         PLAY_OFFSET,
         SKILL_TOKEN,
         SESSION_ID,
-        NAVIGATION_NONE,
+        acsdkExternalMediaPlayerInterfaces::Navigation::NONE,
         false,
         PLAY_REQUESTOR,
+#ifdef MEDIA_PORTABILITY_ENABLED
+        MEDIA_SESSION_ID,
+        CORRELATION_TOKEN,
+#endif
         "");
+    EXPECT_CALL(*m_externalMediaPlayerAdapterHandler, handlePlay(_));
+    m_externalMediaPlayerAdapterHandler->play(params);
 }
 
 /**
@@ -220,9 +217,22 @@ TEST_F(ExternalMediaPlayerTest, testHandlePlayControl) {
     authorizePlayer();
     EXPECT_CALL(
         *m_externalMediaPlayerAdapterHandler,
-        handlePlayControl(PLAYER_ID, acsdkExternalMediaPlayerInterfaces::RequestType::NONE, _));
+        handlePlayControl(
+            PLAYER_ID,
+            acsdkExternalMediaPlayerInterfaces::RequestType::NONE,
+#ifdef MEDIA_PORTABILITY_ENABLED
+            MEDIA_SESSION_ID,
+            CORRELATION_TOKEN,
+#endif
+            PLAYBACK_TARGET));
     m_externalMediaPlayerAdapterHandler->playControl(
-        PLAYER_ID, acsdkExternalMediaPlayerInterfaces::RequestType::NONE, "");
+        PLAYER_ID,
+        acsdkExternalMediaPlayerInterfaces::RequestType::NONE,
+#ifdef MEDIA_PORTABILITY_ENABLED
+        MEDIA_SESSION_ID,
+        CORRELATION_TOKEN,
+#endif
+        PLAYBACK_TARGET);
 }
 
 /**

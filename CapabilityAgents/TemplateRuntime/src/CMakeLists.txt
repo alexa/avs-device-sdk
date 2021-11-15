@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=templateRuntime")
 
-add_library(TemplateRuntime SHARED
+add_library(TemplateRuntime
     "${CMAKE_CURRENT_LIST_DIR}/TemplateRuntime.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/RenderPlayerInfoCardsProviderRegistrar.cpp")
 

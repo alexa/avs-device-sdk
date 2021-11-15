@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 

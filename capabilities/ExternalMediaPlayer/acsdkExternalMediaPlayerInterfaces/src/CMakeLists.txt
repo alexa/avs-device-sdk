@@ -1,6 +1,6 @@
 include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
 
-add_library(acsdkExternalMediaPlayerInterfaces SHARED
+add_library(acsdkExternalMediaPlayerInterfaces
     AdapterUtils.cpp)
 
 target_include_directories(acsdkExternalMediaPlayerInterfaces PUBLIC

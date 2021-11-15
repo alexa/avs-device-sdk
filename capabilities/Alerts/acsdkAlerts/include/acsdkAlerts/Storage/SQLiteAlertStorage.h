@@ -21,6 +21,8 @@
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/AudioFactoryInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
+#include <AVSCommon/Utils/WaitEvent.h>
 #include <SQLiteStorage/SQLiteDatabase.h>
 
 #include "acsdkAlerts/Storage/AlertStorageInterface.h"
@@ -42,11 +44,13 @@ public:
      *
      * @param configurationRoot The global config object.
      * @param audioFactory A factory that can produce default alert sounds.
+     * @param metricRecorder The @c MetricRecorderInterface used to record metrics.
      * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
      */
     static std::shared_ptr<AlertStorageInterface> createAlertStorageInterface(
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
-        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory);
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>& audioFactory,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * Factory method for creating a storage object for Alerts based on an SQLite database.
@@ -54,11 +58,13 @@ public:
      * @deprecated
      * @param configurationRoot The global config object.
      * @param alertsAudioFactory A factory that can produce default alert sounds.
+     * @param metricRecorder The @c MetricRecorderInterface used to record metrics.
      * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
      */
     static std::unique_ptr<SQLiteAlertStorage> create(
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
-        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /**
      * On destruction, close the underlying database.
@@ -116,14 +122,16 @@ private:
      *
      * @param dbFilePath The location of the SQLite database file.
      * @param alertsAudioFactory A factory that can produce default alert sounds.
+     * @param metricRecorder The @c MetricRecorderInterface used to record metrics.
      */
     SQLiteAlertStorage(
         const std::string& dbFilePath,
-        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory);
+        const std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface>& alertsAudioFactory,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * A utility function to help us load alerts from different versions of the alerts table.  Currently, versions
-     * 1 and 2 are supported.
+     * 2 and 3 are supported.
      *
      * @param dbVersion The version of the database we wish to load from.
      * @param[out] alertContainer The container where alerts should be stored.
@@ -178,10 +186,11 @@ private:
     /**
      * Query whether an alert is currently stored in the alerts table with the given token.
      *
+     * @param dbVersion The version of the alerts table.
      * @param token The AVS token which uniquely identifies an alert.
      * @return @c true If the alert is stored in the alerts database, @c false otherwise.
      */
-    bool alertExists(const std::string& token);
+    bool alertExists(const int dbVersion, const std::string& token);
 
     /**
      * Check whether offline alerts table includes column event_time_iso_8601.
@@ -200,18 +209,65 @@ private:
     bool offlineAlertExists(const int dbVersion, const std::string& token);
 
     /**
-     * A utility function to migrate an existing offline alerts v1 table to v2.
+     * A utility function to migrate data from an existing offline alerts v1 table to v2.
      *
-     * @return Whether migrate offline alerts data from v1 to v2 succeeds. If v2 table already exists or if there is no
-     * existing v1 table, return true.
+     * @return Whether migrating offline alerts data from v1 to v2 succeeds. If v2 table already exists or if there is
+     * no existing v1 table, return true.
      */
     bool migrateOfflineAlertsDbFromV1ToV2();
+
+    /**
+     * A utility function to migrate data from an existing alerts v2 table to v3.
+     *
+     * @return Whether migrating alerts data from v2 to v3 succeeds. If v3 table already exists or if there is no
+     * existing v2 table, return true.
+     */
+    bool migrateAlertsDbFromV2ToV3();
+
+    /**
+     * Store an alert to alerts v2 table.
+     *
+     * @param id The alert id of the alert to be stored.
+     * @param alert The alert to be stored.
+     * @return Whether storing the alert to v2 table succeeds.
+     */
+    bool storeAlertToV2(const int id, std::shared_ptr<Alert> alert);
+
+    /**
+     * Modify an alert in the databse.
+     *
+     * @param dbVersion The version of the alerts table.
+     * @param alert The alert to be modified.
+     * @return Whether modifying the alert succeeds.
+     */
+    bool modifyAlert(const int dbVersion, std::shared_ptr<Alert> alert);
+
+    /**
+     * Retry data migration for db uplevel by using the @c RetryTimer with a list of expotential back-off retry times.
+     *
+     * @tparam Task The type of task to execute.
+     * @tparam Args The argument types for the task to execute.
+     * @param task A callable type representing a task.
+     * @param args The arguments to call the task with.
+     * @return Whether retrying data migration succeeds.
+     */
+    template <typename Task, typename... Args>
+    bool retryDataMigration(Task task, Args&&... args);
 
     /// A member that stores a factory that produces audio streams for alerts.
     std::shared_ptr<avsCommon::sdkInterfaces::audio::AlertsAudioFactoryInterface> m_alertsAudioFactory;
 
     /// The underlying database class.
     alexaClientSDK::storage::sqliteStorage::SQLiteDatabase m_db;
+
+    /// The @c MetricRecorderInterface used to record metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
+    /// The retry timer used to restart a task.
+    avsCommon::utils::RetryTimer m_retryTimer;
+
+    /// The wait event for a retry.
+    avsCommon::utils::WaitEvent m_waitRetryEvent;
 };
 
 }  // namespace storage

@@ -225,10 +225,18 @@ public:
      * cloud will perform additional verification of the wakeword audio before proceeding to recognize the subsequent
      * audio.
      *
+     * @attention User perceived latency metrics will only be accurate if the startOfSpeechTimestamp is correct. Some
+     * keyword detectors determine start of speech at different times, and in some cases exclude the wakeword. This
+     * leads to a later timestamp and excludes the wakeword duration from the user perceived latency calculation, thus
+     * underestimating the latency. Verify that the startOfSpeechTimestamp is including the wakeword duration if the
+     * audio stream is initiated by wakeword detection. (Tap-To-Talk remains unaffected)
+     *
      * @param audioProvider The @c AudioProvider to stream audio from.
      * @param initiator The type of interface that initiated this recognize event.
      * @param startOfSpeechTimestamp Moment in time when user started talking to Alexa. This parameter is optional
-     * and it is used to measure user perceived latency.
+     *     and it is used to measure user perceived latency. The startOfSpeechTimestamp must include the wakeword
+     *     duration if the audio stream is initiated by a wakeword, otherwise the latency calculation will not be
+     *     correct.
      * @param begin The @c Index in @c audioProvider.stream where audio streaming should begin.  This parameter is
      *     optional, and defaults to @c INVALID_INDEX.  When this parameter is not specified, @c recognize() will
      *     stream audio starting at the time of the @c recognize() call.  If the @c initiator is @c WAKEWORD, and this
@@ -904,6 +912,11 @@ private:
      * Value that will contain the time since last partial LPM state change when AIP acquires the wakelock.
      */
     std::chrono::milliseconds m_timeSinceLastPartialMS;
+
+    /**
+     * Value that will contain the resource type since last partial LPM state change when AIP acquires the wakelock.
+     */
+    avsCommon::sdkInterfaces::PowerResourceManagerInterface::PartialStateBitSet m_resourceFlags;
 
     /**
      * Value to indicate if audio encoder is being used.

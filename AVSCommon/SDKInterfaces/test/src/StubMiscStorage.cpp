@@ -24,15 +24,18 @@ namespace storage {
 namespace test {
 
 bool StubMiscStorage::createDatabase() {
+    std::lock_guard<std::mutex> lock(m_mutex);
     return true;
 }
 
 bool StubMiscStorage::open() {
+    std::lock_guard<std::mutex> lock(m_mutex);
     m_isOpened = true;
     return true;
 }
 
 void StubMiscStorage::close() {
+    std::lock_guard<std::mutex> lock(m_mutex);
     m_isOpened = false;
 }
 
@@ -41,12 +44,14 @@ bool StubMiscStorage::createTable(
     const std::string& tableName,
     MiscStorageInterface::KeyType keyType,
     MiscStorageInterface::ValueType valueType) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string key = componentName + ":" + tableName;
     m_tables.insert(key);
     return true;
 }
 
-bool StubMiscStorage::clearTable(const std::string& componentName, const std::string& tableName) {
+bool StubMiscStorage::clearTableLocked(const std::string& componentName, const std::string& tableName) {
     std::string keyPrefix = componentName + ":" + tableName + ":";
     auto it = m_storage.begin();
     while (it != m_storage.end()) {
@@ -58,13 +63,22 @@ bool StubMiscStorage::clearTable(const std::string& componentName, const std::st
             ++it;
         }
     }
+
     return true;
 }
 
+bool StubMiscStorage::clearTable(const std::string& componentName, const std::string& tableName) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    return clearTableLocked(componentName, tableName);
+}
+
 bool StubMiscStorage::deleteTable(const std::string& componentName, const std::string& tableName) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string key = componentName + ":" + tableName;
     m_tables.erase(key);
-    return clearTable(componentName, tableName);
+    return clearTableLocked(componentName, tableName);
 }
 
 bool StubMiscStorage::get(
@@ -72,6 +86,8 @@ bool StubMiscStorage::get(
     const std::string& tableName,
     const std::string& key,
     std::string* value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string keyStr = componentName + ":" + tableName + ":" + key;
     auto it = m_storage.find(keyStr);
     if (m_storage.end() == it) {
@@ -102,12 +118,16 @@ bool StubMiscStorage::put(
     const std::string& tableName,
     const std::string& key,
     const std::string& value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string keyStr = componentName + ":" + tableName + ":" + key;
     m_storage[keyStr] = value;
     return true;
 }
 
 bool StubMiscStorage::remove(const std::string& componentName, const std::string& tableName, const std::string& key) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string keyStr = componentName + ":" + tableName + ":" + key;
     m_storage.erase(keyStr);
     return true;
@@ -118,6 +138,8 @@ bool StubMiscStorage::tableEntryExists(
     const std::string& tableName,
     const std::string& key,
     bool* tableEntryExistsValue) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string keyStr = componentName + ":" + tableName + ":" + key;
     auto it = m_storage.find(keyStr);
     *tableEntryExistsValue = m_storage.end() != it;
@@ -128,6 +150,8 @@ bool StubMiscStorage::tableExists(
     const std::string& componentName,
     const std::string& tableName,
     bool* tableExistsValue) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     std::string key = componentName + ":" + tableName;
     bool exists = m_tables.end() != m_tables.find(key);
     *tableExistsValue = exists;
@@ -138,6 +162,11 @@ bool StubMiscStorage::load(
     const std::string& componentName,
     const std::string& tableName,
     std::unordered_map<std::string, std::string>* valueContainer) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!valueContainer) {
+        return false;
+    }
+
     std::string keyStr = componentName + ":" + tableName + ":";
     size_t keyLen = keyStr.length();
     for (const auto& it : m_storage) {
@@ -147,7 +176,6 @@ bool StubMiscStorage::load(
             valueContainer->insert(std::pair<std::string, std::string>(targetKey, it.second));
         }
     }
-    *valueContainer = m_storage;
     return true;
 }
 
@@ -159,6 +187,8 @@ StubMiscStorage::StubMiscStorage() : m_isOpened{false} {
 }
 
 bool StubMiscStorage::isOpened() {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     return m_isOpened;
 }
 

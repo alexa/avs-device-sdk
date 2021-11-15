@@ -33,18 +33,19 @@ static const std::string TAG("LibcurlHTTP2Request");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 size_t LibcurlHTTP2Request::writeCallback(char* data, size_t size, size_t nmemb, void* userData) {
     if (!userData) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullUserData"));
+        ACSDK_ERROR(LX("writeCallback").d("reason", "nullUserData"));
         return CURLE_WRITE_ERROR;
     }
 
     LibcurlHTTP2Request* stream = static_cast<LibcurlHTTP2Request*>(userData);
-    ACSDK_DEBUG9(LX(__func__).d("id", stream->getId()).d("size", size).d("nmemb", nmemb).d("userData", userData));
+    ACSDK_DEBUG9(
+        LX("writeCallback").d("id", stream->getId()).d("size", size).d("nmemb", nmemb).d("userData", userData));
 
     stream->setTimeOfLastTransfer();
     stream->reportResponseCode();
@@ -73,7 +74,8 @@ size_t LibcurlHTTP2Request::headerCallback(char* data, size_t size, size_t nmemb
     }
 
     LibcurlHTTP2Request* stream = static_cast<LibcurlHTTP2Request*>(userData);
-    ACSDK_DEBUG9(LX(__func__).d("id", stream->getId()).d("size", size).d("nmemb", nmemb).d("userData", userData));
+    ACSDK_DEBUG9(
+        LX("headerCallback").d("id", stream->getId()).d("size", size).d("nmemb", nmemb).d("userData", userData));
 
     stream->setTimeOfLastTransfer();
     stream->reportResponseCode();
@@ -94,7 +96,7 @@ size_t LibcurlHTTP2Request::readCallback(char* data, size_t size, size_t nmemb, 
     }
 
     LibcurlHTTP2Request* stream = static_cast<LibcurlHTTP2Request*>(userData);
-    ACSDK_DEBUG9(LX(__func__).d("id", stream->getId()).d("size", size).d("nmemb", nmemb).d("userData", userData));
+    ACSDK_DEBUG9(LX("readCallback").d("id", stream->getId()).d("size", size).d("nmemb", nmemb).d("userData", userData));
 
     stream->setTimeOfLastTransfer();
 
@@ -145,7 +147,8 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
         m_stream{std::move(id)},
         m_isIntermittentTransferExpected{config.isIntermittentTransferExpected()},
         m_isPaused{false},
-        m_isCancelled{false} {
+        m_isCancelled{false},
+        m_connectTimeout{std::chrono::milliseconds{0}} {
     switch (config.getRequestType()) {
         case HTTP2RequestType::GET:
             m_stream.setTransferType(CurlEasyHandleWrapper::TransferType::kGET);
@@ -187,6 +190,7 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
     }
     if (config.getConnectionTimeout() != std::chrono::milliseconds::zero()) {
         m_stream.curlOptionsSetter().setopt(CURLOPT_CONNECTTIMEOUT_MS, config.getConnectionTimeout().count());
+        m_connectTimeout = config.getConnectionTimeout();
     }
     if (config.getTransferTimeout() != std::chrono::milliseconds::zero()) {
         m_stream.curlOptionsSetter().setopt(CURLOPT_TIMEOUT_MS, config.getTransferTimeout().count());
@@ -201,11 +205,15 @@ LibcurlHTTP2Request::LibcurlHTTP2Request(
 };
 
 bool LibcurlHTTP2Request::hasProgressTimedOut() const {
+    if (!m_responseCodeReported && milliseconds::zero() != m_connectTimeout) {
+        return duration_cast<milliseconds>(steady_clock::now() - m_timeOfLastTransfer) > m_connectTimeout;
+    }
     if (m_activityTimeout == milliseconds::zero()) {
         return false;  // no activity timeout checks
     }
     return duration_cast<milliseconds>(steady_clock::now() - m_timeOfLastTransfer) > m_activityTimeout;
 }
+
 bool LibcurlHTTP2Request::isIntermittentTransferExpected() const {
     return m_isIntermittentTransferExpected;
 }

@@ -503,6 +503,11 @@ TEST_F(SQLiteMiscStorageTest, test_tableEntryTestsMultiThread) {
     }
 }
 
+/// Test misc storage provide non-null reference to database object.
+TEST_F(SQLiteMiscStorageTest, test_getDatabaseReference) {
+    ASSERT_NE(nullptr, &m_miscStorage->getDatabase());
+}
+
 }  // namespace test
 }  // namespace sqliteStorage
 }  // namespace storage

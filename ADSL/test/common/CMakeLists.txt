@@ -10,6 +10,5 @@ if (BUILD_TESTING)
     target_link_libraries(ADSLTestCommon
         ADSL
         AVSCommon
-        gtest_main
         gmock_main)
 endif()

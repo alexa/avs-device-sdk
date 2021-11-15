@@ -15,6 +15,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 #include "acsdkAlerts/Alert.h"
 #include "AVSCommon/Utils/Timing/TimeUtils.h"
@@ -58,6 +59,13 @@ static const long LOOP_PAUSE_MS{300};
 static const std::string DEFAULT_AUDIO{"default audio"};
 static const std::string SHORT_AUDIO{"short audio"};
 
+/// Label for testing.
+static const std::string LABEL_TEST("Test label");
+
+/// Original time for testing.
+static const std::string ORIGINAL_TIME_TEST("17:00:00.000");
+static const std::string INVALID_ORIGINAL_TIME_TEST{"-1:00:00.000"};
+
 class MockAlert : public Alert {
 public:
     MockAlert() : Alert(defaultAudioFactory, shortAudioFactory, nullptr) {
@@ -96,6 +104,15 @@ public:
     MOCK_METHOD0(stop, void());
 };
 
+class MockAlertObserverInterface : public acsdkAlertsInterfaces::AlertObserverInterface {
+public:
+    void onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) override;
+};
+
+void MockAlertObserverInterface::onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
+    return;
+}
+
 class AlertTest : public ::testing::Test {
 public:
     AlertTest();
@@ -103,13 +120,23 @@ public:
 protected:
     std::shared_ptr<MockAlert> m_alert;
     std::shared_ptr<MockRenderer> m_renderer;
+    MockAlertObserverInterface m_alertObserverInterface;
 };
 
-AlertTest::AlertTest() : m_alert{std::make_shared<MockAlert>()}, m_renderer{std::make_shared<MockRenderer>()} {
+AlertTest::AlertTest() :
+        m_alert{std::make_shared<MockAlert>()},
+        m_renderer{std::make_shared<MockRenderer>()},
+        m_alertObserverInterface{MockAlertObserverInterface()} {
     m_alert->setRenderer(m_renderer);
+    m_alert->setObserver(&m_alertObserverInterface);
 }
 
-const std::string getPayloadJson(bool inclToken, bool inclSchedTime, const std::string& schedTime) {
+const std::string getPayloadJson(
+    bool inclToken,
+    bool inclSchedTime,
+    const std::string& schedTime,
+    const std::string& label = "",
+    const std::string& originalTime = "") {
     std::string tokenJson;
     if (inclToken) {
         tokenJson = "\"token\": \"" + TOKEN_TEST + "\",";
@@ -120,12 +147,24 @@ const std::string getPayloadJson(bool inclToken, bool inclSchedTime, const std::
         schedTimeJson = "\"scheduledTime\": \"" + schedTime + "\",";
     }
 
+    std::string labelJson;
+    if (!label.empty()) {
+        labelJson = "\"label\": \"" + label + "\",";
+    }
+
+    std::string originalTimeJson;
+    if (!originalTime.empty()) {
+        originalTimeJson = "\"originalTime\": \"" + originalTime + "\",";
+    }
+
     // clang-format off
     const std::string payloadJson =
         "{" +
             tokenJson +
             "\"type\": \"" + ALERT_TYPE + "\"," +
             schedTimeJson +
+            labelJson +
+            originalTimeJson +
             "\"assets\": ["
                 "{"
                     "\"assetId\": \"" + ASSET_ID1 + "\","
@@ -164,7 +203,7 @@ TEST_F(AlertTest, test_defaultShortAudio) {
 
 TEST_F(AlertTest, test_parseFromJsonHappyCase) {
     std::string errorMessage;
-    const std::string payloadJson = getPayloadJson(true, true, SCHED_TIME);
+    const std::string payloadJson = getPayloadJson(true, true, SCHED_TIME, LABEL_TEST, ORIGINAL_TIME_TEST);
     rapidjson::Document payload;
     payload.Parse(payloadJson);
 
@@ -177,6 +216,8 @@ TEST_F(AlertTest, test_parseFromJsonHappyCase) {
     ASSERT_EQ(m_alert->getBackgroundAssetId(), BACKGROUND_ALERT_ASSET);
     ASSERT_EQ(m_alert->getLoopCount(), LOOP_COUNT);
     ASSERT_EQ(m_alert->getLoopPause(), std::chrono::milliseconds{LOOP_PAUSE_MS});
+    ASSERT_EQ(m_alert->getOriginalTime(), m_alert->validateOriginalTimeString(ORIGINAL_TIME_TEST));
+    ASSERT_EQ(m_alert->getLabel(), m_alert->validateLabelString(LABEL_TEST));
 
     std::vector<std::string> assetPlayOrderItems;
     assetPlayOrderItems.push_back(ASSET_ID1);
@@ -225,8 +266,68 @@ TEST_F(AlertTest, test_parseFromJsonBadSchedTimeFormat) {
     ASSERT_EQ(resultStatus, Alert::ParseFromJsonStatus::INVALID_VALUE);
 }
 
-TEST_F(AlertTest, test_setStateActive) {
+TEST_F(AlertTest, test_parseFromJsonInvalidOriginalTime) {
+    std::string errorMessage;
+    const std::string payloadJson = getPayloadJson(true, true, SCHED_TIME, LABEL_TEST, INVALID_ORIGINAL_TIME_TEST);
+
+    rapidjson::Document payload;
+    payload.Parse(payloadJson);
+
+    Alert::ParseFromJsonStatus resultStatus = m_alert->parseFromJson(payload, &errorMessage);
+
+    ASSERT_EQ(resultStatus, Alert::ParseFromJsonStatus::OK);
+    ASSERT_FALSE(m_alert->getOriginalTime().hasValue());
+    ASSERT_TRUE(m_alert->getLabel().hasValue());
+    ASSERT_EQ(m_alert->getLabel().value(), LABEL_TEST);
+}
+
+TEST_F(AlertTest, test_parseFromJsonEmptyOriginalTimeAndLabel) {
+    std::string errorMessage;
+    const std::string payloadJson = getPayloadJson(true, true, SCHED_TIME);
+
+    rapidjson::Document payload;
+    payload.Parse(payloadJson);
+
+    Alert::ParseFromJsonStatus resultStatus = m_alert->parseFromJson(payload, &errorMessage);
+
+    ASSERT_EQ(resultStatus, Alert::ParseFromJsonStatus::OK);
+    ASSERT_FALSE(m_alert->getOriginalTime().hasValue());
+    ASSERT_FALSE(m_alert->getLabel().hasValue());
+}
+
+TEST_F(AlertTest, test_setStateActiveValid) {
     m_alert->reset();
+
+    std::string schedTime{"2030-02-02T12:56:34+0000"};
+    Alert::DynamicData dynamicData;
+    m_alert->getAlertData(nullptr, &dynamicData);
+    ASSERT_TRUE(dynamicData.timePoint.setTime_ISO_8601(schedTime));
+    m_alert->setAlertData(nullptr, &dynamicData);
+
+    // renderer should be started
+    EXPECT_CALL(*(m_renderer.get()), start(_, _, _, _, _, _, _)).WillRepeatedly(Return());
+    ASSERT_EQ(m_alert->getState(), Alert::State::SET);
+    m_alert->setStateActive();
+    ASSERT_NE(m_alert->getState(), Alert::State::ACTIVE);
+
+    m_alert->activate();
+    ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVATING);
+    m_alert->setStateActive();
+    ASSERT_EQ(m_alert->getState(), Alert::State::ACTIVE);
+}
+
+TEST_F(AlertTest, test_setStateActiveInvalid) {
+    m_alert->reset();
+
+    // set a time in the past
+    std::string schedTime{"1990-02-02T12:56:34+0000"};
+    Alert::DynamicData dynamicData;
+    m_alert->getAlertData(nullptr, &dynamicData);
+    ASSERT_TRUE(dynamicData.timePoint.setTime_ISO_8601(schedTime));
+    m_alert->setAlertData(nullptr, &dynamicData);
+
+    // renderer shouldn't be started
+    EXPECT_CALL(*(m_renderer.get()), start(_, _, _, _, _, _, _)).Times(0);
     ASSERT_EQ(m_alert->getState(), Alert::State::SET);
     m_alert->setStateActive();
     ASSERT_NE(m_alert->getState(), Alert::State::ACTIVE);
@@ -253,9 +354,12 @@ TEST_F(AlertTest, test_setTimeISO8601) {
     m_alert->setAlertData(nullptr, &dynamicData);
     int64_t unixTime = 0;
     timeUtils.convert8601TimeStringToUnix(schedTime, &unixTime);
+    auto sec =
+        std::chrono::duration_cast<std::chrono::seconds>(m_alert->getScheduledTime_Utc_TimePoint().time_since_epoch());
 
     ASSERT_EQ(m_alert->getScheduledTime_ISO_8601(), schedTime);
     ASSERT_EQ(m_alert->getScheduledTime_Unix(), unixTime);
+    ASSERT_EQ(static_cast<int64_t>(sec.count()), unixTime);
 }
 
 TEST_F(AlertTest, test_updateScheduleActiveFailed) {

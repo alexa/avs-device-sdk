@@ -56,20 +56,14 @@ public:
         bool forceLogin,
         std::chrono::milliseconds tokenRefreshInterval) override;
     bool logout(const std::string& localPlayerId) override;
-    bool play(
-        const std::string& localPlayerId,
-        const std::string& playContextToken,
-        int64_t index,
-        std::chrono::milliseconds offset,
-        const std::string& skillToken,
-        const std::string& playbackSessionId,
-        const std::string& navigation,
-        bool preload,
-        const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-        const std::string& playbackTarget) override;
+    bool play(const PlayParams& params) override;
     bool playControl(
         const std::string& localPlayerId,
         acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+#ifdef MEDIA_PORTABILITY_ENABLED
+        const std::string& mediaSessionId,
+        const std::string& correlationToken,
+#endif
         const std::string& playbackTarget) override;
     bool seek(const std::string& localPlayerId, std::chrono::milliseconds offset) override;
     bool adjustSeek(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset) override;

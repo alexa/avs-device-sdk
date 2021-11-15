@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkAudioInputStream")
 
-add_library(acsdkAudioInputStream SHARED
+add_library(acsdkAudioInputStream
         AudioInputStreamFactory.cpp
         AudioInputStreamComponent.cpp
         CompatibleAudioFormat.cpp)

@@ -32,7 +32,7 @@ static const std::string TAG("ExchangeHandler");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -42,9 +42,9 @@ ExchangeHandler::ExchangeHandler(
         m_context{context},
         m_authToken{authToken},
         m_authHeader{AUTHORIZATION_HEADER + authToken} {
-    ACSDK_DEBUG5(LX(__func__).d("context", context.get()).sensitive("authToken", authToken));
+    ACSDK_DEBUG5(LX("init").d("context", context.get()).sensitive("authToken", authToken));
     if (m_authToken.empty()) {
-        ACSDK_ERROR(LX(__func__).m("emptyAuthToken"));
+        ACSDK_ERROR(LX("initError").m("emptyAuthToken"));
     }
 }
 

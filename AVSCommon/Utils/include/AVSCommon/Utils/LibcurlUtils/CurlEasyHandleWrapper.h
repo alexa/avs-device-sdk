@@ -18,18 +18,16 @@
 
 #include <chrono>
 #include <curl/curl.h>
+#include <fstream>
 #include <string>
 
 #include <AVSCommon/Utils/Logger/LogEntry.h>
+#include <AVSCommon/Utils/Logger/LogStringFormatter.h>
 #include <AVSCommon/Utils/Logger/LoggerUtils.h>
 
 /// Whether or not curl logs should be emitted.
 #ifdef ACSDK_EMIT_SENSITIVE_LOGS
-
 #define ACSDK_EMIT_CURL_LOGS
-#include <fstream>
-#include <AVSCommon/Utils/Logger/LogStringFormatter.h>
-
 #endif
 
 namespace alexaClientSDK {
@@ -343,15 +341,6 @@ private:
      * @return Always returns zero.
      */
     static int debugFunction(CURL* handle, curl_infotype type, char* data, size_t size, void* user);
-
-    /// File to log the stream I/O to
-    std::unique_ptr<std::ofstream> m_streamLog;
-    /// File to dump data streamed in
-    std::unique_ptr<std::ofstream> m_streamInDump;
-    /// File to dump data streamed out
-    std::unique_ptr<std::ofstream> m_streamOutDump;
-    /// Object to format log strings correctly.
-    avsCommon::utils::logger::LogStringFormatter m_logFormatter;
 #endif
 
     /// Initializes the @c m_interfaceName  from config.
@@ -379,6 +368,15 @@ private:
     static std::atomic<uint64_t> m_idGenerator;
 
     CurlEasyHandleWrapperOptionsSettingAdapter m_curlOptionsSettingAdapter;
+
+    /// File to log the stream I/O to
+    std::unique_ptr<std::ofstream> m_streamLog;
+    /// File to dump data streamed in
+    std::unique_ptr<std::ofstream> m_streamInDump;
+    /// File to dump data streamed out
+    std::unique_ptr<std::ofstream> m_streamOutDump;
+    /// Object to format log strings correctly.
+    avsCommon::utils::logger::LogStringFormatter m_logFormatter;
 
     friend class CurlEasyHandleWrapperOptionsSettingAdapter;
 };

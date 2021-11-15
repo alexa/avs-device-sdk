@@ -36,6 +36,7 @@ namespace sampleApp {
 using namespace acsdkShutdownManagerInterfaces;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
+using namespace avsCommon::utils::json::jsonUtils;
 
 /// The key in our config file to find the root of settings for this database.
 static const std::string SETTING_CONFIGURATION_ROOT_KEY = "deviceSettings";
@@ -51,6 +52,9 @@ static const std::string LOCALE_COMBINATION_CONFIGURATION_KEY = "localeCombinati
 
 /// The default locale value used if the locale configuration is not present.
 static const std::string DEFAULT_LOCALE_VALUE = "en-US";
+
+/// The index for primary locale in the default locales vector.
+static const int PRIMARY_LOCALE_INDEX = 0;
 
 /// The default supported wake word.
 static const std::string DEFAULT_SUPPORTED_WAKEWORD = "ALEXA";
@@ -136,19 +140,10 @@ bool LocaleAssetsManager::initialize(bool enableWakeWord, const ConfigurationNod
         return false;
     }
 
-    if (!settingsConfig.getString(DEFAULT_LOCALE_CONFIGURATION_KEY, &m_defaultLocale)) {
-        ACSDK_ERROR(
-            LX("initializeFailed")
-                .d("reason", "configurationKeyNotFound")
-                .d("configurationKey", SETTING_CONFIGURATION_ROOT_KEY + "." + DEFAULT_LOCALE_CONFIGURATION_KEY));
-        return false;
-    }
-
     auto combinationArray = settingsConfig.getArray(LOCALE_COMBINATION_CONFIGURATION_KEY);
     if (combinationArray) {
         for (std::size_t arrayIndex = 0; arrayIndex < combinationArray.getArraySize(); ++arrayIndex) {
-            auto stringVector = avsCommon::utils::json::jsonUtils::retrieveStringArray<std::vector<std::string>>(
-                combinationArray[arrayIndex].serialize());
+            auto stringVector = retrieveStringArray<std::vector<std::string>>(combinationArray[arrayIndex].serialize());
 
             // Make sure the combination is more than one locale.
             if (stringVector.size() <= 1) {
@@ -169,19 +164,40 @@ bool LocaleAssetsManager::initialize(bool enableWakeWord, const ConfigurationNod
         }
     }
 
+    auto localesArray = settingsConfig.getArray(DEFAULT_LOCALE_CONFIGURATION_KEY);
+    if (!localesArray) {
+        if (!settingsConfig.getString(DEFAULT_LOCALE_CONFIGURATION_KEY, &m_defaultLocale)) {
+            ACSDK_ERROR(
+                LX("initializeFailed")
+                    .d("reason", "configurationKeyNotFound")
+                    .d("configurationKey", SETTING_CONFIGURATION_ROOT_KEY + "." + DEFAULT_LOCALE_CONFIGURATION_KEY));
+            return false;
+        }
+        m_defaultLocales.push_back(m_defaultLocale);
+    } else {
+        m_defaultLocales = retrieveStringArray<std::vector<std::string>>(localesArray.serialize());
+    }
+
     if (m_supportedLocales.empty()) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "noSupportedLocalesInConfiguration"));
         return false;
     }
 
-    if (m_defaultLocale.empty()) {
+    if (m_defaultLocales.empty()) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "noDefaultLocaleInConfiguration"));
         return false;
     }
 
-    // Check if the default is in the supported locales
-    if (m_supportedLocales.find(m_defaultLocale) == m_supportedLocales.end()) {
+    // Check if the default is in the supported locales.
+    if (m_supportedLocales.find(m_defaultLocales[PRIMARY_LOCALE_INDEX]) == m_supportedLocales.end()) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "defaultLocaleNotInSupportedLocaleList"));
+        return false;
+    }
+
+    // Check if the default multilingual locale is in the supported locale combinations.
+    if (m_defaultLocales.size() > 1 &&
+        m_supportedLocalesCombinations.find(m_defaultLocales) == m_supportedLocalesCombinations.end()) {
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "defaultLocalesNotInSupportedLocalesCombinationsList"));
         return false;
     }
 
@@ -222,7 +238,12 @@ LocaleAssetsManager::LocaleCombinations LocaleAssetsManager::getSupportedLocaleC
 }
 
 LocaleAssetsManager::Locale LocaleAssetsManager::getDefaultLocale() const {
+    ACSDK_ERROR(LX("getDefaultLocale").d("reason", "methodDeprecated"));
     return m_defaultLocale;
+}
+
+LocaleAssetsManager::Locales LocaleAssetsManager::getDefaultLocales() const {
+    return m_defaultLocales;
 }
 
 void LocaleAssetsManager::addLocaleAssetsObserver(

@@ -1,7 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkDeviceSetup")
 
 add_library(
-    acsdkDeviceSetup SHARED
+    acsdkDeviceSetup
     DeviceSetup.cpp
     DeviceSetupMessageRequest.cpp
     DeviceSetupComponent.cpp

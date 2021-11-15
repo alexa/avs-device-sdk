@@ -20,7 +20,6 @@ if (BUILD_TESTING)
         CaptionsLib
         UtilsCommonTestLib
         SDKInterfacesTests
-        gtest_main
         gmock_main)
 
     set(INCLUDE_PATH

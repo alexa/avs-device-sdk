@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkDoNotDisturb")
 
-add_library(acsdkDoNotDisturb SHARED
+add_library(acsdkDoNotDisturb
         DNDMessageRequest.cpp
         DNDSettingProtocol.cpp
         DoNotDisturbCapabilityAgent.cpp

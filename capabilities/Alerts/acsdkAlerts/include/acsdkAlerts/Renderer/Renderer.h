@@ -21,6 +21,8 @@
 
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
@@ -50,6 +52,7 @@ namespace renderer {
  */
 class Renderer
         : public RendererInterface
+        , public avsCommon::sdkInterfaces::InternetConnectionObserverInterface
         , public avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface
         , public avsCommon::utils::RequiresShutdown
         , public std::enable_shared_from_this<Renderer> {
@@ -59,6 +62,7 @@ public:
      *
      * @param audioPipelineFactory The @c ApplicationAudioPlayerInterface instance to use to create the notifications
      * media player for rendering audio.
+     * @param internetConnectionMonitor The object use to monitor connectivity with the internet.
      * @param metricRecorder the metric recorder.
      * @param shutdownNotifier the @c ShutdownNotifier to notify if a shutdown occurred.
      * @return The @c Renderer object.
@@ -67,7 +71,8 @@ public:
         const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
             audioPipelineFactory,
         const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
-        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier);
+        const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+        const std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>& internetConnectionMonitor);
 
     /**
      * Creates a @c Renderer.
@@ -75,11 +80,14 @@ public:
      * @deprecated Use createAlertRenderer.
      * @param mediaPlayer the @c MediaPlayerInterface that the @c Renderer object will interact with.
      * @param metricRecorder the metric recorder.
+     * @param internetConnectionMonitor The object use to monitor connectivity with the internet.
      * @return The @c Renderer object.
      */
     static std::shared_ptr<Renderer> create(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor =
+            nullptr);
 
     void start(
         std::shared_ptr<RendererObserverInterface> observer,
@@ -106,6 +114,8 @@ public:
         std::string error,
         const avsCommon::utils::mediaPlayer::MediaPlayerState& state) override;
 
+    void onConnectionStatusChanged(bool connected) override;
+
 private:
     /// A type that identifies which source is currently being operated on.
     using SourceId = avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId;
@@ -118,7 +128,8 @@ private:
      */
     Renderer(
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer,
-        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
+        std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor);
 
     /**
      * @name Executor Thread Functions
@@ -370,6 +381,12 @@ private:
 
     /// The time that the alert started rendering.
     std::chrono::steady_clock::time_point m_renderStartTime;
+
+    /// Variable to capture if we are currently connected to Wifi.
+    std::atomic_bool m_isNetworkConnected;
+
+    /// Object providing notification of gaining and losing internet connectivity.
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> m_internetConnectionMonitor;
 };
 
 }  // namespace renderer

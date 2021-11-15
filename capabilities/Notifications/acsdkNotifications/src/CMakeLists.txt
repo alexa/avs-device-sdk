@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=Notifications")
 
-add_library(acsdkNotifications SHARED
+add_library(acsdkNotifications
 		NotificationsComponent.cpp
 		NotificationIndicator.cpp
 		NotificationsNotifier.cpp

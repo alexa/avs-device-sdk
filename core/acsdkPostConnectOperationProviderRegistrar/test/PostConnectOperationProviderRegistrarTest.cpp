@@ -34,6 +34,8 @@ class MockStartupNotifier : public StartupNotifierInterface {
 public:
     MOCK_METHOD1(addObserver, void(const std::shared_ptr<RequiresStartupInterface>& observer));
     MOCK_METHOD1(removeObserver, void(const std::shared_ptr<RequiresStartupInterface>& observer));
+    MOCK_METHOD1(addWeakPtrObserver, void(const std::weak_ptr<RequiresStartupInterface>& observer));
+    MOCK_METHOD1(removeWeakPtrObserver, void(const std::weak_ptr<RequiresStartupInterface>& observer));
     MOCK_METHOD1(notifyObservers, void(std::function<void(const std::shared_ptr<RequiresStartupInterface>&)>));
     MOCK_METHOD1(notifyObserversInReverse, bool(std::function<void(const std::shared_ptr<RequiresStartupInterface>&)>));
     MOCK_METHOD1(setAddObserverFunction, void(std::function<void(const std::shared_ptr<RequiresStartupInterface>&)>));

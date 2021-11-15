@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=systemSoundPlayer")
 
-add_library(SystemSoundPlayer SHARED SystemSoundPlayer.cpp)
+add_library(SystemSoundPlayer SystemSoundPlayer.cpp)
 
 target_include_directories(SystemSoundPlayer PUBLIC
     "${SystemSoundPlayer_SOURCE_DIR}/include")

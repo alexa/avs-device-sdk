@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=certifiedSender")
-add_library(CertifiedSender SHARED
+add_library(CertifiedSender
         CertifiedSender.cpp
         SQLiteMessageStorage.cpp)
 

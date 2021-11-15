@@ -64,7 +64,7 @@ static const std::string TAG("AvsDirective");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -146,22 +146,22 @@ static std::shared_ptr<AVSMessageHeader> parseHeader(const Document& document, A
 
     std::string instance;
     if (retrieveValue(headerIt->value, JSON_MESSAGE_INSTANCE_KEY, &instance)) {
-        ACSDK_DEBUG5(LX(__func__).d(JSON_MESSAGE_INSTANCE_KEY, instance));
+        ACSDK_DEBUG5(LX("parseHeader").d(JSON_MESSAGE_INSTANCE_KEY, instance));
     }
 
     std::string payloadVersion;
     if (retrieveValue(headerIt->value, JSON_MESSAGE_PAYLOAD_VERSION_KEY, &payloadVersion)) {
-        ACSDK_DEBUG5(LX(__func__).d(JSON_MESSAGE_PAYLOAD_VERSION_KEY, payloadVersion));
+        ACSDK_DEBUG5(LX("parseHeader").d(JSON_MESSAGE_PAYLOAD_VERSION_KEY, payloadVersion));
     }
 
     std::string correlationToken;
     if (retrieveValue(headerIt->value, JSON_CORRELATION_TOKEN_KEY, &correlationToken)) {
-        ACSDK_DEBUG5(LX(__func__).d(JSON_CORRELATION_TOKEN_KEY, correlationToken));
+        ACSDK_DEBUG5(LX("parseHeader").d(JSON_CORRELATION_TOKEN_KEY, correlationToken));
     }
 
     std::string eventCorrelationToken;
     if (retrieveValue(headerIt->value, JSON_EVENT_CORRELATION_TOKEN_KEY, &eventCorrelationToken)) {
-        ACSDK_DEBUG5(LX(__func__).d(JSON_EVENT_CORRELATION_TOKEN_KEY, eventCorrelationToken));
+        ACSDK_DEBUG5(LX("parseHeader").d(JSON_EVENT_CORRELATION_TOKEN_KEY, eventCorrelationToken));
     }
 
     return std::make_shared<AVSMessageHeader>(
@@ -219,20 +219,20 @@ static utils::Optional<AVSMessageEndpoint> parseEndpoint(const Document& documen
 
     Value::ConstMemberIterator endpointIt;
     if (!findNode(directiveIt->value, JSON_ENDPOINT_KEY, &endpointIt)) {
-        ACSDK_DEBUG0(LX(__func__).m("noEndpoint"));
+        ACSDK_DEBUG0(LX("parseEndpoint").m("noEndpoint"));
         return utils::Optional<AVSMessageEndpoint>();
     }
 
     std::string endpointId;
     if (!retrieveValue(endpointIt->value, JSON_ENDPOINT_ID_KEY, &endpointId)) {
-        ACSDK_ERROR(LX(__func__).m("noEndpointId"));
+        ACSDK_ERROR(LX("parseEndpoint").m("noEndpointId"));
         return utils::Optional<AVSMessageEndpoint>();
     }
 
     AVSMessageEndpoint messageEndpoint{endpointId};
     messageEndpoint.cookies = retrieveStringMap(endpointIt->value, JSON_ENDPOINT_COOKIE_KEY);
 
-    ACSDK_DEBUG5(LX(__func__).sensitive("endpointId", endpointId));
+    ACSDK_DEBUG5(LX("parseEndpoint").sensitive("endpointId", endpointId));
     return utils::Optional<AVSMessageEndpoint>(messageEndpoint);
 }
 

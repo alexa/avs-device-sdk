@@ -16,17 +16,20 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_PLATFORMDEFINITIONS_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_PLATFORMDEFINITIONS_H_
 
-/*
-This file contains wrappers macros to help with compatibility with MSVC,
-future operating system helper macros should be placed here.
-*/
+/**
+ * @file
+ * This file contains wrappers macros to help with compatibility with MSVC, future operating system helper macros should
+ * be placed here.
+ */
+
+#include <AVSCommon/Utils/SDKConfig.h>
 
 #if defined(_MSC_VER)
 #include <BaseTsd.h>
 typedef SSIZE_T ssize_t;
 #endif
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && defined(ACSDK_CONFIG_SHARED_LIBS)
 #if defined(IN_AVSCOMMON)
 #define avscommon_EXPORT __declspec(dllexport)
 #else

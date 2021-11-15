@@ -31,12 +31,12 @@ std::mutex SDKPrimitivesProvider::m_mutex;
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 std::shared_ptr<SDKPrimitivesProvider> SDKPrimitivesProvider::getInstance() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getInstance"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     if (!m_provider) {
@@ -53,15 +53,15 @@ SDKPrimitivesProvider::SDKPrimitivesProvider() :
 
 bool SDKPrimitivesProvider::withTimerDelegateFactory(
     std::shared_ptr<sdkInterfaces::timing::TimerDelegateFactoryInterface> timerDelegateFactory) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("withTimerDelegateFactory"));
 
     if (!timerDelegateFactory) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullTimerDelegateFactory"));
+        ACSDK_ERROR(LX("withTimerDelegateFactoryFailed").d("reason", "nullTimerDelegateFactory"));
         return false;
     }
 
     if (isInitialized()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "alreadyInitialized"));
+        ACSDK_ERROR(LX("withTimerDelegateFactoryFailed").d("reason", "alreadyInitialized"));
         return false;
     }
 
@@ -72,10 +72,10 @@ bool SDKPrimitivesProvider::withTimerDelegateFactory(
 }
 
 std::shared_ptr<sdkInterfaces::timing::TimerDelegateFactoryInterface> SDKPrimitivesProvider::getTimerDelegateFactory() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getTimerDelegateFactory"));
 
     if (!isInitialized()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "notInitialized"));
+        ACSDK_ERROR(LX("getTimerDelegateFactoryFailed").d("reason", "notInitialized"));
         return nullptr;
     }
 
@@ -84,10 +84,10 @@ std::shared_ptr<sdkInterfaces::timing::TimerDelegateFactoryInterface> SDKPrimiti
 }
 
 bool SDKPrimitivesProvider::initialize() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("initialize"));
 
     if (isInitialized()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "alreadyInitialized"));
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "alreadyInitialized"));
         return false;
     }
 
@@ -98,14 +98,14 @@ bool SDKPrimitivesProvider::initialize() {
 }
 
 bool SDKPrimitivesProvider::isInitialized() const {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("isInitialized"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     return m_initialized;
 }
 
 void SDKPrimitivesProvider::terminate() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("terminate"));
 
     reset();
 
@@ -114,7 +114,7 @@ void SDKPrimitivesProvider::terminate() {
 }
 
 void SDKPrimitivesProvider::reset() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("reset"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     m_timerDelegateFactory.reset();

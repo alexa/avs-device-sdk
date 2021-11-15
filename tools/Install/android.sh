@@ -65,6 +65,7 @@ CURL_VER=${CURL_DEFAULT_VERSION:-7.67.0}
 OPENSSL_VER=1_1_0h
 NGHTTP2_VER=1.32.0
 FFMPEG_VER=4.0
+LIBARCHIVE_VER=3.5.1
 
 # CMake parameters used to build the SDK.
 set_cmake_var() {
@@ -100,7 +101,10 @@ set_cmake_var() {
         -DSQLITE_INCLUDE_DIR="${SQLITE3_INCLUDE_DIR}" \
         -DFFMPEG_LIB_PATH=${INSTALL_TARGET_LIB} \
         -DFFMPEG_INCLUDE_DIR=${INSTALL_TARGET}/include \
-        -DTARGET_RPATH=${INSTALL_TARGET_LIB})
+        -DTARGET_RPATH=${INSTALL_TARGET_LIB} \
+        -DLibArchive_LIBRARIES="${INSTALL_TARGET_LIB}/libarchive.so" \
+        -DLibArchive_INCLUDE_DIRS="${INSTALL_TARGET_INCLUDE}" \
+        -DCMAKE_CXX_FLAGS="-I${LIBARCHIVE_LIBRARY_SOURCE}/contrib/android/include")
         #-DBUILD_SHARED_LIBS="ON" \
 }
 
@@ -391,6 +395,8 @@ install_dependencies() {
   download_dependency "OPENSSL_LIBRARY_SOURCE" "Libraries/openssl" "https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VER}.tar.gz" "openssl-OpenSSL_${OPENSSL_VER}"
   download_dependency "SQLITE3_LIBRARY_SOURCE" "Libraries/sqlite3" "https://sqlite.org/2018/sqlite-autoconf-3240000.tar.gz" "sqlite-autoconf-3240000"
   download_dependency "FFMPEG_LIBRARY_SOURCE" "Libraries/ffmpeg" "https://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_VER}.tar.gz" "ffmpeg-${FFMPEG_VER}"
+  # Download libarchive
+  download_dependency "LIBARCHIVE_LIBRARY_SOURCE" "Libraries/libarchive" "https://www.libarchive.org/downloads/libarchive-${LIBARCHIVE_VER}.tar.gz" "libarchive-${LIBARCHIVE_VER}"
 
   ##################################################
   # Download packages
@@ -591,6 +597,37 @@ install_dependencies() {
           popd
       fi
       pushd "${CURL_BUILD_TARGET}"
+      make -j ${NUM_THREADS}
+      removeSymbolsFromRelObjFiles .
+      make install
+      popd
+
+      echo "Built on $(date)" > ${DONE_FILE}
+  fi
+
+  ##################################################
+  # Build libarchive
+  ##################################################
+  echo "Start building libarchive..."
+  LIBARCHIVE_BUILD_TARGET="${BUILD_TARGET}/libarchive"
+  DONE_FILE="${LIBARCHIVE_BUILD_TARGET}/.done"
+
+  if [ -d "${LIBARCHIVE_LIBRARY_SOURCE}" ] && [ ! -f "${DONE_FILE}" ]; then
+      if [ ! -f "${LIBARCHIVE_BUILD_TARGET}/Makefile" ]; then
+          mkdir -p "${LIBARCHIVE_BUILD_TARGET}"
+          pushd "${LIBARCHIVE_BUILD_TARGET}"
+          TESTCPPFLAGS="-I${LIBARCHIVE_LIBRARY_SOURCE}/contrib/android/include"
+          echo "test CPPFLAGS"
+          echo ${TESTCPPFLAGS}
+          echo "Start configuring libarchive..."
+          "${LIBARCHIVE_LIBRARY_SOURCE}/configure" \
+          --host="${TOOLCHAIN_HOST}" \
+          --build="${TOOLCHAIN_BUILD}" \
+          --prefix="${INSTALL_TARGET}" \
+          CPPFLAGS="-I${LIBARCHIVE_LIBRARY_SOURCE}/contrib/android/include"
+          popd
+      fi
+      pushd "${LIBARCHIVE_BUILD_TARGET}"
       make -j ${NUM_THREADS}
       removeSymbolsFromRelObjFiles .
       make install

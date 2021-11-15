@@ -14,6 +14,5 @@ if (BUILD_TESTING)
         SDKInterfacesTests
         CertifiedSender
         RegistrationManagerTestUtils
-        gtest_main
         gmock_main)
 endif()

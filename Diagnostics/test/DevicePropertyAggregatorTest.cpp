@@ -375,10 +375,16 @@ TEST_F(DevicePropertyAggregatorTest, test_getTTSPlayerStateProperty) {
  * Test if the Alarm status gets updated if the observer method is called.
  */
 TEST_F(DevicePropertyAggregatorTest, test_getAlarmStatusProperty) {
-    m_devicePropertyAggregator->onAlertStateChange(
-        "TEST_TOKEN", "TEST_ALERT_TYPE", AlertObserverInterface::State::STARTED, "TEST_ALERT_REASON");
+    m_devicePropertyAggregator->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        "TEST_TOKEN",
+        AlertObserverInterface::Type::ALARM,
+        AlertObserverInterface::State::STARTED,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        "TEST_ALERT_REASON"));
 
-    ASSERT_TRUE(validatePropertyValue(DevicePropertyAggregator::ALERT_TYPE_AND_STATE, "TEST_ALERT_TYPE:STARTED"));
+    ASSERT_TRUE(validatePropertyValue(DevicePropertyAggregator::ALERT_TYPE_AND_STATE, "ALARM:STARTED"));
 }
 
 /**

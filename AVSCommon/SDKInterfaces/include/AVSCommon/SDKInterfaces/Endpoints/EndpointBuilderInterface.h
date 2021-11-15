@@ -92,6 +92,21 @@ public:
     virtual EndpointBuilderInterface& withDerivedEndpointId(const std::string& suffix) = 0;
 
     /**
+     * Includes default Registration information to the endpoint.
+     *
+     * @note This will include default endpoint's registration information into the endpoint.
+     * When this payload is included into the endpoint's discovery, cloud will be able to tell this endpoint
+     * represents the same device that the client is running on.
+     *
+     * @warning Do not use this function unless you want the new  endpoint to be treated as same as the AVS endpoint
+     * that maintains HTTP2 connection. This function is added to support a legacy case and might be deprecated later.
+     * Please be aware of the risk while using this function.
+     *
+     * @return This builder which can be used to nest configuration function calls.
+     */
+    virtual EndpointBuilderInterface& withDeviceRegistration() = 0;
+
+    /**
      * Configures builder to use the given identifier for the new endpoint.
      *
      * @note This will override any previous endpoint identifier configuration.

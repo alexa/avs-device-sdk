@@ -89,6 +89,9 @@ constexpr int LOWER_VOLUME_VALUE = 50;
 /// The timeout used throughout the tests.
 static const auto TEST_TIMEOUT = std::chrono::seconds(5);
 
+/// The alert type.
+AlertObserverInterface::Type TYPE_ALARM = AlertObserverInterface::Type::ALARM;
+
 // clang-format off
 
 /// General test directive payload.
@@ -476,7 +479,8 @@ void AlertsCapabilityAgentTest::testStartAlertWithContentVolume(
     m_alertsCA->onFocusChanged(otherChannel, avsCommon::avs::FocusState::BACKGROUND);
 
     // "Start" alert
-    m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
+    m_alertsCA->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        "", TYPE_ALARM, AlertObserverInterface::State::STARTED, std::chrono::system_clock::now()));
 
     std::unique_lock<std::mutex> ulock(m_mutex);
     waitCV.wait_for(ulock, std::chrono::milliseconds(MAX_WAIT_TIME_MS));
@@ -506,8 +510,8 @@ TEST_F(AlertsCapabilityAgentTest, test_localAlertVolumeChangeNoAlert) {
  * Test local alert volume changes. With alert sounding. Must not send event, volume is treated as local.
  */
 TEST_F(AlertsCapabilityAgentTest, testTimer_localAlertVolumeChangeAlertPlaying) {
-    m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
-
+    m_alertsCA->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        "", TYPE_ALARM, AlertObserverInterface::State::STARTED, std::chrono::system_clock::now()));
     // We have to wait for the alert state to be processed before updating speaker settings.
     auto future = m_mockMessageSender->getNextMessage();
     ASSERT_EQ(future.wait_for(std::chrono::milliseconds(MAX_WAIT_TIME_MS)), std::future_status::ready);
@@ -569,7 +573,8 @@ TEST_F(AlertsCapabilityAgentTest, test_avsAlertVolumeChangeAlertPlaying) {
         *(m_speakerManager.get()), setVolume(ChannelVolumeInterface::Type::AVS_ALERTS_VOLUME, TEST_VOLUME_VALUE, _))
         .Times(1);
 
-    m_alertsCA->onAlertStateChange("", "", AlertObserverInterface::State::STARTED, "");
+    m_alertsCA->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        "", TYPE_ALARM, AlertObserverInterface::State::STARTED, std::chrono::system_clock::now()));
     auto future = m_mockMessageSender->getNextMessage();
     ASSERT_EQ(future.wait_for(std::chrono::milliseconds(MAX_WAIT_TIME_MS)), std::future_status::ready);
 

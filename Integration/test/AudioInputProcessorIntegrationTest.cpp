@@ -252,11 +252,7 @@ public:
         std::shared_ptr<const std::vector<char>> KWDMetadata = nullptr) {
         keyWordDetected = true;
         ASSERT_NE(nullptr, stream);
-        bool alwaysReadable = true;
-        bool canOverride = false;
-        bool canBeOverridden = true;
-        auto audioProvider = AudioProvider(
-            stream, m_compatibleAudioFormat, ASRProfile::NEAR_FIELD, alwaysReadable, !canOverride, canBeOverridden);
+        auto audioProvider = AudioProvider::WakeAudioProvider(stream, m_compatibleAudioFormat);
 
         if (m_aip) {
             AudioInputStream::Index aipBegin = AudioInputProcessor::INVALID_INDEX;
@@ -439,23 +435,10 @@ protected:
         ASSERT_NE(nullptr, m_AudioBufferWriter);
 
         // Set up tap and hold to talk buttons.
-        bool alwaysReadable = true;
-        bool canOverride = true;
-        bool canBeOverridden = true;
-        m_HoldToTalkAudioProvider = std::make_shared<AudioProvider>(
-            m_AudioBuffer,
-            m_compatibleAudioFormat,
-            ASRProfile::CLOSE_TALK,
-            !alwaysReadable,
-            canOverride,
-            !canBeOverridden);
-        m_TapToTalkAudioProvider = std::make_shared<AudioProvider>(
-            m_AudioBuffer,
-            m_compatibleAudioFormat,
-            ASRProfile::NEAR_FIELD,
-            alwaysReadable,
-            canOverride,
-            !canBeOverridden);
+        m_HoldToTalkAudioProvider =
+            std::make_shared<AudioProvider>(AudioProvider::HoldAudioProvider(m_AudioBuffer, m_compatibleAudioFormat));
+        m_TapToTalkAudioProvider =
+            std::make_shared<AudioProvider>(AudioProvider::TapAudioProvider(m_AudioBuffer, m_compatibleAudioFormat));
 
         m_tapToTalkButton = std::make_shared<tapToTalkButton>();
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
@@ -1033,12 +1016,8 @@ TEST_F(AudioInputProcessorTest, DISABLED_test_tapToTalkTimeOpus) {
     m_compatibleAudioFormat.endianness = COMPATIBLE_ENDIANNESS;
     m_compatibleAudioFormat.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS;
 
-    bool alwaysReadable = true;
-    bool canOverride = true;
-    bool canBeOverridden = true;
-    std::shared_ptr<AudioProvider> tapToTalkAudioProvider;
-    tapToTalkAudioProvider = std::make_shared<AudioProvider>(
-        m_AudioBuffer, m_compatibleAudioFormat, ASRProfile::NEAR_FIELD, alwaysReadable, canOverride, !canBeOverridden);
+    std::shared_ptr<AudioProvider> tapToTalkAudioProvider =
+        std::make_shared<AudioProvider>(AudioProvider::TapAudioProvider(m_AudioBuffer, m_compatibleAudioFormat));
     // Signal to the AIP to start recognizing.
     ASSERT_TRUE(m_tapToTalkButton->startRecognizing(m_AudioInputProcessor, tapToTalkAudioProvider));
 

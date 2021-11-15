@@ -17,6 +17,8 @@
 #define ACSDKDEFAULTSAMPLEAPPLICATIONOPTIONS_DEFAULTSAMPLEAPPLICATIONOPTIONSCOMPONENT_H_
 
 #include <acsdkManufactory/Component.h>
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
 #include <acsdkSampleApplicationInterfaces/UIManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h>
@@ -41,7 +43,9 @@ using SampleApplicationOptionsComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>>,
     acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>>;
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>>;
 
 /**
  * Get the @c Manufactory @c Component for the default @c SampleApplication options.

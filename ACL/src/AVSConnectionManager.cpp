@@ -31,9 +31,16 @@ static const std::string TAG("AVSConnectionManager");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/**
+ * Create a LogEntry using this file's TAG, the specified event string, and pointer to disambiguate the instance.
+ *
+ * @param event The event string for this @c LogEntry.
+ */
+#define LX_P(event) LX(event).p("this", this)
 
 std::shared_ptr<MessageSenderInterface> AVSConnectionManager::createMessageSenderInterface(
     const std::shared_ptr<AVSConnectionManagerInterface>& connectionManager) {
@@ -64,19 +71,20 @@ std::shared_ptr<AVSConnectionManager> AVSConnectionManager::create(
 
     if (!messageRouter) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageRouter").d("return", "nullptr"));
+
         return nullptr;
     }
 
     for (auto observer : connectionStatusObservers) {
         if (!observer) {
-            ACSDK_ERROR(LX("createFailed").d("reason", "nullConnectionStatusObserver").d("return", "nullptr"));
+            ACSDK_ERROR(LX("createFailed").d("reason", "nullConnectionStatusObserver"));
             return nullptr;
         }
     }
 
     for (auto observer : messageObservers) {
         if (!observer) {
-            ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageObserver").d("return", "nullptr"));
+            ACSDK_ERROR(LX("createFailed").d("reason", "nullMessageObserver"));
             return nullptr;
         }
     }
@@ -91,7 +99,7 @@ std::shared_ptr<AVSConnectionManager> AVSConnectionManager::create(
     }
 
     if (internetConnectionMonitor) {
-        ACSDK_DEBUG5(LX(__func__).m("Subscribing to InternetConnectionMonitor Callbacks"));
+        ACSDK_DEBUG5(LX("create").m("Subscribing to InternetConnectionMonitor Callbacks"));
         internetConnectionMonitor->addInternetConnectionObserver(connectionManager);
     }
 
@@ -109,9 +117,11 @@ AVSConnectionManager::AVSConnectionManager(
         m_messageObservers{messageObservers},
         m_messageRouter{messageRouter},
         m_internetConnectionMonitor{internetConnectionMonitor} {
+    ACSDK_DEBUG5(LX_P("AVSConnectionManager"));
 }
 
 void AVSConnectionManager::doShutdown() {
+    ACSDK_DEBUG5(LX_P("doShutdown"));
     if (m_internetConnectionMonitor) {
         m_internetConnectionMonitor->removeInternetConnectionObserver(shared_from_this());
     }
@@ -136,8 +146,8 @@ void AVSConnectionManager::doShutdown() {
 }
 
 void AVSConnectionManager::enable() {
+    ACSDK_DEBUG5(LX_P("enable"));
     std::lock_guard<std::mutex> lock(m_isEnabledMutex);
-    ACSDK_DEBUG5(LX(__func__));
     m_isEnabled = true;
     auto messageRouter = getMessageRouter();
     if (messageRouter) {
@@ -146,8 +156,8 @@ void AVSConnectionManager::enable() {
 }
 
 void AVSConnectionManager::disable() {
+    ACSDK_DEBUG5(LX_P("disable"));
     std::lock_guard<std::mutex> lock(m_isEnabledMutex);
-    ACSDK_DEBUG5(LX(__func__));
     m_isEnabled = false;
     auto messageRouter = getMessageRouter();
     if (messageRouter) {
@@ -161,8 +171,9 @@ bool AVSConnectionManager::isEnabled() {
 }
 
 void AVSConnectionManager::reconnect() {
+    ACSDK_DEBUG5(LX_P("reconnect"));
     std::lock_guard<std::mutex> lock(m_isEnabledMutex);
-    ACSDK_DEBUG5(LX(__func__).d("isEnabled", m_isEnabled));
+    ACSDK_DEBUG5(LX_P("reconnect").d("isEnabled", m_isEnabled));
     if (m_isEnabled) {
         auto messageRouter = getMessageRouter();
         if (messageRouter) {
@@ -175,9 +186,10 @@ void AVSConnectionManager::reconnect() {
 void AVSConnectionManager::sendMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request) {
     auto messageRouter = getMessageRouter();
     if (messageRouter) {
+        ACSDK_DEBUG7(LX_P("sendMessage"));
         messageRouter->sendMessage(request);
     } else {
-        ACSDK_WARN(LX("sendMessageFailed")
+        ACSDK_WARN(LX_P("sendMessageFailed")
                        .d("reason", "nullMessageRouter")
                        .m("setting status for request to NOT_CONNECTED")
                        .d("request", request->getJsonContent()));
@@ -194,12 +206,12 @@ bool AVSConnectionManager::isConnected() const {
 }
 
 void AVSConnectionManager::onWakeConnectionRetry() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_DEBUG9(LX_P("onWakeConnectionRetry"));
     auto messageRouter = getMessageRouter();
     if (messageRouter) {
         messageRouter->onWakeConnectionRetry();
     } else {
-        ACSDK_WARN(LX("onWakeConnectionRetryFailed").d("reason", "nullMessageRouter"));
+        ACSDK_WARN(LX_P("onWakeConnectionRetryFailed").d("reason", "nullMessageRouter"));
     }
 }
 
@@ -208,7 +220,7 @@ void AVSConnectionManager::setAVSGateway(const std::string& avsGateway) {
     if (messageRouter) {
         messageRouter->setAVSGateway(avsGateway);
     } else {
-        ACSDK_WARN(LX("setAVSGatewayFailed").d("reason", "nullMessageRouter"));
+        ACSDK_WARN(LX_P("setAVSGatewayFailed").d("reason", "nullMessageRouter"));
     }
 }
 
@@ -217,13 +229,13 @@ std::string AVSConnectionManager::getAVSGateway() const {
     if (messageRouter) {
         return messageRouter->getAVSGateway();
     } else {
-        ACSDK_WARN(LX("getAVSGatewayFailed").d("reason", "nullMessageRouter"));
+        ACSDK_WARN(LX_P("getAVSGatewayFailed").d("reason", "nullMessageRouter"));
     }
     return "";
 }
 
 void AVSConnectionManager::onConnectionStatusChanged(bool connected) {
-    ACSDK_DEBUG5(LX(__func__).d("connected", connected).d("isEnabled", m_isEnabled));
+    ACSDK_DEBUG5(LX_P("onConnectionStatusChanged").d("connected", connected).d("isEnabled", m_isEnabled));
     if (m_isEnabled) {
         auto messageRouter = getMessageRouter();
         if (messageRouter) {
@@ -233,7 +245,7 @@ void AVSConnectionManager::onConnectionStatusChanged(bool connected) {
                 messageRouter->onWakeVerifyConnectivity();
             }
         } else {
-            ACSDK_WARN(LX("onConnectionStatusChangedFailed").d("reason", "nullMessageRouter"));
+            ACSDK_WARN(LX_P("onConnectionStatusChangedFailed").d("reason", "nullMessageRouter"));
         }
     }
 }
@@ -241,7 +253,7 @@ void AVSConnectionManager::onConnectionStatusChanged(bool connected) {
 void AVSConnectionManager::addMessageObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
     if (!observer) {
-        ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
+        ACSDK_ERROR(LX_P("addObserverFailed").d("reason", "nullObserver"));
         return;
     }
 
@@ -252,7 +264,7 @@ void AVSConnectionManager::addMessageObserver(
 void AVSConnectionManager::removeMessageObserver(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageObserverInterface> observer) {
     if (!observer) {
-        ACSDK_ERROR(LX("removeObserverFailed").d("reason", "nullObserver"));
+        ACSDK_ERROR(LX_P("removeObserverFailed").d("reason", "nullObserver"));
         return;
     }
 
@@ -264,7 +276,8 @@ void AVSConnectionManager::onConnectionStatusChanged(
     const ConnectionStatusObserverInterface::Status status,
     const std::vector<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::EngineConnectionStatus>&
         engineConnectionStatuses) {
-    ACSDK_DEBUG(LX(__func__).d("status", status).d("engine_count", engineConnectionStatuses.size()));
+    ACSDK_DEBUG(
+        LX_P("onConnectionStatusChanged").d("status", status).d("engine_count", engineConnectionStatuses.size()));
     updateConnectionStatus(status, engineConnectionStatuses);
 }
 

@@ -122,7 +122,7 @@ AuthDelegateTestContext::AuthDelegateTestContext(const std::string& filePath, co
 
     EXPECT_TRUE(m_authDelegate);
 #else
-    auto storage = SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(config);
+    auto storage = SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(config, nullptr, nullptr);
     EXPECT_TRUE(storage);
     if (!storage) {
         return;

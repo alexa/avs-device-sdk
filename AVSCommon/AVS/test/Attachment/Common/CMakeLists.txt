@@ -6,6 +6,5 @@ if(BUILD_TESTING)
             "${AVSCommon_SOURCE_DIR}/AVS/test")
     target_link_libraries(AttachmentCommonTestLib
             AVSCommon
-            gtest_main
             gmock_main)
 endif()

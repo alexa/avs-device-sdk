@@ -20,7 +20,7 @@
 
 #include <acsdkBluetoothInterfaces/BluetoothDeviceObserverInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkBluetooth {

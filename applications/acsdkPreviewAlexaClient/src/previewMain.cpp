@@ -32,12 +32,12 @@ using namespace alexaClientSDK::acsdkPreviewAlexaClient;
  * Function that evaluates if the PreviewAlexaClient invocation uses old-style or new-style opt-arg style invocation.
  *
  * @param argc The number of elements in the @c argv array.
- * @param argv An array of @argc elements, containing the program name and all command-line arguments.
+ * @param argv An array of @a argc elements, containing the program name and all command-line arguments.
  * @return @c true of the invocation uses optarg style argument @c false otherwise.
  */
 bool usesOptStyleArgs(int argc, char* argv[]) {
     for (int i = 1; i < argc; i++) {
-        if (!strcmp(argv[i], "-C") || !strcmp(argv[i], "-K") || !strcmp(argv[i], "-L")) {
+        if (!strcmp(argv[i], "-C") || !strcmp(argv[i], "-L")) {
             return true;
         }
     }
@@ -50,12 +50,11 @@ bool usesOptStyleArgs(int argc, char* argv[]) {
  * user input until the @c run() function returns.
  *
  * @param argc The number of elements in the @c argv array.
- * @param argv An array of @argc elements, containing the program name and all command-line arguments.
+ * @param argv An array of @a argc elements, containing the program name and all command-line arguments.
  * @return @c EXIT_FAILURE if the program failed to initialize correctly, else @c EXIT_SUCCESS.
  */
 int main(int argc, char* argv[]) {
     std::vector<std::string> configFiles;
-    std::string pathToKWDInputFolder;
     std::string logLevel;
 
     if (usesOptStyleArgs(argc, argv)) {
@@ -67,12 +66,6 @@ int main(int argc, char* argv[]) {
                 }
                 configFiles.push_back(std::string(argv[++i]));
                 ConsolePrinter::simplePrint("configFile " + std::string(argv[i]));
-            } else if (strcmp(argv[i], "-K") == 0) {
-                if (i + 1 == argc) {
-                    ConsolePrinter::simplePrint("No wakeword input specified for -K option");
-                    return SampleAppReturnCode::ERROR;
-                }
-                pathToKWDInputFolder = std::string(argv[++i]);
             } else if (strcmp(argv[i], "-L") == 0) {
                 if (i + 1 == argc) {
                     ConsolePrinter::simplePrint("No debugLevel specified for -L option");
@@ -82,24 +75,11 @@ int main(int argc, char* argv[]) {
             } else {
                 ConsolePrinter::simplePrint(
                     "USAGE: " + std::string(argv[0]) + " -C <config1.json> -C <config2.json> ... -C <configN.json> " +
-                    " -K <path_to_inputs_folder> -L <log_level>");
+                    " -L <log_level>");
                 return SampleAppReturnCode::ERROR;
             }
         }
     } else {
-#if defined(KWD_SENSORY)
-        if (argc < 3) {
-            ConsolePrinter::simplePrint(
-                "USAGE: " + std::string(argv[0]) +
-                " <path_to_AlexaClientSDKConfig.json> <path_to_inputs_folder> [log_level]");
-            return SampleAppReturnCode::ERROR;
-        } else {
-            pathToKWDInputFolder = std::string(argv[2]);
-            if (4 == argc) {
-                logLevel = std::string(argv[3]);
-            }
-        }
-#else
         if (argc < 2) {
             ConsolePrinter::simplePrint(
                 "USAGE: " + std::string(argv[0]) + " <path_to_AlexaClientSDKConfig.json> [log_level]");
@@ -108,7 +88,6 @@ int main(int argc, char* argv[]) {
         if (3 == argc) {
             logLevel = std::string(argv[2]);
         }
-#endif
 
         configFiles.push_back(std::string(argv[1]));
         ConsolePrinter::simplePrint("configFile " + std::string(argv[1]));
@@ -130,7 +109,6 @@ int main(int argc, char* argv[]) {
         application = PreviewAlexaClient::create(
             consoleReader,
             configFiles,
-            pathToKWDInputFolder,
             logLevel
 #ifdef DIAGNOSTICS
             ,

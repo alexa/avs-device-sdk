@@ -14,6 +14,8 @@
  */
 
 #include <gtest/gtest.h>
+#include <chrono>
+#include <thread>
 
 #include "AVSCommon/Utils/Timing/MultiTimer.h"
 #include "AVSCommon/Utils/WaitEvent.h"
@@ -61,7 +63,7 @@ TEST(MultiTimerTest, test_executionOrderFollowExpirationTime) {
         EXPECT_TRUE(false);
     });
 
-    sleep(1);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     timer.submitTask(std::chrono::milliseconds(10), [&calledEvent, &counter] {
         // This function is due first and should be called first.
         counter++;

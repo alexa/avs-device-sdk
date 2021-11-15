@@ -1,7 +1,7 @@
 add_definitions("-DACSDK_LOG_MODULE=apiGateway")
 
 add_library(
-        ApiGateway SHARED
+        ApiGateway
         ApiGatewayCapabilityAgent.cpp
 )
 

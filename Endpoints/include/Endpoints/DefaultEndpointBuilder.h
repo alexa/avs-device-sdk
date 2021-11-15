@@ -97,6 +97,7 @@ public:
     /// @name @c EndpointBuilderInterface methods.
     /// @{
     DefaultEndpointBuilder& withDerivedEndpointId(const std::string& suffix) override;
+    DefaultEndpointBuilder& withDeviceRegistration() override;
     DefaultEndpointBuilder& withEndpointId(const EndpointIdentifier& endpointId) override;
     DefaultEndpointBuilder& withFriendlyName(const std::string& friendlyName) override;
     DefaultEndpointBuilder& withDescription(const std::string& description) override;

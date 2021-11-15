@@ -23,6 +23,7 @@
 #include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothDeviceConnectionRulesProviderInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothLocalInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothStorageInterface.h>
 #include <acsdkDoNotDisturb/DoNotDisturbCapabilityAgent.h>
@@ -85,6 +86,7 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>,
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
     std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,

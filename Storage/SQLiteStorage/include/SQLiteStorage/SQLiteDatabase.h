@@ -140,6 +140,16 @@ public:
     bool clearTable(const std::string& tableName);
 
     /**
+     * Drops specified table.
+     *
+     * This method drops the table if it exists and is empty.
+     *
+     * @param tableName The name of the table to drop.
+     * @return true if successful, false if there was an error.
+     */
+    bool dropTable(const std::string& tableName);
+
+    /**
      * If open, close the internal SQLite DB.  Do nothing if there is no DB open.
      */
     void close();

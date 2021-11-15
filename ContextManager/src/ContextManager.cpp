@@ -391,7 +391,9 @@ ContextRequestToken ContextManager::getContextInternal(
                     bool requestState = false;
                     if (stateInfo.legacyCapability && stateInfo.refreshPolicy != StateRefreshPolicy::NEVER) {
                         requestState = true;
-                    } else if (!stateInfo.legacyCapability && stateProvider->canStateBeRetrieved()) {
+                    } else if (
+                        !stateInfo.legacyCapability && stateProvider->canStateBeRetrieved() &&
+                        stateProvider->shouldQueryState()) {
                         if (stateProvider->hasReportableStateProperties()) {
                             /// Check if the reportable state properties should be skipped.
                             if (!bSkipReportableStateProperties) {

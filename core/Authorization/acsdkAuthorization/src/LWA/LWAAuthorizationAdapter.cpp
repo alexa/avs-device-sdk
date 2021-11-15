@@ -15,23 +15,20 @@
 
 #include <algorithm>
 #include <functional>
-#include <random>
 #include <sstream>
 #include <unordered_map>
 
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
 
-#include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/HTTP/HttpResponseCode.h>
 #include <AVSCommon/Utils/LibcurlUtils/CallbackData.h>
 #include <AVSCommon/Utils/LibcurlUtils/HttpPost.h>
-#include <AVSCommon/Utils/Logger/Logger.h>
 
-#include "acsdkAuthorization/LWA/LWAAuthorizationAdapter.h"
+#include <acsdkAuthorization/LWA/LWAAuthorizationAdapter.h>
+#include <acsdkAuthorization/private/Logging.h>
 
 namespace alexaClientSDK {
 namespace acsdkAuthorization {
@@ -48,13 +45,6 @@ using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("LWAAuthorizationAdapter");
-
-/**
- * Create a LogEntry using this file's TAG and the specified event string.
- *
- * @param The event string for this @c LogEntry.
- */
-#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Key for user_code values in JSON returned by @c LWA
 static const char JSON_KEY_USER_CODE[] = "user_code";
@@ -366,7 +356,7 @@ std::shared_ptr<LWAAuthorizationAdapter> LWAAuthorizationAdapter::create(
     std::unique_ptr<avsCommon::utils::libcurlUtils::HttpGetInterface> httpGet,
     const std::string& adapterId) {
     if (!configuration || !httpPost || !deviceInfo || !storage) {
-        ACSDK_ERROR(LX(__func__)
+        ACSDK_ERROR(LX("createFailed")
                         .d("reason", "nullptr")
                         .d("configurationNull", !configuration)
                         .d("httpPostNull", !httpPost)
@@ -406,48 +396,44 @@ LWAAuthorizationAdapter::LWAAuthorizationAdapter(
 }
 
 LWAAuthorizationAdapter::~LWAAuthorizationAdapter() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("~LWAAuthorizationAdapter"));
     stop();
 }
 
 bool LWAAuthorizationAdapter::shouldStopRetrying() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("shouldStopRetrying"));
     std::lock_guard<std::mutex> lock(m_mutex);
     return shouldStopRetryingLocked();
 }
 
 bool LWAAuthorizationAdapter::shouldStopRetryingLocked() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("shouldStopRetryingLocked"));
     return m_isClearingData || m_isShuttingDown;
 }
 
 LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::retrievePersistedData() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("retrievePersistedData"));
 
     std::unique_lock<std::mutex> lock(m_mutex);
 
     RefreshTokenResponse refreshTokenResponse;
     bool storageTokenSucceeded = m_storage->getRefreshToken(&refreshTokenResponse.refreshToken);
     bool userIdSucceeded = m_storage->getUserId(&m_userId);
+    if (!userIdSucceeded) {
+        ACSDK_INFO(LX("retrievePersistedData").m("noUserId"));
+        m_userId.clear();
+    }
 
-    if (!storageTokenSucceeded && !userIdSucceeded) {
+    if (!storageTokenSucceeded) {
         // Not authorized, wait for authorization request.
+        ACSDK_INFO(LX("retrievePersistedData").m("noRefreshToken"));
         return FlowState::IDLE;
-    } else if (storageTokenSucceeded && userIdSucceeded) {
+    } else {
         setRefreshTokenResponseLocked(refreshTokenResponse);
 
         m_authState = AuthObserverInterface::State::AUTHORIZING;
         m_authError = AuthObserverInterface::Error::SUCCESS;
         return FlowState::REFRESHING_TOKEN;
-    } else {
-        ACSDK_ERROR(LX(__func__)
-                        .d("reason", "retrievePersistedDataFailed")
-                        .d("retrieveStorageTokenSucceeded", storageTokenSucceeded)
-                        .d("retrieveUserIdSucceeded", userIdSucceeded));
-
-        m_authState = AuthObserverInterface::State::UNRECOVERABLE_ERROR;
-        m_authError = AuthObserverInterface::Error::INTERNAL_ERROR;
-        return FlowState::IDLE;
     }
 }
 
@@ -526,7 +512,7 @@ AuthObserverInterface::Error LWAAuthorizationAdapter::receiveCodePairResponse(co
 }
 
 HTTPResponse LWAAuthorizationAdapter::sendCodePairRequest() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("sendCodePairRequest"));
 
     std::string scope = SCOPE_ALEXA_ALL;
     if (m_requestCustomerProfile) {
@@ -550,7 +536,7 @@ HTTPResponse LWAAuthorizationAdapter::sendCodePairRequest() {
 
 avsCommon::utils::Optional<avsCommon::sdkInterfaces::AuthObserverInterface::Error> LWAAuthorizationAdapter::
     requestCodePair() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("requestCodePair"));
 
     int retryCount = 0;
     while (!shouldStopRetrying()) {
@@ -596,7 +582,7 @@ avsCommon::utils::libcurlUtils::HTTPResponse LWAAuthorizationAdapter::sendTokenR
     if (requestTime) {
         *requestTime = std::chrono::steady_clock::now();
     } else {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullRequestTime"));
+        ACSDK_ERROR(LX("sendTokenRequestFailed").d("reason", "nullRequestTime"));
     }
 
     return m_httpPost->doPost(
@@ -610,7 +596,7 @@ AuthObserverInterface::Error LWAAuthorizationAdapter::receiveTokenResponse(
     ACSDK_DEBUG5(LX("receiveTokenResponse").d("code", response.code));
 
     if (!tokenResponse) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullTokenResponse"));
+        ACSDK_ERROR(LX("receiveTokenResponseFailed").d("reason", "nullTokenResponse"));
         return AuthObserverInterface::Error::UNKNOWN_ERROR;
     }
 
@@ -668,10 +654,10 @@ AuthObserverInterface::Error LWAAuthorizationAdapter::receiveTokenResponse(
 }
 
 Optional<AuthObserverInterface::Error> LWAAuthorizationAdapter::exchangeToken(RefreshTokenResponse* tokenResponse) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("exchangeToken"));
 
     if (!tokenResponse) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullTokenResponse"));
+        ACSDK_ERROR(LX("exchangeTokenFailed").d("reason", "nullTokenResponse"));
         return Optional<AuthObserverInterface::Error>(AuthObserverInterface::Error::INTERNAL_ERROR);
     }
 
@@ -724,7 +710,7 @@ Optional<AuthObserverInterface::Error> LWAAuthorizationAdapter::exchangeToken(Re
 }
 
 LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRequestingToken() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleRequestingToken"));
 
     updateStateAndNotifyManager(AuthObserverInterface::State::AUTHORIZING, AuthObserverInterface::Error::SUCCESS);
 
@@ -758,26 +744,26 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRequestingToke
             return FlowState::IDLE;
         }
         case TokenExchangeMethod::NONE:
-            ACSDK_ERROR(LX(__func__).d("reason", "noAuthMethod"));
+            ACSDK_ERROR(LX("handleRequestingTokenFailed").d("reason", "noAuthMethod"));
             return FlowState::IDLE;
     }
 
-    ACSDK_ERROR(LX(__func__).d("reason", "missingEnumHandler"));
+    ACSDK_ERROR(LX("handleRequestingTokenFailed").d("reason", "missingEnumHandler"));
     return FlowState::IDLE;
 }
 
 bool LWAAuthorizationAdapter::getCustomerProfile(const std::string& accessToken) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getCustomerProfile"));
     std::string url = m_configuration->getCustomerProfileUrl() + "?access_token=" + accessToken;
     HTTPResponse response;
     if (m_httpGet) {
         response = m_httpGet->doGet(url, {});
     } else {
-        ACSDK_DEBUG0(LX(__func__).d("reason", "usingFallbackGetLogic"));
+        ACSDK_DEBUG0(LX("getCustomerProfileFailed").d("reason", "usingFallbackGetLogic"));
         response = doGet(url);
     }
 
-    ACSDK_INFO(LX(__func__).sensitive("code", response.code).sensitive("body", response.body));
+    ACSDK_INFO(LX("getCustomerProfile").sensitive("code", response.code).sensitive("body", response.body));
 
     Document document;
     auto result = parseLWAResponse(response, &document);
@@ -822,7 +808,7 @@ bool LWAAuthorizationAdapter::getCustomerProfile(const std::string& accessToken)
 
 avsCommon::utils::libcurlUtils::HTTPResponse LWAAuthorizationAdapter::requestRefresh(
     std::chrono::steady_clock::time_point* requestTime) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("requestRefresh"));
 
     const std::vector<std::pair<std::string, std::string>> postData = {
         {POST_KEY_GRANT_TYPE, POST_VALUE_REFRESH_TOKEN},
@@ -835,7 +821,7 @@ avsCommon::utils::libcurlUtils::HTTPResponse LWAAuthorizationAdapter::requestRef
     if (requestTime) {
         *requestTime = now;
     } else {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullRequestTime"));
+        ACSDK_ERROR(LX("requestRefreshFailed").d("reason", "nullRequestTime"));
     }
     auto timeout = m_configuration->getRequestTimeout();
 
@@ -851,7 +837,7 @@ avsCommon::utils::libcurlUtils::HTTPResponse LWAAuthorizationAdapter::requestRef
 }
 
 LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRefreshingToken() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleRefreshingToken"));
 
     int retryCount = 0;
     std::chrono::steady_clock::time_point nextRefresh =
@@ -885,7 +871,7 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRefreshingToke
         }
 
         if (isAboutToExpire) {
-            ACSDK_DEBUG0(LX(__func__).d("reason", "aboutToExpire"));
+            ACSDK_DEBUG0(LX("handleRefreshingTokenFailed").d("reason", "aboutToExpire"));
             m_refreshTokenResponse.accessToken.clear();
             lock.unlock();
             nextState = AuthObserverInterface::State::EXPIRED;
@@ -939,7 +925,7 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRefreshingToke
 }
 
 void LWAAuthorizationAdapter::stop() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("stop"));
     {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_isShuttingDown = true;
@@ -956,14 +942,14 @@ void LWAAuthorizationAdapter::stop() {
 }
 
 LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleStopping() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleStopping"));
     return FlowState::STOPPING;
 }
 
 void LWAAuthorizationAdapter::updateStateAndNotifyManager(
     avsCommon::sdkInterfaces::AuthObserverInterface::State state,
     avsCommon::sdkInterfaces::AuthObserverInterface::Error error) {
-    ACSDK_DEBUG5(LX(__func__).d("state", state).d("error", error));
+    ACSDK_DEBUG5(LX("updateStateAndNotifyManager").d("state", state).d("error", error));
 
     std::string userId;
     std::shared_ptr<AuthorizationManagerInterface> manager;
@@ -974,7 +960,7 @@ void LWAAuthorizationAdapter::updateStateAndNotifyManager(
             m_authState = state;
             m_authError = error;
         } else {
-            ACSDK_DEBUG5(LX(__func__).d("reason", "sameState").d("state", state));
+            ACSDK_DEBUG5(LX("updateStateAndNotifyManagerFailed").d("reason", "sameState").d("state", state));
             return;
         }
 
@@ -985,18 +971,18 @@ void LWAAuthorizationAdapter::updateStateAndNotifyManager(
     if (manager) {
         manager->reportStateChange({state, error}, m_adapterId, userId);
     } else {
-        ACSDK_WARN(LX(__func__).d("reason", "nullManager"));
+        ACSDK_WARN(LX("updateStateAndNotifyManagerFailed").d("reason", "nullManager"));
     }
 }
 
 void LWAAuthorizationAdapter::setRefreshTokenResponse(const RefreshTokenResponse& response, bool persist) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("setRefreshTokenResponse"));
     std::lock_guard<std::mutex> lock(m_mutex);
     setRefreshTokenResponseLocked(response, persist);
 }
 
 void LWAAuthorizationAdapter::setRefreshTokenResponseLocked(const RefreshTokenResponse& response, bool persist) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("setRefreshTokenResponseLocked"));
 
     m_refreshTokenResponse = response;
 
@@ -1012,7 +998,7 @@ void LWAAuthorizationAdapter::setRefreshTokenResponseLocked(const RefreshTokenRe
 }
 
 LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleClearingData() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleClearingData"));
 
     updateStateAndNotifyManager(
         avsCommon::sdkInterfaces::AuthObserverInterface::State::UNINITIALIZED,
@@ -1025,12 +1011,12 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleClearingData()
 
 bool LWAAuthorizationAdapter::isShuttingDown() {
     std::lock_guard<std::mutex> lock(m_mutex);
-    ACSDK_DEBUG5(LX(__func__).d("shuttingDown", m_isShuttingDown));
+    ACSDK_DEBUG5(LX("isShuttingDown").d("shuttingDown", m_isShuttingDown));
     return m_isShuttingDown;
 }
 
 void LWAAuthorizationAdapter::handleAuthorizationFlow(FlowState state) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleAuthorizationFlow"));
 
     while (!isShuttingDown()) {
         auto nextFlowState = FlowState::STOPPING;
@@ -1064,7 +1050,7 @@ void LWAAuthorizationAdapter::handleAuthorizationFlow(FlowState state) {
 bool LWAAuthorizationAdapter::init(
     const avsCommon::utils::configuration::ConfigurationNode& configuration,
     const std::shared_ptr<avsCommon::utils::DeviceInfo>& deviceInfo) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("init"));
 
     m_configuration = LWAAuthorizationConfiguration::create(configuration, deviceInfo);
     if (!m_configuration) {
@@ -1087,19 +1073,19 @@ bool LWAAuthorizationAdapter::authorizeUsingCBLHelper(
     const std::shared_ptr<CBLAuthorizationObserverInterface>& observer,
     bool requestCustomerProfile) {
     if (!observer) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullObserver"));
+        ACSDK_ERROR(LX("authorizeUsingCBLHelperFailed").d("reason", "nullObserver"));
         return false;
     }
 
     std::lock_guard<std::mutex> lock(m_mutex);
 
     if (!m_manager) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullManager"));
+        ACSDK_ERROR(LX("authorizeUsingCBLHelperFailed").d("reason", "nullManager"));
         return false;
     }
 
     if (TokenExchangeMethod::NONE != m_authMethod) {
-        ACSDK_INFO(LX(__func__).d("reason", "authorizationInProgress"));
+        ACSDK_INFO(LX("authorizeUsingCBLHelperFailed").d("reason", "authorizationInProgress"));
         return false;
     }
 
@@ -1110,7 +1096,7 @@ bool LWAAuthorizationAdapter::authorizeUsingCBLHelper(
         m_requestCustomerProfile = requestCustomerProfile;
         m_wake.notify_one();
     } else {
-        ACSDK_INFO(LX(__func__).d("reason", "invalidState").d("m_authState", m_authState));
+        ACSDK_INFO(LX("authorizeUsingCBLHelperFailed").d("reason", "invalidState").d("m_authState", m_authState));
         return false;
     }
 
@@ -1128,19 +1114,19 @@ bool LWAAuthorizationAdapter::authorizeUsingCBLWithCustomerProfile(
 
 std::string LWAAuthorizationAdapter::getId() {
     // m_adapterId is const, no need to lock.
-    ACSDK_DEBUG5(LX(__func__).d("id", m_adapterId));
+    ACSDK_DEBUG5(LX("getId").d("id", m_adapterId));
     return m_adapterId;
 }
 
 std::string LWAAuthorizationAdapter::getAuthToken() {
     std::lock_guard<std::mutex> lock(m_mutex);
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getAuthToken"));
 
     return m_refreshTokenResponse.accessToken;
 }
 
 void LWAAuthorizationAdapter::reset() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("reset"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     m_storage->clear();
@@ -1157,7 +1143,7 @@ void LWAAuthorizationAdapter::reset() {
 }
 
 void LWAAuthorizationAdapter::onAuthFailure(const std::string& authToken) {
-    ACSDK_DEBUG0(LX(__func__));
+    ACSDK_DEBUG0(LX("onAuthFailure"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     if (authToken.empty() || authToken == m_refreshTokenResponse.accessToken) {
@@ -1168,24 +1154,24 @@ void LWAAuthorizationAdapter::onAuthFailure(const std::string& authToken) {
 }
 
 AuthObserverInterface::FullState LWAAuthorizationAdapter::getState() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getState"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     return {m_authState, m_authError};
 }
 
 std::shared_ptr<AuthorizationInterface> LWAAuthorizationAdapter::getAuthorizationInterface() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("getAuthorizationInterface"));
     return shared_from_this();
 }
 
 AuthObserverInterface::FullState LWAAuthorizationAdapter::onAuthorizationManagerReady(
     const std::shared_ptr<AuthorizationManagerInterface>& manager) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("onAuthorizationManagerReady"));
 
     std::lock_guard<std::mutex> lock(m_mutex);
     if (!manager) {
-        ACSDK_ERROR(LX(__func__).d("reason", "nullManager"));
+        ACSDK_ERROR(LX("onAuthorizationManagerReadyFailed").d("reason", "nullManager"));
     } else {
         m_manager = manager;
     }

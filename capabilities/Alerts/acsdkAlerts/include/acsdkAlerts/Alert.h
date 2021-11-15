@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKALERTS_ALERT_H_
-#define ACSDKALERTS_ALERT_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERT_H_
+#define ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERT_H_
 
 #include "acsdkAlerts/Renderer/Renderer.h"
 #include "acsdkAlerts/Renderer/RendererObserverInterface.h"
@@ -23,6 +23,7 @@
 #include <AVSCommon/AVS/MixingBehavior.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <AVSCommon/Utils/Timing/TimePoint.h>
+#include <AVSCommon/Utils/Timing/TimeUtils.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
 
 #include <Settings/DeviceSettingsManager.h>
@@ -166,7 +167,7 @@ public:
         /**
          * Constructor.
          */
-        DynamicData() : state{State::SET}, loopCount{0}, hasRenderingFailed{false} {
+        DynamicData() : state{State::SET}, loopCount{0}, hasRenderingFailed{false}, originalTime(""), label("") {
         }
         /// The state of the alert.
         State state;
@@ -179,6 +180,12 @@ public:
 
         /// A flag to capture if rendering any of asset urls failed.
         bool hasRenderingFailed;
+
+        /// An attribute representing the local time when the alert was originally set.
+        std::string originalTime;
+
+        /// An attribute representing the content of the alert.
+        std::string label;
 
         /// The assets associated with this alert.
         AssetConfiguration assetConfiguration;
@@ -220,6 +227,23 @@ public:
         /// The time, in ISO-8601 format, when this alert should activate.
         std::string scheduledTime_ISO_8601;
     };
+
+    /**
+     * A utility function to convert an originalTime string to an optional of @c OriginalTime.
+     *
+     * @param originalTimeStr a string of original time.
+     * @return An optional with a valid originalTime string; an empty optional otherwise.
+     */
+    static avsCommon::utils::Optional<acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime>
+    validateOriginalTimeString(const std::string& originalTimeStr);
+
+    /**
+     * A utility function to convert a label string to an optional.
+     *
+     * @param label a string of label.
+     * @return An optional with a valid label string; an empty optional otherwise.
+     */
+    static avsCommon::utils::Optional<std::string> validateLabelString(const std::string& label);
 
     /**
      * A utility function to convert an alert state enum value to a string.
@@ -380,6 +404,34 @@ public:
     std::string getScheduledTime_ISO_8601() const;
 
     /**
+     * Gets the UTC time for when the alert should occur.
+     *
+     * @return The UTC time for when the alert should occur.
+     */
+    std::chrono::system_clock::time_point getScheduledTime_Utc_TimePoint() const;
+
+    /**
+     * Gets the @c Type of the alert.
+     *
+     * @return The type of the alert.
+     */
+    acsdkAlertsInterfaces::AlertObserverInterface::Type getType() const;
+
+    /**
+     * Gets the optional with @c OriginalTime.
+     *
+     * @return An optional with @c OriginalTime if originalTime is valid for the alert; an empty optional otherwise.
+     */
+    avsCommon::utils::Optional<acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime> getOriginalTime() const;
+
+    /**
+     * Gets the optional with label string.
+     *
+     * @return An optional with label string if label is valid for the alert; an empty optional otherwise.
+     */
+    avsCommon::utils::Optional<std::string> getLabel() const;
+
+    /**
      * Returns the state of the alert.
      *
      * @return The state of the alert.
@@ -470,6 +522,13 @@ public:
 
 private:
     /**
+     * Returns the AVS token for the alert.
+     *
+     * @return The AVS token for the alert.
+     */
+    std::string getTokenLocked() const;
+
+    /**
      * Returns the alert's scheduled time in Unix.
      *
      * @return The alert's scheduled time in Unix.
@@ -482,6 +541,28 @@ private:
      * @return The alert's scheduled time in ISO 8601.
      */
     std::string getScheduledTime_ISO_8601Locked() const;
+
+    /**
+     * Gets scheduled time point in UTC time. This function should be called with a lock.
+     *
+     * @return The alert's scheduled time point in UTC time.
+     */
+    std::chrono::system_clock::time_point getScheduledTime_Utc_TimePointLocked() const;
+
+    /**
+     * Gets the optional of the original time. This function should be called with a lock.
+     *
+     * @return An optional with @c OriginalTime if originalTime is valid for the alert; an empty optional otherwise.
+     */
+    avsCommon::utils::Optional<acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime> getOriginalTimeLocked()
+        const;
+
+    /**
+     * Gets the optional of the label string. This function should be called with a lock.
+     *
+     * @return An optional with label string if label is valid for the alert; an empty optional otherwise.
+     */
+    avsCommon::utils::Optional<std::string> getLabelLocked() const;
 
     /**
      * Utility function to begin the alert's renderer in an unlocked context
@@ -592,4 +673,4 @@ inline std::ostream& operator<<(std::ostream& stream, const Alert::ParseFromJson
 }  // namespace acsdkAlerts
 }  // namespace alexaClientSDK
 
-#endif  // ACSDKALERTS_ALERT_H_
+#endif  // ALEXA_CLIENT_SDK_ACSDKALERTS_INCLUDE_ACSDKALERTS_ALERT_H_

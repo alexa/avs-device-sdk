@@ -34,6 +34,7 @@
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorObserverInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
+#include <AVSCommon/Utils/Timing/MultiTimer.h>
 
 #include "MRMHandlerInterface.h"
 
@@ -228,6 +229,10 @@ private:
     bool m_wasPreviouslyActive;
     /// The @c Executor which queues up operations from asynchronous API calls.
     avsCommon::utils::threading::Executor m_executor;
+
+    /// A timer to defer reacting to changes in Alexa dialog state, in an effort to improve WakeWordToBar
+    /// performance through freeing up resources on the critical path.
+    alexaClientSDK::avsCommon::utils::timing::MultiTimer m_delayedTaskTimer;
 };
 
 }  // namespace mrm

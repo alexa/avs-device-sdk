@@ -72,9 +72,10 @@ public:
     virtual void provideState(const avs::CapabilityTag& stateProviderName, const ContextRequestToken stateRequestToken);
 
     /**
-     * Returns whether the provider should be queried for its state / properties.
+     * Returns whether the provider can be queried for its state / properties.
+     * If not, the provider is omitted from the context altogether. ContextManager will not query or report its state.
      *
-     * @return Whether this provider should be queried about its state when a new context request arrives.
+     * @return Whether this provider can be queried about its state when a new context request arrives.
      * @note In future versions, this method will be made pure virtual.
      */
     virtual bool canStateBeRetrieved();
@@ -86,6 +87,14 @@ public:
      * @return Whether this provider has reportable state properties.
      */
     virtual bool hasReportableStateProperties();
+
+    /**
+     * Returns whether the provider should be queried for its state / properties.
+     * If this returns false the last cached state will be reported to the context requester.
+     *
+     * @return whether the provider should be queried for its state / properties.
+     */
+    virtual bool shouldQueryState();
 };
 
 inline void StateProviderInterface::provideState(
@@ -107,6 +116,10 @@ inline bool StateProviderInterface::canStateBeRetrieved() {
 
 inline bool StateProviderInterface::hasReportableStateProperties() {
     return false;
+}
+
+inline bool StateProviderInterface::shouldQueryState() {
+    return true;
 }
 
 }  // namespace sdkInterfaces

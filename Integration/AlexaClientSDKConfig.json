@@ -26,6 +26,17 @@
     "lwaAuthorization":{
         "databaseFilePath":"${SDK_LWA_AUTHORIZATION_ADAPTER_DATABASE_FILE_PATH}"
     },
+    "speakerManagerCapabilityAgent":{
+        "defaultSpeakerVolume":40,
+        "defaultAlertsVolume":40,
+        "restoreMuteState":true
+    },
+    "pkcs11Module":{
+        "libraryPath":"${SDK_PKCS11_MODULE_PATH}",
+        "tokenName":"${SDK_PKCS11_TOKEN_NAME}",
+        "userPin":"${SDK_PKCS11_USER_PIN}",
+        "defaultKeyName":"${SDK_PKCS11_KEY_NAME}"
+    },
     "deviceSettings":{
         "databaseFilePath":"${SDK_SQLITE_DEVICE_SETTINGS_DATABASE_FILE_PATH}",
         "locales":["en-US","en-GB","de-DE","en-IN","en-CA","ja-JP","en-AU","fr-FR","it-IT","es-ES","es-MX","fr-CA",
@@ -64,6 +75,9 @@
         "agentString": "CQCAFYNYDC"
     },
     "sampleApp": {
-        "displayCardsSupported":true
+        "displayCardsSupported":true,
+        "sensory": {
+            "modelFilePath": "${SDK_SENSORY_MODEL_FILE_PATH}"
+        }
     }
 }

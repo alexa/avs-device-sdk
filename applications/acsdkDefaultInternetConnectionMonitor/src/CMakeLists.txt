@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkDefaultInternetConnectionMonitor")
-add_library(acsdkDefaultInternetConnectionMonitor SHARED
+add_library(acsdkDefaultInternetConnectionMonitor
     InternetConnectionMonitorComponent.cpp)
 
 target_include_directories(acsdkDefaultInternetConnectionMonitor PUBLIC

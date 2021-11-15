@@ -55,8 +55,15 @@ bool TimePoint::setTime_ISO_8601(const std::string& time_ISO_8601) {
         return false;
     }
 
+    std::chrono::system_clock::time_point tp;
+    if (!m_timeUtils.convert8601TimeStringToUtcTimePoint(time_ISO_8601, &tp)) {
+        ACSDK_ERROR(LX("setTime_ISO_8601Failed").d("input", time_ISO_8601).m("Could not convert to time_point."));
+        return false;
+    }
+
     m_time_ISO_8601 = time_ISO_8601;
     m_time_Unix = tempUnixTime;
+    m_time_Utc_TimePoint = tp;
     return true;
 }
 
@@ -66,6 +73,10 @@ std::string TimePoint::getTime_ISO_8601() const {
 
 int64_t TimePoint::getTime_Unix() const {
     return m_time_Unix;
+}
+
+std::chrono::system_clock::time_point TimePoint::getTime_Utc_TimePoint() const {
+    return m_time_Utc_TimePoint;
 }
 
 }  // namespace timing

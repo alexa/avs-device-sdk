@@ -781,6 +781,17 @@ void CapabilitiesDelegate::filterUnchangedPendingAddOrUpdateEndpointsLocked(
 
     std::unordered_map<std::string, std::string> addOrUpdateEndpointIdToConfigPairs = m_addOrUpdateEndpoints.pending;
 
+    // Find the endpoints with the same ID that are being added and deleted
+    for (auto& endpointIdToConfigPair : addOrUpdateEndpointIdToConfigPairs) {
+        if (m_deleteEndpoints.pending.end() != m_deleteEndpoints.pending.find(endpointIdToConfigPair.first)) {
+            ACSDK_DEBUG9(LX(__func__)
+                             .d("step", "endpoint removed in deleteReport")
+                             .d("reason", "endpoint being added")
+                             .sensitive("endpointId", endpointIdToConfigPair.first));
+            m_deleteEndpoints.pending.erase(endpointIdToConfigPair.first);
+        }
+    }
+
     /// Find the endpoints that are unchanged
     for (auto& endpointIdToConfigPair : addOrUpdateEndpointIdToConfigPairs) {
         auto storedEndpointConfigId = storedEndpointConfig->find(endpointIdToConfigPair.first);

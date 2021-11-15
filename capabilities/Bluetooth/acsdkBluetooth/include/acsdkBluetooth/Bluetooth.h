@@ -66,6 +66,7 @@
 
 #include "acsdkBluetooth/BluetoothEventState.h"
 #include "acsdkBluetooth/BluetoothMediaInputTransformer.h"
+#include "acsdkBluetoothInterfaces/BluetoothLocalInterface.h"
 
 namespace alexaClientSDK {
 namespace acsdkBluetooth {
@@ -117,6 +118,7 @@ static const constexpr char* BLUETOOTH_MEDIA_PLAYER_NAME = "BluetoothMediaPlayer
  */
 class Bluetooth
         : public std::enable_shared_from_this<Bluetooth>
+        , public acsdkBluetoothInterfaces::BluetoothLocalInterface
         , public avsCommon::avs::CapabilityAgent
         , public avsCommon::utils::bluetooth::BluetoothEventListenerInterface
         , public avsCommon::utils::bluetooth::FormattedAudioStreamAdapterListener
@@ -254,6 +256,16 @@ public:
     void handleDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void cancelDirective(std::shared_ptr<avsCommon::avs::CapabilityAgent::DirectiveInfo> info) override;
     void onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) override;
+    /// @}
+
+    /// @name BluetoothLocalInterface Functions
+    /// @{
+    void setDiscoverableMode(bool discoverable) override;
+    void setScanMode(bool scanning) override;
+    void pair(const std::string& addr) override;
+    void unpair(const std::string& addr) override;
+    void connect(const std::string& addr) override;
+    void disconnect(const std::string& addr) override;
     /// @}
 
     /// @name CapabilityConfigurationInterface Functions
@@ -405,6 +417,55 @@ private:
 
     /// A state transition function for entering the none state.
     void executeEnterNone();
+
+    /**
+     * Handles setting the device into discoverable mode.
+     */
+    void executeHandleEnterDiscoverableMode();
+
+    /**
+     * Handles setting the device into undiscoverable mode.
+     */
+    void executeHandleExitDiscoverableMode();
+
+    /**
+     * Handles setting the device into scan mode.
+     */
+    void executeHandleScanDevices();
+
+    /**
+     * Handles pairing with the devices matching the given uuids.
+     *
+     * @param uuids The uuids associated with the devices.
+     * @return A bool indicating success.
+     */
+    bool executeHandlePairDevices(const std::unordered_set<std::string>& uuids);
+
+    /**
+     * Handles unpairing with the devices matching the given uuids.
+     *
+     * @param uuids The uuids associated with the devices.
+     * @return A bool indicating success.
+     */
+    bool executeHandleUnpairDevices(const std::unordered_set<std::string>& uuids);
+
+    /**
+     * Handles connecting with the devices matching the given uuids.
+     * This will connect all available services between the two devices.
+     *
+     * @param uuids The uuids associated with the devices.
+     * @return A bool indicating success.
+     */
+    bool executeHandleConnectByDeviceIds(const std::unordered_set<std::string>& uuids);
+
+    /**
+     * Disconnect with the devices matching the given uuids.
+     * This will disconnect all available services between the two devices.
+     *
+     * @param uuids The uuids associated with the devices.
+     * @return A bool indicating success.
+     */
+    bool executeHandleDisconnectDevices(const std::unordered_set<std::string>& uuids);
 
     /**
      * Puts the device into the desired discoverable mode.

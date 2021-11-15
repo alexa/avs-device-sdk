@@ -45,6 +45,7 @@ public:
     MOCK_CONST_METHOD0(getSupportedLocales, std::set<Locale>());
     MOCK_CONST_METHOD0(getSupportedLocaleCombinations, LocaleCombinations());
     MOCK_CONST_METHOD0(getDefaultLocale, Locale());
+    MOCK_CONST_METHOD0(getDefaultLocales, Locales());
 };
 
 }  // namespace test

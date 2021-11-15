@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=synchronizeStateSender")
-add_library(SynchronizeStateSender SHARED
+add_library(SynchronizeStateSender
         SynchronizeStateSenderFactory.cpp
         PostConnectSynchronizeStateSender.cpp)
 

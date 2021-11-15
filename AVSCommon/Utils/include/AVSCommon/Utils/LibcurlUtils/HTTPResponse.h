@@ -33,6 +33,14 @@ public:
      */
     HTTPResponse();
 
+    /**
+     * Constructor with params.
+     *
+     * @param pCode The status code.
+     * @param pBody The response body.
+     */
+    HTTPResponse(long pCode, const std::string& pBody);
+
     /// The HTTP status code returned by the server.
     long code;
 
@@ -42,9 +50,6 @@ public:
     /// Serialize the object
     std::string serialize();
 };
-
-inline HTTPResponse::HTTPResponse() : code(0) {
-}
 
 }  // namespace libcurlUtils
 }  // namespace utils

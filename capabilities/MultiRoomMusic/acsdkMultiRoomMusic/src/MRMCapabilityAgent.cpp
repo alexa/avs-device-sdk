@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <chrono>
 #include <rapidjson/document.h>
 
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
@@ -56,6 +57,10 @@ static const avsCommon::avs::NamespaceAndName WHA_SKEW_NAMESPACE_WILDCARD{SKEW_D
 static const std::string MRM_CONFIGURATION_ROOT_KEY = "mrm";
 /// The key in our config file to find the MRM capabilities.
 static const std::string MRM_CAPABILITIES_KEY = "capabilities";
+
+/// The amount of time to delay the processing of alexa dialog state changes in an effort to improve
+/// WakeWordToBar performance, by freeing up resources during the critical time just after a wake word.
+static const std::chrono::milliseconds DIALOG_STATE_UPDATE_DELAY{200};
 
 static std::unordered_set<std::shared_ptr<CapabilityConfiguration>> readCapabilities() {
     std::unordered_set<std::shared_ptr<CapabilityConfiguration>> capabilitiesSet;
@@ -191,12 +196,11 @@ MRMCapabilityAgent::~MRMCapabilityAgent() {
 }
 
 void MRMCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("preHandleDirective"));
     // intentional no-op.
 }
-
 void MRMCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleDirective"));
     if (!info) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "info is nullptr."));
         return;
@@ -205,12 +209,12 @@ void MRMCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
 }
 
 void MRMCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("cancelDirective"));
     // intentional no-op.
 }
 
 void MRMCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX("handleDirectiveImmediately"));
     if (!directive) {
         ACSDK_ERROR(LX("handleDirectiveImmediatelyFailed").d("reason", "directive is nullptr."));
         return;
@@ -248,7 +252,7 @@ void MRMCapabilityAgent::onCallStateChange(avsCommon::sdkInterfaces::CallStateOb
 void MRMCapabilityAgent::onDialogUXStateChanged(
     avsCommon::sdkInterfaces::DialogUXStateObserverInterface::DialogUXState state) {
     ACSDK_DEBUG5(LX(__func__).d("state", state));
-    m_executor.submit([this, state]() { executeOnDialogUXStateChanged(state); });
+    m_delayedTaskTimer.submitTask(DIALOG_STATE_UPDATE_DELAY, [this, state]() { executeOnDialogUXStateChanged(state); });
 }
 
 std::string MRMCapabilityAgent::getVersionString() const {

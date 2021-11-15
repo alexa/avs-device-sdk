@@ -18,7 +18,6 @@
 
 #include <AVSCommon/Utils/File/FileUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-
 #include <acsdkNotifications/SQLiteNotificationsStorage.h>
 
 namespace alexaClientSDK {
@@ -315,6 +314,17 @@ bool SQLiteNotificationsStorage::setIndicatorState(IndicatorState state) {
 bool SQLiteNotificationsStorage::getIndicatorState(IndicatorState* state) {
     if (!state) {
         ACSDK_ERROR(LX("getIndicatorStateFailed").m("State parameter was nullptr"));
+        return false;
+    }
+    std::lock_guard<std::mutex> lock{m_databaseMutex};
+    if (!m_database.isDatabaseReady()) {
+        ACSDK_ERROR(LX("getIndicatorStateFailed").m("Database not ready"));
+        return false;
+    }
+
+    if (!m_database.tableExists(INDICATOR_STATE_NAME)) {
+        ACSDK_ERROR(
+            LX("getIndicatorStateFailed").m("Table does not exist").d("table name", INDICATOR_STATE_NAME.c_str()));
         return false;
     }
 

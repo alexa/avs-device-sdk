@@ -21,6 +21,8 @@
 #include <vector>
 
 #include <acsdkManufactory/Component.h>
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/LocaleAssetsManagerInterface.h>
@@ -57,7 +59,9 @@ using SampleApplicationComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>,
     std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
-    std::shared_ptr<sampleApp::UIManager>>;
+    std::shared_ptr<sampleApp::UIManager>,
+    std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>,
+    std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>;
 
 /**
  * Get the manufactory @c Component for acsdkSampleApp.

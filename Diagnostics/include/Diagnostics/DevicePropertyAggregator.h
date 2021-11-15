@@ -55,11 +55,7 @@ public:
 
     /// @name AlertObserverInterface Functions
     /// @{
-    void onAlertStateChange(
-        const std::string& alertToken,
-        const std::string& alertType,
-        AlertObserverInterface::State state,
-        const std::string& reason = "") override;
+    void onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) override;
     /// @}
 
     /// @name AuthObserverInterface Functions

@@ -57,17 +57,23 @@ constexpr char MESSAGE_ID[] = "1";
 /// The value of the payload key for locales
 static const std::string LOCALES_PAYLOAD_KEY = "locales";
 
-/// A list of test locales.
+/// A set of test locales.
 static const std::set<std::string> TEST_LOCALES = {"en-US"};
 
-/// A list of test supported wake words.
+/// A set of test supported wake words.
 static const std::set<std::string> SUPPORTED_WAKE_WORDS = {"ALEXA", "ECHO"};
 
-/// A list of test supported locales.
-static const std::set<std::string> SUPPORTED_LOCALES = {"en-CA", "en-US"};
+/// A set of test supported locales.
+static const std::set<std::string> SUPPORTED_LOCALES = {"en-CA", "en-US", "fr-CA"};
+
+/// A set of test multilingual supported locales.
+static const std::set<std::vector<std::string>> SUPPORTED_MULTILINGUAL_LOCALES = {{"en-CA", "fr-CA"}};
 
 /// Default locale.
 static const std::string DEFAULT_LOCALE = "en-CA";
+
+/// Default multilingual locale.
+static const std::vector<std::string> DEFAULT_MULTILINGUAL_LOCALE = {"en-CA", "fr-CA"};
 
 /// The SetLocales directive signature.
 static const avsCommon::avs::NamespaceAndName SET_WAKE_WORDS{NAMESPACE, "SetLocales"};
@@ -127,7 +133,13 @@ void LocaleHandlerTest::SetUp() {
     ON_CALL(*m_mockAssetsManager, getSupportedLocales()).WillByDefault(InvokeWithoutArgs([] {
         return SUPPORTED_LOCALES;
     }));
+    ON_CALL(*m_mockAssetsManager, getSupportedLocaleCombinations()).WillByDefault(InvokeWithoutArgs([] {
+        return SUPPORTED_MULTILINGUAL_LOCALES;
+    }));
     ON_CALL(*m_mockAssetsManager, getDefaultLocale()).WillByDefault(InvokeWithoutArgs([] { return DEFAULT_LOCALE; }));
+    ON_CALL(*m_mockAssetsManager, getDefaultLocales()).WillByDefault(InvokeWithoutArgs([] {
+        return DEFAULT_MULTILINGUAL_LOCALE;
+    }));
     ON_CALL(*m_mockAssetsManager, changeAssets(_, _)).WillByDefault(InvokeWithoutArgs([] { return true; }));
 
     EXPECT_CALL(*m_mockDeviceSettingStorage, loadSetting("System.locales"))
@@ -142,7 +154,7 @@ void LocaleHandlerTest::SetUp() {
         return retPromise.get_future();
     };
 
-    // By default, all events can be sent succesfully.
+    // By default, all events can be sent successfully.
     ON_CALL(*m_mockWakeWordSettingMessageSender, sendChangedEvent(_)).WillByDefault(Invoke(settingSendEventSuccess));
     ON_CALL(*m_mockWakeWordSettingMessageSender, sendReportEvent(_)).WillByDefault(Invoke(settingSendEventSuccess));
     ON_CALL(*m_mockLocaleSettingMessageSender, sendChangedEvent(_)).WillByDefault(Invoke(settingSendEventSuccess));

@@ -41,6 +41,12 @@ const int8_t AVS_ADJUST_VOLUME_MAX = 100;
 /// Default unmute volume level.
 const int8_t MIN_UNMUTE_VOLUME = 10;
 
+/// Default speaker volume.
+const int8_t DEFAULT_SPEAKER_VOLUME = 40;
+
+/// Default alerts volume.
+const int8_t DEFAULT_ALERTS_VOLUME = 40;
+
 }  // namespace speakerConstants
 }  // namespace avs
 }  // namespace avsCommon

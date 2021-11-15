@@ -154,6 +154,21 @@ EndpointBuilder& EndpointBuilder::withDerivedEndpointId(const std::string& suffi
     return *this;
 }
 
+EndpointBuilder& EndpointBuilder::withDeviceRegistration() {
+    if (m_isConfigurationFinalized) {
+        ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
+        return *this;
+    }
+
+    m_attributes.registration.set(EndpointAttributes::Registration(
+        m_deviceInfo->getProductId(),
+        m_deviceInfo->getDeviceSerialNumber(),
+        m_deviceInfo->getRegistrationKey(),
+        m_deviceInfo->getProductIdKey()));
+
+    return *this;
+}
+
 EndpointBuilder& EndpointBuilder::withEndpointId(const EndpointIdentifier& endpointId) {
     if (m_isConfigurationFinalized) {
         ACSDK_ERROR(LX(std::string(__func__) + "Failed").d("reason", "operationNotAllowed"));
@@ -574,6 +589,7 @@ std::unique_ptr<EndpointInterface> EndpointBuilder::buildImplementation() {
                      .sensitive("endpointId", m_attributes.endpointId)
                      .sensitive("friendlyName", m_attributes.friendlyName));
 
+    m_hasBeenBuilt = true;
     return std::move(endpoint);
 }
 

@@ -29,6 +29,7 @@
 #include <AVSCommon/SDKInterfaces/ContextManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/ExceptionEncounteredSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/FocusManagerInterface.h>
+#include <AVSCommon/SDKInterfaces/InternetConnectionMonitorInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
@@ -60,6 +61,7 @@ using AlertsComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::AudioFocusAnnotation,
         avsCommon::sdkInterfaces::FocusManagerInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::audio::AudioFactoryInterface>>,

@@ -19,7 +19,6 @@
 #include <AVSCommon/AVS/FocusState.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
-#include <AVSCommon/Utils/Timing/TimeUtils.h>
 #include <AVSCommon/Utils/String/StringUtils.h>
 
 #include <rapidjson/stringbuffer.h>
@@ -59,11 +58,54 @@ static const std::string KEY_LOOP_COUNT = "loopCount";
 static const std::string KEY_LOOP_PAUSE_IN_MILLISECONDS = "loopPauseInMilliSeconds";
 /// String for lookup of the backgroundAssetId for an alert, if assets are provided.
 static const std::string KEY_BACKGROUND_ASSET_ID = "backgroundAlertAsset";
+/// String for lookup of the label for an alert.
+static const std::string KEY_LABEL = "label";
+/// String for lookup of the original time for an alert.
+static const std::string KEY_ORIGINAL_TIME = "originalTime";
+
+/// The length of the hour field in an original time string.
+static const int ORIGINAL_TIME_STRING_HOUR_LENGTH = 2;
+/// The length of the minute field in an original time string.
+static const int ORIGINAL_TIME_STRING_MINUTE_LENGTH = 2;
+/// The length of the second field in an original time string.
+static const int ORIGINAL_TIME_STRING_SECOND_LENGTH = 2;
+/// The length of the millisecond field in an original time string.
+static const int ORIGINAL_TIME_STRING_MILLISECOND_LENGTH = 3;
+/// The colon separator used in an original time string.
+static const std::string ORIGINAL_TIME_STRING_COLON_SEPARATOR = ":";
+/// The dot separator used in an original time string.
+static const std::string ORIGINAL_TIME_STRING_DOT_SEPARATOR = ".";
+/// The offset into an original time string where the hour begins.
+static const unsigned int ORIGINAL_TIME_STRING_HOUR_OFFSET = 0;
+/// The offset into an original time string where the minute begins.
+static const unsigned int ORIGINAL_TIME_STRING_MINUTE_OFFSET =
+    ORIGINAL_TIME_STRING_HOUR_OFFSET + ORIGINAL_TIME_STRING_HOUR_LENGTH + ORIGINAL_TIME_STRING_COLON_SEPARATOR.length();
+/// The offset into an original time string where the second begins.
+static const unsigned int ORIGINAL_TIME_STRING_SECOND_OFFSET = ORIGINAL_TIME_STRING_MINUTE_OFFSET +
+                                                               ORIGINAL_TIME_STRING_MINUTE_LENGTH +
+                                                               ORIGINAL_TIME_STRING_COLON_SEPARATOR.length();
+/// The offset into an original time string where the millisecond begins.
+static const unsigned int ORIGINAL_TIME_STRING_MILLISECOND_OFFSET = ORIGINAL_TIME_STRING_SECOND_OFFSET +
+                                                                    ORIGINAL_TIME_STRING_SECOND_LENGTH +
+                                                                    ORIGINAL_TIME_STRING_DOT_SEPARATOR.length();
+/// The total expected length of an original time string.
+static const unsigned long ORIGINAL_TIME_STRING_LENGTH =
+    ORIGINAL_TIME_STRING_MILLISECOND_OFFSET + ORIGINAL_TIME_STRING_MILLISECOND_LENGTH;
 
 /// We won't allow an alert to render more than 1 hour.
 const std::chrono::seconds MAXIMUM_ALERT_RENDERING_TIME = std::chrono::hours(1);
 /// Length of pause of alert sounds when played in background
 const auto BACKGROUND_ALERT_SOUND_PAUSE_TIME = std::chrono::seconds(10);
+
+/// String representation of an alert of alarm type.
+static const std::string ALERT_TYPE_ALARM_STRING =
+    AlertObserverInterface::typeToString(AlertObserverInterface::Type::ALARM);
+/// String representation of an alert of timer type.
+static const std::string ALERT_TYPE_TIMER_STRING =
+    AlertObserverInterface::typeToString(AlertObserverInterface::Type::TIMER);
+/// String representation of an alert of reminder type.
+static const std::string ALERT_TYPE_REMINDER_STRING =
+    AlertObserverInterface::typeToString(AlertObserverInterface::Type::REMINDER);
 
 /// String to identify log entries originating from this file.
 static const std::string TAG("Alert");
@@ -234,6 +276,29 @@ Alert::ParseFromJsonStatus Alert::parseFromJson(const rapidjson::Value& payload,
         return ParseFromJsonStatus::INVALID_VALUE;
     }
 
+    std::string label;
+    // it's ok if the label is not set.
+    if (!retrieveValue(payload, KEY_LABEL, &label)) {
+        ACSDK_DEBUG5(LX("parseFromJson : label is not present."));
+    } else {
+        ACSDK_DEBUG5(LX("parseFromJson").d("label", label));
+        m_dynamicData.label = label;
+    }
+
+    std::string originalTime;
+    // it's ok if the originalTime is not set.
+    if (!retrieveValue(payload, KEY_ORIGINAL_TIME, &originalTime)) {
+        ACSDK_DEBUG5(LX("parseFromJson : originalTime is not present."));
+    } else {
+        ACSDK_DEBUG5(LX("parseFromJson").d("originalTime", originalTime));
+        /// if originalTime is malformed, ignore the value.
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime> validatedOriginalTime =
+            validateOriginalTimeString(originalTime);
+        if (validatedOriginalTime.hasValue()) {
+            m_dynamicData.originalTime = AlertObserverInterface::originalTimeToString(validatedOriginalTime.value());
+        }
+    }
+
     return parseAlertAssetConfigurationFromJson(payload, &m_dynamicData.assetConfiguration, &m_dynamicData);
 }
 
@@ -318,8 +383,24 @@ void Alert::activate() {
     m_dynamicData.state = Alert::State::ACTIVATING;
 
     if (!m_maxLengthTimer.isActive()) {
-        if (!m_maxLengthTimer.start(MAXIMUM_ALERT_RENDERING_TIME, std::bind(&Alert::onMaxTimerExpiration, this))
-                 .valid()) {
+        // An alert should only play a set duration from its scheduled time,
+        // the math is scheduledTime - currentTime + set duration time.
+        auto renderingTime = std::chrono::seconds{getScheduledTime_UnixLocked() - TimePoint::now().getTime_Unix()} +
+                             MAXIMUM_ALERT_RENDERING_TIME;
+        if (renderingTime <= std::chrono::seconds(0)) {
+            lock.unlock();
+            ACSDK_ERROR(LX("activate").m("Calculated negative rendering time, alert shouldn't be playing."));
+            m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
+                getToken(),
+                getType(),
+                AlertObserverInterface::State::ERROR,
+                getScheduledTime_Utc_TimePoint(),
+                getOriginalTime(),
+                getLabel()));
+            return;
+        }
+        ACSDK_INFO(LX("alert").d("renderingTime in seconds:", renderingTime.count()));
+        if (!m_maxLengthTimer.start(renderingTime, std::bind(&Alert::onMaxTimerExpiration, this)).valid()) {
             ACSDK_ERROR(LX("executeStartFailed").d("reason", "startTimerFailed"));
         }
     }
@@ -337,7 +418,13 @@ void Alert::deactivate(StopReason reason) {
 
     if (isAlertPaused()) {
         m_dynamicData.state = Alert::State::STOPPED;
-        m_observer->onAlertStateChange(m_staticData.token, getTypeName(), AlertObserverInterface::State::STOPPED);
+        m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
+            getTokenLocked(),
+            getType(),
+            AlertObserverInterface::State::STOPPED,
+            getScheduledTime_Utc_TimePointLocked(),
+            getOriginalTimeLocked(),
+            getLabelLocked()));
     }
 
     m_renderer->stop();
@@ -426,12 +513,13 @@ bool Alert::setAlertData(StaticData* staticData, DynamicData* dynamicData) {
 }
 
 void Alert::onRendererStateChange(RendererObserverInterface::State state, const std::string& reason) {
-    ACSDK_DEBUG1(LX("onRendererStateChange")
-                     .d("state", state)
-                     .d("reason", reason)
-                     .d("m_hasTimerExpired", m_hasTimerExpired)
-                     .d("m_dynamicData.state", m_dynamicData.state)
-                     .d("token", getToken()));
+    ACSDK_INFO(LX("onRendererStateChange")
+                   .d("state", state)
+                   .d("reason", reason)
+                   .d("m_hasTimerExpired", m_hasTimerExpired)
+                   .d("m_dynamicData.state", m_dynamicData.state));
+    ACSDK_DEBUG1(LX("onRendererStateChange").d("token", getToken()));
+
     bool shouldNotifyObserver = false;
     bool shouldRetryRendering = false;
     AlertObserverInterface::State notifyState = AlertObserverInterface::State::ERROR;
@@ -485,6 +573,20 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
                 } else if (m_startRendererAgainAfterFullStop) {
                     m_startRendererAgainAfterFullStop = false;
                     shouldRetryRendering = true;
+                } else if (
+                    !m_dynamicData.assetConfiguration.assetPlayOrderItems.empty() &&
+                    !m_dynamicData.hasRenderingFailed) {
+                    // If the renderer failed while handling a url, let's presume there are network issues and render
+                    // the on-device background audio sound instead.
+                    ACSDK_ERROR(LX("onRendererStateChangeFailed")
+                                    .d("reason", reason)
+                                    .m("Renderer stopped unexpectedly. Retrying with local background audio sound."));
+                    m_dynamicData.hasRenderingFailed = true;
+                    shouldRetryRendering = true;
+                } else {
+                    shouldNotifyObserver = true;
+                    notifyState = AlertObserverInterface::State::ERROR;
+                    notifyReason = reason;
                 }
             }
             break;
@@ -522,7 +624,15 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
     lock.unlock();
 
     if (shouldNotifyObserver && observerCopy) {
-        observerCopy->onAlertStateChange(m_staticData.token, getTypeName(), notifyState, notifyReason);
+        auto alertInfo = AlertObserverInterface::AlertInfo(
+            getToken(),
+            getType(),
+            notifyState,
+            getScheduledTime_Utc_TimePoint(),
+            getOriginalTime(),
+            getLabel(),
+            notifyReason);
+        observerCopy->onAlertStateChange(alertInfo);
     }
 
     if (shouldRetryRendering) {
@@ -536,6 +646,10 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
 
 std::string Alert::getToken() const {
     std::lock_guard<std::mutex> lock(m_mutex);
+    return getTokenLocked();
+}
+
+std::string Alert::getTokenLocked() const {
     return m_staticData.token;
 }
 
@@ -555,6 +669,34 @@ std::string Alert::getScheduledTime_ISO_8601() const {
 
 std::string Alert::getScheduledTime_ISO_8601Locked() const {
     return m_dynamicData.timePoint.getTime_ISO_8601();
+}
+
+std::chrono::system_clock::time_point Alert::getScheduledTime_Utc_TimePoint() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return getScheduledTime_Utc_TimePointLocked();
+}
+
+std::chrono::system_clock::time_point Alert::getScheduledTime_Utc_TimePointLocked() const {
+    return m_dynamicData.timePoint.getTime_Utc_TimePoint();
+}
+
+avsCommon::utils::Optional<acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime> Alert::getOriginalTime() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return getOriginalTimeLocked();
+}
+
+avsCommon::utils::Optional<acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime> Alert::getOriginalTimeLocked()
+    const {
+    return validateOriginalTimeString(m_dynamicData.originalTime);
+}
+
+avsCommon::utils::Optional<std::string> Alert::getLabel() const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return getLabelLocked();
+}
+
+avsCommon::utils::Optional<std::string> Alert::getLabelLocked() const {
+    return validateLabelString(m_dynamicData.label);
 }
 
 Alert::State Alert::getState() const {
@@ -599,7 +741,13 @@ bool Alert::snooze(const std::string& updatedScheduledTime) {
 
     if (isAlertPaused()) {
         m_dynamicData.state = Alert::State::SNOOZED;
-        m_observer->onAlertStateChange(m_staticData.token, getTypeName(), AlertObserverInterface::State::SNOOZED);
+        m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
+            getTokenLocked(),
+            getType(),
+            AlertObserverInterface::State::SNOOZED,
+            getScheduledTime_Utc_TimePointLocked(),
+            getOriginalTimeLocked(),
+            getLabelLocked()));
     }
 
     m_renderer->stop();
@@ -700,14 +848,21 @@ void Alert::startRendererLocked() {
 }
 
 void Alert::onMaxTimerExpiration() {
-    ACSDK_DEBUG1(LX("onMaxTimerExpiration").d("token", getToken()));
+    ACSDK_INFO(LX("onMaxTimerExpiration"));
+    ACSDK_DEBUG1(LX("expired token").d("token", getToken()));
     std::lock_guard<std::mutex> lock(m_mutex);
     m_dynamicData.state = Alert::State::STOPPING;
     m_hasTimerExpired = true;
 
     if (isAlertPaused()) {
         m_dynamicData.state = Alert::State::STOPPED;
-        m_observer->onAlertStateChange(m_staticData.token, getTypeName(), AlertObserverInterface::State::STOPPED);
+        m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
+            getTokenLocked(),
+            getType(),
+            AlertObserverInterface::State::STOPPED,
+            getScheduledTime_Utc_TimePointLocked(),
+            getOriginalTimeLocked(),
+            getLabelLocked()));
     }
 
     m_renderer->stop();
@@ -717,7 +872,6 @@ bool Alert::isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit) {
     std::lock_guard<std::mutex> lock(m_mutex);
 
     int64_t cutoffTime = currentUnixTime - timeLimit.count();
-
     return (m_dynamicData.timePoint.getTime_Unix() < cutoffTime);
 }
 
@@ -737,9 +891,86 @@ Alert::ContextInfo Alert::getContextInfo() const {
     return ContextInfo(m_staticData.token, getTypeName(), getScheduledTime_ISO_8601Locked());
 }
 
+AlertObserverInterface::Type Alert::getType() const {
+    if (ALERT_TYPE_ALARM_STRING == getTypeName()) {
+        return AlertObserverInterface::Type::ALARM;
+    } else if (ALERT_TYPE_TIMER_STRING == getTypeName()) {
+        return AlertObserverInterface::Type::TIMER;
+    } else if (ALERT_TYPE_REMINDER_STRING == getTypeName()) {
+        return AlertObserverInterface::Type::REMINDER;
+    }
+    ACSDK_ERROR(LX("getTypeError").d("invalidTypeString", getTypeName()));
+    /// If an unrecognized value is received by AlertsCA, it should default to an ALARM.
+    return AlertObserverInterface::Type::ALARM;
+}
+
 bool Alert::isAlertPaused() const {
     return avsCommon::avs::FocusState::BACKGROUND == m_focusState &&
            avsCommon::avs::MixingBehavior::MUST_PAUSE == m_mixingBehavior;
+}
+
+avsCommon::utils::Optional<AlertObserverInterface::OriginalTime> Alert::validateOriginalTimeString(
+    const std::string& originalTimeStr) {
+    auto optionalOriginalTime = avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>();
+    if (originalTimeStr.empty()) {
+        ACSDK_DEBUG7(LX("validateOriginalTimeString: empty originalTimeStr"));
+        return optionalOriginalTime;
+    }
+
+    if (originalTimeStr.length() != ORIGINAL_TIME_STRING_LENGTH) {
+        ACSDK_ERROR(LX("validateOriginalTimeString: invalid originalTimeStr=" + originalTimeStr));
+        return optionalOriginalTime;
+    }
+
+    int hour = 0, minute = 0, second = 0, millisecond = 0;
+
+    if (!stringToInt(
+            originalTimeStr.substr(ORIGINAL_TIME_STRING_HOUR_OFFSET, ORIGINAL_TIME_STRING_HOUR_LENGTH), &hour) ||
+        !AlertObserverInterface::withinBounds(
+            hour, AlertObserverInterface::ORIGINAL_TIME_FIELD_MIN, AlertObserverInterface::ORIGINAL_TIME_HOUR_MAX)) {
+        ACSDK_ERROR(LX("validateOriginalTimeStringFailed").m("invalid hour: " + originalTimeStr));
+        return optionalOriginalTime;
+    }
+
+    if (!stringToInt(
+            originalTimeStr.substr(ORIGINAL_TIME_STRING_MINUTE_OFFSET, ORIGINAL_TIME_STRING_MINUTE_LENGTH), &minute) ||
+        !AlertObserverInterface::withinBounds(
+            minute,
+            AlertObserverInterface::ORIGINAL_TIME_FIELD_MIN,
+            AlertObserverInterface::ORIGINAL_TIME_MINUTE_MAX)) {
+        ACSDK_ERROR(LX("validateOriginalTimeStringFailed").m("invalid minute: " + originalTimeStr));
+        return optionalOriginalTime;
+    }
+
+    if (!stringToInt(
+            originalTimeStr.substr(ORIGINAL_TIME_STRING_SECOND_OFFSET, ORIGINAL_TIME_STRING_SECOND_LENGTH), &second) ||
+        !AlertObserverInterface::withinBounds(
+            second,
+            AlertObserverInterface::ORIGINAL_TIME_FIELD_MIN,
+            AlertObserverInterface::ORIGINAL_TIME_SECOND_MAX)) {
+        ACSDK_ERROR(LX("validateOriginalTimeStringFailed").m("invalid second: " + originalTimeStr));
+        return optionalOriginalTime;
+    }
+
+    if (!stringToInt(
+            originalTimeStr.substr(ORIGINAL_TIME_STRING_MILLISECOND_OFFSET, ORIGINAL_TIME_STRING_MILLISECOND_LENGTH),
+            &millisecond) ||
+        !AlertObserverInterface::withinBounds(
+            millisecond,
+            AlertObserverInterface::ORIGINAL_TIME_FIELD_MIN,
+            AlertObserverInterface::ORIGINAL_TIME_MILLISECOND_MAX)) {
+        ACSDK_ERROR(LX("validateOriginalTimeStringFailed").m("invalid millisecond: " + originalTimeStr));
+        return optionalOriginalTime;
+    }
+    return avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>({hour, minute, second, millisecond});
+}
+
+avsCommon::utils::Optional<std::string> Alert::validateLabelString(const std::string& label) {
+    if (label.empty()) {
+        ACSDK_DEBUG5(LX("validateLabelString: empty label"));
+        return avsCommon::utils::Optional<std::string>();
+    }
+    return avsCommon::utils::Optional<std::string>(label);
 }
 
 std::string Alert::stateToString(Alert::State state) {

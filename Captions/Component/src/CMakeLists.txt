@@ -4,7 +4,7 @@ set(CaptionsComponent_SOURCES)
 list(APPEND CaptionsComponent_SOURCES
         CaptionsComponent.cpp)
 
-add_library(CaptionsComponent SHARED ${CaptionsComponent_SOURCES})
+add_library(CaptionsComponent ${CaptionsComponent_SOURCES})
 
 target_include_directories(CaptionsComponent PUBLIC
         "${Captions_SOURCE_DIR}/Component/include")

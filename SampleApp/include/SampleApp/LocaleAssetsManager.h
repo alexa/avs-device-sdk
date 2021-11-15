@@ -78,6 +78,7 @@ public:
     std::set<Locale> getSupportedLocales() const override;
     LocaleCombinations getSupportedLocaleCombinations() const override;
     Locale getDefaultLocale() const override;
+    Locales getDefaultLocales() const override;
     void addLocaleAssetsObserver(
         const std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface>& observer)
         override;
@@ -129,6 +130,9 @@ private:
 
     /// The default locale.
     Locale m_defaultLocale;
+
+    /// The default multilingual locale.
+    Locales m_defaultLocales;
 
     /// Mutex to synchronize access to observers.
     mutable std::mutex m_observersMutex;

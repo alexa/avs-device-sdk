@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=contextManager")
-add_library(ContextManager SHARED
+add_library(ContextManager
     ContextManager.cpp)
 
 target_include_directories(ContextManager PUBLIC

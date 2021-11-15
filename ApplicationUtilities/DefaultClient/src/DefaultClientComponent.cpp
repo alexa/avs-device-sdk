@@ -24,6 +24,7 @@
 #include <acsdkManufactory/ComponentAccumulator.h>
 #ifdef ENABLE_MC
 #include <acsdkMessagingController/MessagingControllerComponent.h>
+#include <acsdkMessenger/MessengerComponent.h>
 #endif
 #include <acsdkNotifications/NotificationsComponent.h>
 #include <acsdkShared/SharedComponent.h>
@@ -302,6 +303,7 @@ DefaultClientComponent getComponent(
         .addComponent(acsdkExternalMediaPlayer::getBackwardsCompatibleComponent(adapterCreationMap))
         .addComponent(acsdkInteractionModel::getComponent())
 #ifdef ENABLE_MC
+        .addComponent(acsdkMessenger::getComponent())
         .addComponent(acsdkMessagingController::getComponent())
 #endif
         .addComponent(acsdkNotifications::getComponent())

@@ -22,6 +22,7 @@
 #include <acsdkManufactory/Component.h>
 #include <acsdkManufactory/Import.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
+#include <AVSCommon/Utils/LibcurlUtils/LibcurlSetCurlOptionsCallbackFactoryInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkHTTPContentFetcher {

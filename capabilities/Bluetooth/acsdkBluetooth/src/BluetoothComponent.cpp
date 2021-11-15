@@ -23,14 +23,52 @@
 namespace alexaClientSDK {
 namespace acsdkBluetooth {
 
+std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface> createBluetooth(
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface> bluetoothStorage,
+    std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceManagerInterface> deviceManager,
+    std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> eventBus,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
+    std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>
+        audioPipelineFactory,
+    acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::AudioFocusAnnotation,
+        avsCommon::sdkInterfaces::FocusManagerInterface> audioFocusManager,
+    std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> shutdownNotifier,
+    acsdkManufactory::Annotated<
+        avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
+        avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface> endpointCapabilitiesRegistrar,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceConnectionRulesProviderInterface> connectionRulesProvider,
+    std::shared_ptr<BluetoothMediaInputTransformer> mediaInputTransformer,
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface> bluetoothNotifier) {
+    return std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>(Bluetooth::createBluetoothCapabilityAgent(
+        contextManager,
+        messageSender,
+        exceptionEncounteredSender,
+        bluetoothStorage,
+        deviceManager,
+        eventBus,
+        customerDataManager,
+        audioPipelineFactory,
+        audioFocusManager,
+        shutdownNotifier,
+        endpointCapabilitiesRegistrar,
+        connectionRulesProvider,
+        mediaInputTransformer,
+        bluetoothNotifier));
+}
+
 BluetoothComponent getComponent() {
     return acsdkManufactory::ComponentAccumulator<>()
 #ifdef BLUETOOTH_ENABLED
         .addRetainedFactory(BluetoothNotifier::createBluetoothNotifierInterface)
         .addRetainedFactory(BluetoothMediaInputTransformer::create)
-        .addRequiredFactory(Bluetooth::createBluetoothCapabilityAgent)
+        .addRequiredFactory(createBluetooth)
 #else
         .addInstance(std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>(nullptr))
+        .addInstance(std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>(nullptr))
 #endif
         ;
 }

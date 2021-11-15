@@ -25,6 +25,8 @@
 #include <acsdkBluetooth/SQLiteBluetoothStorage.h>
 #include <acsdkBluetoothImplementation/BluetoothImplementationComponent.h>
 #include <acsdkCore/CoreComponent.h>
+#include <acsdkCrypto/CryptoFactory.h>
+#include <acsdkPkcs11/KeyStoreFactory.h>
 #include <acsdkDeviceSettingsManager/DeviceSettingsManagerComponent.h>
 #include <acsdkDeviceSetup/DeviceSetupComponent.h>
 #include <acsdkDoNotDisturb/DoNotDisturbComponent.h>
@@ -33,9 +35,11 @@
 #include <acsdkHTTPContentFetcher/HTTPContentFetcherComponent.h>
 #include <acsdkInteractionModel/InteractionModelComponent.h>
 #include <acsdkInternetConnectionMonitor/InternetConnectionMonitorComponent.h>
+#include <acsdkKWD/KWDComponent.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
 #ifdef ENABLE_MC
 #include <acsdkMessagingController/MessagingControllerComponent.h>
+#include <acsdkMessenger/MessengerComponent.h>
 #endif
 #include <acsdkMetricRecorder/MetricRecorderComponent.h>
 #include <acsdkNotifications/NotificationsComponent.h>
@@ -176,12 +180,12 @@ PreviewAlexaClientComponent getComponent(
 
         /**
          * Although these are the default options for PreviewAlexaClient, applications may modify or replace
-         * these with custom implementations. These include components like ACL, the logger, and AuthDelegateInterface,
-         * among others.
+         * these with custom implementations. These include components like ACL, the logger, and
+         * AuthDelegateInterface, among others.
          *
-         * For example, to replace the default null MetricRecorder with your own implementation, you could remove the
-         * default applications/acsdkNullMetricRecorder library and instead define your own metric recorder component
-         * in the same acsdkMetricRecorder namespace.
+         * For example, to replace the default null MetricRecorder with your own implementation, you could remove
+         * the default applications/acsdkNullMetricRecorder library and instead define your own metric recorder
+         * component in the same acsdkMetricRecorder namespace.
          */
         .addComponent(acsdkAlexaCommunications::getComponent())
         .addComponent(acsdkApplicationAudioPipelineFactory::getComponent())
@@ -238,6 +242,9 @@ PreviewAlexaClientComponent getComponent(
         .addComponent(acsdkExternalMediaPlayerAdapters::getComponent())
 #endif
 
+        /// KWD Component. Default component is the null component.
+        .addComponent(acsdkKWD::getComponent())
+
         /// Capability Agents. Some CAs are still created in Default Client.
         .addComponent(acsdkAlerts::getComponent())
         .addComponent(acsdkAudioPlayer::getComponent())
@@ -247,6 +254,7 @@ PreviewAlexaClientComponent getComponent(
         .addComponent(acsdkExternalMediaPlayer::getComponent())
         .addComponent(acsdkInteractionModel::getComponent())
 #ifdef ENABLE_MC
+        .addComponent(acsdkMessenger::getComponent())
         .addComponent(acsdkMessagingController::getComponent())
 #endif
         .addComponent(acsdkNotifications::getComponent())
@@ -255,7 +263,13 @@ PreviewAlexaClientComponent getComponent(
         .addComponent(capabilityAgents::system::getComponent())
         .addRetainedFactory(capabilityAgents::templateRuntime::RenderPlayerInfoCardsProviderRegistrar::
                                 createRenderPlayerInfoCardsProviderRegistrarInterface)
-        .addComponent(acsdkDeviceSetup::getComponent());
+        .addComponent(acsdkDeviceSetup::getComponent())
+#ifdef ENABLE_PKCS11
+        .addRetainedFactory(acsdkPkcs11::createKeyStore)
+#else
+        .addInstance(std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>())
+#endif
+        .addRetainedFactory(acsdkCrypto::createCryptoFactory);
 }
 
 }  // namespace acsdkPreviewAlexaClient

@@ -19,7 +19,7 @@
 #include <memory>
 
 #include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
-#include <acsdkNotifier/Notifier.h>
+#include <acsdkNotifier/internal/Notifier.h>
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 
 namespace alexaClientSDK {

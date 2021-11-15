@@ -66,7 +66,7 @@ public:
      *
      * @param localeAssetsManager The @c LocaleAssetsManagerInterface that provides the supported locales.
      * @param deviceInfo Information about the device.  For example, the default endpoint.
-     * @return a new instyance of UIManager.
+     * @return a new instance of UIManager.
      */
     static std::shared_ptr<UIManager> create(
         const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& localeAssetsManager,

@@ -97,8 +97,11 @@ TEST(PlaybackContextTest, test_validateMixValidInvalidHeaders) {
     // Test with more than 20 valid headers x-*
     {
         PlaybackContext playbackContext;
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 10; i++) {
             playbackContext.audioSegmentConfig["x-" + std::to_string(i)] = "abcd" + std::to_string(i);
+        }
+        for (int i = 10; i < 25; i++) {
+            playbackContext.audioSegmentConfig["X-" + std::to_string(i)] = "abcd" + std::to_string(i);
         }
         auto isValid = validatePlaybackContextHeaders(&playbackContext);
 

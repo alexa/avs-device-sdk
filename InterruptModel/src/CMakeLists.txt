@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=interruptModel")
 
-add_library(InterruptModel SHARED
+add_library(InterruptModel
         InterruptModel.cpp
         "${InterruptModel_SOURCE_DIR}/config/src/InterruptModelConfiguration.cpp")
 

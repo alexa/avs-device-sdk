@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkShutdownManager")
-add_library(acsdkShutdownManager SHARED
+add_library(acsdkShutdownManager
     ShutdownManager.cpp
     ShutdownNotifier.cpp)
 

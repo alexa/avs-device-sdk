@@ -53,6 +53,16 @@ public:
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
 
     /**
+     * Factory method for creating a storage object for a SQLite database.
+     * Note that the actual database will not be created by this function.
+     *
+     * @deprecated
+     * @param[in] databasePath Path to database
+     * @return Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it.
+     */
+    static std::unique_ptr<SQLiteMiscStorage> create(const std::string& databasePath);
+
+    /**
      * Destructor
      */
     ~SQLiteMiscStorage();
@@ -99,6 +109,17 @@ public:
         const std::string& tableName,
         std::unordered_map<std::string, std::string>* valueContainer) override;
     /// @}
+
+    /**
+     * @brief Provides reference to a database.
+     *
+     * This method provides a reference to inner database object for database maintenance operations. The access to the
+     * database is not serialized against parallel access and should be used only when it is guaranteed there are no
+     * other consumers of the objects.
+     *
+     * @return Reference to database.
+     */
+    SQLiteDatabase& getDatabase();
 
 private:
     /**

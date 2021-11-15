@@ -16,7 +16,7 @@
 #ifndef ACSDKALEXAEVENTPROCESSEDNOTIFIERINTERFACES_ALEXAEVENTPROCESSEDNOTIFIERINTERFACE_H_
 #define ACSDKALEXAEVENTPROCESSEDNOTIFIERINTERFACES_ALEXAEVENTPROCESSEDNOTIFIERINTERFACE_H_
 
-#include <acsdkNotifierInterfaces/NotifierInterface.h>
+#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 
 namespace alexaClientSDK {

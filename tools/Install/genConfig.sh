@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
@@ -25,10 +25,18 @@ LOCALE=${LOCALE:-'en-US'}
 INDEX_MANUFACTURER_NAME=0
 # The device description.
 INDEX_DEVICE_DESCRIPTION=1
+# The path to sensory model file.
+INDEX_SENSORY_MODEL_FILE_PATH=2
+
+# Defaults for PKCS11
+PKCS11_MODULE_PATH="__undefined__"
+PKCS11_TOKEN_NAME="__undefined__"
+PKCS11_USER_PIN="__undefined__"
+PKCS11_KEY_NAME="__undefined__"
 
 function printUsageAndExit() {
     echo  'Usage: genConfig.sh <config.json file> <device_serial_number> <db path> <SDK Source Directory>'
-    echo '<output AlexaClientSDKConfig.json file> [-D<variable>=<value>]+'
+    echo  '<output AlexaClientSDKConfig.json file> [-D<variable>=<value>]+'
     echo  '1) <config.json file> can be downloaded from developer portal and must contain the following:'
     echo  '   "clientId": "<OAuth client ID>"'
     echo  '   "productId": "<your product name for device>"'
@@ -40,6 +48,12 @@ function printUsageAndExit() {
     'Avaiable variables are:'
     echo  '   "SDK_CONFIG_MANUFACTURER_NAME": The name of the device manufacturer. This variable is required.'
     echo  '   "SDK_CONFIG_DEVICE_DESCRIPTION": The description of the device. This variable is required.'
+    echo  '   "SDK_SENSORY_MODEL_FILE_PATH": The path to the sensory KWD model. This variable is optional for Sensory KWD.\n' \
+    '   Please see https://github.com/Sensory/alexa-rpi#model-selection for more information.'
+    echo  '   "PKCS11_MODULE_PATH": PKCS11 Module Path. This variable is required if PKCS11 is enabled.'
+    echo  '   "PKCS11_TOKEN_NAME": PKCS11 Token Name. This variable is required if PKCS11 is enabled.'
+    echo  '   "PKCS11_USER_PIN": PKCS11 User PIN. This variable is required if PKCS11 is enabled.'
+    echo  '   "PKCS11_KEY_NAME": PKCS11 Key Object Name. This variable is required if PKCS11 is enabled.'
     exit 1
 }
 
@@ -49,21 +63,21 @@ then
   printUsageAndExit
 fi
 
-CONFIG_JSON_FILE=$1
+CONFIG_JSON_FILE="$1"
 if [ ! -f "$CONFIG_JSON_FILE" ]; then
     echo "[ERROR] Config json file not found!"
     printUsageAndExit
 fi
 
-DEVICE_SERIAL_NUMBER=$2
+DEVICE_SERIAL_NUMBER="$2"
 if [[ ! "$DEVICE_SERIAL_NUMBER" =~ [0-9a-zA-Z_]+ ]]; then
    echo '[ERROR] Device serial number is invalid!'
    printUsageAndExit
 fi
 
-CONFIG_DB_PATH=$3
+CONFIG_DB_PATH="$3"
 
-SDK_SRC_PATH=$4
+SDK_SRC_PATH="$4"
 if [ ! -d "$SDK_SRC_PATH" ]; then
     echo '[ERROR] Alexa Device Source directory not found!'
     printUsageAndExit
@@ -74,11 +88,9 @@ if [ ! -f "$INPUT_CONFIG_FILE" ]; then
     printUsageAndExit
 fi
 
-OUTPUT_CONFIG_FILE=$5
-# Check if output file exists, if yes, create empty file.
-if [ -f $OUTPUT_CONFIG_FILE ]; then
-  echo -n "" > $OUTPUT_CONFIG_FILE
-fi
+OUTPUT_CONFIG_FILE="$5"
+# Remove output file if it already exists.
+rm -f "$OUTPUT_CONFIG_FILE"
 
 shift 5
 declare -a extra_variables
@@ -97,6 +109,21 @@ for variable in "$@"; do
       ;;
     SDK_CONFIG_MANUFACTURER_NAME )
       extra_variables[${INDEX_MANUFACTURER_NAME}]=${variable_value}
+      ;;
+    SDK_SENSORY_MODEL_FILE_PATH )
+      extra_variables[${INDEX_SENSORY_MODEL_FILE_PATH}]=${variable_value}
+      ;;
+    PKCS11_MODULE_PATH )
+      PKCS11_MODULE_PATH="${variable_value}"
+      ;;
+    PKCS11_TOKEN_NAME )
+      PKCS11_TOKEN_NAME="${variable_value}"
+      ;;
+    PKCS11_USER_PIN )
+      PKCS11_USER_PIN="${variable_value}"
+      ;;
+    PKCS11_KEY_NAME )
+      PKCS11_KEY_NAME="${variable_value}"
       ;;
     * )
       echo "[ERROR] Unknown configuration variable ${variable_name}"
@@ -187,6 +214,18 @@ SDK_LWA_AUTHORIZATION_ADAPTER_DATABASE_FILE_PATH=$CONFIG_DB_PATH/lwaAuthorizatio
 SDK_CONFIG_MANUFACTURER_NAME=${extra_variables[${INDEX_MANUFACTURER_NAME}]}
 SDK_CONFIG_DEVICE_DESCRIPTION=${extra_variables[${INDEX_DEVICE_DESCRIPTION}]}
 
+# Variable for Sensory Keyword Detection
+if [[ ${extra_variables[${INDEX_SENSORY_MODEL_FILE_PATH}]+foobar} ]]
+then
+  SDK_SENSORY_MODEL_FILE_PATH=${extra_variables[${INDEX_SENSORY_MODEL_FILE_PATH}]}
+fi
+
+# Variables for HSM
+SDK_PKCS11_MODULE_PATH="$PKCS11_MODULE_PATH"
+SDK_PKCS11_TOKEN_NAME="$PKCS11_TOKEN_NAME"
+SDK_PKCS11_KEY_NAME="$PKCS11_KEY_NAME"
+SDK_PKCS11_USER_PIN="$PKCS11_USER_PIN"
+
 ########################################################################################################################
 # End of setting variables for generating $OUTPUT_CONFIG_FILE
 # All variables that needs to be substituted must be defined above "set +a" line!
@@ -200,5 +239,8 @@ from string import Template
 with open("${INPUT_CONFIG_FILE}", "r") as f, open("${OUTPUT_CONFIG_FILE}", "w") as o:
     o.write(Template(f.read()).safe_substitute(os.environ))
 EOF
+
+# Set output file owner-only readable
+chmod 400 "${OUTPUT_CONFIG_FILE}"
 
 echo 'Completed generation of config file:' ${OUTPUT_CONFIG_FILE}

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkNullSystemTimeZone")
-add_library(acsdkNullSystemTimeZone SHARED
+add_library(acsdkNullSystemTimeZone
         SystemTimeZoneComponent.cpp)
 
 target_include_directories(acsdkNullSystemTimeZone PUBLIC

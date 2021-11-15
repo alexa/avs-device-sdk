@@ -40,6 +40,7 @@ const std::string PlaybackContext::HTTP_AUDIOSEGMENT_HEADERS = "audioSegment";
 const std::string PlaybackContext::HTTP_ALL_HEADERS = "all";
 static const std::string AUTHORIZATION = "Authorization";
 static const std::string ALLOWED_PREFIX = "x-";
+static const std::string ALLOWED_PREFIX_CAP = "X-";
 static const std::string COOKIE = "Cookie";
 static const unsigned int MIN_KEY_LENGTH = 3;
 static const unsigned int MAX_KEY_LENGTH = 256;
@@ -63,8 +64,9 @@ static std::pair<bool, bool> validatePlaybackContextHeadersInternal(HeaderConfig
         if (!validateIfNotMalicious(entry->first) || !validateIfNotMalicious(entry->second)) {
             foundMaliciousHeaders = true;
         }
-        if ((entry->first.find(ALLOWED_PREFIX) == 0 && entry->first.length() >= MIN_KEY_LENGTH &&
-             entry->first.length() <= MAX_KEY_LENGTH && entry->second.length() <= MAX_VALUE_LENGTH) ||
+        if (((entry->first.find(ALLOWED_PREFIX) == 0 || entry->first.find(ALLOWED_PREFIX_CAP) == 0) &&
+             entry->first.length() >= MIN_KEY_LENGTH && entry->first.length() <= MAX_KEY_LENGTH &&
+             entry->second.length() <= MAX_VALUE_LENGTH) ||
             (entry->first.compare(AUTHORIZATION) == 0 && entry->second.length() <= MAX_VALUE_LENGTH) ||
             (entry->first.compare(COOKIE) == 0 && entry->second.length() <= MAX_VALUE_LENGTH)) {
             if (!foundMaliciousHeaders) {

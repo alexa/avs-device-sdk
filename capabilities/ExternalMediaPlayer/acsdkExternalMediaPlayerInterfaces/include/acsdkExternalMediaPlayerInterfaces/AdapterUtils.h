@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef ACSDKEXTERNALMEDIAPLAYERINTERFACES_ADAPTERUTILS_H_
-#define ACSDKEXTERNALMEDIAPLAYERINTERFACES_ADAPTERUTILS_H_
+#ifndef ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_ADAPTERUTILS_H_
+#define ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_ADAPTERUTILS_H_
 
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
@@ -50,6 +50,41 @@ enum class AdapterEvent {
     /// PlayerErrorEvent to report all errors from the adapters.
     PLAYER_ERROR_EVENT
 };
+
+/**
+ * Convert an AdapterEvent to string
+ * @param event Event to convert
+ * @return Event in string format
+ */
+inline std::string adapterEventToString(AdapterEvent event) {
+    switch (event) {
+        case AdapterEvent::CHANGE_REPORT:
+            return "CHANGE_REPORT";
+        case AdapterEvent::REQUEST_TOKEN:
+            return "REQUEST_TOKEN";
+        case AdapterEvent::LOGIN:
+            return "LOGIN";
+        case AdapterEvent::LOGOUT:
+            return "LOGOUT";
+        case AdapterEvent::PLAYER_EVENT:
+            return "PLAYER_EVENT";
+        case AdapterEvent::PLAYER_ERROR_EVENT:
+            return "PLAYER_ERROR_EVENT";
+    }
+    // To satisfy errant compiler warnings, returning empty string
+    return "";
+}
+
+/**
+ * Write a @c AdapterEvent to an @c ostream.
+ *
+ * @param stream The stream to write the value to.
+ * @param event The @c AdapterEvent value to write to the @c ostream as a string.
+ * @return The @c ostream that was passed in and written to.
+ */
+inline std::ostream& operator<<(std::ostream& stream, const AdapterEvent& event) {
+    return stream << adapterEventToString(event);
+}
 
 /// Table with the retry times on subsequent retries for session management
 /// (token fetch/changeReport send).
@@ -141,8 +176,45 @@ bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::Al
  */
 std::string getEmpContextString(acsdkExternalMediaPlayerInterfaces::AdapterState adapterState);
 
+#ifdef MEDIA_PORTABILITY_ENABLED
+/**
+ * Media portability mode
+ */
+enum class MpMode {
+    /// Legacy mode indicates that no media portability or media convergence is being used.
+    LEGACY,
+    /// Media convergence mode means all media playback is through one type of media player,
+    /// and media portability is not turned on
+    MEDIA_CONVERGENCE,
+    /// Media portability mode means both media convergence and media portability are turned on.
+    MEDIA_PORTABILITY
+};
+
+/**
+ * Method to check if the given request type includes a mediaSessionId.
+ *
+ * @param type RequestType to check
+ * @return Whether request type includes a mediaSessionId
+ */
+bool requestTypeIncludesMediaSessionId(RequestType type);
+
+/**
+ * Get the media portability mode.
+ * @return Media portability mode
+ */
+MpMode getMediaPortabilityMode();
+
+/**
+ * Whether media portability is enabled
+ *
+ * @return True if media portability is enabled, false otherwise.
+ */
+bool mediaPortabilityEnabled();
+
+#endif
+
 }  // namespace acsdkExternalMediaPlayerInterfaces
 }  // namespace alexaClientSDK
 
 #endif  // end
-// ACSDKEXTERNALMEDIAPLAYERINTERFACES_ADAPTERUTILS_H_
+// ALEXA_CLIENT_SDK_ACSDKEXTERNALMEDIAPLAYERINTERFACES_INCLUDE_ACSDKEXTERNALMEDIAPLAYERINTERFACES_ADAPTERUTILS_H_

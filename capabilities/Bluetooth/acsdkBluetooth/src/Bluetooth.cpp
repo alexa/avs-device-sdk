@@ -1363,6 +1363,72 @@ void Bluetooth::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
     });
 }
 
+void Bluetooth::setDiscoverableMode(bool discoverable) {
+    m_executor.submit([this, discoverable] {
+        ACSDK_DEBUG5(LX(__func__).d("discoverable", discoverable));
+        if (discoverable) {
+            executeHandleEnterDiscoverableMode();
+        } else {
+            executeHandleExitDiscoverableMode();
+        }
+    });
+}
+
+void Bluetooth::setScanMode(bool scanning) {
+    m_executor.submit([this, scanning] {
+        ACSDK_DEBUG5(LX(__func__).d("scanning", scanning));
+        if (scanning) {
+            executeHandleScanDevices();
+        } else {
+            executeSetScanMode(false);
+        }
+    });
+}
+
+void Bluetooth::pair(const std::string& addr) {
+    m_executor.submit([this, addr] {
+        ACSDK_DEBUG5(LX(__func__));
+        std::string uuid;
+        retrieveUuid(addr, &uuid);
+        std::unordered_set<std::string> uuids({uuid});
+
+        executeHandlePairDevices(uuids);
+    });
+}
+
+void Bluetooth::unpair(const std::string& addr) {
+    m_executor.submit([this, addr] {
+        ACSDK_DEBUG5(LX(__func__));
+        std::string uuid;
+        retrieveUuid(addr, &uuid);
+        std::unordered_set<std::string> uuids({uuid});
+
+        executeHandleUnpairDevices(uuids);
+    });
+}
+
+void Bluetooth::connect(const std::string& addr) {
+    m_executor.submit([this, addr] {
+        ACSDK_DEBUG5(LX(__func__));
+        std::string uuid;
+        retrieveUuid(addr, &uuid);
+        std::unordered_set<std::string> uuids({uuid});
+
+        executeHandleConnectByDeviceIds(uuids);
+    });
+}
+
+void Bluetooth::disconnect(const std::string& addr) {
+    m_executor.submit([this, addr] {
+        ACSDK_DEBUG5(LX(__func__));
+        std::string uuid;
+        retrieveUuid(addr, &uuid);
+        std::unordered_set<std::string> uuids({uuid});
+
+        executeHandleDisconnectDevices(uuids);
+    });
+}
+
 void Bluetooth::onContextAvailable(const std::string& jsonContext) {
     m_executor.submit([this, jsonContext] {
         ACSDK_DEBUG9(LX("onContextAvailableLambda"));
@@ -1457,46 +1523,21 @@ void Bluetooth::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> 
         }
 
         if (directiveName == SCAN_DEVICES.name) {
-            clearUnusedUuids();
-            executeSetScanMode(true);
+            executeHandleScanDevices();
         } else if (directiveName == ENTER_DISCOVERABLE_MODE.name) {
-            if (executeSetDiscoverableMode(true)) {
-                executeSendEnterDiscoverableModeSucceeded();
-            } else {
-                executeSendEnterDiscoverableModeFailed();
-            }
+            executeHandleEnterDiscoverableMode();
         } else if (directiveName == EXIT_DISCOVERABLE_MODE.name) {
-            // There are no events to send in case this operation fails. The best we can do is log.
-            executeSetScanMode(false);
-            executeSetDiscoverableMode(false);
+            executeHandleExitDiscoverableMode();
         } else if (directiveName == PAIR_DEVICES.name) {
             std::unordered_set<std::string> uuids = retrieveUuidsFromConnectionPayload(payload);
-            if (!uuids.empty()) {
-                /*
-                 * AVS expects this sequence of implicit behaviors.
-                 * AVS should send individual directives, but we will handle this for now.
-                 *
-                 * Don't send ScanDeviceReport event to cloud in pairing mode. Otherwise, another
-                 * SCAN_DEVICES directive would be sent down to start scan mode again.
-                 *
-                 * If the device fails to pair, start scan mode again.
-                 */
-                executeSetScanMode(false, false);
-                executeSetDiscoverableMode(false);
-
-                if (!executePairDevices(uuids)) {
-                    executeSetScanMode(true, false);
-                }
-            } else {
+            if (!executeHandlePairDevices(uuids)) {
                 sendExceptionEncountered(
                     info, "uniqueDeviceId not found.", ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
                 return;
             }
         } else if (directiveName == UNPAIR_DEVICES.name) {
             std::unordered_set<std::string> uuids = retrieveUuidsFromConnectionPayload(payload);
-            if (!uuids.empty()) {
-                executeUnpairDevices(uuids);
-            } else {
+            if (!executeHandleUnpairDevices(uuids)) {
                 sendExceptionEncountered(
                     info, "uniqueDeviceId not found.", ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
                 return;
@@ -1529,9 +1570,7 @@ void Bluetooth::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> 
             }
         } else if (directiveName == CONNECT_BY_DEVICE_IDS.name) {
             std::unordered_set<std::string> uuids = retrieveUuidsFromConnectionPayload(payload);
-            if (!uuids.empty()) {
-                executeConnectByDeviceIds(uuids);
-            } else {
+            if (!executeHandleConnectByDeviceIds(uuids)) {
                 sendExceptionEncountered(
                     info, "uniqueDeviceId not found.", ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
                 return;
@@ -1560,9 +1599,7 @@ void Bluetooth::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> 
             }
         } else if (directiveName == DISCONNECT_DEVICES.name) {
             std::unordered_set<std::string> uuids = retrieveUuidsFromConnectionPayload(payload);
-            if (!uuids.empty()) {
-                executeDisconnectDevices(uuids);
-            } else {
+            if (!executeHandleDisconnectDevices(uuids)) {
                 sendExceptionEncountered(
                     info, "uniqueDeviceId not found.", ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED);
                 return;
@@ -2137,6 +2174,82 @@ void Bluetooth::sendExceptionEncountered(
         info->result->setFailed(message);
     }
     removeDirective(info);
+}
+
+void Bluetooth::executeHandleEnterDiscoverableMode() {
+    ACSDK_INFO(LX(__func__));
+    if (executeSetDiscoverableMode(true)) {
+        executeSendEnterDiscoverableModeSucceeded();
+    } else {
+        executeSendEnterDiscoverableModeFailed();
+    }
+}
+
+void Bluetooth::executeHandleExitDiscoverableMode() {
+    ACSDK_INFO(LX(__func__));
+    // There are no events to send in case this operation fails. The best we can do is log.
+    executeSetScanMode(false);
+    executeSetDiscoverableMode(false);
+}
+
+void Bluetooth::executeHandleScanDevices() {
+    ACSDK_INFO(LX(__func__));
+    clearUnusedUuids();
+    executeSetScanMode(true);
+}
+
+bool Bluetooth::executeHandlePairDevices(const std::unordered_set<std::string>& uuids) {
+    ACSDK_INFO(LX(__func__));
+    if (uuids.empty()) {
+        return false;
+    }
+
+    /*
+     * AVS expects this sequence of implicit behaviors.
+     * AVS should send individual directives, but we will handle this for now.
+     *
+     * Don't send ScanDeviceReport event to cloud in pairing mode. Otherwise, another
+     * SCAN_DEVICES directive would be sent down to start scan mode again.
+     *
+     * If the device fails to pair, start scan mode again.
+     */
+    executeSetScanMode(false, false);
+    executeSetDiscoverableMode(false);
+
+    if (!executePairDevices(uuids)) {
+        executeSetScanMode(true, false);
+    }
+    return true;
+}
+
+bool Bluetooth::executeHandleUnpairDevices(const std::unordered_set<std::string>& uuids) {
+    ACSDK_INFO(LX(__func__));
+    if (uuids.empty()) {
+        return false;
+    }
+
+    executeUnpairDevices(uuids);
+    return true;
+}
+
+bool Bluetooth::executeHandleConnectByDeviceIds(const std::unordered_set<std::string>& uuids) {
+    ACSDK_INFO(LX(__func__));
+    if (uuids.empty()) {
+        return false;
+    }
+
+    executeConnectByDeviceIds(uuids);
+    return true;
+}
+
+bool Bluetooth::executeHandleDisconnectDevices(const std::unordered_set<std::string>& uuids) {
+    ACSDK_INFO(LX(__func__));
+    if (uuids.empty()) {
+        return false;
+    }
+
+    executeDisconnectDevices(uuids);
+    return true;
 }
 
 bool Bluetooth::executeSetScanMode(bool scanning, bool shouldReport) {

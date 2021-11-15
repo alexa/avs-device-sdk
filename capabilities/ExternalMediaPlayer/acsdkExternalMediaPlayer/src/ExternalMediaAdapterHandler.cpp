@@ -99,59 +99,29 @@ bool ExternalMediaAdapterHandler::logout(const std::string& localPlayerId) {
     return handleLogout(localPlayerId);
 }
 
-static const std::unordered_map<std::string, Navigation> NAVIGATION_ENUM_MAP = {{"DEFAULT", Navigation::DEFAULT},
-                                                                                {"NONE", Navigation::NONE},
-                                                                                {"FOREGROUND", Navigation::FOREGROUND}};
-
-static Navigation getNavigationEnum(std::string name) {
-    std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) -> unsigned char {
-        return static_cast<unsigned char>(std::toupper(c));
-    });
-
-    auto it = NAVIGATION_ENUM_MAP.find(name);
-
-    return it != NAVIGATION_ENUM_MAP.end() ? it->second : Navigation::DEFAULT;
-}
-
-bool ExternalMediaAdapterHandler::play(
-    const std::string& localPlayerId,
-    const std::string& playContextToken,
-    int64_t index,
-    std::chrono::milliseconds offset,
-    const std::string& skillToken,
-    const std::string& playbackSessionId,
-    const std::string& navigation,
-    bool preload,
-    const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-    const std::string& playbackTarget) {
-    if (!validatePlayer(localPlayerId)) {
+bool ExternalMediaAdapterHandler::play(const PlayParams& params) {
+    if (!validatePlayer(params.localPlayerId)) {
         ACSDK_WARN(LX("playFailed")
                        .d("reason", "player is not configured or not authorized")
-                       .d("localPlayerId", localPlayerId));
+                       .d("localPlayerId", params.localPlayerId));
         return false;
     }
 
-    auto playerInfo = m_playerInfoMap[localPlayerId];
+    auto playerInfo = m_playerInfoMap[params.localPlayerId];
 
-    playerInfo.skillToken = skillToken;
-    playerInfo.playbackSessionId = playbackSessionId;
+    playerInfo.skillToken = params.skillToken;
+    playerInfo.playbackSessionId = params.playbackSessionId;
 
-    return handlePlay(
-        localPlayerId,
-        playContextToken,
-        index,
-        offset,
-        skillToken,
-        playbackSessionId,
-        getNavigationEnum(navigation),
-        preload,
-        playRequestor,
-        playbackTarget);
+    return handlePlay(params);
 }
 
 bool ExternalMediaAdapterHandler::playControl(
     const std::string& localPlayerId,
     acsdkExternalMediaPlayerInterfaces::RequestType requestType,
+#ifdef MEDIA_PORTABILITY_ENABLED
+    const std::string& mediaSessionId,
+    const std::string& correlationToken,
+#endif
     const std::string& playbackTarget) {
     if (!validatePlayer(localPlayerId)) {
         ACSDK_WARN(LX("playControlFailed")
@@ -160,7 +130,11 @@ bool ExternalMediaAdapterHandler::playControl(
         return false;
     }
 
+#ifdef MEDIA_PORTABILITY_ENABLED
+    return handlePlayControl(localPlayerId, requestType, mediaSessionId, correlationToken, playbackTarget);
+#else
     return handlePlayControl(localPlayerId, requestType, playbackTarget);
+#endif
 }
 
 bool ExternalMediaAdapterHandler::seek(const std::string& localPlayerId, std::chrono::milliseconds offset) {

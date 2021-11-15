@@ -19,7 +19,6 @@ if (BUILD_TESTING)
         AVSCommon
         Captions
         UtilsCommonTestLib
-        gtest_main
         gmock_main)
 
     set(INCLUDE_PATH

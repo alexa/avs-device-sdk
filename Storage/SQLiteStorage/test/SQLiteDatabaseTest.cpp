@@ -33,6 +33,9 @@ static std::string g_workingDirectory;
 static const std::string BAD_PATH =
     "_/_/_/there/is/no/way/this/path/should/exist/,/so/it/should/cause/an/error/when/creating/the/db";
 
+/// Test table name.
+static const std::string TEST_TABLE_NAME{"testTable"};
+
 /**
  * Helper function that generates a unique filepath using the passed in g_workingDirectory.
  *
@@ -212,6 +215,28 @@ TEST(SQLiteDatabaseTest, test_autoRollback) {
     ASSERT_NE(transaction2, nullptr);
 
     db.close();
+}
+
+/// Test to initialize already existing DB.
+TEST(SQLiteDatabaseTest, test_createDeleteTable) {
+    auto dbFilePath = generateDbFilePath();
+    SQLiteDatabase db1(dbFilePath);
+    ASSERT_TRUE(db1.initialize());
+
+    if (db1.tableExists(TEST_TABLE_NAME)) {
+        db1.clearTable(TEST_TABLE_NAME);
+        db1.dropTable(TEST_TABLE_NAME);
+    }
+
+    EXPECT_FALSE(db1.tableExists(TEST_TABLE_NAME));
+
+    ASSERT_TRUE(db1.performQuery("CREATE TABLE " + TEST_TABLE_NAME + " (key TEXT PRIMARY KEY NOT NULL);"));
+
+    ASSERT_TRUE(db1.tableExists(TEST_TABLE_NAME));
+    ASSERT_TRUE(db1.dropTable(TEST_TABLE_NAME));
+    ASSERT_FALSE(db1.tableExists(TEST_TABLE_NAME));
+
+    db1.close();
 }
 
 }  // namespace test

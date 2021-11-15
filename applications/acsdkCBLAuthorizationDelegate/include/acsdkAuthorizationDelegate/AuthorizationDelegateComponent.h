@@ -18,6 +18,8 @@
 
 #include <memory>
 
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkManufactory/Import.h>
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
@@ -39,7 +41,9 @@ using AuthorizationDelegateComponent = acsdkManufactory::Component<
     acsdkManufactory::Import<std::shared_ptr<alexaClientSDK::avsCommon::utils::configuration::ConfigurationNode>>,
     acsdkManufactory::Import<std::unique_ptr<avsCommon::utils::libcurlUtils::HttpPostInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::DeviceInfo>>,
-    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>>;
+    acsdkManufactory::Import<std::shared_ptr<registrationManager::CustomerDataManagerInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>>>;
 
 /**
  * Get the @c Manufactory component for creating an instance of AVSConnectionMangerInterface.

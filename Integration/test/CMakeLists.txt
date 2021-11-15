@@ -30,7 +30,6 @@ set(LINK_PATH ACL
         Integration
         gtest
         gmock
-        KWD
         PlaybackController
         SpeechSynthesizer
         UtilsCommonTestLib
@@ -38,6 +37,7 @@ set(LINK_PATH ACL
         acsdkAlerts
         acsdkAudioPlayer
         acsdkInteractionModel
+        acsdkKWDImplementations
         acsdkManufactory
         acsdkShutdownManager)
 

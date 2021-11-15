@@ -32,6 +32,7 @@
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/Utils/functional/hash.h>
@@ -40,6 +41,9 @@
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/RetryTimer.h>
 #include <AVSCommon/Utils/WaitEvent.h>
+#include <SpeakerManager/SpeakerManagerStorageInterface.h>
+#include <SpeakerManager/SpeakerManagerStorageState.h>
+#include <SpeakerManager/SpeakerManagerConfigHelper.h>
 
 namespace alexaClientSDK {
 namespace capabilityAgents {
@@ -74,6 +78,7 @@ public:
      * Create an instance of @c SpeakerManagerInterface. @c ChannelVolumeInterfaces can be registered via
      * addChannelVolumeInterface.
      *
+     * @param storage A @c MiscStorageInterface to access persistent configuration.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send
@@ -85,6 +90,7 @@ public:
      * @param metricRecorder The metric recorder.
      */
     static std::shared_ptr<SpeakerManagerInterface> createSpeakerManagerCapabilityAgent(
+        const std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface>& storage,
         const std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface>& contextManager,
         const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
         const std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>&
@@ -99,6 +105,7 @@ public:
      * Create an instance of @c SpeakerManager, and register the @c ChannelVolumeInterfaces that will be controlled
      * by it. ChannelVolumeInterfaces will be grouped by @c ChannelVolumeInterface::Type.
      *
+     * @param storage A @c SpeakerManagerStorageInterface to access persistent configuration.
      * @param volumeInterfaces The @c ChannelVolumeInterfaces to register.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
@@ -107,6 +114,7 @@ public:
      * @param metricRecorder The metric recorder.
      */
     static std::shared_ptr<SpeakerManager> create(
+        const std::shared_ptr<SpeakerManagerStorageInterface>& storage,
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& volumeInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
@@ -183,20 +191,20 @@ private:
     /**
      * Constructor. Called after validation has occurred on parameters.
      *
+     * @param speakerManagerStorage The @c SpeakerManagerStorageInterace to register.
      * @param groupVolumeInterfaces The @c ChannelVolumeInterfaces to register.
      * @param contextManager A @c ContextManagerInterface to manage the context.
      * @param messageSender A @c MessageSenderInterface to send messages to AVS.
      * @param exceptionEncounteredSender An @c ExceptionEncounteredSenderInterface to send.
      * directive processing exceptions to AVS.
-     * @param minUnmuteVolume The volume level to increase to when unmuting.
      * @param metricRecorder The metric recorder.
      */
     SpeakerManager(
+        const std::shared_ptr<SpeakerManagerStorageInterface>& speakerManagerStorage,
         const std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>>& groupVolumeInterfaces,
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> messageSender,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionEncounteredSender,
-        const int minUnmuteVolume,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /// Hash functor to use identifier of @c ChannelVolumeInterface as the key in SpeakerSet.
@@ -423,6 +431,21 @@ private:
         const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& settings);
 
     /**
+     * Persist channel configuration.
+     */
+    void executePersistConfiguration();
+
+    /**
+     * Helper method to convert internally stored channel state into config format.
+     *
+     * @param type Channel type.
+     * @param storageState Config container.
+     */
+    void convertSettingsToChannelState(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        SpeakerManagerStorageState::ChannelState* storageState);
+
+    /**
      * Get the maximum volume limit.
      *
      * @return The maximum volume limit.
@@ -441,6 +464,44 @@ private:
     template <typename Task, typename... Args>
     bool retryAndApplySettings(Task task, Args&&... args);
 
+    /**
+     * Configure channel volume and mute status defaults.
+     *
+     * @param type Channel type.
+     * @param state Channel state.
+     * @return A bool indicating success.
+     */
+    void presetChannelDefaults(
+        avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+        const SpeakerManagerStorageState::ChannelState& state);
+
+    /**
+     * Configures channels with default values.
+     */
+    void loadConfiguration();
+
+    /**
+     * Updates volume and mute status on managed channels according to configured settings.
+     */
+    void updateChannelSettings();
+
+    /**
+     * Updates managed channels according to configured settings.
+     * @param type Channel type.
+     */
+    void updateChannelSettings(avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type);
+
+    /**
+     * Helper function to adjust input volume into acceptable range.
+     *
+     * @param volume Input volume.
+     * @return Volume within correct limits.
+     */
+    int8_t adjustVolumeRange(int64_t volume);
+
+    /// Component's configuration access.
+    SpeakerManagerConfigHelper m_config;
+
     /// The metric recorder.
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
@@ -451,7 +512,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> m_messageSender;
 
     /// the @c volume to restore to when unmuting at 0 volume
-    const int m_minUnmuteVolume;
+    int m_minUnmuteVolume;
 
     /// An unordered_map contains ChannelVolumeInterfaces keyed by @c Type. Only internal function
     /// addChannelVolumeInterfaceIntoSpeakerMap can insert an element into this map to ensure that no invalid element
@@ -479,6 +540,9 @@ private:
 
     /// maximumVolumeLimit The maximum volume level speakers in this system can reach.
     int8_t m_maximumVolumeLimit;
+
+    /// Restore mute state flag from configuration
+    bool m_restoreMuteState;
 
     /// Mapping of each speaker type to its speaker settings.
     std::map<

@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkSampleApplicationCBLAuthRequester")
-add_library(acsdkSampleApplicationCBLAuthRequester SHARED
+add_library(acsdkSampleApplicationCBLAuthRequester
     SampleApplicationCBLAuthRequester.cpp)
 
 target_include_directories(acsdkSampleApplicationCBLAuthRequester PUBLIC

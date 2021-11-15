@@ -16,7 +16,6 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
@@ -258,6 +257,32 @@ std::string getEmpContextString(AdapterState adapterState) {
 
     return buffer.GetString();
 }
+
+#ifdef MEDIA_PORTABILITY_ENABLED
+
+bool requestTypeIncludesMediaSessionId(RequestType type) {
+    static const std::set<RequestType> requestTypesWithMediaSessionId{RequestType::RESUME,
+                                                                      RequestType::START_OVER,
+                                                                      RequestType::PREVIOUS,
+                                                                      RequestType::NEXT,
+                                                                      RequestType::REWIND,
+                                                                      RequestType::FAST_FORWARD,
+                                                                      RequestType::STOP,
+                                                                      RequestType::PAUSE};
+
+    return requestTypesWithMediaSessionId.count(type) > 0;
+}
+
+MpMode getMediaPortabilityMode() {
+    // TODO: Update MP mode based on system property
+    return MpMode::LEGACY;
+}
+
+bool mediaPortabilityEnabled() {
+    return getMediaPortabilityMode() == MpMode::MEDIA_PORTABILITY;
+}
+
+#endif
 
 }  // namespace acsdkExternalMediaPlayerInterfaces
 }  // namespace alexaClientSDK

@@ -323,16 +323,8 @@ protected:
         ASSERT_NE(nullptr, m_AudioBufferWriter);
 
         // Set up hold to talk button.
-        bool alwaysReadable = true;
-        bool canOverride = true;
-        bool canBeOverridden = true;
-        m_HoldToTalkAudioProvider = std::make_shared<AudioProvider>(
-            m_AudioBuffer,
-            m_compatibleAudioFormat,
-            ASRProfile::CLOSE_TALK,
-            !alwaysReadable,
-            canOverride,
-            !canBeOverridden);
+        m_HoldToTalkAudioProvider =
+            std::make_shared<AudioProvider>(AudioProvider::HoldAudioProvider(m_AudioBuffer, m_compatibleAudioFormat));
 
         m_holdToTalkButton = std::make_shared<holdToTalkButton>();
 

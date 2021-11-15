@@ -43,7 +43,7 @@
 #endif
 
 #ifdef KWD
-#include <KWD/AbstractKeywordDetector.h>
+#include <acsdkKWDImplementations/AbstractKeywordDetector.h>
 #endif
 
 #ifdef GSTREAMER_MEDIA_PLAYER
@@ -75,16 +75,14 @@ public:
      *
      * @param consoleReader The @c ConsoleReader to read inputs from console.
      * @param configFiles The vector of configuration files.
-     * @param pathToInputFolder The path to the inputs folder containing data files needed by this application.
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
-     * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
+     * @param diagnostics An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
      * @return A new @c PreviewAlexaClient, or @c nullptr if the operation failed.
      */
     static std::unique_ptr<PreviewAlexaClient> create(
         std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
         const std::vector<std::string>& configFiles,
-        const std::string& pathToInputFolder,
         const std::string& logLevel = "",
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr);
 
@@ -95,6 +93,17 @@ public:
      */
     sampleApp::SampleAppReturnCode run();
 
+#ifdef DIAGNOSTICS
+    /**
+     * Initiates application stop for restart sequence. This method notifies event loop that the application
+     * should be terminated with subsequent restart, in other words, if the application is running, it should
+     * return SampleAppReturnCode::RESTART code.
+     *
+     * @return True if restart has been successfully initiated, false on error or if operation is not supported.
+     */
+    bool initiateRestart();
+#endif
+
     /// Destructor which manages the @c SampleApplication shutdown sequence.
     ~PreviewAlexaClient();
 
@@ -104,16 +113,14 @@ private:
      *
      * @param consoleReader The @c ConsoleReader to read inputs from console.
      * @param configFiles The vector of configuration files.
-     * @param pathToInputFolder The path to the inputs folder containing data files needed by this application.
      * @param logLevel The level of logging to enable.  If this parameter is an empty string, the SDK's default
      *     logging level will be used.
-     * @param An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
+     * @param diagnostics An optional @c DiagnosticsInterface object to provide diagnostics on the SDK.
      * @return @c true if initialization succeeded, else @c false.
      */
     bool initialize(
         std::shared_ptr<alexaClientSDK::sampleApp::ConsoleReader> consoleReader,
         const std::vector<std::string>& configFiles,
-        const std::string& pathToInputFolder,
         const std::string& logLevel,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics);
 
@@ -189,10 +196,8 @@ private:
     /// The @c MediaPlayer used by @c NotificationsCapabilityAgent.
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> m_ringtoneMediaPlayer;
 
-#ifdef KWD
     /// The Wakeword Detector which can wake up the client using audio input.
-    std::unique_ptr<kwd::AbstractKeywordDetector> m_keywordDetector;
-#endif
+    std::shared_ptr<acsdkKWDImplementations::AbstractKeywordDetector> m_keywordDetector;
 
 #if defined(ANDROID_MEDIA_PLAYER) || defined(ANDROID_MICROPHONE)
     /// The android OpenSL ES engine used to create media players and microphone.

@@ -55,11 +55,15 @@ if (ENDPOINT_CONTROLLERS_MODE_CONTROLLER)
     list(APPEND LibSampleApp_SOURCES DefaultEndpoint/DefaultEndpointModeControllerHandler.cpp)
 endif()
 
+if (INPUT_CONTROLLER)
+    list(APPEND LibSampleApp_SOURCES InputControllerHandler.cpp)
+endif()
+
 if(EXTERNAL_MEDIA_ADAPTERS)
     list(APPEND LibSampleApp_SOURCES ${ALL_EMP_ADAPTER_REGISTRATION_FILES})
 endif ()
 
-add_library(LibSampleApp SHARED ${LibSampleApp_SOURCES})
+add_library(LibSampleApp ${LibSampleApp_SOURCES})
 
 target_include_directories(LibSampleApp PUBLIC
         # This is relative to project(SampleApp).
@@ -67,19 +71,22 @@ target_include_directories(LibSampleApp PUBLIC
         "${PORTAUDIO_INCLUDE_DIR}")
 
 target_link_libraries(LibSampleApp
-        acsdkCore
-        acsdkManufactory
         acsdkAudioInputStream
-        DefaultClient
+        acsdkCore
+        acsdkCrypto
+        acsdkEqualizerImplementations
+        acsdkKWDImplementations
+        acsdkManufactory
+        acsdkPkcs11
         AVSCommon
         AVSGatewayManager
         CapabilitiesDelegate
         CaptionsComponent
         CBLAuthDelegate
+        DefaultClient
+        InterruptModel
         SQLiteStorage
         SynchronizeStateSender
-        acsdkEqualizerImplementations
-        InterruptModel
         "${PORTAUDIO_LIB_PATH}")
 
 if (ACS_UTILS)
@@ -112,6 +119,10 @@ if (COMMS)
     target_link_libraries(LibSampleApp CallManager)
 endif()
 
+if (RTCSC)
+    target_link_libraries(LibSampleApp RtcscCapabilityAgent)
+endif()
+
 if (MRM AND MRM_STANDALONE_APP)
     target_link_libraries(LibSampleApp acsdkMultiRoomMusic MRMHandlerProxy)
 elseif (MRM)
@@ -140,6 +151,14 @@ endif()
 
 if (AUTH_MANAGER)
     target_link_libraries(LibSampleApp acsdkAuthorization)
+endif()
+
+if (INPUT_CONTROLLER)
+    target_link_libraries(LibSampleApp acsdkInputController)
+endif()
+
+if (CRYPTO_FOUND AND PKCS11)
+    target_compile_definitions(LibSampleApp PRIVATE ENABLE_PKCS11)
 endif()
 
 add_rpath_to_target("LibSampleApp")

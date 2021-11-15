@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=androidUtilities")
 
-add_library(AndroidUtilities SHARED
+add_library(AndroidUtilities
         AndroidLogger.cpp
         AndroidSLESBufferQueue.cpp
         AndroidSLESEngine.cpp
@@ -12,8 +12,7 @@ add_library(AndroidUtilities SHARED
 target_include_directories(AndroidUtilities PUBLIC
     "${AndroidUtilities_SOURCE_DIR}/include"
     "${AudioResources_SOURCE_DIR}/include"
-    "${AVSCommon_INCLUDE_DIRS}"
-    "${ANDROID_NDK}/sysroot/usr/include")
+    "${AVSCommon_INCLUDE_DIRS}")
 
 target_link_libraries(AndroidUtilities AVSCommon OpenSLES log)
 

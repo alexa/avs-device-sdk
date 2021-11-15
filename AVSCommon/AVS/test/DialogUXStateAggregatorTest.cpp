@@ -25,9 +25,12 @@ namespace test {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace std;
 
 /// Long time out for observers to wait for the state change callback (we should not reach this).
 static const auto DEFAULT_TIMEOUT = std::chrono::seconds(5);
+
+static const auto OTHER_ENGINE_TYPE = 2;
 
 /// Short time out for when callbacks are expected not to occur.
 static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);
@@ -227,20 +230,9 @@ TEST_F(DialogUXAggregatorTest, test_aipExpectingSpeechLeadsToListeningState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::EXPECTING);
 }
 
-/// Tests that the AIP busy state leads to the LISTENING state.
-TEST_F(DialogUXAggregatorTest, test_aipBusyLeadsToListeningState) {
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
-
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
-}
-
 /// Tests that the RequestProcessingStarted leads to the THINKING state.
 TEST_F(DialogUXAggregatorTest, test_requestProcessingStartedLeadsToThinkingState) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
-
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
-    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -255,6 +247,7 @@ TEST_F(DialogUXAggregatorTest, test_listeningGoesToIdleAfterTimeout) {
 
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
+    anotherAggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     anotherAggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
@@ -269,7 +262,7 @@ TEST_F(DialogUXAggregatorTest, test_thinkingGoesToIdleAfterTimeout) {
     anotherAggregator->addObserver(m_anotherTestObserver);
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    anotherAggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    anotherAggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
     anotherAggregator->onRequestProcessingStarted();
@@ -278,11 +271,11 @@ TEST_F(DialogUXAggregatorTest, test_thinkingGoesToIdleAfterTimeout) {
     assertStateChange(m_anotherTestObserver, DialogUXStateObserverInterface::DialogUXState::IDLE, TRANSITION_TIMEOUT);
 }
 
-/// Tests that the THINKING state transitions to IDLE after recieving a message and a long timeout.
+/// Tests that the THINKING state transitions to IDLE after receiving a message and a long timeout.
 TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveGoesToIdleAfterLongTimeout) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
     m_aggregator->onRequestProcessingStarted();
@@ -299,7 +292,7 @@ TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveGoesToIdleAfterLongTimeou
 TEST_F(DialogUXAggregatorTest, test_listeningThenRequestProcessingCompletedThenSpeakGoesToSpeakButNotIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
     m_aggregator->onRequestProcessingStarted();
@@ -322,7 +315,7 @@ TEST_F(DialogUXAggregatorTest, test_listeningThenRequestProcessingCompletedThenS
 TEST_F(DialogUXAggregatorTest, test_speakingAndRecognizingFinishedGoesToIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -351,7 +344,7 @@ TEST_F(DialogUXAggregatorTest, test_nonIdleObservantsPreventsIdle) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
     // AIP is active, SS is not. Expected: non idle
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     m_aggregator->onStateChanged(
         SpeechSynthesizerObserverInterface::SpeechSynthesizerState::FINISHED,
         TEST_SOURCE_ID,
@@ -389,7 +382,7 @@ TEST_F(DialogUXAggregatorTest, test_nonIdleObservantsPreventsIdle) {
 TEST_F(DialogUXAggregatorTest, test_speakingFinishedDoesNotGoesToIdleImmediately) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -439,7 +432,7 @@ TEST_F(DialogUXAggregatorTest, test_simpleReceiveDoesNothing) {
 TEST_F(DialogUXAggregatorTest, test_thinkingThenReceiveRemainsInThinkingIfSpeechSynthesizerReportsGainingFocus) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -464,7 +457,7 @@ TEST_F(DialogUXAggregatorTest, test_validStatesForRPSToThinking) {
 
     m_aggregator->onRequestProcessingCompleted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
     m_aggregator->onRequestProcessingStarted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::THINKING);
@@ -498,7 +491,7 @@ TEST_F(DialogUXAggregatorTest, test_validStatesForRPSToThinking) {
 TEST_F(DialogUXAggregatorTest, test_receiveThenRPCTransitionsOutOfThinking) {
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
 
-    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::BUSY);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
 
     m_aggregator->onRequestProcessingStarted();
@@ -537,6 +530,74 @@ TEST_F(DialogUXAggregatorTest, test_receiveRPCwithoutRPS) {
 
     m_aggregator->onRequestProcessingCompleted();
     assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+}
+
+/// Test that the state is set to idle when there is NOT an active connection
+TEST_F(DialogUXAggregatorTest, test_setToIdleIfNoConnectionAvailable) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+
+    DialogUXStateAggregator::EngineConnectionStatus pending{ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+                                                            ConnectionStatusObserverInterface::ChangedReason::NONE,
+                                                            ConnectionStatusObserverInterface::Status::PENDING};
+    DialogUXStateAggregator::EngineConnectionStatus disconnected{
+        ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+        ConnectionStatusObserverInterface::ChangedReason::NONE,
+        ConnectionStatusObserverInterface::Status::DISCONNECTED};
+    vector<DialogUXStateAggregator::EngineConnectionStatus> engineStatuses;
+    engineStatuses.push_back(pending);
+    engineStatuses.push_back(disconnected);
+    m_aggregator->onConnectionStatusChanged(ConnectionStatusObserverInterface::Status::DISCONNECTED, engineStatuses);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+}
+
+/// Test that don't change the state is if THERE IS an active connection
+TEST_F(DialogUXAggregatorTest, test_doNotSetToIdleIfConnectionIsAvailable) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+
+    DialogUXStateAggregator::EngineConnectionStatus connected{ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+                                                              ConnectionStatusObserverInterface::ChangedReason::NONE,
+                                                              ConnectionStatusObserverInterface::Status::CONNECTED};
+    DialogUXStateAggregator::EngineConnectionStatus pending{ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+                                                            ConnectionStatusObserverInterface::ChangedReason::NONE,
+                                                            ConnectionStatusObserverInterface::Status::PENDING};
+    DialogUXStateAggregator::EngineConnectionStatus disconnected{
+        ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+        ConnectionStatusObserverInterface::ChangedReason::NONE,
+        ConnectionStatusObserverInterface::Status::DISCONNECTED};
+    vector<DialogUXStateAggregator::EngineConnectionStatus> engineStatuses;
+    engineStatuses.push_back(connected);
+    engineStatuses.push_back(pending);
+    engineStatuses.push_back(disconnected);
+    m_aggregator->onConnectionStatusChanged(ConnectionStatusObserverInterface::Status::DISCONNECTED, engineStatuses);
+    assertNoStateChange(m_testObserver);
+}
+
+/// Test that don't change the state is if THERE IS an active connection for a different engine typ
+TEST_F(DialogUXAggregatorTest, test_doNotSetToIdleIfConnectionIsAvailableForDifferentEngine) {
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::IDLE);
+    m_aggregator->onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING);
+    assertStateChange(m_testObserver, DialogUXStateObserverInterface::DialogUXState::LISTENING);
+
+    DialogUXStateAggregator::EngineConnectionStatus connected{OTHER_ENGINE_TYPE,
+                                                              ConnectionStatusObserverInterface::ChangedReason::NONE,
+                                                              ConnectionStatusObserverInterface::Status::CONNECTED};
+    DialogUXStateAggregator::EngineConnectionStatus pending{ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+                                                            ConnectionStatusObserverInterface::ChangedReason::NONE,
+                                                            ConnectionStatusObserverInterface::Status::PENDING};
+    DialogUXStateAggregator::EngineConnectionStatus disconnected{
+        ENGINE_TYPE_ALEXA_VOICE_SERVICES,
+        ConnectionStatusObserverInterface::ChangedReason::NONE,
+        ConnectionStatusObserverInterface::Status::DISCONNECTED};
+    vector<DialogUXStateAggregator::EngineConnectionStatus> engineStatuses;
+    engineStatuses.push_back(connected);
+    engineStatuses.push_back(pending);
+    engineStatuses.push_back(disconnected);
+    m_aggregator->onConnectionStatusChanged(ConnectionStatusObserverInterface::Status::DISCONNECTED, engineStatuses);
+    assertNoStateChange(m_testObserver);
 }
 
 }  // namespace test

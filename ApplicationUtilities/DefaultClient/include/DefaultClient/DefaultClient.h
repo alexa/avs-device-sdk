@@ -68,8 +68,9 @@
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Optional.h>
-#include <acsdkBluetoothInterfaces/BluetoothStorageInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothLocalInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothStorageInterface.h>
 #include <acsdkNotificationsInterfaces/NotificationsStorageInterface.h>
 #include <Captions/CaptionManagerInterface.h>
 #include <Captions/CaptionPresenterInterface.h>
@@ -143,6 +144,7 @@ public:
         std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
         std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
         std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+        std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>,
         std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
         std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
         std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
@@ -202,6 +204,7 @@ public:
         std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
         std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
         std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>,
+        std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>,
         std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
         std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>,
         std::shared_ptr<acsdkExternalMediaPlayer::ExternalMediaPlayer>,
@@ -449,7 +452,7 @@ AudioInputProcessor.
         std::shared_ptr<acsdkAlerts::storage::AlertStorageInterface> alertStorage,
         std::shared_ptr<certifiedSender::MessageStorageInterface> messageStorage,
         std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
-        std::unique_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
+        std::shared_ptr<settings::storage::DeviceSettingStorageInterface> deviceSettingStorage,
         std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface> bluetoothStorage,
         std::shared_ptr<avsCommon::sdkInterfaces::storage::MiscStorageInterface> miscStorage,
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::DialogUXStateObserverInterface>>
@@ -1084,6 +1087,13 @@ AudioInputProcessor.
      */
     std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface> getDeviceSetup();
 
+    /**
+     * Gets the @c BluetoothLocalInterface for local applications that wish to invoke Bluetooth functionality.
+     *
+     * @return A shared_ptr to the @c BluetoothLocalInterface.
+     */
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface> getBluetoothLocal();
+
 private:
     /**
      * Initializes the SDK and "glues" all the components together.
@@ -1182,6 +1192,9 @@ private:
 
     /// The alerts capability agent.
     std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface> m_alertsCapabilityAgent;
+
+    /// The bluetooth capability agent.
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface> m_bluetoothLocal;
 
     /// The bluetooth notifier.
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface> m_bluetoothNotifier;

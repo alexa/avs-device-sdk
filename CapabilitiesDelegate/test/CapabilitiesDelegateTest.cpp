@@ -1033,6 +1033,83 @@ TEST_F(
 }
 
 /**
+ * Tests if before the stale endpoint is deleted and the stale endpoint is added, that the first
+ * createPostConnectOperation will create a deleteReport for the stale endpoint, but the second
+ * createPostConnectOperation will return a nullptr operation because the stale endpoint has been added, and this
+ * results in no change in capabilities.
+ */
+TEST_F(
+    CapabilitiesDelegateTest,
+    test_createTwoPostConnectOperationWithStaleEndpointAndPendingEndpointsWithSameEndpointConfigs) {
+    auto unchangedEndpointAttributes = createEndpointAttributes("endpointId");
+    auto unchangedEndpointConfiguration = createCapabilityConfiguration();
+    std::vector<CapabilityConfiguration> unchangedCapabilityConfigs = {unchangedEndpointConfiguration};
+
+    auto staleEndpointAttributes = createEndpointAttributes("staleEndpointId");
+    auto staleEndpointConfiguration = createCapabilityConfiguration();
+    std::vector<CapabilityConfiguration> staleCapabilityConfigs = {staleEndpointConfiguration};
+
+    std::string unchangedEndpointConfig =
+        utils::getEndpointConfigJson(unchangedEndpointAttributes, unchangedCapabilityConfigs);
+    std::string staleEndpointConfig = utils::getEndpointConfigJson(staleEndpointAttributes, staleCapabilityConfigs);
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_))
+        .Times(2)
+        .WillRepeatedly(
+            Invoke([unchangedEndpointAttributes, unchangedEndpointConfig, staleEndpointAttributes, staleEndpointConfig](
+                       std::unordered_map<std::string, std::string>* storedEndpoints) {
+                storedEndpoints->insert({unchangedEndpointAttributes.endpointId, unchangedEndpointConfig});
+                storedEndpoints->insert({staleEndpointAttributes.endpointId, staleEndpointConfig});
+                return true;
+            }));
+    int numCallbacks = 0;
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .Times(2)
+        .WillRepeatedly(Invoke([&numCallbacks](
+                                   CapabilitiesDelegateObserverInterface::State newState,
+                                   CapabilitiesDelegateObserverInterface::Error newError,
+                                   std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
+                                   std::vector<std::string> deleteReportEndpointIdentifiers) {
+            if (numCallbacks == 0) {
+                EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+                EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
+                EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
+                EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
+            } else {
+                EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+                EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+                EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{"staleEndpointId"});
+                EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
+            }
+            numCallbacks++;
+        }));
+
+    auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
+    instance->addOrUpdateEndpoint(unchangedEndpointAttributes, unchangedCapabilityConfigs);
+
+    /// Observer callback should only contain the pending endpoint to add (since that is already registered),
+    /// but not the stale endpoint to delete (since that still needs to be sent to AVS).
+    EXPECT_CALL(
+        *m_mockCapabilitiesDelegateObserver,
+        onCapabilitiesStateChange(
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+            std::vector<std::string>{unchangedEndpointAttributes.endpointId},
+            std::vector<std::string>{}));
+
+    auto publisher = instance->createPostConnectOperation();
+    ASSERT_NE(publisher, nullptr);
+
+    instance->addOrUpdateEndpoint(staleEndpointAttributes, staleCapabilityConfigs);
+    auto publisher1 = instance->createPostConnectOperation();
+    ASSERT_EQ(publisher1, nullptr);
+
+    // Clean-up.
+    instance->shutdown();
+}
+
+/**
  * Tests if the createPostConnectOperation() creates a new @c PostConnectCapabilitiesPublisher when storage is empty.
  * When the capabilities are successfully published, a subsequent call to createPostConnectOperation() results in a
  * nullptr.

@@ -34,9 +34,16 @@ static const std::string TAG("LibcurlHTTP2Connection");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/**
+ * Create a LogEntry using this file's TAG, the specified event string, and object pointer as the first argument.
+ *
+ * @param event The event string for this @c LogEntry.
+ */
+#define LX_P(event) LX(event).p("this", this)
 
 /// Timeout for curl_multi_wait
 const static std::chrono::milliseconds WAIT_FOR_ACTIVITY_TIMEOUT(50);
@@ -119,18 +126,19 @@ LibcurlHTTP2Connection::LibcurlHTTP2Connection(
     const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback) :
         m_isStopping{false},
         m_setCurlOptionsCallback{setCurlOptionsCallback} {
+    ACSDK_DEBUG5(LX_P("init"));
     m_networkThread = std::thread(&LibcurlHTTP2Connection::networkLoop, this);
 }
 
 bool LibcurlHTTP2Connection::createMultiHandle() {
     m_multi = CurlMultiHandleWrapper::create();
     if (!m_multi) {
-        ACSDK_ERROR(LX("initFailed").d("reason", "curlMultiHandleWrapperCreateFailed"));
+        ACSDK_ERROR(LX_P("initFailed").d("reason", "curlMultiHandleWrapperCreateFailed"));
         return false;
     }
     if (curl_multi_setopt(m_multi->getCurlHandle(), CURLMOPT_PIPELINING, 2L) != CURLM_OK) {
         m_multi.reset();
-        ACSDK_ERROR(LX("initFailed").d("reason", "enableHTTP2PipeliningFailed"));
+        ACSDK_ERROR(LX_P("initFailed").d("reason", "enableHTTP2PipeliningFailed"));
         return false;
     }
 
@@ -146,7 +154,7 @@ std::shared_ptr<LibcurlHTTP2Connection> LibcurlHTTP2Connection::create(
 }
 
 LibcurlHTTP2Connection::~LibcurlHTTP2Connection() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX_P("destroy"));
     disconnect();
 }
 
@@ -180,16 +188,16 @@ void LibcurlHTTP2Connection::processNextRequest() {
     auto result = m_multi->addHandle(stream->getCurlHandle());
     if (CURLM_OK == result) {
         auto handle = stream->getCurlHandle();
-        ACSDK_DEBUG9(LX("insertActiveStream").d("handle", handle).d("streamId", stream->getId()));
+        ACSDK_DEBUG9(LX_P("insertActiveStream").d("handle", handle).d("streamId", stream->getId()));
         m_activeStreams[handle] = stream;
     } else {
-        ACSDK_ERROR(LX("processNextRequest").d("reason", "addHandleFailed").d("error", curl_multi_strerror(result)));
+        ACSDK_ERROR(LX_P("processNextRequest").d("reason", "addHandleFailed").d("error", curl_multi_strerror(result)));
         stream->reportCompletion(HTTP2ResponseFinishedStatus::INTERNAL_ERROR);
     }
 }
 
 void LibcurlHTTP2Connection::networkLoop() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX_P("networkLoop"));
 
     while (!isStopping()) {
         if (!createMultiHandle()) {
@@ -215,7 +223,7 @@ void LibcurlHTTP2Connection::networkLoop() {
                 continue;
             }
             if (result != CURLM_OK) {
-                ACSDK_ERROR(LX("networkLoopStopping").d("reason", "performFailed"));
+                ACSDK_ERROR(LX_P("networkLoopStopping").d("reason", "performFailed"));
                 setIsStopping();
                 break;
             }
@@ -241,7 +249,7 @@ void LibcurlHTTP2Connection::networkLoop() {
             result = m_multi->wait(multiWaitTimeout, &numTransfersUpdated);
             if (result != CURLM_OK) {
                 ACSDK_ERROR(
-                    LX("networkLoopStopping").d("reason", "multiWaitFailed").d("error", curl_multi_strerror(result)));
+                    LX_P("networkLoopStopping").d("reason", "multiWaitFailed").d("error", curl_multi_strerror(result)));
                 setIsStopping();
                 break;
             }
@@ -265,7 +273,7 @@ void LibcurlHTTP2Connection::networkLoop() {
         m_multi.reset();
     }
 
-    ACSDK_DEBUG5(LX("networkLoopExiting"));
+    ACSDK_DEBUG5(LX_P("networkLoopExiting"));
 }
 
 std::shared_ptr<HTTP2RequestInterface> LibcurlHTTP2Connection::createAndSendRequest(const HTTP2RequestConfig& config) {
@@ -275,7 +283,7 @@ std::shared_ptr<HTTP2RequestInterface> LibcurlHTTP2Connection::createAndSendRequ
 }
 
 void LibcurlHTTP2Connection::disconnect() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_DEBUG5(LX_P("disconnect"));
     setIsStopping();
     if (m_networkThread.joinable()) {
         m_networkThread.join();
@@ -311,12 +319,12 @@ void LibcurlHTTP2Connection::notifyObserversOfGoawayReceived() {
 
 bool LibcurlHTTP2Connection::addStream(std::shared_ptr<LibcurlHTTP2Request> stream) {
     if (!stream) {
-        ACSDK_ERROR(LX("addStream").d("failed", "null stream"));
+        ACSDK_ERROR(LX_P("addStream").d("failed", "null stream"));
         return false;
     }
     std::lock_guard<std::mutex> lock(m_mutex);
     if (m_isStopping) {
-        ACSDK_ERROR(LX("addStream").d("failed", "network loop stopping"));
+        ACSDK_ERROR(LX_P("addStream").d("failed", "network loop stopping"));
         return false;
     }
     m_requestQueue.push_back(std::move(stream));
@@ -339,14 +347,14 @@ void LibcurlHTTP2Connection::cleanupFinishedStreams() {
                 } else {
                     it->second->reportCompletion(HTTP2ResponseFinishedStatus::COMPLETE);
                 }
-                ACSDK_DEBUG7(LX("streamFinished")
+                ACSDK_DEBUG7(LX_P("streamFinished")
                                  .d("streamId", it->second->getId())
                                  .d("result", curl_easy_strerror(message->data.result))
                                  .d("CURLcode", message->data.result));
                 releaseStream(*(it->second));
             } else {
                 ACSDK_ERROR(
-                    LX("cleanupFinishedStreamError").d("reason", "streamNotFound").d("handle", message->easy_handle));
+                    LX_P("cleanupFinishedStreamError").d("reason", "streamNotFound").d("handle", message->easy_handle));
             }
         }
     } while (message);
@@ -359,7 +367,7 @@ void LibcurlHTTP2Connection::cleanupCancelledAndStalledStreams() {
         if (stream->isCancelled()) {
             cancelActiveStream(*stream);
         } else if (stream->hasProgressTimedOut()) {
-            ACSDK_WARN(LX("streamProgressTimedOut").d("streamId", stream->getId()));
+            ACSDK_WARN(LX_P("streamProgressTimedOut").d("streamId", stream->getId()));
             stream->reportCompletion(HTTP2ResponseFinishedStatus::TIMEOUT);
             releaseStream(*stream);
         }
@@ -388,7 +396,7 @@ void LibcurlHTTP2Connection::unPauseActiveStreams() {
 }
 
 bool LibcurlHTTP2Connection::cancelActiveStream(LibcurlHTTP2Request& stream) {
-    ACSDK_INFO(LX(__func__).d("streamId", stream.getId()));
+    ACSDK_INFO(LX_P("cancelActiveStream").d("streamId", stream.getId()));
     stream.reportCompletion(HTTP2ResponseFinishedStatus::CANCELLED);
     return releaseStream(stream);
 }
@@ -408,7 +416,7 @@ void LibcurlHTTP2Connection::cancelPendingStreams() {
     }
 
     for (auto pendingStream : pendingStreamsCopy) {
-        ACSDK_DEBUG9(LX(__func__).d("pending streamId", pendingStream->getId()));
+        ACSDK_DEBUG9(LX_P("cancelPendingStreams").d("pending streamId", pendingStream->getId()));
         pendingStream->reportCompletion(HTTP2ResponseFinishedStatus::CANCELLED);
     }
 }
@@ -421,11 +429,11 @@ void LibcurlHTTP2Connection::cancelAllStreams() {
 
 bool LibcurlHTTP2Connection::releaseStream(LibcurlHTTP2Request& stream) {
     auto handle = stream.getCurlHandle();
-    ACSDK_DEBUG9(LX("releaseStream").d("streamId", stream.getId()));
+    ACSDK_DEBUG9(LX_P("releaseStream").d("streamId", stream.getId()));
     auto result = m_multi->removeHandle(handle);
     m_activeStreams.erase(handle);
     if (result != CURLM_OK) {
-        ACSDK_ERROR(LX("releaseStreamFailed").d("reason", "removeHandleFailed").d("streamId", stream.getId()));
+        ACSDK_ERROR(LX_P("releaseStreamFailed").d("reason", "removeHandleFailed").d("streamId", stream.getId()));
         return false;
     }
     return true;

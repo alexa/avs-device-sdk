@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=endpoints")
 
-add_library(Endpoints SHARED
+add_library(Endpoints
         Endpoint.cpp
         EndpointAttributeValidation.cpp
         EndpointBuilder.cpp

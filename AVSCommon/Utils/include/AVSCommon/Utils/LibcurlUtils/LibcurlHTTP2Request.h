@@ -189,6 +189,9 @@ private:
 
     /// Whether this request has been cancelled.
     std::atomic_bool m_isCancelled;
+
+    /// Connect timeout.
+    std::chrono::milliseconds m_connectTimeout;
 };
 
 void LibcurlHTTP2Request::setTimeOfLastTransfer() {

@@ -56,7 +56,7 @@ Priority MetricEvent::getPriority() const {
 Optional<DataPoint> MetricEvent::getDataPoint(const std::string& name, DataType dataType) const {
     std::string key = MetricEventBuilder::generateKey(name, dataType);
     if (m_dataPoints.find(key) == m_dataPoints.end()) {
-        ACSDK_WARN(LX("getDataPointWarning").d("reason", "dataPointDoesntExist"));
+        ACSDK_DEBUG9(LX("getDataPointWarning").d("reason", "dataPointDoesntExist"));
         return Optional<DataPoint>{};
     }
 

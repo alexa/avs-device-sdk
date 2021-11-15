@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=acsdkStartupManager")
-add_library(acsdkSystemClockMonitor SHARED
+add_library(acsdkSystemClockMonitor
         SystemClockMonitor.cpp
         SystemClockNotifier.cpp)
 

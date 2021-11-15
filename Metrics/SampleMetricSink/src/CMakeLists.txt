@@ -1,4 +1,4 @@
-add_library(SampleMetricSink SHARED SampleMetricSink.cpp)
+add_library(SampleMetricSink SampleMetricSink.cpp)
 
 target_include_directories(SampleMetricSink	PUBLIC
 	"${SampleMetricSink_SOURCE_DIR}/include"

@@ -45,21 +45,20 @@ public:
      *  Upon failure, the database may not be in
      *  a consistent state. Clearing is recommended.
      *
-     *  @param The adapterId. This is required.
-     *  @param The userId. This can be empty.
+     *  @param adapterId The adapterId. This is required.
+     *  @param userId The userId. This can be empty.
      *  @return Whether the data was successfully stored.
      */
     bool store(const std::string& adapterId, const std::string& userId);
 
     /**
-     *  Stores the information into the database. This will fail if there
-     *  are existing entries.
+     *  Loads information from the database.
      *
-     *  @param The adapterId. This is required.
-     *  @param The userId. This can be empty.
-     *  @return Whether the data was successfully stored.
+     *  @param[out] adapterId The adapterId.
+     *  @param[out] userId The userId.
+     *  @return Whether the data was successfully loaded.
      */
-    bool load(std::string* adapterId, std::string* userId);
+    bool load(std::string& adapterId, std::string& userId);
 
     /**
      * Clears the table. This will not delete the database.

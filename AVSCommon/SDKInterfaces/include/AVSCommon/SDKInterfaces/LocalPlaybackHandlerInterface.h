@@ -34,8 +34,19 @@ public:
      */
     virtual ~LocalPlaybackHandlerInterface() = default;
 
-    /// Available local operations.
-    enum PlaybackOperation { STOP_PLAYBACK, PAUSE_PLAYBACK, RESUME_PLAYBACK };
+    /*
+     * Enumeration of the available local operations.
+     */
+    enum PlaybackOperation {
+        /// Stop playback, close pipeline
+        STOP_PLAYBACK,
+        /// Stop playback, keep pipeline open (for a time), to enable resume
+        RESUMABLE_STOP,
+        /// Resume playing after RESUMABLE_STOP, or TRANSIENT_PAUSE.
+        RESUME_PLAYBACK,
+        /// Transiently pause playback - this is intended to be for a very short period.  Not resumable from cloud
+        TRANSIENT_PAUSE
+    };
 
     /**
      * Request the handler to perform a local playback operation.

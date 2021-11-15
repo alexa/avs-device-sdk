@@ -45,6 +45,21 @@ TEST(TimeTest, test_stringConversion) {
     ASSERT_EQ(dateTm.tm_min, 30);
 }
 
+TEST(TimeTest, test_iso8601StringConversion) {
+    TimeUtils timeUtils;
+    std::string iso8601Str{"1986-08-10T21:30:00+0000"};
+    int64_t unixTime;
+    auto successUnix = timeUtils.convert8601TimeStringToUnix(iso8601Str, &unixTime);
+    ASSERT_TRUE(successUnix);
+
+    std::chrono::system_clock::time_point utcTimePoint;
+    auto successUtcTimePoint = timeUtils.convert8601TimeStringToUtcTimePoint(iso8601Str, &utcTimePoint);
+    ASSERT_TRUE(successUtcTimePoint);
+
+    auto sec = std::chrono::duration_cast<std::chrono::seconds>(utcTimePoint.time_since_epoch());
+    ASSERT_EQ(static_cast<int64_t>(sec.count()), unixTime);
+}
+
 TEST(TimeTest, test_stringConversionError) {
     TimeUtils timeUtils;
     std::string dateStr{"1986-8-10T21:30:00+0000"};

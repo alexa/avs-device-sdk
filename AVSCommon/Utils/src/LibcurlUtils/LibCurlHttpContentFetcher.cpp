@@ -53,7 +53,7 @@ static const std::chrono::minutes MAX_GET_HEADER_WAIT{5};
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -64,7 +64,7 @@ size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t
     }
     auto fetcher = static_cast<LibCurlHttpContentFetcher*>(userData);
 
-    ACSDK_DEBUG9(LX(__func__).sensitive("url", fetcher->m_url).m("CALLED"));
+    ACSDK_DEBUG9(LX("headerCallback").sensitive("url", fetcher->m_url).m("CALLED"));
 
     fetcher->stateTransition(State::FETCHING_HEADER, true);
 
@@ -96,7 +96,7 @@ size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t
         std::istringstream iss(line);
         std::string contentLengthBeginning;
         iss >> contentLengthBeginning >> fetcher->m_header.contentLength;
-        ACSDK_DEBUG9(LX(__func__).d("type", "content-length").d("length", fetcher->m_header.contentLength));
+        ACSDK_DEBUG9(LX("headerCallback").d("type", "content-length").d("length", fetcher->m_header.contentLength));
     } else if (line.compare(0, 13, "content-range") == 0) {
         // To find lines like: "Content-Range: bytes 1000-3979/3980"
         std::istringstream iss(line);
@@ -104,7 +104,7 @@ size_t LibCurlHttpContentFetcher::headerCallback(char* data, size_t size, size_t
         std::string contentUnit;
         std::string range;
         iss >> contentRangeBeginning >> contentUnit >> range;
-        ACSDK_DEBUG9(LX(__func__).d("type", "content-range").d("unit", contentUnit).d("range", range));
+        ACSDK_DEBUG9(LX("headerCallback").d("type", "content-range").d("unit", contentUnit).d("range", range));
     }
     return size * nmemb;
 }
@@ -121,7 +121,7 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
     }
 
     if (State::FETCHING_HEADER == fetcher->getState()) {
-        ACSDK_DEBUG9(LX(__func__).sensitive("url", fetcher->m_url).m("End of header found."));
+        ACSDK_DEBUG9(LX("bodyCallback").sensitive("url", fetcher->m_url).m("End of header found."));
         fetcher->stateTransition(State::HEADER_DONE, true);
     }
 
@@ -133,7 +133,7 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
         elapsedTime = std::chrono::steady_clock::now() - startTime;
     }
     if (MAX_GET_BODY_WAIT <= elapsedTime) {
-        ACSDK_ERROR(LX(__func__).d("reason", "getBodyCallWaitTimeout"));
+        ACSDK_ERROR(LX("bodyCallback").d("reason", "getBodyCallWaitTimeout"));
         fetcher->stateTransition(State::ERROR, false);
         return 0;
     }
@@ -144,7 +144,7 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
     fetcher->stateTransition(State::FETCHING_BODY, true);
 
     if (!fetcher->m_streamWriter) {
-        ACSDK_DEBUG9(LX(__func__).m("No writer received. Creating a new one."));
+        ACSDK_DEBUG9(LX("bodyCallback").m("No writer received. Creating a new one."));
         // Using the url as the identifier for the attachment
         auto stream = std::make_shared<avsCommon::avs::attachment::InProcessAttachment>(fetcher->m_url);
         fetcher->m_streamWriter = stream->createWriter(sds::WriterPolicy::BLOCKING);
@@ -177,7 +177,7 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
                     // might still have bytes to write
                     continue;
                 case avsCommon::avs::attachment::AttachmentWriter::WriteStatus::OK_BUFFER_FULL:
-                    ACSDK_ERROR(LX(__func__).d("unexpected return code", "OK_BUFFER_FULL"));
+                    ACSDK_ERROR(LX("bodyCallback").d("unexpected return code", "OK_BUFFER_FULL"));
                     return 0;
             }
             ACSDK_ERROR(LX("UnexpectedWriteStatus").d("writeStatus", static_cast<int>(writeStatus)));
@@ -188,7 +188,7 @@ size_t LibCurlHttpContentFetcher::bodyCallback(char* data, size_t size, size_t n
     fetcher->m_totalContentReceivedLength += totalBytesWritten;
     fetcher->m_currentContentReceivedLength += totalBytesWritten;
 
-    ACSDK_DEBUG9(LX(__func__)
+    ACSDK_DEBUG9(LX("bodyCallback")
                      .d("totalContentReceived", fetcher->m_totalContentReceivedLength)
                      .d("contentLength", fetcher->m_header.contentLength)
                      .d("currentContentReceived", fetcher->m_currentContentReceivedLength)
@@ -235,7 +235,7 @@ HTTPContentFetcherInterface::Header LibCurlHttpContentFetcher::getHeader(std::at
     auto elapsedTime = std::chrono::steady_clock::now() - startTime;
     while ((MAX_GET_HEADER_WAIT > elapsedTime) && !m_isShutdown && (!shouldShutdown || !(*shouldShutdown))) {
         if (State::ERROR == getState()) {
-            ACSDK_ERROR(LX(__func__).sensitive("URL", m_url).d("reason", "Invalid state").d("state", "ERROR"));
+            ACSDK_ERROR(LX("getHeader").sensitive("URL", m_url).d("reason", "Invalid state").d("state", "ERROR"));
             m_header.successful = false;
             return m_header;
         }
@@ -255,10 +255,11 @@ HTTPContentFetcherInterface::Header LibCurlHttpContentFetcher::getHeader(std::at
 bool LibCurlHttpContentFetcher::getBody(std::shared_ptr<avsCommon::avs::attachment::AttachmentWriter> writer) {
     std::lock_guard<std::mutex> lock(m_getBodyMutex);
     if (State::ERROR == getState()) {
+        ACSDK_ERROR(LX("getBodyFailed").d("reason", "errorState"));
         return false;
     }
     if (!waitingForBodyRequest()) {
-        ACSDK_ERROR(LX(__func__).d("reason", "functionAlreadyCalled"));
+        ACSDK_ERROR(LX("getBodyFailed").d("reason", "functionAlreadyCalled"));
         return false;
     }
     m_streamWriter = writer;
@@ -267,7 +268,7 @@ bool LibCurlHttpContentFetcher::getBody(std::shared_ptr<avsCommon::avs::attachme
 }
 
 void LibCurlHttpContentFetcher::shutdown() {
-    ACSDK_DEBUG9(LX(__func__).m("Shutting down"));
+    ACSDK_DEBUG9(LX("shutdown"));
     m_isShutdown = true;
     stateTransition(State::BODY_DONE, true);
 }
@@ -510,7 +511,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                         // Set this to 1 so that we will try to perform() again.
                         numTransfersLeft = 1;
 
-                        ACSDK_DEBUG9(LX(__func__)
+                        ACSDK_DEBUG9(LX("getContent")
                                          .d("bytesRemaining", bytesRemaining)
                                          .d("totalContentReceived", m_totalContentReceivedLength)
                                          .d("restartingWithRange", ss.str()));
@@ -523,7 +524,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                  * If the writer was created locally, its job is done and can be safely closed.
                  */
                 if (writerWasCreatedLocally) {
-                    ACSDK_DEBUG9(LX(__func__).m("Closing the writer"));
+                    ACSDK_DEBUG9(LX("getContent").m("Closing the writer"));
                     m_streamWriter->close();
                 }
 
@@ -576,7 +577,7 @@ LibCurlHttpContentFetcher::~LibCurlHttpContentFetcher() {
 }
 
 void LibCurlHttpContentFetcher::reportInvalidStateTransitionAttempt(State currentState, State newState) {
-    ACSDK_ERROR(LX(__func__)
+    ACSDK_ERROR(LX("reportInvalidStateTransitionAttempt")
                     .d("currentState", currentState)
                     .d("newState", newState)
                     .m("An attempt was made to perform an invalid state transition."));
@@ -695,10 +696,14 @@ void LibCurlHttpContentFetcher::stateTransition(State newState, bool value) {
             return;
     }
     if (State::ERROR == newState) {
-        ACSDK_ERROR(LX(__func__).sensitive("URL", m_url).d("oldState", m_state).m("State transition to ERROR"));
+        ACSDK_ERROR(
+            LX("stateTransition").sensitive("URL", m_url).d("oldState", m_state).m("State transition to ERROR"));
     } else {
-        ACSDK_DEBUG9(
-            LX(__func__).sensitive("URL", m_url).d("oldState", m_state).d("newState", newState).m("State transition"));
+        ACSDK_DEBUG9(LX("stateTransition")
+                         .sensitive("URL", m_url)
+                         .d("oldState", m_state)
+                         .d("newState", newState)
+                         .m("State transition"));
     }
     m_state = newState;
 }

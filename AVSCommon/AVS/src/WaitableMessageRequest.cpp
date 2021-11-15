@@ -29,7 +29,7 @@ static const std::string TAG("WaitableMessageRequest");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -51,7 +51,7 @@ void WaitableMessageRequest::sendCompleted(
         m_sendMessageStatus = sendMessageStatus;
         m_responseReceived = true;
     } else {
-        ACSDK_WARN(LX(__func__).d("reason", "sendCompletedCalled when m_responseReceived"));
+        ACSDK_WARN(LX("sendCompleted").d("reason", "sendCompletedCalled when m_responseReceived"));
     }
     m_requestCv.notify_one();
 }

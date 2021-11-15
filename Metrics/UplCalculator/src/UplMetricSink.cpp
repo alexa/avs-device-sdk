@@ -68,13 +68,15 @@ void UplMetricSink::consumeMetric(std::shared_ptr<alexaClientSDK::avsCommon::uti
     // Reset UPL data on the start of a new utterance
     if (metricName == START_OF_UTTERANCE) {
         uplCalculators[BASE_UPL_NAME] = BaseUplCalculator::createBaseUplCalculator();
-        uplCalculators[TTS_UPL_NAME] = TtsUplCalculator::createTtsUplCalculator(m_metricRecorder);
-        uplCalculators[MEDIA_UPL_NAME] = MediaUplCalculator::createMediaUplCalculator(m_metricRecorder);
-
-        std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::UplData> uplData =
-            std::make_shared<alexaClientSDK::avsCommon::utils::metrics::UplData>();
-        for (auto& kv : uplCalculators) {
-            kv.second->setUplData(uplData);
+        auto metricRecorder = m_metricRecorder.lock();
+        if (metricRecorder) {
+            uplCalculators[TTS_UPL_NAME] = TtsUplCalculator::createTtsUplCalculator(metricRecorder);
+            uplCalculators[MEDIA_UPL_NAME] = MediaUplCalculator::createMediaUplCalculator(metricRecorder);
+            std::shared_ptr<alexaClientSDK::avsCommon::utils::metrics::UplData> uplData =
+                std::make_shared<alexaClientSDK::avsCommon::utils::metrics::UplData>();
+            for (auto& kv : uplCalculators) {
+                kv.second->setUplData(uplData);
+            }
         }
     }
 

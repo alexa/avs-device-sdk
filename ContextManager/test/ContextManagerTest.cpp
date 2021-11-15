@@ -48,6 +48,7 @@ public:
         provideState,
         void(const avs::CapabilityTag& stateProviderName, const ContextRequestToken stateRequestToken));
     MOCK_METHOD0(hasReportableStateProperties, bool());
+    MOCK_METHOD0(shouldQueryState, bool());
 };
 
 /// Mock legacy state provider.
@@ -347,12 +348,14 @@ TEST_F(ContextManagerTest, test_getEndpointContextShouldIncludeOnlyRelevantState
     auto capabilityForTarget = CapabilityTag("TargetNamespace", "TargetName", "TargetEndpointId");
     CapabilityState stateForTarget{R"({"state":"target"})"};
     EXPECT_CALL(*providerForTargetEndpoint, hasReportableStateProperties()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*providerForTargetEndpoint, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capabilityForTarget, providerForTargetEndpoint);
 
     // Capability that belongs to another endpoint.
     auto providerForOtherEndpoint = std::make_shared<StrictMock<MockStateProvider>>();
     auto capabilityForOther = CapabilityTag("OtherNamespace", "OtherName", "OtherEndpointId");
     EXPECT_CALL(*providerForOtherEndpoint, hasReportableStateProperties()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*providerForOtherEndpoint, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capabilityForOther, providerForOtherEndpoint);
 
     utils::WaitEvent provideStateEvent;
@@ -387,6 +390,7 @@ TEST_F(ContextManagerTest, test_getContextWhenStateAndCacheAreUnavailableShouldF
     auto provider = std::make_shared<MockStateProvider>();
     auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
     EXPECT_CALL(*provider, hasReportableStateProperties()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*provider, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capability, provider);
 
     utils::WaitEvent provideStateEvent;
@@ -418,6 +422,7 @@ TEST_F(ContextManagerTest, test_getContextWhenStateUnavailableShouldReturnCache)
     auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
     CapabilityState state{R"({"state":"target"})"};
     EXPECT_CALL(*provider, hasReportableStateProperties()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*provider, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capability, provider);
 
     // Set value in the cache.
@@ -481,6 +486,7 @@ TEST_F(ContextManagerTest, test_getContextInParallelShouldSucceed) {
     auto capabilityForEndpoint1 = CapabilityTag("Namespace", "Name", "EndpointId1");
     CapabilityState stateForEndpoint1{R"({"state":1})"};
     EXPECT_CALL(*providerForEndpoint1, hasReportableStateProperties()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*providerForEndpoint1, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capabilityForEndpoint1, providerForEndpoint1);
 
     // Capability that belongs to the second endpoint.
@@ -488,6 +494,7 @@ TEST_F(ContextManagerTest, test_getContextInParallelShouldSucceed) {
     auto capabilityForEndpoint2 = CapabilityTag("Namespace", "Name", "EndpointId2");
     CapabilityState stateForEndpoint2{R"({"state":2})"};
     EXPECT_CALL(*providerForEndpoint2, hasReportableStateProperties()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*providerForEndpoint2, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capabilityForEndpoint2, providerForEndpoint2);
 
     // Expect both provide state calls
@@ -546,6 +553,7 @@ TEST_F(ContextManagerTest, test_getContextWithoutReportableStateProperties) {
     auto capability1 = CapabilityTag("Namespace", "Name1", "");
     CapabilityState state1{R"({"state1":"target1"})"};
     EXPECT_CALL(*providerWithReportableStateProperties, hasReportableStateProperties()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*providerWithReportableStateProperties, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capability1, providerWithReportableStateProperties);
 
     auto providerWithoutReportableStateProperties = std::make_shared<MockStateProvider>();
@@ -553,6 +561,7 @@ TEST_F(ContextManagerTest, test_getContextWithoutReportableStateProperties) {
     CapabilityState state2{R"({"state2":"target2"})"};
     EXPECT_CALL(*providerWithoutReportableStateProperties, hasReportableStateProperties())
         .WillRepeatedly(Return(false));
+    EXPECT_CALL(*providerWithoutReportableStateProperties, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capability2, providerWithoutReportableStateProperties);
 
     EXPECT_CALL(*providerWithReportableStateProperties, provideState(_, _)).Times(0);
@@ -589,6 +598,7 @@ TEST_F(ContextManagerTest, test_getContextWithReportableStateProperties) {
     auto capability1 = CapabilityTag("Namespace", "Name1", "");
     CapabilityState state1{R"({"state1":"target1"})"};
     EXPECT_CALL(*providerWithReportableStateProperties, hasReportableStateProperties()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*providerWithReportableStateProperties, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capability1, providerWithReportableStateProperties);
 
     auto providerWithoutReportableStateProperties = std::make_shared<MockStateProvider>();
@@ -596,6 +606,7 @@ TEST_F(ContextManagerTest, test_getContextWithReportableStateProperties) {
     CapabilityState state2{R"({"state2":"target2"})"};
     EXPECT_CALL(*providerWithoutReportableStateProperties, hasReportableStateProperties())
         .WillRepeatedly(Return(false));
+    EXPECT_CALL(*providerWithoutReportableStateProperties, shouldQueryState()).WillRepeatedly(Return(true));
     m_contextManager->setStateProvider(capability2, providerWithoutReportableStateProperties);
 
     utils::WaitEvent provideStateEvent1;
@@ -628,6 +639,33 @@ TEST_F(ContextManagerTest, test_getContextWithReportableStateProperties) {
     auto states = statesFuture.get();
     EXPECT_EQ(states[capability2].valuePayload, state2.valuePayload);
     EXPECT_EQ(states[capability1].valuePayload, state1.valuePayload);
+}
+
+/// Test that requester will get cached value when provider set shouldQueryState to false.
+TEST_F(ContextManagerTest, test_getContextShouldReturnCache) {
+    auto provider = std::make_shared<MockStateProvider>();
+    auto capability = CapabilityTag("Namespace", "Name", "EndpointId");
+    CapabilityState state{R"({"state":"target"})"};
+    EXPECT_CALL(*provider, shouldQueryState()).WillRepeatedly(Return(false));
+    m_contextManager->setStateProvider(capability, provider);
+
+    // Set value in the cache.
+    m_contextManager->reportStateChange(capability, state, AlexaStateChangeCauseType::APP_INTERACTION);
+    // will not query
+    EXPECT_CALL(*provider, provideState(_, _)).Times(0);
+
+    // Get context.
+    auto requester = std::make_shared<MockContextRequester>();
+    m_contextManager->getContext(requester, capability.endpointId);
+
+    std::promise<AVSContext::States> contextStatesPromise;
+    EXPECT_CALL(*requester, onContextAvailable(_, _, _))
+        .WillOnce(WithArg<1>(Invoke([&contextStatesPromise](const AVSContext& context) {
+            contextStatesPromise.set_value(context.getStates());
+        })));
+
+    auto statesFuture = contextStatesPromise.get_future();
+    EXPECT_EQ(statesFuture.get()[capability].valuePayload, state.valuePayload);
 }
 
 }  // namespace test

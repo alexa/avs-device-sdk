@@ -21,14 +21,10 @@ namespace alexaClientSDK {
 namespace integration {
 namespace test {
 
-void TestAlertObserver::onAlertStateChange(
-    const std::string& alertToken,
-    const std::string& alertType,
-    State state,
-    const std::string& reason) {
+void TestAlertObserver::onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
     std::unique_lock<std::mutex> lock(m_mutex);
     TestAlertObserver::changedAlert ca;
-    ca.state = state;
+    ca.state = alertInfo.state;
     m_queue.push_back(ca);
     m_wakeTrigger.notify_all();
 }

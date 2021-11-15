@@ -6,7 +6,7 @@ add_subdirectory("AVS")
 add_subdirectory("SDKInterfaces")
 add_subdirectory("Utils")
 
-add_library(AVSCommon SHARED
+add_library(AVSCommon
     AVS/src/AVSContext.cpp
     AVS/src/AVSDirective.cpp
     AVS/src/AVSMessage.cpp
@@ -114,12 +114,15 @@ add_library(AVSCommon SHARED
     Utils/src/UUIDGeneration.cpp
     Utils/src/WaitEvent.cpp
     Utils/src/WavUtils.cpp
-    Utils/src/WorkerThread.cpp)
+    Utils/src/WorkerThread.cpp
+    ${FileSystemUtils_SOURCE})
 
 target_include_directories(AVSCommon PUBLIC
     "${AVSCommon_SOURCE_DIR}/AVS/include"
     "${AVSCommon_SOURCE_DIR}/SDKInterfaces/include"
     "${AVSCommon_SOURCE_DIR}/Utils/include"
+    "${AVSCommon_BINARY_DIR}/Utils/include"
+    "${AVSCommon_SOURCE_DIR}/../Captions/Interface/include"
     "${RAPIDJSON_INCLUDE_DIR}"
     "${MultipartParser_SOURCE_DIR}"
     ${CURL_INCLUDE_DIRS})
@@ -149,4 +152,5 @@ target_link_libraries(AVSCommon
 LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/AVS/include")
 LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/SDKInterfaces/include")
 LIST(APPEND PATHS "${PROJECT_SOURCE_DIR}/Utils/include")
+LIST(APPEND PATHS "${PROJECT_BINARY_DIR}/Utils/include")
 asdk_install_multiple("${PATHS}")

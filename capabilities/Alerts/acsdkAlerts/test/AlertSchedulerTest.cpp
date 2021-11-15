@@ -40,7 +40,8 @@ static const std::string ALERT3_TOKEN = "token3";
 static const std::string ALERT4_TOKEN = "token4";
 
 /// Test alert type
-static const std::string ALERT_TYPE = "TEST_ALERT_TYPE";
+AlertObserverInterface::Type TYPE_ALARM = AlertObserverInterface::Type::ALARM;
+static const std::string TYPE_ALARM_STRING = AlertObserverInterface::typeToString(TYPE_ALARM);
 
 /// A schedule instant in the past for alerts.
 static const std::string PAST_INSTANT = "2000-01-01T12:34:56+0000";
@@ -73,14 +74,14 @@ class TestAlert : public Alert {
 public:
     TestAlert() :
             Alert(defaultAudioFactory, shortAudioFactory, nullptr),
-            m_alertType{ALERT_TYPE},
+            m_alertType{TYPE_ALARM_STRING},
             m_renderer{std::make_shared<MockRenderer>()} {
         this->setRenderer(m_renderer);
     }
 
     TestAlert(const std::string& token, const std::string& schedTime) :
             Alert(defaultAudioFactory, shortAudioFactory, nullptr),
-            m_alertType{ALERT_TYPE},
+            m_alertType{TYPE_ALARM_STRING},
             m_renderer{std::make_shared<MockRenderer>()} {
         this->setRenderer(m_renderer);
 
@@ -251,15 +252,11 @@ public:
             lock, TEST_TIMEOUT, [this, newState] { return m_previousState == newState; });
     }
 
-    void onAlertStateChange(
-        const std::string& alertToken,
-        const std::string& alertType,
-        AlertScheduler::State newState,
-        const std::string& reason) {
+    void onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
         std::lock_guard<std::mutex> lock(m_mutex);
         m_previousState = m_state;
         m_previousConditionVariable.notify_all();
-        m_state = newState;
+        m_state = alertInfo.state;
         m_conditionVariable.notify_all();
     }
 
@@ -907,7 +904,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeStartedInactiveAlert) {
 
     /// check that we ignore inactive alerts
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(0);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
 }
 
 /**
@@ -923,7 +927,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeStartedActiveAlert) {
     /// active alerts should be handled
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
     m_alertScheduler->updateFocus(avsCommon::avs::FocusState::FOREGROUND, avsCommon::avs::MixingBehavior::PRIMARY);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
 
     /// when an alert starts, we wait for an Alert to send a STARTED event
     /// followed by the focus state FOCUS_ENTERED_FOREGROUND. So we'll check
@@ -943,7 +954,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeStopped) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -957,7 +975,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeCompleted) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -971,7 +996,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeSnoozed) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), modify(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -985,7 +1017,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeErrorActiveAlert) {
     doSimpleTestSetup(true, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 
@@ -999,7 +1038,14 @@ TEST_F(AlertSchedulerTest, test_onAlertStateChangeErrorInactiveAlert) {
     doSimpleTestSetup(false, true);
 
     EXPECT_CALL(*(m_alertStorage.get()), erase(testing::_)).Times(1);
-    m_alertScheduler->onAlertStateChange(ALERT1_TOKEN, ALERT_TYPE, testState, testReason);
+    m_alertScheduler->onAlertStateChange(AlertObserverInterface::AlertInfo(
+        ALERT1_TOKEN,
+        TYPE_ALARM,
+        testState,
+        std::chrono::system_clock::now(),
+        avsCommon::utils::Optional<AlertObserverInterface::OriginalTime>(),
+        avsCommon::utils::Optional<std::string>(),
+        testReason));
     ASSERT_TRUE(m_testAlertObserver->waitFor(testState));
 }
 

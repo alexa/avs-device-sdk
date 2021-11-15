@@ -89,7 +89,8 @@ std::shared_ptr<Renderer> Renderer::createAlertRenderer(
     const std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>&
         audioPipelineFactory,
     const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
-    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier) {
+    const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
+    const std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>& internetConnectionMonitor) {
     if (!audioPipelineFactory) {
         ACSDK_ERROR(LX("createFailed").m("audioPipelineFactory parameter was nullptr."));
         return nullptr;
@@ -113,23 +114,29 @@ std::shared_ptr<Renderer> Renderer::createAlertRenderer(
     }
     auto mediaPlayer = applicationMediaInterfaces->mediaPlayer;
 
-    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder});
+    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder, internetConnectionMonitor});
     mediaPlayer->addObserver(renderer);
     shutdownNotifier->addObserver(renderer);
+
+    if (internetConnectionMonitor) {
+        internetConnectionMonitor->addInternetConnectionObserver(renderer);
+    }
 
     return renderer;
 }
 
 std::shared_ptr<Renderer> Renderer::create(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<MetricRecorderInterface> metricRecorder) {
+    std::shared_ptr<MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor) {
     if (!mediaPlayer) {
         ACSDK_ERROR(LX("createFailed").m("mediaPlayer parameter was nullptr."));
         return nullptr;
     }
 
-    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder});
+    auto renderer = std::shared_ptr<Renderer>(new Renderer{mediaPlayer, metricRecorder, internetConnectionMonitor});
     mediaPlayer->addObserver(renderer);
+
     return renderer;
 }
 
@@ -138,6 +145,10 @@ void Renderer::doShutdown() {
 
     if (m_mediaPlayer) {
         m_mediaPlayer->removeObserver(shared_from_this());
+    }
+
+    if (m_internetConnectionMonitor) {
+        m_internetConnectionMonitor->removeInternetConnectionObserver(shared_from_this());
     }
     m_executor.shutdown();
 }
@@ -208,7 +219,8 @@ void Renderer::onPlaybackError(
 
 Renderer::Renderer(
     std::shared_ptr<MediaPlayerInterface> mediaPlayer,
-    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+    std::shared_ptr<MetricRecorderInterface> metricRecorder,
+    std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor) :
         RequiresShutdown{"Renderer"},
         m_mediaPlayer{mediaPlayer},
         m_metricRecorder{metricRecorder},
@@ -220,7 +232,9 @@ Renderer::Renderer(
         m_shouldPauseBeforeRender{false},
         m_isStopping{false},
         m_isStartPending{false},
-        m_volumeRampEnabled{false} {
+        m_volumeRampEnabled{false},
+        m_isNetworkConnected{false},
+        m_internetConnectionMonitor{internetConnectionMonitor} {
     resetSourceId();
 }
 
@@ -316,7 +330,8 @@ void Renderer::play() {
 
     m_isStartPending = false;
 
-    if (shouldPlayDefault()) {
+    if (shouldPlayDefault() || !m_isNetworkConnected) {
+        ACSDK_INFO(LX(__func__).d("m_isNetworkConnected", m_isNetworkConnected));
         std::shared_ptr<std::istream> stream;
         avsCommon::utils::MediaType streamFormat = avsCommon::utils::MediaType::UNKNOWN;
         std::tie(stream, streamFormat) = m_defaultAudioFactory();
@@ -400,10 +415,12 @@ void Renderer::executeStop() {
     m_isStartPending = false;
 
     if (MediaPlayerInterface::ERROR == m_currentSourceId) {
-        ACSDK_DEBUG5(LX(__func__).m("Nothing to stop, no media playing."));
+        ACSDK_ERROR(LX(__func__).m("Nothing to stop, no media playing."));
         {
             std::lock_guard<std::mutex> lock(m_waitMutex);
             m_isStopping = false;
+            // The alert thinks audio is still rendering, notify them nothing is happening.
+            notifyObserver(RendererObserverInterface::State::STOPPED);
             m_observer = nullptr;
         }
         return;
@@ -574,6 +591,11 @@ void Renderer::handlePlaybackError(const std::string& error) {
 
     notifyObserver(RendererObserverInterface::State::ERROR, error);
     m_observer = nullptr;
+}
+
+void Renderer::onConnectionStatusChanged(bool connected) {
+    ACSDK_DEBUG5(LX(__func__).d("Network connected", connected));
+    m_isNetworkConnected = connected;
 }
 
 }  // namespace renderer

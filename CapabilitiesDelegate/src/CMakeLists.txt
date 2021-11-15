@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=capabilitiesDelegate")
-add_library(CapabilitiesDelegate SHARED
+add_library(CapabilitiesDelegate
     CapabilitiesDelegate.cpp
     DiscoveryEventSender.cpp
     PostConnectCapabilitiesPublisher.cpp

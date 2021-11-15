@@ -45,9 +45,14 @@ std::unique_ptr<DBusConnection> DBusConnection::create(GBusType connectionType) 
         return nullptr;
     }
 
+    if (g_dbus_connection_is_closed(connection)) {
+        ACSDK_ERROR(LX("createNewFailed").d("reason", "connection is closed."));
+        return nullptr;
+    }
+
     g_dbus_connection_set_exit_on_close(connection, false);
 
-    return std::unique_ptr<DBusConnection>(new DBusConnection(connection));
+    return std::unique_ptr<DBusConnection>(new DBusConnection(connection, connectionType));
 }
 
 unsigned int DBusConnection::subscribeToSignal(
@@ -105,7 +110,9 @@ unsigned int DBusConnection::subscribeToSignal(
     return subId;
 }
 
-DBusConnection::DBusConnection(GDBusConnection* connection) : m_connection{connection} {
+DBusConnection::DBusConnection(GDBusConnection* connection, GBusType connectionType) :
+        m_connection{connection},
+        m_connectionType{connectionType} {
 }
 
 void DBusConnection::close() {
@@ -125,7 +132,9 @@ void DBusConnection::close() {
     }
 
     g_dbus_connection_flush_sync(m_connection, nullptr, nullptr);
-    g_dbus_connection_close_sync(m_connection, nullptr, nullptr);
+    if (G_BUS_TYPE_SYSTEM != m_connectionType) {
+        g_dbus_connection_close_sync(m_connection, nullptr, nullptr);
+    }
     g_object_unref(m_connection);
     m_connection = nullptr;
 }

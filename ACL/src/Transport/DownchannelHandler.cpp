@@ -54,15 +54,15 @@ static const std::string RESPONSE_FINISHED = "RESPONSE_FINISHED";
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /**
  * Creates a MetricEvent with the given event name and datapoint and submits it with the metric recorder.
- * @param metricRecorder - The @c MetricRecorderInterface used log the metric.
- * @param eventName - The event name of the metric to be logged.
- * @param dataPoint - The @c DataPoint to be added to the metric.
+ * @param metricRecorder The @c MetricRecorderInterface used log the metric.
+ * @param eventName The event name of the metric to be logged.
+ * @param dataPoint The @c DataPoint to be added to the metric.
  */
 void submitMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
@@ -111,7 +111,7 @@ std::shared_ptr<DownchannelHandler> DownchannelHandler::create(
     std::shared_ptr<MessageConsumerInterface> messageConsumer,
     std::shared_ptr<avsCommon::avs::attachment::AttachmentManagerInterface> attachmentManager,
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder) {
-    ACSDK_DEBUG9(LX(__func__).d("context", context.get()));
+    ACSDK_DEBUG9(LX("create").d("context", context.get()));
 
     if (!context) {
         ACSDK_CRITICAL(LX("createFailed").d("reason", "nullHttp2Transport"));
@@ -144,12 +144,12 @@ std::shared_ptr<DownchannelHandler> DownchannelHandler::create(
 }
 
 std::vector<std::string> DownchannelHandler::getRequestHeaderLines() {
-    ACSDK_DEBUG9(LX(__func__));
+    ACSDK_DEBUG9(LX("getRequestHeaderLines"));
     return {m_authHeader};
 }
 
 HTTP2SendDataResult DownchannelHandler::onSendData(char* bytes, size_t size) {
-    ACSDK_DEBUG9(LX(__func__).d("size", size));
+    ACSDK_DEBUG9(LX("onSendData").d("size", size));
     return HTTP2SendDataResult::COMPLETE;
 }
 
@@ -159,7 +159,7 @@ DownchannelHandler::DownchannelHandler(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder) :
         ExchangeHandler{context, authToken},
         m_metricRecorder{metricRecorder} {
-    ACSDK_DEBUG9(LX(__func__).d("context", context.get()));
+    ACSDK_DEBUG9(LX("init").d("context", context.get()));
     m_powerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG);
     if (m_powerResource) {
         m_powerResource->acquire();
@@ -171,7 +171,7 @@ void DownchannelHandler::onActivity() {
 }
 
 bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
-    ACSDK_DEBUG5(LX(__func__).d("responseCode", responseCode));
+    ACSDK_DEBUG5(LX("onReceiveResponseCode").d("responseCode", responseCode));
     switch (intToHTTPResponseCode(responseCode)) {
         case HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED:
         case HTTPResponseCode::SUCCESS_CREATED:
@@ -205,7 +205,7 @@ bool DownchannelHandler::onReceiveResponseCode(long responseCode) {
 }
 
 void DownchannelHandler::onResponseFinished(HTTP2ResponseFinishedStatus status, const std::string& nonMimeBody) {
-    ACSDK_DEBUG5(LX(__func__).d("status", status).d("nonMimeBody", nonMimeBody));
+    ACSDK_DEBUG5(LX("onResponseFinished").d("status", status).d("nonMimeBody", nonMimeBody));
     m_context->onDownchannelFinished();
     submitResponseFinishedMetric(m_metricRecorder, status);
 }

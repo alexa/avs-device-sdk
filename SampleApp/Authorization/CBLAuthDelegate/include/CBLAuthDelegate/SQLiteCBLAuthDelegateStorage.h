@@ -20,6 +20,8 @@
 #include <string>
 
 #include <acsdkAuthorizationInterfaces/LWA/LWAAuthorizationStorageInterface.h>
+#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 
 #include "CBLAuthDelegate/CBLAuthDelegateStorageInterface.h"
@@ -40,20 +42,15 @@ public:
      * Factory method for creating a storage object for CBLAuthDelegate based on an SQLite database.
      *
      * @param configurationRoot The global config object.
+     * @param cryptoFactory Crypto factory interface.
+     * @param keyStore Key store interface.
+     *
      * @return Pointer to the SQLiteCBLAuthDelegate object, nullptr if there's an error creating it.
      */
     static std::shared_ptr<CBLAuthDelegateStorageInterface> createCBLAuthDelegateStorageInterface(
-        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot);
-
-    /**
-     * Factory method for creating a storage object for CBLAuthDelegate based on an SQLite database.
-     *
-     * @deprecated
-     * @param configurationRoot The global config object.
-     * @return Pointer to the SQLiteCBLAuthDelegate object, nullptr if there's an error creating it.
-     */
-    static std::shared_ptr<CBLAuthDelegateStorageInterface> create(
-        const avsCommon::utils::configuration::ConfigurationNode& configurationRoot);
+        const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
+        const std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
+        const std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>& keyStore);
 
     /**
      * Destructor

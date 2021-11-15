@@ -67,7 +67,7 @@ public:
             const std::shared_ptr<avsCommon::sdkInterfaces::DirectiveHandlerResultInterface>&));
 };
 
-void DirectiveHandlerMockAdapter::preHandleDirective(
+inline void DirectiveHandlerMockAdapter::preHandleDirective(
     std::shared_ptr<avs::AVSDirective> avsDirective,
     std::unique_ptr<sdkInterfaces::DirectiveHandlerResultInterface> handler) {
     if (handler) {

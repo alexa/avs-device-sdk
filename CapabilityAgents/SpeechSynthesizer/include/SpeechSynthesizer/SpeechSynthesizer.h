@@ -384,6 +384,17 @@ private:
     void submitMetric(avsCommon::utils::metrics::MetricEventBuilder& metricEventBuilder);
 
     /**
+     * Creates and records an instance entry metric with the given identifiers and metadata.
+     * @param segmentId The segmentId corresponding to this metric event.
+     * @param name The name of this metric
+     * @param metadata Any metadata to be associated with this metric; default is empty
+     */
+    void submitInstanceEntryMetric(
+        const std::string& segmentId,
+        const std::string& name,
+        const std::map<std::string, std::string>& metadata = {});
+
+    /**
      * This function is called whenever the AVS UX dialog state of the system changes. This function will block
      * processing of other state changes, so any implementation of this should return quickly.
      *
@@ -655,6 +666,9 @@ private:
 
     /// Set of capability configurations that will get published using the Capabilities API
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> m_capabilityConfigurations;
+
+    /// A @c PowerResourceId used for wakelock logic.
+    std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceId> m_powerResourceId;
 
     /// The power resource manager
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> m_powerResourceManager;

@@ -20,6 +20,7 @@
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/MockApplicationAudioPipelineFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MockMediaPlayer.h>
 #include <AVSCommon/Utils/MediaPlayer/SourceConfig.h>
+#include <AVSCommon/Utils/Network/MockInternetConnectionMonitor.h>
 #include <Settings/DeviceSettingsManager.h>
 
 #include "acsdkAlerts/Renderer/Renderer.h"
@@ -195,6 +196,7 @@ protected:
     std::shared_ptr<Renderer> m_renderer;
     std::shared_ptr<MockApplicationAudioPipelineFactory> m_audioPipelineFactory;
     std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface> m_shutdownNotifier;
+    std::shared_ptr<avsCommon::utils::network::test::MockInternetConnectionMonitor> m_mockConnectionMonitor;
 
     static std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType> audioFactoryFunc() {
         return std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::MediaType>(
@@ -205,6 +207,7 @@ protected:
 RendererTest::RendererTest() : m_observer{std::make_shared<MockRendererObserver>()} {
     m_audioPipelineFactory = std::make_shared<MockApplicationAudioPipelineFactory>();
     m_shutdownNotifier = std::make_shared<NiceMock<acsdkShutdownManagerInterfaces::test::MockShutdownNotifier>>();
+    m_mockConnectionMonitor = std::make_shared<avsCommon::utils::network::test::MockInternetConnectionMonitor>();
     m_mediaPlayer = TestMediaPlayer::create();
 
     bool equalizerAvailable = false;
@@ -221,7 +224,8 @@ RendererTest::RendererTest() : m_observer{std::make_shared<MockRendererObserver>
         .WillOnce(Return(std::make_shared<avsCommon::sdkInterfaces::ApplicationMediaInterfaces>(
             m_mediaPlayer, nullptr, nullptr, nullptr)));
 
-    m_renderer = Renderer::createAlertRenderer(m_audioPipelineFactory, nullptr, m_shutdownNotifier);
+    m_renderer =
+        Renderer::createAlertRenderer(m_audioPipelineFactory, nullptr, m_shutdownNotifier, m_mockConnectionMonitor);
 }
 
 RendererTest::~RendererTest() {
@@ -249,17 +253,17 @@ TEST_F(RendererTest, test_createAlertRenderer) {
     ASSERT_NE(m_renderer, nullptr);
 
     /// confirm we return a nullptr if a nullptr was passed in
-    ASSERT_EQ(Renderer::createAlertRenderer(nullptr, nullptr, nullptr), nullptr);
+    ASSERT_EQ(Renderer::createAlertRenderer(nullptr, nullptr, nullptr, nullptr), nullptr);
 }
 
 /**
  * Test if the Renderer class creates an object appropriately and fails when it must
  */
 TEST_F(RendererTest, test_create) {
-    ASSERT_NE(Renderer::create(m_mediaPlayer, nullptr), nullptr);
+    ASSERT_NE(Renderer::create(m_mediaPlayer, nullptr, nullptr), nullptr);
 
     /// confirm we return a nullptr if a nullptr was passed in
-    ASSERT_EQ(Renderer::create(nullptr, nullptr), nullptr);
+    ASSERT_EQ(Renderer::create(nullptr, nullptr, nullptr), nullptr);
 }
 
 /**

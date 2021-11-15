@@ -1,5 +1,5 @@
 add_definitions("-DACSDK_LOG_MODULE=captions")
-add_library(Captions SHARED
+add_library(Captions
         CaptionData.cpp
         CaptionLine.cpp
         CaptionFrame.cpp

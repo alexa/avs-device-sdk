@@ -3,7 +3,7 @@ list(APPEND LibPreviewAlexaClient_SOURCES
         PreviewAlexaClient.cpp
         PreviewAlexaClientComponent.cpp)
 
-add_library(LibPreviewAlexaClient SHARED ${LibPreviewAlexaClient_SOURCES})
+add_library(LibPreviewAlexaClient ${LibPreviewAlexaClient_SOURCES})
 
 target_include_directories(LibPreviewAlexaClient PUBLIC
         "${acsdkPreviewAlexaClient_SOURCE_DIR}/include")
@@ -23,11 +23,14 @@ target_link_libraries(LibPreviewAlexaClient
         acsdkAlerts
         acsdkApplicationAudioPipelineFactoryInterfaces
         acsdkCore
+        acsdkCrypto
         acsdkDeviceSetup
         acsdkDeviceSetupInterfaces
         acsdkInteractionModel
+        acsdkKWD
         acsdkLibcurlHTTPContentFetcher
         acsdkManufactory
+        acsdkPkcs11
         acsdkSampleApplicationInterfaces
         LibSampleApp)
 
@@ -37,6 +40,10 @@ endif()
 
 if (AUTH_MANAGER)
     target_link_libraries(LibPreviewAlexaClient acsdkAuthorization)
+endif()
+
+if (PKCS11)
+    target_compile_definitions(LibPreviewAlexaClient PRIVATE ENABLE_PKCS11)
 endif()
 
 add_rpath_to_target("LibPreviewAlexaClient")

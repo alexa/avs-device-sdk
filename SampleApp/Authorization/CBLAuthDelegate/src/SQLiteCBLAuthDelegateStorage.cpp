@@ -13,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-#include <acsdkAuthorization/LWA/SQLiteLWAAuthorizationStorage.h>
+#include <acsdkAuthorization/LWA/LWAAuthorizationStorage.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 #include "CBLAuthDelegate/SQLiteCBLAuthDelegateStorage.h"
@@ -40,14 +40,16 @@ static const std::string TAG("SQLiteCBLAuthDelegateStorage");
 static const std::string CONFIG_KEY_CBL_AUTH_DELEGATE = "cblAuthDelegate";
 
 std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::createCBLAuthDelegateStorageInterface(
-    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRootPtr) {
-    if (!configurationRootPtr) {
+    const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
+    const std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
+    const std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>& keyStore) {
+    if (!configurationRoot) {
         ACSDK_ERROR(LX("createCBLAuthDelegateStorageInterfaceFailed").d("reason", "nullConfigurationRoot"));
         return nullptr;
     }
 
-    auto lwaStorage = SQLiteLWAAuthorizationStorage::createLWAAuthorizationStorageInterface(
-        configurationRootPtr, CONFIG_KEY_CBL_AUTH_DELEGATE);
+    auto lwaStorage = LWAAuthorizationStorage::createLWAAuthorizationStorageInterface(
+        configurationRoot, CONFIG_KEY_CBL_AUTH_DELEGATE, cryptoFactory, keyStore);
 
     if (!lwaStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "createLWAStorageFailed"));
@@ -55,12 +57,6 @@ std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::c
     }
 
     return std::shared_ptr<SQLiteCBLAuthDelegateStorage>(new SQLiteCBLAuthDelegateStorage(lwaStorage));
-}
-
-std::shared_ptr<CBLAuthDelegateStorageInterface> SQLiteCBLAuthDelegateStorage::create(
-    const avsCommon::utils::configuration::ConfigurationNode& configurationRoot) {
-    return createCBLAuthDelegateStorageInterface(
-        std::make_shared<avsCommon::utils::configuration::ConfigurationNode>(configurationRoot));
 }
 
 SQLiteCBLAuthDelegateStorage::~SQLiteCBLAuthDelegateStorage() {

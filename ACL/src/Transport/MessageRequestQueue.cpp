@@ -26,12 +26,10 @@ using namespace avsCommon::avs;
 /// String to identify log entries originating from this file.
 static const std::string TAG("MessageRequestQueue");
 
-static const std::string EMPTY_QUEUE_NAME = "";
-
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 

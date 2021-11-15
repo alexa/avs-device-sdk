@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_definitions("-DACSDK_LOG_MODULE=acsdkCustomApplicationAudioPipelineFactory")
 
-add_library(acsdkCustomApplicationAudioPipelineFactory SHARED
+add_library(acsdkCustomApplicationAudioPipelineFactory
 		ApplicationAudioPipelineFactoryComponent.cpp
         CustomApplicationAudioPipelineFactory.cpp)
 

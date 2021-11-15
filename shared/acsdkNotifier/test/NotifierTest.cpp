@@ -20,7 +20,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "acsdkNotifier/Notifier.h"
+#include "acsdkNotifier/internal/Notifier.h"
 
 namespace alexaClientSDK {
 namespace acsdkNotifier {
@@ -52,9 +52,13 @@ static auto invokeOnSomething = [](const std::shared_ptr<TestObserverInterface>&
  */
 TEST_F(NotifierTest, test_simplestNotification) {
     TestNotifier notifier;
-    auto observer = std::make_shared<MockTestObserver>();
-    EXPECT_CALL(*observer, onSomething());
-    notifier.addObserver(observer);
+    auto observer0 = std::make_shared<MockTestObserver>();
+    auto observer1 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    EXPECT_CALL(*observer0, onSomething());
+    EXPECT_CALL(*observer1, onSomething());
+    notifier.addObserver(observer0);
+    notifier.addWeakPtrObserver(weakObserver1);
     notifier.notifyObservers(invokeOnSomething);
 }
 
@@ -66,13 +70,26 @@ TEST_F(NotifierTest, test_notificationOrder) {
     auto observer0 = std::make_shared<MockTestObserver>();
     auto observer1 = std::make_shared<MockTestObserver>();
     auto observer2 = std::make_shared<MockTestObserver>();
+    auto observer3 = std::make_shared<MockTestObserver>();
+    auto observer4 = std::make_shared<MockTestObserver>();
+    auto observer5 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    std::weak_ptr<MockTestObserver> weakObserver3 = observer3;
+    std::weak_ptr<MockTestObserver> weakObserver5 = observer5;
+
     InSequence sequence;
     EXPECT_CALL(*observer0, onSomething());
     EXPECT_CALL(*observer1, onSomething());
     EXPECT_CALL(*observer2, onSomething());
+    EXPECT_CALL(*observer3, onSomething());
+    EXPECT_CALL(*observer4, onSomething());
+    EXPECT_CALL(*observer5, onSomething());
     notifier.addObserver(observer0);
-    notifier.addObserver(observer1);
+    notifier.addWeakPtrObserver(weakObserver1);
     notifier.addObserver(observer2);
+    notifier.addWeakPtrObserver(weakObserver3);
+    notifier.addObserver(observer4);
+    notifier.addWeakPtrObserver(weakObserver5);
     notifier.notifyObservers(invokeOnSomething);
 }
 
@@ -84,38 +101,49 @@ TEST_F(NotifierTest, test_duplicateAdditions) {
     auto observer0 = std::make_shared<MockTestObserver>();
     auto observer1 = std::make_shared<MockTestObserver>();
     auto observer2 = std::make_shared<MockTestObserver>();
-    InSequence sequence;
-    EXPECT_CALL(*observer0, onSomething());
-    EXPECT_CALL(*observer1, onSomething());
-    EXPECT_CALL(*observer2, onSomething());
+    std::weak_ptr<MockTestObserver> weakObserver0 = observer0;
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    std::weak_ptr<MockTestObserver> weakObserver2 = observer2;
+    EXPECT_CALL(*observer0, onSomething()).Times(1);
+    EXPECT_CALL(*observer1, onSomething()).Times(1);
+    EXPECT_CALL(*observer2, onSomething()).Times(1);
     notifier.addObserver(observer0);
+    notifier.addWeakPtrObserver(weakObserver0);
+    notifier.addWeakPtrObserver(weakObserver1);
     notifier.addObserver(observer1);
     notifier.addObserver(observer2);
     notifier.addObserver(observer1);
     notifier.addObserver(observer2);
     notifier.addObserver(observer1);
+    notifier.addWeakPtrObserver(weakObserver2);
+    notifier.addWeakPtrObserver(weakObserver2);
     notifier.notifyObservers(invokeOnSomething);
 }
 
 /**
- * Verify addObserverFunc is called on adding an observer when it is set.
+ * Verify addObserverFunc is called on adding an observer when it is set before and after setAddObserverFunction.
  */
 TEST_F(NotifierTest, test_setAddObserverFunction) {
     TestNotifier notifier;
     auto observer0 = std::make_shared<MockTestObserver>();
+    auto observer1 = std::make_shared<MockTestObserver>();
+    auto observer2 = std::make_shared<MockTestObserver>();
+    auto observer3 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    std::weak_ptr<MockTestObserver> weakObserver3 = observer3;
+    EXPECT_CALL(*observer0, onSomething()).Times(1);
+    EXPECT_CALL(*observer1, onSomething()).Times(1);
+    EXPECT_CALL(*observer2, onSomething()).Times(1);
+    EXPECT_CALL(*observer3, onSomething()).Times(1);
 
-    bool result = false;
     std::function<void(const std::shared_ptr<TestObserverInterface>&)> addObserverFunction =
-        [&result](const std::shared_ptr<TestObserverInterface>&) { result = true; };
+        [](const std::shared_ptr<TestObserverInterface>& observer) { observer->onSomething(); };
 
     notifier.addObserver(observer0);
-    ASSERT_EQ(result, false);
-
+    notifier.addWeakPtrObserver(weakObserver1);
     notifier.setAddObserverFunction(addObserverFunction);
-
-    auto observer1 = std::make_shared<MockTestObserver>();
-    notifier.addObserver(observer1);
-    ASSERT_EQ(result, true);
+    notifier.addObserver(observer2);
+    notifier.addWeakPtrObserver(weakObserver3);
 }
 
 /**
@@ -126,13 +154,18 @@ TEST_F(NotifierTest, test_removingObservers) {
     auto observer0 = std::make_shared<MockTestObserver>();
     auto observer1 = std::make_shared<MockTestObserver>();
     auto observer2 = std::make_shared<MockTestObserver>();
+    auto observer3 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    std::weak_ptr<MockTestObserver> weakObserver3 = observer3;
     InSequence sequence;
     EXPECT_CALL(*observer2, onSomething());
     notifier.addObserver(observer0);
-    notifier.addObserver(observer1);
+    notifier.addWeakPtrObserver(weakObserver1);
     notifier.addObserver(observer2);
+    notifier.addWeakPtrObserver(weakObserver3);
     notifier.removeObserver(observer0);
     notifier.removeObserver(observer1);
+    notifier.removeWeakPtrObserver(weakObserver3);
     notifier.notifyObservers(invokeOnSomething);
 }
 
@@ -144,13 +177,26 @@ TEST_F(NotifierTest, test_notificationInReverseOrder) {
     auto observer0 = std::make_shared<MockTestObserver>();
     auto observer1 = std::make_shared<MockTestObserver>();
     auto observer2 = std::make_shared<MockTestObserver>();
+    auto observer3 = std::make_shared<MockTestObserver>();
+    auto observer4 = std::make_shared<MockTestObserver>();
+    auto observer5 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    std::weak_ptr<MockTestObserver> weakObserver3 = observer3;
+    std::weak_ptr<MockTestObserver> weakObserver5 = observer5;
+
     InSequence sequence;
+    EXPECT_CALL(*observer5, onSomething());
+    EXPECT_CALL(*observer4, onSomething());
+    EXPECT_CALL(*observer3, onSomething());
     EXPECT_CALL(*observer2, onSomething());
     EXPECT_CALL(*observer1, onSomething());
     EXPECT_CALL(*observer0, onSomething());
     notifier.addObserver(observer0);
-    notifier.addObserver(observer1);
+    notifier.addWeakPtrObserver(weakObserver1);
     notifier.addObserver(observer2);
+    notifier.addWeakPtrObserver(weakObserver3);
+    notifier.addObserver(observer4);
+    notifier.addWeakPtrObserver(weakObserver5);
     notifier.notifyObserversInReverse(invokeOnSomething);
 }
 
@@ -162,19 +208,36 @@ TEST_F(NotifierTest, test_removeWithinCallback) {
     auto observer0 = std::make_shared<MockTestObserver>();
     auto observer1 = std::make_shared<MockTestObserver>();
     auto observer2 = std::make_shared<MockTestObserver>();
-    auto removeObservers = [&observer0, &observer2, &notifier]() {
+    auto observer3 = std::make_shared<MockTestObserver>();
+    auto observer4 = std::make_shared<MockTestObserver>();
+    auto observer5 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    std::weak_ptr<MockTestObserver> weakObserver3 = observer3;
+    std::weak_ptr<MockTestObserver> weakObserver5 = observer5;
+    auto removeObservers = [&observer0, &observer2, &weakObserver3, &notifier]() {
         notifier.removeObserver(observer0);
         notifier.removeObserver(observer2);
+        notifier.removeWeakPtrObserver(weakObserver3);
     };
     InSequence sequence;
+    notifier.addObserver(observer0);
+    notifier.addWeakPtrObserver(weakObserver1);
+    notifier.addObserver(observer2);
+    notifier.addWeakPtrObserver(weakObserver3);
+    notifier.addObserver(observer4);
+    notifier.addWeakPtrObserver(weakObserver5);
+
     EXPECT_CALL(*observer0, onSomething()).Times(1);
     EXPECT_CALL(*observer1, onSomething()).WillOnce(Invoke(removeObservers));
     EXPECT_CALL(*observer2, onSomething()).Times(0);
-    EXPECT_CALL(*observer1, onSomething()).Times(1);
-    notifier.addObserver(observer0);
-    notifier.addObserver(observer1);
-    notifier.addObserver(observer2);
+    EXPECT_CALL(*observer3, onSomething()).Times(0);
+    EXPECT_CALL(*observer4, onSomething()).Times(1);
+    EXPECT_CALL(*observer5, onSomething()).Times(1);
     notifier.notifyObservers(invokeOnSomething);
+
+    EXPECT_CALL(*observer1, onSomething()).Times(1);
+    EXPECT_CALL(*observer4, onSomething()).Times(1);
+    EXPECT_CALL(*observer5, onSomething()).Times(1);
     notifier.notifyObservers(invokeOnSomething);
 }
 
@@ -189,13 +252,14 @@ TEST_F(NotifierTest, test_removeAndAdditionWithinReverseOrderCallback) {
     auto observer0 = std::make_shared<MockTestObserver>();
     auto observer1 = std::make_shared<MockTestObserver>();
     auto observer2 = std::make_shared<MockTestObserver>();
-    auto removeObservers = [&observer0, &observer2, &notifier]() {
+    std::weak_ptr<MockTestObserver> weakObserver2 = observer2;
+    auto removeObservers = [&observer0, &weakObserver2, &notifier]() {
         notifier.removeObserver(observer0);
-        notifier.removeObserver(observer2);
+        notifier.removeWeakPtrObserver(weakObserver2);
     };
-    auto addObservers = [&observer0, &observer2, &notifier]() {
+    auto addObservers = [&observer0, &weakObserver2, &notifier]() {
         notifier.addObserver(observer0);
-        notifier.addObserver(observer2);
+        notifier.addWeakPtrObserver(weakObserver2);
     };
     InSequence sequence;
     EXPECT_CALL(*observer2, onSomething()).Times(1);
@@ -204,9 +268,37 @@ TEST_F(NotifierTest, test_removeAndAdditionWithinReverseOrderCallback) {
     EXPECT_CALL(*observer1, onSomething()).WillOnce(Invoke(addObservers));
     notifier.addObserver(observer0);
     notifier.addObserver(observer1);
-    notifier.addObserver(observer2);
+    notifier.addWeakPtrObserver(weakObserver2);
     ASSERT_TRUE(notifier.notifyObserversInReverse(invokeOnSomething));
     ASSERT_FALSE(notifier.notifyObserversInReverse(invokeOnSomething));
+}
+
+/**
+ * Verify that when weak_ptr observer is expired (the underlying shared_ptr is reset), that the weak_ptr observer will
+ * not get the notification.
+ */
+TEST_F(NotifierTest, test_resetSharedPtrWeakPtrCallbackShallNotBeCalled) {
+    TestNotifier notifier;
+    auto observer0 = std::make_shared<MockTestObserver>();
+    auto observer1 = std::make_shared<MockTestObserver>();
+    std::weak_ptr<MockTestObserver> weakObserver0 = observer0;
+    std::weak_ptr<MockTestObserver> weakObserver1 = observer1;
+    int count = 0;
+
+    auto invokeCallback = [&count](const std::shared_ptr<TestObserverInterface>& observer) {
+        count++;
+        observer->onSomething();
+    };
+
+    InSequence sequence;
+    EXPECT_CALL(*observer0, onSomething()).Times(1);
+    EXPECT_CALL(*observer1, onSomething()).Times(2);
+    notifier.addWeakPtrObserver(observer0);
+    notifier.addWeakPtrObserver(observer1);
+    notifier.notifyObservers(invokeCallback);
+    observer0.reset();
+    notifier.notifyObservers(invokeCallback);
+    ASSERT_EQ(3, count);
 }
 
 }  // namespace test

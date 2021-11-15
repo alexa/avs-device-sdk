@@ -5,6 +5,10 @@
 #     cmake <path-to-source> -DCMAKE_BUILD_TYPE=<build-type>
 #
 
+# CMake option to build shared libraries instead of static ones. For legacy
+# reasons, we set the default to build shared.
+option(BUILD_SHARED_LIBS "Build shared libraries instead of static." ON)
+
 # If no build type is specified by specifying it on the command line, default to debug.
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: DEBUG, RELEASE, or MINSIZEREL." FORCE)
@@ -50,6 +54,9 @@ endif()
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Build position-independent code even when building static libraries
+set(POSITION_INDEPENDENT_CODE ON CACHE BOOL "Build position-independent code")
 
 # Determine the platform and compiler dependent flags.
 if (NOT MSVC)
@@ -102,3 +109,11 @@ set(CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} CACHE INTERNAL "Flags used 
 # Minimum sized release build.
 set(CMAKE_CXX_FLAGS_MINSIZEREL "${CXX_PLATFORM_DEPENDENT_FLAGS_MINSIZEREL} -DRAPIDJSON_HAS_STDSTRING" CACHE INTERNAL "Flags used for minimum sized RELEASE builds" FORCE)
 set(CMAKE_C_FLAGS_MINSIZEREL ${CMAKE_CXX_FLAGS_RELEASE} CACHE INTERNAL "Flags used for minimum sized RELEASE builds" FORCE)
+
+if(BUILD_SHARED_LIBS)
+    set(ACSDK_CONFIG_STATIC_LIBS OFF CACHE INTERNAL "Flag for SDKConfig.h.in" FORCE)
+    set(ACSDK_CONFIG_SHARED_LIBS ON CACHE INTERNAL "Flag for SDKConfig.h.in" FORCE)
+else()
+    set(ACSDK_CONFIG_STATIC_LIBS ON CACHE INTERNAL "Flag for SDKConfig.h.in" FORCE)
+    set(ACSDK_CONFIG_SHARED_LIBS OFF CACHE INTERNAL "Flag for SDKConfig.h.in" FORCE)
+endif()

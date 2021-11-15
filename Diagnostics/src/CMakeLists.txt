@@ -1,6 +1,6 @@
 add_definitions("-DACSDK_LOG_MODULE=diagnostics")
 
-add_library(Diagnostics SHARED
+add_library(Diagnostics
         DevicePropertyAggregator.cpp
         DiagnosticsUtils.cpp
         DeviceProtocolTracer.cpp

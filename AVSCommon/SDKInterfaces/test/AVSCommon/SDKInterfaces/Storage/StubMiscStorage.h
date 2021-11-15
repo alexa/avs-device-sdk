@@ -19,6 +19,7 @@
 #include <gmock/gmock.h>
 
 #include <memory>
+#include <mutex>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -96,12 +97,29 @@ public:
     ///@}
 
 private:
+    /// Constructor.
     StubMiscStorage();
+
+    /**
+     * A function to clear the table identified by componentName and tableName.
+     *
+     * m_mutex must be held before calling this.
+     *
+     * @param componentName The component name.
+     * @param tableName The table name.
+     * @return Whether the operation was succesful.
+     */
+    bool clearTableLocked(const std::string& componentName, const std::string& tableName);
+
+    // Mutex.
+    std::mutex m_mutex;
 
     /// Container to keep stored values. The format of the key is "componentName:tableName:key".
     std::unordered_map<std::string, std::string> m_storage;
+
     /// A collection of table prefixes to track if table exists.
     std::unordered_set<std::string> m_tables;
+
     /// Flag indicating if database is opened.
     bool m_isOpened;
 };

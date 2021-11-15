@@ -36,7 +36,7 @@ static const std::string TAG("EventBuilder");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -150,7 +150,7 @@ const std::pair<std::string, std::string> buildJsonEventString(
     ACSDK_DEBUG(LX("buildJsonEventString").d("messageId", messageId).d("namespace", nameSpace).d("name", eventName));
 
     auto eventJson = jsonGenerator.toString();
-    ACSDK_DEBUG0(LX(__func__).d("event", eventJson));
+    ACSDK_DEBUG0(LX("buildJsonEventString").d("event", eventJson));
     return std::make_pair(messageId, eventJson);
 }
 
@@ -190,7 +190,7 @@ std::string buildJsonEventString(
     const AVSMessageHeader& eventHeader,
     const Optional<AVSMessageEndpoint>& endpoint,
     const std::string& jsonPayloadValue,
-    const Optional<AVSContext>& context) {
+    const std::string& jsonContext) {
     json::JsonGenerator jsonGenerator;
     jsonGenerator.startObject(EVENT_KEY_STRING);
     {
@@ -202,10 +202,24 @@ std::string buildJsonEventString(
     }
     jsonGenerator.finishObject();
 
-    if (context.hasValue()) {
-        jsonGenerator.addRawJsonMember(CONTEXT_KEY_STRING, context.value().toJson());
+    if (!jsonContext.empty()) {
+        if (!jsonGenerator.addRawJsonMember(CONTEXT_KEY_STRING, jsonContext)) {
+            ACSDK_ERROR(LX("buildJsonEventStringFailed")
+                            .d("reason", "addRawJsonMemberFailed")
+                            .sensitive("context", jsonContext));
+            return "";
+        }
     }
     return jsonGenerator.toString();
+}
+
+std::string buildJsonEventString(
+    const AVSMessageHeader& eventHeader,
+    const Optional<AVSMessageEndpoint>& endpoint,
+    const std::string& jsonPayloadValue,
+    const Optional<AVSContext>& context) {
+    return buildJsonEventString(
+        eventHeader, endpoint, jsonPayloadValue, (context.hasValue() ? context.value().toJson() : ""));
 }
 
 }  // namespace avs

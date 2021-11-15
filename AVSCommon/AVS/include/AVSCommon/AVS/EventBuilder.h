@@ -70,14 +70,30 @@ const std::pair<std::string, std::string> buildJsonEventString(
     const std::string& jsonContext = "");
 
 /**
+ * Builds a JSON event string which includes the header, optional endpoint (if the endpoint is the source
+ * of the event), the @c payload, and jsonContext.
+ *
+ * @param eventHeader The event's @c AVSMessageHeader.
+ * @param endpoint The optional endpoint which was the source of this event.
+ * @param jsonPayloadValue The payload value associated with the "payload" key. The value must be a stringified json.
+ * @param jsonContext The context value associated with the "context" key. The value must be a stringified json.
+ * @return The event JSON string if successful, else an empty string.
+ */
+std::string buildJsonEventString(
+    const AVSMessageHeader& eventHeader,
+    const utils::Optional<AVSMessageEndpoint>& endpoint,
+    const std::string& jsonPayloadValue,
+    const std::string& jsonContext);
+
+/**
  * Builds a JSON event string which includes the header, the @c payload and an optional @c context.
  * The header includes the namespace, name, message Id and an optional @c dialogRequestId.
  * The message Id required for the header is a random string that is generated and added to the
  * header.
  *
  * @param eventHeader The event's @c AVSMessageHeader.
- * @param endpoint The endpoint which was the source of this event.
- * @param payload The payload value associated with the "payload" key. The value must be a stringified json.
+ * @param endpoint The optional endpoint which was the source of this event.
+ * @param jsonPayloadValue The payload value associated with the "payload" key. The value must be a stringified json.
  * @param context Optional @c AVSContext to be sent with the event message.
  * @return The event JSON string if successful, else an empty string.
  */

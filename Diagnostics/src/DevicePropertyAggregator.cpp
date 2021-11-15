@@ -258,15 +258,11 @@ Optional<std::string> DevicePropertyAggregator::getDeviceContextJson() {
     return m_deviceContext;
 }
 
-void DevicePropertyAggregator::onAlertStateChange(
-    const std::string& alertToken,
-    const std::string& alertType,
-    AlertObserverInterface::State state,
-    const std::string& reason) {
+void DevicePropertyAggregator::onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, alertType, state]() {
+    m_executor.submit([this, alertInfo]() {
         std::stringstream ss;
-        ss << alertType << ":" << state;
+        ss << alertInfo.type << ":" << alertInfo.state;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::ALERT_TYPE_AND_STATE] = ss.str();
     });
 }

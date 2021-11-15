@@ -86,7 +86,9 @@ public:
 #endif
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter,
-        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter) override;
+        std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+        std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface>
+            endpointRegistrationManager) override;
     /// @}
 
 private:

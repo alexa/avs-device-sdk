@@ -111,6 +111,9 @@ static const std::string MESSAGE_ID_TEST_3("MessageId_Test3");
 /// PlayRequestId for testing.
 static const std::string PLAY_REQUEST_ID_TEST("PlayRequestId_Test");
 
+/// CorrelationToken for testing.
+static const std::string CORRELATION_TOKEN_TEST("CorrelationToken_Test");
+
 /// Context ID for testing
 static const std::string CONTEXT_ID_TEST("ContextId_Test");
 
@@ -526,6 +529,11 @@ static const std::string FINGERPRINT_BUILD_TYPE_KEY = "buildType";
 /// JSON key for "versionNumber" in fingerprint configuration.
 static const std::string FINGERPRINT_VERSION_NUMBER_KEY = "versionNumber";
 
+/// List of event messages expected to have PlaybackReports field
+static const std::vector<std::string> EVENTS_WITH_REPORTS = {PLAYBACK_FINISHED_NAME,
+                                                             PLAYBACK_STOPPED_NAME,
+                                                             PLAYBACK_FAILED_NAME,
+                                                             PROGRESS_REPORT_INTERVAL_ELAPSED_NAME};
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
@@ -750,6 +758,20 @@ public:
     void sendUpdateProgressReportIntervalDirective();
 
     /**
+     * Verify that the message name matches the expected name,
+     * and contains fields common to PlaybackEvents
+     *
+     * @param request The @c MessageRequest to verify
+     * @param expectedName The expected name to find in the json header
+     * @param verifyReport True to look for PlaybackReport
+     */
+
+    bool verifyPlaybackMessage(
+        std::shared_ptr<avsCommon::avs::MessageRequest> request,
+        std::string expectedName,
+        bool verifyReport = false);
+
+    /**
      * Verify that the message name matches the expected name
      *
      * @param request The @c MessageRequest to verify
@@ -965,8 +987,8 @@ void AudioPlayerTest::wakeOnSendMessage() {
 }
 
 void AudioPlayerTest::sendPlayDirective(long offsetInMilliseconds, long endOffsetInMilliseconds) {
-    auto avsMessageHeader =
-        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST, CORRELATION_TOKEN_TEST);
     std::string payload;
     if (endOffsetInMilliseconds == 0) {
         payload = createEnqueuePayloadTest(offsetInMilliseconds);
@@ -1043,6 +1065,46 @@ void AudioPlayerTest::sendUpdateProgressReportIntervalDirective() {
         "", header, UPDATE_PROGRESS_REPORT_INTERVAL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
     m_audioPlayer->CapabilityAgent::preHandleDirective(directive, std::move(m_mockDirectiveHandlerResult));
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST);
+}
+
+bool AudioPlayerTest::verifyPlaybackMessage(
+    std::shared_ptr<avsCommon::avs::MessageRequest> request,
+    std::string expectedName,
+    bool verifyReport) {
+    rapidjson::Document document;
+    document.Parse(request->getJsonContent().c_str());
+    EXPECT_FALSE(document.HasParseError())
+        << "rapidjson detected a parsing error at offset:" + std::to_string(document.GetErrorOffset()) +
+               ", error message: " + GetParseError_En(document.GetParseError());
+
+    auto event = document.FindMember(MESSAGE_EVENT_KEY);
+    EXPECT_NE(event, document.MemberEnd());
+
+    auto header = event->value.FindMember(MESSAGE_HEADER_KEY);
+    EXPECT_NE(header, event->value.MemberEnd());
+
+    std::string requestName;
+    jsonUtils::retrieveValue(header->value, MESSAGE_NAME_KEY, &requestName);
+
+    if (requestName == expectedName) {
+        auto payload = event->value.FindMember(MESSAGE_PAYLOAD_KEY);
+        EXPECT_NE(payload, event->value.MemberEnd());
+
+        auto key = payload->value.FindMember(MESSAGE_TOKEN_KEY);
+        EXPECT_NE(key, event->value.MemberEnd());
+
+        key = payload->value.FindMember(MESSAGE_PLAYBACK_ATTRIBUTES_KEY);
+        EXPECT_NE(key, event->value.MemberEnd());
+
+        if (verifyReport) {
+            key = payload->value.FindMember(MESSAGE_PLAYBACK_REPORTS_KEY);
+            EXPECT_NE(key, event->value.MemberEnd());
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 bool AudioPlayerTest::verifyMessage(std::shared_ptr<avsCommon::avs::MessageRequest> request, std::string expectedName) {
@@ -1575,7 +1637,7 @@ TEST_F(AudioPlayerTest, test_localPause_withEnqueuedTracks_doesNotAutoProgress) 
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
 
     // local pause
-    m_audioPlayer->localOperation(AudioPlayer::PlaybackOperation::PAUSE_PLAYBACK);
+    m_audioPlayer->localOperation(AudioPlayer::PlaybackOperation::RESUMABLE_STOP);
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
 
     // Never plays next item after user initiated pause
@@ -3261,10 +3323,14 @@ void AudioPlayerTest::verifyMessageOrder2Phase(
             Invoke([this, orderedMessageList, &nextIndex](std::shared_ptr<avsCommon::avs::MessageRequest> request) {
                 std::lock_guard<std::mutex> lock(m_mutex);
                 if (nextIndex < orderedMessageList.size()) {
-                    if (verifyMessage(request, orderedMessageList.at(nextIndex))) {
+                    auto msg = orderedMessageList.at(nextIndex);
+                    if (verifyMessage(request, msg)) {
                         if (nextIndex < orderedMessageList.size()) {
                             nextIndex++;
                         }
+                        bool hasReport = std::find(EVENTS_WITH_REPORTS.begin(), EVENTS_WITH_REPORTS.end(), msg) !=
+                                         EVENTS_WITH_REPORTS.end();
+                        EXPECT_TRUE(verifyPlaybackMessage(request, msg, hasReport));
                     }
                 }
                 m_messageSentTrigger.notify_one();
@@ -3329,32 +3395,15 @@ TEST_F(AudioPlayerTest, testTimer_playbackFinishedMessageOrder_2Players) {
         });
 }
 
-TEST_F(AudioPlayerTest, testTimer_playbackStoppedMessageOrder_1Player) {
+TEST_F(AudioPlayerTest, testTimer_playbackValidateReportEvents_1Player) {
     reSetUp(1);
 
     std::vector<std::string> expectedMessages;
 
     expectedMessages.push_back(PLAYBACK_STARTED_NAME);
     expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
-    expectedMessages.push_back(PLAYBACK_STOPPED_NAME);
-
-    verifyMessageOrder2Phase(
-        expectedMessages,
-        2,
-        [this] { sendPlayDirective(); },
-        [this] {
-            m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
-        });
-}
-
-TEST_F(AudioPlayerTest, testTimer_playbackStoppedMessageOrder_2Players) {
-    reSetUp(2);
-
-    std::vector<std::string> expectedMessages;
-
-    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
-    expectedMessages.push_back(PLAYBACK_NEARLY_FINISHED_NAME);
-    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_INTERVAL_ELAPSED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_INTERVAL_UPDATED_NAME);
     expectedMessages.push_back(PLAYBACK_STOPPED_NAME);
 
     verifyMessageOrder2Phase(
@@ -3362,6 +3411,73 @@ TEST_F(AudioPlayerTest, testTimer_playbackStoppedMessageOrder_2Players) {
         3,
         [this] { sendPlayDirective(); },
         [this] {
+            m_audioPlayer->onProgressReportIntervalUpdated();
+            m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+        });
+}
+
+TEST_F(AudioPlayerTest, testTimer_playbackValidateFailed_1Player) {
+    reSetUp(1);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+    expectedMessages.push_back(PLAYBACK_FAILED_NAME);
+
+    verifyMessageOrder2Phase(
+        expectedMessages,
+        2,
+        [this] { sendPlayDirective(); },
+        [this] {
+            m_audioPlayer->onPlaybackError(
+                m_mockMediaPlayer->getCurrentSourceId(),
+                ErrorType::MEDIA_ERROR_UNKNOWN,
+                "TEST_ERROR",
+                DEFAULT_MEDIA_PLAYER_STATE);
+        });
+}
+
+TEST_F(AudioPlayerTest, testTimer_playbackValidateStutter_1Player) {
+    reSetUp(1);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+    expectedMessages.push_back(PLAYBACK_STUTTER_STARTED_NAME);
+    expectedMessages.push_back(PLAYBACK_STUTTER_FINISHED_NAME);
+    expectedMessages.push_back(PLAYBACK_STOPPED_NAME);
+
+    verifyMessageOrder2Phase(
+        expectedMessages,
+        2,
+        [this] { sendPlayDirective(); },
+        [this] {
+            m_audioPlayer->onBufferUnderrun(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+            m_audioPlayer->onBufferRefilled(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+            m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+        });
+}
+
+TEST_F(AudioPlayerTest, testTimer_playbackPauseResume_1Player) {
+    reSetUp(1);
+
+    std::vector<std::string> expectedMessages;
+
+    expectedMessages.push_back(PLAYBACK_STARTED_NAME);
+    expectedMessages.push_back(PROGRESS_REPORT_DELAY_ELAPSED_NAME);
+    expectedMessages.push_back(PLAYBACK_PAUSED_NAME);
+    expectedMessages.push_back(PLAYBACK_RESUMED_NAME);
+    expectedMessages.push_back(PLAYBACK_STOPPED_NAME);
+
+    verifyMessageOrder2Phase(
+        expectedMessages,
+        2,
+        [this] { sendPlayDirective(); },
+        [this] {
+            m_audioPlayer->onPlaybackPaused(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
+            m_audioPlayer->onPlaybackResumed(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
             m_audioPlayer->onPlaybackStopped(m_mockMediaPlayer->getCurrentSourceId(), DEFAULT_MEDIA_PLAYER_STATE);
         });
 }
@@ -3398,7 +3514,7 @@ TEST_F(AudioPlayerTest, test_localPause) {
 
     EXPECT_CALL(*(m_mockMediaPlayer.get()), stop(_, _)).Times(AtLeast(1));
 
-    ASSERT_TRUE(m_audioPlayer->localOperation(LocalPlaybackHandlerInterface::PlaybackOperation::PAUSE_PLAYBACK));
+    ASSERT_TRUE(m_audioPlayer->localOperation(LocalPlaybackHandlerInterface::PlaybackOperation::RESUMABLE_STOP));
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
 }
 
@@ -3406,7 +3522,7 @@ TEST_F(AudioPlayerTest, test_localResumeAfterPaused) {
     sendPlayDirective();
 
     // pause playback
-    ASSERT_TRUE(m_audioPlayer->localOperation(LocalPlaybackHandlerInterface::PlaybackOperation::PAUSE_PLAYBACK));
+    ASSERT_TRUE(m_audioPlayer->localOperation(LocalPlaybackHandlerInterface::PlaybackOperation::RESUMABLE_STOP));
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
 
     // verify mediaplayer resumes
@@ -3489,7 +3605,7 @@ TEST_F(AudioPlayerTest, test_localSeekToWhileLocalStopped) {
         }));
 
     // pause playback
-    ASSERT_TRUE(m_audioPlayer->localOperation(LocalPlaybackHandlerInterface::PlaybackOperation::PAUSE_PLAYBACK));
+    ASSERT_TRUE(m_audioPlayer->localOperation(LocalPlaybackHandlerInterface::PlaybackOperation::RESUMABLE_STOP));
     ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
 
     auto origin = std::chrono::milliseconds::zero();

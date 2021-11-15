@@ -63,11 +63,20 @@ public:
      */
     int64_t getTime_Unix() const;
 
+    /**
+     * Returns the time managed by this object in UTC time point format.
+     *
+     * @return The time managed by this object in UTC time point format.
+     */
+    std::chrono::system_clock::time_point getTime_Utc_TimePoint() const;
+
 private:
     /// The scheduled time for the alert in ISO-8601 format.
     std::string m_time_ISO_8601;
     /// The scheduled time for the alert in Unix epoch format.
     int64_t m_time_Unix;
+    /// The scheduled time for the alert in UTC time point format.
+    std::chrono::system_clock::time_point m_time_Utc_TimePoint;
 
     /// Object used to safely access time utilities.
     TimeUtils m_timeUtils;

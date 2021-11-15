@@ -434,7 +434,7 @@ LocaleWakeWordsSetting::LocaleWakeWordsSetting(
     std::shared_ptr<SettingEventSenderInterface> wakeWordsEventSender,
     std::shared_ptr<storage::DeviceSettingStorageInterface> settingStorage,
     std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface> assetsManager) :
-        LocalesSetting{{assetsManager->getDefaultLocale()}},
+        LocalesSetting{assetsManager->getDefaultLocales()},
         WakeWordsSetting{DEFAULT_WAKE_WORDS},
         m_localeEventSender{localeEventSender},
         m_wakeWordsEventSender{wakeWordsEventSender},

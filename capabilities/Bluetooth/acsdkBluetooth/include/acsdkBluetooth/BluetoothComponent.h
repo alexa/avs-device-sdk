@@ -19,6 +19,7 @@
 #include <memory>
 
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
+#include <acsdkBluetoothInterfaces/BluetoothLocalInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothDeviceConnectionRulesProviderInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothStorageInterface.h>
@@ -44,6 +45,7 @@ namespace acsdkBluetooth {
  * Manufactory Component definition for the @c BluetoothNotifierInterface.
  */
 using BluetoothComponent = acsdkManufactory::Component<
+    std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface>,
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothNotifierInterface>,
     acsdkManufactory::Import<
         std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>>,

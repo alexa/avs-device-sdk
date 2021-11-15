@@ -23,10 +23,10 @@
 
 #include <acsdkExternalMediaPlayerInterfaces/AdapterUtils.h>
 #include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterConstants.h>
+#include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterHandlerInterface.h>
 #include <AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h>
 #include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include <AVSCommon/Utils/Memory/Memory.h>
-#include <AVSCommon/Utils/Metrics.h>
 #include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
 #include <AVSCommon/Utils/Metrics/DataPointStringBuilder.h>
 #include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
@@ -84,6 +84,12 @@ static const std::string ALEXA_INTERFACE_TYPE = "AlexaInterface";
 static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE = ALEXA_INTERFACE_TYPE;
 /// ExternalMediaPlayer interface name
 static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME = "ExternalMediaPlayer";
+
+#ifdef MEDIA_PORTABILITY_ENABLED
+/// ExternalMediaPlayer interface version for media portability
+static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY = "1.5";
+#endif
+
 /// ExternalMediaPlayer interface version
 static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION = "1.2";
 
@@ -94,6 +100,12 @@ static const std::string PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION = "1
 
 /// Alexa.PlaybackController name.
 static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME = PLAYBACKCONTROLLER_NAMESPACE;
+
+#ifdef MEDIA_PORTABILITY_ENABLED
+/// Alexa.PlaybackController version for media portability
+static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY = "1.1";
+#endif
+
 /// Alexa.PlaybackController version.
 static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
@@ -208,7 +220,7 @@ static const std::string STOP_DIRECTIVE_RECEIVED = "STOP_DIRECTIVE_RECEIVED";
  */
 static void submitMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
-    const std::string metricName,
+    const std::string& metricName,
     const DataPoint& dataPoint,
     const std::string& msgId,
     const std::string& trackId,
@@ -498,10 +510,18 @@ ExternalMediaPlayer::ExternalMediaPlayer(
         PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME,
         PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION));
 
+#ifdef MEDIA_PORTABILITY_ENABLED
+    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
+        ALEXA_INTERFACE_TYPE,
+        PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME,
+        mediaPortabilityEnabled() ? PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY
+                                  : PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+#else
     m_capabilityConfigurations.insert(generateCapabilityConfiguration(
         ALEXA_INTERFACE_TYPE,
         PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME,
         PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
+#endif
 
     m_capabilityConfigurations.insert(generateCapabilityConfiguration(
         ALEXA_INTERFACE_TYPE,
@@ -565,15 +585,19 @@ void ExternalMediaPlayer::createAdapters(
          */
         auto audioPipeline = audioPipelineFactory->createApplicationMediaInterfaces(playerId + "MediaPlayer");
 
+        std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> mediaPlayer;
+        std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface> channelVolume;
         if (!audioPipeline) {
-            ACSDK_ERROR(LX("createSpotifyAdapterFailed").m("failed to create spotifyAudioPipeline"));
-            continue;
+            ACSDK_WARN(LX(__func__).d("failed to create audioPipeline for playerId", playerId));
+        } else {
+            mediaPlayer = audioPipeline->mediaPlayer;
+            channelVolume = audioPipeline->channelVolume;
         }
 
         auto adapter = entry.second(
             m_metricRecorder,
-            audioPipeline->mediaPlayer,
-            audioPipeline->channelVolume,
+            mediaPlayer,
+            channelVolume,
             speakerManager,
             m_messageSender,
             focusManager,
@@ -607,10 +631,18 @@ void ExternalMediaPlayer::createAdapters(
 }
 
 std::shared_ptr<CapabilityConfiguration> getExternalMediaPlayerCapabilityConfiguration() {
+#ifdef MEDIA_PORTABILITY_ENABLED
+    return generateCapabilityConfiguration(
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE,
+        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME,
+        mediaPortabilityEnabled() ? EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY
+                                  : EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION);
+#else
     return generateCapabilityConfiguration(
         EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE,
         EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME,
         EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION);
+#endif
 }
 
 void ExternalMediaPlayer::onContextAvailable(const std::string& jsonContext) {
@@ -1051,12 +1083,13 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
         return;
     }
 
-    std::string navigation;
-    if (!jsonUtils::retrieveValue(payload, "navigation", &navigation)) {
+    std::string navigationStr;
+    if (!jsonUtils::retrieveValue(payload, "navigation", &navigationStr)) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullNavigation"));
         sendExceptionEncounteredAndReportFailed(info, "missing navigation in Play directive");
         return;
     }
+    auto navigation = stringToNavigation(navigationStr);
 
     bool preload;
     if (!jsonUtils::retrieveValue(payload, "preload", &preload)) {
@@ -1086,8 +1119,20 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
 
     std::string alias;
     if (!jsonUtils::retrieveValue(payload, "aliasName", &alias)) {
-        ACSDK_INFO(LX("handleDirective").m("No playback traget"));
+        ACSDK_INFO(LX("handleDirective").m("No playback target"));
     }
+
+#ifdef MEDIA_PORTABILITY_ENABLED
+    std::string mediaSessionId;
+    std::string correlationToken;
+    if (mediaPortabilityEnabled()) {
+        if (!jsonUtils::retrieveValue(payload, "mediaSessionId", &mediaSessionId)) {
+            ACSDK_ERROR(LX("handleDirective").m("NoMediaSessionId"));
+        }
+
+        correlationToken = info->directive->getCorrelationToken();
+    }
+#endif
 
     auto messageId = info->directive->getMessageId();
 
@@ -1103,21 +1148,31 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
                        preload,
                        playRequestor,
                        messageId,
+#ifdef MEDIA_PORTABILITY_ENABLED
+                       mediaSessionId,
+                       correlationToken,
+#endif
                        alias]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
-            if (handler.adapterHandler->play(
-                    handler.localPlayerId,
-                    playbackContextToken,
-                    index,
-                    std::chrono::milliseconds(offset),
-                    skillToken,
-                    playbackSessionId,
-                    navigation,
-                    preload,
-                    playRequestor,
-                    alias)) {
+            ExternalMediaAdapterHandlerInterface::PlayParams params(
+                handler.localPlayerId,
+                playbackContextToken,
+                index,
+                std::chrono::milliseconds(offset),
+                skillToken,
+                playbackSessionId,
+                navigation,
+                preload,
+                playRequestor,
+#ifdef MEDIA_PORTABILITY_ENABLED
+                mediaSessionId,
+                correlationToken,
+#endif
+                alias);
+
+            if (handler.adapterHandler->play(params)) {
                 submitMetric(
                     m_metricRecorder,
                     PLAY_DIRECTIVE_RECEIVED,
@@ -1235,16 +1290,39 @@ void ExternalMediaPlayer::handlePlayControl(std::shared_ptr<DirectiveInfo> info,
         // fall through, alias name is not required
     }
 
+#ifdef MEDIA_PORTABILITY_ENABLED
+    std::string mediaSessionId;
+    std::string correlationToken;
+    if (mediaPortabilityEnabled()) {
+        if (requestTypeIncludesMediaSessionId(request)) {
+            if (!jsonUtils::retrieveValue(payload, "mediaSessionId", &mediaSessionId)) {
+                ACSDK_ERROR(LX("handleDirective").m("NoMediaSessionId"));
+            }
+        }
+
+        if (request == RequestType::RESUME) {
+            correlationToken = info->directive->getCorrelationToken();
+        }
+    }
+
+    m_executor.submit([this, info, playerId, request, playbackSessionId, alias, mediaSessionId, correlationToken]() {
+#else
     m_executor.submit([this, info, playerId, request, playbackSessionId, alias]() {
-        std::string sessId = playbackSessionId;
+#endif
+        std::string playbackSessId = playbackSessionId;
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
+#ifdef MEDIA_PORTABILITY_ENABLED
+            if (handler.adapterHandler->playControl(
+                    handler.localPlayerId, request, mediaSessionId, correlationToken, alias)) {
+#else
             if (handler.adapterHandler->playControl(handler.localPlayerId, request, alias)) {
+#endif
                 if (request == RequestType::STOP || request == RequestType::PAUSE) {
-                    if (sessId.empty()) {
+                    if (playbackSessId.empty()) {
                         auto state = handler.adapterHandler->getAdapterState(handler.localPlayerId);
-                        sessId = state.sessionState.playbackSessionId;
+                        playbackSessId = state.sessionState.playbackSessionId;
                     }
                     auto messageId = info->directive->getMessageId();
                     submitMetric(
@@ -1252,7 +1330,7 @@ void ExternalMediaPlayer::handlePlayControl(std::shared_ptr<DirectiveInfo> info,
                         STOP_DIRECTIVE_RECEIVED,
                         DataPointCounterBuilder{}.setName(STOP_DIRECTIVE_RECEIVED).increment(1).build(),
                         messageId,
-                        sessId,
+                        playbackSessId,
                         playerId);
                 }
             }
@@ -1302,17 +1380,24 @@ bool ExternalMediaPlayer::localOperation(PlaybackOperation op) {
         auto localPlayerId = localPlayerIdHandler.value().localPlayerId;
         auto adapterHandler = localPlayerIdHandler.value().adapterHandler;
 
+        auto requestType = RequestType::STOP;
         switch (op) {
             case PlaybackOperation::STOP_PLAYBACK:
-                adapterHandler->playControl(localPlayerId, RequestType::STOP, "");
+                requestType = RequestType::STOP;
                 break;
-            case PlaybackOperation::PAUSE_PLAYBACK:
-                adapterHandler->playControl(localPlayerId, RequestType::PAUSE, "");
+            case PlaybackOperation::RESUMABLE_STOP:
+            case PlaybackOperation::TRANSIENT_PAUSE:
+                requestType = RequestType::PAUSE;
                 break;
             case PlaybackOperation::RESUME_PLAYBACK:
-                adapterHandler->playControl(localPlayerId, RequestType::RESUME, "");
+                requestType = RequestType::RESUME;
                 break;
         }
+#ifdef MEDIA_PORTABILITY_ENABLED
+        adapterHandler->playControl(localPlayerId, requestType, "", "", "");
+#else
+        adapterHandler->playControl(localPlayerId, requestType, "");
+#endif
         return true;
     }
     return false;
@@ -1482,7 +1567,11 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
             auto maybeHandler = getHandlerFromPlayerId(playerInFocus);
             if (maybeHandler.hasValue()) {
                 const auto& handler = maybeHandler.value();
+#ifdef MEDIA_PORTABILITY_ENABLED
+                handler.adapterHandler->playControl(handler.localPlayerId, buttonIt->second, "", "", "");
+#else
                 handler.adapterHandler->playControl(handler.localPlayerId, buttonIt->second, "");
+#endif
             }
         }
     });
@@ -1509,9 +1598,17 @@ void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
             if (maybeHandler.hasValue()) {
                 const auto& handler = maybeHandler.value();
                 if (action) {
+#ifdef MEDIA_PORTABILITY_ENABLED
+                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.first, "", "", "");
+#else
                     handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.first, "");
+#endif
                 } else {
+#ifdef MEDIA_PORTABILITY_ENABLED
+                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.second, "", "", "");
+#else
                     handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.second, "");
+#endif
                 }
             }
         }
