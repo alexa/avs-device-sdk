@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/CertifiedSender/test/Common" {
   dir_a1b439d2764525912f01475582dd3be8 [shape=box, label="Common", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a1b439d2764525912f01475582dd3be8.html"];
   }
   dir_4270bfced15e0e73154b13468c7c9ad9 [shape=box label="core" fillcolor="white" style="filled" color="red" URL="dir_4270bfced15e0e73154b13468c7c9ad9.html"];
-  dir_a1b439d2764525912f01475582dd3be8->dir_4270bfced15e0e73154b13468c7c9ad9 [headlabel="1", labeldistance=1.5 headhref="dir_000455_000461.html"];
+  dir_a1b439d2764525912f01475582dd3be8->dir_4270bfced15e0e73154b13468c7c9ad9 [headlabel="1", labeldistance=1.5 headhref="dir_000522_000528.html"];
 }

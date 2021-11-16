@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -118,6 +118,8 @@ Functions</h2></td></tr>
 <tr class="separator:a6296db268ac357ca11d940e71b78b891"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fabee4de459d733425f1de6184c7438"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2fabee4de459d733425f1de6184c7438">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; metricRecorder, const std::string &amp;activityName, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_data_point.html">DataPoint</a> &amp;dataPoint, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_directive.html">AVSDirective</a> &gt; &amp;directive=nullptr)</td></tr>
 <tr class="separator:a2fabee4de459d733425f1de6184c7438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5835ec9e06abcac5fc9d1a0b030c4ab"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ad5835ec9e06abcac5fc9d1a0b030c4ab">submitInstanceEntryMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::string &amp;segmentId, const std::string &amp;name, const std::map&lt; std::string, std::string &gt; &amp;metadata={})</td></tr>
+<tr class="separator:ad5835ec9e06abcac5fc9d1a0b030c4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5e27c2d52be1d51629b3a56862f5e71"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab5e27c2d52be1d51629b3a56862f5e71">getSpeechRecognizerCapabilityConfiguration</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html">LocaleAssetsManagerInterface</a> &amp;assetsManager)</td></tr>
 <tr class="separator:ab5e27c2d52be1d51629b3a56862f5e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41bb8396d9277149ccecaf6c5c50a510"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a41bb8396d9277149ccecaf6c5c50a510">resolveMessageRequest</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_editable_message_request.html">avsCommon::avs::EditableMessageRequest</a> &gt; &amp;request, const std::string &amp;resolveKey, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html#ad67017f7b234de3373e3f5c593c335b7">AudioInputProcessor::EncodingFormatResponse</a> encodingFormats, const std::unordered_map&lt; std::string, std::vector&lt; std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request_1_1_named_reader.html">avsCommon::avs::MessageRequest::NamedReader</a> &gt;&gt;&gt; &amp;attachmentReaders, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder)</td></tr>
@@ -279,6 +281,16 @@ Variables</h2></td></tr>
 <tr class="separator:a67a4e826d44a15d213ce6b7efb6b9b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d0cbd6ae636a5a8ec902c7eada08d4c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a2d0cbd6ae636a5a8ec902c7eada08d4c">STOP_CAPTURE_RECEIVED_ACTIVITY_NAME</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a67a4e826d44a15d213ce6b7efb6b9b1b">STOP_CAPTURE_RECEIVED</a></td></tr>
 <tr class="separator:a2d0cbd6ae636a5a8ec902c7eada08d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dd90deaa439d20f6832350175b44fe5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a3dd90deaa439d20f6832350175b44fe5">ACQUIRE_POWER_RESOURCE</a> = &quot;ACQUIRE_POWER_RESOURCE&quot;</td></tr>
+<tr class="memdesc:a3dd90deaa439d20f6832350175b44fe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration metric for acquire power resource.  <a href="#a3dd90deaa439d20f6832350175b44fe5">More...</a><br /></td></tr>
+<tr class="separator:a3dd90deaa439d20f6832350175b44fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1f256461f5b3912b7bce3395df0e2f4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab1f256461f5b3912b7bce3395df0e2f4">ACQUIRE_POWER_RESOURCE_ACTIVITY</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a3dd90deaa439d20f6832350175b44fe5">ACQUIRE_POWER_RESOURCE</a></td></tr>
+<tr class="separator:ab1f256461f5b3912b7bce3395df0e2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12da94002c2e456114daa939de3aae6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab12da94002c2e456114daa939de3aae6">RELEASE_POWER_RESOURCE</a> = &quot;RELEASE_POWER_RESOURCE&quot;</td></tr>
+<tr class="memdesc:ab12da94002c2e456114daa939de3aae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration metric for release power resource.  <a href="#ab12da94002c2e456114daa939de3aae6">More...</a><br /></td></tr>
+<tr class="separator:ab12da94002c2e456114daa939de3aae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f03859bdfb715babde6b127a810e19a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a5f03859bdfb715babde6b127a810e19a">RELEASE_POWER_RESOURCE_ACTIVITY</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab12da94002c2e456114daa939de3aae6">RELEASE_POWER_RESOURCE</a></td></tr>
+<tr class="separator:a5f03859bdfb715babde6b127a810e19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49906932607dfebe34134b7ef4a8d7d0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a49906932607dfebe34134b7ef4a8d7d0">END_OF_SPEECH_OFFSET_RECEIVED</a> = &quot;END_OF_SPEECH_OFFSET&quot;</td></tr>
 <tr class="memdesc:a49906932607dfebe34134b7ef4a8d7d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">End of Speech Offset Received Activity Name for AIP metric source.  <a href="#a49906932607dfebe34134b7ef4a8d7d0">More...</a><br /></td></tr>
 <tr class="separator:a49906932607dfebe34134b7ef4a8d7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -306,6 +318,21 @@ Variables</h2></td></tr>
 <tr class="memitem:a88aa46b77eb48f9986abd5f1e97a0037"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a88aa46b77eb48f9986abd5f1e97a0037">DEFAULT_RESOLVE_KEY</a> = &quot;DEFAULT_RESOLVE_KEY&quot;</td></tr>
 <tr class="memdesc:a88aa46b77eb48f9986abd5f1e97a0037"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default resolveKey used as a placeholder when only one encoding format is configured for <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html">AudioInputProcessor</a></code>.  <a href="#a88aa46b77eb48f9986abd5f1e97a0037">More...</a><br /></td></tr>
 <tr class="separator:a88aa46b77eb48f9986abd5f1e97a0037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5ffb9658eb27484f0f60df92bc7d4bc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab5ffb9658eb27484f0f60df92bc7d4bc">ENTRY_METRIC_ACTOR_NAME</a> = &quot;AudioInputProcessor&quot;</td></tr>
+<tr class="memdesc:ab5ffb9658eb27484f0f60df92bc7d4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keys for instance entry metric specific fields.  <a href="#ab5ffb9658eb27484f0f60df92bc7d4bc">More...</a><br /></td></tr>
+<tr class="separator:ab5ffb9658eb27484f0f60df92bc7d4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a777c7c42a36f3f01aed335b37232c505"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a777c7c42a36f3f01aed335b37232c505">ENTRY_METRIC_ACTIVITY_NAME</a> = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab5ffb9658eb27484f0f60df92bc7d4bc">ENTRY_METRIC_ACTOR_NAME</a></td></tr>
+<tr class="separator:a777c7c42a36f3f01aed335b37232c505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe5ee28d8b063d4361a39badc4afdaf4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#afe5ee28d8b063d4361a39badc4afdaf4">ENTRY_METRIC_KEY_SEGMENT_ID</a> = &quot;segment_id&quot;</td></tr>
+<tr class="separator:afe5ee28d8b063d4361a39badc4afdaf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad277d73b53d6ad8929a8cc7655ebc62"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aad277d73b53d6ad8929a8cc7655ebc62">ENTRY_METRIC_KEY_ACTOR</a> = &quot;actor&quot;</td></tr>
+<tr class="separator:aad277d73b53d6ad8929a8cc7655ebc62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a350c6a47e1ffd54754347083ef2cdb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a1a350c6a47e1ffd54754347083ef2cdb">ENTRY_METRIC_KEY_ENTRY_TYPE</a> = &quot;entry_type&quot;</td></tr>
+<tr class="separator:a1a350c6a47e1ffd54754347083ef2cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83831210e6d62525a4ac54325b1b9095"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a83831210e6d62525a4ac54325b1b9095">ENTRY_METRIC_KEY_ENTRY_NAME</a> = &quot;entry_name&quot;</td></tr>
+<tr class="separator:a83831210e6d62525a4ac54325b1b9095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae6f3a9f9ea87af4f9b1bb400515e3d6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#aae6f3a9f9ea87af4f9b1bb400515e3d6">ENTRY_METRIC_NAME_STATE_CHANGE</a> = &quot;StateChange&quot;</td></tr>
+<tr class="separator:aae6f3a9f9ea87af4f9b1bb400515e3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00edb3ce3355d225e109c0ccb6048169"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a00edb3ce3355d225e109c0ccb6048169">PREROLL_DURATION</a> = std::chrono::milliseconds(500)</td></tr>
 <tr class="memdesc:a00edb3ce3355d225e109c0ccb6048169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preroll duration is a fixed 500ms.  <a href="#a00edb3ce3355d225e109c0ccb6048169">More...</a><br /></td></tr>
 <tr class="separator:a00edb3ce3355d225e109c0ccb6048169"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -710,6 +737,63 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ad5835ec9e06abcac5fc9d1a0b030c4ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5835ec9e06abcac5fc9d1a0b030c4ab">&#9670;&nbsp;</a></span>submitInstanceEntryMetric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::capabilityAgents::aip::submitInstanceEntryMetric </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">MetricRecorderInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>segmentId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metadata</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Creates and records an instance entry metric with the given identifiers and metadata. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metricRecorder</td><td>The <code>MetricRecorderInterface</code> which records Metric events. </td></tr>
+    <tr><td class="paramname">segmentId</td><td>The segmentId corresponding to this metric event. </td></tr>
+    <tr><td class="paramname">name</td><td>The name of this metric </td></tr>
+    <tr><td class="paramname">metadata</td><td>Any metadata to be associated with this metric; default is empty </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6296db268ac357ca11d940e71b78b891"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6296db268ac357ca11d940e71b78b891">&#9670;&nbsp;</a></span>submitMetric() <span class="overload">[1/2]</span></h2>
 
@@ -848,6 +932,52 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a3dd90deaa439d20f6832350175b44fe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dd90deaa439d20f6832350175b44fe5">&#9670;&nbsp;</a></span>ACQUIRE_POWER_RESOURCE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ACQUIRE_POWER_RESOURCE = &quot;ACQUIRE_POWER_RESOURCE&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The duration metric for acquire power resource. </p>
+
+</div>
+</div>
+<a id="ab1f256461f5b3912b7bce3395df0e2f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f256461f5b3912b7bce3395df0e2f4">&#9670;&nbsp;</a></span>ACQUIRE_POWER_RESOURCE_ACTIVITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ACQUIRE_POWER_RESOURCE_ACTIVITY = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a3dd90deaa439d20f6832350175b44fe5">ACQUIRE_POWER_RESOURCE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac08df1f16af6efea21abbf7a6fcb171c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac08df1f16af6efea21abbf7a6fcb171c">&#9670;&nbsp;</a></span>AUDIO_ATTACHMENT_FIELD_NAME</h2>
 
@@ -892,7 +1022,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a5bb88ab9009a6961a79f7513f3930a2b">AUDIO_ENCODING_FORMAT_METRIC_NAME</a></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_af94ae5f58a5af57563d153bd93a96ad9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">alexaClientSDK::capabilityAgents::aip::METRIC_ACTIVITY_NAME_PREFIX_AIP</a></div><div class="ttdeci">static const std::string METRIC_ACTIVITY_NAME_PREFIX_AIP</div><div class="ttdoc">Metric Activity Name Prefix for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:188</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_a5bb88ab9009a6961a79f7513f3930a2b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a5bb88ab9009a6961a79f7513f3930a2b">alexaClientSDK::capabilityAgents::aip::AUDIO_ENCODING_FORMAT_METRIC_NAME</a></div><div class="ttdeci">static const std::string AUDIO_ENCODING_FORMAT_METRIC_NAME</div><div class="ttdoc">AudioEncodingFormat Activity Name for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:227</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_a5bb88ab9009a6961a79f7513f3930a2b"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a5bb88ab9009a6961a79f7513f3930a2b">alexaClientSDK::capabilityAgents::aip::AUDIO_ENCODING_FORMAT_METRIC_NAME</a></div><div class="ttdeci">static const std::string AUDIO_ENCODING_FORMAT_METRIC_NAME</div><div class="ttdoc">AudioEncodingFormat Activity Name for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:235</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1248,8 +1378,164 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a49906932607dfebe34134b7ef4a8d7d0">END_OF_SPEECH_OFFSET_RECEIVED</a></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_af94ae5f58a5af57563d153bd93a96ad9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">alexaClientSDK::capabilityAgents::aip::METRIC_ACTIVITY_NAME_PREFIX_AIP</a></div><div class="ttdeci">static const std::string METRIC_ACTIVITY_NAME_PREFIX_AIP</div><div class="ttdoc">Metric Activity Name Prefix for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:188</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_a49906932607dfebe34134b7ef4a8d7d0"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a49906932607dfebe34134b7ef4a8d7d0">alexaClientSDK::capabilityAgents::aip::END_OF_SPEECH_OFFSET_RECEIVED</a></div><div class="ttdeci">static const std::string END_OF_SPEECH_OFFSET_RECEIVED</div><div class="ttdoc">End of Speech Offset Received Activity Name for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:213</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_a49906932607dfebe34134b7ef4a8d7d0"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#a49906932607dfebe34134b7ef4a8d7d0">alexaClientSDK::capabilityAgents::aip::END_OF_SPEECH_OFFSET_RECEIVED</a></div><div class="ttdeci">static const std::string END_OF_SPEECH_OFFSET_RECEIVED</div><div class="ttdoc">End of Speech Offset Received Activity Name for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:221</div></div>
 </div><!-- fragment -->
+</div>
+</div>
+<a id="a777c7c42a36f3f01aed335b37232c505"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a777c7c42a36f3f01aed335b37232c505">&#9670;&nbsp;</a></span>ENTRY_METRIC_ACTIVITY_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_ACTIVITY_NAME = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab5ffb9658eb27484f0f60df92bc7d4bc">ENTRY_METRIC_ACTOR_NAME</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab5ffb9658eb27484f0f60df92bc7d4bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5ffb9658eb27484f0f60df92bc7d4bc">&#9670;&nbsp;</a></span>ENTRY_METRIC_ACTOR_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_ACTOR_NAME = &quot;AudioInputProcessor&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Keys for instance entry metric specific fields. </p>
+
+</div>
+</div>
+<a id="aad277d73b53d6ad8929a8cc7655ebc62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad277d73b53d6ad8929a8cc7655ebc62">&#9670;&nbsp;</a></span>ENTRY_METRIC_KEY_ACTOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_KEY_ACTOR = &quot;actor&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a83831210e6d62525a4ac54325b1b9095"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83831210e6d62525a4ac54325b1b9095">&#9670;&nbsp;</a></span>ENTRY_METRIC_KEY_ENTRY_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_KEY_ENTRY_NAME = &quot;entry_name&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1a350c6a47e1ffd54754347083ef2cdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a350c6a47e1ffd54754347083ef2cdb">&#9670;&nbsp;</a></span>ENTRY_METRIC_KEY_ENTRY_TYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_KEY_ENTRY_TYPE = &quot;entry_type&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe5ee28d8b063d4361a39badc4afdaf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe5ee28d8b063d4361a39badc4afdaf4">&#9670;&nbsp;</a></span>ENTRY_METRIC_KEY_SEGMENT_ID</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_KEY_SEGMENT_ID = &quot;segment_id&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aae6f3a9f9ea87af4f9b1bb400515e3d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae6f3a9f9ea87af4f9b1bb400515e3d6">&#9670;&nbsp;</a></span>ENTRY_METRIC_NAME_STATE_CHANGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::ENTRY_METRIC_NAME_STATE_CHANGE = &quot;StateChange&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <a id="a9300d1828cd11f55ac49dbca92cd8a8a"></a>
@@ -1581,6 +1867,52 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Recognize EVENT is built for AIP metric source. </p>
+
+</div>
+</div>
+<a id="ab12da94002c2e456114daa939de3aae6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab12da94002c2e456114daa939de3aae6">&#9670;&nbsp;</a></span>RELEASE_POWER_RESOURCE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::RELEASE_POWER_RESOURCE = &quot;RELEASE_POWER_RESOURCE&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The duration metric for release power resource. </p>
+
+</div>
+</div>
+<a id="a5f03859bdfb715babde6b127a810e19a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f03859bdfb715babde6b127a810e19a">&#9670;&nbsp;</a></span>RELEASE_POWER_RESOURCE_ACTIVITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::capabilityAgents::aip::RELEASE_POWER_RESOURCE_ACTIVITY = <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#ab12da94002c2e456114daa939de3aae6">RELEASE_POWER_RESOURCE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -2030,7 +2362,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">METRIC_ACTIVITY_NAME_PREFIX_AIP</a> + <a class="code" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adcda769c4d71b607f755f4e8693d3b62">STOP_CAPTURE_TO_END_OF_SPEECH_METRIC_NAME</a></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_af94ae5f58a5af57563d153bd93a96ad9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#af94ae5f58a5af57563d153bd93a96ad9">alexaClientSDK::capabilityAgents::aip::METRIC_ACTIVITY_NAME_PREFIX_AIP</a></div><div class="ttdeci">static const std::string METRIC_ACTIVITY_NAME_PREFIX_AIP</div><div class="ttdoc">Metric Activity Name Prefix for AIP metric source. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:188</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_adcda769c4d71b607f755f4e8693d3b62"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adcda769c4d71b607f755f4e8693d3b62">alexaClientSDK::capabilityAgents::aip::STOP_CAPTURE_TO_END_OF_SPEECH_METRIC_NAME</a></div><div class="ttdeci">static const std::string STOP_CAPTURE_TO_END_OF_SPEECH_METRIC_NAME</div><div class="ttdoc">The duration metric for short time out. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:218</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip_html_adcda769c4d71b607f755f4e8693d3b62"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1aip.html#adcda769c4d71b607f755f4e8693d3b62">alexaClientSDK::capabilityAgents::aip::STOP_CAPTURE_TO_END_OF_SPEECH_METRIC_NAME</a></div><div class="ttdeci">static const std::string STOP_CAPTURE_TO_END_OF_SPEECH_METRIC_NAME</div><div class="ttdoc">The duration metric for short time out. </div><div class="ttdef"><b>Definition:</b> AudioInputProcessor.cpp:226</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2442,7 +2774,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

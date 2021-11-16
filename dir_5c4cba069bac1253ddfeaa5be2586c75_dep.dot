@@ -12,6 +12,6 @@ digraph "/workplace/avs-device-sdk/shared/acsdkStartupManager/include" {
   }
   dir_fe5a1e31b2404c649ea4321e0ec6a380 [shape=box label="acsdkNotifier" fillcolor="white" style="filled" color="red" URL="dir_fe5a1e31b2404c649ea4321e0ec6a380.html"];
   dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [shape=box label="acsdkStartupManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_db7c1f4866d3e190a24d7d9d9eb0fe40.html"];
-  dir_e5bb4076b101112d45121a4e797ae2bb->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000628_000605.html"];
-  dir_e5bb4076b101112d45121a4e797ae2bb->dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [headlabel="4", labeldistance=1.5 headhref="dir_000628_000631.html"];
+  dir_e5bb4076b101112d45121a4e797ae2bb->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000752_000723.html"];
+  dir_e5bb4076b101112d45121a4e797ae2bb->dir_db7c1f4866d3e190a24d7d9d9eb0fe40 [headlabel="4", labeldistance=1.5 headhref="dir_000752_000755.html"];
 }

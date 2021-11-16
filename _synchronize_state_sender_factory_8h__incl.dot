@@ -154,6 +154,6 @@ digraph "/workplace/avs-device-sdk/SynchronizeStateSender/include/SynchronizeSta
   Node59 [label="AVSCommon/Utils/Metrics\l/DataType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_data_type_8h.html"];
   Node59 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node56 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node60 [label="AVSCommon/Utils/Metrics\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_priority_8h.html"];
+  Node60 [label="AVSCommon/Utils/Metrics\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_metrics_2_priority_8h.html"];
   Node56 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

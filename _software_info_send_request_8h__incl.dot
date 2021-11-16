@@ -171,8 +171,8 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/System/include/System/Softwa
   Node43 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node43 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node43 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node43 -> Node106 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node106 [label="AVSCommon/SDKInterfaces\l/SoftwareInfoSenderObserverInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_software_info_sender_observer_interface_8h.html"];
-  Node106 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 -> Node107 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node107 [label="AVSCommon/SDKInterfaces\l/SoftwareInfoSenderObserverInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_software_info_sender_observer_interface_8h.html"];
+  Node107 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node43 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

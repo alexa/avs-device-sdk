@@ -13,8 +13,8 @@ digraph "/workplace/avs-device-sdk/SpeechEncoder/OpusEncoderContext" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
-  dir_da2b57edd99c1329aac671cd6139532d->dir_40361ce46d5301bb7fc9012f63c9bd0e [headlabel="1", labeldistance=1.5 headhref="dir_000640_000638.html"];
-  dir_da2b57edd99c1329aac671cd6139532d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000640_000017.html"];
-  dir_40361ce46d5301bb7fc9012f63c9bd0e->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000638_000635.html"];
-  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000635_000017.html"];
+  dir_da2b57edd99c1329aac671cd6139532d->dir_40361ce46d5301bb7fc9012f63c9bd0e [headlabel="1", labeldistance=1.5 headhref="dir_000781_000779.html"];
+  dir_da2b57edd99c1329aac671cd6139532d->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000781_000017.html"];
+  dir_40361ce46d5301bb7fc9012f63c9bd0e->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000779_000776.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000776_000017.html"];
 }

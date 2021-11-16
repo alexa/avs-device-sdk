@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::GetImportsAndExports\l\< Types \>::GetMakeOptionalImportsOperation\l::Apply\< std::tuple\< ResultTypes... \>,\l MakeOptional\< Type \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma5de9a0d95ac305a6c7567be459c13750.html"];
+  Node0 [label="alexaClientSDK::acsdkInput\lControllerInterfaces::InputController\lHandlerInterface::InputConfigurations",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_input_controller_interfaces_1_1_input_controller_handler_interface_1_1_input_configurations.html",tooltip="The configuration of the inputs on the device. "];
 }

@@ -1,0 +1,27 @@
+digraph "/workplace/avs-device-sdk/capabilities/DavsClient/acsdkDavsClient/include/acsdkDavsClient/DavsEndpointHandlerV3.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="/workplace/avs-device\l-sdk/capabilities/DavsClient\l/acsdkDavsClient/include/acsdkDavs\lClient/DavsEndpointHandlerV3.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="acsdkDavsClientInterfaces\l/DavsEndpointHandlerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_davs_endpoint_handler_interface_8h.html"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="acsdkAssetsInterfaces\l/DavsRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_davs_request_8h.html"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ArtifactRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_artifact_request_8h.html"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node6 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node6 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="Type.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_type_8h.html"];
+  Node3 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="Region.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_region_8h.html"];
+}

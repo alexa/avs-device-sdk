@@ -3,5 +3,11 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::avs::initialization::\lInitializationParametersBuilder",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_initialization_parameters_builder.html"];
+  Node0 [label="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\< avsCommon::utils::RequiresShutdown \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::acsdkShutdown\lManagerInterfaces::test::\lMockShutdownNotifier",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces_1_1test_1_1_mock_shutdown_notifier.html"];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkNotifier\l::Notifier\< avsCommon::utils\l::RequiresShutdown \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::acsdkShutdown\lManager::ShutdownNotifier",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_shutdown_manager_1_1_shutdown_notifier.html"];
 }

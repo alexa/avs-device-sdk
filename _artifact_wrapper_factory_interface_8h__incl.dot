@@ -1,0 +1,33 @@
+digraph "/workplace/avs-device-sdk/capabilities/AssetManager/acsdkAssetManagerClientInterfaces/include/acsdkAssetManagerClientInterfaces/ArtifactWrapperFactoryInterface.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="/workplace/avs-device\l-sdk/capabilities/AssetManager\l/acsdkAssetManagerClientInterfaces\l/include/acsdkAssetManagerClientInterfaces\l/ArtifactWrapperFactoryInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="acsdkAssetManagerClientInterfaces\l/ArtifactWrapperInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_artifact_wrapper_interface_8h.html"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="acsdkAssetManagerClientInterfaces\l/ArtifactChangeObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_artifact_change_observer_8h.html"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="acsdkAssetsInterfaces\l/ArtifactRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_artifact_request_8h.html"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Type.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_type_8h.html"];
+  Node2 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="acsdkAssetsInterfaces\l/State.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_state_8h.html"];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="acsdkAssetManagerClientInterfaces\l/ArtifactUpdateValidator.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_artifact_update_validator_8h.html"];
+  Node9 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="acsdkAssetsInterfaces\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$capabilities_2_davs_client_2acsdk_assets_interfaces_2include_2acsdk_assets_interfaces_2_priority_8h.html"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

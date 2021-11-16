@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/AndroidUtilities/src" {
   }
   dir_2ef52002849e5065fc0e1bb38b143549 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_2ef52002849e5065fc0e1bb38b143549.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_2ef52002849e5065fc0e1bb38b143549->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000115_000017.html"];
-  dir_c7df710efd17fc482b3b0afac87cdb54->dir_2ef52002849e5065fc0e1bb38b143549 [headlabel="8", labeldistance=1.5 headhref="dir_000120_000115.html"];
-  dir_c7df710efd17fc482b3b0afac87cdb54->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000120_000017.html"];
+  dir_2ef52002849e5065fc0e1bb38b143549->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="7", labeldistance=1.5 headhref="dir_000129_000017.html"];
+  dir_c7df710efd17fc482b3b0afac87cdb54->dir_2ef52002849e5065fc0e1bb38b143549 [headlabel="8", labeldistance=1.5 headhref="dir_000134_000129.html"];
+  dir_c7df710efd17fc482b3b0afac87cdb54->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000134_000017.html"];
 }

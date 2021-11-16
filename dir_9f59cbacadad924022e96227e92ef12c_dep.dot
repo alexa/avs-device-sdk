@@ -1,0 +1,13 @@
+digraph "/workplace/avs-device-sdk/capabilities/InputController/acsdkInputController/include/acsdkInputController" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_2beee4bd4bf6ab46c3136e93b8516ebf {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_2beee4bd4bf6ab46c3136e93b8516ebf.html"]
+  dir_9f59cbacadad924022e96227e92ef12c [shape=box, label="acsdkInputController", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_9f59cbacadad924022e96227e92ef12c.html"];
+  }
+  dir_60f2e5f70c84929e2d9bf93cf41d59e8 [shape=box label="acsdkInputControllerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_60f2e5f70c84929e2d9bf93cf41d59e8.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9f59cbacadad924022e96227e92ef12c->dir_60f2e5f70c84929e2d9bf93cf41d59e8 [headlabel="1", labeldistance=1.5 headhref="dir_000397_000400.html"];
+  dir_9f59cbacadad924022e96227e92ef12c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000397_000017.html"];
+}

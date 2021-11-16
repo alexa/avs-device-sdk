@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/capabilities/AssetManager/acsdkAssetManagerClientInterfaces/include/acsdkAssetManagerClientInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_2775bcf5cfa589dd6ea5a332b45f864e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_2775bcf5cfa589dd6ea5a332b45f864e.html"]
+  dir_e357f3d2edfd444b1b039e9ae455caa6 [shape=box, label="acsdkAssetManagerClientInterfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_e357f3d2edfd444b1b039e9ae455caa6.html"];
+  }
+  dir_de622777c97862544df14465483f72cc [shape=box label="DavsClient" fillcolor="white" style="filled" color="red" URL="dir_de622777c97862544df14465483f72cc.html"];
+  dir_e357f3d2edfd444b1b039e9ae455caa6->dir_de622777c97862544df14465483f72cc [headlabel="6", labeldistance=1.5 headhref="dir_000308_000230.html"];
+}

@@ -6,5 +6,9 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/SpeakerManager/include/Speak
   Node28 -> Node29 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node29 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_8cpp.html"];
   Node28 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node30 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_test_8cpp.html"];
+  Node30 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerConfigHelperTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_config_helper_test_8cpp.html"];
+  Node28 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerMiscStorageTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_misc_storage_test_8cpp.html"];
+  Node28 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_test_8cpp.html"];
 }

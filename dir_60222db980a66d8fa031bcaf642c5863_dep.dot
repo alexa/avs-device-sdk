@@ -8,6 +8,6 @@ digraph "/workplace/avs-device-sdk/core/acsdkSystemClockMonitor/src" {
   }
   dir_1b7bd8613db1a05906df498f7c571108 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_1b7bd8613db1a05906df498f7c571108.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_60222db980a66d8fa031bcaf642c5863->dir_1b7bd8613db1a05906df498f7c571108 [headlabel="2", labeldistance=1.5 headhref="dir_000493_000491.html"];
-  dir_60222db980a66d8fa031bcaf642c5863->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000493_000017.html"];
+  dir_60222db980a66d8fa031bcaf642c5863->dir_1b7bd8613db1a05906df498f7c571108 [headlabel="2", labeldistance=1.5 headhref="dir_000568_000566.html"];
+  dir_60222db980a66d8fa031bcaf642c5863->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000568_000017.html"];
 }

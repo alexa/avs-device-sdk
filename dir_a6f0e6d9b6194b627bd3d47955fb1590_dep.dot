@@ -1,0 +1,21 @@
+digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorization/privateInclude/acsdkAuthorization" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_28a81a68eaf6073d1607ed4c38aa19d7 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="privateInclude" fontname="Helvetica", fontsize="10", URL="dir_28a81a68eaf6073d1607ed4c38aa19d7.html"]
+  subgraph clusterdir_a6f0e6d9b6194b627bd3d47955fb1590 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_a6f0e6d9b6194b627bd3d47955fb1590.html"];
+    dir_a6f0e6d9b6194b627bd3d47955fb1590 [shape=plaintext label="acsdkAuthorization"];
+    dir_0422703349ba381e54a7766353be8d71 [shape=box label="private" color="red" fillcolor="white" style="filled" URL="dir_0422703349ba381e54a7766353be8d71.html"];
+  }
+  }
+  dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_72f2367c10fd2c46da13e851c6b1e25f [shape=box label="Properties" fillcolor="white" style="filled" color="red" URL="dir_72f2367c10fd2c46da13e851c6b1e25f.html"];
+  dir_d29c5f5a2915d6c5388c9daae4f109c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000784_000017.html"];
+  dir_72f2367c10fd2c46da13e851c6b1e25f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000590_000017.html"];
+  dir_0422703349ba381e54a7766353be8d71->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="2", labeldistance=1.5 headhref="dir_000580_000784.html"];
+  dir_0422703349ba381e54a7766353be8d71->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000580_000017.html"];
+  dir_0422703349ba381e54a7766353be8d71->dir_72f2367c10fd2c46da13e851c6b1e25f [headlabel="2", labeldistance=1.5 headhref="dir_000580_000590.html"];
+}

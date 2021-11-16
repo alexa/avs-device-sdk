@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/core/acsdkCodecUtils/privateInclude" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_4910684639fe6513fc4f3756d7fc0f02 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkCodecUtils" fontname="Helvetica", fontsize="10", URL="dir_4910684639fe6513fc4f3756d7fc0f02.html"]
+  subgraph clusterdir_33711f4008243caefa175ed3f7c63eac {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_33711f4008243caefa175ed3f7c63eac.html"];
+    dir_33711f4008243caefa175ed3f7c63eac [shape=plaintext label="privateInclude"];
+    dir_fdb84ad834a7483de72534fabcd14d09 [shape=box label="acsdkCodecUtils" color="red" fillcolor="white" style="filled" URL="dir_fdb84ad834a7483de72534fabcd14d09.html"];
+  }
+  }
+  dir_397128686068e246c885b3648fcff5bf [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_397128686068e246c885b3648fcff5bf.html"];
+  dir_fdb84ad834a7483de72534fabcd14d09->dir_397128686068e246c885b3648fcff5bf [headlabel="1", labeldistance=1.5 headhref="dir_000536_000533.html"];
+}

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,6 +80,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac6ea83c458c33d628163e33a1941a84b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_response.html#ac6ea83c458c33d628163e33a1941a84b">HTTPResponse</a> ()</td></tr>
 <tr class="separator:ac6ea83c458c33d628163e33a1941a84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae719f8c22bd93764a29ea57e39e35c90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_response.html#ae719f8c22bd93764a29ea57e39e35c90">HTTPResponse</a> (long pCode, const std::string &amp;pBody)</td></tr>
+<tr class="separator:ae719f8c22bd93764a29ea57e39e35c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a329bf853ea6e79d8a35109200c185944"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_response.html#a329bf853ea6e79d8a35109200c185944">serialize</a> ()</td></tr>
 <tr class="memdesc:a329bf853ea6e79d8a35109200c185944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize the object.  <a href="#a329bf853ea6e79d8a35109200c185944">More...</a><br /></td></tr>
 <tr class="separator:a329bf853ea6e79d8a35109200c185944"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,13 +99,10 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Structure used to capture the values resulting from an HTTP request. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac6ea83c458c33d628163e33a1941a84b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6ea83c458c33d628163e33a1941a84b">&#9670;&nbsp;</a></span>HTTPResponse()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ea83c458c33d628163e33a1941a84b">&#9670;&nbsp;</a></span>HTTPResponse() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">alexaClientSDK::avsCommon::utils::libcurlUtils::HTTPResponse::HTTPResponse </td>
@@ -112,13 +111,44 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Default constructor. </p>
+
+</div>
+</div>
+<a id="ae719f8c22bd93764a29ea57e39e35c90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae719f8c22bd93764a29ea57e39e35c90">&#9670;&nbsp;</a></span>HTTPResponse() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::avsCommon::utils::libcurlUtils::HTTPResponse::HTTPResponse </td>
+          <td>(</td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>pCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>pBody</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor with params.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pCode</td><td>The status code. </td></tr>
+    <tr><td class="paramname">pBody</td><td>The response body. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -183,7 +213,7 @@ Public Attributes</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

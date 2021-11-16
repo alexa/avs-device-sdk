@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/KWD/test/AbstractKeywordDetectorTest.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/shared/KWD/acsdkKWDImplementations/test/AbstractKeywordDetectorTest.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,45 +61,55 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d0ae40f34093660421d9f00fd3d110f5.html">KWD</a></li><li class="navelem"><a class="el" href="dir_77a9fa317ee4e0123b66e295e59e5001.html">test</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_9982052f7ce695d12571567315b2fafa.html">shared</a></li><li class="navelem"><a class="el" href="dir_e410f0f5f1983efb71051e3794e71cfe.html">KWD</a></li><li class="navelem"><a class="el" href="dir_e571f3a40729e98c18f677039f217076.html">acsdkKWDImplementations</a></li><li class="navelem"><a class="el" href="dir_f089f13e7cc32ee8223f1a27604dae8d.html">test</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">AbstractKeywordDetectorTest.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
-<code>#include &lt;unordered_set&gt;</code><br />
-<code>#include &lt;<a class="el" href="_audio_format_8h_source.html">AVSCommon/Utils/AudioFormat.h</a>&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;<a class="el" href="_keyword_detector_state_notifier_interface_8h_source.html">acsdkKWDInterfaces/KeywordDetectorStateNotifierInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_keyword_notifier_interface_8h_source.html">acsdkKWDInterfaces/KeywordNotifierInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_mock_notifier_8h_source.html">acsdkNotifierInterfaces/internal/MockNotifier.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_audio_input_stream_8h_source.html">AVSCommon/AVS/AudioInputStream.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_key_word_detector_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_abstract_keyword_detector_8h_source.html">KWD/AbstractKeywordDetector.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_format_8h_source.html">AVSCommon/Utils/AudioFormat.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_abstract_keyword_detector_8h_source.html">acsdkKWDImplementations/AbstractKeywordDetector.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AbstractKeywordDetectorTest.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_abstract_keyword_detector_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2test_2_abstract_keyword_detector_test_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2test_2_abstract_keyword_detector_test_8cpp" id="_2workplace_2avs-device-sdk_2_k_w_d_2test_2_abstract_keyword_detector_test_8cpp">
+<div class="center"><img src="_abstract_keyword_detector_test_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2test_2_abstract_keyword_detector_test_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2test_2_abstract_keyword_detector_test_8cpp" id="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2test_2_abstract_keyword_detector_test_8cpp">
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_key_word_observer.html">alexaClientSDK::kwd::test::MockKeyWordObserver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the KeyWordObserverInterface#<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_observer_interface.html#a78930e4e0d76c7637238ee9637723ddb">onKeyWordDetected()</a> call.  <a href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_key_word_observer.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_key_word_observer.html">alexaClientSDK::acsdkKWDImplementations::test::MockKeyWordObserver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the KeyWordObserverInterface#<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_observer_interface.html#a78930e4e0d76c7637238ee9637723ddb">onKeyWordDetected()</a> call.  <a href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_key_word_observer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_state_observer.html">alexaClientSDK::kwd::test::MockStateObserver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the KeyWordDetectorStateObserverInterface#<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html#ae926818923ec68489d21cc4f6caa1021">onStateChanged()</a> call.  <a href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_state_observer.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_state_observer.html">alexaClientSDK::acsdkKWDImplementations::test::MockStateObserver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test observer that mocks out the KeyWordDetectorStateObserverInterface#<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html#ae926818923ec68489d21cc4f6caa1021">onStateChanged()</a> call.  <a href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_state_observer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_key_word_detector.html">alexaClientSDK::kwd::test::MockKeyWordDetector</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_keyword_notifier.html">alexaClientSDK::acsdkKWDImplementations::test::MockKeywordNotifier</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_keyword_notifier.html">KeywordNotifier</a>.  <a href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_keyword_notifier.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_abstract_key_word_detector_test.html">alexaClientSDK::kwd::test::AbstractKeyWordDetectorTest</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_keyword_detector_state_notifier.html">alexaClientSDK::acsdkKWDImplementations::test::MockKeywordDetectorStateNotifier</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A test <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_keyword_detector_state_notifier.html">KeywordDetectorStateNotifier</a>.  <a href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_keyword_detector_state_notifier.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_key_word_detector.html">alexaClientSDK::acsdkKWDImplementations::test::MockKeyWordDetector</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_abstract_key_word_detector_test.html">alexaClientSDK::acsdkKWDImplementations::test::AbstractKeyWordDetectorTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -107,33 +117,56 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1kwd"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html">alexaClientSDK::kwd</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations.html">alexaClientSDK::acsdkKWDImplementations</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1kwd_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html">alexaClientSDK::kwd::test</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html">alexaClientSDK::acsdkKWDImplementations::test</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa6a07fff3957f4c4e84efa286e1481bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#aa6a07fff3957f4c4e84efa286e1481bd">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_addKeyWordObserver)</td></tr>
-<tr class="separator:aa6a07fff3957f4c4e84efa286e1481bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4c9818f7150e6fede051573c8e83c4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#aa4c9818f7150e6fede051573c8e83c4e">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_addMultipleKeyWordObserver)</td></tr>
-<tr class="separator:aa4c9818f7150e6fede051573c8e83c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b74983a0db16f86c49b37badda16ace"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a1b74983a0db16f86c49b37badda16ace">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_removeKeyWordObserver)</td></tr>
-<tr class="separator:a1b74983a0db16f86c49b37badda16ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a330a24b686fc2fcb795796f0e6cdfe07"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a330a24b686fc2fcb795796f0e6cdfe07">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_addStateObserver)</td></tr>
-<tr class="separator:a330a24b686fc2fcb795796f0e6cdfe07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fe8194d929394787605b8cc781f7110"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a4fe8194d929394787605b8cc781f7110">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_addMultipleStateObservers)</td></tr>
-<tr class="separator:a4fe8194d929394787605b8cc781f7110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e37500a48737755f4ab9e6b7b2e0915"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a8e37500a48737755f4ab9e6b7b2e0915">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_removeStateObserver)</td></tr>
-<tr class="separator:a8e37500a48737755f4ab9e6b7b2e0915"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02b2030b57f1adfcdcd2b34790fa7ae8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd_1_1test.html#a02b2030b57f1adfcdcd2b34790fa7ae8">alexaClientSDK::kwd::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_observersDontGetNotifiedOfSameStateTwice)</td></tr>
-<tr class="separator:a02b2030b57f1adfcdcd2b34790fa7ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a90adad60a2190b33ec60123dd6e55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a68a90adad60a2190b33ec60123dd6e55">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_addKeyWordObserver)</td></tr>
+<tr class="separator:a68a90adad60a2190b33ec60123dd6e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1d0bc92e41a44fba2af032ca9f1b9f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#aa1d0bc92e41a44fba2af032ca9f1b9f3">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_notifyKeyWordObserver)</td></tr>
+<tr class="separator:aa1d0bc92e41a44fba2af032ca9f1b9f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91122a062a21a11886fe7a6ab4791c65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a91122a062a21a11886fe7a6ab4791c65">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_removeKeyWordObserver)</td></tr>
+<tr class="separator:a91122a062a21a11886fe7a6ab4791c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b678566f61cca62001af38a678a6bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a95b678566f61cca62001af38a678a6bf">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_addStateObserver)</td></tr>
+<tr class="separator:a95b678566f61cca62001af38a678a6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71f187aa585303610d410f09ac307bb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a71f187aa585303610d410f09ac307bb5">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_notifyStateObserver)</td></tr>
+<tr class="separator:a71f187aa585303610d410f09ac307bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c1d61f70dcf478c27869c827ea0aa17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a2c1d61f70dcf478c27869c827ea0aa17">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_removeStateObserver)</td></tr>
+<tr class="separator:a2c1d61f70dcf478c27869c827ea0aa17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaee65c46aeb67093f447d5fd03dad013"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#aaee65c46aeb67093f447d5fd03dad013">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_observersDontGetNotifiedOfSameStateTwice)</td></tr>
+<tr class="separator:aaee65c46aeb67093f447d5fd03dad013"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbafc0cb0cd55941ed6ad73e00635b4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#acbafc0cb0cd55941ed6ad73e00635b4f">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_isByteSwappingRequired)</td></tr>
+<tr class="separator:acbafc0cb0cd55941ed6ad73e00635b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549c1e615285e3b82186f027564be6f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a549c1e615285e3b82186f027564be6f1">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_readFromStreamSuccessful)</td></tr>
+<tr class="separator:a549c1e615285e3b82186f027564be6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d86614ad361a867ef774389f8db757"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a44d86614ad361a867ef774389f8db757">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_readFromStreamWhileStreamClosed)</td></tr>
+<tr class="separator:a44d86614ad361a867ef774389f8db757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab37edcbf6fa8dabeb87bdbb87df1e38d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#ab37edcbf6fa8dabeb87bdbb87df1e38d">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_readFromStreamBufferOverrun)</td></tr>
+<tr class="separator:ab37edcbf6fa8dabeb87bdbb87df1e38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5015b7a25aa2762eb43344c5153ba575"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a5015b7a25aa2762eb43344c5153ba575">alexaClientSDK::acsdkKWDImplementations::test::TEST_F</a> (AbstractKeyWordDetectorTest, test_readFromStreamTimedOut)</td></tr>
+<tr class="separator:a5015b7a25aa2762eb43344c5153ba575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:abca2126f1aea5c6b28e96d9d435417ae"><td class="memItemLeft" align="right" valign="top">static constexpr std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#abca2126f1aea5c6b28e96d9d435417ae">alexaClientSDK::acsdkKWDImplementations::test::TIMEOUT</a> {1000}</td></tr>
+<tr class="memdesc:abca2126f1aea5c6b28e96d9d435417ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reader timeout.  <a href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#abca2126f1aea5c6b28e96d9d435417ae">More...</a><br /></td></tr>
+<tr class="separator:abca2126f1aea5c6b28e96d9d435417ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc4f585d231dd5b33f5202b2efb37761"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#acc4f585d231dd5b33f5202b2efb37761">alexaClientSDK::acsdkKWDImplementations::test::TEST_BUFFER_SIZE</a> {4096u}</td></tr>
+<tr class="memdesc:acc4f585d231dd5b33f5202b2efb37761"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of reader buffer is one page long.  <a href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#acc4f585d231dd5b33f5202b2efb37761">More...</a><br /></td></tr>
+<tr class="separator:acc4f585d231dd5b33f5202b2efb37761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a610e07c91db25e96c9b9fda4e9a9f7af"><td class="memItemLeft" align="right" valign="top">static constexpr ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a610e07c91db25e96c9b9fda4e9a9f7af">alexaClientSDK::acsdkKWDImplementations::test::ZERO_WORDS_READ</a> = 0</td></tr>
+<tr class="separator:a610e07c91db25e96c9b9fda4e9a9f7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98f500e622f4f16712cfd8f25fc056af"><td class="memItemLeft" align="right" valign="top">static constexpr ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test.html#a98f500e622f4f16712cfd8f25fc056af">alexaClientSDK::acsdkKWDImplementations::test::WORDS_TO_READ</a> = 1</td></tr>
+<tr class="separator:a98f500e622f4f16712cfd8f25fc056af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

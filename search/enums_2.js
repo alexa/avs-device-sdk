@@ -8,6 +8,7 @@ var searchData=
   ['channellayout',['ChannelLayout',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_playback_configuration.html#ad26d422a2e3694dbf4d5eeaf5ff6e233',1,'alexaClientSDK::mediaPlayer::android::PlaybackConfiguration']]],
   ['clearbehavior',['ClearBehavior',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab2a2c45357770f5a72427ac2acd20027',1,'alexaClientSDK::acsdkAudioPlayer']]],
   ['closepoint',['ClosePoint',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_reader.html#aa294a325880ee91da440be7008099f2f',1,'alexaClientSDK::avsCommon::avs::attachment::AttachmentReader']]],
+  ['codectype',['CodecType',['../group___crypto_i_m_p_l.html#ga24be550c50ed66a986f79857a82f246c',1,'alexaClientSDK::acsdkCrypto']]],
   ['connectiontype',['ConnectionType',['../classalexa_client_s_d_k_1_1settings_1_1types_1_1_network_info.html#a4ae1f2f632bf85dcfb2899088175ca8b',1,'alexaClientSDK::settings::types::NetworkInfo']]],
   ['contenttype',['ContentType',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a0a64d6207438731fd2e40c98c3677c53',1,'alexaClientSDK::avsCommon::avs']]],
   ['contextrequesterror',['ContextRequestError',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a8ec2f2403294717c740bfacf5c62d018',1,'alexaClientSDK::avsCommon::sdkInterfaces']]]

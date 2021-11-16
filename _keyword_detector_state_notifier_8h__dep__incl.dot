@@ -1,0 +1,12 @@
+digraph "/workplace/avs-device-sdk/shared/KWD/acsdkKWDImplementations/privateInclude/acsdkKWDImplementations/KeywordDetectorStateNotifier.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node10 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWDImplementations\l/privateInclude/acsdkKWDImplementations\l/KeywordDetectorStateNotifier.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWDImplementations\l/src/AbstractKeywordDetector.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_abstract_keyword_detector_8cpp.html"];
+  Node10 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWDImplementations\l/src/KeywordDetectorStateNotifier.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_keyword_detector_state_notifier_8cpp.html"];
+  Node10 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWDImplementations\l/src/KWDNotifierFactories.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_k_w_d_notifier_factories_8cpp.html"];
+}

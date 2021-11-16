@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/KWD/include/KWD/AbstractKeywordDetector.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/shared/KWD/acsdkKWDImplementations/include/acsdkKWDImplementations/AbstractKeywordDetector.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d0ae40f34093660421d9f00fd3d110f5.html">KWD</a></li><li class="navelem"><a class="el" href="dir_8dea89c1bb4f7e14d42e016f897bd2de.html">include</a></li><li class="navelem"><a class="el" href="dir_ebdf99d72507758dd36f6f35ec8f7330.html">KWD</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_9982052f7ce695d12571567315b2fafa.html">shared</a></li><li class="navelem"><a class="el" href="dir_e410f0f5f1983efb71051e3794e71cfe.html">KWD</a></li><li class="navelem"><a class="el" href="dir_e571f3a40729e98c18f677039f217076.html">acsdkKWDImplementations</a></li><li class="navelem"><a class="el" href="dir_312253303e0e463f7bae115b1083ed5c.html">include</a></li><li class="navelem"><a class="el" href="dir_0eef9d731dd83c1bf4b0b902729b0c4e.html">acsdkKWDImplementations</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,22 +74,24 @@ $(function() {
 <div class="contents">
 <div class="textblock"><code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
-<code>#include &lt;<a class="el" href="_audio_format_8h_source.html">AVSCommon/Utils/AudioFormat.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_keyword_detector_state_notifier_interface_8h_source.html">acsdkKWDInterfaces/KeywordDetectorStateNotifierInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_keyword_notifier_interface_8h_source.html">acsdkKWDInterfaces/KeywordNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_audio_input_stream_8h_source.html">AVSCommon/AVS/AudioInputStream.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_key_word_detector_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_format_8h_source.html">AVSCommon/Utils/AudioFormat.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AbstractKeywordDetector.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_abstract_keyword_detector_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2include_2_k_w_d_2_abstract_keyword_detector_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2include_2_k_w_d_2_abstract_keyword_detector_8h" id="_2workplace_2avs-device-sdk_2_k_w_d_2include_2_k_w_d_2_abstract_keyword_detector_8h">
+<div class="center"><img src="_abstract_keyword_detector_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2include_2acsdk_k_w_d_implementations_2_abstract_keyword_detector_8h" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2include_2acsdk_k_w_d_implementations_2_abstract_keyword_detector_8h" id="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2include_2acsdk_k_w_d_implementations_2_abstract_keyword_detector_8h">
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_abstract_keyword_detector_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2include_2_k_w_d_2_abstract_keyword_detector_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2include_2_k_w_d_2_abstract_keyword_detector_8hdep" id="_2workplace_2avs-device-sdk_2_k_w_d_2include_2_k_w_d_2_abstract_keyword_detector_8hdep">
+<div class="center"><img src="_abstract_keyword_detector_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2include_2acsdk_k_w_d_implementations_2_abstract_keyword_detector_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2include_2acsdk_k_w_d_implementations_2_abstract_keyword_detector_8hdep" id="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2include_2acsdk_k_w_d_implementations_2_abstract_keyword_detector_8hdep">
 </map>
 </div>
 </div>
@@ -97,7 +99,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html">alexaClientSDK::kwd::AbstractKeywordDetector</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html">alexaClientSDK::acsdkKWDImplementations::AbstractKeywordDetector</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -105,14 +107,14 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1kwd"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html">alexaClientSDK::kwd</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations.html">alexaClientSDK::acsdkKWDImplementations</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

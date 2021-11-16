@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/capabilities/MultiRoomMusic/acsdkMultiRoomMus
   }
   dir_5e5533a94be94db747dd733f9f54281b [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_5e5533a94be94db747dd733f9f54281b.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_5e5533a94be94db747dd733f9f54281b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="21", labeldistance=1.5 headhref="dir_000339_000017.html"];
-  dir_6758952a58f66da55fc08914e18ef304->dir_5e5533a94be94db747dd733f9f54281b [headlabel="1", labeldistance=1.5 headhref="dir_000342_000339.html"];
-  dir_6758952a58f66da55fc08914e18ef304->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000342_000017.html"];
+  dir_5e5533a94be94db747dd733f9f54281b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="22", labeldistance=1.5 headhref="dir_000405_000017.html"];
+  dir_6758952a58f66da55fc08914e18ef304->dir_5e5533a94be94db747dd733f9f54281b [headlabel="1", labeldistance=1.5 headhref="dir_000408_000405.html"];
+  dir_6758952a58f66da55fc08914e18ef304->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000408_000017.html"];
 }

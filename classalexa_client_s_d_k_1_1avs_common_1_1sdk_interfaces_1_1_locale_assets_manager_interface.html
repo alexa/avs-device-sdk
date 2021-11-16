@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -117,6 +117,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a76e5c21c3d55338bee482246209cd372"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1300469ae5a007575baab6ee1bd8f0b8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#abe246afffedae31f8efc7971495e0547">Locale</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a1300469ae5a007575baab6ee1bd8f0b8">getDefaultLocale</a> () const =0</td></tr>
 <tr class="separator:a1300469ae5a007575baab6ee1bd8f0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a906ea257d86070900aa1421ac6aaca22"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#add68f2ef5e6a305de7bfa3957124ab0d">Locales</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a906ea257d86070900aa1421ac6aaca22">getDefaultLocales</a> () const</td></tr>
+<tr class="separator:a906ea257d86070900aa1421ac6aaca22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a291d87254d037f187b8b2f7688f864cb"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a64d3a5c70ae0b86b973f6cb5d03eb8fa">WakeWordsSets</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a291d87254d037f187b8b2f7688f864cb">getDefaultSupportedWakeWords</a> () const =0</td></tr>
 <tr class="separator:a291d87254d037f187b8b2f7688f864cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae42b5c6abe78867941b13623ab5b15f0"><td class="memItemLeft" align="right" valign="top">virtual std::map&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a3127bb6a06d1194eee65bd4a57e460b5">LanguageTag</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a64d3a5c70ae0b86b973f6cb5d03eb8fa">WakeWordsSets</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#ae42b5c6abe78867941b13623ab5b15f0">getLanguageSpecificWakeWords</a> () const =0</td></tr>
@@ -394,9 +396,39 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Get the default locale.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000031">Deprecated:</a></b></dt><dd>Use getDefaultLocales</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The default locale. </dd></dl>
 
 <p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#a576dd14fddcf7f216fe68a74277e5c2a">alexaClientSDK::sampleApp::LocaleAssetsManager</a>.</p>
+
+</div>
+</div>
+<a id="a906ea257d86070900aa1421ac6aaca22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a906ea257d86070900aa1421ac6aaca22">&#9670;&nbsp;</a></span>getDefaultLocales()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#add68f2ef5e6a305de7bfa3957124ab0d">LocaleAssetsManagerInterface::Locales</a> alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsManagerInterface::getDefaultLocales </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the default multilingual locales.</p>
+<dl class="section return"><dt>Returns</dt><dd>The default multilingual locales. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#a7e5f0bb61a0caaf19c75f61e285bb85c">alexaClientSDK::sampleApp::LocaleAssetsManager</a>.</p>
 
 </div>
 </div>
@@ -659,7 +691,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

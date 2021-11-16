@@ -2,11 +2,11 @@ digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/ExternalCapabilit
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node271 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node271 -> Node272 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node272 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
-  Node271 -> Node273 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node273 [label="/workplace/avs-device\l-sdk/SampleApp/src/External\lCapabilitiesBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_external_capabilities_builder_8cpp.html"];
-  Node271 -> Node274 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node274 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node276 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/ExternalCapabilities\lBuilder.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node276 -> Node277 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node277 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node276 -> Node278 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node278 [label="/workplace/avs-device\l-sdk/SampleApp/src/External\lCapabilitiesBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_external_capabilities_builder_8cpp.html"];
+  Node276 -> Node279 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node279 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
 }

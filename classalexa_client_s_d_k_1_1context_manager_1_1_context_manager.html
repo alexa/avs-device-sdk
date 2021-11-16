@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -283,7 +283,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Create a new <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> instance.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000060">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000063">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deviceInfo</td><td>Structure used to retrieve the default endpoint id. </td></tr>
@@ -703,7 +703,7 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Sets the state information. The refresh policy indicates to the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> whether on a <code>getContext</code> request the state needs to be updated. If the <code>refreshPolicy</code> is <code>ALWAYS</code>, then the <code>StateProviderInterface</code> needs to be registered with the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>, else <code>setState</code> returns an error.</p>
 <p>For the states for which the refresh policy is <code>ALWAYS</code>, the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> requests for <code>provideStates</code> from the <code>StateProviderInterfaces</code>. When a <code>provideState</code> request is sent to a <code>StateProviderInterface</code>, the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code> will provide a <code>stateRequestToken</code>. The same token needs to be sent on a <code>setState</code> in response to the <code>provideState</code>. If the token sent in the <code>setState</code> request does not match the token in the <code><a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a></code>, <code>setState</code> will return an error.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000020">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> that the state has changed.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000022">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1_context_manager.html">ContextManager</a> that the state has changed.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Token needs to be set only if the <code>setState</code> is in response to a <code>provideState</code> request. Setting the token to 0 is equivalent to no token.</dd></dl>
 <p>The <code>jsonState</code> is the json value that is associated with the key "payload".</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -767,7 +767,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

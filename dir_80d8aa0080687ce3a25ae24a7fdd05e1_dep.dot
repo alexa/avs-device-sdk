@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorization/test/include/acsdkAuthorization/LWA/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_a0308910bff6b742120b3df83f168051 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="LWA" fontname="Helvetica", fontsize="10", URL="dir_a0308910bff6b742120b3df83f168051.html"]
+  dir_80d8aa0080687ce3a25ae24a7fdd05e1 [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_80d8aa0080687ce3a25ae24a7fdd05e1.html"];
+  }
+  dir_32ae0c4bcc468b279bfc4fd15a7e63dc [shape=box label="acsdkAuthorizationInterfaces" fillcolor="white" style="filled" color="red" URL="dir_32ae0c4bcc468b279bfc4fd15a7e63dc.html"];
+  dir_80d8aa0080687ce3a25ae24a7fdd05e1->dir_32ae0c4bcc468b279bfc4fd15a7e63dc [headlabel="1", labeldistance=1.5 headhref="dir_000602_000603.html"];
+}

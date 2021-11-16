@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,6 +83,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aca72a1008a7425496b2cfad886dc4d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af61bb5826411156f0af1689ad6ba77cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#af61bb5826411156f0af1689ad6ba77cf">convert8601TimeStringToUnix</a> (const std::string &amp;timeString, int64_t *unixTime)</td></tr>
 <tr class="separator:af61bb5826411156f0af1689ad6ba77cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac200ceb53413577762166e6d037242b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#ac200ceb53413577762166e6d037242b6">convert8601TimeStringToUtcTimePoint</a> (const std::string &amp;iso8601TimeString, std::chrono::system_clock::time_point *tp)</td></tr>
+<tr class="separator:ac200ceb53413577762166e6d037242b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa230b5b6de2161dd261e9fcf6ba3a3c8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#aa230b5b6de2161dd261e9fcf6ba3a3c8">getCurrentUnixTime</a> (int64_t *currentTime)</td></tr>
 <tr class="separator:aa230b5b6de2161dd261e9fcf6ba3a3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae479873f1c13bcd199ed33bc550999aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#ae479873f1c13bcd199ed33bc550999aa">convertTimeToUtcIso8601Rfc3339</a> (const std::chrono::system_clock::time_point &amp;tp, std::string *iso8601TimeString)</td></tr>
@@ -146,6 +148,43 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">timeString</td><td>The time string, formatted as described above. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">unixTime</td><td>The converted time into Unix epoch time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the conversion was successful. </dd></dl>
+
+</div>
+</div>
+<a id="ac200ceb53413577762166e6d037242b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac200ceb53413577762166e6d037242b6">&#9670;&nbsp;</a></span>convert8601TimeStringToUtcTimePoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::utils::timing::TimeUtils::convert8601TimeStringToUtcTimePoint </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>iso8601TimeString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::system_clock::time_point *&#160;</td>
+          <td class="paramname"><em>tp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Converts a ISO 8601 date-time string to a timepoint. Referring to function <code>convert8601TimeStringToUnix</code> for details of the string representation in ISO 8601 format.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">iso8601TimeString</td><td>The time string in a ISO 8601 format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">tp</td><td>The converted time into UTC time point format. </td></tr>
   </table>
   </dd>
 </dl>
@@ -265,7 +304,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,8 +1,10 @@
 var searchData=
 [
+  ['handleplayparams',['HandlePlayParams',['../structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface_1_1_handle_play_params.html',1,'alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterInterface']]],
   ['handlerandpolicy',['HandlerAndPolicy',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_handler_and_policy.html',1,'alexaClientSDK::avsCommon::avs']]],
   ['handlerandpolicytest',['HandlerAndPolicyTest',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_handler_and_policy_test.html',1,'alexaClientSDK::avsCommon::avs::test']]],
   ['hash_3c_20alexaclientsdk_3a_3aacsdkmanufactory_3a_3ainternal_3a_3atypeindex_20_3e',['hash&lt; alexaClientSDK::acsdkManufactory::internal::TypeIndex &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_type_index_01_4.html',1,'std']]],
+  ['hash_3c_20alexaclientsdk_3a_3aacsdkpkcs11_3a_3apkcs11keydescriptor_20_3e',['hash&lt; alexaClientSDK::acsdkPkcs11::PKCS11KeyDescriptor &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1acsdk_pkcs11_1_1_p_k_c_s11_key_descriptor_01_4.html',1,'std']]],
   ['hash_3c_20alexaclientsdk_3a_3aavscommon_3a_3aavs_3a_3acapabilityconfiguration_20_3e',['hash&lt; alexaClientSDK::avsCommon::avs::CapabilityConfiguration &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration_01_4.html',1,'std']]],
   ['hash_3c_20alexaclientsdk_3a_3aavscommon_3a_3aavs_3a_3acapabilitytag_20_3e',['hash&lt; alexaClientSDK::avsCommon::avs::CapabilityTag &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_tag_01_4.html',1,'std']]],
   ['hash_3c_20alexaclientsdk_3a_3aavscommon_3a_3aavs_3a_3acomponentconfiguration_20_3e',['hash&lt; alexaClientSDK::avsCommon::avs::ComponentConfiguration &gt;',['../structstd_1_1hash_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_component_configuration_01_4.html',1,'std']]],

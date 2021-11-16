@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['acsdk_5fdata_5finfo',['ACSDK_DATA_INFO',['../group___properties_i_m_p_l.html#ga76b2e29bb7fe2022c4f6032a90f54aad',1,'alexaClientSDK::acsdkProperties']]],
+  ['acsdk_5fdata_5fprop',['ACSDK_DATA_PROP',['../group___properties_i_m_p_l.html#ga53b01afb53948753d47c849c3d6f80b4',1,'alexaClientSDK::acsdkProperties']]],
+  ['acsdk_5fenc_5finfo',['ACSDK_ENC_INFO',['../group___properties_i_m_p_l.html#ga73bba826fd31b6b3e1e091971a9bd51c',1,'alexaClientSDK::acsdkProperties']]],
+  ['acsdk_5fenc_5fprop',['ACSDK_ENC_PROP',['../group___properties_i_m_p_l.html#gab0ce7a3b17572b8fdffc5aa977b18496',1,'alexaClientSDK::acsdkProperties']]],
   ['adaptercreatefunction',['AdapterCreateFunction',['../classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html#ae386703640c8509b5ce96f5d7aa2b57f',1,'alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaPlayer']]],
   ['adaptercreationmap',['AdapterCreationMap',['../classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html#a9ef56f52a21794c766dc9ca4d6f2fd14',1,'alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaPlayer']]],
   ['adaptermediaplayermap',['AdapterMediaPlayerMap',['../classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html#ae89825073506daaa6b2ae4273cd57a5a',1,'alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaPlayer']]],
@@ -7,7 +11,7 @@ var searchData=
   ['additionalconfigurations',['AdditionalConfigurations',['../structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html#af23bc255b8e53c5d5d730d39c5b5d771',1,'alexaClientSDK::avsCommon::avs::CapabilityConfiguration']]],
   ['adslcomponent',['ADSLComponent',['../namespacealexa_client_s_d_k_1_1adsl.html#a560d500d798e7c530fa5c0e9bb0a74b8',1,'alexaClientSDK::adsl']]],
   ['alarmvolumerampsetting',['AlarmVolumeRampSetting',['../namespacealexa_client_s_d_k_1_1settings.html#a5a2f768082d05171eb7f0394bbbaf2d8',1,'alexaClientSDK::settings']]],
-  ['alertscomponent',['AlertsComponent',['../namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a4dab69d88bc0748a9c147c8a4a1c3495',1,'alexaClientSDK::acsdkAlerts']]],
+  ['alertscomponent',['AlertsComponent',['../namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a61e207c248a4b1ac6198edd9aa5eb26c',1,'alexaClientSDK::acsdkAlerts']]],
   ['alexaassetid',['AlexaAssetId',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1resources.html#ab9b28e9e72124bf7d1a49eb8fa17ba93',1,'alexaClientSDK::avsCommon::avs::resources']]],
   ['alexacommunicationscomponent',['AlexaCommunicationsComponent',['../namespacealexa_client_s_d_k_1_1acsdk_alexa_communications.html#acfd7549b0ecae3e08a0b821f1295769c',1,'alexaClientSDK::acsdkAlexaCommunications']]],
   ['alexaeventprocessednotifierinterface',['AlexaEventProcessedNotifierInterface',['../namespacealexa_client_s_d_k_1_1acsdk_alexa_event_processed_notifier_interfaces.html#a1a4b11ea9831d0f01ea3f5a0e7d86df9',1,'alexaClientSDK::acsdkAlexaEventProcessedNotifierInterfaces']]],
@@ -21,7 +25,7 @@ var searchData=
   ['audiofocusannotation',['AudioFocusAnnotation',['../namespacealexa_client_s_d_k_1_1afml.html#a0c45e4d665c3622bd0e127605cc36116',1,'alexaClientSDK::afml']]],
   ['audioinputstream',['AudioInputStream',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d',1,'alexaClientSDK::avsCommon::avs']]],
   ['audioinputstreamcomponent',['AudioInputStreamComponent',['../namespacealexa_client_s_d_k_1_1acsdk_audio_input_stream.html#a80c6f7512c753b2ea0ba9cc80ae1ae7a',1,'alexaClientSDK::acsdkAudioInputStream']]],
-  ['authorizationdelegatecomponent',['AuthorizationDelegateComponent',['../namespacealexa_client_s_d_k_1_1acsdk_authorization_delegate.html#ab6adfa41a49a641bbb141d6e4896b6e8',1,'alexaClientSDK::acsdkAuthorizationDelegate']]],
+  ['authorizationdelegatecomponent',['AuthorizationDelegateComponent',['../namespacealexa_client_s_d_k_1_1acsdk_authorization_delegate.html#a9364049453332e2acadafaf56ce65a7d',1,'alexaClientSDK::acsdkAuthorizationDelegate']]],
   ['avcontextdeleter',['AVContextDeleter',['../namespacealexa_client_s_d_k_1_1media_player_1_1android.html#a6d793102353e3d29dadc151d4760a882',1,'alexaClientSDK::mediaPlayer::android']]],
   ['avdictionarydeleter',['AVDictionaryDeleter',['../namespacealexa_client_s_d_k_1_1media_player_1_1android.html#aa50c78a5cc2ca3ebb86ffd2a8625e59b',1,'alexaClientSDK::mediaPlayer::android']]],
   ['avfiltercontextdeleter',['AVFilterContextDeleter',['../namespacealexa_client_s_d_k_1_1media_player_1_1android.html#aa9de5f297cea4878ace84b723f48965a',1,'alexaClientSDK::mediaPlayer::android']]],

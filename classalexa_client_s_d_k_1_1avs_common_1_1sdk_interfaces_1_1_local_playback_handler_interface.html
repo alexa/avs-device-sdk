@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -86,10 +86,10 @@ Inheritance diagram for alexaClientSDK::avsCommon::sdkInterfaces::LocalPlaybackH
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:acdfbc82639db7f1715ac362170085cf6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6">PlaybackOperation</a> { <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6a5e6cbaf46345361074fd552a7ed1bbf5">STOP_PLAYBACK</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6abde4c3441d17d8441f9ab6ef4acd3a51">PAUSE_PLAYBACK</a>, 
-<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6a36c626e0ac9290d4cef5303f2ac8a4dc">RESUME_PLAYBACK</a>
- }<tr class="memdesc:acdfbc82639db7f1715ac362170085cf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Available local operations.  <a href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6">More...</a><br /></td></tr>
-</td></tr>
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6a036e71b50c2a15591872f50ab1fa7bba">RESUMABLE_STOP</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6a36c626e0ac9290d4cef5303f2ac8a4dc">RESUME_PLAYBACK</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_local_playback_handler_interface.html#acdfbc82639db7f1715ac362170085cf6a5cf9a9cbf9777f052059c55dafa19723">TRANSIENT_PAUSE</a>
+ }</td></tr>
 <tr class="separator:acdfbc82639db7f1715ac362170085cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -115,12 +115,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Available local operations. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6a5e6cbaf46345361074fd552a7ed1bbf5"></a>STOP_PLAYBACK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6abde4c3441d17d8441f9ab6ef4acd3a51"></a>PAUSE_PLAYBACK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6a36c626e0ac9290d4cef5303f2ac8a4dc"></a>RESUME_PLAYBACK&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6a5e6cbaf46345361074fd552a7ed1bbf5"></a>STOP_PLAYBACK&#160;</td><td class="fielddoc"><p>Stop playback, close pipeline. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6a036e71b50c2a15591872f50ab1fa7bba"></a>RESUMABLE_STOP&#160;</td><td class="fielddoc"><p>Stop playback, keep pipeline open (for a time), to enable resume. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6a36c626e0ac9290d4cef5303f2ac8a4dc"></a>RESUME_PLAYBACK&#160;</td><td class="fielddoc"><p>Resume playing after RESUMABLE_STOP, or TRANSIENT_PAUSE. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acdfbc82639db7f1715ac362170085cf6a5cf9a9cbf9777f052059c55dafa19723"></a>TRANSIENT_PAUSE&#160;</td><td class="fielddoc"><p>Transiently pause playback - this is intended to be for a very short period. Not resumable from cloud. </p>
+</td></tr>
 </table>
 
 </div>
@@ -243,7 +246,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

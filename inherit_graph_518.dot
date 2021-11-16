@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="std::hash\< std::shared\l_ptr\< alexaClientSDK::\lavsCommon::avs::CapabilityConfiguration \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structstd_1_1hash_3_01std_1_1shared__ptr_3_01alexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration_01_4_01_4.html"];
+  Node0 [label="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManagerStorageState\l::ChannelState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_storage_state_1_1_channel_state.html"];
 }

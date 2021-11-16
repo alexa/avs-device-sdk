@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/SynchronizeStateSender/test" {
   }
   dir_e01b21eb0bf33027d7166255c85943c7 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_e01b21eb0bf33027d7166255c85943c7.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_bc956963215d99be9592ec1406bdd67f->dir_e01b21eb0bf33027d7166255c85943c7 [headlabel="1", labeldistance=1.5 headhref="dir_000653_000650.html"];
-  dir_bc956963215d99be9592ec1406bdd67f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000653_000017.html"];
-  dir_e01b21eb0bf33027d7166255c85943c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000650_000017.html"];
+  dir_bc956963215d99be9592ec1406bdd67f->dir_e01b21eb0bf33027d7166255c85943c7 [headlabel="1", labeldistance=1.5 headhref="dir_000794_000791.html"];
+  dir_bc956963215d99be9592ec1406bdd67f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000794_000017.html"];
+  dir_e01b21eb0bf33027d7166255c85943c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000791_000017.html"];
 }

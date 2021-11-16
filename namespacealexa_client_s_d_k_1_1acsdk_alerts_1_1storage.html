@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -90,6 +90,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a4890cd033c84da6ef5bec0984a20cd8f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a4890cd033c84da6ef5bec0984a20cd8f">TAG</a> (&quot;SQLiteAlertStorage&quot;)</td></tr>
 <tr class="memdesc:a4890cd033c84da6ef5bec0984a20cd8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a4890cd033c84da6ef5bec0984a20cd8f">More...</a><br /></td></tr>
 <tr class="separator:a4890cd033c84da6ef5bec0984a20cd8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87793b351653da61702dc076a0472776"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a87793b351653da61702dc076a0472776">submitMetric</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder, const std::string &amp;eventName, const int count)</td></tr>
+<tr class="separator:a87793b351653da61702dc076a0472776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56c76786c27417f76acef86448498a48"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a56c76786c27417f76acef86448498a48">alertTypeToDbField</a> (const std::string &amp;alertType, int *dbType)</td></tr>
 <tr class="separator:a56c76786c27417f76acef86448498a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bd2e871b0e7af5effa157146a137924"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a1bd2e871b0e7af5effa157146a137924">alertStateToDbField</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a57a94103a83358df32cd2e1f96b5ea7e">Alert::State</a> state, int *dbState)</td></tr>
@@ -112,8 +114,8 @@ Functions</h2></td></tr>
 <tr class="separator:af8290d3d144767364c2cff31b10f25e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32f64c32d4f3c77f435e7ee2a67b26d1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a32f64c32d4f3c77f435e7ee2a67b26d1">loadAlertAssetPlayOrderItems</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, std::map&lt; int, std::set&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_asset_order_item.html">AssetOrderItem</a>, <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_1_1storage_1_1_asset_order_item_compare.html">AssetOrderItemCompare</a> &gt;&gt; *alertAssetOrderItemsMap)</td></tr>
 <tr class="separator:a32f64c32d4f3c77f435e7ee2a67b26d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab120a60b6f4a9b8855b5b73b9666405b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ab120a60b6f4a9b8855b5b73b9666405b">eraseAlert</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
-<tr class="separator:ab120a60b6f4a9b8855b5b73b9666405b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae016ffaf93c2ca2da0af7e5b7d3cda5b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ae016ffaf93c2ca2da0af7e5b7d3cda5b">eraseAlert</a> (int dbVersion, <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
+<tr class="separator:ae016ffaf93c2ca2da0af7e5b7d3cda5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf26e3c2f5af3b7d5578c181a81a1852"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#acf26e3c2f5af3b7d5578c181a81a1852">eraseOfflineAlert</a> (const int dbVersion, <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, const std::string &amp;token)</td></tr>
 <tr class="separator:acf26e3c2f5af3b7d5578c181a81a1852"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a227e3d5a61b4a32225be76ff1824ee8b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a227e3d5a61b4a32225be76ff1824ee8b">eraseAlertAssets</a> (<a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *db, int alertId)</td></tr>
@@ -198,18 +200,51 @@ Variables</h2></td></tr>
 <tr class="memitem:a2a85de5706a64576e9dd9f0bb84c1b54"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a2a85de5706a64576e9dd9f0bb84c1b54">DATABASE_COLUMN_ID_NAME</a> = &quot;id&quot;</td></tr>
 <tr class="memdesc:a2a85de5706a64576e9dd9f0bb84c1b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'id' field we will use as the primary key in our tables.  <a href="#a2a85de5706a64576e9dd9f0bb84c1b54">More...</a><br /></td></tr>
 <tr class="separator:a2a85de5706a64576e9dd9f0bb84c1b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addc369f2b751f72a25c460986f3010d6"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#addc369f2b751f72a25c460986f3010d6">ALERTS_DATABASE_VERSION_ONE</a> = 1</td></tr>
-<tr class="memdesc:addc369f2b751f72a25c460986f3010d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A symbolic name for version one of our database.  <a href="#addc369f2b751f72a25c460986f3010d6">More...</a><br /></td></tr>
-<tr class="separator:addc369f2b751f72a25c460986f3010d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93abee8e6f3499b7b9a3772e0ed447b3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a93abee8e6f3499b7b9a3772e0ed447b3">DATABASE_COLUMN_TOKEN_NAME</a> = &quot;token&quot;</td></tr>
+<tr class="memdesc:a93abee8e6f3499b7b9a3772e0ed447b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'token' field used in alerts table.  <a href="#a93abee8e6f3499b7b9a3772e0ed447b3">More...</a><br /></td></tr>
+<tr class="separator:a93abee8e6f3499b7b9a3772e0ed447b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af66dd75c01fc388a665f2df42ede7b15"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#af66dd75c01fc388a665f2df42ede7b15">DATABASE_COLUMN_TYPE_NAME</a> = &quot;type&quot;</td></tr>
+<tr class="memdesc:af66dd75c01fc388a665f2df42ede7b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'type' field used in alerts table.  <a href="#af66dd75c01fc388a665f2df42ede7b15">More...</a><br /></td></tr>
+<tr class="separator:af66dd75c01fc388a665f2df42ede7b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9896ee7db15144f0e668c8a096ca2133"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a9896ee7db15144f0e668c8a096ca2133">DATABASE_COLUMN_STATE_NAME</a> = &quot;state&quot;</td></tr>
+<tr class="memdesc:a9896ee7db15144f0e668c8a096ca2133"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'state' field used in alerts table.  <a href="#a9896ee7db15144f0e668c8a096ca2133">More...</a><br /></td></tr>
+<tr class="separator:a9896ee7db15144f0e668c8a096ca2133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12f63bd2e467a7eff4d7f49cd05ef1a3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12f63bd2e467a7eff4d7f49cd05ef1a3">DATABASE_COLUMN_SCHEDULED_TIME_UNIX_NAME</a> = &quot;scheduled_time_unix&quot;</td></tr>
+<tr class="memdesc:a12f63bd2e467a7eff4d7f49cd05ef1a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'scheduled_time_unix' field used in alerts table.  <a href="#a12f63bd2e467a7eff4d7f49cd05ef1a3">More...</a><br /></td></tr>
+<tr class="separator:a12f63bd2e467a7eff4d7f49cd05ef1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714c7c109895231585fe0292b0b600d2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a714c7c109895231585fe0292b0b600d2">DATABASE_COLUMN_SCHEDULED_TIME_ISO_8601_NAME</a> = &quot;scheduled_time_iso_8601&quot;</td></tr>
+<tr class="memdesc:a714c7c109895231585fe0292b0b600d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'scheduled_time_iso_8601' field used in alerts table.  <a href="#a714c7c109895231585fe0292b0b600d2">More...</a><br /></td></tr>
+<tr class="separator:a714c7c109895231585fe0292b0b600d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9474c1c5e3a1d5a40da24194e043f927"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a9474c1c5e3a1d5a40da24194e043f927">DATABASE_COLUMN_ASSET_LOOP_COUNT_NAME</a> = &quot;asset_loop_count&quot;</td></tr>
+<tr class="memdesc:a9474c1c5e3a1d5a40da24194e043f927"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'asset_loop_count' field used in alerts table.  <a href="#a9474c1c5e3a1d5a40da24194e043f927">More...</a><br /></td></tr>
+<tr class="separator:a9474c1c5e3a1d5a40da24194e043f927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cf19a9300fefa7e25d06329c61a809f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3cf19a9300fefa7e25d06329c61a809f">DATABASE_COLUMN_ASSET_LOOP_PAUSE_MILLISECONDS_NAME</a> = &quot;asset_loop_pause_milliseconds&quot;</td></tr>
+<tr class="memdesc:a3cf19a9300fefa7e25d06329c61a809f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'asset_loop_pause_milliseconds' field used in alerts table.  <a href="#a3cf19a9300fefa7e25d06329c61a809f">More...</a><br /></td></tr>
+<tr class="separator:a3cf19a9300fefa7e25d06329c61a809f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aade3a3a5af02a18fdfbff375fafc640c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#aade3a3a5af02a18fdfbff375fafc640c">DATABASE_COLUMN_BACKGROUND_ASSET_NAME</a> = &quot;background_asset&quot;</td></tr>
+<tr class="memdesc:aade3a3a5af02a18fdfbff375fafc640c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'background_asset' field used in alerts table.  <a href="#aade3a3a5af02a18fdfbff375fafc640c">More...</a><br /></td></tr>
+<tr class="separator:aade3a3a5af02a18fdfbff375fafc640c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82881e2b80c68c9cf1faf2589b89c106"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a82881e2b80c68c9cf1faf2589b89c106">DATABASE_COLUMN_ORIGINAL_TIME_NAME</a> = &quot;original_time&quot;</td></tr>
+<tr class="memdesc:a82881e2b80c68c9cf1faf2589b89c106"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'original_time' field used in alerts table.  <a href="#a82881e2b80c68c9cf1faf2589b89c106">More...</a><br /></td></tr>
+<tr class="separator:a82881e2b80c68c9cf1faf2589b89c106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a697eb065b2de2089c71cfc6e45b206"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3a697eb065b2de2089c71cfc6e45b206">DATABASE_COLUMN_LABEL_NAME</a> = &quot;label&quot;</td></tr>
+<tr class="memdesc:a3a697eb065b2de2089c71cfc6e45b206"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'label' field used in alerts table.  <a href="#a3a697eb065b2de2089c71cfc6e45b206">More...</a><br /></td></tr>
+<tr class="separator:a3a697eb065b2de2089c71cfc6e45b206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d1b9f34be79e078b9649e60e773da73"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a7d1b9f34be79e078b9649e60e773da73">DATABASE_COLUMN_CREATED_TIME_NAME</a> = &quot;created_time_iso_8601&quot;</td></tr>
+<tr class="memdesc:a7d1b9f34be79e078b9649e60e773da73"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the 'created_time_iso_8601' field used in alerts table.  <a href="#a7d1b9f34be79e078b9649e60e773da73">More...</a><br /></td></tr>
+<tr class="separator:a7d1b9f34be79e078b9649e60e773da73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a223339242c497e7d9715e1585d6b0904"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a223339242c497e7d9715e1585d6b0904">ALERTS_DATABASE_VERSION_TWO</a> = 2</td></tr>
 <tr class="memdesc:a223339242c497e7d9715e1585d6b0904"><td class="mdescLeft">&#160;</td><td class="mdescRight">A symbolic name for version two of our database.  <a href="#a223339242c497e7d9715e1585d6b0904">More...</a><br /></td></tr>
 <tr class="separator:a223339242c497e7d9715e1585d6b0904"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22681fdbf7e7f5c5d6cbf462967910d3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a22681fdbf7e7f5c5d6cbf462967910d3">ALERTS_TABLE_NAME</a> = &quot;alerts&quot;</td></tr>
-<tr class="memdesc:a22681fdbf7e7f5c5d6cbf462967910d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alerts (v1) table.  <a href="#a22681fdbf7e7f5c5d6cbf462967910d3">More...</a><br /></td></tr>
-<tr class="separator:a22681fdbf7e7f5c5d6cbf462967910d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf64f9204726219ce1efd3a1f7600b09"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#abf64f9204726219ce1efd3a1f7600b09">ALERTS_DATABASE_VERSION_THREE</a> = 3</td></tr>
+<tr class="memdesc:abf64f9204726219ce1efd3a1f7600b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">A symbolic name for version three of our database.  <a href="#abf64f9204726219ce1efd3a1f7600b09">More...</a><br /></td></tr>
+<tr class="separator:abf64f9204726219ce1efd3a1f7600b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55c08d650a5d84a2e452e093af40e855"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a55c08d650a5d84a2e452e093af40e855">ALERTS_V2_TABLE_NAME</a> = &quot;alerts_v2&quot;</td></tr>
 <tr class="memdesc:a55c08d650a5d84a2e452e093af40e855"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alerts (v2) table.  <a href="#a55c08d650a5d84a2e452e093af40e855">More...</a><br /></td></tr>
 <tr class="separator:a55c08d650a5d84a2e452e093af40e855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dee363cb8b3a116e5e9055ba56f0c02"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a7dee363cb8b3a116e5e9055ba56f0c02">ALERTS_V3_TABLE_NAME</a> = &quot;alerts_v3&quot;</td></tr>
+<tr class="memdesc:a7dee363cb8b3a116e5e9055ba56f0c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alerts (v3) table.  <a href="#a7dee363cb8b3a116e5e9055ba56f0c02">More...</a><br /></td></tr>
+<tr class="separator:a7dee363cb8b3a116e5e9055ba56f0c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedf98e7e63a73540cb0868284700eadb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#aedf98e7e63a73540cb0868284700eadb">CREATE_ALERTS_TABLE_SQL_STRING</a></td></tr>
 <tr class="memdesc:aedf98e7e63a73540cb0868284700eadb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the alerts table.  <a href="#aedf98e7e63a73540cb0868284700eadb">More...</a><br /></td></tr>
 <tr class="separator:aedf98e7e63a73540cb0868284700eadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,7 +255,7 @@ Variables</h2></td></tr>
 <tr class="memdesc:af0611981ad532f89520aa63a8f5df39a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the alertAssets table.  <a href="#af0611981ad532f89520aa63a8f5df39a">More...</a><br /></td></tr>
 <tr class="separator:af0611981ad532f89520aa63a8f5df39a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af74613a98fa2b1bebf11dfda4bf36bf9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#af74613a98fa2b1bebf11dfda4bf36bf9">OFFLINE_ALERTS_TABLE_NAME</a> = &quot;offlineAlerts&quot;</td></tr>
-<tr class="memdesc:af74613a98fa2b1bebf11dfda4bf36bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the offline alerts table.  <a href="#af74613a98fa2b1bebf11dfda4bf36bf9">More...</a><br /></td></tr>
+<tr class="memdesc:af74613a98fa2b1bebf11dfda4bf36bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the offline alerts (v1) table.  <a href="#af74613a98fa2b1bebf11dfda4bf36bf9">More...</a><br /></td></tr>
 <tr class="separator:af74613a98fa2b1bebf11dfda4bf36bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac05467a7aa20279c030568b3891dc992"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac05467a7aa20279c030568b3891dc992">OFFLINE_ALERTS_V2_TABLE_NAME</a> = &quot;offlineAlerts_v2&quot;</td></tr>
 <tr class="memdesc:ac05467a7aa20279c030568b3891dc992"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the offline alerts (v2) table.  <a href="#ac05467a7aa20279c030568b3891dc992">More...</a><br /></td></tr>
@@ -240,6 +275,28 @@ Variables</h2></td></tr>
 <tr class="memitem:a137444530e31103102c48760904930b5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a137444530e31103102c48760904930b5">CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING</a></td></tr>
 <tr class="memdesc:a137444530e31103102c48760904930b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the alertAssetPlayOrderItems table.  <a href="#a137444530e31103102c48760904930b5">More...</a><br /></td></tr>
 <tr class="separator:a137444530e31103102c48760904930b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86b0f46ef1f13033d7af2df7e437e031"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a86b0f46ef1f13033d7af2df7e437e031">ALERT_METRIC_PREFIX</a> = &quot;ALERT-&quot;</td></tr>
+<tr class="memdesc:a86b0f46ef1f13033d7af2df7e437e031"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prefix for alert metrics.  <a href="#a86b0f46ef1f13033d7af2df7e437e031">More...</a><br /></td></tr>
+<tr class="separator:a86b0f46ef1f13033d7af2df7e437e031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23629b1dfbec4ac5094c25969391c3d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#aa23629b1dfbec4ac5094c25969391c3d">ALERT_DATABASE_OPEN_FAILED</a> = &quot;databaseOpenFailed&quot;</td></tr>
+<tr class="memdesc:aa23629b1dfbec4ac5094c25969391c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The event names for metrics.  <a href="#aa23629b1dfbec4ac5094c25969391c3d">More...</a><br /></td></tr>
+<tr class="separator:aa23629b1dfbec4ac5094c25969391c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3da030d04277a7245452af49124298a1"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3da030d04277a7245452af49124298a1">OFFLINE_ALERTS_V1ToV2_MIGRATION_FAILED</a> = &quot;offlineAlertsV1ToV2MigrationFailed&quot;</td></tr>
+<tr class="separator:a3da030d04277a7245452af49124298a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86be9301fc8a2814f5aa2963e7f4a99b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a86be9301fc8a2814f5aa2963e7f4a99b">ALERTS_V2ToV3_MIGRATION_FAILED</a> = &quot;alertsV2ToV3MigrationFailed&quot;</td></tr>
+<tr class="separator:a86be9301fc8a2814f5aa2963e7f4a99b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5cb2c5a70388d1dc12e197366bbb0e5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ab5cb2c5a70388d1dc12e197366bbb0e5">CREATE_OFFLINE_ALERTS_V2_FAILED</a> = &quot;createOfflineAlertsV2Failed&quot;</td></tr>
+<tr class="separator:ab5cb2c5a70388d1dc12e197366bbb0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af752eb3381015bb524b2b8c5ac338fda"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#af752eb3381015bb524b2b8c5ac338fda">CREATE_ALERTS_V3_FAILED</a> = &quot;createAlertsV3Failed&quot;</td></tr>
+<tr class="separator:af752eb3381015bb524b2b8c5ac338fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a731f52041ddd8acb84e8a0d55f7d01d0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a731f52041ddd8acb84e8a0d55f7d01d0">CREATE_DATABASE_FAILED</a> = &quot;createDatabaseFailed&quot;</td></tr>
+<tr class="separator:a731f52041ddd8acb84e8a0d55f7d01d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade4e8a7eca98802be0288985e25f9158"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ade4e8a7eca98802be0288985e25f9158">RETRY_TABLE</a> = {10, 20, 40}</td></tr>
+<tr class="memdesc:ade4e8a7eca98802be0288985e25f9158"><td class="mdescLeft">&#160;</td><td class="mdescRight">The table with entries for retry times in milliseconds.  <a href="#ade4e8a7eca98802be0288985e25f9158">More...</a><br /></td></tr>
+<tr class="separator:ade4e8a7eca98802be0288985e25f9158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6430e7f5b8f9e5f1269de0a48c0732e"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ad6430e7f5b8f9e5f1269de0a48c0732e">RETRY_TIME_MAXIMUM</a> = RETRY_TABLE.size()</td></tr>
+<tr class="memdesc:ad6430e7f5b8f9e5f1269de0a48c0732e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum retry times.  <a href="#ad6430e7f5b8f9e5f1269de0a48c0732e">More...</a><br /></td></tr>
+<tr class="separator:ad6430e7f5b8f9e5f1269de0a48c0732e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a1bd2e871b0e7af5effa157146a137924"></a>
@@ -513,8 +570,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab120a60b6f4a9b8855b5b73b9666405b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab120a60b6f4a9b8855b5b73b9666405b">&#9670;&nbsp;</a></span>eraseAlert()</h2>
+<a id="ae016ffaf93c2ca2da0af7e5b7d3cda5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae016ffaf93c2ca2da0af7e5b7d3cda5b">&#9670;&nbsp;</a></span>eraseAlert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -525,6 +582,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">static bool alexaClientSDK::acsdkAlerts::storage::eraseAlert </td>
           <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dbVersion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> *&#160;</td>
           <td class="paramname"><em>db</em>, </td>
         </tr>
@@ -549,6 +612,7 @@ Variables</h2></td></tr>
 <p>A utility function to delete alert records from the database for a given alert id. This function will clean up records in the alerts table.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">dbVersion</td><td>The version of the alerts table. </td></tr>
     <tr><td class="paramname">db</td><td>The database object. </td></tr>
     <tr><td class="paramname">alertId</td><td>The alert id of the alert to be deleted. </td></tr>
   </table>
@@ -1001,6 +1065,57 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a87793b351653da61702dc076a0472776"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87793b351653da61702dc076a0472776">&#9670;&nbsp;</a></span>submitMetric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void alexaClientSDK::acsdkAlerts::storage::submitMetric </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>metricRecorder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>eventName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Submits a metric for a given event name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metricRecorder</td><td>The <code>MetricRecorderInterface</code> used to record metrics. </td></tr>
+    <tr><td class="paramname">eventName</td><td>The name of the metric event. </td></tr>
+    <tr><td class="paramname">count</td><td>The number of data point to be added. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4890cd033c84da6ef5bec0984a20cd8f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4890cd033c84da6ef5bec0984a20cd8f">&#9670;&nbsp;</a></span>TAG()</h2>
 
@@ -1075,6 +1190,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The name of the alertAssets table. </p>
+
+</div>
+</div>
+<a id="aa23629b1dfbec4ac5094c25969391c3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23629b1dfbec4ac5094c25969391c3d">&#9670;&nbsp;</a></span>ALERT_DATABASE_OPEN_FAILED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::ALERT_DATABASE_OPEN_FAILED = &quot;databaseOpenFailed&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The event names for metrics. </p>
 
 </div>
 </div>
@@ -1219,6 +1358,30 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is the string value this code will expect form an <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> of <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_timer.html">Timer</a> type. </p>
+
+</div>
+</div>
+<a id="a86b0f46ef1f13033d7af2df7e437e031"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86b0f46ef1f13033d7af2df7e437e031">&#9670;&nbsp;</a></span>ALERT_METRIC_PREFIX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::ALERT_METRIC_PREFIX = &quot;ALERT-&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The prefix for alert metrics. </p>
 
 </div>
 </div>
@@ -1510,8 +1673,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="addc369f2b751f72a25c460986f3010d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addc369f2b751f72a25c460986f3010d6">&#9670;&nbsp;</a></span>ALERTS_DATABASE_VERSION_ONE</h2>
+<a id="abf64f9204726219ce1efd3a1f7600b09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf64f9204726219ce1efd3a1f7600b09">&#9670;&nbsp;</a></span>ALERTS_DATABASE_VERSION_THREE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1520,7 +1683,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const int alexaClientSDK::acsdkAlerts::storage::ALERTS_DATABASE_VERSION_ONE = 1</td>
+          <td class="memname">const int alexaClientSDK::acsdkAlerts::storage::ALERTS_DATABASE_VERSION_THREE = 3</td>
         </tr>
       </table>
   </td>
@@ -1530,7 +1693,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>A symbolic name for version one of our database. </p>
+<p>A symbolic name for version three of our database. </p>
 
 </div>
 </div>
@@ -1558,30 +1721,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a22681fdbf7e7f5c5d6cbf462967910d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22681fdbf7e7f5c5d6cbf462967910d3">&#9670;&nbsp;</a></span>ALERTS_TABLE_NAME</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::ALERTS_TABLE_NAME = &quot;alerts&quot;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The name of the alerts (v1) table. </p>
-
-</div>
-</div>
 <a id="a55c08d650a5d84a2e452e093af40e855"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55c08d650a5d84a2e452e093af40e855">&#9670;&nbsp;</a></span>ALERTS_V2_TABLE_NAME</h2>
 
@@ -1606,6 +1745,52 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a86be9301fc8a2814f5aa2963e7f4a99b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86be9301fc8a2814f5aa2963e7f4a99b">&#9670;&nbsp;</a></span>ALERTS_V2ToV3_MIGRATION_FAILED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::ALERTS_V2ToV3_MIGRATION_FAILED = &quot;alertsV2ToV3MigrationFailed&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7dee363cb8b3a116e5e9055ba56f0c02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dee363cb8b3a116e5e9055ba56f0c02">&#9670;&nbsp;</a></span>ALERTS_V3_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::ALERTS_V3_TABLE_NAME = &quot;alerts_v3&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the alerts (v3) table. </p>
+
+</div>
+</div>
 <a id="a137444530e31103102c48760904930b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a137444530e31103102c48760904930b5">&#9670;&nbsp;</a></span>CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING</h2>
 
@@ -1625,7 +1810,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12db823ddbfb794a15b95fb301efecef">ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_position INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_token TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a12db823ddbfb794a15b95fb301efecef"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12db823ddbfb794a15b95fb301efecef">alexaClientSDK::acsdkAlerts::storage::ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssetPlayOrderItems table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:160</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12db823ddbfb794a15b95fb301efecef">ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_position INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_token TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a12db823ddbfb794a15b95fb301efecef"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12db823ddbfb794a15b95fb301efecef">alexaClientSDK::acsdkAlerts::storage::ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssetPlayOrderItems table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:192</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the alertAssetPlayOrderItems table. </p>
 
@@ -1650,7 +1835,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">                                                                <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac5715100d73ff519f86174044746d7ce">ALERT_ASSETS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;avs_id TEXT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;url TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_ac5715100d73ff519f86174044746d7ce"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac5715100d73ff519f86174044746d7ce">alexaClientSDK::acsdkAlerts::storage::ALERT_ASSETS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSETS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssets table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:130</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">                                                                <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac5715100d73ff519f86174044746d7ce">ALERT_ASSETS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;avs_id TEXT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;url TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_ac5715100d73ff519f86174044746d7ce"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac5715100d73ff519f86174044746d7ce">alexaClientSDK::acsdkAlerts::storage::ALERT_ASSETS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSETS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssets table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:159</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the alertAssets table. </p>
 
@@ -1675,10 +1860,65 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a55c08d650a5d84a2e452e093af40e855">ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a2a85de5706a64576e9dd9f0bb84c1b54">DATABASE_COLUMN_ID_NAME</a> + <span class="stringliteral">&quot; INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;type INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;state INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_unix INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_count INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_pause_milliseconds INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;background_asset TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a2a85de5706a64576e9dd9f0bb84c1b54"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a2a85de5706a64576e9dd9f0bb84c1b54">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ID_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ID_NAME</div><div class="ttdoc">The name of the &amp;#39;id&amp;#39; field we will use as the primary key in our tables. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:102</div></div>
-<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a55c08d650a5d84a2e452e093af40e855"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a55c08d650a5d84a2e452e093af40e855">alexaClientSDK::acsdkAlerts::storage::ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:113</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a7dee363cb8b3a116e5e9055ba56f0c02">ALERTS_V3_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a2a85de5706a64576e9dd9f0bb84c1b54">DATABASE_COLUMN_ID_NAME</a> + <span class="stringliteral">&quot; INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a93abee8e6f3499b7b9a3772e0ed447b3">DATABASE_COLUMN_TOKEN_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#af66dd75c01fc388a665f2df42ede7b15">DATABASE_COLUMN_TYPE_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a9896ee7db15144f0e668c8a096ca2133">DATABASE_COLUMN_STATE_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12f63bd2e467a7eff4d7f49cd05ef1a3">DATABASE_COLUMN_SCHEDULED_TIME_UNIX_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a714c7c109895231585fe0292b0b600d2">DATABASE_COLUMN_SCHEDULED_TIME_ISO_8601_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a9474c1c5e3a1d5a40da24194e043f927">DATABASE_COLUMN_ASSET_LOOP_COUNT_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3cf19a9300fefa7e25d06329c61a809f">DATABASE_COLUMN_ASSET_LOOP_PAUSE_MILLISECONDS_NAME</a> + <span class="stringliteral">&quot; INT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#aade3a3a5af02a18fdfbff375fafc640c">DATABASE_COLUMN_BACKGROUND_ASSET_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a82881e2b80c68c9cf1faf2589b89c106">DATABASE_COLUMN_ORIGINAL_TIME_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3a697eb065b2de2089c71cfc6e45b206">DATABASE_COLUMN_LABEL_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL,&quot;</span> +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a7d1b9f34be79e078b9649e60e773da73">DATABASE_COLUMN_CREATED_TIME_NAME</a> + <span class="stringliteral">&quot; TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a3cf19a9300fefa7e25d06329c61a809f"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3cf19a9300fefa7e25d06329c61a809f">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ASSET_LOOP_PAUSE_MILLISECONDS_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ASSET_LOOP_PAUSE_MILLISECONDS_NAME</div><div class="ttdoc">The name of the &amp;#39;asset_loop_pause_milliseconds&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:118</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a93abee8e6f3499b7b9a3772e0ed447b3"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a93abee8e6f3499b7b9a3772e0ed447b3">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_TOKEN_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_TOKEN_NAME</div><div class="ttdoc">The name of the &amp;#39;token&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:106</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a2a85de5706a64576e9dd9f0bb84c1b54"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a2a85de5706a64576e9dd9f0bb84c1b54">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ID_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ID_NAME</div><div class="ttdoc">The name of the &amp;#39;id&amp;#39; field we will use as the primary key in our tables. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:104</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a12f63bd2e467a7eff4d7f49cd05ef1a3"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a12f63bd2e467a7eff4d7f49cd05ef1a3">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_SCHEDULED_TIME_UNIX_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_SCHEDULED_TIME_UNIX_NAME</div><div class="ttdoc">The name of the &amp;#39;scheduled_time_unix&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:112</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_af66dd75c01fc388a665f2df42ede7b15"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#af66dd75c01fc388a665f2df42ede7b15">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_TYPE_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_TYPE_NAME</div><div class="ttdoc">The name of the &amp;#39;type&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:108</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_aade3a3a5af02a18fdfbff375fafc640c"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#aade3a3a5af02a18fdfbff375fafc640c">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_BACKGROUND_ASSET_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_BACKGROUND_ASSET_NAME</div><div class="ttdoc">The name of the &amp;#39;background_asset&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:120</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a3a697eb065b2de2089c71cfc6e45b206"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a3a697eb065b2de2089c71cfc6e45b206">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_LABEL_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_LABEL_NAME</div><div class="ttdoc">The name of the &amp;#39;label&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:124</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a9896ee7db15144f0e668c8a096ca2133"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a9896ee7db15144f0e668c8a096ca2133">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_STATE_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_STATE_NAME</div><div class="ttdoc">The name of the &amp;#39;state&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:110</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a714c7c109895231585fe0292b0b600d2"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a714c7c109895231585fe0292b0b600d2">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_SCHEDULED_TIME_ISO_8601_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_SCHEDULED_TIME_ISO_8601_NAME</div><div class="ttdoc">The name of the &amp;#39;scheduled_time_iso_8601&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:114</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a9474c1c5e3a1d5a40da24194e043f927"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a9474c1c5e3a1d5a40da24194e043f927">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ASSET_LOOP_COUNT_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ASSET_LOOP_COUNT_NAME</div><div class="ttdoc">The name of the &amp;#39;asset_loop_count&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:116</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a7dee363cb8b3a116e5e9055ba56f0c02"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a7dee363cb8b3a116e5e9055ba56f0c02">alexaClientSDK::acsdkAlerts::storage::ALERTS_V3_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERTS_V3_TABLE_NAME</div><div class="ttdoc">The name of the alerts (v3) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:138</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a7d1b9f34be79e078b9649e60e773da73"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a7d1b9f34be79e078b9649e60e773da73">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_CREATED_TIME_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_CREATED_TIME_NAME</div><div class="ttdoc">The name of the &amp;#39;created_time_iso_8601&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:126</div></div>
+<div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_a82881e2b80c68c9cf1faf2589b89c106"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#a82881e2b80c68c9cf1faf2589b89c106">alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ORIGINAL_TIME_NAME</a></div><div class="ttdeci">static const std::string DATABASE_COLUMN_ORIGINAL_TIME_NAME</div><div class="ttdoc">The name of the &amp;#39;original_time&amp;#39; field used in alerts table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:122</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the alerts table. </p>
+
+</div>
+</div>
+<a id="af752eb3381015bb524b2b8c5ac338fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af752eb3381015bb524b2b8c5ac338fda">&#9670;&nbsp;</a></span>CREATE_ALERTS_V3_FAILED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::CREATE_ALERTS_V3_FAILED = &quot;createAlertsV3Failed&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a731f52041ddd8acb84e8a0d55f7d01d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a731f52041ddd8acb84e8a0d55f7d01d0">&#9670;&nbsp;</a></span>CREATE_DATABASE_FAILED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::CREATE_DATABASE_FAILED = &quot;createDatabaseFailed&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1701,9 +1941,127 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac05467a7aa20279c030568b3891dc992">OFFLINE_ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> + <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">    <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> + <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> + <span class="stringliteral">&quot;event_time_iso_8601 TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_ac05467a7aa20279c030568b3891dc992"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac05467a7aa20279c030568b3891dc992">alexaClientSDK::acsdkAlerts::storage::OFFLINE_ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string OFFLINE_ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the offline alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:145</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac05467a7aa20279c030568b3891dc992">OFFLINE_ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;event_time_iso_8601 TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage_html_ac05467a7aa20279c030568b3891dc992"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1storage.html#ac05467a7aa20279c030568b3891dc992">alexaClientSDK::acsdkAlerts::storage::OFFLINE_ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string OFFLINE_ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the offline alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorage.cpp:174</div></div>
 </div><!-- fragment -->
 <p>The SQL string to create the offline alerts table. </p>
+
+</div>
+</div>
+<a id="ab5cb2c5a70388d1dc12e197366bbb0e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5cb2c5a70388d1dc12e197366bbb0e5">&#9670;&nbsp;</a></span>CREATE_OFFLINE_ALERTS_V2_FAILED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::CREATE_OFFLINE_ALERTS_V2_FAILED = &quot;createOfflineAlertsV2Failed&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9474c1c5e3a1d5a40da24194e043f927"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9474c1c5e3a1d5a40da24194e043f927">&#9670;&nbsp;</a></span>DATABASE_COLUMN_ASSET_LOOP_COUNT_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ASSET_LOOP_COUNT_NAME = &quot;asset_loop_count&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'asset_loop_count' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a3cf19a9300fefa7e25d06329c61a809f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cf19a9300fefa7e25d06329c61a809f">&#9670;&nbsp;</a></span>DATABASE_COLUMN_ASSET_LOOP_PAUSE_MILLISECONDS_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ASSET_LOOP_PAUSE_MILLISECONDS_NAME = &quot;asset_loop_pause_milliseconds&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'asset_loop_pause_milliseconds' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="aade3a3a5af02a18fdfbff375fafc640c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aade3a3a5af02a18fdfbff375fafc640c">&#9670;&nbsp;</a></span>DATABASE_COLUMN_BACKGROUND_ASSET_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_BACKGROUND_ASSET_NAME = &quot;background_asset&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'background_asset' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a7d1b9f34be79e078b9649e60e773da73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d1b9f34be79e078b9649e60e773da73">&#9670;&nbsp;</a></span>DATABASE_COLUMN_CREATED_TIME_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_CREATED_TIME_NAME = &quot;created_time_iso_8601&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'created_time_iso_8601' field used in alerts table. </p>
 
 </div>
 </div>
@@ -1728,6 +2086,174 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The name of the 'id' field we will use as the primary key in our tables. </p>
+
+</div>
+</div>
+<a id="a3a697eb065b2de2089c71cfc6e45b206"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a697eb065b2de2089c71cfc6e45b206">&#9670;&nbsp;</a></span>DATABASE_COLUMN_LABEL_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_LABEL_NAME = &quot;label&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'label' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a82881e2b80c68c9cf1faf2589b89c106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82881e2b80c68c9cf1faf2589b89c106">&#9670;&nbsp;</a></span>DATABASE_COLUMN_ORIGINAL_TIME_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_ORIGINAL_TIME_NAME = &quot;original_time&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'original_time' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a714c7c109895231585fe0292b0b600d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a714c7c109895231585fe0292b0b600d2">&#9670;&nbsp;</a></span>DATABASE_COLUMN_SCHEDULED_TIME_ISO_8601_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_SCHEDULED_TIME_ISO_8601_NAME = &quot;scheduled_time_iso_8601&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'scheduled_time_iso_8601' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a12f63bd2e467a7eff4d7f49cd05ef1a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12f63bd2e467a7eff4d7f49cd05ef1a3">&#9670;&nbsp;</a></span>DATABASE_COLUMN_SCHEDULED_TIME_UNIX_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_SCHEDULED_TIME_UNIX_NAME = &quot;scheduled_time_unix&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'scheduled_time_unix' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a9896ee7db15144f0e668c8a096ca2133"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9896ee7db15144f0e668c8a096ca2133">&#9670;&nbsp;</a></span>DATABASE_COLUMN_STATE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_STATE_NAME = &quot;state&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'state' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="a93abee8e6f3499b7b9a3772e0ed447b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93abee8e6f3499b7b9a3772e0ed447b3">&#9670;&nbsp;</a></span>DATABASE_COLUMN_TOKEN_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_TOKEN_NAME = &quot;token&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'token' field used in alerts table. </p>
+
+</div>
+</div>
+<a id="af66dd75c01fc388a665f2df42ede7b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af66dd75c01fc388a665f2df42ede7b15">&#9670;&nbsp;</a></span>DATABASE_COLUMN_TYPE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::DATABASE_COLUMN_TYPE_NAME = &quot;type&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the 'type' field used in alerts table. </p>
 
 </div>
 </div>
@@ -1799,7 +2325,29 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The name of the offline alerts table. </p>
+<p>The name of the offline alerts (v1) table. </p>
+
+</div>
+</div>
+<a id="a3da030d04277a7245452af49124298a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3da030d04277a7245452af49124298a1">&#9670;&nbsp;</a></span>OFFLINE_ALERTS_V1ToV2_MIGRATION_FAILED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::storage::OFFLINE_ALERTS_V1ToV2_MIGRATION_FAILED = &quot;offlineAlertsV1ToV2MigrationFailed&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1923,11 +2471,59 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ade4e8a7eca98802be0288985e25f9158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade4e8a7eca98802be0288985e25f9158">&#9670;&nbsp;</a></span>RETRY_TABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;int&gt; alexaClientSDK::acsdkAlerts::storage::RETRY_TABLE = {10, 20, 40}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The table with entries for retry times in milliseconds. </p>
+
+</div>
+</div>
+<a id="ad6430e7f5b8f9e5f1269de0a48c0732e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6430e7f5b8f9e5f1269de0a48c0732e">&#9670;&nbsp;</a></span>RETRY_TIME_MAXIMUM</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t alexaClientSDK::acsdkAlerts::storage::RETRY_TIME_MAXIMUM = RETRY_TABLE.size()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum retry times. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

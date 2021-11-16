@@ -3,9 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\< acsdkNotificationsInterfaces\l::NotificationsObserverInterface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkNotifier\l::Notifier\< acsdkNotificationsInterfaces\l::NotificationsObserverInterface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html"];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::acsdkNotifications\l::NotificationsNotifier",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_notifier.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::GetImportsAndExports\l\< Types \>::GetMakeOptionalImportsOperation\l::Apply\< std::tuple\< ResultTypes... \>,\l MakeOptional\< Type \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma5de9a0d95ac305a6c7567be459c13750.html"];
 }

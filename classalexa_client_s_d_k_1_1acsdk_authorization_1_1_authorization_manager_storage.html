@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -80,8 +80,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aad5115a453d46d6605ccfc1d893f8739"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager_storage.html#aad5115a453d46d6605ccfc1d893f8739">store</a> (const std::string &amp;adapterId, const std::string &amp;userId)</td></tr>
 <tr class="separator:aad5115a453d46d6605ccfc1d893f8739"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27c07724ce4888ed2ef8ef2c112f92a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager_storage.html#a27c07724ce4888ed2ef8ef2c112f92a7">load</a> (std::string *adapterId, std::string *userId)</td></tr>
-<tr class="separator:a27c07724ce4888ed2ef8ef2c112f92a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef827e6dee44d978e909cc2513837f5a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager_storage.html#aef827e6dee44d978e909cc2513837f5a">load</a> (std::string &amp;adapterId, std::string &amp;userId)</td></tr>
+<tr class="separator:aef827e6dee44d978e909cc2513837f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89da0a293ca57b78552d193eb986dcb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager_storage.html#a89da0a293ca57b78552d193eb986dcb8">clear</a> ()</td></tr>
 <tr class="separator:a89da0a293ca57b78552d193eb986dcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -144,8 +144,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a27c07724ce4888ed2ef8ef2c112f92a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27c07724ce4888ed2ef8ef2c112f92a7">&#9670;&nbsp;</a></span>load()</h2>
+<a id="aef827e6dee44d978e909cc2513837f5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef827e6dee44d978e909cc2513837f5a">&#9670;&nbsp;</a></span>load()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,13 +153,13 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool alexaClientSDK::acsdkAuthorization::AuthorizationManagerStorage::load </td>
           <td>(</td>
-          <td class="paramtype">std::string *&#160;</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>adapterId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string *&#160;</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>userId</em>&#160;</td>
         </tr>
         <tr>
@@ -169,15 +169,15 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stores the information into the database. This will fail if there are existing entries.</p>
+<p>Loads information from the database.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">The</td><td>adapterId. This is required. </td></tr>
-    <tr><td class="paramname">The</td><td>userId. This can be empty. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">adapterId</td><td>The adapterId. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">userId</td><td>The userId. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the data was successfully stored. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the data was successfully loaded. </dd></dl>
 
 </div>
 </div>
@@ -209,8 +209,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Stores the information into the database. This will overwrite any existing entries. are existing entries. Upon failure, the database may not be in a consistent state. Clearing is recommended.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">The</td><td>adapterId. This is required. </td></tr>
-    <tr><td class="paramname">The</td><td>userId. This can be empty. </td></tr>
+    <tr><td class="paramname">adapterId</td><td>The adapterId. This is required. </td></tr>
+    <tr><td class="paramname">userId</td><td>The userId. This can be empty. </td></tr>
   </table>
   </dd>
 </dl>
@@ -226,7 +226,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

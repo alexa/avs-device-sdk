@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,8 +83,13 @@ $(function() {
 <li>unmuteSelf()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_call_manager_interface.html#a633b51cae428816eb630ae2b5b7a909c">alexaClientSDK::avsCommon::sdkInterfaces::CallManagerInterface</a>
 </li>
+<li>unpack()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_archive_wrapper.html#a54621bf91945a8c54ed6ae563c3f0268">alexaClientSDK::acsdkAssets::common::ArchiveWrapper</a>
+</li>
 <li>unpair()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html#a5e9658346c32e6cbbba9fdb13ea1f4f9">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a44fbdf696b4dca204c72b4f5292a0c0a">alexaClientSDK::acsdkBluetooth::Bluetooth</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#aaae66cbbb91463f0611448badd0934fe">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_device_interface.html#a5e9658346c32e6cbbba9fdb13ea1f4f9">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::BluetoothDeviceInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device.html#a3b9a4e7782bc5274eee85f5ca8260519">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::test::MockBluetoothDevice</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_bluetooth_device.html#a59c935793205a68d5c918c613cb767b8">alexaClientSDK::bluetoothImplementations::blueZ::BlueZBluetoothDevice</a>
 </li>
@@ -96,6 +101,10 @@ $(function() {
 </li>
 <li>unregisterObject()
 : <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_d_bus_object_base.html#a614d3a46320b4152a5939480e5651c7a">alexaClientSDK::bluetoothImplementations::blueZ::DBusObjectBase</a>
+</li>
+<li>unsubscribeToPropertyChangeEvent()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_communication_1_1_in_memory_communication_properties_handler.html#a6f8793709b223a6c7b15bc29e50318bb">alexaClientSDK::acsdkCommunication::InMemoryCommunicationPropertiesHandler&lt; T &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_properties_handler_interface.html#a31f3d38557eb41aeff739c8f0eaef505">alexaClientSDK::acsdkCommunicationInterfaces::CommunicationPropertiesHandlerInterface&lt; T &gt;</a>
 </li>
 <li>update()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_interface.html#a45b914d87359e562682316741bf08d5a">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointInterface</a>
@@ -130,6 +139,9 @@ $(function() {
 <li>updateInterval()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_progress_timer.html#a6abf3509313350910b18b02c98fdfc6c">alexaClientSDK::acsdkAudioPlayer::ProgressTimer</a>
 </li>
+<li>updateLastUsedTimestampLocked()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1manager_1_1_requester.html#ac6e9e67a2c07c1bf0e3f9f0aab682be4">alexaClientSDK::acsdkAssets::manager::Requester</a>
+</li>
 <li>updateOldestUnconsumedCursor()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_buffer_layout.html#a2b86af1b66bd1a9c4738bbdc30ce0c11">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::BufferLayout&lt; T &gt;</a>
 </li>
@@ -154,6 +166,27 @@ $(function() {
 <li>updateStateCallback()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_post_connect_verify_gateway_sender_test.html#aa462d4b8ff2139c449343a40b5538ce0">alexaClientSDK::avsGatewayManager::test::PostConnectVerifyGatewaySenderTest</a>
 </li>
+<li>upgradeEncryption()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_properties_1_1_encrypted_properties.html#ac5389d6cce4b1ab6cc7314c109d2e133">alexaClientSDK::acsdkProperties::EncryptedProperties</a>
+</li>
+<li>upgradeStorage()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_storage_data_migration.html#aeee659350053e29e7325efde0d361c13">alexaClientSDK::acsdkAuthorization::lwa::LWAStorageDataMigration</a>
+</li>
+<li>uploadArtifact()
+: <a class="el" href="class_init_test.html#a523964b213e328b86827f15b4d9e4145">InitTest</a>
+</li>
+<li>uploadArtifactAndSubscribeToChange()
+: <a class="el" href="class_update_test.html#a8552f4d7c638d0faf11dc11073acd497">UpdateTest</a>
+</li>
+<li>uploadArtifactFromRequest()
+: <a class="el" href="class_asset_manager_test.html#a726e3324b4d525cc1a252a605007a302">AssetManagerTest</a>
+</li>
+<li>uploadBase64Artifact()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_davs_service_mock.html#a887477b253246c2683e2ef96daaee575">alexaClientSDK::acsdkAssets::common::DavsServiceMock</a>
+</li>
+<li>uploadBinaryArtifact()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_davs_service_mock.html#ae5b3411aeff72396505735a4cb12bb27">alexaClientSDK::acsdkAssets::common::DavsServiceMock</a>
+</li>
 <li>urlEncode()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_curl_easy_handle_wrapper.html#a9534b190e6c4e0966c9f15dbaeddca11">alexaClientSDK::avsCommon::utils::libcurlUtils::CurlEasyHandleWrapper</a>
 </li>
@@ -169,7 +202,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

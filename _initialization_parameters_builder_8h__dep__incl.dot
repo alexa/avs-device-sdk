@@ -10,5 +10,7 @@ digraph "/workplace/avs-device-sdk/AVSCommon/AVS/include/AVSCommon/AVS/Initializ
   Node14 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node17 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/src\l/Initialization/Initialization\lParametersBuilder.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_initialization_parameters_builder_8cpp.html"];
   Node14 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node18 [label="/workplace/avs-device\l-sdk/AVSCommon/AVS/test\l/AlexaClientSDKInitTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alexa_client_s_d_k_init_test_8cpp.html"];
+  Node14 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
 }

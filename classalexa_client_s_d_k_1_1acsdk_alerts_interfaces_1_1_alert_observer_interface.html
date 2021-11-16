@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,9 +66,11 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -84,6 +86,13 @@ Inheritance diagram for alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInte
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_alert_info.html">AlertInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a935ab5192b09eefb2f94451ce3be6298"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a935ab5192b09eefb2f94451ce3be6298">State</a> { <br />
@@ -103,18 +112,48 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a935ab5192b09eefb2f94451ce3be6298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0409732175658d670f014505cc242660"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">Type</a> { <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660a9de6d0a670ae5a0dee31a6318aa00e8d">Type::ALARM</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660ab127d163c55a6603f3a37ce3a642c36d">Type::TIMER</a>, 
+<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660a7d9b6620fee259aee22549b79179c4df">Type::REMINDER</a>
+ }</td></tr>
+<tr class="separator:a0409732175658d670f014505cc242660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6e31007bc3fb991ab5a92509ea7bab47"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a6e31007bc3fb991ab5a92509ea7bab47">~AlertObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a6e31007bc3fb991ab5a92509ea7bab47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89c0b1c48a351e3aa43df34bcafeffd2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a89c0b1c48a351e3aa43df34bcafeffd2">onAlertStateChange</a> (const std::string &amp;alertToken, const std::string &amp;alertType, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a935ab5192b09eefb2f94451ce3be6298">State</a> state, const std::string &amp;reason=&quot;&quot;)=0</td></tr>
-<tr class="separator:a89c0b1c48a351e3aa43df34bcafeffd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a57b36d146c59d4c206033f06a839f1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a3a57b36d146c59d4c206033f06a839f1">onAlertStateChange</a> (const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_alert_info.html">AlertInfo</a> &amp;alertInfo)=0</td></tr>
+<tr class="separator:a3a57b36d146c59d4c206033f06a839f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ad8fe4a3f1de6175cadbbab74319dd99f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ad8fe4a3f1de6175cadbbab74319dd99f"><td class="memTemplItemLeft" align="right" valign="top">static bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#ad8fe4a3f1de6175cadbbab74319dd99f">withinBounds</a> (T value, T minVal, T maxVal)</td></tr>
+<tr class="separator:ad8fe4a3f1de6175cadbbab74319dd99f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a061256e8f50f3db3a12786d4b4941baa"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a061256e8f50f3db3a12786d4b4941baa">stateToString</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a935ab5192b09eefb2f94451ce3be6298">State</a> state)</td></tr>
 <tr class="separator:a061256e8f50f3db3a12786d4b4941baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5a3de588b9bcb58f1af778265e694e4"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#af5a3de588b9bcb58f1af778265e694e4">typeToString</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">Type</a> type)</td></tr>
+<tr class="separator:af5a3de588b9bcb58f1af778265e694e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4456e853247b3af2dc989bb89e23df58"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a4456e853247b3af2dc989bb89e23df58">originalTimeToString</a> (const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a> &amp;originalTime)</td></tr>
+<tr class="separator:a4456e853247b3af2dc989bb89e23df58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a1d66cbad2e15c4512373459e85c47725"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a1d66cbad2e15c4512373459e85c47725">ORIGINAL_TIME_FIELD_MIN</a> = 0</td></tr>
+<tr class="memdesc:a1d66cbad2e15c4512373459e85c47725"><td class="mdescLeft">&#160;</td><td class="mdescRight">The minimum value for the field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>.  <a href="#a1d66cbad2e15c4512373459e85c47725">More...</a><br /></td></tr>
+<tr class="separator:a1d66cbad2e15c4512373459e85c47725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a864af25a8978f3b03c0891e0660a3bcc"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a864af25a8978f3b03c0891e0660a3bcc">ORIGINAL_TIME_HOUR_MAX</a> = 23</td></tr>
+<tr class="memdesc:a864af25a8978f3b03c0891e0660a3bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum value for the hour field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>.  <a href="#a864af25a8978f3b03c0891e0660a3bcc">More...</a><br /></td></tr>
+<tr class="separator:a864af25a8978f3b03c0891e0660a3bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fe4582bea79cf987a818dfdc7ea6696"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a4fe4582bea79cf987a818dfdc7ea6696">ORIGINAL_TIME_MINUTE_MAX</a> = 59</td></tr>
+<tr class="memdesc:a4fe4582bea79cf987a818dfdc7ea6696"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum value for the minute field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>.  <a href="#a4fe4582bea79cf987a818dfdc7ea6696">More...</a><br /></td></tr>
+<tr class="separator:a4fe4582bea79cf987a818dfdc7ea6696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab037d26cd31bc7acbf9e3b722ed6fb88"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#ab037d26cd31bc7acbf9e3b722ed6fb88">ORIGINAL_TIME_SECOND_MAX</a> = 59</td></tr>
+<tr class="memdesc:ab037d26cd31bc7acbf9e3b722ed6fb88"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum value for the second field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>.  <a href="#ab037d26cd31bc7acbf9e3b722ed6fb88">More...</a><br /></td></tr>
+<tr class="separator:ab037d26cd31bc7acbf9e3b722ed6fb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ac41c0cf31e7196b10a667445cb70c1"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a9ac41c0cf31e7196b10a667445cb70c1">ORIGINAL_TIME_MILLISECOND_MAX</a> = 999</td></tr>
+<tr class="memdesc:a9ac41c0cf31e7196b10a667445cb70c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum value for the millisecond field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>.  <a href="#a9ac41c0cf31e7196b10a667445cb70c1">More...</a><br /></td></tr>
+<tr class="separator:a9ac41c0cf31e7196b10a667445cb70c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An interface for observing state changes on an Alert object. </p>
@@ -166,6 +205,37 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0409732175658d670f014505cc242660"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0409732175658d670f014505cc242660">&#9670;&nbsp;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::Type</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>An enum class to represent the type of an alert. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0409732175658d670f014505cc242660a9de6d0a670ae5a0dee31a6318aa00e8d"></a>ALARM&#160;</td><td class="fielddoc"><p>The alarm type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a0409732175658d670f014505cc242660ab127d163c55a6603f3a37ce3a642c36d"></a>TIMER&#160;</td><td class="fielddoc"><p>The timer type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a0409732175658d670f014505cc242660a7d9b6620fee259aee22549b79179c4df"></a>REMINDER&#160;</td><td class="fielddoc"><p>The reminder type. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6e31007bc3fb991ab5a92509ea7bab47"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e31007bc3fb991ab5a92509ea7bab47">&#9670;&nbsp;</a></span>~AlertObserverInterface()</h2>
@@ -194,8 +264,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a89c0b1c48a351e3aa43df34bcafeffd2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89c0b1c48a351e3aa43df34bcafeffd2">&#9670;&nbsp;</a></span>onAlertStateChange()</h2>
+<a id="a3a57b36d146c59d4c206033f06a839f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a57b36d146c59d4c206033f06a839f1">&#9670;&nbsp;</a></span>onAlertStateChange()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -206,31 +276,9 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual void alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::onAlertStateChange </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>alertToken</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_alert_info.html">AlertInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>alertInfo</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>alertType</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a935ab5192b09eefb2f94451ce3be6298">State</a>&#160;</td>
-          <td class="paramname"><em>state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>reason</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -242,15 +290,46 @@ Static Public Member Functions</h2></td></tr>
 <p>A callback function to notify an object that an alert has updated its state.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">alertToken</td><td>The AVS token of the alert. </td></tr>
-    <tr><td class="paramname">alertType</td><td>The type of the alert. </td></tr>
-    <tr><td class="paramname">state</td><td>The state of the alert. </td></tr>
-    <tr><td class="paramname">reason</td><td>The reason for the state change. </td></tr>
+    <tr><td class="paramname">alertInfo</td><td>The information of the updated alert. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html#a3201a26485becece90634d4d0e161897">alexaClientSDK::acsdkAlerts::AlertsCapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#a2d3ac528e7ee8ee082bd7e07b7c051c4">alexaClientSDK::acsdkAlerts::AlertScheduler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html#af2067fba84bb407eb5a2cdae1566cfdd">alexaClientSDK::integration::test::TestAlertObserver</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert_observer.html#a463b1d01e82b831b74d477d5ca10a3a4">alexaClientSDK::acsdkAlerts::test::TestAlertObserver</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html#a6ef2a7e7723c2f0bd2d756433f9fb408">alexaClientSDK::acsdkAlerts::AlertsCapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_observer_interface.html#a0070257b4da5784fe91704927a51fe43">alexaClientSDK::acsdkAlerts::test::MockAlertObserverInterface</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html#afa265a1918f316a8608641645ce86cde">alexaClientSDK::acsdkAlerts::AlertScheduler</a>, and <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html#a44e83d11cde00adc5312671ccaddf625">alexaClientSDK::integration::test::TestAlertObserver</a>.</p>
+
+</div>
+</div>
+<a id="a4456e853247b3af2dc989bb89e23df58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4456e853247b3af2dc989bb89e23df58">&#9670;&nbsp;</a></span>originalTimeToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::originalTimeToString </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a> &amp;&#160;</td>
+          <td class="paramname"><em>originalTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert a <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code> to a <code>std::string</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code> to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string representation of a <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -288,6 +367,215 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="af5a3de588b9bcb58f1af778265e694e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a3de588b9bcb58f1af778265e694e4">&#9670;&nbsp;</a></span>typeToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::typeToString </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">Type</a>&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert a <code>Type</code> to a <code>std::string</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>The <code>Type</code> to convert. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string representation of a <code>Type</code>. </dd></dl>
+
+</div>
+</div>
+<a id="ad8fe4a3f1de6175cadbbab74319dd99f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8fe4a3f1de6175cadbbab74319dd99f">&#9670;&nbsp;</a></span>withinBounds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::withinBounds </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>minVal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>maxVal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check whether a value is within the bounds.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The value to check. </td></tr>
+    <tr><td class="paramname">minVal</td><td>The minimum value. </td></tr>
+    <tr><td class="paramname">maxVal</td><td>The maximum value. </td></tr>
+    <tr><td class="paramname">true</td><td>if the value is within the bounds, false otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a1d66cbad2e15c4512373459e85c47725"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d66cbad2e15c4512373459e85c47725">&#9670;&nbsp;</a></span>ORIGINAL_TIME_FIELD_MIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::ORIGINAL_TIME_FIELD_MIN = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The minimum value for the field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>. </p>
+
+</div>
+</div>
+<a id="a864af25a8978f3b03c0891e0660a3bcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a864af25a8978f3b03c0891e0660a3bcc">&#9670;&nbsp;</a></span>ORIGINAL_TIME_HOUR_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::ORIGINAL_TIME_HOUR_MAX = 23</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum value for the hour field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>. </p>
+
+</div>
+</div>
+<a id="a9ac41c0cf31e7196b10a667445cb70c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ac41c0cf31e7196b10a667445cb70c1">&#9670;&nbsp;</a></span>ORIGINAL_TIME_MILLISECOND_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::ORIGINAL_TIME_MILLISECOND_MAX = 999</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum value for the millisecond field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>. </p>
+
+</div>
+</div>
+<a id="a4fe4582bea79cf987a818dfdc7ea6696"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fe4582bea79cf987a818dfdc7ea6696">&#9670;&nbsp;</a></span>ORIGINAL_TIME_MINUTE_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::ORIGINAL_TIME_MINUTE_MAX = 59</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum value for the minute field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>. </p>
+
+</div>
+</div>
+<a id="ab037d26cd31bc7acbf9e3b722ed6fb88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab037d26cd31bc7acbf9e3b722ed6fb88">&#9670;&nbsp;</a></span>ORIGINAL_TIME_SECOND_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::ORIGINAL_TIME_SECOND_MAX = 59</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum value for the second field in <code><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">OriginalTime</a></code>. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/capabilities/Alerts/acsdkAlertsInterfaces/include/acsdkAlertsInterfaces/<a class="el" href="_alert_observer_interface_8h_source.html">AlertObserverInterface.h</a></li>
 </ul>
@@ -295,7 +583,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -2,6 +2,8 @@ var searchData=
 [
   ['acsdk_5fconcatenate',['ACSDK_CONCATENATE',['../_logger_8h.html#a8c5e76dd516f4638a4d60761b565077b',1,'Logger.h']]],
   ['acsdk_5fconcatenate_5finner',['ACSDK_CONCATENATE_INNER',['../_logger_8h.html#acf144fd316953c744bb6b74cebd47619',1,'Logger.h']]],
+  ['acsdk_5fconfig_5fshared_5flibs',['ACSDK_CONFIG_SHARED_LIBS',['../_s_d_k_config_8h_8in.html#a45be9c5a9de88de4190ad9c801ae2ee1',1,'SDKConfig.h.in']]],
+  ['acsdk_5fconfig_5fstatic_5flibs',['ACSDK_CONFIG_STATIC_LIBS',['../_s_d_k_config_8h_8in.html#aacfc0651340d3d96c7acf2c1c12dae28',1,'SDKConfig.h.in']]],
   ['acsdk_5fcritical',['ACSDK_CRITICAL',['../_logger_8h.html#a11b064f1af67c1c320d3b297722890ab',1,'Logger.h']]],
   ['acsdk_5fdebug',['ACSDK_DEBUG',['../_logger_8h.html#af414b220a404b4d97ec5805b59115bb1',1,'Logger.h']]],
   ['acsdk_5fdebug0',['ACSDK_DEBUG0',['../_logger_8h.html#a40256656da48b818582924c9061d2d20',1,'Logger.h']]],
@@ -28,6 +30,9 @@ var searchData=
   ['acsdk_5fplayback_5ftoggle_5fto_5fstring',['ACSDK_PLAYBACK_TOGGLE_TO_STRING',['../_playback_buttons_8h.html#a1c0a314e49fc60a04b9d24d0d746b9ba',1,'PlaybackButtons.h']]],
   ['acsdk_5fstringify',['ACSDK_STRINGIFY',['../_logger_8h.html#a25c4f632a13aad8bca23da0cedee26f6',1,'Logger.h']]],
   ['acsdk_5fstringify_5finner',['ACSDK_STRINGIFY_INNER',['../_logger_8h.html#a4f3ff6ca18640f57bac6c106572081c5',1,'Logger.h']]],
+  ['acsdk_5funused_5fvariable',['ACSDK_UNUSED_VARIABLE',['../_properties_2acsdk_properties_2private_include_2acsdk_properties_2private_2_logging_8h.html#a0b1ad56d08e5593496060766eb96f721',1,'Logging.h']]],
   ['acsdk_5fwarn',['ACSDK_WARN',['../_logger_8h.html#adc4fde7e853612078e9424c45794e18a',1,'Logger.h']]],
+  ['alexa_5fclient_5fsdk_5favscommon_5futils_5finclude_5favscommon_5futils_5fsdkconfig_5fh_5f',['ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDKCONFIG_H_',['../_s_d_k_config_8h_8in.html#aa104a977a78b3d24154ec3fd8a3d983c',1,'SDKConfig.h.in']]],
+  ['alexa_5fclient_5fsdk_5favscommon_5futils_5finclude_5favscommon_5futils_5fsdkversion_5fh_5f',['ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_SDKVERSION_H_',['../_s_d_k_version_8h_8in.html#a3020c31058e5d83bb2dc152ae96f9367',1,'SDKVersion.h.in']]],
   ['avscommon_5fexport',['avscommon_EXPORT',['../_platform_definitions_8h.html#a0cbf6e4e500952be38930132dc66678e',1,'PlatformDefinitions.h']]]
 ];

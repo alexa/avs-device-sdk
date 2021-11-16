@@ -1,6 +1,7 @@
 var searchData=
 [
   ['gatewayverifystate',['GatewayVerifyState',['../structalexa_client_s_d_k_1_1avs_gateway_manager_1_1_gateway_verify_state.html',1,'alexaClientSDK::avsGatewayManager']]],
+  ['genericinventory',['GenericInventory',['../classalexa_client_s_d_k_1_1acsdk_assets_1_1client_1_1_generic_inventory.html',1,'alexaClientSDK::acsdkAssets::client']]],
   ['getexportsoperation',['GetExportsOperation',['../structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_exports_operation.html',1,'alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports']]],
   ['getimportsandexports',['GetImportsAndExports',['../structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports.html',1,'alexaClientSDK::acsdkManufactory::internal']]],
   ['getmakeoptionalimportsoperation',['GetMakeOptionalImportsOperation',['../structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_make_optional_imports_operation.html',1,'alexaClientSDK::acsdkManufactory::internal::GetImportsAndExports']]],

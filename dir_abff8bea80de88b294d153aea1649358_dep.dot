@@ -1,0 +1,19 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkSensoryAdapter/acsdkKWDProvider/src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_444cbabbc5fb1ce51bdd527dafc29af1 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkKWDProvider" fontname="Helvetica", fontsize="10", URL="dir_444cbabbc5fb1ce51bdd527dafc29af1.html"]
+  dir_abff8bea80de88b294d153aea1649358 [shape=box, label="src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_abff8bea80de88b294d153aea1649358.html"];
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_996c513b5c65f869edd97e6685508e04 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_996c513b5c65f869edd97e6685508e04.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000116_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000116.html"];
+  dir_abff8bea80de88b294d153aea1649358->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000121_000116.html"];
+  dir_abff8bea80de88b294d153aea1649358->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000121_000017.html"];
+  dir_abff8bea80de88b294d153aea1649358->dir_996c513b5c65f869edd97e6685508e04 [headlabel="1", labeldistance=1.5 headhref="dir_000121_000122.html"];
+  dir_996c513b5c65f869edd97e6685508e04->dir_9982052f7ce695d12571567315b2fafa [headlabel="3", labeldistance=1.5 headhref="dir_000122_000116.html"];
+  dir_996c513b5c65f869edd97e6685508e04->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000122_000017.html"];
+}

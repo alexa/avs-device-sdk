@@ -13,8 +13,8 @@ digraph "/workplace/avs-device-sdk/applications/acsdkOpusSpeechEncoder" {
   }
   dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
   dir_6b07903b29b547047bfa8a8b819c80bf [shape=box label="SpeechEncoder" fillcolor="white" style="filled" color="red" URL="dir_6b07903b29b547047bfa8a8b819c80bf.html"];
-  dir_640fa4d7db1367db5a9296e07cc24fd7->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000097_000598.html"];
-  dir_640fa4d7db1367db5a9296e07cc24fd7->dir_6b07903b29b547047bfa8a8b819c80bf [headlabel="1", labeldistance=1.5 headhref="dir_000097_000634.html"];
-  dir_e3421406bc97444fb9ac73bbcdb4b208->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000094_000598.html"];
-  dir_e3421406bc97444fb9ac73bbcdb4b208->dir_6b07903b29b547047bfa8a8b819c80bf [headlabel="1", labeldistance=1.5 headhref="dir_000094_000634.html"];
+  dir_640fa4d7db1367db5a9296e07cc24fd7->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000097_000116.html"];
+  dir_640fa4d7db1367db5a9296e07cc24fd7->dir_6b07903b29b547047bfa8a8b819c80bf [headlabel="1", labeldistance=1.5 headhref="dir_000097_000775.html"];
+  dir_e3421406bc97444fb9ac73bbcdb4b208->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000094_000116.html"];
+  dir_e3421406bc97444fb9ac73bbcdb4b208->dir_6b07903b29b547047bfa8a8b819c80bf [headlabel="1", labeldistance=1.5 headhref="dir_000094_000775.html"];
 }

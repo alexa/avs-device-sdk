@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -82,8 +82,6 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html">AbstractKeywordDetector</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider.html">KeywordDetectorProvider</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_sensory_keyword_detector.html">SensoryKeywordDetector</a></td></tr>
@@ -91,6 +89,15 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a92815888abd56c27648c7e597ecbb375"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a92815888abd56c27648c7e597ecbb375">SAMPLE_APP_CONFIG_ROOT_KEY</a> (&quot;sampleApp&quot;)</td></tr>
+<tr class="memdesc:a92815888abd56c27648c7e597ecbb375"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Sensory Config values from AlexaClientSDKConfig.json.  <a href="#a92815888abd56c27648c7e597ecbb375">More...</a><br /></td></tr>
+<tr class="separator:a92815888abd56c27648c7e597ecbb375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70dc26e53fa8a3a837989d96c429ff8b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a70dc26e53fa8a3a837989d96c429ff8b">SENSORY_CONFIG_ROOT_KEY</a> (&quot;sensory&quot;)</td></tr>
+<tr class="separator:a70dc26e53fa8a3a837989d96c429ff8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c7d4079daa6ea01cc748f1fd7e71dc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a61c7d4079daa6ea01cc748f1fd7e71dc">SENSORY_MODEL_FILE_PATH</a> (&quot;modelFilePath&quot;)</td></tr>
+<tr class="separator:a61c7d4079daa6ea01cc748f1fd7e71dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52ed97bf50bd183b2021d926d0c6338b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html">acsdkKWDImplementations::AbstractKeywordDetector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a52ed97bf50bd183b2021d926d0c6338b">createSensoryKWDAdapter</a> (std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">avsCommon::avs::AudioInputStream</a> &gt; stream, <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html">avsCommon::utils::AudioFormat</a> audioFormat, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_observer_interface.html">KeyWordObserverInterface</a> &gt;&gt; keyWordObservers, std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html">KeyWordDetectorStateObserverInterface</a> &gt;&gt; keyWordDetectorStateObservers)</td></tr>
+<tr class="separator:a52ed97bf50bd183b2021d926d0c6338b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad81dd0c2a9a8144d99d82f18525d6b1e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#ad81dd0c2a9a8144d99d82f18525d6b1e">TAG</a> (&quot;SensoryKeywordDetector&quot;)</td></tr>
 <tr class="memdesc:ad81dd0c2a9a8144d99d82f18525d6b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ad81dd0c2a9a8144d99d82f18525d6b1e">More...</a><br /></td></tr>
 <tr class="separator:ad81dd0c2a9a8144d99d82f18525d6b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -98,12 +105,12 @@ Functions</h2></td></tr>
 <tr class="separator:a6da8ba2e6c2313336c29593056aa4c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24156862d6ed4b960769d6778f817f45"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a24156862d6ed4b960769d6778f817f45">getSensoryDetails</a> (SnsrSession session, SnsrRC result)</td></tr>
 <tr class="separator:a24156862d6ed4b960769d6778f817f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52c24aef90f728572ab015be8f759e8d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a52c24aef90f728572ab015be8f759e8d">TAG</a> (&quot;AbstractKeywordDetector&quot;)</td></tr>
-<tr class="memdesc:a52c24aef90f728572ab015be8f759e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a52c24aef90f728572ab015be8f759e8d">More...</a><br /></td></tr>
-<tr class="separator:a52c24aef90f728572ab015be8f759e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a38610da8e64120c6f7455cbe455be67f"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider_1_1_k_w_d_registration.html">KeywordDetectorProvider::KWDRegistration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a38610da8e64120c6f7455cbe455be67f">g_sensoryAdapterRegistration</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a52ed97bf50bd183b2021d926d0c6338b">createSensoryKWDAdapter</a>)</td></tr>
+<tr class="memdesc:a38610da8e64120c6f7455cbe455be67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The registration object to register the Sensory adapter's creation method.  <a href="#a38610da8e64120c6f7455cbe455be67f">More...</a><br /></td></tr>
+<tr class="separator:a38610da8e64120c6f7455cbe455be67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ad06e0ca26f6fd7cc11ec1ac772fdb7"><td class="memItemLeft" align="right" valign="top">static const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a4ad06e0ca26f6fd7cc11ec1ac772fdb7">HERTZ_PER_KILOHERTZ</a> = 1000</td></tr>
 <tr class="memdesc:a4ad06e0ca26f6fd7cc11ec1ac772fdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of hertz per kilohertz.  <a href="#a4ad06e0ca26f6fd7cc11ec1ac772fdb7">More...</a><br /></td></tr>
 <tr class="separator:a4ad06e0ca26f6fd7cc11ec1ac772fdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +134,46 @@ Variables</h2></td></tr>
 <tr class="separator:a81c7db73422ca7a318934a8e17572b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a52ed97bf50bd183b2021d926d0c6338b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52ed97bf50bd183b2021d926d0c6338b">&#9670;&nbsp;</a></span>createSensoryKWDAdapter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html">acsdkKWDImplementations::AbstractKeywordDetector</a>&gt; alexaClientSDK::kwd::createSensoryKWDAdapter </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#ab50c23baa96f369ea6478b78dac6ff7d">avsCommon::avs::AudioInputStream</a> &gt;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html">avsCommon::utils::AudioFormat</a>&#160;</td>
+          <td class="paramname"><em>audioFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_observer_interface.html">KeyWordObserverInterface</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>keyWordObservers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html">KeyWordDetectorStateObserverInterface</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>keyWordDetectorStateObservers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a24156862d6ed4b960769d6778f817f45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a24156862d6ed4b960769d6778f817f45">&#9670;&nbsp;</a></span>getSensoryDetails()</h2>
 
@@ -206,8 +253,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a52c24aef90f728572ab015be8f759e8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52c24aef90f728572ab015be8f759e8d">&#9670;&nbsp;</a></span>TAG() <span class="overload">[1/2]</span></h2>
+<a id="a92815888abd56c27648c7e597ecbb375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92815888abd56c27648c7e597ecbb375">&#9670;&nbsp;</a></span>SAMPLE_APP_CONFIG_ROOT_KEY()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,9 +263,9 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static const std::string alexaClientSDK::kwd::TAG </td>
+          <td class="memname">static const std::string alexaClientSDK::kwd::SAMPLE_APP_CONFIG_ROOT_KEY </td>
           <td>(</td>
-          <td class="paramtype">&quot;AbstractKeywordDetector&quot;&#160;</td>
+          <td class="paramtype">&quot;sampleApp&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -230,12 +277,64 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>String to identify log entries originating from this file. </p>
+<p>The Sensory Config values from AlexaClientSDKConfig.json. </p>
+
+</div>
+</div>
+<a id="a70dc26e53fa8a3a837989d96c429ff8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70dc26e53fa8a3a837989d96c429ff8b">&#9670;&nbsp;</a></span>SENSORY_CONFIG_ROOT_KEY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::kwd::SENSORY_CONFIG_ROOT_KEY </td>
+          <td>(</td>
+          <td class="paramtype">&quot;sensory&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61c7d4079daa6ea01cc748f1fd7e71dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61c7d4079daa6ea01cc748f1fd7e71dc">&#9670;&nbsp;</a></span>SENSORY_MODEL_FILE_PATH()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::kwd::SENSORY_MODEL_FILE_PATH </td>
+          <td>(</td>
+          <td class="paramtype">&quot;modelFilePath&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="ad81dd0c2a9a8144d99d82f18525d6b1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad81dd0c2a9a8144d99d82f18525d6b1e">&#9670;&nbsp;</a></span>TAG() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad81dd0c2a9a8144d99d82f18525d6b1e">&#9670;&nbsp;</a></span>TAG()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -263,6 +362,30 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a38610da8e64120c6f7455cbe455be67f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38610da8e64120c6f7455cbe455be67f">&#9670;&nbsp;</a></span>g_sensoryAdapterRegistration</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider_1_1_k_w_d_registration.html">KeywordDetectorProvider::KWDRegistration</a> alexaClientSDK::kwd::g_sensoryAdapterRegistration(<a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a52ed97bf50bd183b2021d926d0c6338b">createSensoryKWDAdapter</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The registration object to register the Sensory adapter's creation method. </p>
+
+</div>
+</div>
 <a id="a4ad06e0ca26f6fd7cc11ec1ac772fdb7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4ad06e0ca26f6fd7cc11ec1ac772fdb7">&#9670;&nbsp;</a></span>HERTZ_PER_KILOHERTZ</h2>
 
@@ -427,7 +550,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

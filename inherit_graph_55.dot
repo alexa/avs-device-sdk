@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::Annotated\< alexaClientSDK\l::avsCommon::sdkInterfaces::\lAudioFocusAnnotation, alexaClientSDK\l::avsCommon::sdkInterfaces::FocusManagerInterface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html"];
+  Node0 [label="alexaClientSDK::acsdkAuthorization\l::lwa::LWAAuthorizationConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_configuration.html"];
 }

@@ -11,5 +11,5 @@ digraph "/workplace/avs-device-sdk/core/acsdkRegistrationManagerInterfaces/test/
   }
   }
   dir_ea71a0f92b3a6b19a5724167c78652cc [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_ea71a0f92b3a6b19a5724167c78652cc.html"];
-  dir_3da89654778aaccbf8ec35ce8128310e->dir_ea71a0f92b3a6b19a5724167c78652cc [headlabel="1", labeldistance=1.5 headhref="dir_000489_000485.html"];
+  dir_3da89654778aaccbf8ec35ce8128310e->dir_ea71a0f92b3a6b19a5724167c78652cc [headlabel="1", labeldistance=1.5 headhref="dir_000564_000560.html"];
 }

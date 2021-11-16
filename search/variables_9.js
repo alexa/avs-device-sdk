@@ -1,6 +1,10 @@
 var searchData=
 [
+  ['jitter_5ffactor',['JITTER_FACTOR',['../namespacealexa_client_s_d_k_1_1acsdk_assets_1_1davs.html#a675fd8269ff4e406083f37ec34c6e20d',1,'alexaClientSDK::acsdkAssets::davs']]],
   ['joke_5faudio_5ffile',['JOKE_AUDIO_FILE',['../namespacealexa_client_s_d_k_1_1integration_1_1test.html#a9352327f221eb28e84150edb6dfa61a3',1,'alexaClientSDK::integration::test']]],
+  ['json_5fartifact_5fkey_5fsymbol',['JSON_ARTIFACT_KEY_SYMBOL',['../namespacealexa_client_s_d_k_1_1acsdk_assets_1_1davs.html#a42a923614d111e5396aec0392b630065',1,'alexaClientSDK::acsdkAssets::davs']]],
+  ['json_5fartifact_5flist_5fsymbol',['JSON_ARTIFACT_LIST_SYMBOL',['../namespacealexa_client_s_d_k_1_1acsdk_assets_1_1davs.html#ab86761d3a1f4509bd8363ea71d5d3a9b',1,'alexaClientSDK::acsdkAssets::davs']]],
+  ['json_5fartifact_5ftype_5fsymbol',['JSON_ARTIFACT_TYPE_SYMBOL',['../namespacealexa_client_s_d_k_1_1acsdk_assets_1_1davs.html#a8243a310107128f3ce5355e27e6c63fa',1,'alexaClientSDK::acsdkAssets::davs']]],
   ['json_5fbegin',['JSON_BEGIN',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a6a0c80934c428dbea71dcd17bf0cb843',1,'alexaClientSDK::capabilityAgents::playbackController']]],
   ['json_5fcolon',['JSON_COLON',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#a57ca7a18c2c2cbc4cda731f3e6adc205',1,'alexaClientSDK::capabilityAgents::playbackController']]],
   ['json_5fcomma',['JSON_COMMA',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1playback_controller.html#acfc1a26762f93b51f8f55a980035c056',1,'alexaClientSDK::capabilityAgents::playbackController']]],
@@ -70,8 +74,11 @@ var searchData=
   ['json_5fno_5fbands_5fprovided',['JSON_NO_BANDS_PROVIDED',['../namespacealexa_client_s_d_k_1_1acsdk_equalizer_1_1test.html#aa43e5090df200835e51e9ec867671c35',1,'alexaClientSDK::acsdkEqualizer::test']]],
   ['json_5fone_5fmode_5fmentioned_5fdisabled',['JSON_ONE_MODE_MENTIONED_DISABLED',['../namespacealexa_client_s_d_k_1_1acsdk_equalizer_1_1test.html#a2f900b3da068185c87ffb52a073dcd04',1,'alexaClientSDK::acsdkEqualizer::test']]],
   ['json_5fone_5fmode_5fmentioned_5fenabled',['JSON_ONE_MODE_MENTIONED_ENABLED',['../namespacealexa_client_s_d_k_1_1acsdk_equalizer_1_1test.html#ab7cfe009cf5f25ba91e2898673e23a5b',1,'alexaClientSDK::acsdkEqualizer::test']]],
+  ['json_5fpayload',['JSON_PAYLOAD',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#acab1dfa2085486a074c0ba8442affb95',1,'alexaClientSDK::capabilityAgents::speakerManager::test']]],
   ['json_5fsemantics_5fcomplete',['JSON_SEMANTICS_COMPLETE',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1test.html#a114308fe689fc71777e46f0778d36f3f',1,'alexaClientSDK::avsCommon::avs::test']]],
   ['json_5fsemantics_5fmultiple_5factions',['JSON_SEMANTICS_MULTIPLE_ACTIONS',['../namespacealexa_client_s_d_k_1_1avs_common_1_1avs_1_1test.html#a66ec22b987c069839f6eaafa351f6187',1,'alexaClientSDK::avsCommon::avs::test']]],
+  ['json_5ftest_5fconfig',['JSON_TEST_CONFIG',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#aa28a3527815f41b3f7e0bedc98f3164c',1,'alexaClientSDK::capabilityAgents::speakerManager::test']]],
+  ['json_5ftest_5fconfig_5fno_5fmute',['JSON_TEST_CONFIG_NO_MUTE',['../namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#a43862ad0b601bbe4ee5c72f41aebcd65',1,'alexaClientSDK::capabilityAgents::speakerManager::test']]],
   ['json_5fvalue_5fbearer',['JSON_VALUE_BEARER',['../namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#ac86caa06d38d686daaf8b9aca6d56b97',1,'alexaClientSDK::acsdkAuthorization::lwa::JSON_VALUE_BEARER()'],['../namespacealexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate.html#af4ce60296c07286ccfa26a73c60a5c5c',1,'alexaClientSDK::authorization::cblAuthDelegate::JSON_VALUE_BEARER()']]],
   ['jsonstreams',['jsonStreams',['../structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1initialization_1_1_initialization_parameters.html#a8ea05b80009027bf484db8d4a3dd15c5',1,'alexaClientSDK::avsCommon::avs::initialization::InitializationParameters']]]
 ];

@@ -11,5 +11,5 @@ digraph "/workplace/avs-device-sdk/SpeechEncoder/OpusEncoderContext/include" {
   }
   }
   dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
-  dir_0a24648f5734fa81ba89fd0f27cf182b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000639_000635.html"];
+  dir_0a24648f5734fa81ba89fd0f27cf182b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000780_000776.html"];
 }

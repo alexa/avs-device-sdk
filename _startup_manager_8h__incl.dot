@@ -11,7 +11,7 @@ digraph "/workplace/avs-device-sdk/shared/acsdkStartupManager/include/acsdkStart
   Node3 [label="acsdkStartupManagerInterfaces\l/StartupNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_startup_notifier_interface_8h.html"];
   Node3 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node4 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node4 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

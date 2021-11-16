@@ -22,7 +22,7 @@ digraph "/workplace/avs-device-sdk/Metrics/UplCalculator/include/Metrics/TtsUplC
   Node8 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node7 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="AVSCommon/Utils/Metrics\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_priority_8h.html"];
+  Node9 [label="AVSCommon/Utils/Metrics\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_metrics_2_priority_8h.html"];
   Node7 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node10 [label="AVSCommon/Utils/Optional.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_optional_8h.html"];
   Node10 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,7 +74,8 @@ $(function() {
 <div class="title">MRMCapabilityAgent.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;rapidjson/document.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;rapidjson/document.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_m_r_m_capability_agent_8h_source.html">acsdkMultiRoomMusic/MRMCapabilityAgent.h</a>&quot;</code><br />
@@ -130,6 +131,8 @@ Variables</h2></td></tr>
 <tr class="memitem:a1f9ded28aa73e7d164f0eea91fff5e25"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mrm.html#a1f9ded28aa73e7d164f0eea91fff5e25">alexaClientSDK::capabilityAgents::mrm::MRM_CAPABILITIES_KEY</a> = &quot;capabilities&quot;</td></tr>
 <tr class="memdesc:a1f9ded28aa73e7d164f0eea91fff5e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the MRM capabilities.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mrm.html#a1f9ded28aa73e7d164f0eea91fff5e25">More...</a><br /></td></tr>
 <tr class="separator:a1f9ded28aa73e7d164f0eea91fff5e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c18e6d82d7620eea5d09d001c0808d0"><td class="memItemLeft" align="right" valign="top">static const std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1mrm.html#a9c18e6d82d7620eea5d09d001c0808d0">alexaClientSDK::capabilityAgents::mrm::DIALOG_STATE_UPDATE_DELAY</a> {200}</td></tr>
+<tr class="separator:a9c18e6d82d7620eea5d09d001c0808d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -186,7 +189,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

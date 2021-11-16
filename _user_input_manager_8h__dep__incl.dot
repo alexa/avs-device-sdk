@@ -2,21 +2,21 @@ digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/UserInputManager.
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node440 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/UserInputManager.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node440 -> Node441 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node441 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8h.html"];
-  Node441 -> Node442 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node442 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
-  Node441 -> Node443 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node443 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
-  Node441 -> Node444 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node444 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$preview_main_8cpp.html"];
-  Node440 -> Node445 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node445 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleApplication.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8h.html"];
-  Node445 -> Node446 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node446 [label="/workplace/avs-device\l-sdk/SampleApp/src/main.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8cpp.html"];
-  Node445 -> Node447 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node447 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
-  Node440 -> Node448 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node448 [label="/workplace/avs-device\l-sdk/SampleApp/src/UserInput\lManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_user_input_manager_8cpp.html"];
+  Node450 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/UserInputManager.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node450 -> Node451 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node451 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8h.html"];
+  Node451 -> Node452 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node452 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node451 -> Node453 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node453 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
+  Node451 -> Node454 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node454 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$preview_main_8cpp.html"];
+  Node450 -> Node455 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node455 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleApplication.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8h.html"];
+  Node455 -> Node456 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node456 [label="/workplace/avs-device\l-sdk/SampleApp/src/main.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8cpp.html"];
+  Node455 -> Node457 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node457 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node450 -> Node458 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node458 [label="/workplace/avs-device\l-sdk/SampleApp/src/UserInput\lManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_user_input_manager_8cpp.html"];
 }

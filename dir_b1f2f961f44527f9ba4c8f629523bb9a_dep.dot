@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetoothInterfac
   dir_b1f2f961f44527f9ba4c8f629523bb9a [shape=box, label="acsdkBluetoothInterfaces", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b1f2f961f44527f9ba4c8f629523bb9a.html"];
   }
   dir_cbaa0c2bd1e08c672f344a40c1ff8458 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_cbaa0c2bd1e08c672f344a40c1ff8458.html"];
-  dir_b1f2f961f44527f9ba4c8f629523bb9a->dir_cbaa0c2bd1e08c672f344a40c1ff8458 [headlabel="1", labeldistance=1.5 headhref="dir_000292_000288.html"];
+  dir_b1f2f961f44527f9ba4c8f629523bb9a->dir_cbaa0c2bd1e08c672f344a40c1ff8458 [headlabel="1", labeldistance=1.5 headhref="dir_000329_000325.html"];
 }

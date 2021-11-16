@@ -14,4 +14,6 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/test/AVSCommon/Utils/MediaPla
   Node3 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="AVSCommon/Utils/Platform\lDefinitions.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_platform_definitions_8h.html"];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="AVSCommon/Utils/SDKConfig.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

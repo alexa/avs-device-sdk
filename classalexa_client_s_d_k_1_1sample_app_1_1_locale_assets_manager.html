@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -110,6 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad13919fa089efed41e7ee3a2cfeb763e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a576dd14fddcf7f216fe68a74277e5c2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacealexa_client_s_d_k_1_1settings.html#a0029fefa32c3965b519d7f293f418efc">Locale</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#a576dd14fddcf7f216fe68a74277e5c2a">getDefaultLocale</a> () const override</td></tr>
 <tr class="separator:a576dd14fddcf7f216fe68a74277e5c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e5f0bb61a0caaf19c75f61e285bb85c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#add68f2ef5e6a305de7bfa3957124ab0d">Locales</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#a7e5f0bb61a0caaf19c75f61e285bb85c">getDefaultLocales</a> () const override</td></tr>
+<tr class="separator:a7e5f0bb61a0caaf19c75f61e285bb85c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8194c4f2c0ef9e3e6d04937074b2fb87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#a8194c4f2c0ef9e3e6d04937074b2fb87">addLocaleAssetsObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface</a> &gt; &amp;observer) override</td></tr>
 <tr class="separator:a8194c4f2c0ef9e3e6d04937074b2fb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaed653ed58239e65b9fd347e96e6058"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html#aaaed653ed58239e65b9fd347e96e6058">removeLocaleAssetsObserver</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsObserverInterface</a> &gt; &amp;observer) override</td></tr>
@@ -301,7 +303,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Create a <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html">LocaleAssetsManager</a> object.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000073">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000075">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to a new <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_locale_assets_manager.html">LocaleAssetsManager</a> object if it succeeds; otherwise, <code>nullptr</code>. </dd></dl>
 
 </div>
@@ -441,9 +443,39 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Get the default locale.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000031">Deprecated:</a></b></dt><dd>Use getDefaultLocales</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>The default locale. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a1300469ae5a007575baab6ee1bd8f0b8">alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a>.</p>
+
+</div>
+</div>
+<a id="a7e5f0bb61a0caaf19c75f61e285bb85c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e5f0bb61a0caaf19c75f61e285bb85c">&#9670;&nbsp;</a></span>getDefaultLocales()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#add68f2ef5e6a305de7bfa3957124ab0d">LocaleAssetsManager::Locales</a> alexaClientSDK::sampleApp::LocaleAssetsManager::getDefaultLocales </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the default multilingual locales.</p>
+<dl class="section return"><dt>Returns</dt><dd>The default multilingual locales. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_locale_assets_manager_interface.html#a906ea257d86070900aa1421ac6aaca22">alexaClientSDK::avsCommon::sdkInterfaces::LocaleAssetsManagerInterface</a>.</p>
 
 </div>
 </div>
@@ -728,7 +760,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

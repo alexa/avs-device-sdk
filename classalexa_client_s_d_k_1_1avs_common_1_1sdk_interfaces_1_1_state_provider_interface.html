@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af988062becf3883c3a4d8f685d032c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42646b5ca95313c48aac3b716eb05fa7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a42646b5ca95313c48aac3b716eb05fa7">hasReportableStateProperties</a> ()</td></tr>
 <tr class="separator:a42646b5ca95313c48aac3b716eb05fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b0cadb9cd573036bcb2578ec118fac"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a93b0cadb9cd573036bcb2578ec118fac">shouldQueryState</a> ()</td></tr>
+<tr class="separator:a93b0cadb9cd573036bcb2578ec118fac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <code>StateProvider</code> may be any client component whose state needs to be sent to the AVS. This specifies the interface to a <code>StateProvider</code>. </p>
@@ -147,8 +149,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns whether the provider should be queried for its state / properties.</p>
-<dl class="section return"><dt>Returns</dt><dd>Whether this provider should be queried about its state when a new context request arrives. </dd></dl>
+<p>Returns whether the provider can be queried for its state / properties. If not, the provider is omitted from the context altogether. ContextManager will not query or report its state.</p>
+<dl class="section return"><dt>Returns</dt><dd>Whether this provider can be queried about its state when a new context request arrives. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In future versions, this method will be made pure virtual. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1_mode_controller_capability_agent.html#a26632ded37a8d96b10571d49ca8d6fc6">alexaClientSDK::capabilityAgents::modeController::ModeControllerCapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1_range_controller_capability_agent.html#a681bc50931f130bf765accb432df7a5e">alexaClientSDK::capabilityAgents::rangeController::RangeControllerCapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1_toggle_controller_capability_agent.html#a36ceae1adddbf0caa5b9916d3186ae41">alexaClientSDK::capabilityAgents::toggleController::ToggleControllerCapabilityAgent</a>, and <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1_power_controller_capability_agent.html#afe11bf1a35462b391f83a8ad361ddc24">alexaClientSDK::capabilityAgents::powerController::PowerControllerCapabilityAgent</a>.</p>
@@ -226,7 +228,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000032">Deprecated:</a></b></dt><dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000035">Deprecated:</a></b></dt><dd><code>NamespaceAndName</code> is being deprecated. Use the CapabilityMessageIdentifier version instead. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1test_state_provider.html#adc405e21289aea2f6c6af9ae55873b68">alexaClientSDK::integration::test::testStateProvider</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_external_media_player.html#a49fdf89cb6c4c2c472307690295c53f0">alexaClientSDK::acsdkExternalMediaPlayer::ExternalMediaPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html#a4a8a838d0c565d43f059838b76e65e64">alexaClientSDK::acsdkAudioPlayer::AudioPlayer</a>, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html#a9aff31d23a969bf5148f48052cd4cad2">alexaClientSDK::capabilityAgents::speechSynthesizer::SpeechSynthesizer</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html#a23637993781f9241ed05dbe7ac8b97ac">alexaClientSDK::acsdkNotifications::NotificationsCapabilityAgent</a>, <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_audio_activity_tracker.html#a27ffc2983f52a93427bcdcde829484c5">alexaClientSDK::afml::AudioActivityTracker</a>, and <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1_visual_activity_tracker.html#ad36862324f796dccc2209c3451bdd3ca">alexaClientSDK::afml::VisualActivityTracker</a>.</p>
 
@@ -280,6 +282,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a93b0cadb9cd573036bcb2578ec118fac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93b0cadb9cd573036bcb2578ec118fac">&#9670;&nbsp;</a></span>shouldQueryState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::avsCommon::sdkInterfaces::StateProviderInterface::shouldQueryState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns whether the provider should be queried for its state / properties. If this returns false the last cached state will be reported to the context requester.</p>
+<dl class="section return"><dt>Returns</dt><dd>whether the provider should be queried for its state / properties. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/<a class="el" href="_state_provider_interface_8h_source.html">StateProviderInterface.h</a></li>
 </ul>
@@ -287,7 +316,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

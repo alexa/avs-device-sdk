@@ -69,7 +69,7 @@ digraph "/workplace/avs-device-sdk/shared/acsdkShutdownManager/src/ShutdownManag
   Node26 [label="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shutdown_notifier_interface_8h.html"];
   Node26 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node26 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node27 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node27 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node27 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node26 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

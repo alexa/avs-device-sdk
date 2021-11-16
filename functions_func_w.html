@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,6 +79,9 @@ $(function() {
 <li>WaitableMessageRequest()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_waitable_message_request.html#a58155c608e109669ff9c327a70a94505">alexaClientSDK::avsCommon::avs::WaitableMessageRequest</a>
 </li>
+<li>waitAndPop()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_download_chunk_queue.html#a170a2fe89e13531677136e41c0ff3fb5">alexaClientSDK::acsdkAssets::common::DownloadChunkQueue</a>
+</li>
 <li>waitCallback()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_callback.html#a07b4be14a5e45e08193230c656f5575f">alexaClientSDK::mediaPlayer::android::test::MockCallback</a>
 </li>
@@ -108,6 +111,9 @@ $(function() {
 </li>
 <li>waitForConnected()
 : <a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_a_c_l_test_context.html#ad36499f4bcb79256cd4f3a1ac2359f96">alexaClientSDK::integration::test::ACLTestContext</a>
+</li>
+<li>waitForDeletion()
+: <a class="el" href="class_eviction_test.html#afac33bab0e18fa19e77a13f25fb937d0">EvictionTest</a>
 </li>
 <li>waitForDirective()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_message_observer.html#a50fd3f873026f1afd5fb5ad9eefd68d2">alexaClientSDK::avsCommon::utils::TestableMessageObserver</a>
@@ -222,6 +228,9 @@ $(function() {
 <li>waitForUserInactivityReport()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html#aeccefe677957f86d71ab7a5741a1fd0c">alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler</a>
 </li>
+<li>waitOnInputChange()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_input_controller_1_1test_1_1_mock_handler.html#a7775d994620e09cae25eb0b713c1474b">alexaClientSDK::acsdkInputController::test::MockHandler</a>
+</li>
 <li>waitOnMessageRouter()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_message_router_test.html#a9456435185c5b44be9500a4f8e301d1e">alexaClientSDK::acl::test::MessageRouterTest</a>
 </li>
@@ -278,6 +287,12 @@ $(function() {
 </li>
 <li>waitUntilSeeked()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#acb0960bc12e9f4f1d3e61c1199f5371c">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
+</li>
+<li>waitUntilStateEquals()
+: <a class="el" href="class_artifact_under_test.html#a0329405521aa0a60f54c998937880b3b">ArtifactUnderTest</a>
+</li>
+<li>WakeAudioProvider()
+: <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_provider.html#a0a48a5e6a014696a5047f13e8b2a26d3">alexaClientSDK::capabilityAgents::aip::AudioProvider</a>
 </li>
 <li>WakeGuard()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1power_1_1_wake_guard.html#af585f4ae18de9a2c115b56c0f3e64b3e">alexaClientSDK::avsCommon::utils::power::WakeGuard</a>
@@ -367,7 +382,7 @@ $(function() {
 </li>
 <li>withCapability()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html#abcca17a2c5d2676dcd2e9289047f512c">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_default_endpoint_builder.html#a722749145e56d3963f59e9e88b0f713c">alexaClientSDK::endpoints::DefaultEndpointBuilder</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_default_endpoint_builder.html#a5249a88eea10bd961c06dcd139a5adea">alexaClientSDK::endpoints::DefaultEndpointBuilder</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a6f7f46716c40f4bb66e43359b37113e1">alexaClientSDK::endpoints::EndpointBuilder</a>
 </li>
 <li>withCapabilityConfiguration()
@@ -403,6 +418,11 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_default_endpoint_builder.html#a58b67f25c462944aafc45ea28b94b8b0">alexaClientSDK::endpoints::DefaultEndpointBuilder</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a73bb9582a137b9a187c1c46b0527aa00">alexaClientSDK::endpoints::EndpointBuilder</a>
 </li>
+<li>withDeviceRegistration()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a64842f1223884b485bee6f7b68c8dac8">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_default_endpoint_builder.html#aadafdf802fa233b055d2848337041573">alexaClientSDK::endpoints::DefaultEndpointBuilder</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#ae3fe22e178b537388474284bd2ef5e5f">alexaClientSDK::endpoints::EndpointBuilder</a>
+</li>
 <li>withDialogUXStateAggregator()
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#ab1619c4ad8a3ab40d4c533ba38a4c04e">alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_external_capabilities_builder.html#ade6730c899a109e782d19a661e1b0ecf">alexaClientSDK::sampleApp::ExternalCapabilitiesBuilder</a>
@@ -429,6 +449,9 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ade2ccb70a80d2de0638b6d9f6f33237a">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_default_endpoint_builder.html#a4fc597b18367994e1977101db5f10893">alexaClientSDK::endpoints::DefaultEndpointBuilder</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#a05bb5f74852c5a7a418f641ae174be9f">alexaClientSDK::endpoints::EndpointBuilder</a>
+</li>
+<li>withinBounds()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#ad8fe4a3f1de6175cadbbab74319dd99f">alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface</a>
 </li>
 <li>withInternetConnectionMonitor()
 : <a class="el" href="classalexa_client_s_d_k_1_1default_client_1_1_external_capabilities_builder_interface.html#a29d11ebedc68a844ea8245fe59fa7318">alexaClientSDK::defaultClient::ExternalCapabilitiesBuilderInterface</a>
@@ -518,7 +541,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_worker_thread.html#ad712c608279652714f1c0da0292dfa53">alexaClientSDK::avsCommon::utils::threading::WorkerThread</a>
 </li>
 <li>write()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html#ad5648bd947f38496250be707ab4e6d05">alexaClientSDK::avsCommon::avs::attachment::AttachmentWriter</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_download_stream.html#af5edf20044ac67c2137379cb90e68826">alexaClientSDK::acsdkAssets::common::DownloadStream</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html#ad5648bd947f38496250be707ab4e6d05">alexaClientSDK::avsCommon::avs::attachment::AttachmentWriter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_in_process_attachment_writer.html#a5d846aac2260fae7a3bd4f14d4ec01c0">alexaClientSDK::avsCommon::avs::attachment::InProcessAttachmentWriter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html#a04672c1926ab9ceedb3569f35f82bd7e">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Writer&lt; T &gt;</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_testable_attachment_writer.html#aac0c87182c1d404adf4bfa831fdea727">alexaClientSDK::avsCommon::utils::TestableAttachmentWriter</a>
@@ -529,6 +553,10 @@ $(function() {
 <li>writeInput()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_f_fmpeg_decoder_test.html#aaeea28dcb28d8f32e583a70b46d11518">alexaClientSDK::mediaPlayer::android::test::FFmpegDecoderTest</a>
 </li>
+<li>writeProperty()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_communication_1_1_in_memory_communication_properties_handler.html#a58cdd64c606f3d11b7ac994261ac1409">alexaClientSDK::acsdkCommunication::InMemoryCommunicationPropertiesHandler&lt; T &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_properties_handler_interface.html#ab8d77b217918d2d63f234d4a50d848b5">alexaClientSDK::acsdkCommunicationInterfaces::CommunicationPropertiesHandlerInterface&lt; T &gt;</a>
+</li>
 <li>Writer()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_writer.html#ac52ff2513d45151d1b20cdbbb5ab1cd0">alexaClientSDK::avsCommon::utils::sds::SharedDataStream::Writer&lt; T &gt;</a>
 </li>
@@ -537,7 +565,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

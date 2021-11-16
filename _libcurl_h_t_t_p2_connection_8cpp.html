@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -102,6 +102,8 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_libcurl_h_t_t_p2_connection_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td></tr>
 <tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aced8826128f8111edd7b86bb8e3fcfbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_libcurl_h_t_t_p2_connection_8cpp.html#aced8826128f8111edd7b86bb8e3fcfbe">LX_P</a>(event)&#160;&#160;&#160;<a class="el" href="_synchronize_state_sender_factory_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event).p(&quot;this&quot;, this)</td></tr>
+<tr class="separator:aced8826128f8111edd7b86bb8e3fcfbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -136,7 +138,32 @@ Functions</h2></td></tr>
 <p>Create a LogEntry using this file's TAG and the specified event string.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">The</td><td>event string for this <code>LogEntry</code>. </td></tr>
+    <tr><td class="paramname">event</td><td>The event string for this <code>LogEntry</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aced8826128f8111edd7b86bb8e3fcfbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aced8826128f8111edd7b86bb8e3fcfbe">&#9670;&nbsp;</a></span>LX_P</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LX_P</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">event</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="_synchronize_state_sender_factory_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event).p(&quot;this&quot;, this)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a LogEntry using this file's TAG, the specified event string, and object pointer as the first argument.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The event string for this <code>LogEntry</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -147,7 +174,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

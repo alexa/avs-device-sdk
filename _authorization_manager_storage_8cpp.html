@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,14 +67,13 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">AuthorizationManagerStorage.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_authorization_manager_storage_8h_source.html">acsdkAuthorization/AuthorizationManagerStorage.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_authorization_2acsdk_authorization_2private_include_2acsdk_authorization_2private_2_logging_8h_source.html">acsdkAuthorization/private/Logging.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AuthorizationManagerStorage.cpp:</div>
 <div class="dyncontent">
@@ -90,11 +89,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_authorization"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization.html">alexaClientSDK::acsdkAuthorization</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_authorization_manager_storage_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td></tr>
-<tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -114,32 +108,6 @@ Variables</h2></td></tr>
 <tr class="memdesc:aae74111c7f6f80863a391a6978f064b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The authAdapterId key associated with the storage userId.  <a href="namespacealexa_client_s_d_k_1_1acsdk_authorization.html#aae74111c7f6f80863a391a6978f064b9">More...</a><br /></td></tr>
 <tr class="separator:aae74111c7f6f80863a391a6978f064b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8bc9ca8e55a0ebf538e46e28bf26262">&#9670;&nbsp;</a></span>LX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LX</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Create a LogEntry using this file's TAG and the specified event string.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">The</td><td>event string for this <code>LogEntry</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="ab85226a738f96d6cb13b16f78fa9e2c9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab85226a738f96d6cb13b16f78fa9e2c9">&#9670;&nbsp;</a></span>TAG</h2>
@@ -169,7 +137,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

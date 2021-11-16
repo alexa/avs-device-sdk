@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/SDKComponent/include/SDK
   dir_d9420befba37a7821a244d1550df84de [shape=box, label="SDKComponent", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_d9420befba37a7821a244d1550df84de.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_d9420befba37a7821a244d1550df84de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000135_000017.html"];
+  dir_d9420befba37a7821a244d1550df84de->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000149_000017.html"];
 }

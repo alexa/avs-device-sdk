@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -94,6 +94,9 @@ Collaboration diagram for alexaClientSDK::storage::sqliteStorage::SQLiteMiscStor
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9d3b2a62df5867b38c87170afbd7255a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#a9d3b2a62df5867b38c87170afbd7255a">~SQLiteMiscStorage</a> ()</td></tr>
 <tr class="separator:a9d3b2a62df5867b38c87170afbd7255a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc468710a2f0836a91e0432096377f76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#adc468710a2f0836a91e0432096377f76">getDatabase</a> ()</td></tr>
+<tr class="memdesc:adc468710a2f0836a91e0432096377f76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides reference to a database.  <a href="#adc468710a2f0836a91e0432096377f76">More...</a><br /></td></tr>
+<tr class="separator:adc468710a2f0836a91e0432096377f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">MiscStorageInterface method overrides.</div></td></tr>
 <tr class="memitem:af0c76f834edda6ac122ea1a72a3b4d75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#af0c76f834edda6ac122ea1a72a3b4d75">createDatabase</a> () override</td></tr>
 <tr class="separator:af0c76f834edda6ac122ea1a72a3b4d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,6 +138,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ad93609478ff400d40d1a17a63409cf6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab45c953c581dc83429eecce1c8173280"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html">SQLiteMiscStorage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#ab45c953c581dc83429eecce1c8173280">create</a> (const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1configuration_1_1_configuration_node.html">avsCommon::utils::configuration::ConfigurationNode</a> &amp;configurationRoot)</td></tr>
 <tr class="separator:ab45c953c581dc83429eecce1c8173280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac037620ab4b8e4d8c41b861400cde942"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html">SQLiteMiscStorage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html#ac037620ab4b8e4d8c41b861400cde942">create</a> (const std::string &amp;databasePath)</td></tr>
+<tr class="separator:ac037620ab4b8e4d8c41b861400cde942"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -310,7 +315,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <a id="ab45c953c581dc83429eecce1c8173280"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab45c953c581dc83429eecce1c8173280">&#9670;&nbsp;</a></span>create()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab45c953c581dc83429eecce1c8173280">&#9670;&nbsp;</a></span>create() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,10 +338,45 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Factory method for creating a storage object for a SQLite database. Note that the actual database will not be created by this function.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000077">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000082">Deprecated:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">configurationRoot</td><td>The global config object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the SQLiteAlertStorage object, nullptr if there's an error creating it. </dd></dl>
+
+</div>
+</div>
+<a id="ac037620ab4b8e4d8c41b861400cde942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac037620ab4b8e4d8c41b861400cde942">&#9670;&nbsp;</a></span>create() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html">SQLiteMiscStorage</a> &gt; alexaClientSDK::storage::sqliteStorage::SQLiteMiscStorage::create </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>databasePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Factory method for creating a storage object for a SQLite database. Note that the actual database will not be created by this function.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000083">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">databasePath</td><td>Path to database </td></tr>
   </table>
   </dd>
 </dl>
@@ -573,6 +613,27 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true If the value was found out ok, <code>false</code> if not. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html#a0519cbc3e78ea65a0cf90626e5a36699">alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface</a>.</p>
+
+</div>
+</div>
+<a id="adc468710a2f0836a91e0432096377f76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc468710a2f0836a91e0432096377f76">&#9670;&nbsp;</a></span>getDatabase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html">SQLiteDatabase</a> &amp; alexaClientSDK::storage::sqliteStorage::SQLiteMiscStorage::getDatabase </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides reference to a database. </p>
+<p>This method provides a reference to inner database object for database maintenance operations. The access to the database is not serialized against parallel access and should be used only when it is guaranteed there are no other consumers of the objects.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to database. </dd></dl>
 
 </div>
 </div>
@@ -988,7 +1049,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

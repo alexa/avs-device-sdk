@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/core/acsdkCodecUtils/test" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_4910684639fe6513fc4f3756d7fc0f02 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkCodecUtils" fontname="Helvetica", fontsize="10", URL="dir_4910684639fe6513fc4f3756d7fc0f02.html"]
+  dir_50b84a10a64184fc8a76b1ca35468dfa [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_50b84a10a64184fc8a76b1ca35468dfa.html"];
+  }
+  dir_fc7fcddaf0a24ca31eeda4e35021934b [shape=box label="src" URL="dir_fc7fcddaf0a24ca31eeda4e35021934b.html"];
+  dir_397128686068e246c885b3648fcff5bf [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_397128686068e246c885b3648fcff5bf.html"];
+  dir_fc7fcddaf0a24ca31eeda4e35021934b->dir_397128686068e246c885b3648fcff5bf [headlabel="1", labeldistance=1.5 headhref="dir_000538_000533.html"];
+  dir_50b84a10a64184fc8a76b1ca35468dfa->dir_fc7fcddaf0a24ca31eeda4e35021934b [headlabel="1", labeldistance=1.5 headhref="dir_000539_000538.html"];
+  dir_50b84a10a64184fc8a76b1ca35468dfa->dir_397128686068e246c885b3648fcff5bf [headlabel="1", labeldistance=1.5 headhref="dir_000539_000533.html"];
+}

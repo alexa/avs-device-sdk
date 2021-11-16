@@ -24,8 +24,7 @@ digraph "/workplace/avs-device-sdk/ApplicationUtilities/SDKComponent/test/SDKCom
   Node8 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="AVSCommon/Utils/SDKVersion.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_version_8h.html"];
-  Node9 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="AVSCommon/Utils/SDKVersion.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node10 [label="SDKComponent/SDKComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_component_8h.html"];
   Node10 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

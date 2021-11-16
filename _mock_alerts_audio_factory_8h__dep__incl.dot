@@ -5,4 +5,6 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInt
   Node10 [label="/workplace/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/Audio/MockAlertsAudioFactory.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node10 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 [label="/workplace/avs-device\l-sdk/capabilities/Alerts\l/acsdkAlerts/test/AlertsCapability\lAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alerts_capability_agent_test_8cpp.html"];
+  Node10 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="/workplace/avs-device\l-sdk/capabilities/Alerts\l/acsdkAlerts/test/SQLiteAlertStorage\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_q_lite_alert_storage_test_8cpp.html"];
 }

@@ -61,7 +61,7 @@ digraph "/workplace/avs-device-sdk/Settings/include/Settings/CloudControlledSett
   Node25 [label="AVSCommon/Utils/Metrics\l/DataType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_data_type_8h.html"];
   Node25 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node22 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="AVSCommon/Utils/Metrics\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_priority_8h.html"];
+  Node26 [label="AVSCommon/Utils/Metrics\l/Priority.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_metrics_2_priority_8h.html"];
   Node22 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 [label="AVSCommon/Utils/Optional.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_optional_8h.html"];
   Node27 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

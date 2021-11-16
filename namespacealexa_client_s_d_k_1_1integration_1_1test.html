@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -2627,38 +2627,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a14fd63c2859f64ffb30daf8313fd28f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14fd63c2859f64ffb30daf8313fd28f7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/65]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_twoDirectiveHandlersRegisteredForADirective&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test <code>DirectiveSequencer's</code> ability to refuse to overwrite registration of a directive handler.</p>
-<p>To do this, an attempt is made to set two different handlers for the same directive. The <code>DirectiveSequencer</code> is expected to refuse the second handler. This directive is known to come down consistently in response to a Recognize event. The Handler that was first set is the only one that should receive the directive. </p>
-
-</div>
-</div>
 <a id="ab13f03a9e04171ba24ed683101d5054c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab13f03a9e04171ba24ed683101d5054c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/65]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab13f03a9e04171ba24ed683101d5054c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/65]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2688,6 +2658,36 @@ template&lt;typename T &gt; </div>
 <p>To do this, audio of "Alexa, wikipedia" is fed into a stream that is being read by a wake word engine. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with a SetMute, Speak, and ExpectSpeech directive. Audio of "Lions" is then fed into the stream and another recognize event is sent. Test AudioInputProcessor's ability to handle a simple interation triggered by a wakeword but no user response.</p>
 <p>To do this, audio of "Alexa, wikipedia" is fed into a stream that is being read by a wake word engine. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with a SetMute, Speak, and ExpectSpeech directive. Audio of "...." is then fed into the stream and another recognize event is sent but no directives are given in response. Test AudioInputProcessor's ability to handle a simple interation triggered by a tap to talk button.</p>
 <p>To do this, audio of "Tell me a joke" is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with a SetMute and Speak directive. </p>
+
+</div>
+</div>
+<a id="a14fd63c2859f64ffb30daf8313fd28f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14fd63c2859f64ffb30daf8313fd28f7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/65]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_twoDirectiveHandlersRegisteredForADirective&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test <code>DirectiveSequencer's</code> ability to refuse to overwrite registration of a directive handler.</p>
+<p>To do this, an attempt is made to set two different handlers for the same directive. The <code>DirectiveSequencer</code> is expected to refuse the second handler. This directive is known to come down consistently in response to a Recognize event. The Handler that was first set is the only one that should receive the directive. </p>
 
 </div>
 </div>
@@ -2751,8 +2751,36 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a8a52b6258738bc8b4190bdd03c45046e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a52b6258738bc8b4190bdd03c45046e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/65]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_test_tapToTalkTimeOpus&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa9a7733ff11384cbc598dd4fdfd1f8ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9a7733ff11384cbc598dd4fdfd1f8ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/65]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9a7733ff11384cbc598dd4fdfd1f8ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/65]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2778,34 +2806,6 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test <code>DirectiveSequencer's</code> ability to handle a multi-turn scenario</p>
 <p>This test is intended to test the Directive Sequencer's ability to go through a full loop of sending a recognize event that will prompt a multi-turn directive, receiving a directive group that contains ExpectSpeech, sending a recognize event to respond to Alexa's question, and receiving the final directive group. </p>
-
-</div>
-</div>
-<a id="a8a52b6258738bc8b4190bdd03c45046e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a52b6258738bc8b4190bdd03c45046e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/65]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_audio_input_processor_test.html">AudioInputProcessorTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_test_tapToTalkTimeOpus&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -2839,37 +2839,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a79ff2bdb7a9c7df0ffcd9d64d5b957aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79ff2bdb7a9c7df0ffcd9d64d5b957aa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/65]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_getAttachmentWithContentId&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test ability to get an attachment from <code>AttachmentManager</code>. </p>
-
-</div>
-</div>
 <a id="ac8c29a204e2d1661b16e960f0b7286f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8c29a204e2d1661b16e960f0b7286f6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/65]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c29a204e2d1661b16e960f0b7286f6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/65]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2895,6 +2866,35 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test AudioInputProcessor's ability to handle a silent interation triggered by a tap to talk button.</p>
 <p>To do this, audio of "....." is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds no directives. </p>
+
+</div>
+</div>
+<a id="a79ff2bdb7a9c7df0ffcd9d64d5b957aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79ff2bdb7a9c7df0ffcd9d64d5b957aa">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/65]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alexa_directive_sequencer_library_test.html">AlexaDirectiveSequencerLibraryTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_getAttachmentWithContentId&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test ability to get an attachment from <code>AttachmentManager</code>. </p>
 
 </div>
 </div>
@@ -2989,38 +2989,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aae30c95e0a3c6ba128f568482ec30347"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae30c95e0a3c6ba128f568482ec30347">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/65]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_testTimer_UserLongUnrelatedBargeInOnActive&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test when an alert is active and the user barges in and gets multiple speaks in response</p>
-<p>Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped. </p>
-
-</div>
-</div>
 <a id="a3e5931a2cb050f8e8bca4d83f86a63ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e5931a2cb050f8e8bca4d83f86a63ad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/65]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e5931a2cb050f8e8bca4d83f86a63ad">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/65]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3050,8 +3020,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a211ee2443efc7bf3e1a20b7b4fb8bd6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a211ee2443efc7bf3e1a20b7b4fb8bd6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/65]</span></h2>
+<a id="aae30c95e0a3c6ba128f568482ec30347"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae30c95e0a3c6ba128f568482ec30347">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/65]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3065,7 +3035,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">DISABLED_test_userSpeakingWhenAlertShouldBeActive&#160;</td>
+          <td class="paramtype">DISABLED_testTimer_UserLongUnrelatedBargeInOnActive&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -3075,13 +3045,13 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test when the user is speaking to Alexa and an alert becomes active</p>
-<p>Set a 5 second timer then start a recognize event using a hold to talk initiator but do not call stopCapture until the alert has become active in the background. Once the alert is active, call stopCapture and see that is is in the foreground before locally stopping it. </p>
+<p>Test when an alert is active and the user barges in and gets multiple speaks in response</p>
+<p>Set a 5 second timer and wait until it is active. Send a recognize event asking "what's up" and see that the alert goes into the background. When all the speaks are complete, the alert is forgrounded and can be locally stopped. </p>
 
 </div>
 </div>
 <a id="a1cac77a955d02d2a1115603690915660"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cac77a955d02d2a1115603690915660">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/65]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cac77a955d02d2a1115603690915660">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/65]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3107,6 +3077,36 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Test AudioInputProcessor's ability to handle a multiturn interation triggered by a tap to talk button but no user response.</p>
 <p>To do this, audio of "Wikipedia" is fed into a stream after button sends recognize to AudioInputProcessor. The AudioInputProcessor is then observed to send a Recognize event to AVS which responds with a SetMute, Speak, and ExpectSpeech directive. Audio of "...." is then fed into the stream and another recognize event is sent but no directives are given in response. </p>
+
+</div>
+</div>
+<a id="a211ee2443efc7bf3e1a20b7b4fb8bd6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a211ee2443efc7bf3e1a20b7b4fb8bd6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/65]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::integration::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1integration_1_1test_1_1_alerts_test.html">AlertsTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DISABLED_test_userSpeakingWhenAlertShouldBeActive&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test when the user is speaking to Alexa and an alert becomes active</p>
+<p>Set a 5 second timer then start a recognize event using a hold to talk initiator but do not call stopCapture until the alert has become active in the background. Once the alert is active, call stopCapture and see that is is in the foreground before locally stopping it. </p>
 
 </div>
 </div>
@@ -8610,7 +8610,7 @@ template&lt;typename T &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,0 +1,18 @@
+digraph "/workplace/avs-device-sdk/shared/KWD/acsdkKWDProvider/include/acsdkKWDProvider" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_9e1fe2b8ef2de256782eb4aeb68ae3af {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_9e1fe2b8ef2de256782eb4aeb68ae3af.html"]
+  subgraph clusterdir_816969d95cac49c4c79af54b55faa46f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_816969d95cac49c4c79af54b55faa46f.html"];
+    dir_816969d95cac49c4c79af54b55faa46f [shape=plaintext label="acsdkKWDProvider"];
+    dir_92719b94c1b1b465b843fbc3b25efbb1 [shape=box label="KWDProvider" color="black" fillcolor="white" style="filled" URL="dir_92719b94c1b1b465b843fbc3b25efbb1.html"];
+  }
+  }
+  dir_e571f3a40729e98c18f677039f217076 [shape=box label="acsdkKWDImplementations" fillcolor="white" style="filled" color="red" URL="dir_e571f3a40729e98c18f677039f217076.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_e571f3a40729e98c18f677039f217076->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="11", labeldistance=1.5 headhref="dir_000760_000017.html"];
+  dir_92719b94c1b1b465b843fbc3b25efbb1->dir_e571f3a40729e98c18f677039f217076 [headlabel="1", labeldistance=1.5 headhref="dir_000773_000760.html"];
+  dir_92719b94c1b1b465b843fbc3b25efbb1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000773_000017.html"];
+}

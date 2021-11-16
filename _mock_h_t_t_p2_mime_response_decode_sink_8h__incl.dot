@@ -48,9 +48,11 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/test/AVSCommon/Utils/HTTP2/Mo
   Node15 [label="AVSCommon/Utils/HTTP2\l/HTTP2SendStatus.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_send_status_8h.html"];
   Node14 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node16 [label="AVSCommon/Utils/Platform\lDefinitions.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_platform_definitions_8h.html"];
-  Node13 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 [label="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_send_data_result_8h.html"];
-  Node17 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="AVSCommon/Utils/SDKConfig.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node13 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="AVSCommon/Utils/HTTP2\l/HTTP2SendDataResult.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_h_t_t_p2_send_data_result_8h.html"];
+  Node18 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

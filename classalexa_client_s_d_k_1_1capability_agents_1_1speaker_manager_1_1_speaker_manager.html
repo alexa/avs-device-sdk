@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -163,6 +163,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af988062becf3883c3a4d8f685d032c1b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42646b5ca95313c48aac3b716eb05fa7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a42646b5ca95313c48aac3b716eb05fa7">hasReportableStateProperties</a> ()</td></tr>
 <tr class="separator:a42646b5ca95313c48aac3b716eb05fa7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b0cadb9cd573036bcb2578ec118fac inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a93b0cadb9cd573036bcb2578ec118fac">shouldQueryState</a> ()</td></tr>
+<tr class="separator:a93b0cadb9cd573036bcb2578ec118fac inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::ContextRequesterInterface</a></td></tr>
 <tr class="memitem:a761877550e7024ecd44aea4ca306b877 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html#a761877550e7024ecd44aea4ca306b877">~ContextRequesterInterface</a> ()=default</td></tr>
 <tr class="separator:a761877550e7024ecd44aea4ca306b877 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,10 +203,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ad7a8bfa6ffc8e75e1b678e878124980a"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">SpeakerManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html#ad7a8bfa6ffc8e75e1b678e878124980a">createSpeakerManagerCapabilityAgent</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;contextManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;messageSender, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;exceptionEncounteredSender, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; &amp;endpointCapabilitiesRegistrar, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder)</td></tr>
-<tr class="separator:ad7a8bfa6ffc8e75e1b678e878124980a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c650980daaeafc26e77052f359ef557"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html#a4c650980daaeafc26e77052f359ef557">create</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt;&gt; &amp;volumeInterfaces, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
-<tr class="separator:a4c650980daaeafc26e77052f359ef557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b958edf5d7c27ffd7d94a92c4c401a0"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">SpeakerManagerInterface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html#a9b958edf5d7c27ffd7d94a92c4c401a0">createSpeakerManagerCapabilityAgent</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; &amp;storage, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;contextManager, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; &amp;messageSender, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; &amp;exceptionEncounteredSender, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html">acsdkManufactory::Annotated</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_default_endpoint_annotation.html">avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation</a>, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_capabilities_registrar_interface.html">avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface</a> &gt; &amp;endpointCapabilitiesRegistrar, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder)</td></tr>
+<tr class="separator:a9b958edf5d7c27ffd7d94a92c4c401a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1a6addf7e0434c2bc17e68633a67acb"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html#ad1a6addf7e0434c2bc17e68633a67acb">create</a> (const std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_storage_interface.html">SpeakerManagerStorageInterface</a> &gt; &amp;storage, const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt;&gt; &amp;volumeInterfaces, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; contextManager, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html">avsCommon::sdkInterfaces::MessageSenderInterface</a> &gt; messageSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_exception_encountered_sender_interface.html">avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface</a> &gt; exceptionEncounteredSender, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
+<tr class="separator:ad1a6addf7e0434c2bc17e68633a67acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -389,7 +391,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000030">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000033">Deprecated:</a></b></dt><dd></dd></dl>
 <p>Adjusts the volume for ChannelVolumeInterfaces of a certain <code>Type</code> with a volume delta.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -432,8 +434,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a4c650980daaeafc26e77052f359ef557"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c650980daaeafc26e77052f359ef557">&#9670;&nbsp;</a></span>create()</h2>
+<a id="ad1a6addf7e0434c2bc17e68633a67acb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1a6addf7e0434c2bc17e68633a67acb">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -444,6 +446,12 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a> &gt; alexaClientSDK::capabilityAgents::speakerManager::SpeakerManager::create </td>
           <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_storage_interface.html">SpeakerManagerStorageInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html">avsCommon::sdkInterfaces::ChannelVolumeInterface</a> &gt;&gt; &amp;&#160;</td>
           <td class="paramname"><em>volumeInterfaces</em>, </td>
         </tr>
@@ -486,6 +494,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Create an instance of <code><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a></code>, and register the <code>ChannelVolumeInterfaces</code> that will be controlled by it. ChannelVolumeInterfaces will be grouped by <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_channel_volume_interface.html#aefa1d302dab9395c7a1493078e6fb04f">ChannelVolumeInterface::Type</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">storage</td><td>A <code><a class="el" href="structalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_storage_interface.html">SpeakerManagerStorageInterface</a></code> to access persistent configuration. </td></tr>
     <tr><td class="paramname">volumeInterfaces</td><td>The <code>ChannelVolumeInterfaces</code> to register. </td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>A <code>ContextManagerInterface</code> to manage the context. </td></tr>
     <tr><td class="paramname">messageSender</td><td>A <code>MessageSenderInterface</code> to send messages to AVS. </td></tr>
@@ -497,8 +506,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad7a8bfa6ffc8e75e1b678e878124980a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7a8bfa6ffc8e75e1b678e878124980a">&#9670;&nbsp;</a></span>createSpeakerManagerCapabilityAgent()</h2>
+<a id="a9b958edf5d7c27ffd7d94a92c4c401a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b958edf5d7c27ffd7d94a92c4c401a0">&#9670;&nbsp;</a></span>createSpeakerManagerCapabilityAgent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -509,6 +518,12 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_interface.html">SpeakerManagerInterface</a> &gt; alexaClientSDK::capabilityAgents::speakerManager::SpeakerManager::createSpeakerManagerCapabilityAgent </td>
           <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html">avsCommon::sdkInterfaces::storage::MiscStorageInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>storage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_manager_interface.html">avsCommon::sdkInterfaces::ContextManagerInterface</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>contextManager</em>, </td>
         </tr>
@@ -557,6 +572,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Create an instance of <code>SpeakerManagerInterface</code>. <code>ChannelVolumeInterfaces</code> can be registered via addChannelVolumeInterface.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">storage</td><td>A <code>MiscStorageInterface</code> to access persistent configuration. </td></tr>
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a></td><td>A <code>ContextManagerInterface</code> to manage the context. </td></tr>
     <tr><td class="paramname">messageSender</td><td>A <code>MessageSenderInterface</code> to send messages to AVS. </td></tr>
     <tr><td class="paramname">exceptionEncounteredSender</td><td>An <code>ExceptionEncounteredSenderInterface</code> to send directive processing exceptions to AVS. </td></tr>
@@ -911,7 +927,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000031">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000034">Deprecated:</a></b></dt><dd></dd></dl>
 <p>Sets the mute for ChannelVolumeInterfaces of a certain <code>Type</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1027,7 +1043,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000029">Deprecated:</a></b></dt><dd></dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000032">Deprecated:</a></b></dt><dd></dd></dl>
 <p>Set the volume for ChannelVolumeInterfaces of a certain <code>Type</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1052,7 +1068,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

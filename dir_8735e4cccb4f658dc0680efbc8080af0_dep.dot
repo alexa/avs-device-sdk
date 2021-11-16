@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/applications/acsdkSensoryAdapter/include/acsdkSensoryAdapter/Sensory" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0088c65b60c455f206c69fc279aa16fc {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkSensoryAdapter" fontname="Helvetica", fontsize="10", URL="dir_0088c65b60c455f206c69fc279aa16fc.html"]
+  dir_8735e4cccb4f658dc0680efbc8080af0 [shape=box, label="Sensory", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_8735e4cccb4f658dc0680efbc8080af0.html"];
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000116_000017.html"];
+  dir_8735e4cccb4f658dc0680efbc8080af0->dir_9982052f7ce695d12571567315b2fafa [headlabel="3", labeldistance=1.5 headhref="dir_000124_000116.html"];
+  dir_8735e4cccb4f658dc0680efbc8080af0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000124_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000116.html"];
+}

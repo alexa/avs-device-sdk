@@ -106,7 +106,7 @@ digraph "/workplace/avs-device-sdk/core/acsdkPostConnectOperationProviderRegistr
   Node37 [label="acsdkStartupManagerInterfaces\l/StartupNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_startup_notifier_interface_8h.html"];
   Node37 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node37 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node38 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node38 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node38 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node38 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node37 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

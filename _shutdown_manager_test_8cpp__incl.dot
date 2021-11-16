@@ -18,7 +18,7 @@ digraph "/workplace/avs-device-sdk/shared/acsdkShutdownManager/test/ShutdownMana
   Node6 [label="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shutdown_notifier_interface_8h.html"];
   Node6 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node7 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node7 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -35,7 +35,7 @@ digraph "/workplace/avs-device-sdk/shared/acsdkShutdownManager/test/ShutdownMana
   Node13 [label="acsdkShutdownManager\l/ShutdownNotifier.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shutdown_notifier_8h.html"];
   Node13 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 [label="acsdkNotifier/Notifier.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_8h.html"];
+  Node14 [label="acsdkNotifier/internal\l/Notifier.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_8h.html"];
   Node14 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node15 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node14 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

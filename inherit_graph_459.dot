@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::integration\l::test::holdToTalkButton",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1integration_1_1test_1_1hold_to_talk_button.html"];
+  Node0 [label="alexaClientSDK::avsCommon\l::utils::sds::InProcessSDSTraits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_in_process_s_d_s_traits.html",tooltip="Structure for specifying the traits of a SharedDataStream which works between threads in a single pro..."];
 }

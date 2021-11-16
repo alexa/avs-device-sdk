@@ -119,5 +119,6 @@ digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDK
   Node52 -> Node26 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node52 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node53 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_component_8cpp.html"];
-  Node8 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node54 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager\lMiscStorage.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_misc_storage_8cpp.html"];
 }

@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/capabilities/AssetManager/acsdkAssetManagerClientInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_07b4ac17d8fc69607b453186ce599c3b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="AssetManager" fontname="Helvetica", fontsize="10", URL="dir_07b4ac17d8fc69607b453186ce599c3b.html"]
+  subgraph clusterdir_3ba2035ca5da00ee02b55bb348a40df0 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_3ba2035ca5da00ee02b55bb348a40df0.html"];
+    dir_3ba2035ca5da00ee02b55bb348a40df0 [shape=plaintext label="acsdkAssetManagerClientInterfaces"];
+    dir_2775bcf5cfa589dd6ea5a332b45f864e [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_2775bcf5cfa589dd6ea5a332b45f864e.html"];
+  }
+  }
+  dir_de622777c97862544df14465483f72cc [shape=box label="DavsClient" fillcolor="white" style="filled" color="red" URL="dir_de622777c97862544df14465483f72cc.html"];
+  dir_2775bcf5cfa589dd6ea5a332b45f864e->dir_de622777c97862544df14465483f72cc [headlabel="6", labeldistance=1.5 headhref="dir_000307_000230.html"];
+}

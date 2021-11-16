@@ -9,8 +9,8 @@ digraph "/workplace/avs-device-sdk/applications/acsdkAndroidApplicationAudioPipe
   dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
   dir_17f2aaa44c0ff33b634df8d6348022d5 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_17f2aaa44c0ff33b634df8d6348022d5.html"];
   dir_9d34932954f3d83257e5e12e3f421a72 [shape=box label="MediaPlayer" fillcolor="white" style="filled" color="red" URL="dir_9d34932954f3d83257e5e12e3f421a72.html"];
-  dir_17f2aaa44c0ff33b634df8d6348022d5->dir_9982052f7ce695d12571567315b2fafa [headlabel="4", labeldistance=1.5 headhref="dir_000030_000598.html"];
-  dir_375f1c944b2b3aec10684fda8196bcca->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000038_000598.html"];
+  dir_17f2aaa44c0ff33b634df8d6348022d5->dir_9982052f7ce695d12571567315b2fafa [headlabel="4", labeldistance=1.5 headhref="dir_000030_000116.html"];
+  dir_375f1c944b2b3aec10684fda8196bcca->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000038_000116.html"];
   dir_375f1c944b2b3aec10684fda8196bcca->dir_17f2aaa44c0ff33b634df8d6348022d5 [headlabel="2", labeldistance=1.5 headhref="dir_000038_000030.html"];
-  dir_375f1c944b2b3aec10684fda8196bcca->dir_9d34932954f3d83257e5e12e3f421a72 [headlabel="2", labeldistance=1.5 headhref="dir_000038_000548.html"];
+  dir_375f1c944b2b3aec10684fda8196bcca->dir_9d34932954f3d83257e5e12e3f421a72 [headlabel="2", labeldistance=1.5 headhref="dir_000038_000660.html"];
 }

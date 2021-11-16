@@ -11,5 +11,5 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/PowerController/include" {
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_7ff25c6a5765995d2ece2c3b02f397d8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000396_000017.html"];
+  dir_7ff25c6a5765995d2ece2c3b02f397d8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="10", labeldistance=1.5 headhref="dir_000463_000017.html"];
 }

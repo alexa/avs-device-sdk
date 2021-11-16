@@ -26,7 +26,12 @@ var searchData=
   ['loglevelobserverinterface',['LogLevelObserverInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_level_observer_interface.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
   ['logstringformatter',['LogStringFormatter',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_string_formatter.html',1,'alexaClientSDK::avsCommon::utils::logger']]],
   ['lwaauthorizationadapter',['LWAAuthorizationAdapter',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_adapter.html',1,'alexaClientSDK::acsdkAuthorization::lwa']]],
+  ['lwaauthorizationadaptertest',['LWAAuthorizationAdapterTest',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_l_w_a_authorization_adapter_test.html',1,'alexaClientSDK::acsdkAuthorization::lwa::test']]],
   ['lwaauthorizationconfiguration',['LWAAuthorizationConfiguration',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_configuration.html',1,'alexaClientSDK::acsdkAuthorization::lwa']]],
   ['lwaauthorizationinterface',['LWAAuthorizationInterface',['../classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_interface.html',1,'alexaClientSDK::acsdkAuthorizationInterfaces::lwa']]],
-  ['lwaauthorizationstorageinterface',['LWAAuthorizationStorageInterface',['../classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html',1,'alexaClientSDK::acsdkAuthorizationInterfaces::lwa']]]
+  ['lwaauthorizationstorage',['LWAAuthorizationStorage',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_storage.html',1,'alexaClientSDK::acsdkAuthorization::lwa']]],
+  ['lwaauthorizationstorageinterface',['LWAAuthorizationStorageInterface',['../classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html',1,'alexaClientSDK::acsdkAuthorizationInterfaces::lwa']]],
+  ['lwaauthorizationstoragetest',['LWAAuthorizationStorageTest',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_l_w_a_authorization_storage_test.html',1,'alexaClientSDK::acsdkAuthorization::lwa::test']]],
+  ['lwaauthstoragemigrationtest',['LWAAuthStorageMigrationTest',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_l_w_a_auth_storage_migration_test.html',1,'alexaClientSDK::acsdkAuthorization::lwa::test']]],
+  ['lwastoragedatamigration',['LWAStorageDataMigration',['../classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_storage_data_migration.html',1,'alexaClientSDK::acsdkAuthorization::lwa']]]
 ];

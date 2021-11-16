@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -65,13 +65,21 @@ $(function() {
 
 <h3><a id="index_n"></a>- n -</h3><ul>
 <li>name()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">alexaClientSDK::avsCommon::utils::RequiresShutdown</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1client_1_1_artifact_wrapper.html#ac160a5431b1d25ca52fedb529dfed707">alexaClientSDK::acsdkAssets::client::ArtifactWrapper</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1client_interfaces_1_1_artifact_wrapper_interface.html#aeaad08b2e6a113c11b52df4b436d84c3">alexaClientSDK::acsdkAssets::clientInterfaces::ArtifactWrapperInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1manager_1_1_requester.html#a43598ae3160a111a3a73b2122e4618c7">alexaClientSDK::acsdkAssets::manager::Requester</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html#a745cd4dc404db52f7d0afbf838454fac">alexaClientSDK::avsCommon::utils::RequiresShutdown</a>
 </li>
 <li>NamedReader()
 : <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_message_request_1_1_named_reader.html#ad59f803fc8f1d86592f1ddb19b92c0c3">alexaClientSDK::avsCommon::avs::MessageRequest::NamedReader</a>
 </li>
 <li>NamespaceAndName()
-: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html#a7bc70d8330d4a4ea1220ea11ad378da7">alexaClientSDK::avsCommon::avs::NamespaceAndName</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_namespace_and_name.html#a40f072c3351af4bdff805e2d0a0ace49">alexaClientSDK::avsCommon::avs::NamespaceAndName</a>
+</li>
+<li>needsUnpacking()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_interfaces_1_1_artifact_request.html#ae62c6654298a7830422bcac58e492eb0">alexaClientSDK::acsdkAssets::commonInterfaces::ArtifactRequest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_interfaces_1_1_davs_request.html#a9a5e337dbfc8440e6431919cf3a658aa">alexaClientSDK::acsdkAssets::commonInterfaces::DavsRequest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1common_interfaces_1_1_url_request.html#a76332e71d529382f21d3c45009b0a085">alexaClientSDK::acsdkAssets::commonInterfaces::UrlRequest</a>
 </li>
 <li>networkInfo()
 : <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html#a20635ea9eb07765a7ee99dea3b9ebbd7">alexaClientSDK::sampleApp::InteractionManager</a>
@@ -146,10 +154,10 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_condition_variable_wrapper.html#ae0604a45e12ba1b22fe70093f9adf31e">alexaClientSDK::avsCommon::utils::threading::ConditionVariableWrapper</a>
 </li>
 <li>notifyKeyWordDetectorStateObservers()
-: <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html#a6d441867552906f2d40bfdb338056ee0">alexaClientSDK::kwd::AbstractKeywordDetector</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html#a3c5e0a9453310ea7bf4bc472d61cc61e">alexaClientSDK::acsdkKWDImplementations::AbstractKeywordDetector</a>
 </li>
 <li>notifyKeyWordObservers()
-: <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html#a6f0c847c62d5842c96144a15b7bf832b">alexaClientSDK::kwd::AbstractKeywordDetector</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html#a52a0d1241d82237911608c778de3b788">alexaClientSDK::acsdkKWDImplementations::AbstractKeywordDetector</a>
 </li>
 <li>notifyObserver()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_focus_manager_interface_1_1_activity.html#af298cc8bfbc191f945ac54e203536899">alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface::Activity</a>
@@ -197,6 +205,9 @@ $(function() {
 <li>notifyOne()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_condition_variable_wrapper.html#ae1fd82306954b0c366fac0c2160967c2">alexaClientSDK::avsCommon::utils::threading::ConditionVariableWrapper</a>
 </li>
+<li>notifyUpdateIsAvailableLocked()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_assets_1_1manager_1_1_requester.html#abedb101c22d090e974d4369c6c8f0578">alexaClientSDK::acsdkAssets::manager::Requester</a>
+</li>
 <li>now()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html#a2e3524c782c5490aac64e27f0887e23e">alexaClientSDK::avsCommon::utils::timing::TimePoint</a>
 </li>
@@ -211,7 +222,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

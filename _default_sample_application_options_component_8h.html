@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,6 +74,8 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_component_8h_source.html">acsdkManufactory/Component.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_crypto_factory_interface_8h_source.html">acsdkCryptoInterfaces/CryptoFactoryInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_key_store_interface_8h_source.html">acsdkCryptoInterfaces/KeyStoreInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_u_i_manager_interface_8h_source.html">acsdkSampleApplicationInterfaces/UIManagerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_auth_delegate_interface_8h_source.html">AVSCommon/SDKInterfaces/AuthDelegateInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_a_v_s_connection_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/AVSConnectionManagerInterface.h</a>&gt;</code><br />
@@ -111,8 +113,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a46f56b9cf64e66bac9e5e9984ca71c8e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#a46f56b9cf64e66bac9e5e9984ca71c8e">alexaClientSDK::acsdkSampleApplication::SampleApplicationOptionsComponent</a> = acsdkManufactory::Component&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt;, std::shared_ptr&lt; avsCommon::utils::logger::Logger &gt;, std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; authorization::cblAuthDelegate::CBLAuthRequesterInterface &gt; &gt;, acsdkManufactory::Import&lt; std::unique_ptr&lt; avsCommon::utils::libcurlUtils::HttpPostInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; registrationManager::CustomerDataManagerInterface &gt; &gt;&gt;</td></tr>
-<tr class="separator:a46f56b9cf64e66bac9e5e9984ca71c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a9de02a50ffcf1dda0c0d294e16ee0a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_sample_application.html#a1a9de02a50ffcf1dda0c0d294e16ee0a">alexaClientSDK::acsdkSampleApplication::SampleApplicationOptionsComponent</a> = acsdkManufactory::Component&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::AuthDelegateInterface &gt;, std::shared_ptr&lt; avsCommon::utils::logger::Logger &gt;, std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; authorization::cblAuthDelegate::CBLAuthRequesterInterface &gt; &gt;, acsdkManufactory::Import&lt; std::unique_ptr&lt; avsCommon::utils::libcurlUtils::HttpPostInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::DeviceInfo &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; registrationManager::CustomerDataManagerInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; acsdkCryptoInterfaces::CryptoFactoryInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; acsdkCryptoInterfaces::KeyStoreInterface &gt; &gt;&gt;</td></tr>
+<tr class="separator:a1a9de02a50ffcf1dda0c0d294e16ee0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -123,7 +125,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

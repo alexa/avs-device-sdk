@@ -10,7 +10,7 @@ digraph "/workplace/avs-device-sdk/Metrics" {
     dir_9f62398617d82962c1cec148da29c672 [shape=box label="UplCalculator" color="red" fillcolor="white" style="filled" URL="dir_9f62398617d82962c1cec148da29c672.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_040ed820c8939930f4ffbf04d6923076->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000560_000017.html"];
-  dir_9f62398617d82962c1cec148da29c672->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000568_000017.html"];
-  dir_88bc15e9d162c836057111d08acd2c60->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000564_000017.html"];
+  dir_040ed820c8939930f4ffbf04d6923076->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000672_000017.html"];
+  dir_9f62398617d82962c1cec148da29c672->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="27", labeldistance=1.5 headhref="dir_000680_000017.html"];
+  dir_88bc15e9d162c836057111d08acd2c60->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="5", labeldistance=1.5 headhref="dir_000676_000017.html"];
 }

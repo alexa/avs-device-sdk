@@ -7,4 +7,6 @@ digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorizationInterfac
   Node8 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/include\l/acsdkAuthorization/AuthorizationManager.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_8h.html"];
   Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/src\l/AuthorizationManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_8cpp.html"];
+  Node8 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/test\l/AuthorizationManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_test_8cpp.html"];
 }

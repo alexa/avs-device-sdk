@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -152,6 +152,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aee900ef2ed66ca8f9653877a1db860d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac54c08dceae8abdb6bdd87e5e3b5af51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#ac54c08dceae8abdb6bdd87e5e3b5af51">onFocusChanged</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a066217aef6bc1e0e18dd3a13f467d275">avsCommon::avs::FocusState</a> newFocus, <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1avs.html#a31e011146a25762bffff08aef6d8a361">avsCommon::avs::MixingBehavior</a> behavior) override</td></tr>
 <tr class="separator:ac54c08dceae8abdb6bdd87e5e3b5af51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">BluetoothLocalInterface Functions</div></td></tr>
+<tr class="memitem:ac43acb5ad159dd95d05fde31f8c1042a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#ac43acb5ad159dd95d05fde31f8c1042a">setDiscoverableMode</a> (bool discoverable) override</td></tr>
+<tr class="separator:ac43acb5ad159dd95d05fde31f8c1042a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c8473107d9cc3f49530b064351b18fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a5c8473107d9cc3f49530b064351b18fd">setScanMode</a> (bool scanning) override</td></tr>
+<tr class="separator:a5c8473107d9cc3f49530b064351b18fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03b9c6459fde7448086d675ae9062b36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a03b9c6459fde7448086d675ae9062b36">pair</a> (const std::string &amp;addr) override</td></tr>
+<tr class="separator:a03b9c6459fde7448086d675ae9062b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fbdf696b4dca204c72b4f5292a0c0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a44fbdf696b4dca204c72b4f5292a0c0a">unpair</a> (const std::string &amp;addr) override</td></tr>
+<tr class="separator:a44fbdf696b4dca204c72b4f5292a0c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9985078791c866a72145e9a3b39babaf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a9985078791c866a72145e9a3b39babaf">connect</a> (const std::string &amp;addr) override</td></tr>
+<tr class="separator:a9985078791c866a72145e9a3b39babaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33c798505435e11a1232f484b1b288e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a33c798505435e11a1232f484b1b288e3">disconnect</a> (const std::string &amp;addr) override</td></tr>
+<tr class="separator:a33c798505435e11a1232f484b1b288e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">CapabilityConfigurationInterface Functions</div></td></tr>
 <tr class="memitem:a766ec797c8ee2b0913ea7c2cecb9062b"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; std::shared_ptr&lt; <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_configuration.html">avsCommon::avs::CapabilityConfiguration</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a766ec797c8ee2b0913ea7c2cecb9062b">getCapabilityConfigurations</a> () override</td></tr>
 <tr class="separator:a766ec797c8ee2b0913ea7c2cecb9062b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +189,9 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">CustomerDataHandler Functions</div></td></tr>
 <tr class="memitem:a984c62571f5cf18a03b09327d4115f99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth.html#a984c62571f5cf18a03b09327d4115f99">clearData</a> () override</td></tr>
 <tr class="separator:a984c62571f5cf18a03b09327d4115f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a></td></tr>
+<tr class="memitem:a9de435799c99ced6b2cb9af34798e853 inherit pub_methods_classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#a9de435799c99ced6b2cb9af34798e853">~BluetoothLocalInterface</a> ()=default</td></tr>
+<tr class="separator:a9de435799c99ced6b2cb9af34798e853 inherit pub_methods_classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html">alexaClientSDK::avsCommon::avs::CapabilityAgent</a></td></tr>
 <tr class="memitem:ab6745fae4f7b144f64d34251c76d14f7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent.html#ab6745fae4f7b144f64d34251c76d14f7">~CapabilityAgent</a> ()=default</td></tr>
 <tr class="separator:ab6745fae4f7b144f64d34251c76d14f7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_capability_agent"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,6 +224,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af988062becf3883c3a4d8f685d032c1b inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42646b5ca95313c48aac3b716eb05fa7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a42646b5ca95313c48aac3b716eb05fa7">hasReportableStateProperties</a> ()</td></tr>
 <tr class="separator:a42646b5ca95313c48aac3b716eb05fa7 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b0cadb9cd573036bcb2578ec118fac inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html#a93b0cadb9cd573036bcb2578ec118fac">shouldQueryState</a> ()</td></tr>
+<tr class="separator:a93b0cadb9cd573036bcb2578ec118fac inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::ContextRequesterInterface</a></td></tr>
 <tr class="memitem:a761877550e7024ecd44aea4ca306b877 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface.html#a761877550e7024ecd44aea4ca306b877">~ContextRequesterInterface</a> ()=default</td></tr>
 <tr class="separator:a761877550e7024ecd44aea4ca306b877 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_context_requester_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -503,6 +521,41 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
 
 </div>
 </div>
+<a id="a9985078791c866a72145e9a3b39babaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9985078791c866a72145e9a3b39babaf">&#9670;&nbsp;</a></span>connect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkBluetooth::Bluetooth::connect </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Connect with the device matching the given MAC address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mac</td><td>The MAC address associated with the device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#a92fcfbe0c1b2757f5bbd777b32dff4af">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>.</p>
+
+</div>
+</div>
 <a id="a36b08697a11b7ed20ae6f78a85d824c9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a36b08697a11b7ed20ae6f78a85d824c9">&#9670;&nbsp;</a></span>createBluetoothCapabilityAgent()</h2>
 
@@ -628,6 +681,41 @@ This method is called while CustomerDataManager is in a locked state. Do not cal
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a33c798505435e11a1232f484b1b288e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33c798505435e11a1232f484b1b288e3">&#9670;&nbsp;</a></span>disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkBluetooth::Bluetooth::disconnect </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Disconnect from the device matching the given MAC address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mac</td><td>The MAC address associated with the device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#a1ff2bcff63346cd948f49025a673578c">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>.</p>
 
 </div>
 </div>
@@ -819,7 +907,7 @@ template&lt;typename ServiceType &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>This is called by the ContextManager once the context is ready and available.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000021">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the source endpoint.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000023">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the source endpoint.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -856,7 +944,7 @@ template&lt;typename ServiceType &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>The <a class="el" href="namespacealexa_client_s_d_k_1_1context_manager.html">contextManager</a> calls this if it is unable to process a <code>getContext</code> request successfully.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000022">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the optional token.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000024">Deprecated:</a></b></dt><dd>This method is being deprecated since it cannot specify the optional token.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The <code>ContextRequester</code> should perform minimum processing and return quickly. Otherwise it will block the processing of updating the of other <code>ContextProviders</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1204,6 +1292,41 @@ template&lt;typename ServiceType &gt; </div>
 
 </div>
 </div>
+<a id="a03b9c6459fde7448086d675ae9062b36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03b9c6459fde7448086d675ae9062b36">&#9670;&nbsp;</a></span>pair()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkBluetooth::Bluetooth::pair </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Pair with the device matching the given MAC address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mac</td><td>The MAC address associated with the device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#ab334143864525ddb40b0b32550546d09">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>.</p>
+
+</div>
+</div>
 <a id="ab8373a19801f01cd2710e8c128c0fa3a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab8373a19801f01cd2710e8c128c0fa3a">&#9670;&nbsp;</a></span>preHandleDirective()</h2>
 
@@ -1230,6 +1353,111 @@ template&lt;typename ServiceType &gt; </div>
 
 </div>
 </div>
+<a id="ac43acb5ad159dd95d05fde31f8c1042a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac43acb5ad159dd95d05fde31f8c1042a">&#9670;&nbsp;</a></span>setDiscoverableMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkBluetooth::Bluetooth::setDiscoverableMode </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>discoverable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Puts the device into the desired discoverable mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">discoverable</td><td>A bool indicating whether it should be discoverable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#a03a7e3af956c8219b575823e1f592100">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>.</p>
+
+</div>
+</div>
+<a id="a5c8473107d9cc3f49530b064351b18fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c8473107d9cc3f49530b064351b18fd">&#9670;&nbsp;</a></span>setScanMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkBluetooth::Bluetooth::setScanMode </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>scanning</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Puts the device into the desired scan mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scanning</td><td>A bool indicating whether it should be scanning. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#a0b4015ef8b24b835ac9e54ff329794ff">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>.</p>
+
+</div>
+</div>
+<a id="a44fbdf696b4dca204c72b4f5292a0c0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44fbdf696b4dca204c72b4f5292a0c0a">&#9670;&nbsp;</a></span>unpair()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkBluetooth::Bluetooth::unpair </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Unpair with the device matching the given MAC address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mac</td><td>The MAC address associated with the device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html#aaae66cbbb91463f0611448badd0934fe">alexaClientSDK::acsdkBluetoothInterfaces::BluetoothLocalInterface</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetooth/include/acsdkBluetooth/<a class="el" href="_bluetooth_8h_source.html">Bluetooth.h</a></li>
 <li>/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetooth/src/<a class="el" href="_bluetooth_8cpp.html">Bluetooth.cpp</a></li>
@@ -1238,7 +1466,7 @@ template&lt;typename ServiceType &gt; </div>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

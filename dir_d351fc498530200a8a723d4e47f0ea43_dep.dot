@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/Settings/include/Settings/Types" {
   }
   dir_ad156fe40e841a0a09e302ebd8b7e03e [shape=box label="Storage" URL="dir_ad156fe40e841a0a09e302ebd8b7e03e.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_ad156fe40e841a0a09e302ebd8b7e03e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000591_000017.html"];
-  dir_d351fc498530200a8a723d4e47f0ea43->dir_ad156fe40e841a0a09e302ebd8b7e03e [headlabel="1", labeldistance=1.5 headhref="dir_000592_000591.html"];
-  dir_d351fc498530200a8a723d4e47f0ea43->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000592_000017.html"];
+  dir_ad156fe40e841a0a09e302ebd8b7e03e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000703_000017.html"];
+  dir_d351fc498530200a8a723d4e47f0ea43->dir_ad156fe40e841a0a09e302ebd8b7e03e [headlabel="1", labeldistance=1.5 headhref="dir_000704_000703.html"];
+  dir_d351fc498530200a8a723d4e47f0ea43->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000704_000017.html"];
 }

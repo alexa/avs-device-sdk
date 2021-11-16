@@ -30,6 +30,10 @@ var searchData=
   ['testspeechsynthesizerobserver_2eh',['TestSpeechSynthesizerObserver.h',['../_test_speech_synthesizer_observer_8h.html',1,'']]],
   ['testtimingadapterfactory_2ecpp',['TestTimingAdapterFactory.cpp',['../_test_timing_adapter_factory_8cpp.html',1,'']]],
   ['testtimingadapterfactory_2eh',['TestTimingAdapterFactory.h',['../_test_timing_adapter_factory_8h.html',1,'']]],
+  ['testtrace_2ecpp',['TestTrace.cpp',['../_test_trace_8cpp.html',1,'']]],
+  ['testtrace_2eh',['TestTrace.h',['../_test_trace_8h.html',1,'']]],
+  ['testutil_2ecpp',['TestUtil.cpp',['../_test_util_8cpp.html',1,'']]],
+  ['testutil_2eh',['TestUtil.h',['../_test_util_8h.html',1,'']]],
   ['textstyle_2ecpp',['TextStyle.cpp',['../_text_style_8cpp.html',1,'']]],
   ['textstyle_2eh',['TextStyle.h',['../_text_style_8h.html',1,'']]],
   ['textstyletest_2ecpp',['TextStyleTest.cpp',['../_text_style_test_8cpp.html',1,'']]],
@@ -49,6 +53,7 @@ var searchData=
   ['timerdelegatefactory_2eh',['TimerDelegateFactory.h',['../_timer_delegate_factory_8h.html',1,'']]],
   ['timerdelegatefactoryinterface_2eh',['TimerDelegateFactoryInterface.h',['../_timer_delegate_factory_interface_8h.html',1,'']]],
   ['timerdelegateinterface_2eh',['TimerDelegateInterface.h',['../_timer_delegate_interface_8h.html',1,'']]],
+  ['timerdelegatetest_2ecpp',['TimerDelegateTest.cpp',['../_timer_delegate_test_8cpp.html',1,'']]],
   ['timertest_2ecpp',['TimerTest.cpp',['../_timer_test_8cpp.html',1,'']]],
   ['timeutils_2ecpp',['TimeUtils.cpp',['../_time_utils_8cpp.html',1,'']]],
   ['timeutils_2eh',['TimeUtils.h',['../_time_utils_8h.html',1,'']]],
@@ -74,6 +79,8 @@ var searchData=
   ['transportobserverinterface_2eh',['TransportObserverInterface.h',['../_transport_observer_interface_8h.html',1,'']]],
   ['ttsuplcalculator_2ecpp',['TtsUplCalculator.cpp',['../_tts_upl_calculator_8cpp.html',1,'']]],
   ['ttsuplcalculator_2eh',['TtsUplCalculator.h',['../_tts_upl_calculator_8h.html',1,'']]],
+  ['type_2eh',['Type.h',['../_type_8h.html',1,'']]],
   ['typeindex_2eh',['TypeIndex.h',['../_type_index_8h.html',1,'']]],
+  ['types_2eh',['Types.h',['../_types_8h.html',1,'']]],
   ['typetraitshelper_2eh',['TypeTraitsHelper.h',['../_type_traits_helper_8h.html',1,'']]]
 ];

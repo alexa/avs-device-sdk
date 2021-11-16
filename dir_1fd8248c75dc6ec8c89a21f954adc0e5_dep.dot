@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/test/AVSCommon/Utils/Logger" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_834bf911d49030c30073fd5ed0d05185 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_834bf911d49030c30073fd5ed0d05185.html"]
+  dir_1fd8248c75dc6ec8c89a21f954adc0e5 [shape=box, label="Logger", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1fd8248c75dc6ec8c89a21f954adc0e5.html"];
+  }
+  dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
+  dir_1fd8248c75dc6ec8c89a21f954adc0e5->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="1", labeldistance=1.5 headhref="dir_000266_000211.html"];
+}

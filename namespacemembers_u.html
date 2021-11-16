@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -107,6 +107,9 @@ $(function() {
 <li>UNKNOWN_KEY_VALUE_TYPE
 : <a class="el" href="namespacealexa_client_s_d_k_1_1storage_1_1sqlite_storage.html#a90aa4526a73ebfbf8c9c03a1a009723b">alexaClientSDK::storage::sqliteStorage</a>
 </li>
+<li>UNLIMITED_RETRIES
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_properties.html#a52054d1017699e30b2aaf64b0f64a27f">alexaClientSDK::acsdkProperties</a>
+</li>
 <li>UNMUTE()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test.html#a1d928d540436bf4884080e94dd9d826e">alexaClientSDK::avsCommon::sdkInterfaces::test</a>
 </li>
@@ -115,6 +118,9 @@ $(function() {
 </li>
 <li>UNMUTE_STRING()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test.html#a8dc692042ad6d93e631222fda588d898">alexaClientSDK::avsCommon::sdkInterfaces::test</a>
+</li>
+<li>unpackLocked()
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_assets_1_1common.html#a7edba84d7e2ea747ad75a54b90db862b">alexaClientSDK::acsdkAssets::common</a>
 </li>
 <li>UNPAIR_DEVICES
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth.html#afef2894b49bbbe168295ca4f3a44f3ab">alexaClientSDK::acsdkBluetooth</a>
@@ -154,6 +160,9 @@ $(function() {
 <li>UPDATE_PROGRESS_REPORT_INTERVAL_PAYLOAD_TEST
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a9ae7c9e522ea834e38b6ecaaf46a1003">alexaClientSDK::acsdkAudioPlayer::test</a>
 </li>
+<li>UPDATE_RETRY_INTERVAL
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_assets_1_1manager.html#ad1cc9b929a76c1d0db4287e230179878">alexaClientSDK::acsdkAssets::manager</a>
+</li>
 <li>UpdateResult
 : <a class="el" href="namespacealexa_client_s_d_k_1_1endpoints_1_1test.html#a14c6f474553162079a6594326a98295e">alexaClientSDK::endpoints::test</a>
 </li>
@@ -184,6 +193,9 @@ $(function() {
 <li>URL_END_SCHEME_PATTERN
 : <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser.html#a3e77b880934e6f5e7a6d4e65f4c4fdb1">alexaClientSDK::playlistParser</a>
 </li>
+<li>URL_POWER_RESOURCE_TAG
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_assets_1_1manager.html#a455ffafab74698c67f8322acf5eb98ab">alexaClientSDK::acsdkAssets::manager</a>
+</li>
 <li>URL_TEST()
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player_1_1test.html#a63d5323512a63488398f755fd50a2a0a">alexaClientSDK::acsdkAudioPlayer::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test.html#a8783f6c7b8764d80e17151fa78742b43">alexaClientSDK::capabilityAgents::speechSynthesizer::test</a>
@@ -196,11 +208,36 @@ $(function() {
 : <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1test.html#a986ec94b8e325194390b065cc20a76a7">alexaClientSDK::mediaPlayer::test</a>
 , <a class="el" href="namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#ac9ad3b43e58f0a6938eafb9deb350af3">alexaClientSDK::playlistParser::test</a>
 </li>
+<li>USED_TIMESTAMP
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_assets_1_1manager.html#a96a0c8322f0a3acbc28cff24722f532b">alexaClientSDK::acsdkAssets::manager</a>
+</li>
 <li>USER_AGENT_OPTION
 : <a class="el" href="namespacealexa_client_s_d_k_1_1media_player_1_1android.html#a1d91947eb0823641f62009e1e91b2d9d">alexaClientSDK::mediaPlayer::android</a>
 </li>
+<li>USER_CODE
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test.html#adba3670d1aeba06b053bc8a2ed3868a4">alexaClientSDK::acsdkAuthorization::lwa::test</a>
+</li>
+<li>USER_ID
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test.html#acaaf16df058d86bcd7790e82dc47129f">alexaClientSDK::acsdkAuthorization::lwa::test</a>
+, <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1test.html#a466a62c716e0c393f8a81152ac847fd3">alexaClientSDK::acsdkAuthorization::test</a>
+</li>
+<li>USER_ID_2
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1test.html#a5464c5b80176e1dde01c6d81bcbf2fe9">alexaClientSDK::acsdkAuthorization::test</a>
+</li>
+<li>USER_ID_COLUMN_NAME
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a9b188cea220cacaa9f13d8b0be59ae0f">alexaClientSDK::acsdkAuthorization::lwa</a>
+</li>
 <li>USER_ID_KEY
 : <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization.html#aae74111c7f6f80863a391a6978f064b9">alexaClientSDK::acsdkAuthorization</a>
+</li>
+<li>USER_ID_PROPERTY_NAME
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#ace776a410e647eca284801f0f12ca59b">alexaClientSDK::acsdkAuthorization::lwa</a>
+</li>
+<li>USER_ID_TABLE_NAME
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a9451bce66be2d9f5a4cd0344ee28ca97">alexaClientSDK::acsdkAuthorization::lwa</a>
+</li>
+<li>USER_ID_VALUE
+: <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test.html#a31e8f038410dc98307fa582f421b901d">alexaClientSDK::acsdkAuthorization::lwa::test</a>
 </li>
 <li>USER_INACTIVITY_MESSAGE_ID
 : <a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1system_1_1test.html#ac3169b7eff770f3217732bddb44d4689">alexaClientSDK::capabilityAgents::system::test</a>
@@ -256,7 +293,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

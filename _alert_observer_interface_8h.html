@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,7 +73,10 @@ $(function() {
 <div class="title">AlertObserverInterface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;iomanip&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;<a class="el" href="_optional_8h_source.html">AVSCommon/Utils/Optional.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AlertObserverInterface.h:</div>
 <div class="dyncontent">
@@ -95,6 +98,10 @@ This graph shows which files directly or indirectly include this file:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html">alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_alert_info.html">alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -108,12 +115,16 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a426469a778d77d86334ab3e380034aa0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_interfaces.html#a426469a778d77d86334ab3e380034aa0">alexaClientSDK::acsdkAlertsInterfaces::operator&lt;&lt;</a> (std::ostream &amp;stream, const AlertObserverInterface::State &amp;state)</td></tr>
 <tr class="separator:a426469a778d77d86334ab3e380034aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a270dfd166789ed64cc6a655db5059a"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_interfaces.html#a7a270dfd166789ed64cc6a655db5059a">alexaClientSDK::acsdkAlertsInterfaces::operator&lt;&lt;</a> (std::ostream &amp;stream, const AlertObserverInterface::Type &amp;type)</td></tr>
+<tr class="separator:a7a270dfd166789ed64cc6a655db5059a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4645c65d23b23514f90f0f94b30fcd7c"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_interfaces.html#a4645c65d23b23514f90f0f94b30fcd7c">alexaClientSDK::acsdkAlertsInterfaces::operator&lt;&lt;</a> (std::ostream &amp;stream, const AlertObserverInterface::OriginalTime &amp;originalTime)</td></tr>
+<tr class="separator:a4645c65d23b23514f90f0f94b30fcd7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

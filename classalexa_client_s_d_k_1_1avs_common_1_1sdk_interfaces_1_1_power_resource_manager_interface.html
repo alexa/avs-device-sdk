@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -141,8 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a79e710992f0d03ec72113e7138f07cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b347aed113dee929afbaede4c38e8ee"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a3b347aed113dee929afbaede4c38e8ee">getTimeSinceLastResumeMS</a> ()</td></tr>
 <tr class="separator:a3b347aed113dee929afbaede4c38e8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae32c4cc02c742cb08442fdb050b6e880"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#ae32c4cc02c742cb08442fdb050b6e880">getTimeSinceLastPartialMS</a> (const std::string &amp;component, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a> partialState=PowerResourceTypeFlag::TYPE_ALL_FLAG)</td></tr>
-<tr class="separator:ae32c4cc02c742cb08442fdb050b6e880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41b48e34f059b06bc7fa186b36ee39fb"><td class="memItemLeft" align="right" valign="top">virtual std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a41b48e34f059b06bc7fa186b36ee39fb">getTimeSinceLastPartialMS</a> (const std::string &amp;component, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a> &amp;resourceFlags, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a> partialState=PowerResourceTypeFlag::TYPE_ALL_FLAG)</td></tr>
+<tr class="separator:a41b48e34f059b06bc7fa186b36ee39fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a2b351931ce9bba2fbe0c2beb4ef1f3"><td class="memItemLeft" align="right" valign="top">virtual std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_1_1_power_resource_id.html">PowerResourceId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a6a2b351931ce9bba2fbe0c2beb4ef1f3">create</a> (const std::string &amp;resourceId, bool isRefCounted=true, const <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#aa6c87f2f5104369c2eed8ddc07d13057">PowerResourceLevel</a> level=<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#aa6c87f2f5104369c2eed8ddc07d13057a813d55cbff97c1d8e24ca0b469e14044">PowerResourceLevel::STANDBY_MED</a>)=0</td></tr>
 <tr class="separator:a6a2b351931ce9bba2fbe0c2beb4ef1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a342fcf3d8dfb8e4f93a99bc78fbdaf05"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a342fcf3d8dfb8e4f93a99bc78fbdaf05">acquire</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface_1_1_power_resource_id.html">PowerResourceId</a> &gt; &amp;id, const std::chrono::milliseconds autoReleaseTimeout=std::chrono::milliseconds::zero())=0</td></tr>
@@ -477,8 +477,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae32c4cc02c742cb08442fdb050b6e880"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae32c4cc02c742cb08442fdb050b6e880">&#9670;&nbsp;</a></span>getTimeSinceLastPartialMS()</h2>
+<a id="a41b48e34f059b06bc7fa186b36ee39fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41b48e34f059b06bc7fa186b36ee39fb">&#9670;&nbsp;</a></span>getTimeSinceLastPartialMS()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -491,6 +491,12 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>component</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html#a25fbd43f9f916033daedf01a1298aedd">PartialStateBitSet</a> &amp;&#160;</td>
+          <td class="paramname"><em>resourceFlags</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -513,6 +519,7 @@ Public Member Functions</h2></td></tr>
 <p>Acquires the time since latest partial low power mode state change. This API should only be called after a power resource has been acquired. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">component</td><td>component name. </td></tr>
+    <tr><td class="paramname">resourceFlags</td><td>in/out parameter to get resource flags which exit lpm state last. This parameter is passed by the caller of this API and it gets updated with the bit pattern which represents one bit position for each resource type.Ref:enum PowerResourceTypeIndex </td></tr>
     <tr><td class="paramname">partialState</td><td>the partial low power mode state (PowerResourceTypeFlags) to check. The state type is determined based on the bits that are passed in. For example, if TYPE_CPU is passed in then the time since the most recent CPU low power mode state will be returned. The default behavior of this partial state, TYPE_ALL, returns the most recent low power mode state value. If more than one partial state is passed in, e.g. TYPE_CPU|TYPE_DDR, this API will return the time from the most recent change of the types given. </td></tr>
   </table>
   </dd>
@@ -521,6 +528,7 @@ Public Member Functions</h2></td></tr>
 <p>Provides the default <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_power_resource_manager_interface.html">PowerResourceManagerInterface</a></code> time since last partial in MS. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">component</td><td>component name. </td></tr>
+    <tr><td class="paramname">resourceFlags</td><td>in/out parameter to get resource flags which exit lpm state last. </td></tr>
     <tr><td class="paramname">partialState</td><td>the partial low power mode state (PowerResourceTypeFlags) to check. </td></tr>
   </table>
   </dd>
@@ -668,7 +676,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

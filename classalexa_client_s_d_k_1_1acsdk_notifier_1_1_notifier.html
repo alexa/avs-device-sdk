@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,6 +66,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -98,6 +99,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7eacc2509c1cc2b5eb9eb9cf7c82810c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b540c7d45f53ecae54a408df7b192d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7b540c7d45f53ecae54a408df7b192d0">removeObserver</a> (const std::shared_ptr&lt; ObserverType &gt; &amp;observer) override</td></tr>
 <tr class="separator:a7b540c7d45f53ecae54a408df7b192d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57066b342a74c714e2f4683bfc30b4d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a57066b342a74c714e2f4683bfc30b4d2">addWeakPtrObserver</a> (const std::weak_ptr&lt; ObserverType &gt; &amp;observer) override</td></tr>
+<tr class="separator:a57066b342a74c714e2f4683bfc30b4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae3eb58351d0fbc94270eea8f25037d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#aae3eb58351d0fbc94270eea8f25037d0">removeWeakPtrObserver</a> (const std::weak_ptr&lt; ObserverType &gt; &amp;observer) override</td></tr>
+<tr class="separator:aae3eb58351d0fbc94270eea8f25037d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb90fc950f05c26bfadf716c2ebff7c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#adb90fc950f05c26bfadf716c2ebff7c9">notifyObservers</a> (std::function&lt; void(const std::shared_ptr&lt; ObserverType &gt; &amp;)&gt; notify) override</td></tr>
 <tr class="separator:adb90fc950f05c26bfadf716c2ebff7c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5147b7778932aa88e4d6984d66a1d7cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a5147b7778932aa88e4d6984d66a1d7cb">notifyObserversInReverse</a> (std::function&lt; void(const std::shared_ptr&lt; ObserverType &gt; &amp;)&gt; notify) override</td></tr>
@@ -177,12 +182,51 @@ template&lt;typename ObserverType&gt; </div>
 <p>Add an observer. Duplicate additions are ignored.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">observer</td><td>The observer to add. </td></tr>
+    <tr><td class="paramname">observer</td><td>The observer to add.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000079">Deprecated:</a></b></dt><dd>In the future, <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html">Notifier</a></code> will no longer maintain the life cycle of its <code>observers</code>. Please start using the new <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a57066b342a74c714e2f4683bfc30b4d2">addWeakPtrObserver()</a></code> API instead. </dd></dl>
 
 <p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#a2a5cd37cb4a2f8b0f480a96a5245d3be">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a57066b342a74c714e2f4683bfc30b4d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57066b342a74c714e2f4683bfc30b4d2">&#9670;&nbsp;</a></span>addWeakPtrObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ObserverType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html">alexaClientSDK::acsdkNotifier::Notifier</a>&lt; ObserverType &gt;::addWeakPtrObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::weak_ptr&lt; ObserverType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Add an observer with weak_ptr. Duplicate additions are ignored.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to add.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Lifecycle of the observer will not be managed by the <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html">Notifier</a>. If the observer object is expired, then no callback will be called to that object. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#ac4726e3beba268a1ac9f2f0d8cf6ef30">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>.</p>
 
 </div>
 </div>
@@ -211,7 +255,7 @@ template&lt;typename ObserverType&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Notify the observers in the order that they were added via <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#a7eacc2509c1cc2b5eb9eb9cf7c82810c">addObserver()</a>.</p>
+<p>Notify the observers in the order that they were added.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">notify</td><td>The function to invoke to notify an observer. </td></tr>
@@ -289,12 +333,50 @@ template&lt;typename ObserverType&gt; </div>
 <p>Remove an observer. Invalid requests (nullptr or non member observers) are ignored.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">observer</td><td>The observer to remove.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000080">Deprecated:</a></b></dt><dd>In the future, <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html">Notifier</a></code> will no longer maintain the life cycle of its <code>observers</code>. Please start using the new <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html#aae3eb58351d0fbc94270eea8f25037d0">removeWeakPtrObserver()</a></code> API instead. </dd></dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#a38c753c8930671adb19d073ca1048c0c">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>.</p>
+
+</div>
+</div>
+<a id="aae3eb58351d0fbc94270eea8f25037d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae3eb58351d0fbc94270eea8f25037d0">&#9670;&nbsp;</a></span>removeWeakPtrObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ObserverType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html">alexaClientSDK::acsdkNotifier::Notifier</a>&lt; ObserverType &gt;::removeWeakPtrObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::weak_ptr&lt; ObserverType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>observer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Remove an observer with weak_ptr. Invalid requests (nullptr or non member observers) are ignored.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramname">observer</td><td>The observer to remove. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#a38c753c8930671adb19d073ca1048c0c">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>.</p>
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html#ab6a31f9804bf555f6ff764a258381f38">alexaClientSDK::acsdkNotifierInterfaces::NotifierInterface&lt; ObserverType &gt;</a>.</p>
 
 </div>
 </div>
@@ -324,6 +406,7 @@ template&lt;typename ObserverType&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Set the function to be called after an observer is added (for example, to notify the newly-added observer of the current state).</p>
+<p>If there's any observers that were added before <code>setAddObserverFunction</code> is called, those added observers will be notified as well.</p>
 <p>Use caution when setting this function. The function MUST be reentrant, or else you run the risk of deadlock. When an observer adds itself to a <code>NotifierInterface</code>, this function will be called in the same context.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -337,13 +420,13 @@ template&lt;typename ObserverType&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/workplace/avs-device-sdk/shared/acsdkNotifier/include/acsdkNotifier/<a class="el" href="_notifier_8h_source.html">Notifier.h</a></li>
+<li>/workplace/avs-device-sdk/shared/acsdkNotifier/include/acsdkNotifier/internal/<a class="el" href="_notifier_8h_source.html">Notifier.h</a></li>
 </ul>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

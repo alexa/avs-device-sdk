@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -73,15 +73,16 @@ $(function() {
 <p>This is the complete list of members for <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#af61bb5826411156f0af1689ad6ba77cf">convert8601TimeStringToUnix</a>(const std::string &amp;timeString, int64_t *unixTime)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#ae479873f1c13bcd199ed33bc550999aa">convertTimeToUtcIso8601Rfc3339</a>(const std::chrono::system_clock::time_point &amp;tp, std::string *iso8601TimeString)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#aca72a1008a7425496b2cfad886dc4d77">convertToUtcTimeT</a>(const std::tm *utcTm, std::time_t *ret)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#aa230b5b6de2161dd261e9fcf6ba3a3c8">getCurrentUnixTime</a>(int64_t *currentTime)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#acf06300da957a4b17b60e9193c293688">TimeUtils</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#ac200ceb53413577762166e6d037242b6">convert8601TimeStringToUtcTimePoint</a>(const std::string &amp;iso8601TimeString, std::chrono::system_clock::time_point *tp)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#ae479873f1c13bcd199ed33bc550999aa">convertTimeToUtcIso8601Rfc3339</a>(const std::chrono::system_clock::time_point &amp;tp, std::string *iso8601TimeString)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#aca72a1008a7425496b2cfad886dc4d77">convertToUtcTimeT</a>(const std::tm *utcTm, std::time_t *ret)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#aa230b5b6de2161dd261e9fcf6ba3a3c8">getCurrentUnixTime</a>(int64_t *currentTime)</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html#acf06300da957a4b17b60e9193c293688">TimeUtils</a>()</td><td class="entry"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_utils.html">alexaClientSDK::avsCommon::utils::timing::TimeUtils</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

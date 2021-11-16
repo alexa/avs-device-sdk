@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -86,11 +86,15 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert.html">MockAlert</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_observer_interface.html">MockAlertObserverInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html">MockAlertStorage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_renderer.html">MockRenderer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_reminder_alert_test.html">ReminderAlertTest</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_stub_alert_storage.html">StubAlertStorage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -225,8 +229,14 @@ Functions</h2></td></tr>
 <tr class="memitem:ac8f72cb9650296e49253d3afb8a12af2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ac8f72cb9650296e49253d3afb8a12af2">ALERT_TYPE</a> (&quot;MOCK_ALERT_TYPE&quot;)</td></tr>
 <tr class="memdesc:ac8f72cb9650296e49253d3afb8a12af2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> type.  <a href="#ac8f72cb9650296e49253d3afb8a12af2">More...</a><br /></td></tr>
 <tr class="separator:ac8f72cb9650296e49253d3afb8a12af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab22685d55260c0709437de6ce821b9ec"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab22685d55260c0709437de6ce821b9ec">getPayloadJson</a> (bool inclToken, bool inclSchedTime, const std::string &amp;schedTime)</td></tr>
-<tr class="separator:ab22685d55260c0709437de6ce821b9ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae16b39c3fa7874d945b7b70581843269"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae16b39c3fa7874d945b7b70581843269">LABEL_TEST</a> (&quot;Test label&quot;)</td></tr>
+<tr class="memdesc:ae16b39c3fa7874d945b7b70581843269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Label for testing.  <a href="#ae16b39c3fa7874d945b7b70581843269">More...</a><br /></td></tr>
+<tr class="separator:ae16b39c3fa7874d945b7b70581843269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6f06cbd45aadbef40f24aebf4cd20a6"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab6f06cbd45aadbef40f24aebf4cd20a6">ORIGINAL_TIME_TEST</a> (&quot;17:00:00.000&quot;)</td></tr>
+<tr class="memdesc:ab6f06cbd45aadbef40f24aebf4cd20a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Original time for testing.  <a href="#ab6f06cbd45aadbef40f24aebf4cd20a6">More...</a><br /></td></tr>
+<tr class="separator:ab6f06cbd45aadbef40f24aebf4cd20a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab995ccc970b499e72262822b106814c8"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab995ccc970b499e72262822b106814c8">getPayloadJson</a> (bool inclToken, bool inclSchedTime, const std::string &amp;schedTime, const std::string &amp;label=&quot;&quot;, const std::string &amp;originalTime=&quot;&quot;)</td></tr>
+<tr class="separator:ab995ccc970b499e72262822b106814c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03642cefebb4ee9f14e5fd03b19f0859"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a03642cefebb4ee9f14e5fd03b19f0859">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_defaultAudio)</td></tr>
 <tr class="separator:a03642cefebb4ee9f14e5fd03b19f0859"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad49b69bf46c71cac2862ba8611e5e766"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ad49b69bf46c71cac2862ba8611e5e766">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_defaultShortAudio)</td></tr>
@@ -239,8 +249,14 @@ Functions</h2></td></tr>
 <tr class="separator:ad01c1cd46427c1b95e981f410fec8dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a69eeb007506c5c80a39d35af11467b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a4a69eeb007506c5c80a39d35af11467b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_parseFromJsonBadSchedTimeFormat)</td></tr>
 <tr class="separator:a4a69eeb007506c5c80a39d35af11467b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a475da57d11e473350e96090ce3542710"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a475da57d11e473350e96090ce3542710">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_setStateActive)</td></tr>
-<tr class="separator:a475da57d11e473350e96090ce3542710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa91bc5af4c5e297dcaf3f306475b2482"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aa91bc5af4c5e297dcaf3f306475b2482">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_parseFromJsonInvalidOriginalTime)</td></tr>
+<tr class="separator:aa91bc5af4c5e297dcaf3f306475b2482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad1c86a5602ab56474933d2a9d2bb51e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aad1c86a5602ab56474933d2a9d2bb51e">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_parseFromJsonEmptyOriginalTimeAndLabel)</td></tr>
+<tr class="separator:aad1c86a5602ab56474933d2a9d2bb51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fbb27a8a53d9bb6deb7a3155fd02cc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a4fbb27a8a53d9bb6deb7a3155fd02cc9">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_setStateActiveValid)</td></tr>
+<tr class="separator:a4fbb27a8a53d9bb6deb7a3155fd02cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0bc2c3e00f742c60d434fd86f9cd094"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aa0bc2c3e00f742c60d434fd86f9cd094">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_setStateActiveInvalid)</td></tr>
+<tr class="separator:aa0bc2c3e00f742c60d434fd86f9cd094"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98f8d882d55b6ec30e40501d189ea027"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a98f8d882d55b6ec30e40501d189ea027">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_deactivate)</td></tr>
 <tr class="separator:a98f8d882d55b6ec30e40501d189ea027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29fb5436a0f40442e7a53a1e4ce924fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a29fb5436a0f40442e7a53a1e4ce924fc">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>, test_setTimeISO8601)</td></tr>
@@ -285,6 +301,45 @@ Functions</h2></td></tr>
 <tr class="separator:ad0952948a13653c39915e4d7baf7ffb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf197c2108aea2952ed100dbf6467cbe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#acf197c2108aea2952ed100dbf6467cbe">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_reminder_alert_test.html">ReminderAlertTest</a>, test_getTypeName)</td></tr>
 <tr class="separator:acf197c2108aea2952ed100dbf6467cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4839c16ff911b703c84f3f5932937843"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a4839c16ff911b703c84f3f5932937843">TAG</a> (&quot;SQLiteAlertStorageTest&quot;)</td></tr>
+<tr class="memdesc:a4839c16ff911b703c84f3f5932937843"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#a4839c16ff911b703c84f3f5932937843">More...</a><br /></td></tr>
+<tr class="separator:a4839c16ff911b703c84f3f5932937843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1029a045e9c47284cf38be701558db7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a1029a045e9c47284cf38be701558db7e">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_emptyDbConfiguration)</td></tr>
+<tr class="separator:a1029a045e9c47284cf38be701558db7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf39c4ac222cca2592f038e19396b8e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aaf39c4ac222cca2592f038e19396b8e7">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_invalidDbConfiguration)</td></tr>
+<tr class="separator:aaf39c4ac222cca2592f038e19396b8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e99752731ebda47d5784f859d099a02"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a4e99752731ebda47d5784f859d099a02">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_nullAlertsAudioFactory)</td></tr>
+<tr class="separator:a4e99752731ebda47d5784f859d099a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9b33ffd11a4d1d597ae1cddc4473be1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ac9b33ffd11a4d1d597ae1cddc4473be1">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_nullMetricRecorder)</td></tr>
+<tr class="separator:ac9b33ffd11a4d1d597ae1cddc4473be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26548f89a4ed45c5af81a04106b78d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab26548f89a4ed45c5af81a04106b78d0">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_openExistingDatabaseSucceeds)</td></tr>
+<tr class="separator:ab26548f89a4ed45c5af81a04106b78d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade81e1551e9e72871bc92099f4311f87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ade81e1551e9e72871bc92099f4311f87">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_createExistingDatabaseFails)</td></tr>
+<tr class="separator:ade81e1551e9e72871bc92099f4311f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0b244708ca85e85d2b28966c3b54c11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ac0b244708ca85e85d2b28966c3b54c11">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_openDatabaseWhenAlertsTableIsMissing)</td></tr>
+<tr class="separator:ac0b244708ca85e85d2b28966c3b54c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af400abab5ba8451f43b320e39aa5d29b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#af400abab5ba8451f43b320e39aa5d29b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_openDatabaseWhenOfflineAlertsTableIsMissing)</td></tr>
+<tr class="separator:af400abab5ba8451f43b320e39aa5d29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1eb631de2760e0539bf5ece9fb6427a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a1eb631de2760e0539bf5ece9fb6427a1">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_openDatabaseWhenAssetTablesAreMissing)</td></tr>
+<tr class="separator:a1eb631de2760e0539bf5ece9fb6427a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00264a714615c546540baa9e05405644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a00264a714615c546540baa9e05405644">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_migrateAlertFromV2ToV3)</td></tr>
+<tr class="separator:a00264a714615c546540baa9e05405644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01441d6b57d6c100134d2b9bf790b6c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a01441d6b57d6c100134d2b9bf790b6c2">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_migrateOfflineAlertFromV1ToV2)</td></tr>
+<tr class="separator:a01441d6b57d6c100134d2b9bf790b6c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad834022c4d495a5e96bda127b4bcc83c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ad834022c4d495a5e96bda127b4bcc83c">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_storeAndLoadAlerts)</td></tr>
+<tr class="separator:ad834022c4d495a5e96bda127b4bcc83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a537edebf3fcff2d6c3e52b807055d446"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a537edebf3fcff2d6c3e52b807055d446">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_modifyAlerts)</td></tr>
+<tr class="separator:a537edebf3fcff2d6c3e52b807055d446"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78f7ba94cf525c85e884c0e9735c20c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a78f7ba94cf525c85e884c0e9735c20c0">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_eraseAlert)</td></tr>
+<tr class="separator:a78f7ba94cf525c85e884c0e9735c20c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada9c589c11be97f3d0886567db5b651d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ada9c589c11be97f3d0886567db5b651d">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_bulkEraseAlert)</td></tr>
+<tr class="separator:ada9c589c11be97f3d0886567db5b651d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1e2f3605a1ab1598434b89aa4e31dde"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab1e2f3605a1ab1598434b89aa4e31dde">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_storeAndLoadOfflineAlerts)</td></tr>
+<tr class="separator:ab1e2f3605a1ab1598434b89aa4e31dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bfcce98fd529bda56b8b77a8126c31c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a9bfcce98fd529bda56b8b77a8126c31c">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_eraseOfflineAlerts)</td></tr>
+<tr class="separator:a9bfcce98fd529bda56b8b77a8126c31c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3b4135e4c726013a69b1f638d8c6b00"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae3b4135e4c726013a69b1f638d8c6b00">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>, test_clearDatabase)</td></tr>
+<tr class="separator:ae3b4135e4c726013a69b1f638d8c6b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a109d291f813901f4cfcf752e322b7428"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a109d291f813901f4cfcf752e322b7428">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_timer_alert_test.html">TimerAlertTest</a>, test_defaultAudio)</td></tr>
 <tr class="separator:a109d291f813901f4cfcf752e322b7428"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a390d9fa5350bc055ac5b003727805f1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a390d9fa5350bc055ac5b003727805f1a">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_timer_alert_test.html">TimerAlertTest</a>, test_shortAudio)</td></tr>
@@ -328,6 +383,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a8b109bf9631de37faa1f814729f8fad7"><td class="memItemLeft" align="right" valign="top">static const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a8b109bf9631de37faa1f814729f8fad7">TEST_TIMEOUT</a> = std::chrono::seconds(5)</td></tr>
 <tr class="memdesc:a8b109bf9631de37faa1f814729f8fad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The timeout used throughout the tests.  <a href="#a8b109bf9631de37faa1f814729f8fad7">More...</a><br /></td></tr>
 <tr class="separator:a8b109bf9631de37faa1f814729f8fad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058bf5b9024825d957610c30ad4c1215"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">AlertObserverInterface::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a058bf5b9024825d957610c30ad4c1215">TYPE_ALARM</a> = AlertObserverInterface::Type::ALARM</td></tr>
+<tr class="memdesc:a058bf5b9024825d957610c30ad4c1215"><td class="mdescLeft">&#160;</td><td class="mdescRight">The alert type.  <a href="#a058bf5b9024825d957610c30ad4c1215">More...</a><br /></td></tr>
+<tr class="separator:a058bf5b9024825d957610c30ad4c1215"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32c22e0baffc5bde4de4f2a1ed63b82a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a32c22e0baffc5bde4de4f2a1ed63b82a">VOLUME_PAYLOAD</a></td></tr>
 <tr class="memdesc:a32c22e0baffc5bde4de4f2a1ed63b82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">General test directive payload.  <a href="#a32c22e0baffc5bde4de4f2a1ed63b82a">More...</a><br /></td></tr>
 <tr class="separator:a32c22e0baffc5bde4de4f2a1ed63b82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -358,9 +416,8 @@ Variables</h2></td></tr>
 <tr class="separator:ab0718fe00b8b6e92c07d30f4b546eedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94ad252cc2cf8ec29edfe03372b67a35"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a94ad252cc2cf8ec29edfe03372b67a35">ALERT4_TOKEN</a> = &quot;token4&quot;</td></tr>
 <tr class="separator:a94ad252cc2cf8ec29edfe03372b67a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a892a9072d4816875b8f3ff36e265834b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a892a9072d4816875b8f3ff36e265834b">ALERT_TYPE</a> = &quot;TEST_ALERT_TYPE&quot;</td></tr>
-<tr class="memdesc:a892a9072d4816875b8f3ff36e265834b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test alert type.  <a href="#a892a9072d4816875b8f3ff36e265834b">More...</a><br /></td></tr>
-<tr class="separator:a892a9072d4816875b8f3ff36e265834b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a195b4bba82dd6f969f563cd92ab64e17"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a195b4bba82dd6f969f563cd92ab64e17">TYPE_ALARM_STRING</a> = <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#af5a3de588b9bcb58f1af778265e694e4">AlertObserverInterface::typeToString</a>(<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a058bf5b9024825d957610c30ad4c1215">TYPE_ALARM</a>)</td></tr>
+<tr class="separator:a195b4bba82dd6f969f563cd92ab64e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1dee7777600f017ad9af60c7b2c11b5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae1dee7777600f017ad9af60c7b2c11b5">PAST_INSTANT</a> = &quot;2000-01-01T12:34:56+0000&quot;</td></tr>
 <tr class="memdesc:ae1dee7777600f017ad9af60c7b2c11b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A schedule instant in the past for alerts.  <a href="#ae1dee7777600f017ad9af60c7b2c11b5">More...</a><br /></td></tr>
 <tr class="separator:ae1dee7777600f017ad9af60c7b2c11b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -397,10 +454,85 @@ Variables</h2></td></tr>
 <tr class="separator:a28267d63a1547939525f2b5b0a2e9e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a494fb3908d124d02882c1158ebc8f9ac"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a494fb3908d124d02882c1158ebc8f9ac">SHORT_AUDIO</a> {&quot;short audio&quot;}</td></tr>
 <tr class="separator:a494fb3908d124d02882c1158ebc8f9ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38a4f122ccae7b368a89ff3f10197567"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a38a4f122ccae7b368a89ff3f10197567">INVALID_ORIGINAL_TIME_TEST</a> {&quot;-1:00:00.000&quot;}</td></tr>
+<tr class="separator:a38a4f122ccae7b368a89ff3f10197567"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e67cd5d7575e9df0078cccc851b4c58"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a9e67cd5d7575e9df0078cccc851b4c58">REMINDER_DEFAULT_DATA</a> = &quot;reminder default data&quot;</td></tr>
 <tr class="separator:a9e67cd5d7575e9df0078cccc851b4c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad619206680b24f89a3047170459b7eeb"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ad619206680b24f89a3047170459b7eeb">REMINDER_SHORT_DATA</a> = &quot;reminder short data&quot;</td></tr>
 <tr class="separator:ad619206680b24f89a3047170459b7eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ff991c30350dc01ab4e4a64e7d0e6b9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0ff991c30350dc01ab4e4a64e7d0e6b9">TEST_DATABASE_FILE_NAME</a> = &quot;SQLiteAlertStorageTest.db&quot;</td></tr>
+<tr class="memdesc:a0ff991c30350dc01ab4e4a64e7d0e6b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of database file for testing.  <a href="#a0ff991c30350dc01ab4e4a64e7d0e6b9">More...</a><br /></td></tr>
+<tr class="separator:a0ff991c30350dc01ab4e4a64e7d0e6b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa61fedd591075c70014a32c92d84ff94"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aa61fedd591075c70014a32c92d84ff94">VALID_ALERTS_DB_CONFIG_JSON</a></td></tr>
+<tr class="separator:aa61fedd591075c70014a32c92d84ff94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a778586ef802cb23f0ea62cb2632a6b7e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a778586ef802cb23f0ea62cb2632a6b7e">INVALID_ALERTS_DB_CONFIG_JSON</a></td></tr>
+<tr class="separator:a778586ef802cb23f0ea62cb2632a6b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6b54e11230db326f2ce88b68e427d05"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae6b54e11230db326f2ce88b68e427d05">ALERTS_V2_TABLE_NAME</a> = &quot;alerts_v2&quot;</td></tr>
+<tr class="memdesc:ae6b54e11230db326f2ce88b68e427d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alerts (v2) table.  <a href="#ae6b54e11230db326f2ce88b68e427d05">More...</a><br /></td></tr>
+<tr class="separator:ae6b54e11230db326f2ce88b68e427d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f5c2b1d44141185a9b74f4eb241408"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a11f5c2b1d44141185a9b74f4eb241408">ALERTS_V3_TABLE_NAME</a> = &quot;alerts_v3&quot;</td></tr>
+<tr class="memdesc:a11f5c2b1d44141185a9b74f4eb241408"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alerts (v3) table.  <a href="#a11f5c2b1d44141185a9b74f4eb241408">More...</a><br /></td></tr>
+<tr class="separator:a11f5c2b1d44141185a9b74f4eb241408"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39083593e021184e13e96e7ecc0a37bf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a39083593e021184e13e96e7ecc0a37bf">CREATE_ALERTS_V2_TABLE_SQL_STRING</a></td></tr>
+<tr class="memdesc:a39083593e021184e13e96e7ecc0a37bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the alerts table.  <a href="#a39083593e021184e13e96e7ecc0a37bf">More...</a><br /></td></tr>
+<tr class="separator:a39083593e021184e13e96e7ecc0a37bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7f2b9674b5385646891b9d0089e0968"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab7f2b9674b5385646891b9d0089e0968">CREATE_ALERTS_V3_TABLE_SQL_STRING</a></td></tr>
+<tr class="separator:ab7f2b9674b5385646891b9d0089e0968"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28ef7a8f0016204a70c0a8f124735426"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a28ef7a8f0016204a70c0a8f124735426">ALERT_ASSETS_TABLE_NAME</a> = &quot;alertAssets&quot;</td></tr>
+<tr class="memdesc:a28ef7a8f0016204a70c0a8f124735426"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alertAssets table.  <a href="#a28ef7a8f0016204a70c0a8f124735426">More...</a><br /></td></tr>
+<tr class="separator:a28ef7a8f0016204a70c0a8f124735426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d92c1e14be780c054b78e8e2e1408bf"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a3d92c1e14be780c054b78e8e2e1408bf">CREATE_ALERT_ASSETS_TABLE_SQL_STRING</a></td></tr>
+<tr class="memdesc:a3d92c1e14be780c054b78e8e2e1408bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the alertAssets table.  <a href="#a3d92c1e14be780c054b78e8e2e1408bf">More...</a><br /></td></tr>
+<tr class="separator:a3d92c1e14be780c054b78e8e2e1408bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb788199c9fc3914c932520f6991faca"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#afb788199c9fc3914c932520f6991faca">OFFLINE_ALERTS_TABLE_NAME</a> = &quot;offlineAlerts&quot;</td></tr>
+<tr class="memdesc:afb788199c9fc3914c932520f6991faca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the offline alerts (v1) table.  <a href="#afb788199c9fc3914c932520f6991faca">More...</a><br /></td></tr>
+<tr class="separator:afb788199c9fc3914c932520f6991faca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a905d6a86a99414047d34dd3844930ed7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a905d6a86a99414047d34dd3844930ed7">OFFLINE_ALERTS_V2_TABLE_NAME</a> = &quot;offlineAlerts_v2&quot;</td></tr>
+<tr class="memdesc:a905d6a86a99414047d34dd3844930ed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the offline alerts (v2) table.  <a href="#a905d6a86a99414047d34dd3844930ed7">More...</a><br /></td></tr>
+<tr class="separator:a905d6a86a99414047d34dd3844930ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582e51ad3181fab41cc8d1c342cc1e79"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a582e51ad3181fab41cc8d1c342cc1e79">CREATE_OFFLINE_ALERTS_V1_TABLE_SQL_STRING</a></td></tr>
+<tr class="memdesc:a582e51ad3181fab41cc8d1c342cc1e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the offline alerts table.  <a href="#a582e51ad3181fab41cc8d1c342cc1e79">More...</a><br /></td></tr>
+<tr class="separator:a582e51ad3181fab41cc8d1c342cc1e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a02f6f5deee0830104d933dc9901426"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a4a02f6f5deee0830104d933dc9901426">CREATE_OFFLINE_ALERTS_V2_TABLE_SQL_STRING</a></td></tr>
+<tr class="separator:a4a02f6f5deee0830104d933dc9901426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a474898ffc8f05e48da3caee042455a6e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a474898ffc8f05e48da3caee042455a6e">ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a> = &quot;alertAssetPlayOrderItems&quot;</td></tr>
+<tr class="memdesc:a474898ffc8f05e48da3caee042455a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the alertAssetPlayOrderItems table.  <a href="#a474898ffc8f05e48da3caee042455a6e">More...</a><br /></td></tr>
+<tr class="separator:a474898ffc8f05e48da3caee042455a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b9fa1bbed0cfd42de6b4d1df723d14"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a55b9fa1bbed0cfd42de6b4d1df723d14">CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING</a></td></tr>
+<tr class="memdesc:a55b9fa1bbed0cfd42de6b4d1df723d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SQL string to create the alertAssetPlayOrderItems table.  <a href="#a55b9fa1bbed0cfd42de6b4d1df723d14">More...</a><br /></td></tr>
+<tr class="separator:a55b9fa1bbed0cfd42de6b4d1df723d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a479dfc674bdcce9f21a7183d861deb9c"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a479dfc674bdcce9f21a7183d861deb9c">TEST_ALERT_TYPE_ALARM</a> = &quot;ALARM&quot;</td></tr>
+<tr class="separator:a479dfc674bdcce9f21a7183d861deb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697f9cfaa86e888459b708d4b81b1ccc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a697f9cfaa86e888459b708d4b81b1ccc">TEST_ALERT_TYPE_TIMER</a> = &quot;TIMER&quot;</td></tr>
+<tr class="separator:a697f9cfaa86e888459b708d4b81b1ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b8e9a4d9053a985700242d38679e06a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a8b8e9a4d9053a985700242d38679e06a">TEST_ALERT_TYPE_REMINDER</a> = &quot;REMINDER&quot;</td></tr>
+<tr class="separator:a8b8e9a4d9053a985700242d38679e06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d58eddf4f36b668b42908b798bcb936"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a1d58eddf4f36b668b42908b798bcb936">SCHEDULED_TIME_ISO_STRING</a> = &quot;2008-08-08T08:00:00+0000&quot;</td></tr>
+<tr class="memdesc:a1d58eddf4f36b668b42908b798bcb936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schduled time string in ISO 8601 format.  <a href="#a1d58eddf4f36b668b42908b798bcb936">More...</a><br /></td></tr>
+<tr class="separator:a1d58eddf4f36b668b42908b798bcb936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf37b30f986bc707a2215fcc4d178725"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#acf37b30f986bc707a2215fcc4d178725">SCHEDULED_TIME_ISO_STRING_ALARM</a> = &quot;2020-08-08T08:00:00+0000&quot;</td></tr>
+<tr class="separator:acf37b30f986bc707a2215fcc4d178725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825a45b68e02937e8b11de8497a14dc4"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a825a45b68e02937e8b11de8497a14dc4">SCHEDULED_TIME_ISO_STRING_TIMER</a> = &quot;2020-08-09T08:00:00+0000&quot;</td></tr>
+<tr class="separator:a825a45b68e02937e8b11de8497a14dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ad391d55adaa5b4729b2c5a8ff61500"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0ad391d55adaa5b4729b2c5a8ff61500">SCHEDULED_TIME_ISO_STRING_REMINDER</a> = &quot;2020-08-10T08:00:00+0000&quot;</td></tr>
+<tr class="separator:a0ad391d55adaa5b4729b2c5a8ff61500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc5b6b527333a270de23dc111b47a4b3"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#afc5b6b527333a270de23dc111b47a4b3">TOKEN_ALARM</a> = &quot;token-alarm&quot;</td></tr>
+<tr class="memdesc:afc5b6b527333a270de23dc111b47a4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alerts token.  <a href="#afc5b6b527333a270de23dc111b47a4b3">More...</a><br /></td></tr>
+<tr class="separator:afc5b6b527333a270de23dc111b47a4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3645d86ce942c18d700748e47b2b77e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ab3645d86ce942c18d700748e47b2b77e">TOKEN_TIMER</a> = &quot;token-timer&quot;</td></tr>
+<tr class="separator:ab3645d86ce942c18d700748e47b2b77e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d3055cf781f5013697751bb6f400f0d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a3d3055cf781f5013697751bb6f400f0d">TOKEN_REMINDER</a> = &quot;token-reminder&quot;</td></tr>
+<tr class="separator:a3d3055cf781f5013697751bb6f400f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af12a0fa12060cc1602af2a34fc2f98aa"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#af12a0fa12060cc1602af2a34fc2f98aa">ORIGINAL_TIME_ALARM</a> = &quot;16:00:00.000&quot;</td></tr>
+<tr class="memdesc:af12a0fa12060cc1602af2a34fc2f98aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Original time.  <a href="#af12a0fa12060cc1602af2a34fc2f98aa">More...</a><br /></td></tr>
+<tr class="separator:af12a0fa12060cc1602af2a34fc2f98aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7111ade003a304c17ee3447dba9e1a0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#aa7111ade003a304c17ee3447dba9e1a0">ORIGINAL_TIME_REMINDER</a> = &quot;18:00:00.000&quot;</td></tr>
+<tr class="separator:aa7111ade003a304c17ee3447dba9e1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bc3a9dc88a7c7cbe49fa981d5d1be43"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a2bc3a9dc88a7c7cbe49fa981d5d1be43">LABEL_TIMER</a> = &quot;coffee&quot;</td></tr>
+<tr class="memdesc:a2bc3a9dc88a7c7cbe49fa981d5d1be43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Label for the alerts.  <a href="#a2bc3a9dc88a7c7cbe49fa981d5d1be43">More...</a><br /></td></tr>
+<tr class="separator:a2bc3a9dc88a7c7cbe49fa981d5d1be43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7123b5bbe2a03eff579a8e468c227088"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a7123b5bbe2a03eff579a8e468c227088">LABEL_REMINDER</a> = &quot;walk the dog&quot;</td></tr>
+<tr class="separator:a7123b5bbe2a03eff579a8e468c227088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a608fad1fbd8051cfe97d2faa97ca0b43"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a608fad1fbd8051cfe97d2faa97ca0b43">TIMER_DEFAULT_DATA</a> = &quot;timer default data&quot;</td></tr>
 <tr class="separator:a608fad1fbd8051cfe97d2faa97ca0b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a669506f79678d0fe8905595e95556ec5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a669506f79678d0fe8905595e95556ec5">TIMER_SHORT_DATA</a> = &quot;timer short data&quot;</td></tr>
@@ -617,8 +749,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab22685d55260c0709437de6ce821b9ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab22685d55260c0709437de6ce821b9ec">&#9670;&nbsp;</a></span>getPayloadJson()</h2>
+<a id="ab995ccc970b499e72262822b106814c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab995ccc970b499e72262822b106814c8">&#9670;&nbsp;</a></span>getPayloadJson()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -639,7 +771,19 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>schedTime</em>&#160;</td>
+          <td class="paramname"><em>schedTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>originalTime</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -676,8 +820,92 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae16b39c3fa7874d945b7b70581843269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae16b39c3fa7874d945b7b70581843269">&#9670;&nbsp;</a></span>LABEL_TEST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acsdkAlerts::test::LABEL_TEST </td>
+          <td>(</td>
+          <td class="paramtype">&quot;Test label&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Label for testing. </p>
+
+</div>
+</div>
+<a id="ab6f06cbd45aadbef40f24aebf4cd20a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6f06cbd45aadbef40f24aebf4cd20a6">&#9670;&nbsp;</a></span>ORIGINAL_TIME_TEST()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acsdkAlerts::test::ORIGINAL_TIME_TEST </td>
+          <td>(</td>
+          <td class="paramtype">&quot;17:00:00.000&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Original time for testing. </p>
+
+</div>
+</div>
+<a id="a4839c16ff911b703c84f3f5932937843"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4839c16ff911b703c84f3f5932937843">&#9670;&nbsp;</a></span>TAG()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::string alexaClientSDK::acsdkAlerts::test::TAG </td>
+          <td>(</td>
+          <td class="paramtype">&quot;SQLiteAlertStorageTest&quot;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
 <a id="ab3cb815c1c769d77b94ca407cce0c492"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3cb815c1c769d77b94ca407cce0c492">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3cb815c1c769d77b94ca407cce0c492">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -705,7 +933,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a109d291f813901f4cfcf752e322b7428"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a109d291f813901f4cfcf752e322b7428">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a109d291f813901f4cfcf752e322b7428">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -733,7 +961,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a48675529541da653cf9b5f337a5f2216"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48675529541da653cf9b5f337a5f2216">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a48675529541da653cf9b5f337a5f2216">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -761,7 +989,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad0952948a13653c39915e4d7baf7ffb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0952948a13653c39915e4d7baf7ffb8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0952948a13653c39915e4d7baf7ffb8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -789,7 +1017,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a390d9fa5350bc055ac5b003727805f1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a390d9fa5350bc055ac5b003727805f1a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a390d9fa5350bc055ac5b003727805f1a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -817,7 +1045,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4cd8f5cbee2eef5bb9cf4cad2b0215db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cd8f5cbee2eef5bb9cf4cad2b0215db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cd8f5cbee2eef5bb9cf4cad2b0215db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -845,7 +1073,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="acf197c2108aea2952ed100dbf6467cbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf197c2108aea2952ed100dbf6467cbe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acf197c2108aea2952ed100dbf6467cbe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -873,7 +1101,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4c0889088a9a38d08e8c0dd7de72ee9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c0889088a9a38d08e8c0dd7de72ee9d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c0889088a9a38d08e8c0dd7de72ee9d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -901,7 +1129,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae26e361702fed918f22298721102ddfc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae26e361702fed918f22298721102ddfc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae26e361702fed918f22298721102ddfc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -929,7 +1157,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a03642cefebb4ee9f14e5fd03b19f0859"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03642cefebb4ee9f14e5fd03b19f0859">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a03642cefebb4ee9f14e5fd03b19f0859">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -957,7 +1185,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad49b69bf46c71cac2862ba8611e5e766"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad49b69bf46c71cac2862ba8611e5e766">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad49b69bf46c71cac2862ba8611e5e766">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -985,7 +1213,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa0681a2d2c3d046cac6f83ab1194ad5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0681a2d2c3d046cac6f83ab1194ad5a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0681a2d2c3d046cac6f83ab1194ad5a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1013,7 +1241,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5be0bc2b8c7066491eca52fd31a34e6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5be0bc2b8c7066491eca52fd31a34e6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5be0bc2b8c7066491eca52fd31a34e6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1041,7 +1269,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad01c1cd46427c1b95e981f410fec8dd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad01c1cd46427c1b95e981f410fec8dd8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad01c1cd46427c1b95e981f410fec8dd8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1069,7 +1297,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4a69eeb007506c5c80a39d35af11467b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a69eeb007506c5c80a39d35af11467b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a69eeb007506c5c80a39d35af11467b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1096,8 +1324,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a475da57d11e473350e96090ce3542710"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a475da57d11e473350e96090ce3542710">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/79]</span></h2>
+<a id="aa91bc5af4c5e297dcaf3f306475b2482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa91bc5af4c5e297dcaf3f306475b2482">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1111,7 +1339,91 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_setStateActive&#160;</td>
+          <td class="paramtype">test_parseFromJsonInvalidOriginalTime&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aad1c86a5602ab56474933d2a9d2bb51e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad1c86a5602ab56474933d2a9d2bb51e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_parseFromJsonEmptyOriginalTimeAndLabel&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4fbb27a8a53d9bb6deb7a3155fd02cc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fbb27a8a53d9bb6deb7a3155fd02cc9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_setStateActiveValid&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0bc2c3e00f742c60d434fd86f9cd094"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0bc2c3e00f742c60d434fd86f9cd094">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_setStateActiveInvalid&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1125,7 +1437,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a98f8d882d55b6ec30e40501d189ea027"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98f8d882d55b6ec30e40501d189ea027">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a98f8d882d55b6ec30e40501d189ea027">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1153,7 +1465,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a29fb5436a0f40442e7a53a1e4ce924fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29fb5436a0f40442e7a53a1e4ce924fc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a29fb5436a0f40442e7a53a1e4ce924fc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1180,316 +1492,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab730e4aa19a612d6b72ec8260c66d47f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab730e4aa19a612d6b72ec8260c66d47f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_updateScheduleActiveFailed&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a13aa0658098faab859c939524fa5f99c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13aa0658098faab859c939524fa5f99c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_updateScheduleBadTime&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5a204819de6e1b304d3a86cda2f5f557"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a204819de6e1b304d3a86cda2f5f557">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_updateScheduleHappyCase&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afd28f12287df49be0b4110814dd187e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd28f12287df49be0b4110814dd187e6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_snoozeBadTime&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6297ab8983743ceca02dfe6e3a143902"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6297ab8983743ceca02dfe6e3a143902">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_snoozeHappyCase&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2a5823c4b131ca3ad361f0f91b3e2520"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a5823c4b131ca3ad361f0f91b3e2520">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_setLoopCountNegative&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5fa864a0533649c1cc76a44d69638b9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5fa864a0533649c1cc76a44d69638b9f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_setLoopCountHappyCase&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af121fee1249f34bedd65c9081eb20666"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af121fee1249f34bedd65c9081eb20666">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_setLoopPause&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a70a9114dd0bd6dab4280a88f66d3dde3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70a9114dd0bd6dab4280a88f66d3dde3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_setBackgroundAssetId&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5605fa3444cf0afdf4c04fa209437902"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5605fa3444cf0afdf4c04fa209437902">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">DISABLED_test_isPastDue&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4cbaa6516e4ac6ff6c0ecb32c1bc0869"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cbaa6516e4ac6ff6c0ecb32c1bc0869">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_stateToString&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a729fcffa66a3e16af31bbdb84a9296a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a729fcffa66a3e16af31bbdb84a9296a6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a729fcffa66a3e16af31bbdb84a9296a6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1520,8 +1524,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1ec79d59ef997a71b66cd3481b645497"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ec79d59ef997a71b66cd3481b645497">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/79]</span></h2>
+<a id="ab730e4aa19a612d6b72ec8260c66d47f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab730e4aa19a612d6b72ec8260c66d47f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1535,7 +1539,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_stopReasonToString&#160;</td>
+          <td class="paramtype">test_updateScheduleActiveFailed&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1548,8 +1552,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af355a4aa16409175f1b8ca687a9ec8e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af355a4aa16409175f1b8ca687a9ec8e0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/79]</span></h2>
+<a id="a1029a045e9c47284cf38be701558db7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1029a045e9c47284cf38be701558db7e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1557,13 +1561,13 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_parseFromJsonStatusToString&#160;</td>
+          <td class="paramtype">test_emptyDbConfiguration&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1573,11 +1577,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Test create with empty <code>ConfigurationNode</code>. </p>
 
 </div>
 </div>
-<a id="a22e882abfe0776566f11b07db936a595"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22e882abfe0776566f11b07db936a595">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/79]</span></h2>
+<a id="a13aa0658098faab859c939524fa5f99c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13aa0658098faab859c939524fa5f99c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1591,7 +1596,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_hasAssetHappy&#160;</td>
+          <td class="paramtype">test_updateScheduleBadTime&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1605,7 +1610,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aacad2ead4a5bd3f410280c4ad656b212"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacad2ead4a5bd3f410280c4ad656b212">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aacad2ead4a5bd3f410280c4ad656b212">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1633,8 +1638,150 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a5a204819de6e1b304d3a86cda2f5f557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a204819de6e1b304d3a86cda2f5f557">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_updateScheduleHappyCase&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf39c4ac222cca2592f038e19396b8e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf39c4ac222cca2592f038e19396b8e7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_invalidDbConfiguration&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test create with invalid alerts database configuration. </p>
+
+</div>
+</div>
+<a id="afd28f12287df49be0b4110814dd187e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd28f12287df49be0b4110814dd187e6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_snoozeBadTime&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6297ab8983743ceca02dfe6e3a143902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6297ab8983743ceca02dfe6e3a143902">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_snoozeHappyCase&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4e99752731ebda47d5784f859d099a02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e99752731ebda47d5784f859d099a02">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_nullAlertsAudioFactory&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test create with null <code>AlertsAudioFactoryInterface</code>. </p>
+
+</div>
+</div>
 <a id="ac08bc7434bc4f3012d060262fa837747"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac08bc7434bc4f3012d060262fa837747">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac08bc7434bc4f3012d060262fa837747">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1662,8 +1809,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a936d969c4f74dcc9496e119fbfa993c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a936d969c4f74dcc9496e119fbfa993c4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/79]</span></h2>
+<a id="a2a5823c4b131ca3ad361f0f91b3e2520"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5823c4b131ca3ad361f0f91b3e2520">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1677,7 +1824,121 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_hasAssetBgAssetIdNotFoundOnAssets&#160;</td>
+          <td class="paramtype">test_setLoopCountNegative&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac9b33ffd11a4d1d597ae1cddc4473be1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9b33ffd11a4d1d597ae1cddc4473be1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_nullMetricRecorder&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test create with null <code>MetricRecorderInterface</code>. It's okay if metric recorder instance is not provided. </p>
+
+</div>
+</div>
+<a id="a5fa864a0533649c1cc76a44d69638b9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fa864a0533649c1cc76a44d69638b9f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_setLoopCountHappyCase&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab26548f89a4ed45c5af81a04106b78d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab26548f89a4ed45c5af81a04106b78d0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[36/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_openExistingDatabaseSucceeds&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test if open existing database succeeds. </p>
+
+</div>
+</div>
+<a id="af121fee1249f34bedd65c9081eb20666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af121fee1249f34bedd65c9081eb20666">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_setLoopPause&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1691,7 +1952,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a59ff6b7a188a52d3a73f05fe3804ea71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59ff6b7a188a52d3a73f05fe3804ea71">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[37/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a59ff6b7a188a52d3a73f05fe3804ea71">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1727,8 +1988,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a2f95d7d29a8637a22fdd6ad8da2f1a63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f95d7d29a8637a22fdd6ad8da2f1a63">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[38/79]</span></h2>
+<a id="ade81e1551e9e72871bc92099f4311f87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade81e1551e9e72871bc92099f4311f87">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_createExistingDatabaseFails&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test if create existing database fails. </p>
+
+</div>
+</div>
+<a id="a70a9114dd0bd6dab4280a88f66d3dde3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70a9114dd0bd6dab4280a88f66d3dde3">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1742,7 +2032,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_hasAssetOrderItemNotFoundOnAssets&#160;</td>
+          <td class="paramtype">test_setBackgroundAssetId&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1755,8 +2045,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a15072eb56092b9a5cc1ae3fe5804846e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15072eb56092b9a5cc1ae3fe5804846e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[39/79]</span></h2>
+<a id="ac0b244708ca85e85d2b28966c3b54c11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0b244708ca85e85d2b28966c3b54c11">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_openDatabaseWhenAlertsTableIsMissing&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test if open succeeds when latest alerts table does not exist yet. </p>
+<p>missing table will be created on open. </p>
+
+</div>
+</div>
+<a id="a5605fa3444cf0afdf4c04fa209437902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5605fa3444cf0afdf4c04fa209437902">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1770,7 +2090,65 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">test_focusChangeDuringActivation&#160;</td>
+          <td class="paramtype">DISABLED_test_isPastDue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af400abab5ba8451f43b320e39aa5d29b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af400abab5ba8451f43b320e39aa5d29b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_openDatabaseWhenOfflineAlertsTableIsMissing&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test if open succeeds when latest offline alerts table does not exist yet. </p>
+<p>missing table will be created on open. </p>
+
+</div>
+</div>
+<a id="a4cbaa6516e4ac6ff6c0ecb32c1bc0869"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cbaa6516e4ac6ff6c0ecb32c1bc0869">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_stateToString&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -1784,7 +2162,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a7d7f7207ef2a74a7fbf8357f7b42d099"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d7f7207ef2a74a7fbf8357f7b42d099">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[40/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d7f7207ef2a74a7fbf8357f7b42d099">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1819,8 +2197,154 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a1eb631de2760e0539bf5ece9fb6427a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1eb631de2760e0539bf5ece9fb6427a1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_openDatabaseWhenAssetTablesAreMissing&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test if open succeeds when 'alertAsset' and 'alertAssetPlayOrderItems' tables do not exist yet. </p>
+<p>missing tables will be created on open. </p>
+
+</div>
+</div>
+<a id="a1ec79d59ef997a71b66cd3481b645497"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ec79d59ef997a71b66cd3481b645497">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_stopReasonToString&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af355a4aa16409175f1b8ca687a9ec8e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af355a4aa16409175f1b8ca687a9ec8e0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_parseFromJsonStatusToString&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a22e882abfe0776566f11b07db936a595"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22e882abfe0776566f11b07db936a595">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_hasAssetHappy&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a00264a714615c546540baa9e05405644"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00264a714615c546540baa9e05405644">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_migrateAlertFromV2ToV3&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test data migration from alerts v2 table to v3. </p>
+<p>create alerts v2 table.</p>
+<p>data migration happens on open.</p>
+<p>verify if the alert has been migrated successfully from table v2 to v3. </p>
+
+</div>
+</div>
 <a id="a4b8d05f9c0b0f8840f573f49dbaa0354"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b8d05f9c0b0f8840f573f49dbaa0354">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[41/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b8d05f9c0b0f8840f573f49dbaa0354">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1848,37 +2372,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8239344cff58b04abff190fe90b710bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8239344cff58b04abff190fe90b710bc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[42/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">testTimer_localAlertVolumeChangeAlertPlaying&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test local alert volume changes. With alert sounding. Must not send event, volume is treated as local. </p>
-
-</div>
-</div>
 <a id="a445995c5555d86b77a17026afdcbb13a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a445995c5555d86b77a17026afdcbb13a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[43/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a445995c5555d86b77a17026afdcbb13a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1906,8 +2401,65 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a936d969c4f74dcc9496e119fbfa993c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a936d969c4f74dcc9496e119fbfa993c4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_hasAssetBgAssetIdNotFoundOnAssets&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8239344cff58b04abff190fe90b710bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8239344cff58b04abff190fe90b710bc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">testTimer_localAlertVolumeChangeAlertPlaying&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test local alert volume changes. With alert sounding. Must not send event, volume is treated as local. </p>
+
+</div>
+</div>
 <a id="a9617e0d8c0c25c301dd44dd74c4729f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9617e0d8c0c25c301dd44dd74c4729f8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[44/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9617e0d8c0c25c301dd44dd74c4729f8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1935,8 +2487,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a2f95d7d29a8637a22fdd6ad8da2f1a63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f95d7d29a8637a22fdd6ad8da2f1a63">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_hasAssetOrderItemNotFoundOnAssets&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad5c52692f72e6b6c5d3ab6196c8e3d2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5c52692f72e6b6c5d3ab6196c8e3d2b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[45/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5c52692f72e6b6c5d3ab6196c8e3d2b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1964,8 +2544,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a15072eb56092b9a5cc1ae3fe5804846e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15072eb56092b9a5cc1ae3fe5804846e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alert_test.html">AlertTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_focusChangeDuringActivation&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a860fb4cb066ba8f9520e32bd0224eed6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a860fb4cb066ba8f9520e32bd0224eed6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[46/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a860fb4cb066ba8f9520e32bd0224eed6">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1993,8 +2601,40 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a01441d6b57d6c100134d2b9bf790b6c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01441d6b57d6c100134d2b9bf790b6c2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_migrateOfflineAlertFromV1ToV2&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test data migration from offline alerts v1 table to v2. </p>
+<p>create offline alerts v1 table.</p>
+<p>data migration happens on open.</p>
+<p>verify if the offline alert has been migrated successfully from table v1 to v2. </p>
+
+</div>
+</div>
 <a id="a0609054f84386b5dac019c7f927664d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0609054f84386b5dac019c7f927664d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[47/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0609054f84386b5dac019c7f927664d2">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2022,37 +2662,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a47432216c94694932a34cdb991241235"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47432216c94694932a34cdb991241235">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[48/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_startAlertWithContentChannelLowerVolume&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test use cases when alert is going to start when content is being played on Content channel with lower volume. </p>
-
-</div>
-</div>
 <a id="a96f1e7f88269f8b4f3e303419f80a353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96f1e7f88269f8b4f3e303419f80a353">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[49/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a96f1e7f88269f8b4f3e303419f80a353">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2080,8 +2691,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a47432216c94694932a34cdb991241235"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47432216c94694932a34cdb991241235">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_startAlertWithContentChannelLowerVolume&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test use cases when alert is going to start when content is being played on Content channel with lower volume. </p>
+
+</div>
+</div>
 <a id="a531f76a8b1c9c79a9cc2ec87cf03a578"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a531f76a8b1c9c79a9cc2ec87cf03a578">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[50/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a531f76a8b1c9c79a9cc2ec87cf03a578">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2109,37 +2749,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ad59e3116de65a92f3c430842ea0b28e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad59e3116de65a92f3c430842ea0b28e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[51/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_startAlertWithCommsChannelLowerVolume&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test use cases when alert is going to start when content is being played on Comms channel with lower volume. </p>
-
-</div>
-</div>
 <a id="ab2974e3ba5d6b277d0c6a411b2ec23de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2974e3ba5d6b277d0c6a411b2ec23de">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[52/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2974e3ba5d6b277d0c6a411b2ec23de">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2167,8 +2778,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ad59e3116de65a92f3c430842ea0b28e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad59e3116de65a92f3c430842ea0b28e8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_startAlertWithCommsChannelLowerVolume&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test use cases when alert is going to start when content is being played on Comms channel with lower volume. </p>
+
+</div>
+</div>
 <a id="a54e22d9c86a24326ac94293a79812648"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54e22d9c86a24326ac94293a79812648">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[53/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a54e22d9c86a24326ac94293a79812648">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2196,37 +2836,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a02dcd181f7c520027928195bcb34a7f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02dcd181f7c520027928195bcb34a7f9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[54/79]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">test_startAlertWithDialogChannelLowerVolume&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Test use cases when alert is going to start when content is being played on Dialog channel with lower volume. </p>
-
-</div>
-</div>
 <a id="a4c8e4231bc294f2ac86ef12f5a1d1141"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c8e4231bc294f2ac86ef12f5a1d1141">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[55/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c8e4231bc294f2ac86ef12f5a1d1141">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[68/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2254,8 +2865,69 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ad834022c4d495a5e96bda127b4bcc83c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad834022c4d495a5e96bda127b4bcc83c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[69/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_storeAndLoadAlerts&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test store and load alerts. </p>
+<p>store alerts</p>
+<p>load alerts</p>
+<p>verify </p>
+
+</div>
+</div>
+<a id="a02dcd181f7c520027928195bcb34a7f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02dcd181f7c520027928195bcb34a7f9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[70/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_alerts_capability_agent_test.html">AlertsCapabilityAgentTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_startAlertWithDialogChannelLowerVolume&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test use cases when alert is going to start when content is being played on Dialog channel with lower volume. </p>
+
+</div>
+</div>
 <a id="a91428685550c9939a4997232043b0268"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91428685550c9939a4997232043b0268">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[56/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a91428685550c9939a4997232043b0268">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[71/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2284,7 +2956,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5f8ceaaeb58df1f2591bf4231e9db505"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f8ceaaeb58df1f2591bf4231e9db505">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[57/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f8ceaaeb58df1f2591bf4231e9db505">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[72/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2313,7 +2985,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5cc895a6bea04c3799f58a815ae0b9d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cc895a6bea04c3799f58a815ae0b9d8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[58/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cc895a6bea04c3799f58a815ae0b9d8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[73/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2341,8 +3013,40 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a537edebf3fcff2d6c3e52b807055d446"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a537edebf3fcff2d6c3e52b807055d446">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[74/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_modifyAlerts&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test modify an alert. </p>
+<p>update schedule time.</p>
+<p>verify the value after modification.</p>
+<p>modify should fail if the alert does not exist. </p>
+
+</div>
+</div>
 <a id="a67312824855035d78d88d105b809d7d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67312824855035d78d88d105b809d7d9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[59/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a67312824855035d78d88d105b809d7d9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[75/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2371,7 +3075,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af8a6dd38762dfa7829dc1df981d4dac7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8a6dd38762dfa7829dc1df981d4dac7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[60/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af8a6dd38762dfa7829dc1df981d4dac7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[76/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2400,7 +3104,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a28cad39ab2e794d27c02510fb709dc52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28cad39ab2e794d27c02510fb709dc52">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[61/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a28cad39ab2e794d27c02510fb709dc52">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[77/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2428,8 +3132,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a78f7ba94cf525c85e884c0e9735c20c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78f7ba94cf525c85e884c0e9735c20c0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[78/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_eraseAlert&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test erase an alert. </p>
+<p>start to erase </p>
+
+</div>
+</div>
 <a id="adbdf8034007205e861ec391eb5bcbe5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbdf8034007205e861ec391eb5bcbe5d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[62/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adbdf8034007205e861ec391eb5bcbe5d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[79/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2459,7 +3193,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0bb8235b93ae6b7f9b39b81a9e61d546"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bb8235b93ae6b7f9b39b81a9e61d546">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[63/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bb8235b93ae6b7f9b39b81a9e61d546">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[80/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2487,8 +3221,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ada9c589c11be97f3d0886567db5b651d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada9c589c11be97f3d0886567db5b651d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[81/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_bulkEraseAlert&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test bulkErase alerts. </p>
+<p>start to bulkErase </p>
+
+</div>
+</div>
 <a id="aadf1e4035891d88227e6acc2676adb90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadf1e4035891d88227e6acc2676adb90">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[64/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aadf1e4035891d88227e6acc2676adb90">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[82/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2517,7 +3281,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a362c5b743592b01b04050998afbb9e2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a362c5b743592b01b04050998afbb9e2d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[65/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a362c5b743592b01b04050998afbb9e2d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[83/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2545,8 +3309,39 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ab1e2f3605a1ab1598434b89aa4e31dde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1e2f3605a1ab1598434b89aa4e31dde">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[84/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_storeAndLoadOfflineAlerts&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test store and load offline alerts. </p>
+<p>store offline alerts.</p>
+<p>load offline alerts. </p>
+
+</div>
+</div>
 <a id="a43650081d7e4170200365d86b037a12e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43650081d7e4170200365d86b037a12e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[66/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43650081d7e4170200365d86b037a12e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[85/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2575,7 +3370,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ad0bbdf08bea26fa8d6ec5ad7e5540b4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0bbdf08bea26fa8d6ec5ad7e5540b4b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[67/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0bbdf08bea26fa8d6ec5ad7e5540b4b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[86/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2607,8 +3402,41 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a9bfcce98fd529bda56b8b77a8126c31c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bfcce98fd529bda56b8b77a8126c31c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[87/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_eraseOfflineAlerts&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test erase offline alerts. </p>
+<p>store offline alerts.</p>
+<p>erase the offline alert.</p>
+<p>load offline alerts.</p>
+<p>erase the offline alert. </p>
+
+</div>
+</div>
 <a id="a83c2341545bb26df8be7d9bdf560d006"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83c2341545bb26df8be7d9bdf560d006">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[68/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a83c2341545bb26df8be7d9bdf560d006">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[88/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2638,8 +3466,41 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae3b4135e4c726013a69b1f638d8c6b00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3b4135e4c726013a69b1f638d8c6b00">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[89/100]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkAlerts::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_s_q_lite_alert_storage_test.html">SQLiteAlertStorageTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_clearDatabase&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test clear databse. </p>
+<p>include legacy tables.</p>
+<p>store alerts.</p>
+<p>check alerts exist.</p>
+<p>clear database. </p>
+
+</div>
+</div>
 <a id="a3c9dfd2649e9e245af943db9552ca9af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c9dfd2649e9e245af943db9552ca9af">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[69/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c9dfd2649e9e245af943db9552ca9af">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[90/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2668,7 +3529,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ae59befdcd3768bc8c476736489cdcc5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae59befdcd3768bc8c476736489cdcc5c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[70/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae59befdcd3768bc8c476736489cdcc5c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[91/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2697,7 +3558,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a991335b1f37457b33246cab11762827c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a991335b1f37457b33246cab11762827c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[71/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a991335b1f37457b33246cab11762827c">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[92/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2726,7 +3587,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a098b8ad3aff3138ca72a036f1ef9afb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a098b8ad3aff3138ca72a036f1ef9afb4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[72/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a098b8ad3aff3138ca72a036f1ef9afb4">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[93/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2756,7 +3617,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a3d4ec40951ada376458e4999149a1a08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d4ec40951ada376458e4999149a1a08">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[73/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d4ec40951ada376458e4999149a1a08">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[94/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2786,7 +3647,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a861f4f527a020058fa93009728c81645"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a861f4f527a020058fa93009728c81645">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[74/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a861f4f527a020058fa93009728c81645">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[95/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2817,7 +3678,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="affdbeb2d4758b56a4a608bb2b975b523"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affdbeb2d4758b56a4a608bb2b975b523">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[75/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#affdbeb2d4758b56a4a608bb2b975b523">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[96/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2846,7 +3707,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abf1dbcb06bb302b675ca1a270598257b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf1dbcb06bb302b675ca1a270598257b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[76/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abf1dbcb06bb302b675ca1a270598257b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[97/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2875,7 +3736,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa21b686128e464cf82b28de72f2861b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa21b686128e464cf82b28de72f2861b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[77/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa21b686128e464cf82b28de72f2861b7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[98/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2904,7 +3765,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6157aa57b6a3fc81b838eb2276bd4c89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6157aa57b6a3fc81b838eb2276bd4c89">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[78/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6157aa57b6a3fc81b838eb2276bd4c89">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[99/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2933,7 +3794,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1660348a7283eeeedbbb6bbb29b1a6fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1660348a7283eeeedbbb6bbb29b1a6fe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[79/79]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1660348a7283eeeedbbb6bbb29b1a6fe">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[100/100]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3220,6 +4081,54 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a474898ffc8f05e48da3caee042455a6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a474898ffc8f05e48da3caee042455a6e">&#9670;&nbsp;</a></span>ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME = &quot;alertAssetPlayOrderItems&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the alertAssetPlayOrderItems table. </p>
+
+</div>
+</div>
+<a id="a28ef7a8f0016204a70c0a8f124735426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28ef7a8f0016204a70c0a8f124735426">&#9670;&nbsp;</a></span>ALERT_ASSETS_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ALERT_ASSETS_TABLE_NAME = &quot;alertAssets&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the alertAssets table. </p>
+
+</div>
+</div>
 <a id="a0ae7445e05ab8bfea44073c2d4518fc9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ae7445e05ab8bfea44073c2d4518fc9">&#9670;&nbsp;</a></span>ALERT_PAST_DUE_TIME_LIMIT</h2>
 
@@ -3241,30 +4150,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html">Alert</a> past due time limit. </p>
-
-</div>
-</div>
-<a id="a892a9072d4816875b8f3ff36e265834b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a892a9072d4816875b8f3ff36e265834b">&#9670;&nbsp;</a></span>ALERT_TYPE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ALERT_TYPE = &quot;TEST_ALERT_TYPE&quot;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Test alert type. </p>
 
 </div>
 </div>
@@ -3290,6 +4175,200 @@ Variables</h2></td></tr>
 
 <p>Alerts namespace. </p>
 
+</div>
+</div>
+<a id="ae6b54e11230db326f2ce88b68e427d05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6b54e11230db326f2ce88b68e427d05">&#9670;&nbsp;</a></span>ALERTS_V2_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ALERTS_V2_TABLE_NAME = &quot;alerts_v2&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the alerts (v2) table. </p>
+
+</div>
+</div>
+<a id="a11f5c2b1d44141185a9b74f4eb241408"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11f5c2b1d44141185a9b74f4eb241408">&#9670;&nbsp;</a></span>ALERTS_V3_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ALERTS_V3_TABLE_NAME = &quot;alerts_v3&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the alerts (v3) table. </p>
+
+</div>
+</div>
+<a id="a55b9fa1bbed0cfd42de6b4d1df723d14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55b9fa1bbed0cfd42de6b4d1df723d14">&#9670;&nbsp;</a></span>CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::CREATE_ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_SQL_STRING</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a474898ffc8f05e48da3caee042455a6e">ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_position INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_play_order_token TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_a474898ffc8f05e48da3caee042455a6e"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a474898ffc8f05e48da3caee042455a6e">alexaClientSDK::acsdkAlerts::test::ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSET_PLAY_ORDER_ITEMS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssetPlayOrderItems table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:155</div></div>
+</div><!-- fragment -->
+<p>The SQL string to create the alertAssetPlayOrderItems table. </p>
+
+</div>
+</div>
+<a id="a3d92c1e14be780c054b78e8e2e1408bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d92c1e14be780c054b78e8e2e1408bf">&#9670;&nbsp;</a></span>CREATE_ALERT_ASSETS_TABLE_SQL_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::CREATE_ALERT_ASSETS_TABLE_SQL_STRING</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">                                                                <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a28ef7a8f0016204a70c0a8f124735426">ALERT_ASSETS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;alert_id INT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;avs_id TEXT NOT NULL,&quot;</span> +</div><div class="line">                                                                <span class="stringliteral">&quot;url TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_a28ef7a8f0016204a70c0a8f124735426"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a28ef7a8f0016204a70c0a8f124735426">alexaClientSDK::acsdkAlerts::test::ALERT_ASSETS_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERT_ASSETS_TABLE_NAME</div><div class="ttdoc">The name of the alertAssets table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:118</div></div>
+</div><!-- fragment -->
+<p>The SQL string to create the alertAssets table. </p>
+
+</div>
+</div>
+<a id="a39083593e021184e13e96e7ecc0a37bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39083593e021184e13e96e7ecc0a37bf">&#9670;&nbsp;</a></span>CREATE_ALERTS_V2_TABLE_SQL_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::CREATE_ALERTS_V2_TABLE_SQL_STRING</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae6b54e11230db326f2ce88b68e427d05">ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;type INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;state INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_unix INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_count INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_pause_milliseconds INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;background_asset TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_ae6b54e11230db326f2ce88b68e427d05"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#ae6b54e11230db326f2ce88b68e427d05">alexaClientSDK::acsdkAlerts::test::ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:80</div></div>
+</div><!-- fragment -->
+<p>The SQL string to create the alerts table. </p>
+
+</div>
+</div>
+<a id="ab7f2b9674b5385646891b9d0089e0968"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7f2b9674b5385646891b9d0089e0968">&#9670;&nbsp;</a></span>CREATE_ALERTS_V3_TABLE_SQL_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::CREATE_ALERTS_V3_TABLE_SQL_STRING</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a11f5c2b1d44141185a9b74f4eb241408">ALERTS_V3_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;type INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;state INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_unix INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_count INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;asset_loop_pause_milliseconds INT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;background_asset TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;original_time TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;label TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;created_time_iso_8601 TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_a11f5c2b1d44141185a9b74f4eb241408"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a11f5c2b1d44141185a9b74f4eb241408">alexaClientSDK::acsdkAlerts::test::ALERTS_V3_TABLE_NAME</a></div><div class="ttdeci">static const std::string ALERTS_V3_TABLE_NAME</div><div class="ttdoc">The name of the alerts (v3) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:83</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a582e51ad3181fab41cc8d1c342cc1e79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a582e51ad3181fab41cc8d1c342cc1e79">&#9670;&nbsp;</a></span>CREATE_OFFLINE_ALERTS_V1_TABLE_SQL_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::CREATE_OFFLINE_ALERTS_V1_TABLE_SQL_STRING</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#afb788199c9fc3914c932520f6991faca">OFFLINE_ALERTS_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_afb788199c9fc3914c932520f6991faca"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#afb788199c9fc3914c932520f6991faca">alexaClientSDK::acsdkAlerts::test::OFFLINE_ALERTS_TABLE_NAME</a></div><div class="ttdeci">static const std::string OFFLINE_ALERTS_TABLE_NAME</div><div class="ttdoc">The name of the offline alerts (v1) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:131</div></div>
+</div><!-- fragment -->
+<p>The SQL string to create the offline alerts table. </p>
+
+</div>
+</div>
+<a id="a4a02f6f5deee0830104d933dc9901426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a02f6f5deee0830104d933dc9901426">&#9670;&nbsp;</a></span>CREATE_OFFLINE_ALERTS_V2_TABLE_SQL_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::CREATE_OFFLINE_ALERTS_V2_TABLE_SQL_STRING</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= std::string(<span class="stringliteral">&quot;CREATE TABLE &quot;</span>) +</div><div class="line">        <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a905d6a86a99414047d34dd3844930ed7">OFFLINE_ALERTS_V2_TABLE_NAME</a> + <span class="stringliteral">&quot; (&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;id INT PRIMARY KEY NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;token TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;scheduled_time_iso_8601 TEXT NOT NULL,&quot;</span> +</div><div class="line">        <span class="stringliteral">&quot;event_time_iso_8601 TEXT NOT NULL);&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_a905d6a86a99414047d34dd3844930ed7"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a905d6a86a99414047d34dd3844930ed7">alexaClientSDK::acsdkAlerts::test::OFFLINE_ALERTS_V2_TABLE_NAME</a></div><div class="ttdeci">static const std::string OFFLINE_ALERTS_V2_TABLE_NAME</div><div class="ttdoc">The name of the offline alerts (v2) table. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:134</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a28267d63a1547939525f2b5b0a2e9e56"></a>
@@ -3356,6 +4435,28 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a778586ef802cb23f0ea62cb2632a6b7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a778586ef802cb23f0ea62cb2632a6b7e">&#9670;&nbsp;</a></span>INVALID_ALERTS_DB_CONFIG_JSON</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::INVALID_ALERTS_DB_CONFIG_JSON</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;(</span></div><div class="line"><span class="stringliteral">    {</span></div><div class="line"><span class="stringliteral">        &quot;alertsCapabilityAgent&quot;: {</span></div><div class="line"><span class="stringliteral">            &quot;databaseFilePath&quot;: &quot;&quot;</span></div><div class="line"><span class="stringliteral">        }</span></div><div class="line"><span class="stringliteral">    }</span></div><div class="line"><span class="stringliteral">)&quot;</span></div></div><!-- fragment -->
+</div>
+</div>
 <a id="a7c5a0ca99109a0a1ac15e642f613b050"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c5a0ca99109a0a1ac15e642f613b050">&#9670;&nbsp;</a></span>INVALID_FORMAT_SCHED_TIME</h2>
 
@@ -3375,6 +4476,74 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a38a4f122ccae7b368a89ff3f10197567"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38a4f122ccae7b368a89ff3f10197567">&#9670;&nbsp;</a></span>INVALID_ORIGINAL_TIME_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::INVALID_ORIGINAL_TIME_TEST {&quot;-1:00:00.000&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7123b5bbe2a03eff579a8e468c227088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7123b5bbe2a03eff579a8e468c227088">&#9670;&nbsp;</a></span>LABEL_REMINDER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::LABEL_REMINDER = &quot;walk the dog&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2bc3a9dc88a7c7cbe49fa981d5d1be43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bc3a9dc88a7c7cbe49fa981d5d1be43">&#9670;&nbsp;</a></span>LABEL_TIMER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::LABEL_TIMER = &quot;coffee&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Label for the alerts. </p>
 
 </div>
 </div>
@@ -3496,6 +4665,100 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afb788199c9fc3914c932520f6991faca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb788199c9fc3914c932520f6991faca">&#9670;&nbsp;</a></span>OFFLINE_ALERTS_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::OFFLINE_ALERTS_TABLE_NAME = &quot;offlineAlerts&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the offline alerts (v1) table. </p>
+
+</div>
+</div>
+<a id="a905d6a86a99414047d34dd3844930ed7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a905d6a86a99414047d34dd3844930ed7">&#9670;&nbsp;</a></span>OFFLINE_ALERTS_V2_TABLE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::OFFLINE_ALERTS_V2_TABLE_NAME = &quot;offlineAlerts_v2&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of the offline alerts (v2) table. </p>
+
+</div>
+</div>
+<a id="af12a0fa12060cc1602af2a34fc2f98aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af12a0fa12060cc1602af2a34fc2f98aa">&#9670;&nbsp;</a></span>ORIGINAL_TIME_ALARM</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ORIGINAL_TIME_ALARM = &quot;16:00:00.000&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Original time. </p>
+
+</div>
+</div>
+<a id="aa7111ade003a304c17ee3447dba9e1a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7111ade003a304c17ee3447dba9e1a0">&#9670;&nbsp;</a></span>ORIGINAL_TIME_REMINDER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::ORIGINAL_TIME_REMINDER = &quot;18:00:00.000&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae1dee7777600f017ad9af60c7b2c11b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae1dee7777600f017ad9af60c7b2c11b5">&#9670;&nbsp;</a></span>PAST_INSTANT</h2>
 
@@ -3588,6 +4851,96 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a1d58eddf4f36b668b42908b798bcb936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d58eddf4f36b668b42908b798bcb936">&#9670;&nbsp;</a></span>SCHEDULED_TIME_ISO_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::SCHEDULED_TIME_ISO_STRING = &quot;2008-08-08T08:00:00+0000&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Schduled time string in ISO 8601 format. </p>
+
+</div>
+</div>
+<a id="acf37b30f986bc707a2215fcc4d178725"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf37b30f986bc707a2215fcc4d178725">&#9670;&nbsp;</a></span>SCHEDULED_TIME_ISO_STRING_ALARM</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::SCHEDULED_TIME_ISO_STRING_ALARM = &quot;2020-08-08T08:00:00+0000&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0ad391d55adaa5b4729b2c5a8ff61500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ad391d55adaa5b4729b2c5a8ff61500">&#9670;&nbsp;</a></span>SCHEDULED_TIME_ISO_STRING_REMINDER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::SCHEDULED_TIME_ISO_STRING_REMINDER = &quot;2020-08-10T08:00:00+0000&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a825a45b68e02937e8b11de8497a14dc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a825a45b68e02937e8b11de8497a14dc4">&#9670;&nbsp;</a></span>SCHEDULED_TIME_ISO_STRING_TIMER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::SCHEDULED_TIME_ISO_STRING_TIMER = &quot;2020-08-09T08:00:00+0000&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a458db74657186c87e1c62f9cf8df4fc5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a458db74657186c87e1c62f9cf8df4fc5">&#9670;&nbsp;</a></span>SET_ALARM_VOLUME_RAMP_DIRECTIVE_NAME</h2>
 
@@ -3663,6 +5016,97 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a479dfc674bdcce9f21a7183d861deb9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a479dfc674bdcce9f21a7183d861deb9c">&#9670;&nbsp;</a></span>TEST_ALERT_TYPE_ALARM</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TEST_ALERT_TYPE_ALARM = &quot;ALARM&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Constants for Alerts. Type of the alert for testing. </p>
+
+</div>
+</div>
+<a id="a8b8e9a4d9053a985700242d38679e06a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b8e9a4d9053a985700242d38679e06a">&#9670;&nbsp;</a></span>TEST_ALERT_TYPE_REMINDER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TEST_ALERT_TYPE_REMINDER = &quot;REMINDER&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a697f9cfaa86e888459b708d4b81b1ccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a697f9cfaa86e888459b708d4b81b1ccc">&#9670;&nbsp;</a></span>TEST_ALERT_TYPE_TIMER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TEST_ALERT_TYPE_TIMER = &quot;TIMER&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0ff991c30350dc01ab4e4a64e7d0e6b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ff991c30350dc01ab4e4a64e7d0e6b9">&#9670;&nbsp;</a></span>TEST_DATABASE_FILE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TEST_DATABASE_FILE_NAME = &quot;SQLiteAlertStorageTest.db&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The name of database file for testing. </p>
 
 </div>
 </div>
@@ -3822,6 +5266,136 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="afc5b6b527333a270de23dc111b47a4b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc5b6b527333a270de23dc111b47a4b3">&#9670;&nbsp;</a></span>TOKEN_ALARM</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TOKEN_ALARM = &quot;token-alarm&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Alerts token. </p>
+
+</div>
+</div>
+<a id="a3d3055cf781f5013697751bb6f400f0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d3055cf781f5013697751bb6f400f0d">&#9670;&nbsp;</a></span>TOKEN_REMINDER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TOKEN_REMINDER = &quot;token-reminder&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab3645d86ce942c18d700748e47b2b77e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3645d86ce942c18d700748e47b2b77e">&#9670;&nbsp;</a></span>TOKEN_TIMER</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TOKEN_TIMER = &quot;token-timer&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a058bf5b9024825d957610c30ad4c1215"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a058bf5b9024825d957610c30ad4c1215">&#9670;&nbsp;</a></span>TYPE_ALARM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">AlertObserverInterface::Type</a> alexaClientSDK::acsdkAlerts::test::TYPE_ALARM = AlertObserverInterface::Type::ALARM</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The alert type. </p>
+<p>Test alert type. </p>
+
+</div>
+</div>
+<a id="a195b4bba82dd6f969f563cd92ab64e17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a195b4bba82dd6f969f563cd92ab64e17">&#9670;&nbsp;</a></span>TYPE_ALARM_STRING</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::TYPE_ALARM_STRING = <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#af5a3de588b9bcb58f1af778265e694e4">AlertObserverInterface::typeToString</a>(<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a058bf5b9024825d957610c30ad4c1215">TYPE_ALARM</a>)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa61fedd591075c70014a32c92d84ff94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa61fedd591075c70014a32c92d84ff94">&#9670;&nbsp;</a></span>VALID_ALERTS_DB_CONFIG_JSON</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string alexaClientSDK::acsdkAlerts::test::VALID_ALERTS_DB_CONFIG_JSON</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;(</span></div><div class="line"><span class="stringliteral">    {</span></div><div class="line"><span class="stringliteral">        &quot;alertsCapabilityAgent&quot;: {</span></div><div class="line"><span class="stringliteral">            &quot;databaseFilePath&quot;: &quot;)&quot; + <a class="code" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0ff991c30350dc01ab4e4a64e7d0e6b9">TEST_DATABASE_FILE_NAME</a> + R</span><span class="stringliteral">&quot;(&quot;</span></div><div class="line"><span class="stringliteral">        }</span></div><div class="line"><span class="stringliteral">    }</span></div><div class="line"><span class="stringliteral">)&quot;</span></div><div class="ttc" id="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test_html_a0ff991c30350dc01ab4e4a64e7d0e6b9"><div class="ttname"><a href="namespacealexa_client_s_d_k_1_1acsdk_alerts_1_1test.html#a0ff991c30350dc01ab4e4a64e7d0e6b9">alexaClientSDK::acsdkAlerts::test::TEST_DATABASE_FILE_NAME</a></div><div class="ttdeci">static const std::string TEST_DATABASE_FILE_NAME</div><div class="ttdoc">The name of database file for testing. </div><div class="ttdef"><b>Definition:</b> SQLiteAlertStorageTest.cpp:57</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a32c22e0baffc5bde4de4f2a1ed63b82a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a32c22e0baffc5bde4de4f2a1ed63b82a">&#9670;&nbsp;</a></span>VOLUME_PAYLOAD</h2>
 
@@ -3901,7 +5475,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

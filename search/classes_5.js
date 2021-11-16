@@ -3,6 +3,7 @@ var searchData=
   ['factorysequencer',['FactorySequencer',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_factory_sequencer.html',1,'alexaClientSDK::acsdkManufactory']]],
   ['factorysequencer_3c_20resulttype_2c_20precursortypes_2e_2e_2e_20_3e',['FactorySequencer&lt; ResultType, PrecursorTypes... &gt;',['../classalexa_client_s_d_k_1_1acsdk_manufactory_1_1_factory_sequencer_3_01_result_type_00_01_precursor_types_8_8_8_01_4.html',1,'alexaClientSDK::acsdkManufactory']]],
   ['fadeinconfig',['FadeInConfig',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_source_config_1_1_fade_in_config.html',1,'alexaClientSDK::avsCommon::utils::mediaPlayer::SourceConfig']]],
+  ['falsevalidator',['FalseValidator',['../classalexa_client_s_d_k_1_1acsdk_communication_1_1test_1_1_false_validator.html',1,'alexaClientSDK::acsdkCommunication::test']]],
   ['ffmpegattachmentinputcontroller',['FFmpegAttachmentInputController',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_attachment_input_controller.html',1,'alexaClientSDK::mediaPlayer::android']]],
   ['ffmpegdecoder',['FFmpegDecoder',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1_f_fmpeg_decoder.html',1,'alexaClientSDK::mediaPlayer::android']]],
   ['ffmpegdecodertest',['FFmpegDecoderTest',['../classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_f_fmpeg_decoder_test.html',1,'alexaClientSDK::mediaPlayer::android::test']]],
@@ -26,5 +27,9 @@ var searchData=
   ['formattedaudiostreamadapter',['FormattedAudioStreamAdapter',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_formatted_audio_stream_adapter.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['formattedaudiostreamadapterlistener',['FormattedAudioStreamAdapterListener',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_formatted_audio_stream_adapter_listener.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['fullstate',['FullState',['../structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface_1_1_full_state.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::AuthObserverInterface']]],
+  ['functioninvokerinterface',['FunctionInvokerInterface',['../classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_function_invoker_interface.html',1,'alexaClientSDK::acsdkCommunicationInterfaces']]],
+  ['functioninvokerinterface_3c_20bool_2c_20std_3a_3astring_20_3e',['FunctionInvokerInterface&lt; bool, std::string &gt;',['../classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_function_invoker_interface.html',1,'alexaClientSDK::acsdkCommunicationInterfaces']]],
+  ['functioninvokerinterface_3c_20std_3a_3astring_20_3e',['FunctionInvokerInterface&lt; std::string &gt;',['../classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_function_invoker_interface.html',1,'alexaClientSDK::acsdkCommunicationInterfaces']]],
+  ['functioninvokerinterface_3c_20std_3a_3astring_2c_20int_20_3e',['FunctionInvokerInterface&lt; std::string, int &gt;',['../classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_function_invoker_interface.html',1,'alexaClientSDK::acsdkCommunicationInterfaces']]],
   ['futurepromisepair',['FuturePromisePair',['../structalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_future_promise_pair.html',1,'alexaClientSDK::acsdkNotifications::test']]]
 ];

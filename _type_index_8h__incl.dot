@@ -73,7 +73,9 @@ digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufact
   Node26 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 [label="AVSCommon/Utils/Platform\lDefinitions.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_platform_definitions_8h.html"];
-  Node0 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node28 [label="acsdkManufactory/internal\l/TypeTraitsHelper.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_type_traits_helper_8h.html"];
-  Node28 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="AVSCommon/Utils/SDKConfig.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="acsdkManufactory/internal\l/TypeTraitsHelper.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_type_traits_helper_8h.html"];
+  Node29 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

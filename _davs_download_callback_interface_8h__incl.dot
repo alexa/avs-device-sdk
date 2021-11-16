@@ -1,0 +1,30 @@
+digraph "/workplace/avs-device-sdk/capabilities/DavsClient/acsdkDavsClientInterfaces/include/acsdkDavsClientInterfaces/DavsDownloadCallbackInterface.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node0 [label="/workplace/avs-device\l-sdk/capabilities/DavsClient\l/acsdkDavsClientInterfaces\l/include/acsdkDavsClientInterfaces\l/DavsDownloadCallbackInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="acsdkAssetsInterfaces\l/ResultCode.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_result_code_8h.html"];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="acsdkAssetsInterfaces\l/VendableArtifact.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_vendable_artifact_8h.html"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="chrono",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="DavsRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_davs_request_8h.html"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="set",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node4 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="ArtifactRequest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_artifact_request_8h.html"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node7 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node7 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="unordered_map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node7 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="Type.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_type_8h.html"];
+  Node4 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="Region.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_region_8h.html"];
+}

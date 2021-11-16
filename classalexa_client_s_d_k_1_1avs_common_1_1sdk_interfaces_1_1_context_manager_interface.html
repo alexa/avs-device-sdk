@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -608,7 +608,7 @@ If you are using RequestToken to track the context response, make sure that the 
 </div><div class="memdoc">
 <p>Sets the state information. The refresh policy indicates to the <code>ContextManager</code> whether on a <code>getContext</code> request the state needs to be updated. If the <code>refreshPolicy</code> is <code>ALWAYS</code>, then the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> needs to be registered with the <code>ContextManager</code>, else <code>setState</code> returns an error.</p>
 <p>For the states for which the refresh policy is <code>ALWAYS</code>, the <code>ContextManager</code> requests for <code>provideStates</code> from the <code>StateProviderInterfaces</code>. When a <code>provideState</code> request is sent to a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code>, the <code>ContextManager</code> will provide a <code>stateRequestToken</code>. The same token needs to be sent on a <code>setState</code> in response to the <code>provideState</code>. If the token sent in the <code>setState</code> request does not match the token in the <code>ContextManager</code>, <code>setState</code> will return an error.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000020">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the ContextManager that the state has changed.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000022">Deprecated:</a></b></dt><dd>Use the provideStateResponse for responding to <code>provideState</code> request and <code>reportStateChange</code> to proactively report to the ContextManager that the state has changed.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Token needs to be set only if the <code>setState</code> is in response to a <code>provideState</code> request. Setting the token to 0 is equivalent to no token.</dd></dl>
 <p>The <code>jsonState</code> is the json value that is associated with the key "payload".</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -660,7 +660,7 @@ If you are using RequestToken to track the context response, make sure that the 
 </table>
 </div><div class="memdoc">
 <p>Registers a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> with the <code>ContextManager</code>. When the context manager receives a <code>getContext</code> request, it queries the registered queryable <code>StateProviderInterfaces</code> for updated state. If a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> tries to register a <code>CapabilityMessageIdentifier</code> that is already present, the older <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> will be replaced with the new one.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000019">Deprecated:</a></b></dt><dd>Use <code>addStateProvider</code> to add or replace the state provider and <code>removeStateProvider</code> to remove a state provider.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000021">Deprecated:</a></b></dt><dd>Use <code>addStateProvider</code> to add or replace the state provider and <code>removeStateProvider</code> to remove a state provider.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If a <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> wants to unregister with the <code>ContextManager</code>, then it needs to set the pointer to the <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_provider_interface.html">StateProviderInterface</a></code> to a <code>nullptr</code>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -679,7 +679,7 @@ If you are using RequestToken to track the context response, make sure that the 
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

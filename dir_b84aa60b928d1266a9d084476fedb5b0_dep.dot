@@ -12,6 +12,6 @@ digraph "/workplace/avs-device-sdk/capabilities/Equalizer/acsdkEqualizerInterfac
   }
   }
   dir_b9b4e583bc1ae50910ec521d666a459f [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_b9b4e583bc1ae50910ec521d666a459f.html"];
-  dir_7c0d3db0d246bbf21ef4b4501fddbc0c->dir_b9b4e583bc1ae50910ec521d666a459f [headlabel="6", labeldistance=1.5 headhref="dir_000324_000321.html"];
-  dir_be0007ee48d5242602032acac74ea9a8->dir_7c0d3db0d246bbf21ef4b4501fddbc0c [headlabel="1", labeldistance=1.5 headhref="dir_000326_000324.html"];
+  dir_7c0d3db0d246bbf21ef4b4501fddbc0c->dir_b9b4e583bc1ae50910ec521d666a459f [headlabel="6", labeldistance=1.5 headhref="dir_000381_000378.html"];
+  dir_be0007ee48d5242602032acac74ea9a8->dir_7c0d3db0d246bbf21ef4b4501fddbc0c [headlabel="1", labeldistance=1.5 headhref="dir_000383_000381.html"];
 }

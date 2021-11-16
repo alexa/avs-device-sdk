@@ -25,7 +25,7 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/System/include/System/Softwa
   Node9 [label="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shutdown_notifier_interface_8h.html"];
   Node9 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node10 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node10 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node10 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -160,17 +160,17 @@ digraph "/workplace/avs-device-sdk/CapabilityAgents/System/include/System/Softwa
   Node47 -> Node83 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node83 [label="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_directive_handler_interface_8h.html"];
   Node83 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node83 -> Node98 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node98 [label="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_directive_handler_result_interface_8h.html"];
-  Node98 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 -> Node98 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node99 [label="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_directive_handler_result_interface_8h.html"];
+  Node99 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node66 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node99 [label="AVSCommon/SDKInterfaces\l/SoftwareInfoSenderObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_software_info_sender_observer_interface_8h.html"];
-  Node99 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node99 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node100 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="AVSCommon/SDKInterfaces\l/SoftwareInfoSenderObserverInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_software_info_sender_observer_interface_8h.html"];
+  Node100 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

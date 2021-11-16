@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6418a0282efa709f01c16160744ac46c {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkCrypto" fontname="Helvetica", fontsize="10", URL="dir_6418a0282efa709f01c16160744ac46c.html"]
+  subgraph clusterdir_1f2919b7b7b3e8010de021fadbd93175 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_1f2919b7b7b3e8010de021fadbd93175.html"];
+    dir_1f2919b7b7b3e8010de021fadbd93175 [shape=plaintext label="include"];
+    dir_dafe9c8657aaa0d1065b84b7184681cf [shape=box label="acsdkCrypto" color="black" fillcolor="white" style="filled" URL="dir_dafe9c8657aaa0d1065b84b7184681cf.html"];
+  }
+  }
+  dir_8d535980e8bcd8dca7a4900da179e35a [shape=box label="acsdkCryptoInterfaces" fillcolor="white" style="filled" color="red" URL="dir_8d535980e8bcd8dca7a4900da179e35a.html"];
+  dir_dafe9c8657aaa0d1065b84b7184681cf->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="1", labeldistance=1.5 headhref="dir_000608_000611.html"];
+}

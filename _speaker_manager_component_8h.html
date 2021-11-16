@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -84,6 +84,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_message_sender_interface_8h_source.html">AVSCommon/SDKInterfaces/MessageSenderInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_manager_interface_8h_source.html">AVSCommon/SDKInterfaces/SpeakerManagerInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_misc_storage_interface_8h_source.html">AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_default_endpoint_annotation_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_endpoint_capabilities_registrar_interface_8h_source.html">AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -115,8 +116,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a3a3355d4111e1f2039608ea1ff1daefb"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a3a3355d4111e1f2039608ea1ff1daefb">alexaClientSDK::capabilityAgents::speakerManager::SpeakerManagerComponent</a> = acsdkManufactory::Component&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::SpeakerManagerInterface &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; acsdkShutdownManagerInterfaces::ShutdownNotifierInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::ContextManagerInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::MessageSenderInterface &gt; &gt;, acsdkManufactory::Import&lt; acsdkManufactory::Annotated&lt; avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation, avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &gt;&gt;</td></tr>
-<tr class="separator:a3a3355d4111e1f2039608ea1ff1daefb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff74c7df835caa2f05873928fa5f2664"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#aff74c7df835caa2f05873928fa5f2664">alexaClientSDK::capabilityAgents::speakerManager::SpeakerManagerComponent</a> = acsdkManufactory::Component&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::SpeakerManagerInterface &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::storage::MiscStorageInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; acsdkShutdownManagerInterfaces::ShutdownNotifierInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::ContextManagerInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::sdkInterfaces::MessageSenderInterface &gt; &gt;, acsdkManufactory::Import&lt; acsdkManufactory::Annotated&lt; avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation, avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface &gt; &gt;, acsdkManufactory::Import&lt; std::shared_ptr&lt; avsCommon::utils::metrics::MetricRecorderInterface &gt; &gt;&gt;</td></tr>
+<tr class="separator:aff74c7df835caa2f05873928fa5f2664"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -127,7 +128,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,0 +1,12 @@
+digraph "AssetManagerTest"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node6 [label="AssetManagerTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node8 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" TESTING_DIRECTORY\nDAVS_TMP\nDAVS_REQUESTS_DIR\nURL_WORKING_DIR\nTMP_DIR\nURL_RESOURCES_DIR\nBASE_DIR\nDAVS_RESOURCES_DIR" ,fontname="Helvetica"];
+  Node8 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node9 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" service" ,fontname="Helvetica"];
+  Node9 [label="alexaClientSDK::acsdkAssets\l::common::DavsServiceMock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_davs_service_mock.html"];
+}

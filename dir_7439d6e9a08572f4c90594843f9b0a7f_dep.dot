@@ -1,0 +1,17 @@
+digraph "/workplace/avs-device-sdk/core/Properties/acsdkPropertiesInterfaces/test/include/acsdkPropertiesInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_7501a869a1f06ec91a36ff36befb279f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_7501a869a1f06ec91a36ff36befb279f.html"]
+  subgraph clusterdir_7439d6e9a08572f4c90594843f9b0a7f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_7439d6e9a08572f4c90594843f9b0a7f.html"];
+    dir_7439d6e9a08572f4c90594843f9b0a7f [shape=plaintext label="acsdkPropertiesInterfaces"];
+    dir_8e646928d40365fdbabb095daa24412f [shape=box label="test" color="black" fillcolor="white" style="filled" URL="dir_8e646928d40365fdbabb095daa24412f.html"];
+  }
+  }
+  dir_8145d729cc2136b803d030ae5d5d64ee [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_8145d729cc2136b803d030ae5d5d64ee.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_8e646928d40365fdbabb095daa24412f->dir_8145d729cc2136b803d030ae5d5d64ee [headlabel="5", labeldistance=1.5 headhref="dir_000636_000631.html"];
+  dir_8e646928d40365fdbabb095daa24412f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000636_000017.html"];
+}

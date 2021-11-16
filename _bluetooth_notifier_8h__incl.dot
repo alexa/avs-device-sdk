@@ -15,13 +15,13 @@ digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetooth/include
   Node5 [label="acsdkBluetoothInterfaces\l/BluetoothNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_notifier_interface_8h.html"];
   Node5 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node6 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="functional",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node6 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="acsdkNotifier/Notifier.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_8h.html"];
+  Node8 [label="acsdkNotifier/internal\l/Notifier.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_8h.html"];
   Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node8 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

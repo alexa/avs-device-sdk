@@ -7,9 +7,9 @@ digraph "/workplace/avs-device-sdk/shared/acsdkNotifier/include" {
   subgraph clusterdir_086725da32bc0c5578ea00c2ed95d43a {
     graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_086725da32bc0c5578ea00c2ed95d43a.html"];
     dir_086725da32bc0c5578ea00c2ed95d43a [shape=plaintext label="include"];
-    dir_b170ce45316ac9f00b9eaf5564266dfb [shape=box label="acsdkNotifier" color="black" fillcolor="white" style="filled" URL="dir_b170ce45316ac9f00b9eaf5564266dfb.html"];
+    dir_b170ce45316ac9f00b9eaf5564266dfb [shape=box label="acsdkNotifier" color="red" fillcolor="white" style="filled" URL="dir_b170ce45316ac9f00b9eaf5564266dfb.html"];
   }
   }
   dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [shape=box label="acsdkNotifierInterfaces" fillcolor="white" style="filled" color="red" URL="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html"];
-  dir_b170ce45316ac9f00b9eaf5564266dfb->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000607_000609.html"];
+  dir_b170ce45316ac9f00b9eaf5564266dfb->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000725_000728.html"];
 }

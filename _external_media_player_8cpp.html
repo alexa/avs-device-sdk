@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -81,10 +81,10 @@ $(function() {
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_adapter_utils_8h_source.html">acsdkExternalMediaPlayerInterfaces/AdapterUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_external_media_adapter_constants_8h_source.html">acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterConstants.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_external_media_adapter_handler_interface_8h_source.html">acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterHandlerInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_constants_8h_source.html">AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_memory_8h_source.html">AVSCommon/Utils/Memory/Memory.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_metrics_8h_source.html">AVSCommon/Utils/Metrics.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_data_point_counter_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointCounterBuilder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_data_point_string_builder_8h_source.html">AVSCommon/Utils/Metrics/DataPointStringBuilder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metric_event_builder_8h_source.html">AVSCommon/Utils/Metrics/MetricEventBuilder.h</a>&gt;</code><br />
@@ -117,8 +117,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a410e3677a260b919150714784f788bda"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a410e3677a260b919150714784f788bda">alexaClientSDK::acsdkExternalMediaPlayer::TAG</a> (&quot;ExternalMediaPlayer&quot;)</td></tr>
 <tr class="memdesc:a410e3677a260b919150714784f788bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a410e3677a260b919150714784f788bda">More...</a><br /></td></tr>
 <tr class="separator:a410e3677a260b919150714784f788bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16000e3337234f63246fae358dde0e7a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a16000e3337234f63246fae358dde0e7a">alexaClientSDK::acsdkExternalMediaPlayer::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string metricName, const DataPoint &amp;dataPoint, const std::string &amp;msgId, const std::string &amp;trackId, const std::string &amp;playerId)</td></tr>
-<tr class="separator:a16000e3337234f63246fae358dde0e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750624590467f23f095f4f9ab8c8a792"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a750624590467f23f095f4f9ab8c8a792">alexaClientSDK::acsdkExternalMediaPlayer::submitMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;metricName, const DataPoint &amp;dataPoint, const std::string &amp;msgId, const std::string &amp;trackId, const std::string &amp;playerId)</td></tr>
+<tr class="separator:a750624590467f23f095f4f9ab8c8a792"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a18311702eeba04ee530e4251b5fc53"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; avsCommon::avs::CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a3a18311702eeba04ee530e4251b5fc53">alexaClientSDK::acsdkExternalMediaPlayer::getExternalMediaPlayerCapabilityConfiguration</a> ()</td></tr>
 <tr class="separator:a3a18311702eeba04ee530e4251b5fc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80a5a8239769c500936d014aa6c305db"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; CapabilityConfiguration &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player.html#a80a5a8239769c500936d014aa6c305db">alexaClientSDK::acsdkExternalMediaPlayer::generateCapabilityConfiguration</a> (const std::string &amp;type, const std::string &amp;interfaceName, const std::string &amp;version)</td></tr>
@@ -314,7 +314,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -86,8 +86,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aee7a60c24ea81503d29ab9ed22b4be8c"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_preview_alexa_client_1_1_preview_alexa_client.html">PreviewAlexaClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_preview_alexa_client_1_1_preview_alexa_client.html#aee7a60c24ea81503d29ab9ed22b4be8c">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_console_reader.html">alexaClientSDK::sampleApp::ConsoleReader</a> &gt; consoleReader, const std::vector&lt; std::string &gt; &amp;configFiles, const std::string &amp;pathToInputFolder, const std::string &amp;logLevel=&quot;&quot;, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html">avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface</a> &gt; diagnostics=nullptr)</td></tr>
-<tr class="separator:aee7a60c24ea81503d29ab9ed22b4be8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f39b5a2c060710247c3b916ec63eace"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_preview_alexa_client_1_1_preview_alexa_client.html">PreviewAlexaClient</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_preview_alexa_client_1_1_preview_alexa_client.html#a3f39b5a2c060710247c3b916ec63eace">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1sample_app_1_1_console_reader.html">alexaClientSDK::sampleApp::ConsoleReader</a> &gt; consoleReader, const std::vector&lt; std::string &gt; &amp;configFiles, const std::string &amp;logLevel=&quot;&quot;, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html">avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface</a> &gt; diagnostics=nullptr)</td></tr>
+<tr class="separator:a3f39b5a2c060710247c3b916ec63eace"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to manage the top-level components of the AVS Client Application.</p>
@@ -114,8 +114,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aee7a60c24ea81503d29ab9ed22b4be8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee7a60c24ea81503d29ab9ed22b4be8c">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a3f39b5a2c060710247c3b916ec63eace"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f39b5a2c060710247c3b916ec63eace">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,12 +134,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
           <td class="paramname"><em>configFiles</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>pathToInputFolder</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -170,9 +164,8 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">consoleReader</td><td>The <code>ConsoleReader</code> to read inputs from console. </td></tr>
     <tr><td class="paramname">configFiles</td><td>The vector of configuration files. </td></tr>
-    <tr><td class="paramname">pathToInputFolder</td><td>The path to the inputs folder containing data files needed by this application. </td></tr>
     <tr><td class="paramname">logLevel</td><td>The level of logging to enable. If this parameter is an empty string, the SDK's default logging level will be used. </td></tr>
-    <tr><td class="paramname">An</td><td>optional <code>DiagnosticsInterface</code> object to provide diagnostics on the SDK. </td></tr>
+    <tr><td class="paramname">diagnostics</td><td>An optional <code>DiagnosticsInterface</code> object to provide diagnostics on the SDK. </td></tr>
   </table>
   </dd>
 </dl>
@@ -207,7 +200,7 @@ Static Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

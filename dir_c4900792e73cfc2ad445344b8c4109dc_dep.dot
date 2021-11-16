@@ -1,0 +1,21 @@
+digraph "/workplace/avs-device-sdk/shared/KWD/acsdkKWDImplementations/privateInclude" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e571f3a40729e98c18f677039f217076 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkKWDImplementations" fontname="Helvetica", fontsize="10", URL="dir_e571f3a40729e98c18f677039f217076.html"]
+  subgraph clusterdir_c4900792e73cfc2ad445344b8c4109dc {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_c4900792e73cfc2ad445344b8c4109dc.html"];
+    dir_c4900792e73cfc2ad445344b8c4109dc [shape=plaintext label="privateInclude"];
+    dir_8e66f24353c085c8381862e1cf6771a7 [shape=box label="acsdkKWDImplementations" color="black" fillcolor="white" style="filled" URL="dir_8e66f24353c085c8381862e1cf6771a7.html"];
+  }
+  }
+  dir_fe5a1e31b2404c649ea4321e0ec6a380 [shape=box label="acsdkNotifier" fillcolor="white" style="filled" color="red" URL="dir_fe5a1e31b2404c649ea4321e0ec6a380.html"];
+  dir_36e5af62bd5db895b52244933458ca30 [shape=box label="acsdkKWDInterfaces" fillcolor="white" style="filled" color="red" URL="dir_36e5af62bd5db895b52244933458ca30.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_36e5af62bd5db895b52244933458ca30->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000767_000017.html"];
+  dir_8e66f24353c085c8381862e1cf6771a7->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="2", labeldistance=1.5 headhref="dir_000764_000723.html"];
+  dir_8e66f24353c085c8381862e1cf6771a7->dir_36e5af62bd5db895b52244933458ca30 [headlabel="2", labeldistance=1.5 headhref="dir_000764_000767.html"];
+  dir_8e66f24353c085c8381862e1cf6771a7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000764_000017.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000723.html"];
+}

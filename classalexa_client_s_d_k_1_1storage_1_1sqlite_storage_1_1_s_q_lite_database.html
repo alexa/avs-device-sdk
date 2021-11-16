@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -97,6 +97,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0e289d8885703754b67fcd085f5c9ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bb8741f74b129f27c42004c895a4cc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html#a3bb8741f74b129f27c42004c895a4cc8">clearTable</a> (const std::string &amp;tableName)</td></tr>
 <tr class="separator:a3bb8741f74b129f27c42004c895a4cc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af82f0c80b8e99c6971e93bcef6ab5e86"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html#af82f0c80b8e99c6971e93bcef6ab5e86">dropTable</a> (const std::string &amp;tableName)</td></tr>
+<tr class="separator:af82f0c80b8e99c6971e93bcef6ab5e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a048eaa8f2093b2fee7fdd794127bea63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html#a048eaa8f2093b2fee7fdd794127bea63">close</a> ()</td></tr>
 <tr class="separator:a048eaa8f2093b2fee7fdd794127bea63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a967a69d2ed4a952be5c622c6de0b071a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_statement.html">SQLiteStatement</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_database.html#a967a69d2ed4a952be5c622c6de0b071a">createStatement</a> (const std::string &amp;sqlString)</td></tr>
@@ -243,6 +245,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="af82f0c80b8e99c6971e93bcef6ab5e86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af82f0c80b8e99c6971e93bcef6ab5e86">&#9670;&nbsp;</a></span>dropTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alexaClientSDK::storage::sqliteStorage::SQLiteDatabase::dropTable </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>tableName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Drops specified table.</p>
+<p>This method drops the table if it exists and is empty.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td>The name of the table to drop. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successful, false if there was an error. </dd></dl>
+
+</div>
+</div>
 <a id="aa123142eebd0c701abc4782a6ec1542f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa123142eebd0c701abc4782a6ec1542f">&#9670;&nbsp;</a></span>initialize()</h2>
 
@@ -360,7 +389,7 @@ Public Member Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

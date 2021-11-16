@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -95,6 +95,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a55cb48b733e8dc72f2e5816aa1051333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a786bbeafc8463d0ca32bcee3ce596af9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">EndpointBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a786bbeafc8463d0ca32bcee3ce596af9">withDerivedEndpointId</a> (const std::string &amp;suffix)=0</td></tr>
 <tr class="separator:a786bbeafc8463d0ca32bcee3ce596af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64842f1223884b485bee6f7b68c8dac8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">EndpointBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#a64842f1223884b485bee6f7b68c8dac8">withDeviceRegistration</a> ()=0</td></tr>
+<tr class="separator:a64842f1223884b485bee6f7b68c8dac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1a8d09516ef0142e85ec3aef9211c4f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">EndpointBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ae1a8d09516ef0142e85ec3aef9211c4f">withEndpointId</a> (const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints.html#a9558b5c5daec34fca6eb942722eee5f5">EndpointIdentifier</a> &amp;endpointId)=0</td></tr>
 <tr class="separator:ae1a8d09516ef0142e85ec3aef9211c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade2ccb70a80d2de0638b6d9f6f33237a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">EndpointBuilderInterface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ade2ccb70a80d2de0638b6d9f6f33237a">withFriendlyName</a> (const std::string &amp;friendlyName)=0</td></tr>
@@ -446,6 +448,37 @@ The builder will fail if the description param is invalid.</dd></dl>
 
 </div>
 </div>
+<a id="a64842f1223884b485bee6f7b68c8dac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64842f1223884b485bee6f7b68c8dac8">&#9670;&nbsp;</a></span>withDeviceRegistration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html">EndpointBuilderInterface</a>&amp; alexaClientSDK::avsCommon::sdkInterfaces::endpoints::EndpointBuilderInterface::withDeviceRegistration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Includes default Registration information to the endpoint.</p>
+<dl class="section note"><dt>Note</dt><dd>This will include default endpoint's registration information into the endpoint. When this payload is included into the endpoint's discovery, cloud will be able to tell this endpoint represents the same device that the client is running on.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not use this function unless you want the new endpoint to be treated as same as the AVS endpoint that maintains HTTP2 connection. This function is added to support a legacy case and might be deprecated later. Please be aware of the risk while using this function.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>This builder which can be used to nest configuration function calls. </dd></dl>
+
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_endpoint_builder.html#ae3fe22e178b537388474284bd2ef5e5f">alexaClientSDK::endpoints::EndpointBuilder</a>, and <a class="el" href="classalexa_client_s_d_k_1_1endpoints_1_1_default_endpoint_builder.html#aadafdf802fa233b055d2848337041573">alexaClientSDK::endpoints::DefaultEndpointBuilder</a>.</p>
+
+</div>
+</div>
 <a id="af1c6f059899e0cf0fcb668c115723fb2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1c6f059899e0cf0fcb668c115723fb2">&#9670;&nbsp;</a></span>withDisplayCategory()</h2>
 
@@ -702,7 +735,7 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 </div><div class="memdoc">
 <p>Configures builder to use a <code>ModeControllerInterface</code> with <code>instance</code> identifier.</p>
 <dl class="section note"><dt>Note</dt><dd>The builder will fail if the instance name is already used in that endpoint.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000025">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000027">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller.html">modeController</a></td><td>An interface that provides the mode operations. </td></tr>
@@ -760,7 +793,7 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 </table>
 </div><div class="memdoc">
 <p>Configures builder to use a <code>PowerControllerInterface</code> </p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000023">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000025">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller.html">powerController</a></td><td>An interface that provides the power operations. </td></tr>
@@ -834,7 +867,7 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 </div><div class="memdoc">
 <p>Configures builder to use a <code>RangeControllerInteface</code> with <code>instance</code> identifier.</p>
 <dl class="section note"><dt>Note</dt><dd>The builder will fail if the instance name is already used in that endpoint.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000026">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000028">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller.html">rangeController</a></td><td>An interface that provides the range operations. </td></tr>
@@ -911,7 +944,7 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 </div><div class="memdoc">
 <p>Configures builder to use a <code>ToggleControllerInterface</code> with <code>instance</code> identifier.</p>
 <dl class="section note"><dt>Note</dt><dd>The builder will fail if the instance name is already used in that endpoint.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000024">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000026">Deprecated:</a></b></dt><dd>use the new <code><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1_endpoint_builder_interface.html#ad67c2923e2d76cac16ef9b7189a58547">withEndpointCapabilitiesBuilder()</a></code> method instead.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller.html">toggleController</a></td><td>An interface that performs the toggle operations. </td></tr>
@@ -936,7 +969,7 @@ The builder will fail if the manufacturer name param is invalid.</dd></dl>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

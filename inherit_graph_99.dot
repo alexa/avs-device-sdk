@@ -3,5 +3,9 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::GetImportsAndExports\l\< Types \>::GetExportsOperation\l::Apply\< std::tuple\< ResultTypes... \>, Type \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ex6adecd1f4b45736dea8d6781cb845a31.html"];
+  Node0 [label="alexaClientSDK::acsdkExternal\lMediaPlayerInterfaces::PlayerInfoBase",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_player_info_base.html"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::acsdkExternal\lMediaPlayerInterfaces::Discovered\lPlayerInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_discovered_player_info.html"];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkExternal\lMediaPlayerInterfaces::PlayerInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_player_info.html"];
 }

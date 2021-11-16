@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/KWD/src/AbstractKeywordDetector.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/shared/KWD/acsdkKWDImplementations/src/AbstractKeywordDetector.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d0ae40f34093660421d9f00fd3d110f5.html">KWD</a></li><li class="navelem"><a class="el" href="dir_1104beda8a197feaba7f001b12a48aaa.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_9982052f7ce695d12571567315b2fafa.html">shared</a></li><li class="navelem"><a class="el" href="dir_e410f0f5f1983efb71051e3794e71cfe.html">KWD</a></li><li class="navelem"><a class="el" href="dir_e571f3a40729e98c18f677039f217076.html">acsdkKWDImplementations</a></li><li class="navelem"><a class="el" href="dir_16ad47bc397a3938ee11c65fafbe7921.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,12 +74,14 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_abstract_keyword_detector_8h_source.html">KWD/AbstractKeywordDetector.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_abstract_keyword_detector_8h_source.html">acsdkKWDImplementations/AbstractKeywordDetector.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_keyword_detector_state_notifier_8h_source.html">acsdkKWDImplementations/KeywordDetectorStateNotifier.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_keyword_notifier_8h_source.html">acsdkKWDImplementations/KeywordNotifier.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for AbstractKeywordDetector.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_abstract_keyword_detector_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2src_2_abstract_keyword_detector_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2src_2_abstract_keyword_detector_8cpp" id="_2workplace_2avs-device-sdk_2_k_w_d_2src_2_abstract_keyword_detector_8cpp">
+<div class="center"><img src="_abstract_keyword_detector_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2src_2_abstract_keyword_detector_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2src_2_abstract_keyword_detector_8cpp" id="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_implementations_2src_2_abstract_keyword_detector_8cpp">
 </map>
 </div>
 </div><table class="memberdecls">
@@ -88,7 +90,7 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k.html">alexaClientSDK</a></td></tr>
 <tr class="memdesc:namespacealexa_client_s_d_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not curl logs should be emitted. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacealexa_client_s_d_k_1_1kwd"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html">alexaClientSDK::kwd</a></td></tr>
+<tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations.html">alexaClientSDK::acsdkKWDImplementations</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -98,9 +100,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a52c24aef90f728572ab015be8f759e8d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1kwd.html#a52c24aef90f728572ab015be8f759e8d">alexaClientSDK::kwd::TAG</a> (&quot;AbstractKeywordDetector&quot;)</td></tr>
-<tr class="memdesc:a52c24aef90f728572ab015be8f759e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1kwd.html#a52c24aef90f728572ab015be8f759e8d">More...</a><br /></td></tr>
-<tr class="separator:a52c24aef90f728572ab015be8f759e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3d31a2fd71ed3ac7981198a98356f7b"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations.html#aa3d31a2fd71ed3ac7981198a98356f7b">alexaClientSDK::acsdkKWDImplementations::TAG</a> (&quot;AbstractKeywordDetector&quot;)</td></tr>
+<tr class="memdesc:aa3d31a2fd71ed3ac7981198a98356f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1acsdk_k_w_d_implementations.html#aa3d31a2fd71ed3ac7981198a98356f7b">More...</a><br /></td></tr>
+<tr class="separator:aa3d31a2fd71ed3ac7981198a98356f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -132,7 +134,7 @@ Functions</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

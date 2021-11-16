@@ -1,0 +1,17 @@
+digraph "/workplace/avs-device-sdk/core/Crypto/acsdkPkcs11/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_bd8b60e8e404fe8dca071a29b0b81e0d {
+    graph [ bgcolor="#ddddee", pencolor="black", label="acsdkPkcs11" fontname="Helvetica", fontsize="10", URL="dir_bd8b60e8e404fe8dca071a29b0b81e0d.html"]
+  subgraph clusterdir_9a68918ec19e3a0055b1e90f12986f1f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_9a68918ec19e3a0055b1e90f12986f1f.html"];
+    dir_9a68918ec19e3a0055b1e90f12986f1f [shape=plaintext label="include"];
+    dir_1a54c6422d9f3847b65c3ee79810d9e9 [shape=box label="acsdkPkcs11" color="black" fillcolor="white" style="filled" URL="dir_1a54c6422d9f3847b65c3ee79810d9e9.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_8d535980e8bcd8dca7a4900da179e35a [shape=box label="acsdkCryptoInterfaces" fillcolor="white" style="filled" color="red" URL="dir_8d535980e8bcd8dca7a4900da179e35a.html"];
+  dir_1a54c6422d9f3847b65c3ee79810d9e9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000620_000017.html"];
+  dir_1a54c6422d9f3847b65c3ee79810d9e9->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="1", labeldistance=1.5 headhref="dir_000620_000611.html"];
+}

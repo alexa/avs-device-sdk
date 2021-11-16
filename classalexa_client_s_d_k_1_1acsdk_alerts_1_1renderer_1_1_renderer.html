@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -106,11 +106,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a46254e1d5a77a65f5adaa7af317aa31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a494b2f930b419de86584e419876dabb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html#a494b2f930b419de86584e419876dabb9">onPlaybackError</a> (<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#ad6a5305efc05863a6c2d49a2f40551f7">SourceId</a> sourceId, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player.html#ab6ff57ee3fc3650d3b710fa12d32e25d">avsCommon::utils::mediaPlayer::ErrorType</a> &amp;type, std::string error, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html">avsCommon::utils::mediaPlayer::MediaPlayerState</a> &amp;state) override</td></tr>
 <tr class="separator:a494b2f930b419de86584e419876dabb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d3be02e64fd4aa46164ad004b4f1454"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html#a3d3be02e64fd4aa46164ad004b4f1454">onConnectionStatusChanged</a> (bool connected) override</td></tr>
+<tr class="separator:a3d3be02e64fd4aa46164ad004b4f1454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface.html">alexaClientSDK::acsdkAlerts::renderer::RendererInterface</a></td></tr>
 <tr class="memitem:ade5b471b222d6d2cfd68a7276e6cee07 inherit pub_methods_classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface.html#ade5b471b222d6d2cfd68a7276e6cee07">~RendererInterface</a> ()=default</td></tr>
 <tr class="separator:ade5b471b222d6d2cfd68a7276e6cee07 inherit pub_methods_classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af84e74e7607ad423aaf72dc77defb0dd inherit pub_methods_classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface.html#af84e74e7607ad423aaf72dc77defb0dd">start</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_observer_interface.html">acsdkAlerts::renderer::RendererObserverInterface</a> &gt; observer, std::function&lt; std::pair&lt; std::unique_ptr&lt; std::istream &gt;, const <a class="el" href="namespacealexa_client_s_d_k_1_1avs_common_1_1utils.html#a23c4c0b3872cf0413515899644d25924">avsCommon::utils::MediaType</a> &gt;()&gt; audioFactory, bool volumeRampEnabled, const std::vector&lt; std::string &gt; &amp;urls=std::vector&lt; std::string &gt;(), int loopCount=0, std::chrono::milliseconds loopPause=std::chrono::milliseconds{0}, bool startWithPause=false)=0</td></tr>
 <tr class="separator:af84e74e7607ad423aaf72dc77defb0dd inherit pub_methods_classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface.html">alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionObserverInterface</a></td></tr>
+<tr class="memitem:a321c49de8f68de3df7fcab7570ab3734 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface.html#a321c49de8f68de3df7fcab7570ab3734">~InternetConnectionObserverInterface</a> ()=default</td></tr>
+<tr class="separator:a321c49de8f68de3df7fcab7570ab3734 inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html">alexaClientSDK::avsCommon::utils::mediaPlayer::MediaPlayerObserverInterface</a></td></tr>
 <tr class="memitem:a98a4b7578480d29f86b2d7868080200e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html#a98a4b7578480d29f86b2d7868080200e">~MediaPlayerObserverInterface</a> ()=default</td></tr>
 <tr class="separator:a98a4b7578480d29f86b2d7868080200e inherit pub_methods_classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,10 +148,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0e9a03e1631d849206fbd28573cf50d2"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html#a0e9a03e1631d849206fbd28573cf50d2">createAlertRenderer</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1_application_audio_pipeline_factory_interface.html">acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface</a> &gt; &amp;audioPipelineFactory, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier)</td></tr>
-<tr class="separator:a0e9a03e1631d849206fbd28573cf50d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dccbe7205d13723eb7b9c22dab79f41"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html#a2dccbe7205d13723eb7b9c22dab79f41">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; mediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr)</td></tr>
-<tr class="separator:a2dccbe7205d13723eb7b9c22dab79f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a727e5418c74ee3cb56eae135da07a829"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html#a727e5418c74ee3cb56eae135da07a829">createAlertRenderer</a> (const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1_application_audio_pipeline_factory_interface.html">acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface</a> &gt; &amp;audioPipelineFactory, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; &amp;metricRecorder, const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;shutdownNotifier, const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt; &amp;internetConnectionMonitor)</td></tr>
+<tr class="separator:a727e5418c74ee3cb56eae135da07a829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a98a228890fe860e222c30a3fa34b95"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html#a0a98a228890fe860e222c30a3fa34b95">create</a> (std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_interface.html">avsCommon::utils::mediaPlayer::MediaPlayerInterface</a> &gt; mediaPlayer, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt; metricRecorder=nullptr, std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt; internetConnectionMonitor=nullptr)</td></tr>
+<tr class="separator:a0a98a228890fe860e222c30a3fa34b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -171,8 +176,8 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An implementation of an alert renderer. This class is thread-safe. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2dccbe7205d13723eb7b9c22dab79f41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dccbe7205d13723eb7b9c22dab79f41">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a0a98a228890fe860e222c30a3fa34b95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a98a228890fe860e222c30a3fa34b95">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,7 +195,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1_metric_recorder_interface.html">avsCommon::utils::metrics::MetricRecorderInterface</a> &gt;&#160;</td>
-          <td class="paramname"><em>metricRecorder</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramname"><em>metricRecorder</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt;&#160;</td>
+          <td class="paramname"><em>internetConnectionMonitor</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -205,11 +216,12 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Creates a <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a></code>.</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000043">Deprecated:</a></b></dt><dd>Use createAlertRenderer. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000046">Deprecated:</a></b></dt><dd>Use createAlertRenderer. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"><a class="el" href="namespacealexa_client_s_d_k_1_1media_player.html">mediaPlayer</a></td><td>the <code>MediaPlayerInterface</code> that the <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a></code> object will interact with. </td></tr>
     <tr><td class="paramname">metricRecorder</td><td>the metric recorder. </td></tr>
+    <tr><td class="paramname">internetConnectionMonitor</td><td>The object use to monitor connectivity with the internet. </td></tr>
   </table>
   </dd>
 </dl>
@@ -217,8 +229,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a0e9a03e1631d849206fbd28573cf50d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e9a03e1631d849206fbd28573cf50d2">&#9670;&nbsp;</a></span>createAlertRenderer()</h2>
+<a id="a727e5418c74ee3cb56eae135da07a829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a727e5418c74ee3cb56eae135da07a829">&#9670;&nbsp;</a></span>createAlertRenderer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,7 +254,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces.html#a15ee9e9585537cd84b16816a944a0745">acsdkShutdownManagerInterfaces::ShutdownNotifierInterface</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>shutdownNotifier</em>&#160;</td>
+          <td class="paramname"><em>shutdownNotifier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_monitor_interface.html">avsCommon::sdkInterfaces::InternetConnectionMonitorInterface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>internetConnectionMonitor</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -260,12 +278,48 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">audioPipelineFactory</td><td>The <code>ApplicationAudioPlayerInterface</code> instance to use to create the notifications media player for rendering audio. </td></tr>
+    <tr><td class="paramname">internetConnectionMonitor</td><td>The object use to monitor connectivity with the internet. </td></tr>
     <tr><td class="paramname">metricRecorder</td><td>the metric recorder. </td></tr>
     <tr><td class="paramname">shutdownNotifier</td><td>the <code>ShutdownNotifier</code> to notify if a shutdown occurred. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html">Renderer</a></code> object. </dd></dl>
+
+</div>
+</div>
+<a id="a3d3be02e64fd4aa46164ad004b4f1454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d3be02e64fd4aa46164ad004b4f1454">&#9670;&nbsp;</a></span>onConnectionStatusChanged()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void alexaClientSDK::acsdkAlerts::renderer::Renderer::onConnectionStatusChanged </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>connected</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Take necessary actions as a result of an internet connection change.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">connected</td><td>Whether or not we are currently connected to the internet. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface.html#adfa3c36e4431bce3529a06b60540b58e">alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionObserverInterface</a>.</p>
 
 </div>
 </div>
@@ -619,7 +673,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

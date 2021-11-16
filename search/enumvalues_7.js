@@ -8,5 +8,6 @@ var searchData=
   ['header_5fdone',['HEADER_DONE',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_h_t_t_p_content_fetcher_interface.html#aba5364b9cdcabdc4dcab1d8a64370b86ac449178c9953cdc0fe17c4d69f85f7ee',1,'alexaClientSDK::avsCommon::sdkInterfaces::HTTPContentFetcherInterface']]],
   ['hi',['HI',['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#a8f18a008780343a6d497782368a2a642abf8c144140b15befb8ce662632a7b76e',1,'alexaClientSDK::settings::test']]],
   ['high',['HIGH',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics.html#a288af415af6d051ee25083b835210b11ab89de3b4b81c4facfac906edf29aec8c',1,'alexaClientSDK::avsCommon::utils::metrics']]],
+  ['hsm_5ferror',['HSM_ERROR',['../group___properties_i_m_p_l.html#gga809075156fb4604c7655d5538602dc37a7c266d9dafed9369a7798eca4b3c1a01',1,'alexaClientSDK::acsdkProperties']]],
   ['http_5fresponse_5fcode_5fundefined',['HTTP_RESPONSE_CODE_UNDEFINED',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893a463a0b728cc6493c40e35f5b76140586',1,'alexaClientSDK::avsCommon::utils::http::HTTP_RESPONSE_CODE_UNDEFINED()'],['../_http_response_codes_8h.html#a7c7e2e35af1fc43c26bd735151de06eaa335352ea1154abc7e7d8a442b1288b49',1,'HTTP_RESPONSE_CODE_UNDEFINED():&#160;HttpResponseCodes.h']]]
 ];

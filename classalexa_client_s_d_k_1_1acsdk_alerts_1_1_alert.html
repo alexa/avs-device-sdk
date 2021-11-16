@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -190,6 +190,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a68910ca3e1c659a5b07eb86086400e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafd8e9777b7122abe4f573946237b524"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#aafd8e9777b7122abe4f573946237b524">getScheduledTime_ISO_8601</a> () const</td></tr>
 <tr class="separator:aafd8e9777b7122abe4f573946237b524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36c64ea394bde3425dca1fea1c67531a"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a36c64ea394bde3425dca1fea1c67531a">getScheduledTime_Utc_TimePoint</a> () const</td></tr>
+<tr class="separator:a36c64ea394bde3425dca1fea1c67531a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ab9c3eebbc61bbe619646e55168bf0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">acsdkAlertsInterfaces::AlertObserverInterface::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a9ab9c3eebbc61bbe619646e55168bf0d">getType</a> () const</td></tr>
+<tr class="separator:a9ab9c3eebbc61bbe619646e55168bf0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22d6430b858f35b36b45e198fd7f4da6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a22d6430b858f35b36b45e198fd7f4da6">getOriginalTime</a> () const</td></tr>
+<tr class="separator:a22d6430b858f35b36b45e198fd7f4da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac83dace5d7eb1a8678f3804e4f108414"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#ac83dace5d7eb1a8678f3804e4f108414">getLabel</a> () const</td></tr>
+<tr class="separator:ac83dace5d7eb1a8678f3804e4f108414"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21e6e76472e2199d86ab57ce2273295d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a57a94103a83358df32cd2e1f96b5ea7e">Alert::State</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a21e6e76472e2199d86ab57ce2273295d">getState</a> () const</td></tr>
 <tr class="separator:a21e6e76472e2199d86ab57ce2273295d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c35090757526b208b64c4e3d93bc50f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a318011e6df9725d152fdf4bde45d60e2">StopReason</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a2c35090757526b208b64c4e3d93bc50f">getStopReason</a> () const</td></tr>
@@ -220,6 +228,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a831a3bc0bd9bd2353c094abe4c8e65a7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a831a3bc0bd9bd2353c094abe4c8e65a7">validateOriginalTimeString</a> (const std::string &amp;originalTimeStr)</td></tr>
+<tr class="separator:a831a3bc0bd9bd2353c094abe4c8e65a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7adb23fde271c5118dd522c48e83033"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#ab7adb23fde271c5118dd522c48e83033">validateLabelString</a> (const std::string &amp;label)</td></tr>
+<tr class="separator:ab7adb23fde271c5118dd522c48e83033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fb51d7d489d16eb18bc4977a28e3e0a"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a1fb51d7d489d16eb18bc4977a28e3e0a">stateToString</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a57a94103a83358df32cd2e1f96b5ea7e">Alert::State</a> state)</td></tr>
 <tr class="separator:a1fb51d7d489d16eb18bc4977a28e3e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2906df287f551e7c7bce03f3f252ca7"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#ab2906df287f551e7c7bce03f3f252ca7">stopReasonToString</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert.html#a318011e6df9725d152fdf4bde45d60e2">Alert::StopReason</a> stopReason)</td></tr>
@@ -555,6 +567,25 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac83dace5d7eb1a8678f3804e4f108414"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac83dace5d7eb1a8678f3804e4f108414">&#9670;&nbsp;</a></span>getLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; std::string &gt; alexaClientSDK::acsdkAlerts::Alert::getLabel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the optional with label string.</p>
+<dl class="section return"><dt>Returns</dt><dd>An optional with label string if label is valid for the alert; an empty optional otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="a234453313ff927ebdfc09f6f1b898c32"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a234453313ff927ebdfc09f6f1b898c32">&#9670;&nbsp;</a></span>getLoopCount()</h2>
 
@@ -593,6 +624,25 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a22d6430b858f35b36b45e198fd7f4da6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22d6430b858f35b36b45e198fd7f4da6">&#9670;&nbsp;</a></span>getOriginalTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">acsdkAlertsInterfaces::AlertObserverInterface::OriginalTime</a> &gt; alexaClientSDK::acsdkAlerts::Alert::getOriginalTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the optional with <code>OriginalTime</code>.</p>
+<dl class="section return"><dt>Returns</dt><dd>An optional with <code>OriginalTime</code> if originalTime is valid for the alert; an empty optional otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="aafd8e9777b7122abe4f573946237b524"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aafd8e9777b7122abe4f573946237b524">&#9670;&nbsp;</a></span>getScheduledTime_ISO_8601()</h2>
 
@@ -628,6 +678,25 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the time the alert should occur, in Unix epoch time.</p>
 <dl class="section return"><dt>Returns</dt><dd>The time the alert should occur, in Unix epoch time. </dd></dl>
+
+</div>
+</div>
+<a id="a36c64ea394bde3425dca1fea1c67531a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36c64ea394bde3425dca1fea1c67531a">&#9670;&nbsp;</a></span>getScheduledTime_Utc_TimePoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::system_clock::time_point alexaClientSDK::acsdkAlerts::Alert::getScheduledTime_Utc_TimePoint </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the UTC time for when the alert should occur.</p>
+<dl class="section return"><dt>Returns</dt><dd>The UTC time for when the alert should occur. </dd></dl>
 
 </div>
 </div>
@@ -707,6 +776,26 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a9ab9c3eebbc61bbe619646e55168bf0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ab9c3eebbc61bbe619646e55168bf0d">&#9670;&nbsp;</a></span>getType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">AlertObserverInterface::Type</a> alexaClientSDK::acsdkAlerts::Alert::getType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the <code>Type</code> of the alert.</p>
+<dl class="section return"><dt>Returns</dt><dd>The type of the alert. </dd></dl>
+<p>If an unrecognized value is received by AlertsCA, it should default to an ALARM. </p>
+
+</div>
+</div>
 <a id="a065d815418fe7c994d23571f908e36ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a065d815418fe7c994d23571f908e36ff">&#9670;&nbsp;</a></span>getTypeName()</h2>
 
@@ -732,7 +821,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Returns a string to identify the type of the class. Required for persistent storage.</p>
 <dl class="section return"><dt>Returns</dt><dd>The type name of the alert. </dd></dl>
 
-<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert.html#a4b4b1067c3e8a51fe7b12299517326cb">alexaClientSDK::acsdkAlerts::test::TestAlert</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert.html#a1d684f02dd7017ea0fbe5e0f80f2fc1f">alexaClientSDK::acsdkAlerts::test::MockAlert</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_timer.html#aa104950cff2320250f4fa5e4ffa43140">alexaClientSDK::acsdkAlerts::Timer</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_reminder.html#a082c0fd7c031a0e03431214fe3e4dfeb">alexaClientSDK::acsdkAlerts::Reminder</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alarm.html#af25fed0a7c7176103170b15ead0c0230">alexaClientSDK::acsdkAlerts::Alarm</a>.</p>
+<p>Implemented in <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert.html#a1d684f02dd7017ea0fbe5e0f80f2fc1f">alexaClientSDK::acsdkAlerts::test::MockAlert</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert.html#a4b4b1067c3e8a51fe7b12299517326cb">alexaClientSDK::acsdkAlerts::test::TestAlert</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert.html#a1d684f02dd7017ea0fbe5e0f80f2fc1f">alexaClientSDK::acsdkAlerts::test::MockAlert</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_timer.html#aa104950cff2320250f4fa5e4ffa43140">alexaClientSDK::acsdkAlerts::Timer</a>, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_reminder.html#a082c0fd7c031a0e03431214fe3e4dfeb">alexaClientSDK::acsdkAlerts::Reminder</a>, and <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alarm.html#af25fed0a7c7176103170b15ead0c0230">alexaClientSDK::acsdkAlerts::Alarm</a>.</p>
 
 </div>
 </div>
@@ -853,6 +942,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The status of the parse. </dd></dl>
+<p>if originalTime is malformed, ignore the value. </p>
 
 </div>
 </div>
@@ -1209,6 +1299,74 @@ The caller should validate the new schedule which should not be more than 30 min
 
 </div>
 </div>
+<a id="ab7adb23fde271c5118dd522c48e83033"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7adb23fde271c5118dd522c48e83033">&#9670;&nbsp;</a></span>validateLabelString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; std::string &gt; alexaClientSDK::acsdkAlerts::Alert::validateLabelString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>label</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A utility function to convert a label string to an optional.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td>a string of label. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An optional with a valid label string; an empty optional otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a831a3bc0bd9bd2353c094abe4c8e65a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a831a3bc0bd9bd2353c094abe4c8e65a7">&#9670;&nbsp;</a></span>validateOriginalTimeString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html">avsCommon::utils::Optional</a>&lt; <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">AlertObserverInterface::OriginalTime</a> &gt; alexaClientSDK::acsdkAlerts::Alert::validateOriginalTimeString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>originalTimeStr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A utility function to convert an originalTime string to an optional of <code>OriginalTime</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">originalTimeStr</td><td>a string of original time. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An optional with a valid originalTime string; an empty optional otherwise. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/<a class="el" href="_alert_8h_source.html">Alert.h</a></li>
 <li>/workplace/avs-device-sdk/capabilities/Alerts/acsdkAlerts/src/<a class="el" href="_alert_8cpp.html">Alert.cpp</a></li>
@@ -1217,7 +1375,7 @@ The caller should validate the new schedule which should not be more than 30 min
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

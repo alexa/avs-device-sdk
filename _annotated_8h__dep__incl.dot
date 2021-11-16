@@ -71,8 +71,6 @@ digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufact
   Node2 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioPlayer.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_audio_player_8h.html"];
-  Node31 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node32 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/include/DefaultClient\l/DefaultClient.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_default_client_8h.html"];
   Node31 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node49 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/include\l/acsdkAudioPlayer/AudioPlayerComponent.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_audio_player_component_8h.html"];
@@ -90,7 +88,6 @@ digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufact
   Node55 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DoNotDisturbCapability\lAgent.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_do_not_disturb_capability_agent_8h.html"];
-  Node57 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 -> Node62 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node62 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DoNotDisturbComponent.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_do_not_disturb_component_8h.html"];
   Node62 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -98,7 +95,6 @@ digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufact
   Node2 -> Node62 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node66 [label="/workplace/avs-device\l-sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayer.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_external_media_player_8h.html"];
-  Node66 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node75 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node75 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationRenderer.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_notification_renderer_8h.html"];
   Node2 -> Node79 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -109,7 +105,6 @@ digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufact
   Node83 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/Alexa/include/Alexa/AlexaInterface\lCapabilityAgent.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_alexa_interface_capability_agent_8h.html"];
-  Node84 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -123,23 +118,24 @@ digraph "/workplace/avs-device-sdk/shared/acsdkManufactory/include/acsdkManufact
   Node91 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node94 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PlaybackController/include\l/PlaybackController/PlaybackController.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_playback_controller_8h.html"];
-  Node94 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node94 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node100 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node100 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/include\l/SpeakerManager/SpeakerManager.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_speaker_manager_8h.html"];
-  Node100 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node100 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node101 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/SpeakerManager/src/SpeakerManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_speaker_manager_8cpp.html"];
   Node2 -> Node101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 -> Node104 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node104 [label="/workplace/avs-device\l-sdk/Endpoints/include\l/Endpoints/DefaultEndpointBuilder.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_default_endpoint_builder_8h.html"];
-  Node104 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node104 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="/workplace/avs-device\l-sdk/Endpoints/include\l/Endpoints/DefaultEndpointBuilder.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_default_endpoint_builder_8h.html"];
+  Node106 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 -> Node105 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node105 [label="/workplace/avs-device\l-sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/CookBook.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_cook_book_8h.html"];
-  Node2 -> Node161 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node161 [label="/workplace/avs-device\l-sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/RuntimeManufactory.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_runtime_manufactory_8h.html"];
+  Node2 -> Node108 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node108 [label="/workplace/avs-device\l-sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/CookBook.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_cook_book_8h.html"];
+  Node2 -> Node167 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node167 [label="/workplace/avs-device\l-sdk/shared/acsdkManufactory\l/include/acsdkManufactory\l/internal/RuntimeManufactory.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_runtime_manufactory_8h.html"];
+  Node2 -> Node164 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node164 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWD\l/include/acsdkKWD/KWDComponent.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$_k_w_d_component_8h.html"];
+  Node164 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

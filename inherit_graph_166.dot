@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::afml\l::FocusManager::ChannelConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1afml_1_1_focus_manager_1_1_channel_configuration.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::HasRequiredImport\l\< Types \>::BoolValues\< InTypes \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_has_required_import_1_1_bool_values.html"];
 }

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/KWD/Sensory/include/Sensory/SensoryKeywordDetector.h File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/applications/acsdkSensoryAdapter/include/acsdkSensoryAdapter/Sensory/SensoryKeywordDetector.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d0ae40f34093660421d9f00fd3d110f5.html">KWD</a></li><li class="navelem"><a class="el" href="dir_3b650c7af5a92e78b431c566d27e27fb.html">Sensory</a></li><li class="navelem"><a class="el" href="dir_53b42e3f321e6fe3756d7d815e459c61.html">include</a></li><li class="navelem"><a class="el" href="dir_cee562da2aae732442ef025e38e67ff6.html">Sensory</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html">applications</a></li><li class="navelem"><a class="el" href="dir_0ebafafa6006f5ef4aa43abbb131b692.html">acsdkSensoryAdapter</a></li><li class="navelem"><a class="el" href="dir_996c513b5c65f869edd97e6685508e04.html">include</a></li><li class="navelem"><a class="el" href="dir_0088c65b60c455f206c69fc279aa16fc.html">acsdkSensoryAdapter</a></li><li class="navelem"><a class="el" href="dir_8735e4cccb4f658dc0680efbc8080af0.html">Sensory</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -76,24 +76,26 @@ $(function() {
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;unordered_set&gt;</code><br />
-<code>#include &lt;<a class="el" href="_audio_format_8h_source.html">AVSCommon/Utils/AudioFormat.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_abstract_keyword_detector_8h_source.html">acsdkKWDImplementations/AbstractKeywordDetector.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_keyword_detector_state_notifier_interface_8h_source.html">acsdkKWDInterfaces/KeywordDetectorStateNotifierInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_keyword_notifier_interface_8h_source.html">acsdkKWDInterfaces/KeywordNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_audio_input_stream_8h_source.html">AVSCommon/AVS/AudioInputStream.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_key_word_detector_state_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_abstract_keyword_detector_8h_source.html">KWD/AbstractKeywordDetector.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_key_word_observer_interface_8h_source.html">AVSCommon/SDKInterfaces/KeyWordObserverInterface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_audio_format_8h_source.html">AVSCommon/Utils/AudioFormat.h</a>&gt;</code><br />
 <code>#include &quot;snsr.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SensoryKeywordDetector.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="_sensory_keyword_detector_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2_sensory_2include_2_sensory_2_sensory_keyword_detector_8h" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2_sensory_2include_2_sensory_2_sensory_keyword_detector_8h" id="_2workplace_2avs-device-sdk_2_k_w_d_2_sensory_2include_2_sensory_2_sensory_keyword_detector_8h">
+<div class="center"><img src="_sensory_keyword_detector_8h__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2applications_2acsdk_sensory_adapter_2include_2acsdk_sensory_adapter_2_sensory_2_sensory_keyword_detector_8h" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2applications_2acsdk_sensory_adapter_2include_2acsdk_sensory_adapter_2_sensory_2_sensory_keyword_detector_8h" id="_2workplace_2avs-device-sdk_2applications_2acsdk_sensory_adapter_2include_2acsdk_sensory_adapter_2_sensory_2_sensory_keyword_detector_8h">
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="_sensory_keyword_detector_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2_sensory_2include_2_sensory_2_sensory_keyword_detector_8hdep" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2_sensory_2include_2_sensory_2_sensory_keyword_detector_8hdep" id="_2workplace_2avs-device-sdk_2_k_w_d_2_sensory_2include_2_sensory_2_sensory_keyword_detector_8hdep">
+<div class="center"><img src="_sensory_keyword_detector_8h__dep__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2applications_2acsdk_sensory_adapter_2include_2acsdk_sensory_adapter_2_sensory_2_sensory_keyword_detector_8hdep" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2applications_2acsdk_sensory_adapter_2include_2acsdk_sensory_adapter_2_sensory_2_sensory_keyword_detector_8hdep" id="_2workplace_2avs-device-sdk_2applications_2acsdk_sensory_adapter_2include_2acsdk_sensory_adapter_2_sensory_2_sensory_keyword_detector_8hdep">
 </map>
 </div>
 </div>
@@ -116,7 +118,7 @@ Namespaces</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

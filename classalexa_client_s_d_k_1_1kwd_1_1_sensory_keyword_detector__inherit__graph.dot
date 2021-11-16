@@ -4,5 +4,5 @@ digraph "alexaClientSDK::kwd::SensoryKeywordDetector"
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node0 [label="alexaClientSDK::kwd\l::SensoryKeywordDetector",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node1 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::kwd\l::AbstractKeywordDetector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1kwd_1_1_abstract_keyword_detector.html"];
+  Node1 [label="alexaClientSDK::acsdkKWDImplementations\l::AbstractKeywordDetector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html"];
 }

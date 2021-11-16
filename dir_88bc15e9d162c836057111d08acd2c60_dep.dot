@@ -12,7 +12,7 @@ digraph "/workplace/avs-device-sdk/Metrics/SampleMetricSink" {
   }
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_101b095db37944aa2a0a3f24e5441fda->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000565_000017.html"];
-  dir_f86cc188f8e43e068e6dbfc82dc8aa0b->dir_101b095db37944aa2a0a3f24e5441fda [headlabel="1", labeldistance=1.5 headhref="dir_000567_000565.html"];
-  dir_f86cc188f8e43e068e6dbfc82dc8aa0b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000567_000017.html"];
+  dir_101b095db37944aa2a0a3f24e5441fda->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000677_000017.html"];
+  dir_f86cc188f8e43e068e6dbfc82dc8aa0b->dir_101b095db37944aa2a0a3f24e5441fda [headlabel="1", labeldistance=1.5 headhref="dir_000679_000677.html"];
+  dir_f86cc188f8e43e068e6dbfc82dc8aa0b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000679_000017.html"];
 }

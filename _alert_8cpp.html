@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -79,7 +79,6 @@ $(function() {
 <code>#include &lt;<a class="el" href="_focus_state_8h_source.html">AVSCommon/AVS/FocusState.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="_time_utils_8h_source.html">AVSCommon/Utils/Timing/TimeUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_string_utils_8h_source.html">AVSCommon/Utils/String/StringUtils.h</a>&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
@@ -148,12 +147,60 @@ Variables</h2></td></tr>
 <tr class="memitem:a66c394331a75bf0eb6326cac71bcf365"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a66c394331a75bf0eb6326cac71bcf365">alexaClientSDK::acsdkAlerts::KEY_BACKGROUND_ASSET_ID</a> = &quot;backgroundAlertAsset&quot;</td></tr>
 <tr class="memdesc:a66c394331a75bf0eb6326cac71bcf365"><td class="mdescLeft">&#160;</td><td class="mdescRight">String for lookup of the backgroundAssetId for an alert, if assets are provided.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a66c394331a75bf0eb6326cac71bcf365">More...</a><br /></td></tr>
 <tr class="separator:a66c394331a75bf0eb6326cac71bcf365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ff8c9d19a46988efe8561c263bcb1a7"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a6ff8c9d19a46988efe8561c263bcb1a7">alexaClientSDK::acsdkAlerts::KEY_LABEL</a> = &quot;label&quot;</td></tr>
+<tr class="memdesc:a6ff8c9d19a46988efe8561c263bcb1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">String for lookup of the label for an alert.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a6ff8c9d19a46988efe8561c263bcb1a7">More...</a><br /></td></tr>
+<tr class="separator:a6ff8c9d19a46988efe8561c263bcb1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988813d86daf171950a18479dd74f84f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a988813d86daf171950a18479dd74f84f">alexaClientSDK::acsdkAlerts::KEY_ORIGINAL_TIME</a> = &quot;originalTime&quot;</td></tr>
+<tr class="memdesc:a988813d86daf171950a18479dd74f84f"><td class="mdescLeft">&#160;</td><td class="mdescRight">String for lookup of the original time for an alert.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a988813d86daf171950a18479dd74f84f">More...</a><br /></td></tr>
+<tr class="separator:a988813d86daf171950a18479dd74f84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1294ff1eedf85e30e802ed64bff88014"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a1294ff1eedf85e30e802ed64bff88014">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_HOUR_LENGTH</a> = 2</td></tr>
+<tr class="memdesc:a1294ff1eedf85e30e802ed64bff88014"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of the hour field in an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a1294ff1eedf85e30e802ed64bff88014">More...</a><br /></td></tr>
+<tr class="separator:a1294ff1eedf85e30e802ed64bff88014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ff946df7b010044616f5efb057d939"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a99ff946df7b010044616f5efb057d939">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_MINUTE_LENGTH</a> = 2</td></tr>
+<tr class="memdesc:a99ff946df7b010044616f5efb057d939"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of the minute field in an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a99ff946df7b010044616f5efb057d939">More...</a><br /></td></tr>
+<tr class="separator:a99ff946df7b010044616f5efb057d939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a224d7a9c6f38fb526a3eee5cfca774e3"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a224d7a9c6f38fb526a3eee5cfca774e3">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_SECOND_LENGTH</a> = 2</td></tr>
+<tr class="memdesc:a224d7a9c6f38fb526a3eee5cfca774e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of the second field in an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a224d7a9c6f38fb526a3eee5cfca774e3">More...</a><br /></td></tr>
+<tr class="separator:a224d7a9c6f38fb526a3eee5cfca774e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae771cb4d56f5133bbfae0bb027b467f2"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ae771cb4d56f5133bbfae0bb027b467f2">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_MILLISECOND_LENGTH</a> = 3</td></tr>
+<tr class="memdesc:ae771cb4d56f5133bbfae0bb027b467f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of the millisecond field in an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ae771cb4d56f5133bbfae0bb027b467f2">More...</a><br /></td></tr>
+<tr class="separator:ae771cb4d56f5133bbfae0bb027b467f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a233de58d4407cdbac0b3202f5028070d"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a233de58d4407cdbac0b3202f5028070d">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_COLON_SEPARATOR</a> = &quot;:&quot;</td></tr>
+<tr class="memdesc:a233de58d4407cdbac0b3202f5028070d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The colon separator used in an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a233de58d4407cdbac0b3202f5028070d">More...</a><br /></td></tr>
+<tr class="separator:a233de58d4407cdbac0b3202f5028070d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23c2dde7812e1ea0b42704a6980bb142"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a23c2dde7812e1ea0b42704a6980bb142">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_DOT_SEPARATOR</a> = &quot;.&quot;</td></tr>
+<tr class="memdesc:a23c2dde7812e1ea0b42704a6980bb142"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dot separator used in an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a23c2dde7812e1ea0b42704a6980bb142">More...</a><br /></td></tr>
+<tr class="separator:a23c2dde7812e1ea0b42704a6980bb142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba0f95e337f55c910940dd54974af6b7"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aba0f95e337f55c910940dd54974af6b7">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_HOUR_OFFSET</a> = 0</td></tr>
+<tr class="memdesc:aba0f95e337f55c910940dd54974af6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset into an original time string where the hour begins.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aba0f95e337f55c910940dd54974af6b7">More...</a><br /></td></tr>
+<tr class="separator:aba0f95e337f55c910940dd54974af6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307f3aec08fa7908194f32dc80c92032"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a307f3aec08fa7908194f32dc80c92032">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_MINUTE_OFFSET</a></td></tr>
+<tr class="memdesc:a307f3aec08fa7908194f32dc80c92032"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset into an original time string where the minute begins.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a307f3aec08fa7908194f32dc80c92032">More...</a><br /></td></tr>
+<tr class="separator:a307f3aec08fa7908194f32dc80c92032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40075d6d1f40f25eb1ffda6cc899ad1d"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a40075d6d1f40f25eb1ffda6cc899ad1d">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_SECOND_OFFSET</a></td></tr>
+<tr class="memdesc:a40075d6d1f40f25eb1ffda6cc899ad1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset into an original time string where the second begins.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a40075d6d1f40f25eb1ffda6cc899ad1d">More...</a><br /></td></tr>
+<tr class="separator:a40075d6d1f40f25eb1ffda6cc899ad1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dd5eb17632db87c9c8f0da5ba327066"><td class="memItemLeft" align="right" valign="top">static const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a7dd5eb17632db87c9c8f0da5ba327066">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_MILLISECOND_OFFSET</a></td></tr>
+<tr class="memdesc:a7dd5eb17632db87c9c8f0da5ba327066"><td class="mdescLeft">&#160;</td><td class="mdescRight">The offset into an original time string where the millisecond begins.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a7dd5eb17632db87c9c8f0da5ba327066">More...</a><br /></td></tr>
+<tr class="separator:a7dd5eb17632db87c9c8f0da5ba327066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf418f51f254df9d62caa966dea584d0"><td class="memItemLeft" align="right" valign="top">static const unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aaf418f51f254df9d62caa966dea584d0">alexaClientSDK::acsdkAlerts::ORIGINAL_TIME_STRING_LENGTH</a></td></tr>
+<tr class="memdesc:aaf418f51f254df9d62caa966dea584d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The total expected length of an original time string.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aaf418f51f254df9d62caa966dea584d0">More...</a><br /></td></tr>
+<tr class="separator:aaf418f51f254df9d62caa966dea584d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa14a14099ade2aa80b9686befb1507df"><td class="memItemLeft" align="right" valign="top">const std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aa14a14099ade2aa80b9686befb1507df">alexaClientSDK::acsdkAlerts::MAXIMUM_ALERT_RENDERING_TIME</a> = std::chrono::hours(1)</td></tr>
 <tr class="memdesc:aa14a14099ade2aa80b9686befb1507df"><td class="mdescLeft">&#160;</td><td class="mdescRight">We won't allow an alert to render more than 1 hour.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#aa14a14099ade2aa80b9686befb1507df">More...</a><br /></td></tr>
 <tr class="separator:aa14a14099ade2aa80b9686befb1507df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52a1814772ad2be15db70dc53f7e916"><td class="memItemLeft" align="right" valign="top">const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ab52a1814772ad2be15db70dc53f7e916">alexaClientSDK::acsdkAlerts::BACKGROUND_ALERT_SOUND_PAUSE_TIME</a> = std::chrono::seconds(10)</td></tr>
 <tr class="memdesc:ab52a1814772ad2be15db70dc53f7e916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Length of pause of alert sounds when played in background.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ab52a1814772ad2be15db70dc53f7e916">More...</a><br /></td></tr>
 <tr class="separator:ab52a1814772ad2be15db70dc53f7e916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0065e03384dcd8643eb27b009557db2"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ae0065e03384dcd8643eb27b009557db2">alexaClientSDK::acsdkAlerts::ALERT_TYPE_ALARM_STRING</a></td></tr>
+<tr class="memdesc:ae0065e03384dcd8643eb27b009557db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">String representation of an alert of alarm type.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#ae0065e03384dcd8643eb27b009557db2">More...</a><br /></td></tr>
+<tr class="separator:ae0065e03384dcd8643eb27b009557db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81b2337afc0f35577a9786b562443abe"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a81b2337afc0f35577a9786b562443abe">alexaClientSDK::acsdkAlerts::ALERT_TYPE_TIMER_STRING</a></td></tr>
+<tr class="memdesc:a81b2337afc0f35577a9786b562443abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">String representation of an alert of timer type.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#a81b2337afc0f35577a9786b562443abe">More...</a><br /></td></tr>
+<tr class="separator:a81b2337afc0f35577a9786b562443abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7787d26d7749593b7f566d702e45046"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#af7787d26d7749593b7f566d702e45046">alexaClientSDK::acsdkAlerts::ALERT_TYPE_REMINDER_STRING</a></td></tr>
+<tr class="memdesc:af7787d26d7749593b7f566d702e45046"><td class="mdescLeft">&#160;</td><td class="mdescRight">String representation of an alert of reminder type.  <a href="namespacealexa_client_s_d_k_1_1acsdk_alerts.html#af7787d26d7749593b7f566d702e45046">More...</a><br /></td></tr>
+<tr class="separator:af7787d26d7749593b7f566d702e45046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -185,7 +232,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

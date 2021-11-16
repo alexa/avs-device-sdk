@@ -9,11 +9,11 @@ digraph "/workplace/avs-device-sdk/applications/acsdkDefaultInternetConnectionMo
   dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
   dir_cc9786810ad5b32168ee87c45fdb9bb2 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_cc9786810ad5b32168ee87c45fdb9bb2.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="14", labeldistance=1.5 headhref="dir_000598_000017.html"];
-  dir_cc9786810ad5b32168ee87c45fdb9bb2->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000067_000598.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000116_000017.html"];
+  dir_cc9786810ad5b32168ee87c45fdb9bb2->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000067_000116.html"];
   dir_cc9786810ad5b32168ee87c45fdb9bb2->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000067_000017.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000598.html"];
-  dir_228b1ea8ce92cd13a94689597c1677bd->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000069_000598.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000116.html"];
+  dir_228b1ea8ce92cd13a94689597c1677bd->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000069_000116.html"];
   dir_228b1ea8ce92cd13a94689597c1677bd->dir_cc9786810ad5b32168ee87c45fdb9bb2 [headlabel="1", labeldistance=1.5 headhref="dir_000069_000067.html"];
   dir_228b1ea8ce92cd13a94689597c1677bd->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000069_000017.html"];
 }

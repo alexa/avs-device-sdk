@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,8 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">ExternalMediaAdapterHandlerInterface.h File Reference</div>  </div>
 </div><!--header-->
@@ -76,6 +75,7 @@ $(function() {
 <div class="textblock"><code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;<a class="el" href="_play_requestor_8h_source.html">AVSCommon/AVS/PlayRequestor.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_requires_shutdown_8h_source.html">AVSCommon/Utils/RequiresShutdown.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_external_media_adapter_interface_8h_source.html">acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterInterface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_external_media_player_common_8h_source.html">acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerCommon.h</a>&quot;</code><br />
@@ -100,6 +100,9 @@ This graph shows which files directly or indirectly include this file:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface.html">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterHandlerInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface_1_1_play_params.html">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterHandlerInterface::PlayParams</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface_1_1_play_params.html" title="PlayParams is a struct that contains the parameters for the play method. ">PlayParams</a> is a struct that contains the parameters for the play method.  <a href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface_1_1_play_params.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -108,20 +111,12 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html">alexaClientSDK::acsdkExternalMediaPlayerInterfaces</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a1b4dfbb2041e5159b32fdd81e22481e3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a1b4dfbb2041e5159b32fdd81e22481e3">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::Navigation</a> { <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a1b4dfbb2041e5159b32fdd81e22481e3a5b39c8b553c821e7cddc6da64b5bd2ee">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::Navigation::DEFAULT</a>, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a1b4dfbb2041e5159b32fdd81e22481e3ab50339a10e1de285ac99d4c3990b8693">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::Navigation::NONE</a>, 
-<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a1b4dfbb2041e5159b32fdd81e22481e3ae41f4c3e11dd067fd5691da0124b8fd2">alexaClientSDK::acsdkExternalMediaPlayerInterfaces::Navigation::FOREGROUND</a>
- }</td></tr>
-<tr class="separator:a1b4dfbb2041e5159b32fdd81e22481e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

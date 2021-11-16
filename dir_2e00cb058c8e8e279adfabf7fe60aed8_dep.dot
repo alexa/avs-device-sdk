@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/src/Power" {
   dir_2e00cb058c8e8e279adfabf7fe60aed8 [shape=box, label="Power", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_2e00cb058c8e8e279adfabf7fe60aed8.html"];
   }
   dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
-  dir_2e00cb058c8e8e279adfabf7fe60aed8->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="8", labeldistance=1.5 headhref="dir_000234_000192.html"];
+  dir_2e00cb058c8e8e279adfabf7fe60aed8->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="8", labeldistance=1.5 headhref="dir_000259_000211.html"];
 }

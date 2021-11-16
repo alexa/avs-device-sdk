@@ -2,9 +2,9 @@ digraph "/workplace/avs-device-sdk/applications/acsdkDefaultInternetConnectionMo
 {
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node75 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lInternetConnectionMonitor\l/include/acsdkInternetConnectionMonitor\l/InternetConnectionMonitorComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node75 -> Node76 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node76 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lInternetConnectionMonitor\l/src/InternetConnectionMonitorComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_internet_connection_monitor_component_8cpp.html"];
-  Node75 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node77 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
+  Node76 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lInternetConnectionMonitor\l/include/acsdkInternetConnectionMonitor\l/InternetConnectionMonitorComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node76 -> Node77 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="/workplace/avs-device\l-sdk/applications/acsdkDefault\lInternetConnectionMonitor\l/src/InternetConnectionMonitorComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_internet_connection_monitor_component_8cpp.html"];
+  Node76 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
 }

@@ -1,0 +1,11 @@
+digraph "/workplace/avs-device-sdk/AVSCommon/Utils/test/AVSCommon/Utils/LibcurlUtils" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_834bf911d49030c30073fd5ed0d05185 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Utils" fontname="Helvetica", fontsize="10", URL="dir_834bf911d49030c30073fd5ed0d05185.html"]
+  dir_7a26dfea4e107f2246a1b41f7b43a22d [shape=box, label="LibcurlUtils", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_7a26dfea4e107f2246a1b41f7b43a22d.html"];
+  }
+  dir_957fc395b73dfe8b64ee3f74464f588a [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_957fc395b73dfe8b64ee3f74464f588a.html"];
+  dir_7a26dfea4e107f2246a1b41f7b43a22d->dir_957fc395b73dfe8b64ee3f74464f588a [headlabel="2", labeldistance=1.5 headhref="dir_000265_000211.html"];
+}

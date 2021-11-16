@@ -74,12 +74,14 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/SDS/R
   Node27 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node28 [label="AVSCommon/Utils/Platform\lDefinitions.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_platform_definitions_8h.html"];
-  Node0 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 [label="SharedDataStream.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shared_data_stream_8h.html"];
-  Node29 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node29 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="AVSCommon/Utils/SDKConfig.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node30 [label="ReaderPolicy.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_reader_policy_8h.html"];
+  Node30 [label="SharedDataStream.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shared_data_stream_8h.html"];
+  Node30 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="ReaderPolicy.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_reader_policy_8h.html"];
 }

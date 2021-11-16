@@ -1,0 +1,15 @@
+digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorization/test/include" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_902233085c23416f7f60b9ee3f6edad1 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="test" fontname="Helvetica", fontsize="10", URL="dir_902233085c23416f7f60b9ee3f6edad1.html"]
+  subgraph clusterdir_5537a6093ff2e08d8e6ba019da78488a {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_5537a6093ff2e08d8e6ba019da78488a.html"];
+    dir_5537a6093ff2e08d8e6ba019da78488a [shape=plaintext label="include"];
+    dir_6bc342063d12188ffeefcb179ff6d03b [shape=box label="acsdkAuthorization" color="red" fillcolor="white" style="filled" URL="dir_6bc342063d12188ffeefcb179ff6d03b.html"];
+  }
+  }
+  dir_32ae0c4bcc468b279bfc4fd15a7e63dc [shape=box label="acsdkAuthorizationInterfaces" fillcolor="white" style="filled" color="red" URL="dir_32ae0c4bcc468b279bfc4fd15a7e63dc.html"];
+  dir_6bc342063d12188ffeefcb179ff6d03b->dir_32ae0c4bcc468b279bfc4fd15a7e63dc [headlabel="1", labeldistance=1.5 headhref="dir_000600_000603.html"];
+}

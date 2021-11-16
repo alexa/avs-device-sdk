@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -91,7 +91,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a09c3d47e4813410f58b6834653d957ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a09c3d47e4813410f58b6834653d957ba">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_media_input_transformer_test.html">BluetoothMediaInputTransformerTest</a>, test_createWithNullParams)</td></tr>
-<tr class="memdesc:a09c3d47e4813410f58b6834653d957ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that create() returns a nullptr if called with invalid arguments.  <a href="#a09c3d47e4813410f58b6834653d957ba">More...</a><br /></td></tr>
+<tr class="memdesc:a09c3d47e4813410f58b6834653d957ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_input_controller.html#a674311f6d25f268c0c0f5d98117f5162">create()</a> returns a nullptr if called with invalid arguments.  <a href="#a09c3d47e4813410f58b6834653d957ba">More...</a><br /></td></tr>
 <tr class="separator:a09c3d47e4813410f58b6834653d957ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d91be50dfa1abf9ba82ace848886aeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a5d91be50dfa1abf9ba82ace848886aeb">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_media_input_transformer_test.html">BluetoothMediaInputTransformerTest</a>, test_handlePlayCommand)</td></tr>
 <tr class="memdesc:a5d91be50dfa1abf9ba82ace848886aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that a Play AVRCP command is transformed to playButtonPressed().  <a href="#a5d91be50dfa1abf9ba82ace848886aeb">More...</a><br /></td></tr>
@@ -119,7 +119,7 @@ Functions</h2></td></tr>
 <tr class="memitem:aa77a8af61500b7909cffbb68748cf178"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#aa77a8af61500b7909cffbb68748cf178">fileExists</a> (const std::string &amp;file)</td></tr>
 <tr class="separator:aa77a8af61500b7909cffbb68748cf178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a487d40b99c816a459e269018af861a22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a487d40b99c816a459e269018af861a22">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_createBTWithNullParams)</td></tr>
-<tr class="memdesc:a487d40b99c816a459e269018af861a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that create() returns a nullptr if called with invalid arguments.  <a href="#a487d40b99c816a459e269018af861a22">More...</a><br /></td></tr>
+<tr class="memdesc:a487d40b99c816a459e269018af861a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test that <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_input_controller.html#a674311f6d25f268c0c0f5d98117f5162">create()</a> returns a nullptr if called with invalid arguments.  <a href="#a487d40b99c816a459e269018af861a22">More...</a><br /></td></tr>
 <tr class="separator:a487d40b99c816a459e269018af861a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a846ebc3ed8f592cecdd29c24ce350552"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a846ebc3ed8f592cecdd29c24ce350552">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_createBTWithDuplicateDeviceCategoriesInConnectionRules)</td></tr>
 <tr class="separator:a846ebc3ed8f592cecdd29c24ce350552"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,12 +133,20 @@ Functions</h2></td></tr>
 <tr class="separator:a6c258214a85629faa3344aed45a76503"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ce5dc38791d032555d7880f3d2f77ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a2ce5dc38791d032555d7880f3d2f77ef">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleConnectByProfileWithMatchedProfileName)</td></tr>
 <tr class="separator:a2ce5dc38791d032555d7880f3d2f77ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4087faf9269f95abb7a8d9e17cc5981"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#ad4087faf9269f95abb7a8d9e17cc5981">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleConnectLocal)</td></tr>
+<tr class="separator:ad4087faf9269f95abb7a8d9e17cc5981"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cad7b35079451fdbc2e6b736c578a05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a3cad7b35079451fdbc2e6b736c578a05">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, DISABLED_test_handlePairDevices)</td></tr>
 <tr class="separator:a3cad7b35079451fdbc2e6b736c578a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd6e6237443de7b003becc7de1581864"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#acd6e6237443de7b003becc7de1581864">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handlePairLocal)</td></tr>
+<tr class="separator:acd6e6237443de7b003becc7de1581864"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae19d0ad83b0849ffbb1b75fa192d3a0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#ae19d0ad83b0849ffbb1b75fa192d3a0a">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleUnpairDevices)</td></tr>
 <tr class="separator:ae19d0ad83b0849ffbb1b75fa192d3a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3186fef735fc5d67041c58976d2473a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a3186fef735fc5d67041c58976d2473a8">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleUnpairLocal)</td></tr>
+<tr class="separator:a3186fef735fc5d67041c58976d2473a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b82130c26816e73fcb1d304ab3cb765"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a8b82130c26816e73fcb1d304ab3cb765">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleDisconnectDevices)</td></tr>
 <tr class="separator:a8b82130c26816e73fcb1d304ab3cb765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f984dc250c4ab136fc4fd5fb5af2d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#aa6f984dc250c4ab136fc4fd5fb5af2d0">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleDisconnectLocal)</td></tr>
+<tr class="separator:aa6f984dc250c4ab136fc4fd5fb5af2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a677cd09543910b08e5a6bf9dffbe087b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#a677cd09543910b08e5a6bf9dffbe087b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_handleSetDeviceCategories)</td></tr>
 <tr class="separator:a677cd09543910b08e5a6bf9dffbe087b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac551ee0d1d58aba2335f250817ccd30b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_bluetooth_1_1test.html#ac551ee0d1d58aba2335f250817ccd30b">TEST_F</a> (<a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>, test_contentDucksUponReceivingBackgroundFocus)</td></tr>
@@ -626,7 +634,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a09c3d47e4813410f58b6834653d957ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09c3d47e4813410f58b6834653d957ba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a09c3d47e4813410f58b6834653d957ba">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -651,12 +659,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Test that create() returns a nullptr if called with invalid arguments. </p>
+<p>Test that <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_input_controller.html#a674311f6d25f268c0c0f5d98117f5162">create()</a> returns a nullptr if called with invalid arguments. </p>
 
 </div>
 </div>
 <a id="a5d91be50dfa1abf9ba82ace848886aeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d91be50dfa1abf9ba82ace848886aeb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d91be50dfa1abf9ba82ace848886aeb">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -686,7 +694,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8431bc1ce42c955ed70f2735137d527e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8431bc1ce42c955ed70f2735137d527e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8431bc1ce42c955ed70f2735137d527e">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -716,7 +724,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="abf21f992e72b0c9d47150e8e3fdd3ea5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf21f992e72b0c9d47150e8e3fdd3ea5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abf21f992e72b0c9d47150e8e3fdd3ea5">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -746,7 +754,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab99deca5a5220084b72985597db3e140"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab99deca5a5220084b72985597db3e140">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab99deca5a5220084b72985597db3e140">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -776,7 +784,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a83b37ed39bc42fa8aaca1ac04fe64312"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83b37ed39bc42fa8aaca1ac04fe64312">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a83b37ed39bc42fa8aaca1ac04fe64312">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -806,7 +814,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a9d0e5272bf60d67d38dd8a6752fe5040"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d0e5272bf60d67d38dd8a6752fe5040">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d0e5272bf60d67d38dd8a6752fe5040">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -836,7 +844,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="aa32a5d5b35693171b9bfcfb82264d1c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa32a5d5b35693171b9bfcfb82264d1c9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa32a5d5b35693171b9bfcfb82264d1c9">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -866,7 +874,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a64e860f05e4d0dfa56ae8bcd93a1f495"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64e860f05e4d0dfa56ae8bcd93a1f495">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e860f05e4d0dfa56ae8bcd93a1f495">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -896,7 +904,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a4d84ad85d22717f45f011422222e315f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d84ad85d22717f45f011422222e315f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d84ad85d22717f45f011422222e315f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[10/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -926,7 +934,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af4890c0c163180b0308b4eb34c51e0f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4890c0c163180b0308b4eb34c51e0f0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af4890c0c163180b0308b4eb34c51e0f0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[11/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -956,7 +964,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="af61b2b1c994e489bc5d14948a80235ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af61b2b1c994e489bc5d14948a80235ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af61b2b1c994e489bc5d14948a80235ab">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[12/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -986,7 +994,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a5baba220b546befab79a3de3fe255d6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5baba220b546befab79a3de3fe255d6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5baba220b546befab79a3de3fe255d6f">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[13/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1016,7 +1024,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a0733f4168207210eba0706c77a233f22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0733f4168207210eba0706c77a233f22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0733f4168207210eba0706c77a233f22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[14/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1046,7 +1054,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a432f1955cea0ff6ae356e6d2bc451b6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a432f1955cea0ff6ae356e6d2bc451b6d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a432f1955cea0ff6ae356e6d2bc451b6d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[15/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1076,7 +1084,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a400f668e3ea5537165c49883688a8b22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a400f668e3ea5537165c49883688a8b22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a400f668e3ea5537165c49883688a8b22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[16/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1106,7 +1114,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a487d40b99c816a459e269018af861a22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a487d40b99c816a459e269018af861a22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a487d40b99c816a459e269018af861a22">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[17/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1131,12 +1139,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Test that create() returns a nullptr if called with invalid arguments. </p>
+<p>Test that <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_input_controller.html#a674311f6d25f268c0c0f5d98117f5162">create()</a> returns a nullptr if called with invalid arguments. </p>
 
 </div>
 </div>
 <a id="a846ebc3ed8f592cecdd29c24ce350552"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a846ebc3ed8f592cecdd29c24ce350552">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a846ebc3ed8f592cecdd29c24ce350552">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[18/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1160,12 +1168,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test that create() returns a nullptr if called with an invalid set of device connection rules. Fail due to re-defined device category. </p>
+<p>Test that <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_input_controller.html#a674311f6d25f268c0c0f5d98117f5162">create()</a> returns a nullptr if called with an invalid set of device connection rules. Fail due to re-defined device category. </p>
 
 </div>
 </div>
 <a id="a3a58cb35e8f7ce5435ff9fd705fea3cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a58cb35e8f7ce5435ff9fd705fea3cc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a58cb35e8f7ce5435ff9fd705fea3cc">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[19/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1189,12 +1197,12 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Test that create() returns a nullptr if called with an invalid set of device connection rules. Fail due to lack of dependent profiles defined in the device connection rule. </p>
+<p>Test that <a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_input_controller.html#a674311f6d25f268c0c0f5d98117f5162">create()</a> returns a nullptr if called with an invalid set of device connection rules. Fail due to lack of dependent profiles defined in the device connection rule. </p>
 
 </div>
 </div>
 <a id="a096011ad821214b40bb62906d9cf5720"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a096011ad821214b40bb62906d9cf5720">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a096011ad821214b40bb62906d9cf5720">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[20/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1224,7 +1232,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ab4219387094613b59f445f8a5ca1eef7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4219387094613b59f445f8a5ca1eef7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4219387094613b59f445f8a5ca1eef7">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[21/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1254,7 +1262,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a6c258214a85629faa3344aed45a76503"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c258214a85629faa3344aed45a76503">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c258214a85629faa3344aed45a76503">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[22/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1284,7 +1292,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a2ce5dc38791d032555d7880f3d2f77ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ce5dc38791d032555d7880f3d2f77ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ce5dc38791d032555d7880f3d2f77ef">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[23/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1313,8 +1321,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ad4087faf9269f95abb7a8d9e17cc5981"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4087faf9269f95abb7a8d9e17cc5981">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/35]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkBluetooth::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_handleConnectLocal&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test call to handle the local connect() method.</p>
+<p>Assumption: A <code>DeviceManager</code> contains m_mockBluetoothDevice1. The device belongs to <a class="el" href="_device_category_8h.html#a9aa2c6ab7aa650f94a8d918ca098ff3ca696b031073e74bf2cb98e5ef201d4aa3">DeviceCategory::UNKNOWN</a>. The device is in disconnected state. Use case: A local connect() call is made with the MAC address of m_mockBluetoothDevice1. Expected result: 1) m_mockBluetoothDevice1 connects. 2) The observer should be notified of device connection once. 3) One <code>ConnectByDeviceIdsSucceed</code> event. </p>
+
+</div>
+</div>
 <a id="a3cad7b35079451fdbc2e6b736c578a05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cad7b35079451fdbc2e6b736c578a05">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[24/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cad7b35079451fdbc2e6b736c578a05">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1342,8 +1380,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="acd6e6237443de7b003becc7de1581864"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd6e6237443de7b003becc7de1581864">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/35]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkBluetooth::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_handlePairLocal&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test call to handle the local pair() method. Assumption: A <code>DeviceManager</code> contains m_mockBluetoothDevice1. m_mockBluetoothDevice1 belongs to <a class="el" href="_device_category_8h.html#a9aa2c6ab7aa650f94a8d918ca098ff3caf9dd946cc89c1f3b41a0edbe0f36931d">DeviceCategory::PHONE</a>, which follows <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_basic_device_connection_rule.html">BasicDeviceConnectionRule</a></code>. Use case: A local pair() call is made with the MAC address of m_mockBluetoothDevice1. Expected result: 1) m_mockBluetoothDevice1 pairs and connects. 2) The observer should be notified of device connection once. 3) One <code>PairDevicesSucceeded</code> and one <code>ConnectByDeviceIdsSucceed</code> event. </p>
+
+</div>
+</div>
 <a id="ae19d0ad83b0849ffbb1b75fa192d3a0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae19d0ad83b0849ffbb1b75fa192d3a0a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[25/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae19d0ad83b0849ffbb1b75fa192d3a0a">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1372,8 +1439,37 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a3186fef735fc5d67041c58976d2473a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3186fef735fc5d67041c58976d2473a8">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/35]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkBluetooth::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_handleUnpairLocal&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test call to handle the local unpair() method. Assumption: A <code>DeviceManager</code> contains m_mockBluetoothDevice1. m_mockBluetoothDevice1 belongs to <a class="el" href="_device_category_8h.html#a9aa2c6ab7aa650f94a8d918ca098ff3caf9dd946cc89c1f3b41a0edbe0f36931d">DeviceCategory::PHONE</a>, which follows <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_basic_device_connection_rule.html">BasicDeviceConnectionRule</a></code>. Use case: A local unpair() call is made with the MAC address of m_mockBluetoothDevice1. Expected result: 1) m_mockBluetoothDevice1 disconnects and unpairs. 2) The observer should be notified of device disconnection once. 3) One <code>DisconnectDevicesSucceeded</code> and one <code>UnpairDevicesSucceeded</code> event. </p>
+
+</div>
+</div>
 <a id="a8b82130c26816e73fcb1d304ab3cb765"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b82130c26816e73fcb1d304ab3cb765">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[26/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b82130c26816e73fcb1d304ab3cb765">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1402,8 +1498,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aa6f984dc250c4ab136fc4fd5fb5af2d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f984dc250c4ab136fc4fd5fb5af2d0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/35]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">alexaClientSDK::acsdkBluetooth::test::TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_test.html">BluetoothTest</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">test_handleDisconnectLocal&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Test call to handle the local disconnect() method.</p>
+<p>Assumption: A <code>DeviceManager</code> contains m_mockBluetoothDevice1. The device belongs to <a class="el" href="_device_category_8h.html#a9aa2c6ab7aa650f94a8d918ca098ff3ca696b031073e74bf2cb98e5ef201d4aa3">DeviceCategory::UNKNOWN</a>. The device is in connected state. Use case: A local disconnect() call is made with the MAC address of m_mockBluetoothDevice1. Expected result: 1) m_mockBluetoothDevice1 disconnects. 2) The observer should be notified of device disconnection once. 3) One <code>DisconnectDevicesSucceeded</code> event. </p>
+
+</div>
+</div>
 <a id="a677cd09543910b08e5a6bf9dffbe087b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a677cd09543910b08e5a6bf9dffbe087b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[27/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a677cd09543910b08e5a6bf9dffbe087b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1433,7 +1559,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="ac551ee0d1d58aba2335f250817ccd30b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac551ee0d1d58aba2335f250817ccd30b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[28/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac551ee0d1d58aba2335f250817ccd30b">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[32/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1461,7 +1587,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="adc3bf2335117bb44f4b083f802e99527"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc3bf2335117bb44f4b083f802e99527">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[29/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adc3bf2335117bb44f4b083f802e99527">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[33/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1489,7 +1615,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a1169e6f833e404812162fbcc4c0fc2ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1169e6f833e404812162fbcc4c0fc2ee">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[30/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1169e6f833e404812162fbcc4c0fc2ee">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[34/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1519,7 +1645,7 @@ Variables</h2></td></tr>
 </div>
 </div>
 <a id="a8a7893471c0b6b48f967ec60cbbf575d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a7893471c0b6b48f967ec60cbbf575d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[31/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7893471c0b6b48f967ec60cbbf575d">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[35/35]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4367,7 +4493,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

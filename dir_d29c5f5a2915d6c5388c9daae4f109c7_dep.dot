@@ -8,5 +8,5 @@ digraph "/workplace/avs-device-sdk/Storage" {
     dir_74c6299ccbc82b9602ff2a1d0fd58149 [shape=box label="SQLiteStorage" color="red" fillcolor="white" style="filled" URL="dir_74c6299ccbc82b9602ff2a1d0fd58149.html"];
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_74c6299ccbc82b9602ff2a1d0fd58149->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000644_000017.html"];
+  dir_74c6299ccbc82b9602ff2a1d0fd58149->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000785_000017.html"];
 }

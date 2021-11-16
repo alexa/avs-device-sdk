@@ -9,8 +9,8 @@ digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/Libcu
   dir_432ae366851f981ad5bcb252f92369c5 [shape=box label="Logger" URL="dir_432ae366851f981ad5bcb252f92369c5.html"];
   dir_97afc8111b754cf401b73024f872f45d [shape=box label="SDKInterfaces" fillcolor="white" style="filled" color="red" URL="dir_97afc8111b754cf401b73024f872f45d.html"];
   dir_0bf0f45007ff5e6885dc23c0041db988 [shape=box label="HTTP2" URL="dir_0bf0f45007ff5e6885dc23c0041db988.html"];
-  dir_6ba3b1a153b1f9de381c75d191edb957->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000205_000206.html"];
-  dir_6ba3b1a153b1f9de381c75d191edb957->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000205_000018.html"];
-  dir_6ba3b1a153b1f9de381c75d191edb957->dir_0bf0f45007ff5e6885dc23c0041db988 [headlabel="4", labeldistance=1.5 headhref="dir_000205_000202.html"];
-  dir_97afc8111b754cf401b73024f872f45d->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000018_000206.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="3", labeldistance=1.5 headhref="dir_000225_000226.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_97afc8111b754cf401b73024f872f45d [headlabel="3", labeldistance=1.5 headhref="dir_000225_000018.html"];
+  dir_6ba3b1a153b1f9de381c75d191edb957->dir_0bf0f45007ff5e6885dc23c0041db988 [headlabel="4", labeldistance=1.5 headhref="dir_000225_000222.html"];
+  dir_97afc8111b754cf401b73024f872f45d->dir_432ae366851f981ad5bcb252f92369c5 [headlabel="2", labeldistance=1.5 headhref="dir_000018_000226.html"];
 }

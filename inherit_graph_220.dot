@@ -3,9 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::SystemSoundAudioFactoryInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_system_sound_audio_factory_interface.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::application\lUtilities::resources::audio\l::SystemSoundAudioFactory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_system_sound_audio_factory.html"];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::test::MockSystemSoundAudioFactory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_system_sound_audio_factory.html",tooltip="Mock class that implements SystemSoundAudioFactoryInterface. "];
+  Node0 [label="alexaClientSDK::acsdkProperties\l::DataProperty",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_properties_1_1_data_property.html",tooltip="Data structure to produce and parse DER for encrypted property data. "];
 }

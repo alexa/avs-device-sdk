@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -66,6 +66,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -89,6 +90,11 @@ Collaboration diagram for alexaClientSDK::acsdkExternalMediaPlayerInterfaces::Ex
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface_1_1_handle_play_params.html">HandlePlayParams</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab80e7c97cea899451bc70f0867acd5f4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#ab80e7c97cea899451bc70f0867acd5f4">ExternalMediaAdapterInterface</a> (const std::string &amp;adapterName)</td></tr>
@@ -105,8 +111,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7de3ebcd4cf90713b802fcee062501bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b7b6041a1829a39f32723702200cc65"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#a4b7b6041a1829a39f32723702200cc65">handleLogout</a> ()=0</td></tr>
 <tr class="separator:a4b7b6041a1829a39f32723702200cc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d34f643c3dc4da735326d673abbf58"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#a90d34f643c3dc4da735326d673abbf58">handlePlay</a> (std::string &amp;playContextToken, int64_t index, std::chrono::milliseconds offset, const std::string &amp;skillToken, const std::string &amp;playbackSessionId, const std::string &amp;navigation, bool preload, const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">avsCommon::avs::PlayRequestor</a> &amp;playRequestor, const std::string &amp;playbackTarget)=0</td></tr>
-<tr class="separator:a90d34f643c3dc4da735326d673abbf58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793e21eeb17abd275442b9791e64b564"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#a793e21eeb17abd275442b9791e64b564">handlePlay</a> (const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface_1_1_handle_play_params.html">HandlePlayParams</a> &amp;params)=0</td></tr>
+<tr class="separator:a793e21eeb17abd275442b9791e64b564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a260c765a8fc7eb912cbda25b1deffa87"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#a260c765a8fc7eb912cbda25b1deffa87">handlePlayControl</a> (<a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#af3f896da53e6012450c4c575ee0884b8">RequestType</a> requestType, const std::string &amp;playbackTarget)=0</td></tr>
 <tr class="separator:a260c765a8fc7eb912cbda25b1deffa87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec5b49c0d097ad1feeab86a0c279f1d1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface.html#aec5b49c0d097ad1feeab86a0c279f1d1">handleSeek</a> (std::chrono::milliseconds offset)=0</td></tr>
@@ -451,8 +457,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a90d34f643c3dc4da735326d673abbf58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90d34f643c3dc4da735326d673abbf58">&#9670;&nbsp;</a></span>handlePlay()</h2>
+<a id="a793e21eeb17abd275442b9791e64b564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a793e21eeb17abd275442b9791e64b564">&#9670;&nbsp;</a></span>handlePlay()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -463,61 +469,9 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">virtual void alexaClientSDK::acsdkExternalMediaPlayerInterfaces::ExternalMediaAdapterInterface::handlePlay </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>playContextToken</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_interface_1_1_handle_play_params.html">HandlePlayParams</a> &amp;&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int64_t&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::chrono::milliseconds&#160;</td>
-          <td class="paramname"><em>offset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>skillToken</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>playbackSessionId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>navigation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>preload</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_play_requestor.html">avsCommon::avs::PlayRequestor</a> &amp;&#160;</td>
-          <td class="paramname"><em>playRequestor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>playbackTarget</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -529,15 +483,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Method to allow a user to initiate play from a third party music service provider based on a play context.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">playContextToken</td><td>Play context {Track/playlist/album/artist/station/podcast} identifier. </td></tr>
-    <tr><td class="paramname">index</td><td>The index of the media item in the container, if the container is indexable. </td></tr>
-    <tr><td class="paramname">offset</td><td>The offset position within media item, in milliseconds. </td></tr>
-    <tr><td class="paramname">skillToken</td><td>An opaque token for the domain or skill that is presently associated with this player. </td></tr>
-    <tr><td class="paramname">playbackSessionId</td><td>A universally unique identifier (UUID) generated to the RFC 4122 specification. </td></tr>
-    <tr><td class="paramname">navigation</td><td>Communicates desired visual display behavior for the app associated with playback. </td></tr>
-    <tr><td class="paramname">preload</td><td>If true, this Play directive is intended to preload the identified content only but not begin playback. </td></tr>
-    <tr><td class="paramname">playRequestor</td><td>The <code>PlayRequestor</code> object that is used to distinguish if it's a music alarm or not. </td></tr>
-    <tr><td class="paramname">playbackTarget</td><td>The <code>PlaybackTarget</code> is used to specify the targeted device that will handle the playback action. </td></tr>
+    <tr><td class="paramname">params</td><td>Handle play parameters required for playback </td></tr>
   </table>
   </dd>
 </dl>
@@ -582,6 +528,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">requestType</td><td>The type of REQUEST. Will always be PLAY/PAUSE/RESUME/NEXT... </td></tr>
     <tr><td class="paramname">playbackTarget</td><td>The <code>PlaybackTarget</code> is used to specify the targeted device that will handle the play control. </td></tr>
+    <tr><td class="paramname">isLocal</td><td>Whether play control is locally triggered on device </td></tr>
   </table>
   </dd>
 </dl>
@@ -655,7 +602,7 @@ Additional Inherited Members</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

@@ -1,0 +1,30 @@
+digraph "/workplace/avs-device-sdk/capabilities/AssetManager" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_55f1e16e469d547c636a522dac21b8a1 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="capabilities" fontname="Helvetica", fontsize="10", URL="dir_55f1e16e469d547c636a522dac21b8a1.html"]
+  subgraph clusterdir_07b4ac17d8fc69607b453186ce599c3b {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_07b4ac17d8fc69607b453186ce599c3b.html"];
+    dir_07b4ac17d8fc69607b453186ce599c3b [shape=plaintext label="AssetManager"];
+    dir_c153292608d6a329a57fe8f8b3d4529e [shape=box label="acsdkAssetManager" color="red" fillcolor="white" style="filled" URL="dir_c153292608d6a329a57fe8f8b3d4529e.html"];
+    dir_059fdc4ec18b8aa0c1c2ebaeff88e291 [shape=box label="acsdkAssetManagerClient" color="red" fillcolor="white" style="filled" URL="dir_059fdc4ec18b8aa0c1c2ebaeff88e291.html"];
+    dir_3ba2035ca5da00ee02b55bb348a40df0 [shape=box label="acsdkAssetManagerClientInterfaces" color="red" fillcolor="white" style="filled" URL="dir_3ba2035ca5da00ee02b55bb348a40df0.html"];
+  }
+  }
+  dir_9982052f7ce695d12571567315b2fafa [shape=box label="shared" fillcolor="white" style="filled" color="red" URL="dir_9982052f7ce695d12571567315b2fafa.html"];
+  dir_de622777c97862544df14465483f72cc [shape=box label="DavsClient" fillcolor="white" style="filled" color="red" URL="dir_de622777c97862544df14465483f72cc.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000116_000017.html"];
+  dir_de622777c97862544df14465483f72cc->dir_9982052f7ce695d12571567315b2fafa [headlabel="4", labeldistance=1.5 headhref="dir_000230_000116.html"];
+  dir_de622777c97862544df14465483f72cc->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="53", labeldistance=1.5 headhref="dir_000230_000017.html"];
+  dir_059fdc4ec18b8aa0c1c2ebaeff88e291->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000302_000116.html"];
+  dir_059fdc4ec18b8aa0c1c2ebaeff88e291->dir_de622777c97862544df14465483f72cc [headlabel="6", labeldistance=1.5 headhref="dir_000302_000230.html"];
+  dir_059fdc4ec18b8aa0c1c2ebaeff88e291->dir_3ba2035ca5da00ee02b55bb348a40df0 [headlabel="5", labeldistance=1.5 headhref="dir_000302_000306.html"];
+  dir_059fdc4ec18b8aa0c1c2ebaeff88e291->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000302_000017.html"];
+  dir_3ba2035ca5da00ee02b55bb348a40df0->dir_de622777c97862544df14465483f72cc [headlabel="6", labeldistance=1.5 headhref="dir_000306_000230.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000116.html"];
+  dir_c153292608d6a329a57fe8f8b3d4529e->dir_de622777c97862544df14465483f72cc [headlabel="42", labeldistance=1.5 headhref="dir_000174_000230.html"];
+  dir_c153292608d6a329a57fe8f8b3d4529e->dir_059fdc4ec18b8aa0c1c2ebaeff88e291 [headlabel="3", labeldistance=1.5 headhref="dir_000174_000302.html"];
+  dir_c153292608d6a329a57fe8f8b3d4529e->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="28", labeldistance=1.5 headhref="dir_000174_000017.html"];
+}

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -84,6 +84,21 @@ $(function() {
 </li>
 <li>ManagedGVariant()
 : <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_managed_g_variant.html#af4d27b7359139b2c3e0e1e2942d9c022">alexaClientSDK::bluetoothImplementations::blueZ::ManagedGVariant</a>
+</li>
+<li>mapAlgorithmToEvpCipher()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_1_1_open_ssl_type_mapper.html#acce2a8e47ef27141b8e89177db97fb24">alexaClientSDK::acsdkCrypto::OpenSslTypeMapper</a>
+</li>
+<li>mapAlgorithmToKeyParams()
+: <a class="el" href="structalexa_client_s_d_k_1_1acsdk_pkcs11_1_1_p_k_c_s11_key_descriptor.html#aea70e7b26be77617d1969be12c251f1e">alexaClientSDK::acsdkPkcs11::PKCS11KeyDescriptor</a>
+</li>
+<li>mapAlgorithmToPadding()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_1_1_open_ssl_type_mapper.html#afa39800342d15ca3bc3d43e9eb5f5aee">alexaClientSDK::acsdkCrypto::OpenSslTypeMapper</a>
+</li>
+<li>mapAlgorithmToTagSize()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_1_1_open_ssl_type_mapper.html#a7663cbdd98b7e979907dc75ddf2874cb">alexaClientSDK::acsdkCrypto::OpenSslTypeMapper</a>
+</li>
+<li>mapDigestToEvpMd()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_1_1_open_ssl_type_mapper.html#ae2d21175373252c47293bad59cadb2e2">alexaClientSDK::acsdkCrypto::OpenSslTypeMapper</a>
 </li>
 <li>mapEqualizerBands()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_equalizer_band_mapper_interface.html#af464dcb3e99d91390e7e59feb1fc287a">alexaClientSDK::acsdkEqualizer::EqualizerBandMapperInterface</a>
@@ -171,8 +186,9 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_gateway_manager.html#a0ac6359ca18c501861407800c7bf0a53">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAVSGatewayManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_channel_volume_interface.html#a65f9a78b6acf5104ae41cb6da7e7c039">alexaClientSDK::avsCommon::sdkInterfaces::test::MockChannelVolumeInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_handler.html#a4b9e9f0158f0b01d960d5585435f8eb8">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveHandler</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_locale_assets_manager.html#a01946efbb60e3b7e016320b39de67a83">alexaClientSDK::avsCommon::sdkInterfaces::test::MockLocaleAssetsManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_locale_assets_manager.html#afd2944b353d4befb36384575cdb0570d">alexaClientSDK::avsCommon::sdkInterfaces::test::MockLocaleAssetsManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_request.html#aa7a46ff7160d5929dea2fd013846b3ea">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Request</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_mock_requires_shutdown.html#a98055ecce4e4fe0b8f2b355f23e8a6af">alexaClientSDK::avsCommon::utils::test::MockRequiresShutdown</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_d_bus_proxy.html#ab9e8cca50c390b1d6dec734bb3b08d64">alexaClientSDK::bluetoothImplementations::blueZ::test::MockDBusProxy</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html#a899c536735be593a56208581ba1bb448">alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_connection.html#a3bd382225cfcde3fa2b9167763434415">alexaClientSDK::capabilityAgents::system::test::MockConnection</a>
@@ -199,7 +215,12 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#ab9775eda3b881c8a11f182fa3e5b1698">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_renderer.html#aefbee373080993fdaa0a5dbf67f3fbb5">alexaClientSDK::acsdkAlerts::test::MockRenderer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_context.html#a6d24cbdbe12f6d291ac1e276fc706784">alexaClientSDK::acsdkAudioPlayer::test::MockContext</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_mock_c_b_l_observer.html#a46dc7f81dea3f03cd4c5c9e9d208f7a1">alexaClientSDK::acsdkAuthorization::lwa::test::MockCBLObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_mock_authorization_adapter.html#ae0eba8cebbc800e82e3977fcd662fd18">alexaClientSDK::acsdkAuthorization::test::MockAuthorizationAdapter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_mock_registration_manager.html#aa52f4bdc16d714396d44dd4f0e3d8757">alexaClientSDK::acsdkAuthorization::test::MockRegistrationManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_mock_playback_router.html#acb08183fc000fe282066604861028558">alexaClientSDK::acsdkBluetooth::test::MockPlaybackRouter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_factory.html#ad9da8f2151f54738384f97b48e6a1edf">alexaClientSDK::acsdkCryptoInterfaces::test::MockCryptoFactory</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_digest.html#af6b2844fdb02901602eb9801a91b3e41">alexaClientSDK::acsdkCryptoInterfaces::test::MockDigest</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_interface.html#aab86aa1e1085782769f1610583ac74df">alexaClientSDK::acsdkEqualizerInterfaces::test::MockEqualizerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_storage_interface.html#af5d524cbfb532b3eb4329bb56a16237c">alexaClientSDK::acsdkEqualizerInterfaces::test::MockEqualizerStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#af68d7cf6441a5aed6efe6eb11004220b">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
@@ -208,6 +229,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer_observer.html#a943c8b8ed38ba5b7613712f98b52ce40">alexaClientSDK::acsdkNotifications::test::MockNotificationRendererObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_1_1test_1_1_mock_test_observer.html#ad268b6ef2f7185d9c3b14c3039a0b0ed">alexaClientSDK::acsdkNotifier::test::MockTestObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_post_connect_operation_provider.html#a80be090b7d5d885d30e442f7d6ce0782">alexaClientSDK::acsdkPostConnectOperationProviderRegistrar::test::MockPostConnectOperationProvider</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_properties_interfaces_1_1test_1_1_mock_properties.html#afddc345ac44963b0d324c4fab5507343">alexaClientSDK::acsdkPropertiesInterfaces::test::MockProperties</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_shutdown_manager_1_1test_1_1_mock_requires_shutdown.html#a48527d06c9a66d6255a6c5301ee863c6">alexaClientSDK::acsdkShutdownManager::test::MockRequiresShutdown</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_startup_manager_1_1test_1_1_mock_requires_startup.html#ad8a8e924e8615f56fd4bf233d445bfb8">alexaClientSDK::acsdkStartupManager::test::MockRequiresStartup</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_system_clock_monitor_1_1test_1_1_mock_system_clock_observer.html#a0a1b01e2c5b60f7bea990d2d42220f5d">alexaClientSDK::acsdkSystemClockMonitor::test::MockSystemClockObserver</a>
@@ -215,22 +237,26 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html#a3e24400af151629304f95e2f5e4bff2d">alexaClientSDK::adsl::test::MockDirectiveSequencer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_mock_attachment_reader.html#ace30300c9b5ccd9ea6160d12cf5d7fa6">alexaClientSDK::avsCommon::avs::test::MockAttachmentReader</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_builder.html#af4e2fb55b72d89208ac82ffd9a05b175">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointBuilder</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_mock_misc_storage.html#a9c297ea4bf0ec4642ee7b234e9a72fe4">alexaClientSDK::avsCommon::sdkInterfaces::storage::test::MockMiscStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_a_v_s_connection_manager.html#ad66eb290fd4125c82e607a9ba7835a44">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAVSConnectionManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capabilities_delegate.html#aa80c0304a0f4afee605701568ecde235">alexaClientSDK::avsCommon::sdkInterfaces::test::MockCapabilitiesDelegate</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capability_configuration_interface.html#abad71acfd899140567dcd57cd6f553ce">alexaClientSDK::avsCommon::sdkInterfaces::test::MockCapabilityConfigurationInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_channel_volume_interface.html#aea80a0a0fa29b19c98a6763d4609dbd5">alexaClientSDK::avsCommon::sdkInterfaces::test::MockChannelVolumeInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html#ae78e1ae37fd80eaad7aa3abf4531f713">alexaClientSDK::avsCommon::sdkInterfaces::test::MockContextManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_handler.html#a8e28ce2d3421d09d4dcc2c27afc9d683">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_handler_result.html#ab410e61b8b9f5303756a9e403a378f27">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveHandlerResult</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html#ab5f583a69ef9b95e5a1baf14ae44ab3c">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveSequencer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_sequencer.html#a5ae926c9e26bf698d6dafb07e533c13e">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveSequencer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager.html#afec7818ba8d80d5cc7a690f081b40cbe">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_locale_assets_manager.html#ac686d4445f29ec342e4fc701be18c4e1">alexaClientSDK::avsCommon::sdkInterfaces::test::MockLocaleAssetsManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_playback_router.html#a24e832ac165f5c5dee2b1f7f38376dec">alexaClientSDK::avsCommon::sdkInterfaces::test::MockPlaybackRouter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_revoke_authorization_observer.html#a024e7f890c60f8e4a315802690fedb3e">alexaClientSDK::avsCommon::sdkInterfaces::test::MockRevokeAuthorizationObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_timer_delegate_factory.html#a002f6b088c1cc1a6fc4a83e1306d28d9">alexaClientSDK::avsCommon::sdkInterfaces::test::MockTimerDelegateFactory</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_user_inactivity_monitor.html#afdd3eb859c5c91c37e127c2f98a86cb2">alexaClientSDK::avsCommon::sdkInterfaces::test::MockUserInactivityMonitor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_user_inactivity_monitor_observer.html#aae95e5c4e02745e404463a15848270a7">alexaClientSDK::avsCommon::sdkInterfaces::test::MockUserInactivityMonitorObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_connection.html#a3b1ca5815b583e362791ca1c8c2d2845">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Connection</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_request.html#a968135e15940685c76513d8e071b17bc">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Request</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a580ffceda24466fa3cbdf2b7572fd1ef">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_mock_requires_shutdown.html#a860d804f45e3fc9c6af63a670b8f50f4">alexaClientSDK::avsCommon::utils::test::MockRequiresShutdown</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_mock_auth_delegate.html#a983cd40eb4337dfc55585542bd18c7d6">alexaClientSDK::avsGatewayManager::test::MockAuthDelegate</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_mock_a_v_s_gateway_manager_storage.html#a89675c592678fe921fcd4a408cb1197a">alexaClientSDK::avsGatewayManager::test::MockAVSGatewayManagerStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_d_bus_proxy.html#ac1350419e99690e7cb13be520ac19ffe">alexaClientSDK::bluetoothImplementations::blueZ::test::MockDBusProxy</a>
@@ -242,6 +268,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html#a664eabcaae9dd6df949ac40f35ba8bb9">alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1test_1_1_mock_power_controller_interface.html#a88d487bdbd3e97b8e0cf27c9fba9bc02">alexaClientSDK::capabilityAgents::powerController::test::MockPowerControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1test_1_1_mock_range_controller_interface.html#ac4a31d54314531254b6ecc9ad6c49e45">alexaClientSDK::capabilityAgents::rangeController::test::MockRangeControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_misc_storage_interface.html#ab97f714e755d611d912cc811a02bfb72">alexaClientSDK::capabilityAgents::speakerManager::test::MockMiscStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_connection.html#a0fe6dbaf61e48769a5fc5cf3600e0e06">alexaClientSDK::capabilityAgents::system::test::MockConnection</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html#af66fa2acef243eba55a2abf79fe67d81">alexaClientSDK::capabilityAgents::templateRuntime::test::MockGui</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_media_properties_fetcher.html#a522b6ac691264d82dae4cb3409b8acb0">alexaClientSDK::capabilityAgents::templateRuntime::test::MockMediaPropertiesFetcher</a>
@@ -270,20 +297,30 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_router.html#a0337e1070a5e452c9ce4c36173987669">alexaClientSDK::acl::test::MockMessageRouter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_post_connect_operation.html#afcb596330171e9641afa887bd20148e8">alexaClientSDK::acl::transport::test::MockPostConnectOperation</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport.html#a7bc3125cc307564d228971cac69c5e42">alexaClientSDK::acl::transport::test::MockTransport</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport_observer.html#ae65e42b5aa5ba0d2d766c531e2976d1e">alexaClientSDK::acl::transport::test::MockTransportObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport_observer.html#a51413421983fd3a4d5382a60e63fe709">alexaClientSDK::acl::transport::test::MockTransportObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a57e9c1d557ee2bcdcd1c6282a7801260">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_mock_auth_manager.html#a35c4a3bdfdfe6531375b466ca6821971">alexaClientSDK::acsdkAuthorization::lwa::test::MockAuthManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_mock_c_b_l_observer.html#a341cfb84b3b101ab3f6d7819e692e82f">alexaClientSDK::acsdkAuthorization::lwa::test::MockCBLObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_mock_authorization_adapter.html#a978a9484495d94196e2367d605142634">alexaClientSDK::acsdkAuthorization::test::MockAuthorizationAdapter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_mock_playback_router.html#a672218e4c015f520c943d2ae796ffabe">alexaClientSDK::acsdkBluetooth::test::MockPlaybackRouter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1test_1_1_mock_bluetooth_device_observer.html#a739357c3ca72943c8b0fb0f2437ffec2">alexaClientSDK::acsdkBluetoothInterfaces::test::MockBluetoothDeviceObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_codec.html#a520522f954c71e7dbbd88f635a9c678d">alexaClientSDK::acsdkCryptoInterfaces::test::MockCryptoCodec</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_factory.html#a1d53072ae0fdc2ec39f1f86e61417ee3">alexaClientSDK::acsdkCryptoInterfaces::test::MockCryptoFactory</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_digest.html#ac5c4f5a5598ce8c5321cad04d0ccb199">alexaClientSDK::acsdkCryptoInterfaces::test::MockDigest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_key_store.html#aae491f1391c7ad6408f099b6ea9f7f77">alexaClientSDK::acsdkCryptoInterfaces::test::MockKeyStore</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_controller_listener_interface.html#afaa1773d88020563640975fca8cef4ee">alexaClientSDK::acsdkEqualizerInterfaces::test::MockEqualizerControllerListenerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_interface.html#a581ee7bd350da52867fdeca4e122cf8e">alexaClientSDK::acsdkEqualizerInterfaces::test::MockEqualizerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_mode_controller_interface.html#a00b7ba037d1e9dbfb27ce1a7662e24f3">alexaClientSDK::acsdkEqualizerInterfaces::test::MockEqualizerModeControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_storage_interface.html#a25ef6e8ef4be5ecd4346af56470fd5b8">alexaClientSDK::acsdkEqualizerInterfaces::test::MockEqualizerStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#a1d99edd8b9f4c75965bc9a3de13a4a2b">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player.html#a9300331c92afcfa8f2cb26687e6ab50c">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayer</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#a7efafe0e7789655ce2b13669f2bef281">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#a7dcaefed602a52296c1f5fbf95aa21fc">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_render_player_info_cards_provider_registrar.html#a551e338401e15c6d2b51882776bc013b">alexaClientSDK::acsdkExternalMediaPlayer::test::MockRenderPlayerInfoCardsProviderRegistrar</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html#a0a8ff06e40bd5d0ad04ab1cdac43ce56">alexaClientSDK::acsdkExternalMediaPlayer::test::MockStartupNotifier</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_state_observer.html#a7259a65039b074fb7d2ffbeab9236735">alexaClientSDK::acsdkKWDImplementations::test::MockStateObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html#a6e8e9cc5cec38172d15ab99690392cfe">alexaClientSDK::acsdkPostConnectOperationProviderRegistrar::test::MockStartupNotifier</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_properties_interfaces_1_1test_1_1_mock_properties.html#adae4213a5eb574f4c4164beac6832d97">alexaClientSDK::acsdkPropertiesInterfaces::test::MockProperties</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_properties_interfaces_1_1test_1_1_mock_properties_factory.html#a51847427ac0709fee690fa2ff2391693">alexaClientSDK::acsdkPropertiesInterfaces::test::MockPropertiesFactory</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_shutdown_manager_interfaces_1_1test_1_1_mock_shutdown_notifier.html#af161c5d6f0ef9b2ebbdb16ef32285144">alexaClientSDK::acsdkShutdownManagerInterfaces::test::MockShutdownNotifier</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#ad42521003a09d6fb76a3120349d937a2">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_sequencer.html#ade75de95bb043e520022ac59646815e7">alexaClientSDK::adsl::test::MockDirectiveSequencer</a>
@@ -319,37 +356,38 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_user_inactivity_monitor.html#adf87ed260e1fbc618ec5065620a9955d">alexaClientSDK::avsCommon::sdkInterfaces::test::MockUserInactivityMonitor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_connection.html#a2720d3acdc857710552fb08daf66a93f">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Connection</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html#aa233edc0f07f395df3edac5a2a01dc06">alexaClientSDK::avsCommon::utils::logger::test::MockLogger</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a83a9f1ed75e2a8050e9b35555ae292d4">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a1548112fdea0460f63361befa53c8e46">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1metrics_1_1test_1_1_mock_metric_recorder.html#a7c1c29f611b535cb3acb6dbbaad94ccd">alexaClientSDK::avsCommon::utils::metrics::test::MockMetricRecorder</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1test_1_1_mock_internet_connection_monitor.html#ae4b33f18ff0a23d21d79a983b00bd37a">alexaClientSDK::avsCommon::utils::network::test::MockInternetConnectionMonitor</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1network_1_1test_1_1_mock_internet_connection_monitor.html#aaa8e700d47701a23af199310fa56f9b9">alexaClientSDK::avsCommon::utils::network::test::MockInternetConnectionMonitor</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_mock_auth_delegate.html#a2a934cff0d43faf257af18812b5797ef">alexaClientSDK::avsGatewayManager::test::MockAuthDelegate</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_mock_a_v_s_gateway_manager_storage.html#aa69fbcbac626743a2b88487827963e99">alexaClientSDK::avsGatewayManager::test::MockAVSGatewayManagerStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_listener.html#a729de76984e9e304b1ceb7a360c6f78e">alexaClientSDK::bluetoothImplementations::blueZ::test::MockListener</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_auth_delegate.html#a084cbd538add687c3228682ce02018cd">alexaClientSDK::capabilitiesDelegate::test::MockAuthDelegate</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_delegate_storage.html#afb38ffe1ba112986d534eeff983441b0">alexaClientSDK::capabilitiesDelegate::test::MockCapabilitiesDelegateStorage</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_event_sender.html#abfbfb8fe82306985621ec496e0c049fd">alexaClientSDK::capabilitiesDelegate::test::MockDiscoveryEventSender</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_delegate_storage.html#a842a4004b3bd60b386e1d00718cc0896">alexaClientSDK::capabilitiesDelegate::test::MockCapabilitiesDelegateStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_event_sender.html#a1eced9c2900888c3083bdf78c49248d9">alexaClientSDK::capabilitiesDelegate::test::MockDiscoveryEventSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_status_observer.html#aeaf7c065e46e816f243ffce8fd84a328">alexaClientSDK::capabilitiesDelegate::test::MockDiscoveryStatusObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_capability_configuration_change_observer.html#ac91647b76ec20ccf55c88f98f6c690fd">alexaClientSDK::capabilityAgents::aip::test::MockCapabilityConfigurationChangeObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_encoder_context.html#a6683e2a676f4c18c39823c861acd53bb">alexaClientSDK::capabilityAgents::aip::test::MockEncoderContext</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html#a1abdf3534b42beec51179457f1547ab3">alexaClientSDK::capabilityAgents::aip::test::MockObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#a1138f04978e1df9932e1d72c7a2a935a">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test_1_1_mock_mode_controller_interface.html#a42fd27e5b25c78eb26771f9e19339c77">alexaClientSDK::capabilityAgents::modeController::test::MockModeControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test_1_1_mock_mode_controller_interface.html#a4b28e1d9e45c3bc98a5a11ba9bae4cbe">alexaClientSDK::capabilityAgents::modeController::test::MockModeControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html#a1a5a899b172baaa8533cc8baa2e808c2">alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1test_1_1_mock_power_controller_interface.html#a86b6dfc63e25a9739833aa034903ff08">alexaClientSDK::capabilityAgents::powerController::test::MockPowerControllerInterface</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1test_1_1_mock_range_controller_interface.html#aee4455218b220ab9eea9a542ec30c101">alexaClientSDK::capabilityAgents::rangeController::test::MockRangeControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1test_1_1_mock_range_controller_interface.html#a35135890b92793d3d1944901707a6944">alexaClientSDK::capabilityAgents::rangeController::test::MockRangeControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage.html#ab852022e219c1194e1290570ef2b27cc">alexaClientSDK::capabilityAgents::speakerManager::test::MockSpeakerManagerStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage_interface.html#aa1db6fd637230fa2afddcf4f80aba736">alexaClientSDK::capabilityAgents::speakerManager::test::MockSpeakerManagerStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_capability_configuration_change_observer.html#a8155757e42d545530dd2adf0c66b9884">alexaClientSDK::capabilityAgents::system::test::MockCapabilityConfigurationChangeObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_connection.html#a3ccfe04755cbe92b059651b91aade903">alexaClientSDK::capabilityAgents::system::test::MockConnection</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_software_info_sender_observer.html#a734a379e673adf8951517f59a817e637">alexaClientSDK::capabilityAgents::system::test::MockSoftwareInfoSenderObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_info_cards_player.html#ac1d0ce363efdad4a488f09b4c6f18bc4">alexaClientSDK::capabilityAgents::templateRuntime::test::MockRenderInfoCardsPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_info_cards_player_registrar.html#a352b065bdad540eb4e32020c80ab1d3a">alexaClientSDK::capabilityAgents::templateRuntime::test::MockRenderInfoCardsPlayerRegistrar</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_render_player_info_card_provider.html#ac68cea2f565d56fa48249e39de0f8795">alexaClientSDK::capabilityAgents::templateRuntime::test::MockRenderPlayerInfoCardProvider</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html#ad043bc37365f4a0ef39f8685cc191c35">alexaClientSDK::capabilityAgents::toggleController::test::MockToggleControllerInterface</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html#a6c48d9e8ced3c8769fc95379b46c9d77">alexaClientSDK::captions::test::MockCaptionManager</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_parser.html#a38f5d49bae3b21757adfe3fbe54d1488">alexaClientSDK::captions::test::MockCaptionParser</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html#a8eefb001e39737b706f8a7bb3df50bf3">alexaClientSDK::capabilityAgents::toggleController::test::MockToggleControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html#a0590517b91918de276388b7bfbc0ea8f">alexaClientSDK::captions::test::MockCaptionManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_parser.html#ade608683d13c1add7351d74236ce9f1a">alexaClientSDK::captions::test::MockCaptionParser</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_presenter.html#ab51567bf2cde2ed4f87dd2a1232d02b7">alexaClientSDK::captions::test::MockCaptionPresenter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_system_clock_delay.html#a6a58a4fbd2377cf10ac38bd03d57917b">alexaClientSDK::captions::test::MockSystemClockDelay</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html#a0c12c67a2d9aab847cabd4bcf47a0aaa">alexaClientSDK::certifiedSender::test::MockMessageStorage</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_state_observer.html#acb440eec5a0a0c70336b9b6790aef4b7">alexaClientSDK::kwd::test::MockStateObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_attachment_reader.html#af14f4abbcf4a1f0623cb9f7f5a12bb33">alexaClientSDK::mediaPlayer::android::test::MockAttachmentReader</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_content_fetcher_factory.html#af978a90775dcdab9261df81007aee873">alexaClientSDK::mediaPlayer::android::test::MockContentFetcherFactory</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_empty_attachment_reader.html#a636b29083cce5d5225dc181f7b790b02">alexaClientSDK::mediaPlayer::android::test::MockEmptyAttachmentReader</a>
@@ -361,11 +399,9 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting_event_sender.html#adeca98dbf9377710c117fbf38be7bba2">alexaClientSDK::settings::test::MockSettingEventSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1speechencoder_1_1test_1_1_mock_encoder_context.html#a018ae8f2c3844ca2287389e7d97a7cba">alexaClientSDK::speechencoder::test::MockEncoderContext</a>
 </li>
-<li>MOCK_METHOD10()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#a666c4d3b5548a8f584e75fdb35bf54da">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
-</li>
 <li>MOCK_METHOD1_T()
-: <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting.html#a181e171552357043bb991d45c16f8ac7">alexaClientSDK::settings::test::MockSetting&lt; ValueT &gt;</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1test_1_1_mock_notifier.html#aee8f65d291951eaee4a4079956d13e6d">alexaClientSDK::acsdkNotifierInterfaces::test::MockNotifier&lt; ObserverType &gt;</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1test_1_1_mock_setting.html#a181e171552357043bb991d45c16f8ac7">alexaClientSDK::settings::test::MockSetting&lt; ValueT &gt;</a>
 </li>
 <li>MOCK_METHOD2()
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_connection_status_observer.html#a75beae5835c6957f871549a7cf6c585a">alexaClientSDK::acl::test::MockConnectionStatusObserver</a>
@@ -374,23 +410,31 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_post_connect.html#a1e4173ac763b8021a45641442a2d5d96">alexaClientSDK::acl::test::MockPostConnect</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport.html#a619565e75d433fd9fe18db7dc1e65252">alexaClientSDK::acl::transport::test::MockTransport</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_transport_observer.html#a7d0f31bb6bec2c0be443363ce4c67784">alexaClientSDK::acl::transport::test::MockTransportObserver</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a6c8f517571e39a4bcf892f07ad60ce0f">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#a600c63a73947c6f932516ef404f9f8f9">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1test_1_1_mock_audio_player_observer.html#ade227dd6934594dc111bb3b010e96a13">alexaClientSDK::acsdkAudioPlayer::test::MockAudioPlayerObserver</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_mock_playback_router.html#a1c25df2162919b7b810c7a2ac650c576">alexaClientSDK::acsdkBluetooth::test::MockPlaybackRouter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_mock_c_b_l_observer.html#a9449a6f8cd97046dad77d8f10fefd5df">alexaClientSDK::acsdkAuthorization::lwa::test::MockCBLObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_mock_playback_router.html#a8f9845c4efe04894ad99ec0c93bf8e32">alexaClientSDK::acsdkBluetooth::test::MockPlaybackRouter</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_communication_1_1test_1_1_test_subscriber.html#a0a9c3661694658ba18ee3a736ea031f1">alexaClientSDK::acsdkCommunication::test::TestSubscriber</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_codec.html#a318fd757b332bc5b6391d8d5a037efee">alexaClientSDK::acsdkCryptoInterfaces::test::MockCryptoCodec</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_digest.html#a3ef370885aa08493148a4a1f3240167f">alexaClientSDK::acsdkCryptoInterfaces::test::MockDigest</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_key_factory.html#a7eb2d0edbc1a4505d2449b683c41fde7">alexaClientSDK::acsdkCryptoInterfaces::test::MockKeyFactory</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#afbe8d27c608db51c8199ce68b9ce5625">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player.html#a42065b4e8a699cc85c273e43f9d196c9">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#af4b31b3775b158e208d18f5a28ebf8c1">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_observer.html#aca15be90768d19c3f3d74df1fd95056a">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_observer.html#a54aa1c6dcc63081df2d507060363c642">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer.html#aabe628caadac521812417cb898f82c76">alexaClientSDK::acsdkNotifications::test::MockNotificationRenderer</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_properties_interfaces_1_1test_1_1_mock_properties.html#a0d17f87b342d55f861c2984eb2a644ca">alexaClientSDK::acsdkPropertiesInterfaces::test::MockProperties</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#ade0cb40bed2f8a0c361f694d5f344c06">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1test_1_1_mock_attachment_manager.html#ab499aa5108b38356fd67391a4abfbfb8">alexaClientSDK::avsCommon::avs::attachment::test::MockAttachmentManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_capabilities_registrar.html#af5ee7573dabae2d0d82202bfdcb2e587">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointCapabilitiesRegistrar</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_manager.html#af3e1b1d7c96dc73ff45e76b17ce9a71f">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointRegistrationManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_observer.html#af6bd24249d7410b452d7a92eecb3380c">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointRegistrationObserver</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capabilities_delegate.html#a209102a2b956a5c5628f2c11f9370a01">alexaClientSDK::avsCommon::sdkInterfaces::test::MockCapabilitiesDelegate</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_mock_misc_storage.html#ad1ebf4fb51884bfc7c68cc2092f4414e">alexaClientSDK::avsCommon::sdkInterfaces::storage::test::MockMiscStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_auth_observer.html#a350cd87f6cbe1bc747682e8e3396c060">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAuthObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_capabilities_delegate.html#ab3a6a89fff3a84243a764d5c0006d2fd">alexaClientSDK::avsCommon::sdkInterfaces::test::MockCapabilitiesDelegate</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html#a84cd7c03aba18c7d5a46cfcd9a7d4b5d">alexaClientSDK::avsCommon::sdkInterfaces::test::MockContextManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_directive_handler.html#aac7354d216b1b05b4dda170f3064a452">alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveHandler</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager.html#a21e5842e9a891d0c2060c55d84c2150c">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager.html#a2ea3e7f0de2856fde519d92c4c07f376">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html#a8093bfd6b176cf86b29bfc739d58fdbf">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManagerObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_locale_assets_manager.html#ab5f793cd61d5fe80819295fb814688b8">alexaClientSDK::avsCommon::sdkInterfaces::test::MockLocaleAssetsManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_playback_handler.html#af4c3b4e96db2088014b16afa6645fe49">alexaClientSDK::avsCommon::sdkInterfaces::test::MockPlaybackHandler</a>
@@ -398,15 +442,17 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_power_resource_manager.html#a4b3d9c5296f7a9ea962dd0ea5a121de1">alexaClientSDK::avsCommon::sdkInterfaces::test::MockPowerResourceManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_render_player_info_cards_observer.html#a47ec6cf3b10affce8b61504ae836d2df">alexaClientSDK::avsCommon::sdkInterfaces::test::MockRenderPlayerInfoCardsObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker_manager.html#a1e1d4d8d89146b5d7c58c329e401f18c">alexaClientSDK::avsCommon::sdkInterfaces::test::MockSpeakerManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1test_1_1_mock_http_get.html#a489bca31999f0caf21bfa952c754f31b">alexaClientSDK::avsCommon::utils::libcurlUtils::test::MockHttpGet</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a5823968a93b1f9dd7b98f48ceb993bea">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_d_bus_proxy.html#adf0138c00ed0a0c598220d69cdbc8bf9">alexaClientSDK::bluetoothImplementations::blueZ::test::MockDBusProxy</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_delegate_storage.html#a46e9a616362c62cbf16363319c3f6101">alexaClientSDK::capabilitiesDelegate::test::MockCapabilitiesDelegateStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_event_sender.html#ab8098fddd2e2e055bbfe9a367035f119">alexaClientSDK::capabilitiesDelegate::test::MockDiscoveryEventSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_discovery_status_observer.html#ada75e98d6b8fdc1fe1a3e26f0ff524ef">alexaClientSDK::capabilitiesDelegate::test::MockDiscoveryStatusObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_expect_speech_timeout_handler.html#a7dd18a946a6ea450e490a3a610a11cf1">alexaClientSDK::capabilityAgents::aip::test::MockExpectSpeechTimeoutHandler</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test_1_1_mock_mode_controller_interface.html#aa8ff538ab943e8e951f1a6389a782e8a">alexaClientSDK::capabilityAgents::modeController::test::MockModeControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test_1_1_mock_mode_controller_interface.html#af67203a34478b37d7ea84b8356dd424e">alexaClientSDK::capabilityAgents::modeController::test::MockModeControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1test_1_1_mock_power_controller_interface.html#a51932490ce95919dc71a8ea498fe22fd">alexaClientSDK::capabilityAgents::powerController::test::MockPowerControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1range_controller_1_1test_1_1_mock_range_controller_interface.html#a8b7b936a3a29433ca8bad589f05ef27a">alexaClientSDK::capabilityAgents::rangeController::test::MockRangeControllerInterface</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_misc_storage_interface.html#a96263078951708f0ced6e6e5a10a491b">alexaClientSDK::capabilityAgents::speakerManager::test::MockMiscStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html#a5f26f7edcf2e0069d40326935257e1da">alexaClientSDK::capabilityAgents::templateRuntime::test::MockGui</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1toggle_controller_1_1test_1_1_mock_toggle_controller_interface.html#a3451b4ecb634c717dacbf145c4758ced">alexaClientSDK::capabilityAgents::toggleController::test::MockToggleControllerInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html#a9075927c58aa0a2dd63ecdfd8d0d4eea">alexaClientSDK::captions::test::MockCaptionManager</a>
@@ -418,7 +464,7 @@ $(function() {
 , <a class="el" href="structalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_legacy_state_provider.html#aaec9ecbd38f52a13e85fdf41fc0e6950">alexaClientSDK::contextManager::test::MockLegacyStateProvider</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1context_manager_1_1test_1_1_mock_state_provider.html#a95112d106f41e745001a6a2f0f97a18e">alexaClientSDK::contextManager::test::MockStateProvider</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_decoder.html#a3919ad145fbe6159b703b9a47c83c171">alexaClientSDK::mediaPlayer::android::test::MockDecoder</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html#a91fc123ab4da2982c110b3807c1dda27">alexaClientSDK::mediaPlayer::android::test::MockObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html#a0ba6849c4ae37a7af198d39ad7ebe4fe">alexaClientSDK::mediaPlayer::android::test::MockObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1settings_1_1storage_1_1test_1_1_mock_device_setting_storage.html#a375233f4e374d75ee9e62d1b39692c14">alexaClientSDK::settings::storage::test::MockDeviceSettingStorage</a>
 </li>
 <li>MOCK_METHOD2_T()
@@ -426,12 +472,15 @@ $(function() {
 </li>
 <li>MOCK_METHOD3()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_storage.html#ad994173ba9d3dabae09382f2c1c33d7b">alexaClientSDK::acsdkAlerts::test::MockAlertStorage</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_mock_auth_manager.html#aebcbff512628ea0ca570d01a8e9ffdac">alexaClientSDK::acsdkAuthorization::lwa::test::MockAuthManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_codec.html#a3e4905fc6cc364594a06fc433fa2c0df">alexaClientSDK::acsdkCryptoInterfaces::test::MockCryptoCodec</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#add60eb4135301cc1bf6ed0003ff772d3">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#acae4211bf6de971e2fcd25f325ac67af">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_exception_encountered_sender.html#a98db245b8495d8e07ae449d678b53835">alexaClientSDK::adsl::test::MockExceptionEncounteredSender</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_observer.html#a55b50fd08d93316ac3daa74c8a0b44a2">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointRegistrationObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_registration_observer.html#a06874ecada4c39120903b183021fa9db">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointRegistrationObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_mock_misc_storage.html#ad3ef84e92a4948903044de55c24c83ff">alexaClientSDK::avsCommon::sdkInterfaces::storage::test::MockMiscStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_alexa_interface_message_sender.html#a2c77f93fb7b900ed31722f16b4938a1a">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAlexaInterfaceMessageSender</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html#ad58fd6c670c5b5ab4917c7f2f8e8d899">alexaClientSDK::avsCommon::sdkInterfaces::test::MockContextManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html#a3e6c8a54036f9a52aabb2d1f5378fdf4">alexaClientSDK::avsCommon::sdkInterfaces::test::MockContextManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_exception_encountered_sender.html#aeea5205b1b3a74e9762017399d439d18">alexaClientSDK::avsCommon::sdkInterfaces::test::MockExceptionEncounteredSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager.html#a9db2445121acd3a2dad83d73782e054f">alexaClientSDK::avsCommon::sdkInterfaces::test::MockFocusManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_power_resource_manager.html#ad532793d8e963bf537993b31083aa24e">alexaClientSDK::avsCommon::sdkInterfaces::test::MockPowerResourceManager</a>
@@ -439,7 +488,8 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a0a55fb183dedfff1083b1da721ae0732">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_d_bus_proxy.html#a27b794218a8ebbf9cf68fd0490a14929">alexaClientSDK::bluetoothImplementations::blueZ::test::MockDBusProxy</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_encoder_context.html#accf8abf0b7c34e851b9d93ae40ebb014">alexaClientSDK::capabilityAgents::aip::test::MockEncoderContext</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#afa51dafc418e602814dee2eac35dfc2a">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#a4c7c23cca1073bac8c2268c9f26bedcc">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_misc_storage_interface.html#aa078b1031286269705cb0ddc91947148">alexaClientSDK::capabilityAgents::speakerManager::test::MockMiscStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_observer.html#a66f89a89a32ff34c1c9390a9e4eb9870">alexaClientSDK::capabilityAgents::speakerManager::test::MockObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1test_1_1_mock_gui.html#a681395eb3a567f5d8d25039d9e883b52">alexaClientSDK::capabilityAgents::templateRuntime::test::MockGui</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1certified_sender_1_1test_1_1_mock_message_storage.html#a883aa383104357ff45229933ed5516d1">alexaClientSDK::certifiedSender::test::MockMessageStorage</a>
@@ -451,26 +501,30 @@ $(function() {
 <li>MOCK_METHOD4()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#a49b7bf170c767f5f0424cfc2b77e521c">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1test_1_1_mock_attachment_reader.html#a34764cb18932f0112ef0d4223728d3f3">alexaClientSDK::avsCommon::avs::test::MockAttachmentReader</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_mock_misc_storage.html#a23df53ec537062ddd4ecc9160eaf85e2">alexaClientSDK::avsCommon::sdkInterfaces::storage::test::MockMiscStorage</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_alexa_interface_message_sender.html#a3ae62bb52c13cee833e36babd85403d7">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAlexaInterfaceMessageSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_context_manager.html#a7b470d3414f266200760231a16d114f2">alexaClientSDK::avsCommon::sdkInterfaces::test::MockContextManager</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker_manager.html#a33482fd85578ea8216369dce8b710f5e">alexaClientSDK::avsCommon::sdkInterfaces::test::MockSpeakerManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker_manager.html#a8da937de086ef75d4663a4e810d3652b">alexaClientSDK::avsCommon::sdkInterfaces::test::MockSpeakerManager</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1test_1_1_mock_http_post.html#a5ac4865929a1347dadd59e1956545f0e">alexaClientSDK::avsCommon::utils::libcurlUtils::test::MockHttpPost</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html#a2cfe6f4ec5c00d908ef8e4d54502a30b">alexaClientSDK::avsCommon::utils::logger::test::MockLogger</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_d_bus_proxy.html#ae0ebcc0fcd3740b8cdbb6b36b54318af">alexaClientSDK::bluetoothImplementations::blueZ::test::MockDBusProxy</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_capabilities_delegate_observer.html#a822a3b14a5d083183d2538a5bead19fa">alexaClientSDK::capabilitiesDelegate::test::MockCapabilitiesDelegateObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#a4d7eaf48a259e04f250ab06090d03752">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1test_1_1_mock_m_r_m_handler.html#a489a8fdb617816b6acc63735bd653c47">alexaClientSDK::capabilityAgents::mrm::test::MockMRMHandler</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_misc_storage_interface.html#a18315f2fef1ea3222ea46fe667569c55">alexaClientSDK::capabilityAgents::speakerManager::test::MockMiscStorageInterface</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1test_1_1_mock_speech_synthesizer_observer.html#a6fefb465883504822d63bb39ce7d6668">alexaClientSDK::capabilityAgents::speechSynthesizer::test::MockSpeechSynthesizerObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1captions_1_1test_1_1_mock_caption_manager.html#a9319cfe42825f4964365138b3a277d81">alexaClientSDK::captions::test::MockCaptionManager</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_observer.html#a000eaf1b3f1ba335a704f6b53e613bbf">alexaClientSDK::mediaPlayer::android::test::MockObserver</a>
 </li>
 <li>MOCK_METHOD5()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_adapter_handler.html#a85818dacf8dc7a08f0efe412662660f4">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaAdapterHandler</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_key_word_observer.html#afedf2d457a60fa0837161c69cc809b84">alexaClientSDK::acsdkKWDImplementations::test::MockKeyWordObserver</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_alexa_interface_message_sender.html#aa8dc5594f2dfc3804d5c4c8bedf11d59">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAlexaInterfaceMessageSender</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#a29a7f4deda7ab613f1ee0d22c8044d09">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
-, <a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1test_1_1_mock_key_word_observer.html#a07c74f09580ab64cca71e810a2e43ece">alexaClientSDK::kwd::test::MockKeyWordObserver</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#a6a40e4acfa02c94d1186071b8660ae93">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
 </li>
 <li>MOCK_METHOD6()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1test_1_1_mock_0164b52e36b194427b1eeba23684d844.html#a118b7e1d8c4c58d2989caa8c62fb5812">alexaClientSDK::acsdkApplicationAudioPipelineFactoryInterfaces::test::MockApplicationAudioPipelineFactory</a>
+, <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_key_store.html#ad47ca3fdcad66157fe0743782169616a">alexaClientSDK::acsdkCryptoInterfaces::test::MockKeyStore</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1endpoints_1_1test_1_1_mock_endpoint_builder.html#afff5017d35f096f4ddcaab8b730e87e0">alexaClientSDK::avsCommon::sdkInterfaces::endpoints::test::MockEndpointBuilder</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_alexa_interface_message_sender.html#a3343d6825a6ecd24f16aa8a13c58b0e5">alexaClientSDK::avsCommon::sdkInterfaces::test::MockAlexaInterfaceMessageSender</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1alexa_1_1test_1_1_mock_alexa_interface_message_sender_internal.html#a0989cc4bbca663a1eb5e538ff6f677e4">alexaClientSDK::capabilityAgents::alexa::test::MockAlexaInterfaceMessageSenderInternal</a>
@@ -479,8 +533,8 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_renderer.html#aa6a199ee4c34a8b113675e107af14656">alexaClientSDK::acsdkAlerts::test::MockRenderer</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1acsdk_application_audio_pipeline_factory_interfaces_1_1test_1_1_mock_0164b52e36b194427b1eeba23684d844.html#a891a38486c7af523e716c460de72e761">alexaClientSDK::acsdkApplicationAudioPipelineFactoryInterfaces::test::MockApplicationAudioPipelineFactory</a>
 </li>
-<li>MOCK_METHOD9()
-: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_external_media_player_adapter.html#adfc23fdb322c86016f491c8b7ebafbd8">alexaClientSDK::acsdkExternalMediaPlayer::test::MockExternalMediaPlayerAdapter</a>
+<li>MOCK_METHOD8()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_key_store.html#a15ca7c35eee1cb4040ba03e47e054d47">alexaClientSDK::acsdkCryptoInterfaces::test::MockKeyStore</a>
 </li>
 <li>MockActivityTrackerInterface()
 : <a class="el" href="classalexa_client_s_d_k_1_1afml_1_1test_1_1_mock_activity_tracker_interface.html#a4d0830df03d558d1c70578b2e4f86a6d">alexaClientSDK::afml::test::MockActivityTrackerInterface</a>
@@ -497,6 +551,9 @@ $(function() {
 <li>MockAttachmentReader()
 : <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1android_1_1test_1_1_mock_attachment_reader.html#aacf59e54fca68b28f5ab1fdcce559e54">alexaClientSDK::mediaPlayer::android::test::MockAttachmentReader</a>
 , <a class="el" href="classalexa_client_s_d_k_1_1media_player_1_1test_1_1_mock_attachment_reader.html#a8d1754f42738089d84535915ad453335">alexaClientSDK::mediaPlayer::test::MockAttachmentReader</a>
+</li>
+<li>MockAuthorizationAdapter()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_mock_authorization_adapter.html#a40f5f84c9eb766bc8da51f101eff2cf3">alexaClientSDK::acsdkAuthorization::test::MockAuthorizationAdapter</a>
 </li>
 <li>MockBluetoothDevice()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_device.html#afc8d9753cc936ed33906b3b0c37b6838">alexaClientSDK::avsCommon::sdkInterfaces::bluetooth::test::MockBluetoothDevice</a>
@@ -539,7 +596,7 @@ $(function() {
 , <a class="el" href="classalexa_client_s_d_k_1_1playlist_parser_1_1test_1_1_mock_content_fetcher.html#ab0872a90a53a69859befba2c98efcaf4">alexaClientSDK::playlistParser::test::MockContentFetcher</a>
 </li>
 <li>MockCustomerDataHandler()
-: <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_customer_data_handler.html#a3e056f4ff6936137370328d1d8a077a4">alexaClientSDK::registrationManager::test::MockCustomerDataHandler</a>
+: <a class="el" href="classalexa_client_s_d_k_1_1registration_manager_1_1test_1_1_mock_customer_data_handler.html#abd0c6dfe784a051d497310b08a9f520f">alexaClientSDK::registrationManager::test::MockCustomerDataHandler</a>
 </li>
 <li>MockDBusProxy()
 : <a class="el" href="classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_mock_d_bus_proxy.html#a81e3922371bebff17a95e59b9f07d59f">alexaClientSDK::bluetoothImplementations::blueZ::test::MockDBusProxy</a>
@@ -581,6 +638,9 @@ $(function() {
 <li>mockHandleDirectiveImmediately()
 : <a class="el" href="classalexa_client_s_d_k_1_1adsl_1_1test_1_1_mock_directive_handler.html#acc98cf6203aad39bca29dd2ae52cdce5">alexaClientSDK::adsl::test::MockDirectiveHandler</a>
 </li>
+<li>MockHandler()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_input_controller_1_1test_1_1_mock_handler.html#a873369a524b18a645965432699043a9c">alexaClientSDK::acsdkInputController::test::MockHandler</a>
+</li>
 <li>MockHTTP2Connection()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_connection.html#a1e0e58656fc9c551f51b7e9b881422c3">alexaClientSDK::avsCommon::utils::http2::test::MockHTTP2Connection</a>
 </li>
@@ -595,6 +655,9 @@ $(function() {
 </li>
 <li>MockInterfaceImpl()
 : <a class="el" href="classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_mock_interface_impl.html#a45470cd6efa9decb94b5bb18cb3104d5">alexaClientSDK::applicationUtilities::androidUtilities::test::MockInterfaceImpl&lt; InterfaceT &gt;</a>
+</li>
+<li>MockKeyWordDetector()
+: <a class="el" href="classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_key_word_detector.html#ac54a4fb1d061fd4f3c561d8db6e432dc">alexaClientSDK::acsdkKWDImplementations::test::MockKeyWordDetector</a>
 </li>
 <li>MockLogger()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1test_1_1_mock_logger.html#a61876ac7434c605a01993e39234d4689">alexaClientSDK::avsCommon::utils::logger::test::MockLogger</a>
@@ -647,6 +710,9 @@ $(function() {
 <li>mockRender()
 : <a class="el" href="classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer.html#a060f32cb2cfa7dd051bfb2d40eeed563">alexaClientSDK::acsdkNotifications::test::MockNotificationRenderer</a>
 </li>
+<li>MockRequiresShutdown()
+: <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1test_1_1_mock_requires_shutdown.html#adff64168c91948af84e84a8c009df302">alexaClientSDK::avsCommon::utils::test::MockRequiresShutdown</a>
+</li>
 <li>mockResume()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1test_1_1_mock_media_player.html#a2ba5b7d740fea4f3e85b26efb191d401">alexaClientSDK::avsCommon::utils::mediaPlayer::test::MockMediaPlayer</a>
 </li>
@@ -668,6 +734,9 @@ $(function() {
 <li>MockSpeaker()
 : <a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_speaker.html#a878479024b77c3aa7daecf54b5a97fdd">alexaClientSDK::avsCommon::sdkInterfaces::test::MockSpeaker</a>
 </li>
+<li>MockSpeakerManagerStorage()
+: <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage.html#a97b715ff49ffa13ad11ea5ca6803d068">alexaClientSDK::capabilityAgents::speakerManager::test::MockSpeakerManagerStorage</a>
+</li>
 <li>MockStateReportGenerator()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1system_1_1test_1_1_mock_state_report_generator.html#a8af7538ef1d56b2d165f1b5ae331081f">alexaClientSDK::capabilityAgents::system::test::MockStateReportGenerator</a>
 </li>
@@ -687,7 +756,7 @@ $(function() {
 : <a class="el" href="classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_transport_factory.html#a7fff22dc5ecaa8a6e74d0411b118d489">alexaClientSDK::acl::test::MockTransportFactory</a>
 </li>
 <li>ModeControllerAttributes()
-: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_attributes.html#a00a1d29b44122aa266cf0c1f04961ae8">alexaClientSDK::avsCommon::sdkInterfaces::modeController::ModeControllerAttributes</a>
+: <a class="el" href="structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1mode_controller_1_1_mode_controller_attributes.html#ac643feda2fb8adf55da3c511f06da481">alexaClientSDK::avsCommon::sdkInterfaces::modeController::ModeControllerAttributes</a>
 </li>
 <li>ModeControllerCapabilityAgentTest()
 : <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1mode_controller_1_1test_1_1_mode_controller_capability_agent_test.html#a99635026adaf846b3f237296bf073b9e">alexaClientSDK::capabilityAgents::modeController::test::ModeControllerCapabilityAgentTest</a>
@@ -727,7 +796,7 @@ $(function() {
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

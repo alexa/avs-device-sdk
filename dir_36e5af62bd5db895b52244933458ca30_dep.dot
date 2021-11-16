@@ -1,0 +1,18 @@
+digraph "/workplace/avs-device-sdk/shared/KWD/acsdkKWDInterfaces" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e410f0f5f1983efb71051e3794e71cfe {
+    graph [ bgcolor="#ddddee", pencolor="black", label="KWD" fontname="Helvetica", fontsize="10", URL="dir_e410f0f5f1983efb71051e3794e71cfe.html"]
+  subgraph clusterdir_36e5af62bd5db895b52244933458ca30 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_36e5af62bd5db895b52244933458ca30.html"];
+    dir_36e5af62bd5db895b52244933458ca30 [shape=plaintext label="acsdkKWDInterfaces"];
+    dir_db27fc115501cbcd4deb3f3a7a55bdca [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_db27fc115501cbcd4deb3f3a7a55bdca.html"];
+  }
+  }
+  dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
+  dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [shape=box label="acsdkNotifierInterfaces" fillcolor="white" style="filled" color="red" URL="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="1", labeldistance=1.5 headhref="dir_000017_000728.html"];
+  dir_db27fc115501cbcd4deb3f3a7a55bdca->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000768_000017.html"];
+  dir_db27fc115501cbcd4deb3f3a7a55bdca->dir_d3cfb0f75dbe2fd43efeb9e5a78af15e [headlabel="2", labeldistance=1.5 headhref="dir_000768_000728.html"];
+}

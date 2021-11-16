@@ -13,9 +13,9 @@ digraph "/workplace/avs-device-sdk/shared/acsdkShutdownManager/include" {
   dir_fe5a1e31b2404c649ea4321e0ec6a380 [shape=box label="acsdkNotifier" fillcolor="white" style="filled" color="red" URL="dir_fe5a1e31b2404c649ea4321e0ec6a380.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_327d2d2447c2d09118d81200f3476bc6 [shape=box label="acsdkShutdownManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_327d2d2447c2d09118d81200f3476bc6.html"];
-  dir_3f91a8538d058f6f1c751aa2632f1f34->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000618_000605.html"];
-  dir_3f91a8538d058f6f1c751aa2632f1f34->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000618_000017.html"];
-  dir_3f91a8538d058f6f1c751aa2632f1f34->dir_327d2d2447c2d09118d81200f3476bc6 [headlabel="3", labeldistance=1.5 headhref="dir_000618_000621.html"];
-  dir_13e65effb2bde530b17b3d5eefcd0266->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000605.html"];
-  dir_327d2d2447c2d09118d81200f3476bc6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000621_000017.html"];
+  dir_3f91a8538d058f6f1c751aa2632f1f34->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000742_000723.html"];
+  dir_3f91a8538d058f6f1c751aa2632f1f34->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000742_000017.html"];
+  dir_3f91a8538d058f6f1c751aa2632f1f34->dir_327d2d2447c2d09118d81200f3476bc6 [headlabel="3", labeldistance=1.5 headhref="dir_000742_000745.html"];
+  dir_13e65effb2bde530b17b3d5eefcd0266->dir_fe5a1e31b2404c649ea4321e0ec6a380 [headlabel="1", labeldistance=1.5 headhref="dir_000017_000723.html"];
+  dir_327d2d2447c2d09118d81200f3476bc6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000745_000017.html"];
 }

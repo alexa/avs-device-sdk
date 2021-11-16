@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -83,6 +83,7 @@ $(function() {
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_event_builder_8h_source.html">AVSCommon/AVS/EventBuilder.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_s_d_k_interfaces_2include_2_a_v_s_common_2_s_d_k_interfaces_2_audio_2_mixing_behavior_8h_source.html">AVSCommon/SDKInterfaces/Audio/MixingBehavior.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_generator_8h_source.html">AVSCommon/Utils/JSON/JSONGenerator.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
@@ -133,6 +134,8 @@ Functions</h2></td></tr>
 <tr class="separator:a645a37f09fddbe356d280d69f8314c87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5be2d93f02364eb06d61b98e75c406c2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a5be2d93f02364eb06d61b98e75c406c2">alexaClientSDK::acsdkAudioPlayer::submitInstanceMetric</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;segmentId, const std::string &amp;name, const std::map&lt; std::string, std::string &gt; &amp;metadata={})</td></tr>
 <tr class="separator:a5be2d93f02364eb06d61b98e75c406c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08e0f29eae93c15e5f811a72af26ca6a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a08e0f29eae93c15e5f811a72af26ca6a">alexaClientSDK::acsdkAudioPlayer::createAssociation</a> (const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder, const std::string &amp;associateFrom, const std::string &amp;associateTo)</td></tr>
+<tr class="separator:a08e0f29eae93c15e5f811a72af26ca6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a546941d95a3d266b99540ad6e20a5799"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a546941d95a3d266b99540ad6e20a5799">alexaClientSDK::acsdkAudioPlayer::messageSentSuccessfully</a> (MessageRequestObserverInterface::Status status)</td></tr>
 <tr class="separator:a546941d95a3d266b99540ad6e20a5799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaea385633cd114d991f3c01c8f5e189f"><td class="memItemLeft" align="right" valign="top">static audio::MixingBehavior&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aaea385633cd114d991f3c01c8f5e189f">alexaClientSDK::acsdkAudioPlayer::getMixingBehavior</a> (const std::string &amp;messageID, const rapidjson::Value &amp;payload, const std::shared_ptr&lt; MetricRecorderInterface &gt; &amp;metricRecorder)</td></tr>
@@ -235,6 +238,15 @@ Variables</h2></td></tr>
 <tr class="memitem:ad5b700d9b6c8217ab10ef397672c2230"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad5b700d9b6c8217ab10ef397672c2230">alexaClientSDK::acsdkAudioPlayer::CAPTION_CONTENT_KEY</a> [] = &quot;content&quot;</td></tr>
 <tr class="memdesc:ad5b700d9b6c8217ab10ef397672c2230"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key under "captionData" containing the caption content.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad5b700d9b6c8217ab10ef397672c2230">More...</a><br /></td></tr>
 <tr class="separator:ad5b700d9b6c8217ab10ef397672c2230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4da5813d6a481e6437c4c4a29ce4745"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad4da5813d6a481e6437c4c4a29ce4745">alexaClientSDK::acsdkAudioPlayer::KEY_ANALYZERS</a> [] = &quot;analyzers&quot;</td></tr>
+<tr class="memdesc:ad4da5813d6a481e6437c4c4a29ce4745"><td class="mdescLeft">&#160;</td><td class="mdescRight">The "analyzers" key used to retrieve analyzer data from directive.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad4da5813d6a481e6437c4c4a29ce4745">More...</a><br /></td></tr>
+<tr class="separator:ad4da5813d6a481e6437c4c4a29ce4745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2921d20c180e88ef07b0f9f3ff04d1e5"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a2921d20c180e88ef07b0f9f3ff04d1e5">alexaClientSDK::acsdkAudioPlayer::KEY_ANALYZERS_INTERFACE</a> [] = &quot;interface&quot;</td></tr>
+<tr class="memdesc:a2921d20c180e88ef07b0f9f3ff04d1e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to retrieve the audio analyzer name from directive.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a2921d20c180e88ef07b0f9f3ff04d1e5">More...</a><br /></td></tr>
+<tr class="separator:a2921d20c180e88ef07b0f9f3ff04d1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5dba090799b24ad873e6e73d0c1331b"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab5dba090799b24ad873e6e73d0c1331b">alexaClientSDK::acsdkAudioPlayer::KEY_ANALYZERS_ENABLED</a> [] = &quot;enabled&quot;</td></tr>
+<tr class="memdesc:ab5dba090799b24ad873e6e73d0c1331b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key used to retrieve the audio analyzer enabled state from directive.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ab5dba090799b24ad873e6e73d0c1331b">More...</a><br /></td></tr>
+<tr class="separator:ab5dba090799b24ad873e6e73d0c1331b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a9014b9832e28914649842150e9f0f3"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a7a9014b9832e28914649842150e9f0f3">alexaClientSDK::acsdkAudioPlayer::STUTTER_DURATION_KEY</a> [] = &quot;stutterDurationInMilliseconds&quot;</td></tr>
 <tr class="memdesc:a7a9014b9832e28914649842150e9f0f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The stutter key used in <code><a class="el" href="classalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_player.html">AudioPlayer</a></code> events.  <a href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a7a9014b9832e28914649842150e9f0f3">More...</a><br /></td></tr>
 <tr class="separator:a7a9014b9832e28914649842150e9f0f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -331,16 +343,26 @@ Variables</h2></td></tr>
 <tr class="separator:a07bf675a76c8a3d938258d049854e051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcc487c9959b52c45e327dc346d019dc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#afcc487c9959b52c45e327dc346d019dc">alexaClientSDK::acsdkAudioPlayer::METRIC_KEY_ERROR_RECOVERABLE</a> = &quot;error_recoverable&quot;</td></tr>
 <tr class="separator:afcc487c9959b52c45e327dc346d019dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae43a47edd4b5b1b05e88574dc5a8ca46"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ae43a47edd4b5b1b05e88574dc5a8ca46">alexaClientSDK::acsdkAudioPlayer::METRIC_KEY_ASSOCIATE_FROM</a> = &quot;association_from_id&quot;</td></tr>
+<tr class="separator:ae43a47edd4b5b1b05e88574dc5a8ca46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b1974e734cf20526fbcbebeeaae3075"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a8b1974e734cf20526fbcbebeeaae3075">alexaClientSDK::acsdkAudioPlayer::METRIC_KEY_ASSOCIATE_TO</a> = &quot;association_to_id&quot;</td></tr>
+<tr class="separator:a8b1974e734cf20526fbcbebeeaae3075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2d49631f9a6dbcd22a8416409c47195"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ae2d49631f9a6dbcd22a8416409c47195">alexaClientSDK::acsdkAudioPlayer::METRIC_INSTANCE_RECEIVE_DIRECTIVE</a> = &quot;ReceiveDirective&quot;</td></tr>
 <tr class="separator:ae2d49631f9a6dbcd22a8416409c47195"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78b75632ea0d1dbe5e70e25c8031334f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a78b75632ea0d1dbe5e70e25c8031334f">alexaClientSDK::acsdkAudioPlayer::METRIC_INSTANCE_STATE_CHANGED</a> = &quot;PlaybackStateChanged&quot;</td></tr>
 <tr class="separator:a78b75632ea0d1dbe5e70e25c8031334f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79be7f18264a6643ead656656fc4659"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aa79be7f18264a6643ead656656fc4659">alexaClientSDK::acsdkAudioPlayer::METRIC_INSTANCE_FIRST_BYTE_READ</a> = &quot;FirstAudioByteRead&quot;</td></tr>
+<tr class="separator:aa79be7f18264a6643ead656656fc4659"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4934c9e12d315940b95121bcf5629458"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a4934c9e12d315940b95121bcf5629458">alexaClientSDK::acsdkAudioPlayer::METRIC_META_KEY_NAMESPACE</a> = &quot;namespace&quot;</td></tr>
 <tr class="separator:a4934c9e12d315940b95121bcf5629458"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ac16af4892041aad9822131f95f66b0"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a8ac16af4892041aad9822131f95f66b0">alexaClientSDK::acsdkAudioPlayer::METRIC_META_KEY_NAME</a> = &quot;name&quot;</td></tr>
 <tr class="separator:a8ac16af4892041aad9822131f95f66b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af30eda58022185b33c2d7b77521ce07a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#af30eda58022185b33c2d7b77521ce07a">alexaClientSDK::acsdkAudioPlayer::METRIC_META_KEY_ISPREPARE_BOOL</a> = &quot;isPreparePhase&quot;</td></tr>
 <tr class="separator:af30eda58022185b33c2d7b77521ce07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a974c9ef056a8b625d9f5eaade8062f0a"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#a974c9ef056a8b625d9f5eaade8062f0a">alexaClientSDK::acsdkAudioPlayer::METRIC_INSTANCE_ACQUIRE_MEDIA_PLAYER_START</a> = &quot;AcquireMediaPlayerStart&quot;</td></tr>
+<tr class="separator:a974c9ef056a8b625d9f5eaade8062f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acffe3a87dc303e9832142662f0bb2af5"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#acffe3a87dc303e9832142662f0bb2af5">alexaClientSDK::acsdkAudioPlayer::METRIC_INSTANCE_ACQUIRE_MEDIA_PLAYER_FINISH</a> = &quot;AcquireMediaPlayerFinish&quot;</td></tr>
+<tr class="separator:acffe3a87dc303e9832142662f0bb2af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
@@ -372,7 +394,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

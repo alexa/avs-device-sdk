@@ -12,6 +12,6 @@ digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorizationInterfac
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_ebd8ea06bd6775daf5a25f413a4a4aa2 [shape=box label="acsdkRegistrationManagerInterfaces" fillcolor="white" style="filled" color="red" URL="dir_ebd8ea06bd6775daf5a25f413a4a4aa2.html"];
-  dir_73f9c219508e92a12acd7900d076a251->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000506_000017.html"];
-  dir_73f9c219508e92a12acd7900d076a251->dir_ebd8ea06bd6775daf5a25f413a4a4aa2 [headlabel="1", labeldistance=1.5 headhref="dir_000506_000484.html"];
+  dir_73f9c219508e92a12acd7900d076a251->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000604_000017.html"];
+  dir_73f9c219508e92a12acd7900d076a251->dir_ebd8ea06bd6775daf5a25f413a4a4aa2 [headlabel="1", labeldistance=1.5 headhref="dir_000604_000559.html"];
 }

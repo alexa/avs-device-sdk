@@ -1,0 +1,14 @@
+digraph "/workplace/avs-device-sdk/shared/KWD/acsdkKWDImplementations/include/acsdkKWDImplementations/KWDNotifierFactories.h"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node36 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWDImplementations\l/include/acsdkKWDImplementations\l/KWDNotifierFactories.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="/workplace/avs-device\l-sdk/applications/acsdkSensory\lAdapter/acsdkKWD/src/KWDComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$applications_2acsdk_sensory_adapter_2acsdk_k_w_d_2src_2_k_w_d_component_8cpp.html"];
+  Node36 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="/workplace/avs-device\l-sdk/applications/acsdkSensory\lAdapter/src/SensoryKeywordDetector.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sensory_keyword_detector_8cpp.html"];
+  Node36 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="/workplace/avs-device\l-sdk/applications/acsdkSensory\lAdapter/test/SensoryKeywordDetector\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sensory_keyword_detector_test_8cpp.html"];
+  Node36 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="/workplace/avs-device\l-sdk/shared/KWD/acsdkKWDImplementations\l/src/KWDNotifierFactories.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_k_w_d_notifier_factories_8cpp.html"];
+}

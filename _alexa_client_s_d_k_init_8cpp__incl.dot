@@ -125,6 +125,5 @@ digraph "/workplace/avs-device-sdk/AVSCommon/AVS/src/AlexaClientSDKInit.cpp"
   Node39 [label="utility",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node38 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node40 [label="AVSCommon/Utils/SDKVersion.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_version_8h.html"];
-  Node40 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="AVSCommon/Utils/SDKVersion.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

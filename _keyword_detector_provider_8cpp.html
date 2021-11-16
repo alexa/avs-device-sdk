@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AlexaClientSDK: /workplace/avs-device-sdk/KWD/KWDProvider/src/KeywordDetectorProvider.cpp File Reference</title>
+<title>AlexaClientSDK: /workplace/avs-device-sdk/shared/KWD/acsdkKWDProvider/src/KeywordDetectorProvider.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -61,27 +61,110 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d0ae40f34093660421d9f00fd3d110f5.html">KWD</a></li><li class="navelem"><a class="el" href="dir_c9a193c1c2edbf088be64b91af50d436.html">KWDProvider</a></li><li class="navelem"><a class="el" href="dir_75b03e7b1e301cc37138f8f5b30006c4.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_9982052f7ce695d12571567315b2fafa.html">shared</a></li><li class="navelem"><a class="el" href="dir_e410f0f5f1983efb71051e3794e71cfe.html">KWD</a></li><li class="navelem"><a class="el" href="dir_c437527fd62637636a68c5be7de238c6.html">acsdkKWDProvider</a></li><li class="navelem"><a class="el" href="dir_4bd23ccde07e1e77862fb19b3e057556.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">KeywordDetectorProvider.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="_keyword_detector_provider_8h_source.html">KWDProvider/KeywordDetectorProvider.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
+<code>#include &quot;<a class="el" href="_keyword_detector_provider_8h_source.html">KWDProvider/KeywordDetectorProvider.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for KeywordDetectorProvider.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="_keyword_detector_provider_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2_k_w_d_2_k_w_d_provider_2src_2_keyword_detector_provider_8cpp" alt=""/></div>
-<map name="_2workplace_2avs-device-sdk_2_k_w_d_2_k_w_d_provider_2src_2_keyword_detector_provider_8cpp" id="_2workplace_2avs-device-sdk_2_k_w_d_2_k_w_d_provider_2src_2_keyword_detector_provider_8cpp">
+<div class="center"><img src="_keyword_detector_provider_8cpp__incl.png" border="0" usemap="#_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_provider_2src_2_keyword_detector_provider_8cpp" alt=""/></div>
+<map name="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_provider_2src_2_keyword_detector_provider_8cpp" id="_2workplace_2avs-device-sdk_2shared_2_k_w_d_2acsdk_k_w_d_provider_2src_2_keyword_detector_provider_8cpp">
 </map>
 </div>
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_keyword_detector_provider_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td></tr>
+<tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ab85226a738f96d6cb13b16f78fa9e2c9"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_keyword_detector_provider_8cpp.html#ab85226a738f96d6cb13b16f78fa9e2c9">TAG</a> {&quot;KeywordDetectorProvider&quot;}</td></tr>
+<tr class="memdesc:ab85226a738f96d6cb13b16f78fa9e2c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="#ab85226a738f96d6cb13b16f78fa9e2c9">More...</a><br /></td></tr>
+<tr class="separator:ab85226a738f96d6cb13b16f78fa9e2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae82842545645fd6a0e2e9115adb23a64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider.html#a91eb5f0921fb17ec543c79e9672beb2f">KeywordDetectorProvider::KWDCreateMethod</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_keyword_detector_provider_8cpp.html#ae82842545645fd6a0e2e9115adb23a64">m_kwdCreateFunction</a></td></tr>
+<tr class="separator:ae82842545645fd6a0e2e9115adb23a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8bc9ca8e55a0ebf538e46e28bf26262">&#9670;&nbsp;</a></span>LX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">event</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a LogEntry using this file's TAG and the specified event string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">The</td><td>event string for this <code>LogEntry</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ae82842545645fd6a0e2e9115adb23a64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae82842545645fd6a0e2e9115adb23a64">&#9670;&nbsp;</a></span>m_kwdCreateFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider.html#a91eb5f0921fb17ec543c79e9672beb2f">KeywordDetectorProvider::KWDCreateMethod</a> m_kwdCreateFunction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab85226a738f96d6cb13b16f78fa9e2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab85226a738f96d6cb13b16f78fa9e2c9">&#9670;&nbsp;</a></span>TAG</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string TAG {&quot;KeywordDetectorProvider&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String to identify log entries originating from this file. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

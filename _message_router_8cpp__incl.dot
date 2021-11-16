@@ -115,7 +115,7 @@ digraph "/workplace/avs-device-sdk/ACL/src/Transport/MessageRouter.cpp"
   Node40 [label="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_shutdown_notifier_interface_8h.html"];
   Node40 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node40 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 [label="acsdkNotifierInterfaces\l/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
+  Node41 [label="acsdkNotifierInterfaces\l/internal/NotifierInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifier_interface_8h.html"];
   Node41 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node41 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node40 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

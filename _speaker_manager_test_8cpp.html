@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -74,7 +74,7 @@ $(function() {
 <div class="title">SpeakerManagerTest.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
+<div class="textblock"><code>#include &lt;future&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;set&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -92,9 +92,9 @@ $(function() {
 <code>#include &lt;gmock/gmock.h&gt;</code><br />
 <code>#include &lt;gtest/gtest.h&gt;</code><br />
 <code>#include &lt;rapidjson/document.h&gt;</code><br />
-<code>#include &lt;rapidjson/error/en.h&gt;</code><br />
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="_speaker_manager_storage_interface_8h_source.html">SpeakerManager/SpeakerManagerStorageInterface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_speaker_manager_8h_source.html">SpeakerManager/SpeakerManager.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SpeakerManagerTest.cpp:</div>
@@ -107,6 +107,8 @@ Include dependency graph for SpeakerManagerTest.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_observer.html">alexaClientSDK::capabilityAgents::speakerManager::test::MockObserver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage.html">alexaClientSDK::capabilityAgents::speakerManager::test::MockSpeakerManagerStorage</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_test.html">alexaClientSDK::capabilityAgents::speakerManager::test::SpeakerManagerTest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,6 +196,10 @@ Functions</h2></td></tr>
 <tr class="separator:a639d5bae5ae0bd0e113085200efc3911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44cb5cc55bcbf019f992a9a570f9a2a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#a44cb5cc55bcbf019f992a9a570f9a2a2">alexaClientSDK::capabilityAgents::speakerManager::test::TEST_P</a> (SpeakerManagerTest, test_setVolumeDirectiveWhenMuted)</td></tr>
 <tr class="separator:a44cb5cc55bcbf019f992a9a570f9a2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac119f984817c8cb7f67211a6300554cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#ac119f984817c8cb7f67211a6300554cd">alexaClientSDK::capabilityAgents::speakerManager::test::TEST_P</a> (SpeakerManagerTest, test_getSpeakerConfigDefaults)</td></tr>
+<tr class="separator:ac119f984817c8cb7f67211a6300554cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aace27bd6dfed418588bdd99a1e8be1bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test.html#aace27bd6dfed418588bdd99a1e8be1bf">alexaClientSDK::capabilityAgents::speakerManager::test::TEST_P</a> (SpeakerManagerTest, test_getSpeakerConfigFromStorage)</td></tr>
+<tr class="separator:aace27bd6dfed418588bdd99a1e8be1bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -214,7 +220,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

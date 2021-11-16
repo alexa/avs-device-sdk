@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['base64url',['Base64Url',['../classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_base64_url.html',1,'alexaClientSDK::acsdkAssets::common']]],
   ['basestreamsource',['BaseStreamSource',['../classalexa_client_s_d_k_1_1media_player_1_1_base_stream_source.html',1,'alexaClientSDK::mediaPlayer']]],
   ['baseuplcalculator',['BaseUplCalculator',['../classalexa_client_s_d_k_1_1metrics_1_1implementations_1_1_base_upl_calculator.html',1,'alexaClientSDK::metrics::implementations']]],
   ['basicdeviceconnectionrule',['BasicDeviceConnectionRule',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_basic_device_connection_rule.html',1,'alexaClientSDK::acsdkBluetooth']]],
@@ -19,6 +20,7 @@ var searchData=
   ['bluetootheventstate',['BluetoothEventState',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth_event_state.html',1,'alexaClientSDK::acsdkBluetooth']]],
   ['bluetootheventtypehash',['BluetoothEventTypeHash',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1bluetooth_1_1_bluetooth_event_type_hash.html',1,'alexaClientSDK::avsCommon::utils::bluetooth']]],
   ['bluetoothhostcontrollerinterface',['BluetoothHostControllerInterface',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_host_controller_interface.html',1,'alexaClientSDK::avsCommon::sdkInterfaces::bluetooth']]],
+  ['bluetoothlocalinterface',['BluetoothLocalInterface',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_local_interface.html',1,'alexaClientSDK::acsdkBluetoothInterfaces']]],
   ['bluetoothmediainputtransformer',['BluetoothMediaInputTransformer',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth_media_input_transformer.html',1,'alexaClientSDK::acsdkBluetooth']]],
   ['bluetoothmediainputtransformertest',['BluetoothMediaInputTransformerTest',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_bluetooth_media_input_transformer_test.html',1,'alexaClientSDK::acsdkBluetooth::test']]],
   ['bluetoothnotifier',['BluetoothNotifier',['../classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_bluetooth_notifier.html',1,'alexaClientSDK::acsdkBluetooth']]],

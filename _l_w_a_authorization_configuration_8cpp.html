@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -67,7 +67,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -79,8 +78,10 @@ $(function() {
 <code>#include &lt;rapidjson/stringbuffer.h&gt;</code><br />
 <code>#include &lt;rapidjson/writer.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="_device_info_8h_source.html">AVSCommon/Utils/DeviceInfo.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="_l_w_a_authorization_configuration_8h_source.html">acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="_l_w_a_authorization_configuration_8h_source.html">acsdkAuthorization/LWA/LWAAuthorizationConfiguration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_authorization_2acsdk_authorization_2private_include_2acsdk_authorization_2private_2_logging_8h_source.html">acsdkAuthorization/private/Logging.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for LWAAuthorizationConfiguration.cpp:</div>
 <div class="dyncontent">
@@ -98,11 +99,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html">alexaClientSDK::acsdkAuthorization::lwa</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_w_a_authorization_configuration_8cpp.html#ad8bc9ca8e55a0ebf538e46e28bf26262">LX</a>(event)&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td></tr>
-<tr class="separator:ad8bc9ca8e55a0ebf538e46e28bf26262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -136,6 +132,9 @@ Variables</h2></td></tr>
 <tr class="memitem:acf533738463a59e89be684d51256bd7e"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#acf533738463a59e89be684d51256bd7e">alexaClientSDK::acsdkAuthorization::lwa::CONFIG_VALUE_DEFAULT_LOCALE</a> = &quot;en-US&quot;</td></tr>
 <tr class="memdesc:acf533738463a59e89be684d51256bd7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default value for settings.locale.  <a href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#acf533738463a59e89be684d51256bd7e">More...</a><br /></td></tr>
 <tr class="separator:acf533738463a59e89be684d51256bd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29f03cac5fd6db112677ed69fecbca2c"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a29f03cac5fd6db112677ed69fecbca2c">alexaClientSDK::acsdkAuthorization::lwa::PRIMARY_LOCALE_INDEX</a> = 0</td></tr>
+<tr class="memdesc:a29f03cac5fd6db112677ed69fecbca2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for primary locale in a multilingual locales vector.  <a href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#a29f03cac5fd6db112677ed69fecbca2c">More...</a><br /></td></tr>
+<tr class="separator:a29f03cac5fd6db112677ed69fecbca2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad0246cf7e296eb0437416ff0d49074b"><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#aad0246cf7e296eb0437416ff0d49074b">alexaClientSDK::acsdkAuthorization::lwa::JSON_KEY_ALEXA_ALL</a> [] = &quot;alexa:all&quot;</td></tr>
 <tr class="memdesc:aad0246cf7e296eb0437416ff0d49074b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key for alexa:all values in JSON sent to <code>LWA</code>.  <a href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#aad0246cf7e296eb0437416ff0d49074b">More...</a><br /></td></tr>
 <tr class="separator:aad0246cf7e296eb0437416ff0d49074b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,37 +169,11 @@ Variables</h2></td></tr>
 <tr class="memdesc:ae27a405a41032c9752dc1e3c3e496da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default for configured base URL for <code>LWA</code> requests.  <a href="namespacealexa_client_s_d_k_1_1acsdk_authorization_1_1lwa.html#ae27a405a41032c9752dc1e3c3e496da3">More...</a><br /></td></tr>
 <tr class="separator:ae27a405a41032c9752dc1e3c3e496da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ad8bc9ca8e55a0ebf538e46e28bf26262"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8bc9ca8e55a0ebf538e46e28bf26262">&#9670;&nbsp;</a></span>LX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LX</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">event</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger_1_1_log_entry.html">alexaClientSDK::avsCommon::utils::logger::LogEntry</a>(<a class="el" href="_locale_wake_words_setting_8cpp.html#a72ffeb92c6ff57009a3ecb9fcea7921e">TAG</a>, event)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Create a LogEntry using this file's TAG and the specified event string.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">The</td><td>event string for this <code>LogEntry</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

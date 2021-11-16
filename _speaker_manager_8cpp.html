@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -85,6 +85,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_shutdown_notifier_interface_8h_source.html">acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_capability_configuration_8h_source.html">AVSCommon/AVS/CapabilityConfiguration.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_speaker_constants_8h_source.html">AVSCommon/AVS/SpeakerConstants/SpeakerConstants.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_misc_storage_interface_8h_source.html">AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_j_s_o_n_utils_8h_source.html">AVSCommon/Utils/JSON/JSONUtils.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_logger_8h_source.html">AVSCommon/Utils/Logger/Logger.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_metrics_8h_source.html">AVSCommon/Utils/Metrics.h</a>&gt;</code><br />
@@ -92,6 +93,7 @@ $(function() {
 <code>#include &lt;<a class="el" href="_metric_event_builder_8h_source.html">AVSCommon/Utils/Metrics/MetricEventBuilder.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="_speaker_manager_constants_8h_source.html">SpeakerManager/SpeakerManagerConstants.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_speaker_manager_8h_source.html">SpeakerManager/SpeakerManager.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_speaker_manager_misc_storage_8h_source.html">SpeakerManager/SpeakerManagerMiscStorage.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for SpeakerManager.cpp:</div>
 <div class="dyncontent">
@@ -148,12 +150,6 @@ Variables</h2></td></tr>
 <tr class="memitem:a90a7290dd751d5a441bfc0073f8a828f"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a90a7290dd751d5a441bfc0073f8a828f">alexaClientSDK::capabilityAgents::speakerManager::TAG</a> {&quot;SpeakerManager&quot;}</td></tr>
 <tr class="memdesc:a90a7290dd751d5a441bfc0073f8a828f"><td class="mdescLeft">&#160;</td><td class="mdescRight">String to identify log entries originating from this file.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a90a7290dd751d5a441bfc0073f8a828f">More...</a><br /></td></tr>
 <tr class="separator:a90a7290dd751d5a441bfc0073f8a828f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f83881f9acd476313c652f53b57d7cc"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a1f83881f9acd476313c652f53b57d7cc">alexaClientSDK::capabilityAgents::speakerManager::SPEAKERMANAGER_CONFIGURATION_ROOT_KEY</a> = &quot;speakerManagerCapabilityAgent&quot;</td></tr>
-<tr class="memdesc:a1f83881f9acd476313c652f53b57d7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the root of speaker manager configuration.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a1f83881f9acd476313c652f53b57d7cc">More...</a><br /></td></tr>
-<tr class="separator:a1f83881f9acd476313c652f53b57d7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18b0fbb623c22765693c76224c360f83"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a18b0fbb623c22765693c76224c360f83">alexaClientSDK::capabilityAgents::speakerManager::SPEAKERMANAGER_MIN_UNMUTE_VOLUME_KEY</a> = &quot;minUnmuteVolume&quot;</td></tr>
-<tr class="memdesc:a18b0fbb623c22765693c76224c360f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">The key in our config file to find the minUnmuteVolume value.  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a18b0fbb623c22765693c76224c360f83">More...</a><br /></td></tr>
-<tr class="separator:a18b0fbb623c22765693c76224c360f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fed8d0395ddbdd15fc8dcecad068d06"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a1fed8d0395ddbdd15fc8dcecad068d06">alexaClientSDK::capabilityAgents::speakerManager::SPEAKER_MANAGER_METRIC_PREFIX</a> = &quot;SPEAKER_MANAGER-&quot;</td></tr>
 <tr class="memdesc:a1fed8d0395ddbdd15fc8dcecad068d06"><td class="mdescLeft">&#160;</td><td class="mdescRight">prefix for metrics emitted from the <a class="el" href="classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager.html">SpeakerManager</a> CA  <a href="namespacealexa_client_s_d_k_1_1capability_agents_1_1speaker_manager.html#a1fed8d0395ddbdd15fc8dcecad068d06">More...</a><br /></td></tr>
 <tr class="separator:a1fed8d0395ddbdd15fc8dcecad068d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,7 +184,7 @@ Variables</h2></td></tr>
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>

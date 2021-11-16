@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="avs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">AlexaClientSDK
-   &#160;<span id="projectnumber">1.25.0</span>
+   &#160;<span id="projectnumber">1.26.0</span>
    </div>
    <div id="projectbrief">A cross-platform, modular SDK for interacting with the Alexa Voice Service</div>
   </td>
@@ -84,10 +84,14 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a426469a778d77d86334ab3e380034aa0"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_interfaces.html#a426469a778d77d86334ab3e380034aa0">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a935ab5192b09eefb2f94451ce3be6298">AlertObserverInterface::State</a> &amp;state)</td></tr>
 <tr class="separator:a426469a778d77d86334ab3e380034aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a270dfd166789ed64cc6a655db5059a"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_interfaces.html#a7a270dfd166789ed64cc6a655db5059a">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">AlertObserverInterface::Type</a> &amp;type)</td></tr>
+<tr class="separator:a7a270dfd166789ed64cc6a655db5059a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4645c65d23b23514f90f0f94b30fcd7c"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacealexa_client_s_d_k_1_1acsdk_alerts_interfaces.html#a4645c65d23b23514f90f0f94b30fcd7c">operator&lt;&lt;</a> (std::ostream &amp;stream, const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">AlertObserverInterface::OriginalTime</a> &amp;originalTime)</td></tr>
+<tr class="separator:a4645c65d23b23514f90f0f94b30fcd7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a426469a778d77d86334ab3e380034aa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a426469a778d77d86334ab3e380034aa0">&#9670;&nbsp;</a></span>operator<<()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a426469a778d77d86334ab3e380034aa0">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,11 +135,101 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a7a270dfd166789ed64cc6a655db5059a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a270dfd166789ed64cc6a655db5059a">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::acsdkAlertsInterfaces::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html#a0409732175658d670f014505cc242660">AlertObserverInterface::Type</a> &amp;&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write a <code>Type</code> value to an <code>ostream</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">state</td><td>The <code>Type</code> value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
+<a id="a4645c65d23b23514f90f0f94b30fcd7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4645c65d23b23514f90f0f94b30fcd7c">&#9670;&nbsp;</a></span>operator<<() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; alexaClientSDK::acsdkAlertsInterfaces::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface_1_1_original_time.html">AlertObserverInterface::OriginalTime</a> &amp;&#160;</td>
+          <td class="paramname"><em>originalTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Write a <code>OriginalTime</code> value to an <code>ostream</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>The stream to write the value to. </td></tr>
+    <tr><td class="paramname">state</td><td>The <code>OriginalTime</code> value to write to the <code>ostream</code> as a string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>ostream</code> that was passed in and written to. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
   <body>
     <p style="text-align:left;">
-      AlexaClientSDK 1.25.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+      AlexaClientSDK 1.26.0 - Copyright 2016-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
       <span style="float:right;">
 	Licensed under the <a HREF=http://aws.amazon.com/apache2.0/>Apache License, Version 2.0</a>
       </span>
