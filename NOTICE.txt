@@ -59,12 +59,12 @@ of the Amazon Software License is located at:
 ALEXA AUDIO ASSETS
 ******************
 
-Copyright 2018 Amazon.com, Inc. or its affiliates (“Amazon”).
+Copyright 2019-2022 Amazon.com, Inc. or its affiliates ("Amazon").
 All Rights Reserved.
 
-These materials are licensed to you as "Program Materials" under the Program
-Materials License Agreement, which is currently available at
-https://developer.amazon.com/support/legal/pml.
+These materials are licensed to you as “AVS Materials" under the Amazon
+Developer Services Agreement, which is currently available at
+https://developer.amazon.com/support/legal/da
 
 **********************
 THIRD PARTY COMPONENTS
