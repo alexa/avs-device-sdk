@@ -1,13 +1,14 @@
 digraph "alexaClientSDK::acl::test::MockMessageRouter"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node4 [label="alexaClientSDK::acl\l::test::MockMessageRouter",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::acl\l::MessageRouterInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html"];
-  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageSender\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html",tooltip="This specifies an interface to send a message. "];
-  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
+  Node1 [label="alexaClientSDK::acl\l::test::MockMessageRouter",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acl\l::MessageRouterInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acl_1_1_message_router_interface.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::MessageSender\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_message_sender_interface.html",tooltip="This specifies an interface to send a message."];
+  Node4 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html",tooltip=" "];
 }

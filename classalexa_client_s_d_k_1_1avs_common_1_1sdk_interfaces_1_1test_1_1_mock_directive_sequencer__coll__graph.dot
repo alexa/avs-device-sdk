@@ -1,10 +1,11 @@
 digraph "alexaClientSDK::avsCommon::sdkInterfaces::test::MockDirectiveSequencer"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node3 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockDirectiveSequencer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DirectiveSequencer\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html"];
-  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
+  Node1 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockDirectiveSequencer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Mock class that implements the DirectiveSequencer."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DirectiveSequencer\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_directive_sequencer_interface.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html",tooltip=" "];
 }

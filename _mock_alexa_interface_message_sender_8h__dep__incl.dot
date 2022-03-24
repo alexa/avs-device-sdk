@@ -1,16 +1,17 @@
 digraph "/workplace/avs-device-sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockAlexaInterfaceMessageSender.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node31 [label="/workplace/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockAlexaInterfaceMessageSender.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node31 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node32 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/Alexa/test/AlexaInterfaceCapability\lAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alexa_interface_capability_agent_test_8cpp.html"];
-  Node31 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node33 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ModeController/test/ModeController\lCapabilityAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mode_controller_capability_agent_test_8cpp.html"];
-  Node31 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node34 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PowerController/test\l/PowerControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_controller_capability_agent_test_8cpp.html"];
-  Node31 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node35 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/RangeController/test\l/RangeControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_range_controller_capability_agent_test_8cpp.html"];
-  Node31 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node36 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/test\l/ToggleControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_toggle_controller_capability_agent_test_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockAlexaInterfaceMessageSender.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/Alexa/test/AlexaInterfaceCapability\lAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_alexa_interface_capability_agent_test_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ModeController/test/ModeController\lCapabilityAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_mode_controller_capability_agent_test_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PowerController/test\l/PowerControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_power_controller_capability_agent_test_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/RangeController/test\l/RangeControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_range_controller_capability_agent_test_8cpp.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/ToggleController/test\l/ToggleControllerCapabilityAgent\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_toggle_controller_capability_agent_test_8cpp.html",tooltip=" "];
 }

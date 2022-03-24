@@ -1,20 +1,21 @@
 digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node58 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/PooledMediaPlayerFactory.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node58 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node59 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lPlayerFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pooled_media_player_factory_8cpp.html"];
-  Node58 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node60 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lResourceProvider.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pooled_media_resource_provider_8cpp.html"];
-  Node58 -> Node61 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node61 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/test/PooledMediaPlayerFactory\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pooled_media_player_factory_test_8cpp.html"];
-  Node58 -> Node62 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node62 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_test_8cpp.html"];
-  Node58 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node63 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleApplication.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8h.html"];
-  Node63 -> Node64 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node64 [label="/workplace/avs-device\l-sdk/SampleApp/src/main.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8cpp.html"];
-  Node63 -> Node65 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node65 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/MediaPlayer/PooledMediaPlayerFactory.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lPlayerFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pooled_media_player_factory_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lResourceProvider.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pooled_media_resource_provider_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/test/PooledMediaPlayerFactory\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_pooled_media_player_factory_test_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_audio_player_test_8cpp.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/SampleApplication.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8h.html",tooltip=" "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="/workplace/avs-device\l-sdk/SampleApp/src/main.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_8cpp.html",tooltip=" "];
+  Node6 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html",tooltip=" "];
 }

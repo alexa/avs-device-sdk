@@ -1,19 +1,24 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node83 [label="TestWithParam",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node83 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="alexaClientSDK::acsdkAuthorization\l::lwa::test::LWAAuthorizationAdapterTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_l_w_a_authorization_adapter_test.html"];
-  Node83 -> Node85 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node85 [label="alexaClientSDK::acsdkAuthorization\l::test::AuthorizationManagerTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_authorization_manager_test.html"];
-  Node83 -> Node86 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node86 [label="alexaClientSDK::acsdkEqualizer\lInterfaces::test::EqualizerStorage\lInterfaceTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_equalizer_storage_interface_test.html"];
-  Node83 -> Node87 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node87 [label="alexaClientSDK::capability\lAgents::speakerManager\l::test::SpeakerManagerMiscStorageTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_misc_storage_test.html"];
-  Node83 -> Node88 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node88 [label="alexaClientSDK::capability\lAgents::speakerManager\l::test::SpeakerManagerTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_test.html"];
-  Node83 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node89 [label="alexaClientSDK::mediaPlayer\l::test::MediaPlayerTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_media_player_test.html"];
+  Node81 [label="TestWithParam",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node81 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="alexaClientSDK::acsdkAuthorization\l::lwa::test::LWAAuthorizationAdapterTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_l_w_a_authorization_adapter_test.html",tooltip=" "];
+  Node81 -> Node83 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 [label="alexaClientSDK::acsdkAuthorization\l::test::AuthorizationManagerTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_authorization_manager_test.html",tooltip=" "];
+  Node81 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="alexaClientSDK::acsdkCrypto\l::test::MapCipher",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_crypto_1_1test_1_1_map_cipher.html",tooltip=" "];
+  Node81 -> Node85 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node85 [label="alexaClientSDK::acsdkCrypto\l::test::MapDigest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_crypto_1_1test_1_1_map_digest.html",tooltip=" "];
+  Node81 -> Node86 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="alexaClientSDK::acsdkEqualizer\lInterfaces::test::EqualizerStorage\lInterfaceTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_equalizer_storage_interface_test.html",tooltip=" "];
+  Node81 -> Node87 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node87 [label="alexaClientSDK::capability\lAgents::speakerManager\l::test::SpeakerManagerMiscStorageTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_misc_storage_test.html",tooltip=" "];
+  Node81 -> Node88 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node88 [label="alexaClientSDK::capability\lAgents::speakerManager\l::test::SpeakerManagerTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_speaker_manager_test.html",tooltip=" "];
+  Node81 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node89 [label="alexaClientSDK::mediaPlayer\l::test::MediaPlayerTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1media_player_1_1test_1_1_media_player_test.html",tooltip=" "];
 }

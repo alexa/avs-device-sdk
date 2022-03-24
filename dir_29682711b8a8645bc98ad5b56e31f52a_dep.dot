@@ -8,6 +8,6 @@ digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorization/private
   }
   dir_d29c5f5a2915d6c5388c9daae4f109c7 [shape=box label="Storage" fillcolor="white" style="filled" color="red" URL="dir_d29c5f5a2915d6c5388c9daae4f109c7.html"];
   dir_72f2367c10fd2c46da13e851c6b1e25f [shape=box label="Properties" fillcolor="white" style="filled" color="red" URL="dir_72f2367c10fd2c46da13e851c6b1e25f.html"];
-  dir_29682711b8a8645bc98ad5b56e31f52a->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="2", labeldistance=1.5 headhref="dir_000595_000784.html"];
-  dir_29682711b8a8645bc98ad5b56e31f52a->dir_72f2367c10fd2c46da13e851c6b1e25f [headlabel="2", labeldistance=1.5 headhref="dir_000595_000590.html"];
+  dir_29682711b8a8645bc98ad5b56e31f52a->dir_d29c5f5a2915d6c5388c9daae4f109c7 [headlabel="2", labeldistance=1.5 headhref="dir_000596_000793.html"];
+  dir_29682711b8a8645bc98ad5b56e31f52a->dir_72f2367c10fd2c46da13e851c6b1e25f [headlabel="2", labeldistance=1.5 headhref="dir_000596_000591.html"];
 }

@@ -1,27 +1,28 @@
 digraph "alexaClientSDK::avsCommon::sdkInterfaces::DialogUXStateObserverInterface"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DialogUXState\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html"];
+  Node1 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DialogUXState\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="A dialog specific UX state observer."];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::diagnostics\l::DevicePropertyAggregator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html"];
-  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::avsCommon\l::test::TestObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_test_observer.html",tooltip="A test observer that mocks out the DialogUXStateObserverInterface#onDialogUXStateChanged() call..."];
-  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::capability\lAgents::aip::AudioInputProcessor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html"];
-  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::capability\lAgents::aip::test::TestDialogUXState\lObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_test_dialog_u_x_state_observer.html",tooltip="Class to monitor DialogUXStateAggregator for the THINKING state and automatically move it to IDLE..."];
-  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html"];
-  Node0 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html"];
-  Node0 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="alexaClientSDK::capability\lAgents::templateRuntime\l::TemplateRuntime",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html"];
-  Node0 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="alexaClientSDK::sampleApp\l::InteractionManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html"];
-  Node0 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="alexaClientSDK::sampleApp\l::UIManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html"];
+  Node2 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::diagnostics\l::DevicePropertyAggregator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::avsCommon\l::test::TestObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_test_observer.html",tooltip="A test observer that mocks out the DialogUXStateObserverInterface#onDialogUXStateChanged() call."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="alexaClientSDK::capability\lAgents::aip::AudioInputProcessor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="alexaClientSDK::capability\lAgents::aip::test::TestDialogUXState\lObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_test_dialog_u_x_state_observer.html",tooltip="Class to monitor DialogUXStateAggregator for the THINKING state and automatically move it to IDLE."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="alexaClientSDK::capability\lAgents::speechSynthesizer\l::SpeechSynthesizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speech_synthesizer_1_1_speech_synthesizer.html",tooltip=" "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="alexaClientSDK::capability\lAgents::templateRuntime\l::TemplateRuntime",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1template_runtime_1_1_template_runtime.html",tooltip=" "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="alexaClientSDK::sampleApp\l::InteractionManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html",tooltip=" "];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="alexaClientSDK::sampleApp\l::UIManager",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_u_i_manager.html",tooltip=" "];
 }

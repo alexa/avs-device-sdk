@@ -1,12 +1,13 @@
 digraph "/workplace/avs-device-sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackControllerComponent.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node110 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PlaybackController/include\l/PlaybackController/PlaybackController\lComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node110 -> Node111 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node111 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
-  Node110 -> Node112 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node112 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
-  Node110 -> Node113 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node113 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PlaybackController/src\l/PlaybackControllerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_playback_controller_component_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PlaybackController/include\l/PlaybackController/PlaybackController\lComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/CapabilityAgents\l/PlaybackController/src\l/PlaybackControllerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_playback_controller_component_8cpp.html",tooltip=" "];
 }

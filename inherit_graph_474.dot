@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::utils::sds::test::Source",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1test_1_1_source.html",tooltip="A data source class which can generate an aribrary amount of data at a specified rate and block size..."];
+  Node0 [label="alexaClientSDK::avsCommon\l::utils::ShutdownMonitor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_shutdown_monitor.html",tooltip="Class used to track whether RequiresShutdown objects have been shut down correctly."];
 }

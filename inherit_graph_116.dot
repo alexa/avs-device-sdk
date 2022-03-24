@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::ContainsType\< std\l::tuple\< ContainedTypes... \>, Type \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_type_3_01std_1_1tuple_3_071ba8971b14a99a529b07225b33331f5.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::ContainsType\< std\l::tuple\< ContainedTypes... \>,\l Type \>::BoolValues\< InTypes \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_type_3_01std_1_1tuple_3_051d566dfc5f28d0cb1b2892fd2499ccb.html",tooltip=" "];
 }

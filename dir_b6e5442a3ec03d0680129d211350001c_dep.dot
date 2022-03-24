@@ -8,6 +8,6 @@ digraph "/workplace/avs-device-sdk/shared/acsdkStartupManager/src" {
   }
   dir_5c4cba069bac1253ddfeaa5be2586c75 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_5c4cba069bac1253ddfeaa5be2586c75.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_b6e5442a3ec03d0680129d211350001c->dir_5c4cba069bac1253ddfeaa5be2586c75 [headlabel="2", labeldistance=1.5 headhref="dir_000753_000751.html"];
-  dir_b6e5442a3ec03d0680129d211350001c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000753_000017.html"];
+  dir_b6e5442a3ec03d0680129d211350001c->dir_5c4cba069bac1253ddfeaa5be2586c75 [headlabel="2", labeldistance=1.5 headhref="dir_000762_000760.html"];
+  dir_b6e5442a3ec03d0680129d211350001c->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000762_000017.html"];
 }

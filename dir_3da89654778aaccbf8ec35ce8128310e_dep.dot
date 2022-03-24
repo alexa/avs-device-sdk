@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/core/acsdkRegistrationManagerInterfaces/test/
   dir_3da89654778aaccbf8ec35ce8128310e [shape=box, label="RegistrationManager", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3da89654778aaccbf8ec35ce8128310e.html"];
   }
   dir_ea71a0f92b3a6b19a5724167c78652cc [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_ea71a0f92b3a6b19a5724167c78652cc.html"];
-  dir_3da89654778aaccbf8ec35ce8128310e->dir_ea71a0f92b3a6b19a5724167c78652cc [headlabel="1", labeldistance=1.5 headhref="dir_000564_000560.html"];
+  dir_3da89654778aaccbf8ec35ce8128310e->dir_ea71a0f92b3a6b19a5724167c78652cc [headlabel="1", labeldistance=1.5 headhref="dir_000565_000561.html"];
 }

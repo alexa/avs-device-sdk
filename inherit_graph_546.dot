@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::kwd\l::KeywordDetectorProvider\l::KWDRegistration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider_1_1_k_w_d_registration.html"];
+  Node0 [label="alexaClientSDK::kwd\l::test::testKeyWordObserver\l::detectionResult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1kwd_1_1test_1_1test_key_word_observer_1_1detection_result.html",tooltip="A struct used for bookkeeping of keyword detections."];
 }

@@ -1,25 +1,26 @@
 digraph "alexaClientSDK::sampleApp::UIManager"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node10 [label="alexaClientSDK::sampleApp\l::UIManager",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node11 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DialogUXState\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html",tooltip="A dialog specific UX state observer. "];
-  Node12 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node12 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html"];
-  Node13 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node13 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_observer_interface.html"];
-  Node14 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html"];
-  Node15 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node15 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::SingleSetting\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html"];
-  Node16 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node16 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html"];
-  Node17 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 [label="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationsObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_observer_interface.html"];
-  Node18 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="alexaClientSDK::acsdkBluetooth\lInterfaces::BluetoothDeviceObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_device_observer_interface.html"];
-  Node19 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 [label="alexaClientSDK::acsdkSample\lApplicationInterfaces::UIManager\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_sample_application_interfaces_1_1_u_i_manager_interface.html"];
+  Node1 [label="alexaClientSDK::sampleApp\l::UIManager",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::DialogUXState\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html",tooltip="A dialog specific UX state observer."];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::CapabilitiesDelegate\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_capabilities_delegate_observer_interface.html",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::ConnectionStatus\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_connection_status_observer_interface.html",tooltip=" "];
+  Node6 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::SingleSetting\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_single_setting_observer_interface.html",tooltip=" "];
+  Node7 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html",tooltip=" "];
+  Node8 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationsObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_interfaces_1_1_notifications_observer_interface.html",tooltip=" "];
+  Node9 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="alexaClientSDK::acsdkBluetooth\lInterfaces::BluetoothDeviceObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_device_observer_interface.html",tooltip=" "];
+  Node10 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="alexaClientSDK::acsdkSample\lApplicationInterfaces::UIManager\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_sample_application_interfaces_1_1_u_i_manager_interface.html",tooltip=" "];
 }

@@ -1,13 +1,14 @@
 digraph "alexaClientSDK::capabilityAgents::toggleController::test::ToggleControllerCapabilityAgentTest"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node2 [label="alexaClientSDK::capability\lAgents::toggleController\l::test::ToggleControllerCapability\lAgentTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" TEST_POWER_STATE_ON\nTEST_POWER_STATE_OFF" ,fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::toggleController\l::ToggleControllerObserverInterface\l::ToggleState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_control90daa0f9a58b24f27d855f3d0249a569.html"];
-  Node5 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" timeOfSample" ,fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::avsCommon\l::utils::timing::TimePoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html"];
+  Node1 [label="alexaClientSDK::capability\lAgents::toggleController\l::test::ToggleControllerCapability\lAgentTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" TEST_POWER_STATE_ON\nTEST_POWER_STATE_OFF" ,fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::toggleController\l::ToggleControllerObserverInterface\l::ToggleState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1toggle_controller_1_1_toggle_control90daa0f9a58b24f27d855f3d0249a569.html",tooltip=" "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" timeOfSample" ,fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::avsCommon\l::utils::timing::TimePoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_time_point.html",tooltip=" "];
 }

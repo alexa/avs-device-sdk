@@ -9,9 +9,9 @@ digraph "/workplace/avs-device-sdk/core/Properties/acsdkProperties/include/acsdk
   dir_b73263857559cb03637ee9bf8846a03f [shape=box label="Crypto" fillcolor="white" style="filled" color="red" URL="dir_b73263857559cb03637ee9bf8846a03f.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_3d04e556473239c430261115def45483 [shape=box label="acsdkPropertiesInterfaces" fillcolor="white" style="filled" color="red" URL="dir_3d04e556473239c430261115def45483.html"];
-  dir_b73263857559cb03637ee9bf8846a03f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000581_000017.html"];
-  dir_3d04e556473239c430261115def45483->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000630_000017.html"];
-  dir_72628410bfa5cbae94f638ab81527fe6->dir_b73263857559cb03637ee9bf8846a03f [headlabel="3", labeldistance=1.5 headhref="dir_000626_000581.html"];
-  dir_72628410bfa5cbae94f638ab81527fe6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000626_000017.html"];
-  dir_72628410bfa5cbae94f638ab81527fe6->dir_3d04e556473239c430261115def45483 [headlabel="2", labeldistance=1.5 headhref="dir_000626_000630.html"];
+  dir_b73263857559cb03637ee9bf8846a03f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="13", labeldistance=1.5 headhref="dir_000582_000017.html"];
+  dir_3d04e556473239c430261115def45483->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000618_000017.html"];
+  dir_72628410bfa5cbae94f638ab81527fe6->dir_b73263857559cb03637ee9bf8846a03f [headlabel="3", labeldistance=1.5 headhref="dir_000637_000582.html"];
+  dir_72628410bfa5cbae94f638ab81527fe6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000637_000017.html"];
+  dir_72628410bfa5cbae94f638ab81527fe6->dir_3d04e556473239c430261115def45483 [headlabel="2", labeldistance=1.5 headhref="dir_000637_000618.html"];
 }

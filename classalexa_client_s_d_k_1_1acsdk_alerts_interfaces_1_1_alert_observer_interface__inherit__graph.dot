@@ -1,21 +1,22 @@
 digraph "alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkAlerts\lInterfaces::AlertObserverInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html"];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::acsdkAlerts\l::AlertScheduler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html"];
-  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::acsdkAlerts\l::test::MockAlertObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_observer_interface.html"];
-  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::acsdkAlerts\l::test::TestAlertObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert_observer.html"];
-  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html"];
-  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="alexaClientSDK::diagnostics\l::DevicePropertyAggregator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html"];
-  Node0 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="alexaClientSDK::integration\l::test::TestAlertObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html"];
+  Node1 [label="alexaClientSDK::acsdkAlerts\lInterfaces::AlertObserverInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::acsdkAlerts\l::AlertScheduler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::acsdkAlerts\l::test::MockAlertObserverInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_observer_interface.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="alexaClientSDK::acsdkAlerts\l::test::TestAlertObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert_observer.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html",tooltip=" "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="alexaClientSDK::diagnostics\l::DevicePropertyAggregator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="alexaClientSDK::integration\l::test::TestAlertObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html",tooltip=" "];
 }

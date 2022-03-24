@@ -1,14 +1,15 @@
 digraph "/workplace/avs-device-sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/NotificationsCapabilityAgent.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node116 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationsCapability\lAgent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node116 -> Node117 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node117 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lCapabilityAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_capability_agent_8cpp.html"];
-  Node116 -> Node118 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node118 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_component_8cpp.html"];
-  Node116 -> Node119 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node119 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lNotifier.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_notifier_8cpp.html"];
-  Node116 -> Node120 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node120 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_capability_agent_test_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/include\l/acsdkNotifications/NotificationsCapability\lAgent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lCapabilityAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_capability_agent_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_component_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lNotifier.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_notifier_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/capabilities/Notifications\l/acsdkNotifications/test/Notifications\lCapabilityAgentTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_notifications_capability_agent_test_8cpp.html",tooltip=" "];
 }

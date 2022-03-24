@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::sampleApp\l::SampleApplication::MediaPlayer\lRegistration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_sample_application_1_1_media_player_registration.html"];
+  Node0 [label="alexaClientSDK::settings\l::SettingCallbacks\< ManagerT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1settings_1_1_setting_callbacks.html",tooltip=" "];
 }

@@ -1,10 +1,11 @@
 digraph "alexaClientSDK::capabilityAgents::alexa::test::AlexaInterfaceMessageSenderTest"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node2 [label="alexaClientSDK::capability\lAgents::alexa::test::AlexaInterface\lMessageSenderTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_context" ,fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::avsCommon\l::avs::AVSContext",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_context.html"];
+  Node1 [label="alexaClientSDK::capability\lAgents::alexa::test::AlexaInterface\lMessageSenderTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Test harness for AlexaInterfaceMessageSender class."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_context" ,fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::avs::AVSContext",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_a_v_s_context.html",tooltip=" "];
 }

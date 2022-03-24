@@ -1,10 +1,11 @@
 digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCryptoInterfaces/test/include/acsdkCryptoInterfaces/test/MockKeyStore.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node8 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\lInterfaces/test/include/acsdkCrypto\lInterfaces/test/MockKeyStore.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/testCrypto\l/EncryptedPropertiesFactoryTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encrypted_properties_factory_test_8cpp.html"];
-  Node8 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/testCrypto\l/EncryptedPropertiesTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encrypted_properties_test_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\lInterfaces/test/include/acsdkCrypto\lInterfaces/test/MockKeyStore.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/testCrypto\l/EncryptedPropertiesFactoryTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encrypted_properties_factory_test_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/testCrypto\l/EncryptedPropertiesTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encrypted_properties_test_8cpp.html",tooltip=" "];
 }

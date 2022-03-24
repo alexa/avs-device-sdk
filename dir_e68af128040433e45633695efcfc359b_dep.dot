@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/SpeechEncoder/test" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_42bcecaea8b07e2c1ef02db2f3150d05 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_42bcecaea8b07e2c1ef02db2f3150d05.html"];
-  dir_e68af128040433e45633695efcfc359b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000783_000017.html"];
-  dir_e68af128040433e45633695efcfc359b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000783_000776.html"];
-  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000776_000017.html"];
+  dir_e68af128040433e45633695efcfc359b->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000792_000017.html"];
+  dir_e68af128040433e45633695efcfc359b->dir_42bcecaea8b07e2c1ef02db2f3150d05 [headlabel="1", labeldistance=1.5 headhref="dir_000792_000785.html"];
+  dir_42bcecaea8b07e2c1ef02db2f3150d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000785_000017.html"];
 }

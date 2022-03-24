@@ -1,12 +1,13 @@
 digraph "/workplace/avs-device-sdk/capabilities/Bluetooth/acsdkBluetooth/include/acsdkBluetooth/DeviceConnectionRulesAdapter.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node37 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/DeviceConnectionRulesAdapter.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node37 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node38 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_8cpp.html"];
-  Node37 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node39 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/DeviceConnection\lRulesAdapter.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_connection_rules_adapter_8cpp.html"];
-  Node37 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node40 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_test_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/DeviceConnectionRulesAdapter.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/DeviceConnection\lRulesAdapter.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_device_connection_rules_adapter_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bluetooth_test_8cpp.html",tooltip=" "];
 }

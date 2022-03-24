@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorization/test/in
   dir_80d8aa0080687ce3a25ae24a7fdd05e1 [shape=box, label="test", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_80d8aa0080687ce3a25ae24a7fdd05e1.html"];
   }
   dir_32ae0c4bcc468b279bfc4fd15a7e63dc [shape=box label="acsdkAuthorizationInterfaces" fillcolor="white" style="filled" color="red" URL="dir_32ae0c4bcc468b279bfc4fd15a7e63dc.html"];
-  dir_80d8aa0080687ce3a25ae24a7fdd05e1->dir_32ae0c4bcc468b279bfc4fd15a7e63dc [headlabel="1", labeldistance=1.5 headhref="dir_000602_000603.html"];
+  dir_80d8aa0080687ce3a25ae24a7fdd05e1->dir_32ae0c4bcc468b279bfc4fd15a7e63dc [headlabel="1", labeldistance=1.5 headhref="dir_000603_000604.html"];
 }

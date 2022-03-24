@@ -7,6 +7,7 @@ digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto" {
   subgraph clusterdir_6418a0282efa709f01c16160744ac46c {
     graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_6418a0282efa709f01c16160744ac46c.html"];
     dir_6418a0282efa709f01c16160744ac46c [shape=plaintext label="acsdkCrypto"];
+    dir_9bc27436999fa41008f71dcd95fb3fab [shape=box label="doc" color="black" fillcolor="white" style="filled" URL="dir_9bc27436999fa41008f71dcd95fb3fab.html"];
     dir_1f2919b7b7b3e8010de021fadbd93175 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_1f2919b7b7b3e8010de021fadbd93175.html"];
     dir_584aed27a77590cddd7a24a81ab43c88 [shape=box label="privateInclude" color="red" fillcolor="white" style="filled" URL="dir_584aed27a77590cddd7a24a81ab43c88.html"];
     dir_015759be97b1897f880b100443ac6db6 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_015759be97b1897f880b100443ac6db6.html"];
@@ -16,14 +17,14 @@ digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto" {
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_8d535980e8bcd8dca7a4900da179e35a [shape=box label="acsdkCryptoInterfaces" fillcolor="white" style="filled" color="red" URL="dir_8d535980e8bcd8dca7a4900da179e35a.html"];
   dir_4910684639fe6513fc4f3756d7fc0f02 [shape=box label="acsdkCodecUtils" fillcolor="white" style="filled" color="red" URL="dir_4910684639fe6513fc4f3756d7fc0f02.html"];
-  dir_015759be97b1897f880b100443ac6db6->dir_1f2919b7b7b3e8010de021fadbd93175 [headlabel="1", labeldistance=1.5 headhref="dir_000609_000607.html"];
-  dir_015759be97b1897f880b100443ac6db6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000609_000017.html"];
-  dir_015759be97b1897f880b100443ac6db6->dir_584aed27a77590cddd7a24a81ab43c88 [headlabel="23", labeldistance=1.5 headhref="dir_000609_000583.html"];
-  dir_231565b96ece506b07bca70acb2922f2->dir_1f2919b7b7b3e8010de021fadbd93175 [headlabel="1", labeldistance=1.5 headhref="dir_000610_000607.html"];
-  dir_231565b96ece506b07bca70acb2922f2->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="2", labeldistance=1.5 headhref="dir_000610_000611.html"];
-  dir_231565b96ece506b07bca70acb2922f2->dir_584aed27a77590cddd7a24a81ab43c88 [headlabel="8", labeldistance=1.5 headhref="dir_000610_000583.html"];
-  dir_231565b96ece506b07bca70acb2922f2->dir_4910684639fe6513fc4f3756d7fc0f02 [headlabel="4", labeldistance=1.5 headhref="dir_000610_000532.html"];
-  dir_1f2919b7b7b3e8010de021fadbd93175->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="1", labeldistance=1.5 headhref="dir_000607_000611.html"];
-  dir_584aed27a77590cddd7a24a81ab43c88->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000583_000017.html"];
-  dir_584aed27a77590cddd7a24a81ab43c88->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="8", labeldistance=1.5 headhref="dir_000583_000611.html"];
+  dir_015759be97b1897f880b100443ac6db6->dir_1f2919b7b7b3e8010de021fadbd93175 [headlabel="1", labeldistance=1.5 headhref="dir_000611_000609.html"];
+  dir_015759be97b1897f880b100443ac6db6->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000611_000017.html"];
+  dir_015759be97b1897f880b100443ac6db6->dir_584aed27a77590cddd7a24a81ab43c88 [headlabel="23", labeldistance=1.5 headhref="dir_000611_000584.html"];
+  dir_231565b96ece506b07bca70acb2922f2->dir_1f2919b7b7b3e8010de021fadbd93175 [headlabel="1", labeldistance=1.5 headhref="dir_000612_000609.html"];
+  dir_231565b96ece506b07bca70acb2922f2->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="2", labeldistance=1.5 headhref="dir_000612_000613.html"];
+  dir_231565b96ece506b07bca70acb2922f2->dir_584aed27a77590cddd7a24a81ab43c88 [headlabel="8", labeldistance=1.5 headhref="dir_000612_000584.html"];
+  dir_231565b96ece506b07bca70acb2922f2->dir_4910684639fe6513fc4f3756d7fc0f02 [headlabel="4", labeldistance=1.5 headhref="dir_000612_000532.html"];
+  dir_1f2919b7b7b3e8010de021fadbd93175->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="1", labeldistance=1.5 headhref="dir_000609_000613.html"];
+  dir_584aed27a77590cddd7a24a81ab43c88->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000584_000017.html"];
+  dir_584aed27a77590cddd7a24a81ab43c88->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="8", labeldistance=1.5 headhref="dir_000584_000613.html"];
 }

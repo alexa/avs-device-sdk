@@ -9,6 +9,6 @@ digraph "/workplace/avs-device-sdk/SampleApp/src/PeripheralEndpoint" {
   dir_db613c36c14f3946188c6043fb421073 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_db613c36c14f3946188c6043fb421073.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_db613c36c14f3946188c6043fb421073->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="57", labeldistance=1.5 headhref="dir_000132_000017.html"];
-  dir_a02d981be441c2788afa6a8d94be3881->dir_db613c36c14f3946188c6043fb421073 [headlabel="8", labeldistance=1.5 headhref="dir_000699_000132.html"];
-  dir_a02d981be441c2788afa6a8d94be3881->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000699_000017.html"];
+  dir_a02d981be441c2788afa6a8d94be3881->dir_db613c36c14f3946188c6043fb421073 [headlabel="8", labeldistance=1.5 headhref="dir_000708_000132.html"];
+  dir_a02d981be441c2788afa6a8d94be3881->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="12", labeldistance=1.5 headhref="dir_000708_000017.html"];
 }

@@ -1,7 +1,14 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManagerConfigHelper",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_config_helper.html"];
+  Node0 [label="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManagerStorageInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_storage_interface.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::capability\lAgents::speakerManager\l::SpeakerManagerMiscStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1_speaker_manager_misc_storage.html",tooltip=" "];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeakerManagerStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage.html",tooltip=" "];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::capability\lAgents::speakerManager\l::test::MockSpeakerManagerStorage\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1capability_agents_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage_interface.html",tooltip=" "];
 }

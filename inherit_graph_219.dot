@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkProperties\l::DataInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_properties_1_1_data_info.html",tooltip="Data structure to produce and parse DER for encrypted property data. "];
+  Node0 [label="alexaClientSDK::acsdkProperties\l::DataProperty",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_properties_1_1_data_property.html",tooltip="Data structure to produce and parse DER for encrypted property data."];
 }

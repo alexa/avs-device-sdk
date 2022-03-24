@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/SynchronizeStateSender/src" {
   }
   dir_e01b21eb0bf33027d7166255c85943c7 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_e01b21eb0bf33027d7166255c85943c7.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_e01b21eb0bf33027d7166255c85943c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000791_000017.html"];
-  dir_e40776bbb9101f800c7a781e35fa1df0->dir_e01b21eb0bf33027d7166255c85943c7 [headlabel="3", labeldistance=1.5 headhref="dir_000793_000791.html"];
-  dir_e40776bbb9101f800c7a781e35fa1df0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000793_000017.html"];
+  dir_e01b21eb0bf33027d7166255c85943c7->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000800_000017.html"];
+  dir_e40776bbb9101f800c7a781e35fa1df0->dir_e01b21eb0bf33027d7166255c85943c7 [headlabel="3", labeldistance=1.5 headhref="dir_000802_000800.html"];
+  dir_e40776bbb9101f800c7a781e35fa1df0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="9", labeldistance=1.5 headhref="dir_000802_000017.html"];
 }

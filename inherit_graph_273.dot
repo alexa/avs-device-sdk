@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::avs::capabilitySemantics\l::StatesToRangeMapping",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics_1_1_states_to_range_mapping.html"];
+  Node0 [label="alexaClientSDK::avsCommon\l::avs::capabilitySemantics\l::StatesToValueMapping",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1capability_semantics_1_1_states_to_value_mapping.html",tooltip=" "];
 }

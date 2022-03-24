@@ -1,11 +1,12 @@
 digraph "alexaClientSDK::acsdkNotificationsInterfaces::NotificationRendererObserverInterface"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationRendererObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkNotifications\l::NotificationsCapabilityAgent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html"];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::acsdkNotifications\l::test::MockNotificationRendererObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer_observer.html"];
+  Node1 [label="alexaClientSDK::acsdkNotifications\lInterfaces::NotificationRendererObserver\lInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkNotifications\l::NotificationsCapabilityAgent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1_notifications_capability_agent.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::acsdkNotifications\l::test::MockNotificationRendererObserver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_notifications_1_1test_1_1_mock_notification_renderer_observer.html",tooltip=" "];
 }

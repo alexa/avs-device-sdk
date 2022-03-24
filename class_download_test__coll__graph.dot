@@ -1,12 +1,13 @@
 digraph "DownloadTest"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node2 [label="DownloadTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" DAVS_TEST_DIR" ,fontname="Helvetica"];
-  Node4 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" service" ,fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::acsdkAssets\l::common::DavsServiceMock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_davs_service_mock.html"];
+  Node1 [label="DownloadTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" DAVS_TEST_DIR" ,fontname="Helvetica"];
+  Node3 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" service" ,fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::acsdkAssets\l::common::DavsServiceMock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_davs_service_mock.html",tooltip=" "];
 }

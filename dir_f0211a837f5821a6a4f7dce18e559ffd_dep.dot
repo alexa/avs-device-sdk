@@ -16,8 +16,8 @@ digraph "/workplace/avs-device-sdk/applications/acsdkSampleMetricRecorder" {
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_9982052f7ce695d12571567315b2fafa->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="40", labeldistance=1.5 headhref="dir_000116_000017.html"];
   dir_1b2c3ab7f2d290ac316411dc94dff7e8->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000089_000116.html"];
-  dir_1b2c3ab7f2d290ac316411dc94dff7e8->dir_43f851592d494520999e836628ea5995 [headlabel="2", labeldistance=1.5 headhref="dir_000089_000671.html"];
-  dir_43f851592d494520999e836628ea5995->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="37", labeldistance=1.5 headhref="dir_000671_000017.html"];
+  dir_1b2c3ab7f2d290ac316411dc94dff7e8->dir_43f851592d494520999e836628ea5995 [headlabel="2", labeldistance=1.5 headhref="dir_000089_000680.html"];
+  dir_43f851592d494520999e836628ea5995->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="37", labeldistance=1.5 headhref="dir_000680_000017.html"];
   dir_670598820ff98147b434b67b78984d05->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000086_000116.html"];
   dir_670598820ff98147b434b67b78984d05->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000086_000017.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266->dir_9982052f7ce695d12571567315b2fafa [headlabel="2", labeldistance=1.5 headhref="dir_000017_000116.html"];

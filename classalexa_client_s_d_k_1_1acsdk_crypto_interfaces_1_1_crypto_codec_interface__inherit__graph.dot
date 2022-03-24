@@ -1,11 +1,12 @@
 digraph "alexaClientSDK::acsdkCryptoInterfaces::CryptoCodecInterface"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkCrypto\lInterfaces::CryptoCodecInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkCrypto\l::OpenSslCryptoCodec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_crypto_1_1_open_ssl_crypto_codec.html",tooltip="Binary codec implementation. "];
-  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::acsdkCrypto\lInterfaces::test::MockCryptoCodec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_codec.html"];
+  Node1 [label="alexaClientSDK::acsdkCrypto\lInterfaces::CryptoCodecInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Crypto codec (cipher) interface."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkCrypto\l::OpenSslCryptoCodec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_crypto_1_1_open_ssl_crypto_codec.html",tooltip="Binary codec implementation."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::acsdkCrypto\lInterfaces::test::MockCryptoCodec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_crypto_interfaces_1_1test_1_1_mock_crypto_codec.html",tooltip=" "];
 }

@@ -1,9 +1,10 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationProperties\lHandlerInterface\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_properties_handler_interface.html"];
+  Node0 [label="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationProperties\lHandlerInterface\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_properties_handler_interface.html",tooltip=" "];
   Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkCommunication\l::InMemoryCommunicationPropertiesHandler\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_1_1_in_memory_communication_properties_handler.html"];
+  Node1 [label="alexaClientSDK::acsdkCommunication\l::InMemoryCommunicationPropertiesHandler\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_1_1_in_memory_communication_properties_handler.html",tooltip=" "];
 }

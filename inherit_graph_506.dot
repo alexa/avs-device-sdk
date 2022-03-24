@@ -1,9 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1099 [label="Environment",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node1099 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="alexaClientSDK::bluetooth\lImplementations::blueZ\l::test::Environment",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1test_1_1_environment.html",tooltip="Class used to properly initialize and tear down g_connection. "];
+  Node0 [label="alexaClientSDK::capabilities\lDelegate::InProcessEndpointsToConfig\lMapStruct",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1capabilities_delegate_1_1_in_process_endpoints_to_config_map_struct.html",tooltip=" "];
 }

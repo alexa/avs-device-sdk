@@ -12,6 +12,6 @@ digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto/privateInclude/acsdkC
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_8d535980e8bcd8dca7a4900da179e35a [shape=box label="acsdkCryptoInterfaces" fillcolor="white" style="filled" color="red" URL="dir_8d535980e8bcd8dca7a4900da179e35a.html"];
-  dir_d82a8d658b961b17e2ce5cbe88b07aca->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000585_000017.html"];
-  dir_d82a8d658b961b17e2ce5cbe88b07aca->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="8", labeldistance=1.5 headhref="dir_000585_000611.html"];
+  dir_d82a8d658b961b17e2ce5cbe88b07aca->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000586_000017.html"];
+  dir_d82a8d658b961b17e2ce5cbe88b07aca->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="8", labeldistance=1.5 headhref="dir_000586_000613.html"];
 }

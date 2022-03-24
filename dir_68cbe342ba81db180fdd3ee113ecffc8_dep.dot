@@ -9,9 +9,9 @@ digraph "/workplace/avs-device-sdk/core/acsdkRegistrationManager/test" {
   dir_4a51e47e48a2d7421cd11c25b8eb2059 [shape=box label="privateInclude" fillcolor="white" style="filled" color="red" URL="dir_4a51e47e48a2d7421cd11c25b8eb2059.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_3a778dbe7c7cb0b2902f548956c022c0 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_3a778dbe7c7cb0b2902f548956c022c0.html"];
-  dir_4a51e47e48a2d7421cd11c25b8eb2059->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000555_000017.html"];
-  dir_68cbe342ba81db180fdd3ee113ecffc8->dir_4a51e47e48a2d7421cd11c25b8eb2059 [headlabel="4", labeldistance=1.5 headhref="dir_000558_000555.html"];
-  dir_68cbe342ba81db180fdd3ee113ecffc8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000558_000017.html"];
-  dir_68cbe342ba81db180fdd3ee113ecffc8->dir_3a778dbe7c7cb0b2902f548956c022c0 [headlabel="2", labeldistance=1.5 headhref="dir_000558_000553.html"];
-  dir_3a778dbe7c7cb0b2902f548956c022c0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000553_000017.html"];
+  dir_4a51e47e48a2d7421cd11c25b8eb2059->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000556_000017.html"];
+  dir_68cbe342ba81db180fdd3ee113ecffc8->dir_4a51e47e48a2d7421cd11c25b8eb2059 [headlabel="4", labeldistance=1.5 headhref="dir_000559_000556.html"];
+  dir_68cbe342ba81db180fdd3ee113ecffc8->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000559_000017.html"];
+  dir_68cbe342ba81db180fdd3ee113ecffc8->dir_3a778dbe7c7cb0b2902f548956c022c0 [headlabel="2", labeldistance=1.5 headhref="dir_000559_000554.html"];
+  dir_3a778dbe7c7cb0b2902f548956c022c0->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="3", labeldistance=1.5 headhref="dir_000554_000017.html"];
 }

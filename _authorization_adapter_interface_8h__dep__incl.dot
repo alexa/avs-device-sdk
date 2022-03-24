@@ -1,22 +1,23 @@
 digraph "/workplace/avs-device-sdk/core/Authorization/acsdkAuthorizationInterfaces/include/acsdkAuthorizationInterfaces/AuthorizationAdapterInterface.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node7 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorizationInterfaces\l/include/acsdkAuthorizationInterfaces\l/AuthorizationAdapterInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorizationInterfaces\l/include/acsdkAuthorizationInterfaces\l/AuthorizationAdapterInterface.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/include\l/acsdkAuthorization/LWA/LWAAuthorization\lAdapter.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_8h.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/src\l/LWA/LWAAuthorizationAdapter.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_8cpp.html",tooltip=" "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/test\l/LWAAuthorizationAdapterTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_test_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/test\l/AuthorizationManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_test_8cpp.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorizationInterfaces\l/include/acsdkAuthorizationInterfaces\l/AuthorizationManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_interface_8h.html",tooltip=" "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/include\l/acsdkAuthorization/AuthorizationManager.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_8h.html",tooltip=" "];
   Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/include\l/acsdkAuthorization/LWA/LWAAuthorization\lAdapter.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_8h.html"];
-  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/src\l/LWA/LWAAuthorizationAdapter.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_8cpp.html"];
-  Node8 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/test\l/LWAAuthorizationAdapterTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_l_w_a_authorization_adapter_test_8cpp.html"];
-  Node7 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/test\l/AuthorizationManagerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_test_8cpp.html"];
-  Node7 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node12 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorizationInterfaces\l/include/acsdkAuthorizationInterfaces\l/AuthorizationManagerInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_interface_8h.html"];
-  Node12 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node13 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/include\l/acsdkAuthorization/AuthorizationManager.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_8h.html"];
-  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/src\l/AuthorizationManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_8cpp.html"];
-  Node13 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node12 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="/workplace/avs-device\l-sdk/core/Authorization\l/acsdkAuthorization/src\l/AuthorizationManager.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_authorization_manager_8cpp.html",tooltip=" "];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

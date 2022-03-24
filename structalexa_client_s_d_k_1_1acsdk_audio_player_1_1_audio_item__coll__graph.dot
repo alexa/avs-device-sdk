@@ -1,15 +1,16 @@
 digraph "alexaClientSDK::acsdkAudioPlayer::AudioItem"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node1 [label="alexaClientSDK::acsdkAudio\lPlayer::AudioItem",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="alexaClientSDK::acsdkAudio\lPlayer::AudioItem",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Struct which contains all the fields which define an audio item for a Play directive."];
   Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" stream" ,fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::acsdkAudio\lPlayer::AudioItem::Stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream.html",tooltip="Contains the parameters of the stream. "];
+  Node2 [label="alexaClientSDK::acsdkAudio\lPlayer::AudioItem::Stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream.html",tooltip="Contains the parameters of the stream."];
   Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" progressReport" ,fontname="Helvetica"];
-  Node3 [label="alexaClientSDK::acsdkAudio\lPlayer::AudioItem::Stream\l::ProgressReport",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html",tooltip="Contains values for progress reports. "];
+  Node3 [label="alexaClientSDK::acsdkAudio\lPlayer::AudioItem::Stream\l::ProgressReport",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item_1_1_stream_1_1_progress_report.html",tooltip="Contains values for progress reports."];
   Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" playbackContext" ,fontname="Helvetica"];
-  Node4 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::Playback\lContext",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_context.html"];
+  Node4 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::Playback\lContext",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_context.html",tooltip=" "];
   Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" captionData" ,fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::captions\l::CaptionData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1captions_1_1_caption_data.html"];
+  Node5 [label="alexaClientSDK::captions\l::CaptionData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1captions_1_1_caption_data.html",tooltip=" "];
 }

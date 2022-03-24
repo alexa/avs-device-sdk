@@ -7,5 +7,5 @@ digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto/include/acsdkCrypto" 
   dir_dafe9c8657aaa0d1065b84b7184681cf [shape=box, label="acsdkCrypto", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_dafe9c8657aaa0d1065b84b7184681cf.html"];
   }
   dir_8d535980e8bcd8dca7a4900da179e35a [shape=box label="acsdkCryptoInterfaces" fillcolor="white" style="filled" color="red" URL="dir_8d535980e8bcd8dca7a4900da179e35a.html"];
-  dir_dafe9c8657aaa0d1065b84b7184681cf->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="1", labeldistance=1.5 headhref="dir_000608_000611.html"];
+  dir_dafe9c8657aaa0d1065b84b7184681cf->dir_8d535980e8bcd8dca7a4900da179e35a [headlabel="1", labeldistance=1.5 headhref="dir_000610_000613.html"];
 }

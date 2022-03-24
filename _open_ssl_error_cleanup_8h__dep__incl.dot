@@ -1,14 +1,15 @@
 digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto/privateInclude/acsdkCrypto/private/OpenSslErrorCleanup.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node4 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/privateInclude/acsdkCrypto\l/private/OpenSslErrorCleanup.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslCryptoCodec.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_crypto_codec_8cpp.html"];
-  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslDigest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_digest_8cpp.html"];
-  Node4 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslErrorCleanup.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_error_cleanup_8cpp.html"];
-  Node4 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslKeyFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_key_factory_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/privateInclude/acsdkCrypto\l/private/OpenSslErrorCleanup.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslCryptoCodec.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_crypto_codec_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslDigest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_digest_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslErrorCleanup.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_error_cleanup_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/src/OpenSslKeyFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_key_factory_8cpp.html",tooltip=" "];
 }

@@ -1,14 +1,15 @@
 digraph "/workplace/avs-device-sdk/capabilities/Equalizer/acsdkEqualizerImplementations/include/acsdkEqualizerImplementations/SDKConfigEqualizerConfiguration.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node22 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/include/acsdkEqualizerImplementations\l/SDKConfigEqualizerConfiguration.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node22 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node23 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/EqualizerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_component_8cpp.html"];
-  Node22 -> Node24 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/SDKConfigEqualizerConfiguration.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_config_equalizer_configuration_8cpp.html"];
-  Node22 -> Node25 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node25 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/test/SDKConfigEqualizerConfigurationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_config_equalizer_configuration_test_8cpp.html"];
-  Node22 -> Node26 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/include/acsdkEqualizerImplementations\l/SDKConfigEqualizerConfiguration.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/EqualizerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_equalizer_component_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/src/SDKConfigEqualizerConfiguration.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_config_equalizer_configuration_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/capabilities/Equalizer\l/acsdkEqualizerImplementations\l/test/SDKConfigEqualizerConfigurationTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_s_d_k_config_equalizer_configuration_test_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/SampleApp/src/SampleApplication.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_sample_application_8cpp.html",tooltip=" "];
 }

@@ -12,5 +12,5 @@ digraph "/workplace/avs-device-sdk/applications/acsdkGstreamerApplicationAudioPi
   dir_d2baf2fec365b8c95ab1fad241b8e25c->dir_9982052f7ce695d12571567315b2fafa [headlabel="4", labeldistance=1.5 headhref="dir_000036_000116.html"];
   dir_0f77b54ef3235fa8e8934b65263c6431->dir_9982052f7ce695d12571567315b2fafa [headlabel="1", labeldistance=1.5 headhref="dir_000040_000116.html"];
   dir_0f77b54ef3235fa8e8934b65263c6431->dir_d2baf2fec365b8c95ab1fad241b8e25c [headlabel="2", labeldistance=1.5 headhref="dir_000040_000036.html"];
-  dir_0f77b54ef3235fa8e8934b65263c6431->dir_9d34932954f3d83257e5e12e3f421a72 [headlabel="1", labeldistance=1.5 headhref="dir_000040_000660.html"];
+  dir_0f77b54ef3235fa8e8934b65263c6431->dir_9d34932954f3d83257e5e12e3f421a72 [headlabel="1", labeldistance=1.5 headhref="dir_000040_000669.html"];
 }

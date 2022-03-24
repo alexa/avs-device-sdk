@@ -1,13 +1,14 @@
 digraph "/workplace/avs-device-sdk/SampleApp/include/SampleApp/PlatformSpecificValues.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/PlatformSpecificValues.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 [label="/workplace/avs-device\l-sdk/SampleApp/include\l/SampleApp/PlatformSpecificValues.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8h.html"];
+  Node2 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClientComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8h.html",tooltip=" "];
   Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html"];
+  Node3 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_8cpp.html",tooltip=" "];
   Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
+  Node4 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html",tooltip=" "];
   Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

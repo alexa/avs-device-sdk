@@ -12,11 +12,11 @@ digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/An
   dir_55f1e16e469d547c636a522dac21b8a1 [shape=box label="capabilities" fillcolor="white" style="filled" color="red" URL="dir_55f1e16e469d547c636a522dac21b8a1.html"];
   dir_748b5abbb33df61eda67007924a1a0cb->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="144", labeldistance=1.5 headhref="dir_000127_000017.html"];
   dir_748b5abbb33df61eda67007924a1a0cb->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="49", labeldistance=1.5 headhref="dir_000127_000163.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000663_000127.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000663_000684.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000663_000017.html"];
-  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="2", labeldistance=1.5 headhref="dir_000663_000163.html"];
-  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="42", labeldistance=1.5 headhref="dir_000684_000017.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="5", labeldistance=1.5 headhref="dir_000672_000127.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_655fbec917b1f23289d3ed8ec9803bf1 [headlabel="1", labeldistance=1.5 headhref="dir_000672_000693.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="15", labeldistance=1.5 headhref="dir_000672_000017.html"];
+  dir_1c7bd630be78b850d01adb3bbc48faf9->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="2", labeldistance=1.5 headhref="dir_000672_000163.html"];
+  dir_655fbec917b1f23289d3ed8ec9803bf1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="42", labeldistance=1.5 headhref="dir_000693_000017.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266->dir_748b5abbb33df61eda67007924a1a0cb [headlabel="1", labeldistance=1.5 headhref="dir_000017_000127.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266->dir_55f1e16e469d547c636a522dac21b8a1 [headlabel="4", labeldistance=1.5 headhref="dir_000017_000163.html"];
   dir_55f1e16e469d547c636a522dac21b8a1->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="644", labeldistance=1.5 headhref="dir_000163_000017.html"];

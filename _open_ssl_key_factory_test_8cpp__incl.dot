@@ -1,20 +1,21 @@
 digraph "/workplace/avs-device-sdk/core/Crypto/acsdkCrypto/test/OpenSslKeyFactoryTest.cpp"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/test/OpenSslKeyFactoryTest.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="gtest/gtest.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="acsdkCrypto/private\l/OpenSslKeyFactory.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_key_factory_8h.html"];
-  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="acsdkCryptoInterfaces\l/KeyFactoryInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_key_factory_interface_8h.html"];
-  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="AlgorithmType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_algorithm_type_8h.html"];
-  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 [label="/workplace/avs-device\l-sdk/core/Crypto/acsdkCrypto\l/test/OpenSslKeyFactoryTest.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="gtest/gtest.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="acsdkCrypto/private\l/OpenSslKeyFactory.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_open_ssl_key_factory_8h.html",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="acsdkCryptoInterfaces\l/KeyFactoryInterface.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_key_factory_interface_8h.html",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="vector",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="AlgorithmType.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_algorithm_type_8h.html",tooltip=" "];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="ostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
 }

@@ -8,7 +8,7 @@ digraph "/workplace/avs-device-sdk/shared/KWD/acsdkKWDProvider/src" {
   }
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
   dir_9e1fe2b8ef2de256782eb4aeb68ae3af [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_9e1fe2b8ef2de256782eb4aeb68ae3af.html"];
-  dir_4bd23ccde07e1e77862fb19b3e057556->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000774_000017.html"];
-  dir_4bd23ccde07e1e77862fb19b3e057556->dir_9e1fe2b8ef2de256782eb4aeb68ae3af [headlabel="1", labeldistance=1.5 headhref="dir_000774_000771.html"];
-  dir_9e1fe2b8ef2de256782eb4aeb68ae3af->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000771_000017.html"];
+  dir_4bd23ccde07e1e77862fb19b3e057556->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="1", labeldistance=1.5 headhref="dir_000783_000017.html"];
+  dir_4bd23ccde07e1e77862fb19b3e057556->dir_9e1fe2b8ef2de256782eb4aeb68ae3af [headlabel="1", labeldistance=1.5 headhref="dir_000783_000780.html"];
+  dir_9e1fe2b8ef2de256782eb4aeb68ae3af->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="4", labeldistance=1.5 headhref="dir_000780_000017.html"];
 }

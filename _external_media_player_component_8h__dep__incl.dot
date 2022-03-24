@@ -1,12 +1,13 @@
 digraph "/workplace/avs-device-sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/ExternalMediaPlayerComponent.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node228 [label="/workplace/avs-device\l-sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayerComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node228 -> Node229 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node229 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html"];
-  Node228 -> Node230 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node230 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html"];
-  Node228 -> Node231 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node231 [label="/workplace/avs-device\l-sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/src/ExternalMediaPlayerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_external_media_player_component_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/include/acsdkExternalMediaPlayer\l/ExternalMediaPlayerComponent.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_preview_alexa_client_component_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_default_client_component_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/src/ExternalMediaPlayerComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_external_media_player_component_8cpp.html",tooltip=" "];
 }

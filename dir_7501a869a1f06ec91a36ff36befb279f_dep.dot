@@ -12,6 +12,6 @@ digraph "/workplace/avs-device-sdk/core/Properties/acsdkPropertiesInterfaces/tes
   }
   dir_8145d729cc2136b803d030ae5d5d64ee [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_8145d729cc2136b803d030ae5d5d64ee.html"];
   dir_13e65effb2bde530b17b3d5eefcd0266 [shape=box label="AVSCommon" fillcolor="white" style="filled" color="red" URL="dir_13e65effb2bde530b17b3d5eefcd0266.html"];
-  dir_7439d6e9a08572f4c90594843f9b0a7f->dir_8145d729cc2136b803d030ae5d5d64ee [headlabel="5", labeldistance=1.5 headhref="dir_000635_000631.html"];
-  dir_7439d6e9a08572f4c90594843f9b0a7f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000635_000017.html"];
+  dir_7439d6e9a08572f4c90594843f9b0a7f->dir_8145d729cc2136b803d030ae5d5d64ee [headlabel="5", labeldistance=1.5 headhref="dir_000644_000641.html"];
+  dir_7439d6e9a08572f4c90594843f9b0a7f->dir_13e65effb2bde530b17b3d5eefcd0266 [headlabel="2", labeldistance=1.5 headhref="dir_000644_000017.html"];
 }

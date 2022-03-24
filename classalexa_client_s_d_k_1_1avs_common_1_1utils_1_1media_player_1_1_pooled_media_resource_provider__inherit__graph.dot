@@ -1,11 +1,12 @@
 digraph "alexaClientSDK::avsCommon::utils::mediaPlayer::PooledMediaResourceProvider"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProvider",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProviderInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html"];
+  Node1 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProvider",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
   Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lFactoryInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html"];
+  Node2 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::PooledMedia\lResourceProviderInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_pooled_media_resource_provider_interface.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lFactoryInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_factory_interface.html",tooltip=" "];
 }

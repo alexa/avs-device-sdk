@@ -1,12 +1,13 @@
 digraph "/workplace/avs-device-sdk/core/acsdkPostConnectOperationProviderRegistrar/include/acsdkPostConnectOperationProviderRegistrar/PostConnectOperationProviderRegistrar.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node39 [label="/workplace/avs-device\l-sdk/core/acsdkPostConnectOperation\lProviderRegistrar/include/acsdkPostConnect\lOperationProviderRegistrar/PostConnectOperation\lProviderRegistrar.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node39 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node40 [label="/workplace/avs-device\l-sdk/core/acsdkCore/src\l/CoreComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_core_component_8cpp.html"];
-  Node39 -> Node41 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 [label="/workplace/avs-device\l-sdk/core/acsdkPostConnectOperation\lProviderRegistrar/src/PostConnectOperation\lProviderRegistrar.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_operation_provider_registrar_8cpp.html"];
-  Node39 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node42 [label="/workplace/avs-device\l-sdk/core/acsdkPostConnectOperation\lProviderRegistrar/test/PostConnectOperation\lProviderRegistrarTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_operation_provider_registrar_test_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/core/acsdkPostConnectOperation\lProviderRegistrar/include/acsdkPostConnect\lOperationProviderRegistrar/PostConnectOperation\lProviderRegistrar.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/core/acsdkCore/src\l/CoreComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_core_component_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/core/acsdkPostConnectOperation\lProviderRegistrar/src/PostConnectOperation\lProviderRegistrar.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_operation_provider_registrar_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/core/acsdkPostConnectOperation\lProviderRegistrar/test/PostConnectOperation\lProviderRegistrarTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_post_connect_operation_provider_registrar_test_8cpp.html",tooltip=" "];
 }

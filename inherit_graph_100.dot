@@ -1,7 +1,12 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkInput\lController::InputControllerFactory\lInterfaces",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_input_controller_1_1_input_controller_factory_interfaces.html",tooltip="This structure contains the interfaces to interact with the InputController Capability Agent..."];
+  Node0 [label="alexaClientSDK::acsdkInput\lControllerInterfaces::InputController\lHandlerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_input_controller_interfaces_1_1_input_controller_handler_interface.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::acsdkInput\lController::test::MockHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_input_controller_1_1test_1_1_mock_handler.html",tooltip="A Mock for InputControllerHandlerInterface."];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::sampleApp\l::InputControllerHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1sample_app_1_1_input_controller_handler.html",tooltip=" "];
 }

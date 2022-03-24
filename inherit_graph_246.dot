@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::application\lUtilities::androidUtilities\l::test::AndroidSLESObjectTest\l::MockInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_android_s_l_ef6f82b5773b151088a4a25ac30a19f68.html",tooltip="This will be used to mock the getInterface result. "];
+  Node0 [label="alexaClientSDK::application\lUtilities::androidUtilities\l::test::MockAndroidSLESObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1test_1_1_mock_android_s_l_e_s_object.html",tooltip=" "];
 }

@@ -1,31 +1,32 @@
 digraph "/workplace/avs-device-sdk/capabilities/AudioPlayer/acsdkAudioPlayer/test/ProgressTimerTest.cpp"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node0 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/ProgressTimer\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="gmock/gmock.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="AVSCommon/Utils/PromiseFuture\lPair.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_promise_future_pair_8h.html"];
-  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="future",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="AVSCommon/Utils/Timing\l/Stopwatch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_stopwatch_8h.html"];
-  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="chrono",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="mutex",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node4 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="thread",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="acsdkAudioPlayer/Progress\lTimer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_progress_timer_8h.html"];
-  Node8 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="condition_variable",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node8 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="cstdint",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node8 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node8 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="/workplace/avs-device\l-sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/ProgressTimer\lTest.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="gmock/gmock.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="AVSCommon/Utils/PromiseFuture\lPair.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_promise_future_pair_8h.html",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="future",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="AVSCommon/Utils/Timing\l/Stopwatch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_stopwatch_8h.html",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="chrono",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="mutex",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="thread",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="acsdkAudioPlayer/Progress\lTimer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_progress_timer_8h.html",tooltip=" "];
+  Node9 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="condition_variable",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="cstdint",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="memory",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

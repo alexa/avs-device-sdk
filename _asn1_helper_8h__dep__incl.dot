@@ -1,14 +1,15 @@
 digraph "/workplace/avs-device-sdk/core/Properties/acsdkProperties/privateInclude/acsdkProperties/private/Asn1Helper.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node7 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/privateInclude\l/acsdkProperties/private/Asn1Helper.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/Asn1Helper.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_asn1_helper_8cpp.html"];
-  Node7 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/DataProperty\lCodecState.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_data_property_codec_state_8cpp.html"];
-  Node7 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/Encryption\lKeyPropertyCodec.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encryption_key_property_codec_8cpp.html"];
-  Node7 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/Encryption\lKeyPropertyCodecState.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encryption_key_property_codec_state_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/privateInclude\l/acsdkProperties/private/Asn1Helper.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/Asn1Helper.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_asn1_helper_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/DataProperty\lCodecState.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_data_property_codec_state_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/Encryption\lKeyPropertyCodec.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encryption_key_property_codec_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/core/Properties\l/acsdkProperties/src/Encryption\lKeyPropertyCodecState.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_encryption_key_property_codec_state_8cpp.html",tooltip=" "];
 }

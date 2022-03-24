@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::GetImportsAndExports\l\< Types \>::GetOptionalImportsOperation\l::Apply\<... \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_op6aa581e286a4d9aa27ea8529990ec6f1.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::GetImportsAndExports\l\< Types \>::GetRequiredImportsOperation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_required_imports_operation.html",tooltip=" "];
 }

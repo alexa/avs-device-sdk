@@ -1,7 +1,12 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::settings\l::SettingsManagerBuilderBase\l\< settings::SettingsManager\l\< SettingsT... \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1settings_1_1_settings_manager_builder_base_3_01settings_1_1_settings_c2e930c93ad4c2cfa1d6864ba3c9a08d.html"];
+  Node0 [label="alexaClientSDK::settings\l::storage::DeviceSettingStorage\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1_device_setting_storage_interface.html",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="alexaClientSDK::settings\l::storage::SQLiteDeviceSetting\lStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1_s_q_lite_device_setting_storage.html",tooltip=" "];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::settings\l::storage::test::MockDeviceSetting\lStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1settings_1_1storage_1_1test_1_1_mock_device_setting_storage.html",tooltip=" "];
 }

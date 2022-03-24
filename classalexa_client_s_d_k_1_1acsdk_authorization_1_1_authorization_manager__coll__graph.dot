@@ -1,23 +1,24 @@
 digraph "alexaClientSDK::acsdkAuthorization::AuthorizationManager"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node9 [label="alexaClientSDK::acsdkAuthorization\l::AuthorizationManager",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node10 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="alexaClientSDK::acsdkAuthorization\lInterfaces::AuthorizationManagerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_manager_interface.html"];
-  Node11 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11 [label="alexaClientSDK::acsdkAuthorization\lInterfaces::AuthorizationAuthorityInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_authority_interface.html"];
-  Node12 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node12 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthDelegateInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html"];
-  Node13 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node13 [label="alexaClientSDK::registration\lManager::RegistrationManagerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager_interface.html"];
-  Node14 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node14 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html"];
-  Node15 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node15 [label="alexaClientSDK::registration\lManager::CustomerDataHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html"];
-  Node16 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node16 [label="alexaClientSDK::registration\lManager::CustomerDataHandlerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html"];
-  Node17 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 [label="std::enable_shared\l_from_this\< AuthorizationManager \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 [label="alexaClientSDK::acsdkAuthorization\l::AuthorizationManager",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkAuthorization\lInterfaces::AuthorizationManagerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_manager_interface.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::acsdkAuthorization\lInterfaces::AuthorizationAuthorityInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_authority_interface.html",tooltip=" "];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthDelegateInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_delegate_interface.html",tooltip=" "];
+  Node5 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="alexaClientSDK::registration\lManager::RegistrationManagerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager_interface.html",tooltip=" "];
+  Node6 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="alexaClientSDK::avsCommon\l::utils::RequiresShutdown",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html",tooltip=" "];
+  Node7 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="alexaClientSDK::registration\lManager::CustomerDataHandler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler.html",tooltip=" "];
+  Node8 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="alexaClientSDK::registration\lManager::CustomerDataHandlerInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_handler_interface.html",tooltip=" "];
+  Node9 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="std::enable_shared\l_from_this\< AuthorizationManager \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
 }

@@ -1,10 +1,11 @@
 digraph "/workplace/avs-device-sdk/capabilities/DoNotDisturb/acsdkDoNotDisturb/include/acsdkDoNotDisturb/DNDSettingProtocol.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node53 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DNDSettingProtocol.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node53 -> Node54 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node54 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/src/DNDSettingProtocol.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_d_n_d_setting_protocol_8cpp.html"];
-  Node53 -> Node55 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node55 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_do_not_disturb_capability_agent_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/include\l/acsdkDoNotDisturb/DNDSettingProtocol.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/src/DNDSettingProtocol.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_d_n_d_setting_protocol_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/capabilities/DoNotDisturb\l/acsdkDoNotDisturb/src/DoNotDisturb\lCapabilityAgent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_do_not_disturb_capability_agent_8cpp.html",tooltip=" "];
 }

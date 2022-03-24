@@ -1,9 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::ContainsTypes\<\l std::tuple\< ContainerTypes...\l \>, TupleTypes... \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_types.html"];
-  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkManufactory\l::internal::ContainsTupleTypes\l\< std::tuple\< ContainerTypes...\l \>, std::tuple\< TupleTypes... \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_tuple_types_3_01std_1_1tu95cf3c53631a9e8f0a3d6e4aaa4c55e5.html"];
+  Node0 [label="alexaClientSDK::acsdkManufactory\l::internal::ContainsTypes\<... \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_types.html",tooltip=" "];
 }

@@ -1,12 +1,13 @@
 digraph "/workplace/avs-device-sdk/AVSCommon/Utils/include/AVSCommon/Utils/ID3Tags/ID3v2Tags.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node2 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/ID3Tags/ID3v2Tags.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/ID3Tags/ID3v2Tags.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_i_d3v2_tags_8cpp.html"];
-  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/test/ID3v2TagsTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_i_d3v2_tags_test_8cpp.html"];
-  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="/workplace/avs-device\l-sdk/PlaylistParser/src\l/Id3TagsRemover.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_id3_tags_remover_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/ID3Tags/ID3v2Tags.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/src/ID3Tags/ID3v2Tags.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_i_d3v2_tags_8cpp.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/AVSCommon/Utils\l/test/ID3v2TagsTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_i_d3v2_tags_test_8cpp.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/PlaylistParser/src\l/Id3TagsRemover.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_id3_tags_remover_8cpp.html",tooltip=" "];
 }

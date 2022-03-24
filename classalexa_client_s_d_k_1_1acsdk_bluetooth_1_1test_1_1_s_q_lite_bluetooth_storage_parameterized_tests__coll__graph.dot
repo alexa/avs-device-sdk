@@ -1,13 +1,14 @@
 digraph "alexaClientSDK::acsdkBluetooth::test::SQLiteBluetoothStorageParameterizedTests"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node4 [label="alexaClientSDK::acsdkBluetooth\l::test::SQLiteBluetoothStorageParameterizedTests",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="alexaClientSDK::acsdkBluetooth\l::test::SQLiteBluetoothStorageTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html"];
-  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node7 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="testing::WithParamInterface\l\< bool \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 [label="alexaClientSDK::acsdkBluetooth\l::test::SQLiteBluetoothStorageParameterizedTests",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Parameterized tests to test both migrated and newly created databases."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkBluetooth\l::test::SQLiteBluetoothStorageTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1test_1_1_s_q_lite_bluetooth_storage_test.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Test",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="testing::WithParamInterface\l\< bool \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
 }

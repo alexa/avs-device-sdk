@@ -1,18 +1,19 @@
 digraph "/workplace/avs-device-sdk/MediaPlayer/AndroidSLESMediaPlayer/include/AndroidSLESMediaPlayer/AndroidSLESMediaQueue.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node46 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaQueue.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node46 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8h.html"];
-  Node47 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_application_audio_pipeline_factory_8cpp.html"];
-  Node47 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node49 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html"];
-  Node47 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node50 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_test_8cpp.html"];
-  Node46 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node51 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaQueue.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_queue_8cpp.html"];
-  Node46 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node52 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaQueueTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_queue_test_8cpp.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaQueue.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/include/AndroidSLESMediaPlayer\l/AndroidSLESMediaPlayer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8h.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_application_audio_pipeline_factory_8cpp.html",tooltip=" "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaPlayer.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_8cpp.html",tooltip=" "];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaPlayerTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_player_test_8cpp.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/AndroidSLESMediaQueue.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_queue_8cpp.html",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="/workplace/avs-device\l-sdk/MediaPlayer/AndroidSLESMedia\lPlayer/test/AndroidSLESMediaQueueTest.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_s_l_e_s_media_queue_test_8cpp.html",tooltip=" "];
 }

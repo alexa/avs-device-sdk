@@ -1,7 +1,8 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::playlist\lParser::M3UContent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1playlist_parser_1_1_m3_u_content.html",tooltip="A struct used to encapsulate information retrieved from an M3U playlist. "];
+  Node0 [label="alexaClientSDK::playlist\lParser::PlayItem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structalexa_client_s_d_k_1_1playlist_parser_1_1_play_item.html",tooltip=" "];
 }

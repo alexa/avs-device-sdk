@@ -1,11 +1,12 @@
 digraph "Graphical Class Hierarchy"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="alexaClientSDK::acsdkAuthorization\lInterfaces::lwa::LWAAuthorizationStorage\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html"];
+  Node0 [label="alexaClientSDK::acsdkAuthorization\lInterfaces::lwa::LWAAuthorizationStorage\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html",tooltip=" "];
   Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="alexaClientSDK::acsdkAuthorization\l::lwa::LWAAuthorizationStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_storage.html",tooltip="A SQLite based version of LWAAuthorizationStorageInterface. "];
+  Node1 [label="alexaClientSDK::acsdkAuthorization\l::lwa::LWAAuthorizationStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_storage.html",tooltip="A SQLite based version of LWAAuthorizationStorageInterface."];
   Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="alexaClientSDK::acsdkAuthorization\l::lwa::test::StubStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_stub_storage.html"];
+  Node2 [label="alexaClientSDK::acsdkAuthorization\l::lwa::test::StubStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_stub_storage.html",tooltip=" "];
 }

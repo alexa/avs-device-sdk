@@ -1,14 +1,15 @@
 digraph "/workplace/avs-device-sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/PlatformSpecificValues.h"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node35 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/AndroidUtilities/include\l/AndroidUtilities/PlatformSpecific\lValues.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node35 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node36 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/AndroidApplicationAudioPipelineFactory.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_application_audio_pipeline_factory_8h.html"];
-  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node37 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_application_audio_pipeline_factory_8cpp.html"];
-  Node36 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node38 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/ApplicationAudioPipelineFactoryComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$acsdk_android_application_audio_pipeline_factory_2src_2_application_audio_pipeline_factory_component_8cpp.html"];
-  Node35 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node39 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/ApplicationAudioPipelineFactoryComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$acsdk_android_application_audio_pipeline_factory_2include_2acsdk_application_audio_pipeline_fact952244caba7ee8985a8bdd12c0ca49b0.html"];
+  Node1 [label="/workplace/avs-device\l-sdk/ApplicationUtilities\l/AndroidUtilities/include\l/AndroidUtilities/PlatformSpecific\lValues.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/AndroidApplicationAudioPipelineFactory.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_application_audio_pipeline_factory_8h.html",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/AndroidApplicationAudioPipelineFactory.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_android_application_audio_pipeline_factory_8cpp.html",tooltip=" "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/src/ApplicationAudioPipelineFactoryComponent.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$acsdk_android_application_audio_pipeline_factory_2src_2_application_audio_pipeline_factory_component_8cpp.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="/workplace/avs-device\l-sdk/applications/acsdkAndroid\lApplicationAudioPipelineFactory\l/include/acsdkApplicationAudioPipelineFactory\l/ApplicationAudioPipelineFactoryComponent.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$acsdk_android_application_audio_pipeline_factory_2include_2acsdk_application_audio_pipeline_fact952244caba7ee8985a8bdd12c0ca49b0.html",tooltip=" "];
 }

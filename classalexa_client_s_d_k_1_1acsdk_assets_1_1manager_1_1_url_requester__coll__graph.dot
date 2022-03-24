@@ -1,17 +1,18 @@
 digraph "alexaClientSDK::acsdkAssets::manager::UrlRequester"
 {
+ // LATEX_PDF_SIZE
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node5 [label="alexaClientSDK::acsdkAssets\l::manager::UrlRequester",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="alexaClientSDK::acsdkAssets\l::manager::Requester",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_assets_1_1manager_1_1_requester.html"];
-  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationPropertyValidator\lInterface\< int \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_property_validator_interface.html"];
-  Node8 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="alexaClientSDK::acsdkCommunication\lInterfaces::FunctionInvokerInterface\l\< std::string \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_function_invoker_interface.html"];
-  Node9 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="std::enable_shared\l_from_this\< Requester \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node10 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_timer" ,fontname="Helvetica"];
-  Node10 [label="alexaClientSDK::avsCommon\l::utils::timing::Timer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html"];
+  Node1 [label="alexaClientSDK::acsdkAssets\l::manager::UrlRequester",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="alexaClientSDK::acsdkAssets\l::manager::Requester",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_assets_1_1manager_1_1_requester.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationPropertyValidator\lInterface\< int \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_property_validator_interface.html",tooltip=" "];
+  Node4 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="alexaClientSDK::acsdkCommunication\lInterfaces::FunctionInvokerInterface\l\< std::string \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_function_invoker_interface.html",tooltip=" "];
+  Node5 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="std::enable_shared\l_from_this\< Requester \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node6 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_timer" ,fontname="Helvetica"];
+  Node6 [label="alexaClientSDK::avsCommon\l::utils::timing::Timer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer.html",tooltip=" "];
 }
