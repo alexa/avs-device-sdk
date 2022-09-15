@@ -71,14 +71,14 @@ unique_ptr<VendableArtifact> VendableArtifact::create(
         uuid += "_unpack";
     }
     return unique_ptr<VendableArtifact>(new VendableArtifact(
-            move(request),
-            move(id),
+            std::move(request),
+            std::move(id),
             artifactSizeBytes,
             artifactExpiry,
-            move(s3Url),
+            std::move(s3Url),
             urlExpiry,
             currentSizeBytes,
-            move(uuid),
+            std::move(uuid),
             multipart));
 }
 
@@ -160,7 +160,7 @@ unique_ptr<VendableArtifact> VendableArtifact::create(
     }
 
     return create(
-            move(request),
+            std::move(request),
             id,
             size,
             TimeEpoch(chrono::milliseconds(ttl)),
@@ -180,14 +180,14 @@ VendableArtifact::VendableArtifact(
         size_t currentSizeBytes,
         string uuid,
         bool multipart) :
-        m_request(move(request)),
-        m_id(move(id)),
+        m_request(std::move(request)),
+        m_id(std::move(id)),
         m_artifactSizeBytes(artifactSizeBytes),
         m_artifactExpiry(artifactExpiry),
-        m_s3Url(move(s3Url)),
+        m_s3Url(std::move(s3Url)),
         m_urlExpiry(urlExpiry),
         m_currentSizeBytes(currentSizeBytes),
-        m_uuid(move(uuid)),
+        m_uuid(std::move(uuid)),
         m_multipart(multipart) {
 }
 

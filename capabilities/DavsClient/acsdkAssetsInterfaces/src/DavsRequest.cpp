@@ -65,13 +65,13 @@ shared_ptr<DavsRequest> DavsRequest::create(string type, string key, FilterMap f
         }
     }
 
-    return unique_ptr<DavsRequest>(new DavsRequest(move(type), move(key), move(filters), endpoint, unpack));
+    return unique_ptr<DavsRequest>(new DavsRequest(std::move(type), std::move(key), std::move(filters), endpoint, unpack));
 }
 
 DavsRequest::DavsRequest(string type, string key, FilterMap filters, Region endpoint, bool unpack) :
-        m_type(move(type)),
-        m_key(move(key)),
-        m_filters(move(filters)),
+        m_type(std::move(type)),
+        m_key(std::move(key)),
+        m_filters(std::move(filters)),
         m_region(endpoint),
         m_unpack(unpack) {
     m_summary = this->m_type + "_" + this->m_key;
