@@ -39,7 +39,7 @@ static const string TAG("AuthRefreshedObserver");
 
 AuthRefreshedObserver::AuthRefreshedObserver(function<void()> afterAuthRefreshedCallback) :
         m_state{State::UNINITIALIZED},
-        m_afterAuthRefreshedCallback{move(afterAuthRefreshedCallback)} {
+        m_afterAuthRefreshedCallback{std::move(afterAuthRefreshedCallback)} {
 }
 
 shared_ptr<AuthRefreshedObserver> alexaClientSDK::avsGatewayManager::AuthRefreshedObserver::create(

@@ -56,7 +56,7 @@ void WorkerThread::cancel() {
 void WorkerThread::run(std::function<bool()> workFunc) {
     std::lock_guard<std::mutex> lock(m_mutex);
     m_cancel = false;
-    m_workerFunc = move(workFunc);
+    m_workerFunc = std::move(workFunc);
     m_workReady.notify_one();
 }
 
