@@ -33,7 +33,7 @@ using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::power;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CertifiedSender");
+#define TAG "CertifiedSender"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <cctype>
 #include <iomanip>
 #include <sstream>
 
@@ -28,7 +29,7 @@ namespace playlistParser {
 using namespace avsCommon::utils::playlistParser;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("M3UParser");
+#define TAG "M3UParser"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

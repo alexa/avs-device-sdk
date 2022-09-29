@@ -40,7 +40,7 @@ static const std::string VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_NAME = "Visu
 static const std::string VISUALACTIVITYTRACKER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("VisualActivityTracker");
+#define TAG "VisualActivityTracker"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -110,7 +110,7 @@ void VisualActivityTracker::provideState(
     const avsCommon::avs::NamespaceAndName& stateProviderName,
     unsigned int stateRequestToken) {
     ACSDK_DEBUG5(LX("provideState"));
-    m_executor.submit([this, stateRequestToken]() { executeProvideState(stateRequestToken); });
+    m_executor.execute([this, stateRequestToken]() { executeProvideState(stateRequestToken); });
 }
 
 void VisualActivityTracker::notifyOfActivityUpdates(const std::vector<Channel::State>& channels) {
@@ -132,7 +132,7 @@ void VisualActivityTracker::notifyOfActivityUpdates(const std::vector<Channel::S
         }
     }
 
-    m_executor.submit([this, channels]() {
+    m_executor.execute([this, channels]() {
         // The last element of the vector is the most recent channel state.
         m_channelState = channels.back();
     });

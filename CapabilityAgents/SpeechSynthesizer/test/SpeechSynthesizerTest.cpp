@@ -167,6 +167,22 @@ static const std::string PAYLOAD_TEST_MULTIPLE_ANALYZER =
             "]"
         "}";
 // clang-format on
+/// A complete unparsed JSON directive for creating a directive without an attachment manager.
+// clang-format off
+static const std::string UNPARSED_DIRECTIVE_TEST =
+        "{"
+            "\"directive\": {"
+                "\"header\": {"
+                    "\"namespace\":\"" + NAMESPACE_SPEECH_SYNTHESIZER + "\","
+                    "\"name\":\"" + NAME_SPEAK + "\","
+                    "\"messageId\":\"" + MESSAGE_ID_TEST + "\","
+                    "\"dialogRequestId\":\"" + DIALOG_REQUEST_ID_TEST + "\""
+                "},"
+                "\"payload\":" +
+                    PAYLOAD_TEST +
+            "}"
+        "}";
+// clang-format on
 
 /// The @c FINISHED state of the @c SpeechSynthesizer.
 static const std::string FINISHED_STATE("FINISHED");
@@ -1948,6 +1964,86 @@ TEST_F(SpeechSynthesizerTest, test_parsingMultipleAnalyzerConfig) {
     ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStarted());
     ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
     ASSERT_TRUE(std::future_status::ready == m_wakeSendMessageFuture.wait_for(MY_WAIT_TIMEOUT));
+}
+
+/*
+
+ * Test playing a directive after capability agent is given a empty attachment reader.
+
+ *
+
+ * Expect the speech synthesizer to cancel the first directive, and play the second directive.
+
+ */
+
+TEST_F(SpeechSynthesizerTest, test_handleDirectiveWithEmptyAttachment) {
+    std::pair<std::unique_ptr<AVSDirective>, AVSDirective::ParseStatus> directivePair =
+        AVSDirective::create(UNPARSED_DIRECTIVE_TEST, nullptr, CONTEXT_ID_TEST);
+
+    std::shared_ptr<AVSDirective> directiveOne = std::move(directivePair.first);
+    {
+        SCOPED_TRACE("Empty attachment manager directive.");
+        EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _))
+            .Times(0)
+            .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
+        EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
+            .Times(0);
+        EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(0);
+
+        m_speechSynthesizer->handleDirectiveImmediately(directiveOne);
+    }
+
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
+        NAMESPACE_SPEECH_SYNTHESIZER, NAME_SPEAK, MESSAGE_ID_TEST_2, DIALOG_REQUEST_ID_TEST);
+    std::shared_ptr<AVSDirective> directiveTwo =
+        AVSDirective::create("", avsMessageHeader, PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST);
+    {
+        SCOPED_TRACE("Check success after failed.");
+        EXPECT_CALL(*(m_mockFocusManager.get()), acquireChannel(CHANNEL_NAME, _))
+            .Times(1)
+            .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnAcquireChannel));
+        EXPECT_CALL(
+            *(m_mockSpeechPlayer.get()),
+            attachmentSetSource(A<std::shared_ptr<avsCommon::avs::attachment::AttachmentReader>>(), nullptr))
+            .Times(AtLeast(1));
+        EXPECT_CALL(*(m_mockSpeechPlayer.get()), play(_)).Times(AtLeast(1));
+        EXPECT_CALL(*(m_mockSpeechPlayer.get()), getOffset(_))
+            .Times(1)
+            .WillOnce(Return(OFFSET_IN_CHRONO_MILLISECONDS_TEST));
+        EXPECT_CALL(*(m_mockSpeechPlayer.get()), getMediaPlayerState(_)).Times(AtLeast(2));
+        EXPECT_CALL(
+            *(m_mockContextManager.get()),
+            setState(NAMESPACE_AND_NAME_SPEECH_STATE, PLAYING_STATE_TEST, StateRefreshPolicy::ALWAYS, 0))
+            .Times(AtLeast(1))
+            .WillOnce(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSetState));
+        EXPECT_CALL(*(m_mockMessageSender.get()), sendMessage(_))
+            .Times(AtLeast(1))
+            .WillRepeatedly(InvokeWithoutArgs(this, &SpeechSynthesizerTest::wakeOnSendMessage));
+        EXPECT_CALL(*m_mockCaptionManager, isEnabled()).WillRepeatedly(Return(true));
+        EXPECT_CALL(*m_mockCaptionManager, onCaption(_, _)).Times(1);
+        EXPECT_CALL(*m_mockPowerResourceManager, acquire(_, _)).Times(AtLeast(1));
+
+        std::vector<audioAnalyzer::AudioAnalyzerState> data;
+        EXPECT_CALL(
+            *m_mockSpeechSynthesizerObserver,
+            onStateChanged(SpeechSynthesizerObserverInterface::SpeechSynthesizerState::GAINING_FOCUS, _, _, _))
+            .Times(1);
+        EXPECT_CALL(
+            *m_mockSpeechSynthesizerObserver,
+            onStateChanged(SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING, _, _, Eq(data)))
+            .Times(1);
+
+        m_speechSynthesizer->addObserver(m_mockSpeechSynthesizerObserver);
+        m_speechSynthesizer->handleDirectiveImmediately(directiveTwo);
+        ASSERT_TRUE(std::future_status::ready == m_wakeAcquireChannelFuture.wait_for(MY_WAIT_TIMEOUT));
+        m_speechSynthesizer->onFocusChanged(FocusState::FOREGROUND, MixingBehavior::PRIMARY);
+        ASSERT_TRUE(std::future_status::ready == m_wakeSetStateFuture.wait_for(MY_WAIT_TIMEOUT));
+        m_wakeSetStatePromise = std::promise<void>();
+        m_wakeSetStateFuture = m_wakeSetStatePromise.get_future();
+        ASSERT_TRUE(m_mockSpeechPlayer->waitUntilPlaybackStarted());
+    }
 }
 
 }  // namespace test

@@ -61,11 +61,13 @@ public:
 
     /// @name PowerResourceManagerInterface Legacy Methods
     /// @{
+    /**********************************Deprecated Legacy APIs**********************************************/
     void acquirePowerResource(
         const std::string& component,
         const PowerResourceLevel level = PowerResourceLevel::STANDBY_MED) override;
     void releasePowerResource(const std::string& component) override;
     bool isPowerResourceAcquired(const std::string& component) override;
+    /******************************************************************************************************/
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceId> create(
         const std::string& resourceId,
         bool isRefCounted = true,

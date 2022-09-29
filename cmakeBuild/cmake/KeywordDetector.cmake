@@ -2,7 +2,7 @@
 # Setup the Keyword Detector type and compiler options.
 #
 # To build with a Keyword Detector, run the following command with a keyword detector type of AMAZON_KEY_WORD_DETECTOR,
-# AMAZONLITE_KEY_WORD_DETECTOR, or SENSORY_KEY_WORD_DETECTOR:
+# AMAZONLITE_KEY_WORD_DETECTOR:
 #     cmake <path-to-source>
 #       -DAMAZON_KEY_WORD_DETECTOR=ON
 #           -DAMAZON_KEY_WORD_DETECTOR_LIB_PATH=<path-to-amazon-lib>
@@ -12,9 +12,6 @@
 #           -DAMAZONLITE_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-amazon-include-dir>
 #           -DAMAZONLITE_KEY_WORD_DETECTOR_DYNAMIC_MODEL_LOADING=<ON_OR_OFF>
 #           -DAMAZONLITE_KEY_WORD_DETECTOR_MODEL_CPP_PATH=<path-to-model-cpp-file-if-dynamic-model-loading-disabled>
-#       -DSENSORY_KEY_WORD_DETECTOR=ON
-#           -DSENSORY_KEY_WORD_DETECTOR_LIB_PATH=<path-to-sensory-lib>
-#           -DSENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR=<path-to-sensory-include-dir>
 #
 
 option(AMAZON_KEY_WORD_DETECTOR "Enable Amazon keyword detector." OFF)
@@ -33,13 +30,7 @@ mark_as_dependent(AMAZONLITE_KEY_WORD_DETECTOR_MODEL_CPP_PATH AMAZONLITE_KEY_WOR
 mark_as_dependent(AMAZONLITE_KEY_WORD_DETECTOR_LIB_PATH AMAZONLITE_KEY_WORD_DETECTOR)
 mark_as_dependent(AMAZONLITE_KEY_WORD_DETECTOR_INCLUDE_DIR AMAZONLITE_KEY_WORD_DETECTOR)
 
-option(SENSORY_KEY_WORD_DETECTOR "Enable Sensory keyword detector." OFF)
-set(SENSORY_KEY_WORD_DETECTOR_LIB_PATH "" CACHE FILEPATH "Sensory keyword detector library path.")
-set(SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR "" CACHE PATH "Sensory keyword detector include dir.")
-mark_as_dependent(SENSORY_KEY_WORD_DETECTOR_LIB_PATH SENSORY_KEY_WORD_DETECTOR)
-mark_as_dependent(SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR SENSORY_KEY_WORD_DETECTOR)
-
-if(NOT AMAZON_KEY_WORD_DETECTOR AND NOT AMAZONLITE_KEY_WORD_DETECTOR AND NOT SENSORY_KEY_WORD_DETECTOR)
+if(NOT AMAZON_KEY_WORD_DETECTOR AND NOT AMAZONLITE_KEY_WORD_DETECTOR)
     message("No keyword detector type specified, skipping build of keyword detector.")
     return()
 endif()
@@ -68,21 +59,4 @@ if(AMAZONLITE_KEY_WORD_DETECTOR)
     add_definitions(-DKWD)
     add_definitions(-DKWD_AMAZONLITE)
     set(KWD ON)
-endif()
-
-if(SENSORY_KEY_WORD_DETECTOR)
-    message("Creating ${PROJECT_NAME} with keyword detector type: Sensory")
-    if(NOT SENSORY_KEY_WORD_DETECTOR_LIB_PATH)
-        message(FATAL_ERROR "Must pass library path of Sensory KeywordDetector!")
-    endif()
-    if(NOT SENSORY_KEY_WORD_DETECTOR_INCLUDE_DIR)
-        message(FATAL_ERROR "Must pass include dir path of Sensory KeywordDetector!")
-    endif()
-    add_definitions(-DKWD)
-    add_definitions(-DKWD_SENSORY)
-    set(KWD ON)
-
-    # If Sensory KWD Enabled Add SensoryAdapter to extension paths to include with project.
-    set(EXTENSION_PATHS "${PROJECT_SOURCE_DIR}/applications/acsdkSensoryAdapter;${EXTENSION_PATHS}" CACHE STRING
-        "Adding SensoryAdapter to the ExtensionPaths" FORCE)
 endif()

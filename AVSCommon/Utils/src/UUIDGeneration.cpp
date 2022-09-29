@@ -34,7 +34,7 @@ namespace utils {
 namespace uuidGeneration {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("UUIDGeneration");
+#define TAG "UUIDGeneration"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -177,13 +177,13 @@ static void addDefaultSeedLocked() {
     std::random_device rd;
     uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     if (lastInvokeTime > 0) {
-        seedsPool.push_front((uint32_t)(timeSeed - lastInvokeTime));  // interval between two invocations
+        seedsPool.push_front(static_cast<uint32_t>(timeSeed - lastInvokeTime));  // interval between two invocations
     }
     lastInvokeTime = timeSeed;
-    seedsPool.push_front((uint32_t)timeSeed);  // lower 32bits of current time
-    seedsPool.push_front(rd());                // random device
-    seedsPool.push_front(
-        reinterpret_cast<std::intptr_t>(&timeSeed));  // lower 32bits of memory address of temporary variable
+    seedsPool.push_front(static_cast<uint32_t>(timeSeed));  // lower 32bits of current time
+    seedsPool.push_front(rd());                             // random device
+    seedsPool.push_front(static_cast<uint32_t>(
+        reinterpret_cast<std::intptr_t>(&timeSeed)));  // lower 32bits of memory address of temporary variable
 
     if (seedsPool.size() > MAX_SEEDS_POOL_SIZE) {
         seedsPool.resize(MAX_SEEDS_POOL_SIZE);

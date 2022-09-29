@@ -55,7 +55,7 @@ std::shared_ptr<HTTP2RequestInterface> MockHTTP2Connection::createAndSendRequest
 
     if (request->getRequestType() == HTTP2RequestType::POST) {
         // Parse POST HTTP2 Requests.
-        std::lock_guard<std::mutex> lock(m_postRequestMutex);
+        std::lock_guard<std::mutex> innerLock(m_postRequestMutex);
         m_postRequestQueue.push_back(request);
         if (m_postResponseCode != HTTPResponseCode::HTTP_RESPONSE_CODE_UNDEFINED) {
             request->getSink()->onReceiveResponseCode(responseCodeToInt(m_postResponseCode));
@@ -66,12 +66,12 @@ std::shared_ptr<HTTP2RequestInterface> MockHTTP2Connection::createAndSendRequest
         m_requestPostCv.notify_one();
     } else if (m_downchannelURL == request->getUrl()) {
         // Push downchannel requests to its queue.
-        std::lock_guard<std::mutex> lock(m_downchannelRequestMutex);
+        std::lock_guard<std::mutex> innerLock(m_downchannelRequestMutex);
         m_downchannelRequestQueue.push_back(request);
         m_downchannelRequestCv.notify_all();
     } else if (m_pingURL == request->getUrl()) {
         // Push ping requests to its queue.
-        std::lock_guard<std::mutex> lock(m_pingRequestMutex);
+        std::lock_guard<std::mutex> innerLock(m_pingRequestMutex);
         m_pingRequestQueue.push_back(request);
         m_pingRequestCv.notify_one();
     }

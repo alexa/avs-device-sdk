@@ -210,7 +210,8 @@ private:
 
 template <typename CollectionT, typename ValueT>
 bool JsonGenerator::addStringArray(const std::string& key, const CollectionT& collection) {
-    if (!checkWriter() || !m_writer.Key(key.c_str(), key.length())) {
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    if (!checkWriter() || !m_writer.Key(key.c_str(), keyLength)) {
         return false;
     }
     m_writer.StartArray();
@@ -224,7 +225,8 @@ bool JsonGenerator::addStringArray(const std::string& key, const CollectionT& co
 
 template <typename CollectionT, typename ValueT>
 bool JsonGenerator::addMembersArray(const std::string& key, const CollectionT& collection) {
-    if (!checkWriter() || !m_writer.Key(key.c_str(), key.length())) {
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    if (!checkWriter() || !m_writer.Key(key.c_str(), keyLength)) {
         return false;
     }
     m_writer.StartArray();
@@ -238,7 +240,8 @@ bool JsonGenerator::addMembersArray(const std::string& key, const CollectionT& c
 
 template <typename CollectionArrayT, typename CollectionValueT, typename ValueT>
 bool JsonGenerator::addCollectionOfStringArray(const std::string& key, const CollectionArrayT& collection) {
-    if (!checkWriter() || !m_writer.Key(key.c_str(), key.length())) {
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    if (!checkWriter() || !m_writer.Key(key.c_str(), keyLength)) {
         return false;
     }
     m_writer.StartArray();

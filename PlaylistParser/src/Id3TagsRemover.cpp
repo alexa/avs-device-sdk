@@ -27,7 +27,7 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::utils::id3Tags;
 using namespace avsCommon::utils::sds;
 
-static const std::string TAG("Id3TagsRemover");
+#define TAG "Id3TagsRemover"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

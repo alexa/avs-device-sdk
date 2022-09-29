@@ -36,6 +36,8 @@ static constexpr const char* DIRECTIVE_DISPATCHED_IMMEDIATE = "DIRECTIVE_DISPATC
 
 /// Names of the new recordered timepoints for UPL
 static constexpr const char* END_OF_UTTERANCE = "END_OF_UTTERANCE";
+static constexpr const char* END_OF_WW = "END_OF_WW";
+static constexpr const char* RECOGNIZE_EVENT_IS_BUILT = "RECOGNIZE_EVENT_IS_BUILT";
 
 /// Datapoint name for the start of utterance with wakeword detection
 static constexpr const char* START_OF_STREAM_TIMESTAMP = "START_OF_STREAM_TIMESTAMP";

@@ -31,7 +31,7 @@ using namespace avsCommon::utils::logger;
 using namespace alexaClientSDK::storage::sqliteStorage;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SQLiteMessageStorage");
+#define TAG "SQLiteMessageStorage"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -19,7 +19,7 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SettingEventRequestObserver");
+#define TAG "SettingEventRequestObserver"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

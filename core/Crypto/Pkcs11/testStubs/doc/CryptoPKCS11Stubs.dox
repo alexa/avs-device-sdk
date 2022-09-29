@@ -1,0 +1,32 @@
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+/**
+ * @defgroup Lib_acsdkPkcs11Stubs Test Stubs for PKCS#11 Library
+ * @brief HSM function stubs for @a Lib_acsdkCryptoInterfaces.
+ *
+ * This module provide bare-bone stub functionality subset from PKCS#11 specification. Only few functions are
+ * implemented, and code can expect the following:
+ * - There is only one hardcoded slot with ACSDK token name.
+ * - User PIN is hardcoded to 1234 value.
+ * - There are two object that corresponds to AES-256 and AES-128 keys with TEST_KEY name.
+ * - Code supports AES encryption and decryption operations using @ref Lib_acsdkCrypto.
+ *
+ * This is a test support module, and must not be used either for integration tests or in production.
+ *
+ * @sa Lib_acsdkCryptoInterfaces
+ * @sa Lib_acsdkPkcs11
+ * @sa Lib_acsdkCrypto
+ */

@@ -1141,6 +1141,18 @@ TEST_F(NotificationsCapabilityAgentTest, test_clearData) {
     ASSERT_TRUE(m_testNotificationsObserver->waitFor(IndicatorState::OFF, MY_WAIT_TIMEOUT));
 }
 
+TEST_F(NotificationsCapabilityAgentTest, test_addObserverToNotificationsAfterCapabilityAgentDestroyed) {
+    initializeCapabilityAgent();
+    auto notifier = m_notificationsCapabilityAgent->getNotificationsNotifierInterface();
+    ASSERT_TRUE(notifier);
+
+    m_renderer.reset();
+    m_notificationsCapabilityAgent->shutdown();
+    m_notificationsCapabilityAgent.reset();
+
+    notifier->addObserver(m_testNotificationsObserver);
+}
+
 }  // namespace test
 }  // namespace acsdkNotifications
 }  // namespace alexaClientSDK

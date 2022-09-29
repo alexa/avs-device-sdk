@@ -43,7 +43,7 @@ static const std::string AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_NAME = "Audio
 static const std::string AUDIOACTIVITYTRACKER_CAPABILITY_INTERFACE_VERSION = "1.0";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AudioActivityTracker");
+#define TAG "AudioActivityTracker"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -113,12 +113,12 @@ void AudioActivityTracker::provideState(
     const avsCommon::avs::NamespaceAndName& stateProviderName,
     unsigned int stateRequestToken) {
     ACSDK_DEBUG5(LX("provideState"));
-    m_executor.submit([this, stateRequestToken]() { executeProvideState(stateRequestToken); });
+    m_executor.execute([this, stateRequestToken]() { executeProvideState(stateRequestToken); });
 }
 
 void AudioActivityTracker::notifyOfActivityUpdates(const std::vector<Channel::State>& channelStates) {
     ACSDK_DEBUG5(LX("notifyOfActivityUpdates"));
-    m_executor.submit([this, channelStates]() { executeNotifyOfActivityUpdates(channelStates); });
+    m_executor.execute([this, channelStates]() { executeNotifyOfActivityUpdates(channelStates); });
 }
 
 AudioActivityTracker::AudioActivityTracker(

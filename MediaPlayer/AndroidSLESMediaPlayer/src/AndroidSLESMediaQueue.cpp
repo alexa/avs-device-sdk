@@ -20,7 +20,7 @@
 #include "AndroidSLESMediaPlayer/AndroidSLESMediaQueue.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"AndroidSLESMediaQueue"};
+#define TAG "AndroidSLESMediaQueue"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -89,7 +89,7 @@ std::unique_ptr<AndroidSLESMediaQueue> AndroidSLESMediaQueue::create(
 }
 
 void AndroidSLESMediaQueue::onBufferFree() {
-    m_executor.submit([this]() { fillBuffer(); });
+    m_executor.execute([this]() { fillBuffer(); });
 }
 
 AndroidSLESMediaQueue::~AndroidSLESMediaQueue() {
@@ -212,7 +212,7 @@ void AndroidSLESMediaQueue::enqueueSilence(const PlaybackConfiguration& configur
 void AndroidSLESMediaQueue::fillAllBuffers(const PlaybackConfiguration& configuration) {
     enqueueSilence(configuration);
     for (; m_index < m_buffers.size(); ++m_index) {
-        m_executor.submit([this]() { fillBuffer(); });
+        m_executor.execute([this]() { fillBuffer(); });
     }
     m_index = 0;
 }

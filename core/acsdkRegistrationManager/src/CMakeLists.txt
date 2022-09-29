@@ -4,6 +4,7 @@ add_library(RegistrationManager
         CustomerDataHandler.cpp
         CustomerDataManager.cpp
         CustomerDataManagerFactory.cpp
+        RegistrationManagerFactory.cpp
         RegistrationManager.cpp
         RegistrationManagerComponent.cpp
         RegistrationNotifier.cpp)

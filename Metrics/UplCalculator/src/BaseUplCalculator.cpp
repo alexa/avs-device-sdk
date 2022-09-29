@@ -23,7 +23,7 @@ namespace metrics {
 namespace implementations {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("BaseUplCalculator");
+#define TAG "BaseUplCalculator"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -78,13 +78,19 @@ void BaseUplCalculator::inspectMetric(
         }
     } else if (WW_DURATION == metricName) {
         std::chrono::milliseconds startOfStreamTimestamp;
+        std::chrono::milliseconds wakeWordDuration;
         if (getDuration(START_OF_STREAM_TIMESTAMP, metricEvent, startOfStreamTimestamp)) {
             // Sends a warning since it overwrites previous START_OF_UTTERANCE
             m_uplData->addTimepoint(START_OF_UTTERANCE, UplTimePoint(startOfStreamTimestamp));
+            if (getDuration(WW_DURATION, metricEvent, wakeWordDuration)) {
+                m_uplData->addTimepoint(END_OF_WW, UplTimePoint(startOfStreamTimestamp + wakeWordDuration));
+            }
         } else {
             ACSDK_ERROR(
                 LX("inspectMetricFailed").d("reason", "missing START_OF_STREAM_TIMESTAMP").d("metricName", metricName));
         }
+    } else if (RECOGNIZE_EVENT_IS_BUILT == metricName) {
+        m_uplData->addTimepoint(RECOGNIZE_EVENT_IS_BUILT, metricEvent->getSteadyTimestamp());
     } else if (STOP_CAPTURE == metricName) {
         m_uplData->addTimepoint(metricName, metricEvent->getSteadyTimestamp());
     } else if (END_OF_SPEECH_OFFSET == metricName) {

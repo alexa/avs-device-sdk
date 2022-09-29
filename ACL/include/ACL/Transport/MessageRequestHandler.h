@@ -115,7 +115,7 @@ private:
      * Record a stream metric once when a specific threshold of bytes have been read from the stream.
      * The stream metric name and threshold will be specified in the MessageRequest.
      */
-    void recordStreamMetric(int bytes);
+    void recordStreamMetric(std::size_t bytes);
 
     /**
      * Record the metric that specifics the start of sending the Message Event to the cloud.
@@ -159,7 +159,7 @@ private:
     avsCommon::sdkInterfaces::MessageRequestObserverInterface::Status m_resultStatus;
 
     /// The number of bytes that have been read from the stream.
-    unsigned int m_streamBytesRead;
+    std::size_t m_streamBytesRead;
 
     /// If the stream metric has already been recorded.
     bool m_recordedStreamMetric;

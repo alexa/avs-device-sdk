@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_MEDIAPLAYER_ERRORTYPES_H_
 
 #include <ostream>
+#include <string>
 
 namespace alexaClientSDK {
 namespace avsCommon {

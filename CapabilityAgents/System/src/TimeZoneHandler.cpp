@@ -34,7 +34,7 @@ using namespace avsCommon::utils::logger;
 using namespace settings;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("TimeZoneHandler");
+#define TAG "TimeZoneHandler"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -85,7 +85,7 @@ void TimeZoneHandler::handleDirectiveImmediately(std::shared_ptr<AVSDirective> d
         return;
     }
     auto info = createDirectiveInfo(directive, nullptr);
-    m_executor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
+    m_executor.execute([this, info]() { executeHandleDirectiveImmediately(info); });
 }
 void TimeZoneHandler::preHandleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {
     // intentional no-op
@@ -95,7 +95,7 @@ void TimeZoneHandler::handleDirective(std::shared_ptr<CapabilityAgent::Directive
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "info is nullptr."));
         return;
     }
-    m_executor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
+    m_executor.execute([this, info]() { executeHandleDirectiveImmediately(info); });
 }
 void TimeZoneHandler::cancelDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {
     // intentional no-op

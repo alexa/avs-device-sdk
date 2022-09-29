@@ -25,7 +25,7 @@
 #include <Endpoints/EndpointAttributeValidation.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DiscoveryUtils");
+#define TAG "DiscoveryUtils"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -112,6 +112,14 @@ static const std::string SCOPE_TYPE_KEY = "type";
 static const std::string SCOPE_TYPE_BEARER_TOKEN = "BearerToken";
 /// Scope Token key
 static const std::string SCOPE_TOKEN_KEY = "token";
+
+/// Maximum number of endpoints for a user.
+/// See here for more information: https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html#limits
+static constexpr size_t MAX_ENDPOINTS = 300;
+
+/// Maximum capabilities per endpoint.
+/// See here for more information: https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html#limits
+static constexpr size_t MAX_CAPABILITIES_PER_ENDPOINT = 100;
 
 /**
  * Helper struct to build json objects
@@ -412,6 +420,14 @@ std::string getDeleteReportEventJson(
     }
 
     return buildJsonEventString(header, Optional<AVSMessageEndpoint>(), payloadGenerator.toString());
+}
+
+size_t getMaxEndpoints() {
+    return MAX_ENDPOINTS;
+}
+
+size_t getMaxCapabilitiesPerEndpoint() {
+    return MAX_CAPABILITIES_PER_ENDPOINT;
 }
 
 }  // namespace utils

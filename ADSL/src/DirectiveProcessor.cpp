@@ -25,7 +25,7 @@
 #include "ADSL/DirectiveProcessor.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DirectiveProcessor");
+#define TAG "DirectiveProcessor"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -427,7 +427,6 @@ bool DirectiveProcessor::handleQueuedDirectivesLocked(std::unique_lock<std::mute
             scrubDialogRequestIdLocked(directive->getDialogRequestId());
         }
     }
-
     return handleDirectiveCalled;
 }
 

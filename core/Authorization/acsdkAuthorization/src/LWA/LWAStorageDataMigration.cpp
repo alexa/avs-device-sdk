@@ -22,17 +22,17 @@ namespace alexaClientSDK {
 namespace acsdkAuthorization {
 namespace lwa {
 
-using namespace ::alexaClientSDK::acsdkPropertiesInterfaces;
+using namespace ::alexaClientSDK::propertiesInterfaces;
 using namespace ::alexaClientSDK::storage;
 using namespace ::alexaClientSDK::avsCommon::utils::logger;
 using namespace ::alexaClientSDK::avsCommon::utils::error;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LWAStorageDataMigration");
+#define TAG "LWAStorageDataMigration"
 
 LWAStorageDataMigration::LWAStorageDataMigration(
     const std::shared_ptr<storage::sqliteStorage::SQLiteMiscStorage>& storage,
-    const std::shared_ptr<acsdkPropertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory) noexcept :
+    const std::shared_ptr<propertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory) noexcept :
         m_storage{storage},
         m_propertiesFactory{propertiesFactory} {
 }
@@ -69,7 +69,7 @@ void LWAStorageDataMigration::upgradeStorage() noexcept {
 bool LWAStorageDataMigration::migrateSinglePropertyTable(
     const std::string& tableName,
     const std::string& columnName,
-    const std::shared_ptr<alexaClientSDK::acsdkPropertiesInterfaces::PropertiesInterface>& properties,
+    const std::shared_ptr<alexaClientSDK::propertiesInterfaces::PropertiesInterface>& properties,
     const std::string& propertyName) noexcept {
     if (!m_storage) {
         ACSDK_ERROR(LX("migrateSinglePropertyTableFailed").d("reason", "storageNull"));

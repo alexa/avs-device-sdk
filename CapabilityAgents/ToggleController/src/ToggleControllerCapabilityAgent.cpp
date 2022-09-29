@@ -29,7 +29,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::configuration;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"ToggleControllerCapabilityAgent"};
+#define TAG "ToggleControllerCapabilityAgent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -202,7 +202,7 @@ void ToggleControllerCapabilityAgent::handleDirective(std::shared_ptr<DirectiveI
         return;
     }
 
-    m_executor.submit([this, info] {
+    m_executor.execute([this, info] {
         ACSDK_DEBUG5(LX("handleDirectiveInExecutor"));
         const std::string directiveName = info->directive->getName();
         if (!info->directive->getEndpoint().hasValue() ||
@@ -242,7 +242,7 @@ void ToggleControllerCapabilityAgent::provideState(
     ACSDK_DEBUG5(
         LX(__func__).d("contextRequestToken", contextRequestToken).sensitive("stateProviderName", stateProviderName));
 
-    m_executor.submit([this, stateProviderName, contextRequestToken] {
+    m_executor.execute([this, stateProviderName, contextRequestToken] {
         ACSDK_DEBUG5(LX("provideStateInExecutor"));
         executeProvideState(stateProviderName, contextRequestToken);
     });
@@ -316,7 +316,7 @@ void ToggleControllerCapabilityAgent::onToggleStateChanged(
         return;
     }
 
-    m_executor.submit([this, toggleState, cause] {
+    m_executor.execute([this, toggleState, cause] {
         m_contextManager->reportStateChange(
             CapabilityTag(NAMESPACE, TOGGLESTATE_PROPERTY_NAME, m_endpointId, m_instance),
             buildCapabilityState(toggleState),

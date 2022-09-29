@@ -167,11 +167,14 @@ enum class SupportedPlaybackOperation {
     /// Enable Loop on.
     ENABLE_REPEAT,
 
+    /// Disable loop on.
+    DISABLE_REPEAT,
+
     /// Enable repeat of a track .
     ENABLE_REPEAT_ONE,
 
-    /// Disable loop on.
-    DISABLE_REPEAT,
+    /// Disable repeat of a track.
+    DISABLE_REPEAT_ONE,
 
     /// Enable shuffle.
     ENABLE_SHUFFLE,
@@ -378,15 +381,6 @@ struct AdapterSessionState {
 
     /// The validity period of the token in milliseconds.
     std::chrono::milliseconds tokenRefreshInterval;
-
-#ifdef MEDIA_PORTABILITY_ENABLED
-    /// A universally unique identifier (UUID) generated to the RFC 4122
-    /// specification used to track media playback
-    std::string mediaSessionId;
-
-    /// A identifier token used to opaquely plumb routing info from directives to events
-    std::string correlationToken;
-#endif
 };
 
 /**
@@ -551,12 +545,6 @@ public:
         bool preload;
         /// PlayRequestor for indicating who requested playback
         avsCommon::avs::PlayRequestor playRequestor;
-#ifdef MEDIA_PORTABILITY_ENABLED
-        /// mediaSessionId used to track media playback
-        std::string mediaSessionId;
-        /// correlationToken used to opaquely plumb routing info
-        std::string correlationToken;
-#endif
         /// Playback target to play on
         std::string playbackTarget;
 
@@ -590,10 +578,6 @@ public:
             Navigation navigation,
             bool preload,
             const avsCommon::avs::PlayRequestor& playRequestor,
-#ifdef MEDIA_PORTABILITY_ENABLED
-            const std::string& mediaSessionId,
-            const std::string& correlationToken,
-#endif
             const std::string& playbackTarget) :
                 playContextToken{playContextToken},
                 index{index},
@@ -603,10 +587,6 @@ public:
                 navigation{navigation},
                 preload{preload},
                 playRequestor(playRequestor),
-#ifdef MEDIA_PORTABILITY_ENABLED
-                mediaSessionId{mediaSessionId},
-                correlationToken{correlationToken},
-#endif
                 playbackTarget{playbackTarget} {
         }
     };
@@ -655,15 +635,7 @@ public:
      * that will handle the play control.
      * @param isLocal Whether play control is locally triggered on device
      */
-    virtual void handlePlayControl(
-        RequestType requestType,
-#ifdef MEDIA_PORTABILITY_ENABLED
-        /// @param mediaSessionId The optional @c mediaSessionId used to track media playback
-        /// @param correlationToken The optional @c correlationToken used to opaquely plumb routing info
-        const std::string& mediaSessionId,
-        const std::string& correlationToken,
-#endif
-        const std::string& playbackTarget) = 0;
+    virtual void handlePlayControl(RequestType requestType, const std::string& playbackTarget) = 0;
 
     /**
      * Method to seek to the given offset.
@@ -838,6 +810,8 @@ inline std::string SupportedPlaybackOperationToString(SupportedPlaybackOperation
             return "EnableRepeatOne";
         case SupportedPlaybackOperation::DISABLE_REPEAT:
             return "DisableRepeat";
+        case SupportedPlaybackOperation::DISABLE_REPEAT_ONE:
+            return "DisableRepeatOne";
         case SupportedPlaybackOperation::ENABLE_SHUFFLE:
             return "EnableShuffle";
         case SupportedPlaybackOperation::DISABLE_SHUFFLE:

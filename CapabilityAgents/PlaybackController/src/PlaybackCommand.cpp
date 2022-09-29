@@ -28,7 +28,7 @@ using namespace avsCommon::avs;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PlaybackCommand");
+#define TAG "PlaybackCommand"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

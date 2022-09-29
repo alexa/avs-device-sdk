@@ -17,10 +17,12 @@
 #define ACSDKSAMPLEAPPLICATIONCBLAUTHREQUESTER_SAMPLEAPPLICATIONCBLAUTHREQUESTER_H_
 
 #include <memory>
+#include <mutex>
+#include <string>
 
-#include <acsdkSampleApplicationInterfaces/UIManagerInterface.h>
-#include <CBLAuthDelegate/CBLAuthRequesterInterface.h>
 #include <acsdkAuthorizationInterfaces/LWA/CBLAuthorizationObserverInterface.h>
+#include <acsdkSampleApplicationInterfaces/UIAuthNotifierInterface.h>
+#include <acsdkSampleApplicationInterfaces/UIManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkSampleApplicationCBLAuthRequester {
@@ -28,19 +30,8 @@ namespace acsdkSampleApplicationCBLAuthRequester {
 /**
  * Implementation of CBLAuthRequesterInterface.
  */
-class SampleApplicationCBLAuthRequester
-        : public authorization::cblAuthDelegate::CBLAuthRequesterInterface
-        , public acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface {
+class SampleApplicationCBLAuthRequester : public acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface {
 public:
-    /**
-     * Create a new instance of @c CBLAuthRequesterInterface.
-     *
-     * @param uiManager The instance of @c UIManagerInterface to use to message the user.
-     * @return A new instance of @c CBLAuthRequesterInterface.
-     */
-    static std::shared_ptr<CBLAuthRequesterInterface> createCBLAuthRequesterInterface(
-        const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager);
-
     /**
      * Create a new instance of @c CBLAuthorizationObserverInterface.
      *
@@ -51,18 +42,20 @@ public:
     createCBLAuthorizationObserverInterface(
         const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager);
 
-    /// @name CBLAuthDelegateRequester methods
+    /// @name CBLAuthorizationObserverInterface methods
     /// @{
     void onRequestAuthorization(const std::string& url, const std::string& code) override;
     void onCheckingForAuthorization() override;
-    /// @}
-
-    /// @name CBLAuthorizationObserverInterface methods
-    /// @{
     void onCustomerProfileAvailable(
         const acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface::CustomerProfile& customerProfile)
         override;
     /// @}
+
+    /**
+     * Set a notifier that bridges Authorization state from authorization requester to the user interface.
+     * @param uiAuthNotifier An instance of @c UIAuthNotifierInterface.
+     */
+    void setUIAuthNotifier(std::shared_ptr<acsdkSampleApplicationInterfaces::UIAuthNotifierInterface> uiAuthNotifier);
 
 private:
     /**
@@ -73,11 +66,23 @@ private:
     SampleApplicationCBLAuthRequester(
         const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager);
 
-    /// The instance of @c UIManagerInterface to use to message the user.
+    /// The instance of @c UIManagerInterface used to message the user.
     std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface> m_uiManager;
+
+    /// The instance of @c UIAuthNotifierInterface used to notify UI about the authorization events.
+    std::shared_ptr<acsdkSampleApplicationInterfaces::UIAuthNotifierInterface> m_uiAuthNotifier;
 
     /// Counter used to make repeated messages about checking for authorization distinguishable from each other.
     int m_authCheckCounter;
+
+    /// URL returned by CBLAuthRequesterInterface for authorization
+    std::string m_authUrl;
+
+    /// CBL Code returned by CBLAuthRequesterInterface for authorization
+    std::string m_authCode;
+
+    /// Mutex to synchronize rd/wr to the class.
+    std::mutex m_mutex;
 };
 
 }  // namespace acsdkSampleApplicationCBLAuthRequester

@@ -77,6 +77,25 @@ public:
         const NotificationProperties& properties) = 0;
 
     /**
+     * Handle an external volume/mute state event in the system and update the settings.
+     *
+     * A volume could be changed either using SpeakerManager instance or using any other component
+     * which support volume change. In the case, volume on the device is being updated by some
+     * other component, this interface could be used to update the speaker settings of the
+     * associated @c ChannelVolumeInterface. This interface does not modify/change the volume
+     * or mute. It should be used to update speaker settings within SpeakerManager and notify
+     * AVS/observers if required of this change.
+     *
+     * @param type The type of @c ChannelVolumeInterface to retrieve settings for.
+     * @param speakerSettings New updated value. Values must be between [0,100]
+     * @param properties Notification properties that specify how the volume change will be notified.
+     */
+    virtual void onExternalSpeakerSettingsUpdate(
+        ChannelVolumeInterface::Type type,
+        const SpeakerInterface::SpeakerSettings& speakerSettings,
+        const NotificationProperties& properties){};
+
+    /**
      * Adjusts the volume for ChannelVolumeInterfaces of a certain @c Type with a volume delta.
      *
      * @param type The type of @c ChannelVolumeInterface to modify.

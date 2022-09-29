@@ -29,7 +29,7 @@ using namespace avsCommon::utils::mediaPlayer;
 using namespace avsCommon::utils::mediaPlayer::test;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PooledMediaPlayerFactoryTest");
+#define TAG "PooledMediaPlayerFactoryTest"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

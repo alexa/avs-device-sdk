@@ -36,7 +36,6 @@
 #include <AVSCommon/AVS/Attachment/AttachmentUtils.h>
 #include <Settings/SettingEventMetadata.h>
 #include <Settings/SharedAVSSettingProtocol.h>
-#include <SpeechEncoder/SpeechEncoder.h>
 #include <AVSCommon/AVS/Attachment/DefaultAttachmentReader.h>
 
 #include "AIP/AudioInputProcessor.h"
@@ -84,7 +83,7 @@ static const std::string CAPABILITY_INTERFACE_VALUES_KEY = "values";
 static const std::string CAPABILITY_INTERFACE_DEFAULT_LOCALE = "DEFAULT";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AudioInputProcessor");
+#define TAG "AudioInputProcessor"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -199,6 +198,8 @@ static const std::string WAKEWORD_DETECTION_SEGMENT_UPLOADED_PCM = "AIP_WAKEWORD
 
 /// Recognize EVENT is built for AIP metric source
 static const std::string RECOGNIZE_START_SEND_MESSAGE = "RECOGNIZE_EVENT_IS_BUILT";
+static const std::string RECOGNIZE_START_SEND_MESSAGE_ACTIVITY_NAME =
+    METRIC_ACTIVITY_NAME_PREFIX_AIP + RECOGNIZE_START_SEND_MESSAGE;
 
 /// Wakeword Activity Name for AIP metric source
 static const std::string START_OF_STREAM_TIMESTAMP = "START_OF_STREAM_TIMESTAMP";
@@ -216,6 +217,11 @@ static const std::string ACQUIRE_POWER_RESOURCE_ACTIVITY = METRIC_ACTIVITY_NAME_
 /// The duration metric for release power resource
 static const std::string RELEASE_POWER_RESOURCE = "RELEASE_POWER_RESOURCE";
 static const std::string RELEASE_POWER_RESOURCE_ACTIVITY = METRIC_ACTIVITY_NAME_PREFIX_AIP + RELEASE_POWER_RESOURCE;
+
+/// The timestamp for the start of execute on context available
+static const std::string FETCH_CONTEXT_DURATION = "FETCH_CONTEXT_DURATION";
+static const std::string FETCH_CONTEXT_DURATION_ACTIVITY_NAME =
+    METRIC_ACTIVITY_NAME_PREFIX_AIP + FETCH_CONTEXT_DURATION;
 
 /// End of Speech Offset Received Activity Name for AIP metric source
 static const std::string END_OF_SPEECH_OFFSET_RECEIVED = "END_OF_SPEECH_OFFSET";
@@ -259,6 +265,9 @@ static const int MILLISECONDS_PER_SECOND = 1000;
 static const int WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_OPUS = 5209;
 /// Threshold number of bytes for PCM Encoded Wakeword detection
 static const int WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_PCM = 40480;
+
+/// Cloud resolve key constant. Used to determine the encoding sent to the cloud.
+static const std::string CLOUD_RESOLVE_KEY = "CLOUD";
 
 /**
  * Helper function to get string values of encoding audio format, which are used in Recognize event.
@@ -410,7 +419,7 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
     std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
     const std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface>& capabilityChangeNotifier,
     std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting,
-    std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
+    std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface> audioEncoder,
     AudioProvider defaultAudioProvider,
     std::shared_ptr<PowerResourceManagerInterface> powerResourceManager,
     std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
@@ -470,7 +479,7 @@ std::shared_ptr<AudioInputProcessor> AudioInputProcessor::create(
         userInactivityMonitor,
         systemSoundPlayer,
         assetsManager,
-        speechEncoder,
+        audioEncoder,
         defaultAudioProvider,
         wakeWordConfirmation,
         speechConfirmation,
@@ -508,7 +517,7 @@ void AudioInputProcessor::addObserver(std::shared_ptr<ObserverInterface> observe
         ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    m_executor.submit([this, observer]() { m_observers.insert(observer); });
+    m_executor.execute([this, observer]() { m_observers.insert(observer); });
 }
 
 void AudioInputProcessor::removeObserver(std::shared_ptr<ObserverInterface> observer) {
@@ -579,11 +588,13 @@ std::future<void> AudioInputProcessor::resetState() {
 }
 
 void AudioInputProcessor::onContextAvailable(const std::string& jsonContext) {
-    m_executor.submit([this, jsonContext]() { executeOnContextAvailable(jsonContext); });
+    ACSDK_DEBUG0(LX(__func__));
+    m_executor.execute([this, jsonContext]() { executeOnContextAvailable(jsonContext); });
 }
 
 void AudioInputProcessor::onContextFailure(const ContextRequestError error) {
-    m_executor.submit([this, error]() { executeOnContextFailure(error); });
+    ACSDK_DEBUG0(LX(__func__));
+    m_executor.execute([this, error]() { executeOnContextFailure(error); });
 }
 
 void AudioInputProcessor::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
@@ -650,11 +661,11 @@ void AudioInputProcessor::onDeregistered() {
 
 void AudioInputProcessor::onFocusChanged(avsCommon::avs::FocusState newFocus, avsCommon::avs::MixingBehavior behavior) {
     ACSDK_DEBUG9(LX("onFocusChanged").d("newFocus", newFocus).d("MixingBehavior", behavior));
-    m_executor.submit([this, newFocus]() { executeOnFocusChanged(newFocus); });
+    m_executor.execute([this, newFocus]() { executeOnFocusChanged(newFocus); });
 }
 
 void AudioInputProcessor::onDialogUXStateChanged(DialogUXStateObserverInterface::DialogUXState newState) {
-    m_executor.submit([this, newState]() { executeOnDialogUXStateChanged(newState); });
+    m_executor.execute([this, newState]() { executeOnDialogUXStateChanged(newState); });
 }
 
 AudioInputProcessor::AudioInputProcessor(
@@ -666,7 +677,7 @@ AudioInputProcessor::AudioInputProcessor(
     std::shared_ptr<UserInactivityMonitorInterface> userInactivityMonitor,
     std::shared_ptr<SystemSoundPlayerInterface> systemSoundPlayer,
     const std::shared_ptr<LocaleAssetsManagerInterface>& assetsManager,
-    std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
+    std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface> audioEncoder,
     AudioProvider defaultAudioProvider,
     std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
     std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
@@ -684,7 +695,7 @@ AudioInputProcessor::AudioInputProcessor(
         m_contextManager{contextManager},
         m_focusManager{focusManager},
         m_userInactivityMonitor{userInactivityMonitor},
-        m_encoder{speechEncoder},
+        m_encoder{audioEncoder},
         m_defaultAudioProvider{defaultAudioProvider},
         m_lastAudioProvider{AudioProvider::null()},
         m_state{ObserverInterface::State::IDLE},
@@ -709,6 +720,7 @@ AudioInputProcessor::AudioInputProcessor(
         m_messageRequestResolver{nullptr},
         m_encodingAudioFormats{{DEFAULT_RESOLVE_KEY, AudioFormat::Encoding::LPCM}} {
     m_capabilityConfigurations.insert(capabilitiesConfiguration);
+    m_fetchContextTimeMetricData.setName(FETCH_CONTEXT_DURATION);
 
     if (m_powerResourceManager) {
         m_powerResourceId = m_powerResourceManager->create(
@@ -819,7 +831,7 @@ bool resolveMessageRequest(
     rapidjson::Value formatValue;
     auto encodingFormat = encodingFormats.at(resolveKey);
     auto formatString = encodingFormatToString(encodingFormat);
-    formatValue.SetString(formatString.c_str(), formatString.length());
+    formatValue.SetString(formatString.c_str(), static_cast<rapidjson::SizeType>(formatString.length()));
 
     if (payload->value.FindMember(FORMAT_KEY) != payload->value.MemberEnd()) {
         ACSDK_WARN(LX("Format already exists in Json payload. Replace it with").d("format", formatString));
@@ -868,7 +880,7 @@ std::future<bool> AudioInputProcessor::expectSpeechTimedOut() {
 
 void AudioInputProcessor::handleStopCaptureDirective(std::shared_ptr<DirectiveInfo> info) {
     m_stopCaptureReceivedTime = steady_clock::now();
-    m_executor.submit([this, info]() {
+    m_executor.execute([this, info]() {
         bool stopImmediately = true;
         executeStopCapture(stopImmediately, info);
     });
@@ -895,7 +907,7 @@ void AudioInputProcessor::handleExpectSpeechDirective(std::shared_ptr<DirectiveI
         return;
     }
 
-    m_executor.submit([this, timeout, info]() { executeExpectSpeech(milliseconds{timeout}, info); });
+    m_executor.execute([this, timeout, info]() { executeExpectSpeech(milliseconds{timeout}, info); });
 }
 
 void AudioInputProcessor::handleSetEndOfSpeechOffsetDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -1105,7 +1117,7 @@ bool AudioInputProcessor::executeRecognize(
     }
 
     if (settings::WakeWordConfirmationSettingType::TONE == m_wakeWordConfirmation->get()) {
-        m_executor.submit(
+        m_executor.execute(
             [this]() { m_systemSoundPlayer->playTone(SystemSoundPlayerInterface::Tone::WAKEWORD_NOTIFICATION); });
     }
 
@@ -1141,10 +1153,12 @@ bool AudioInputProcessor::executeRecognize(
     avsCommon::avs::AudioInputStream::Index encodingOffset = 0;
     AudioInputStream::Reader::Reference encodingReference = AudioInputStream::Reader::Reference::ABSOLUTE;
 
-    // Set up the speech encoder
+    // Set up the audio encoder
+    std::shared_ptr<AudioInputStream> encodedStream;
     if (m_usingEncoder) {
         ACSDK_DEBUG(LX("encodingAudio").d("format", avsEncodingFormat));
-        if (!m_encoder->startEncoding(provider.stream, provider.format, offset, reference)) {
+        encodedStream = m_encoder->startEncoding(provider.stream, provider.format, offset, reference);
+        if (!encodedStream) {
             ACSDK_ERROR(LX("executeRecognizeFailed").d("reason", "Failed to start encoder"));
             return false;
         }
@@ -1179,7 +1193,7 @@ bool AudioInputProcessor::executeRecognize(
         std::shared_ptr<attachment::AttachmentReader> audioReader =
             attachment::DefaultAttachmentReader<AudioInputStream>::create(
                 sds::ReaderPolicy::NONBLOCKING,
-                isLPCMEncodingAudioFormat ? provider.stream : m_encoder->getEncodedStream(),
+                isLPCMEncodingAudioFormat ? provider.stream : encodedStream,
                 isLPCMEncodingAudioFormat ? offset : encodingOffset,
                 isLPCMEncodingAudioFormat ? reference : encodingReference);
         if (!audioReader) {
@@ -1193,14 +1207,24 @@ bool AudioInputProcessor::executeRecognize(
         ACSDK_INFO(LX("Create audio attachment reader success")
                        .d("resolveKey", resolveKey)
                        .d("format", encodingFormatToString(it.second)));
+
+        if (resolveKey == CLOUD_RESOLVE_KEY) {
+            if (isLPCMEncodingAudioFormat) {
+                m_audioBytesForMetricThreshold = WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_PCM;
+                m_uploadMetricName = WAKEWORD_DETECTION_SEGMENT_UPLOADED_PCM;
+            } else {
+                m_audioBytesForMetricThreshold = WAKEWORD_DETECTION_SEGMENT_SIZE_BYTES_OPUS;
+                m_uploadMetricName = WAKEWORD_DETECTION_SEGMENT_UPLOADED_OPUS;
+            }
+        }
     }
 
     if (!multiStreamsRequestedLocked()) {
         m_messageRequestResolver = nullptr;
 
         // Set up format for single audio stream request
-        if (m_usingEncoder && m_encoder->getContext()) {
-            avsEncodingFormat = m_encoder->getContext()->getAVSFormatName();
+        if (m_usingEncoder) {
+            avsEncodingFormat = m_encoder->getAVSFormatName();
         }
         payloadGenerator.addMember(FORMAT_KEY, avsEncodingFormat);
 
@@ -1243,6 +1267,11 @@ bool AudioInputProcessor::executeRecognize(
 
     setState(ObserverInterface::State::RECOGNIZING);
 
+    // Notify observers of current ASRProfile
+    for (auto observer : m_observers) {
+        observer->onASRProfileChanged(asrProfileToString(provider.profile));
+    }
+
     // Note that we're preparing to send a Recognize event.
     m_preparingToSend = true;
 
@@ -1251,6 +1280,7 @@ bool AudioInputProcessor::executeRecognize(
     m_streamIsClosedInRecognizingState = false;
 
     //  Start assembling the context; we'll service the callback after assembling our Recognize event.
+    m_fetchContextTimeMetricData.startDurationTimer();
     m_contextManager->getContextWithoutReportableStateProperties(shared_from_this());
 
     // Stop the ExpectSpeech timer so we don't get a timeout.
@@ -1266,6 +1296,9 @@ bool AudioInputProcessor::executeRecognize(
     m_recognizeRequest.reset();
 
     // Handle metrics for this event.
+    if (m_usingEncoder) {
+        avsEncodingFormat = m_encoder->getAVSFormatName();
+    }
     submitMetric(
         m_metricRecorder,
         MetricEventBuilder{}
@@ -1282,6 +1315,7 @@ bool AudioInputProcessor::executeRecognize(
                               .setName("RESOURCE_TYPE_ID")
                               .setValue(std::to_string(m_resourceFlags.to_ulong()))
                               .build())
+            .addDataPoint(DataPointStringBuilder{}.setName("ENCODING_FORMAT").setValue(avsEncodingFormat).build())
             .addDataPoint(DataPointCounterBuilder{}.setName(START_OF_UTTERANCE).increment(1).build()),
         m_preCachedDialogRequestId);
 
@@ -1312,9 +1346,16 @@ bool AudioInputProcessor::executeRecognize(
                 .addDataPoint(
                     DataPointDurationBuilder{duration_cast<milliseconds>(startOfStreamTimestamp.time_since_epoch())}
                         .setName(START_OF_STREAM_TIMESTAMP)
-                        .build())
+                        .build()),
+            m_preCachedDialogRequestId);
+
+        submitMetric(
+            m_metricRecorder,
+            MetricEventBuilder{}
+                .setActivityName(RECOGNIZE_START_SEND_MESSAGE_ACTIVITY_NAME)
                 .addDataPoint(DataPointCounterBuilder{}.setName(RECOGNIZE_START_SEND_MESSAGE).increment(1).build()),
             m_preCachedDialogRequestId);
+
         ACSDK_DEBUG(LX(__func__).d("WW_DURATION(ms)", duration.count()));
     }
 
@@ -1330,6 +1371,13 @@ bool AudioInputProcessor::executeRecognize(
 void AudioInputProcessor::executeOnContextAvailable(const std::string& jsonContext) {
     ACSDK_DEBUG(LX("executeOnContextAvailable").sensitive("jsonContext", jsonContext));
 
+    /// Submit execute context start metric
+    submitMetric(
+        m_metricRecorder,
+        MetricEventBuilder{}
+            .setActivityName(FETCH_CONTEXT_DURATION_ACTIVITY_NAME)
+            .addDataPoint(m_fetchContextTimeMetricData.stopDurationTimer().build()),
+        m_preCachedDialogRequestId);
     // Should already be RECOGNIZING if we get here.
     if (m_state != ObserverInterface::State::RECOGNIZING) {
         ACSDK_ERROR(
@@ -1470,7 +1518,7 @@ bool AudioInputProcessor::executeStopCapture(bool stopImmediately, std::shared_p
     std::function<void()> stopCapture = [=] {
         ACSDK_DEBUG(LX("stopCapture").d("stopImmediately", stopImmediately));
         if (m_usingEncoder) {
-            // If SpeechEncoder is enabled, let it finish it so the stream will be closed automatically.
+            // If Audio Encoder is enabled, let it finish it so the stream will be closed automatically.
             m_encoder->stopEncoding(stopImmediately);
             m_usingEncoder = false;
         }
@@ -1631,7 +1679,7 @@ void AudioInputProcessor::setState(ObserverInterface::State state) {
 
     // Reset the user inactivity if transitioning to or from `RECOGNIZING` state.
     if (ObserverInterface::State::RECOGNIZING == m_state || ObserverInterface::State::RECOGNIZING == state) {
-        m_executor.submit([this]() { m_userInactivityMonitor->onUserActive(); });
+        m_executor.execute([this]() { m_userInactivityMonitor->onUserActive(); });
     }
 
     auto currentDialogRequestId =
@@ -1699,7 +1747,7 @@ void AudioInputProcessor::onExceptionReceived(const std::string& exceptionMessag
 
 void AudioInputProcessor::onSendCompleted(MessageRequestObserverInterface::Status status) {
     ACSDK_DEBUG(LX("onSendCompleted").d("status", status));
-    m_executor.submit([this, status]() {
+    m_executor.execute([this, status]() {
         if (MessageRequestObserverInterface::Status::SUCCESS == status &&
             ObserverInterface::State::RECOGNIZING == m_state) {
             // This is to take care of the edge case where the event stream is closed before a stop capture is received.
@@ -1715,7 +1763,7 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Aud
 }
 
 void AudioInputProcessor::onLocaleAssetsChanged() {
-    m_executor.submit([this]() { executeOnLocaleAssetsChanged(); });
+    m_executor.execute([this]() { executeOnLocaleAssetsChanged(); });
 }
 
 void AudioInputProcessor::executeOnLocaleAssetsChanged() {
@@ -1787,7 +1835,7 @@ bool AudioInputProcessor::handleSetWakeWordConfirmation(std::shared_ptr<Directiv
 
     auto executeChange = [this, value]() { m_wakeWordConfirmation->setAvsChange(value); };
 
-    m_executor.submit(executeChange);
+    m_executor.execute(executeChange);
 
     if (info->result) {
         info->result->setCompleted();
@@ -1810,7 +1858,7 @@ bool AudioInputProcessor::handleSetSpeechConfirmation(std::shared_ptr<DirectiveI
         return false;
     }
 
-    settings::SpeechConfirmationSettingType value;
+    settings::SpeechConfirmationSettingType value = settings::getSpeechConfirmationDefault();
     std::stringstream ss{jsonValue};
     ss >> value;
 
@@ -1823,7 +1871,7 @@ bool AudioInputProcessor::handleSetSpeechConfirmation(std::shared_ptr<DirectiveI
 
     auto executeChange = [this, value]() { m_speechConfirmation->setAvsChange(value); };
 
-    m_executor.submit(executeChange);
+    m_executor.execute(executeChange);
 
     if (info->result) {
         info->result->setCompleted();
@@ -1852,7 +1900,7 @@ bool AudioInputProcessor::handleSetWakeWords(std::shared_ptr<DirectiveInfo> info
         return false;
     }
 
-    m_executor.submit([this, wakeWords, info]() { m_wakeWordsSetting->setAvsChange(wakeWords); });
+    m_executor.execute([this, wakeWords, info]() { m_wakeWordsSetting->setAvsChange(wakeWords); });
 
     if (info->result) {
         info->result->setCompleted();
@@ -1902,7 +1950,7 @@ void AudioInputProcessor::managePowerResource(ObserverInterface::State newState)
 
 void AudioInputProcessor::onConnectionStatusChanged(bool connected) {
     if (!connected) {
-        m_executor.submit([this]() { return executeDisconnected(); });
+        m_executor.execute([this]() { return executeDisconnected(); });
     }
 }
 
@@ -1914,8 +1962,7 @@ void AudioInputProcessor::executeDisconnected() {
 }
 
 bool AudioInputProcessor::setEncodingAudioFormat(AudioFormat::Encoding encoding) {
-    if (encoding == AudioFormat::Encoding::LPCM ||
-        (m_encoder && m_encoder->getContext() && encoding == m_encoder->getContext()->getAudioFormat().encoding)) {
+    if (encoding == AudioFormat::Encoding::LPCM || (m_encoder && encoding == m_encoder->getEncoding())) {
         std::lock_guard<std::mutex> lock(m_encodingFormatMutex);
         m_encodingAudioFormats.clear();
         // Only one format is configured, and AIP will send resolved RequestMessage, and this resolveKey is simply a
@@ -1927,10 +1974,10 @@ bool AudioInputProcessor::setEncodingAudioFormat(AudioFormat::Encoding encoding)
 }
 
 bool AudioInputProcessor::initialize() {
-    if (m_encoder && m_encoder->getContext()) {
+    if (m_encoder) {
         std::lock_guard<std::mutex> lock(m_encodingFormatMutex);
         m_encodingAudioFormats.clear();
-        m_encodingAudioFormats.emplace(DEFAULT_RESOLVE_KEY, m_encoder->getContext()->getAudioFormat().encoding);
+        m_encodingAudioFormats.emplace(DEFAULT_RESOLVE_KEY, m_encoder->getEncoding());
     }
     m_assetsManager->addLocaleAssetsObserver(shared_from_this());
     return true;
@@ -1986,21 +2033,17 @@ void AudioInputProcessor::closeAttachmentReaders(attachment::AttachmentReader::C
 }
 
 bool AudioInputProcessor::isEncodingFormatSupported(avsCommon::utils::AudioFormat::Encoding encodingFormat) const {
-    if (encodingFormat == AudioFormat::Encoding::LPCM ||
-        (m_encoder && m_encoder->getContext() &&
-         encodingFormat == m_encoder->getContext()->getAudioFormat().encoding)) {
+    if (encodingFormat == AudioFormat::Encoding::LPCM || (m_encoder && encodingFormat == m_encoder->getEncoding())) {
         return true;
     }
     return false;
 }
 
 bool AudioInputProcessor::isUsingEncoderLocked() const {
-    for (auto it = m_encodingAudioFormats.begin(); it != m_encodingAudioFormats.end(); it++) {
-        if (it->second != AudioFormat::Encoding::LPCM) {
-            return true;
-        }
-    }
-    return false;
+    return std::any_of(
+        m_encodingAudioFormats.begin(),
+        m_encodingAudioFormats.end(),
+        [](EncodingFormatResponse::const_reference entry) { return entry.second != AudioFormat::Encoding::LPCM; });
 }
 
 bool AudioInputProcessor::multiStreamsRequestedLocked() const {

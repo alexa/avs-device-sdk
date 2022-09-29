@@ -44,7 +44,7 @@ using namespace avsCommon::sdkInterfaces::endpoints;
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("EndpointBuilder");
+#define TAG "EndpointBuilder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

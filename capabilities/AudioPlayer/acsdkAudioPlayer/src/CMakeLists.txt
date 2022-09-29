@@ -3,11 +3,13 @@ if (ENABLE_DEVICE_CONTEXT_IN_EVENT)
 endif()
 add_definitions("-DACSDK_LOG_MODULE=audioplayer")
 
-add_library(acsdkAudioPlayer
+set (AUDIOPLAYER_SOURCES
     AudioPlayer.cpp
     AudioPlayerComponent.cpp
     ProgressTimer.cpp
     Util.cpp)
+
+add_library(acsdkAudioPlayer ${AUDIOPLAYER_SOURCES})
 
 target_include_directories(acsdkAudioPlayer PUBLIC
     "${acsdkAudioPlayer_SOURCE_DIR}/include"
@@ -19,7 +21,8 @@ target_link_libraries(acsdkAudioPlayer
     acsdkShutdownManagerInterfaces
     Captions
     AVSCommon
-    "${CRYPTO_LDFLAGS}")
+    acsdkCodecUtils
+    acsdkCryptoInterfaces)
 
 
 # install target

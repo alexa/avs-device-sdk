@@ -85,11 +85,6 @@ static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE = ALEXA_I
 /// ExternalMediaPlayer interface name
 static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME = "ExternalMediaPlayer";
 
-#ifdef MEDIA_PORTABILITY_ENABLED
-/// ExternalMediaPlayer interface version for media portability
-static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY = "1.5";
-#endif
-
 /// ExternalMediaPlayer interface version
 static const std::string EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION = "1.2";
 
@@ -100,11 +95,6 @@ static const std::string PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION = "1
 
 /// Alexa.PlaybackController name.
 static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME = PLAYBACKCONTROLLER_NAMESPACE;
-
-#ifdef MEDIA_PORTABILITY_ENABLED
-/// Alexa.PlaybackController version for media portability
-static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY = "1.1";
-#endif
 
 /// Alexa.PlaybackController version.
 static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.0";
@@ -510,18 +500,10 @@ ExternalMediaPlayer::ExternalMediaPlayer(
         PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_NAME,
         PLAYBACKSTATEREPORTER_CAPABILITY_INTERFACE_VERSION));
 
-#ifdef MEDIA_PORTABILITY_ENABLED
-    m_capabilityConfigurations.insert(generateCapabilityConfiguration(
-        ALEXA_INTERFACE_TYPE,
-        PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME,
-        mediaPortabilityEnabled() ? PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY
-                                  : PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
-#else
     m_capabilityConfigurations.insert(generateCapabilityConfiguration(
         ALEXA_INTERFACE_TYPE,
         PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME,
         PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION));
-#endif
 
     m_capabilityConfigurations.insert(generateCapabilityConfiguration(
         ALEXA_INTERFACE_TYPE,
@@ -621,7 +603,7 @@ void ExternalMediaPlayer::createAdapters(
     }
 
     if (hasAddedAdapters) {
-        m_executor.submit([this, handler, discoveredPlayers]() {
+        m_executor.execute([this, handler, discoveredPlayers]() {
             m_adapterHandlers.insert(handler);
             updateDiscoveredPlayers(discoveredPlayers, {});
         });
@@ -631,23 +613,15 @@ void ExternalMediaPlayer::createAdapters(
 }
 
 std::shared_ptr<CapabilityConfiguration> getExternalMediaPlayerCapabilityConfiguration() {
-#ifdef MEDIA_PORTABILITY_ENABLED
-    return generateCapabilityConfiguration(
-        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE,
-        EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME,
-        mediaPortabilityEnabled() ? EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION_FOR_MEDIA_PORTABILITY
-                                  : EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION);
-#else
     return generateCapabilityConfiguration(
         EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_TYPE,
         EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_NAME,
         EXTERNALMEDIAPLAYER_CAPABILITY_INTERFACE_VERSION);
-#endif
 }
 
 void ExternalMediaPlayer::onContextAvailable(const std::string& jsonContext) {
     // Do not block the ContextManager thread.
-    m_executor.submit([this, jsonContext] {
+    m_executor.execute([this, jsonContext] {
         ACSDK_DEBUG5(LX("onContextAvailableLambda"));
 
         while (!m_eventQueue.empty()) {
@@ -674,7 +648,7 @@ void ExternalMediaPlayer::onContextFailure(const avsCommon::sdkInterfaces::Conte
 void ExternalMediaPlayer::provideState(
     const avsCommon::avs::NamespaceAndName& stateProviderName,
     unsigned int stateRequestToken) {
-    m_executor.submit([this, stateProviderName, stateRequestToken] {
+    m_executor.execute([this, stateProviderName, stateRequestToken] {
         executeProvideState(stateProviderName, true, stateRequestToken);
     });
 }
@@ -851,7 +825,7 @@ void ExternalMediaPlayer::handleAuthorizeDiscoveredPlayers(std::shared_ptr<Direc
         }
     }
 
-    m_executor.submit([this, info, playerInfoList, parseAllSucceeded]() {
+    m_executor.execute([this, info, playerInfoList, parseAllSucceeded]() {
         // A map of playerId to skillToken
         std::unordered_map<std::string, std::string> authorizedForJson;
         // The new map of m_authorizedAdapters.
@@ -997,7 +971,7 @@ void ExternalMediaPlayer::handleLogin(std::shared_ptr<DirectiveInfo> info, Reque
         return;
     }
 
-    m_executor.submit([this, info, playerId, accessToken, userName, refreshInterval, forceLogin]() {
+    m_executor.execute([this, info, playerId, accessToken, userName, refreshInterval, forceLogin]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
@@ -1025,7 +999,7 @@ void ExternalMediaPlayer::handleLogout(std::shared_ptr<DirectiveInfo> info, Requ
         return;
     }
 
-    m_executor.submit([this, info, playerId]() {
+    m_executor.execute([this, info, playerId]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
@@ -1122,37 +1096,21 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
         ACSDK_INFO(LX("handleDirective").m("No playback target"));
     }
 
-#ifdef MEDIA_PORTABILITY_ENABLED
-    std::string mediaSessionId;
-    std::string correlationToken;
-    if (mediaPortabilityEnabled()) {
-        if (!jsonUtils::retrieveValue(payload, "mediaSessionId", &mediaSessionId)) {
-            ACSDK_ERROR(LX("handleDirective").m("NoMediaSessionId"));
-        }
-
-        correlationToken = info->directive->getCorrelationToken();
-    }
-#endif
-
     auto messageId = info->directive->getMessageId();
 
-    m_executor.submit([this,
-                       info,
-                       playerId,
-                       playbackContextToken,
-                       index,
-                       offset,
-                       skillToken,
-                       playbackSessionId,
-                       navigation,
-                       preload,
-                       playRequestor,
-                       messageId,
-#ifdef MEDIA_PORTABILITY_ENABLED
-                       mediaSessionId,
-                       correlationToken,
-#endif
-                       alias]() {
+    m_executor.execute([this,
+                        info,
+                        playerId,
+                        playbackContextToken,
+                        index,
+                        offset,
+                        skillToken,
+                        playbackSessionId,
+                        navigation,
+                        preload,
+                        playRequestor,
+                        messageId,
+                        alias]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
@@ -1166,10 +1124,6 @@ void ExternalMediaPlayer::handlePlay(std::shared_ptr<DirectiveInfo> info, Reques
                 navigation,
                 preload,
                 playRequestor,
-#ifdef MEDIA_PORTABILITY_ENABLED
-                mediaSessionId,
-                correlationToken,
-#endif
                 alias);
 
             if (handler.adapterHandler->play(params)) {
@@ -1210,7 +1164,7 @@ void ExternalMediaPlayer::handleSeek(std::shared_ptr<DirectiveInfo> info, Reques
         return;
     }
 
-    m_executor.submit([this, info, playerId, position]() {
+    m_executor.execute([this, info, playerId, position]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
@@ -1252,7 +1206,7 @@ void ExternalMediaPlayer::handleAdjustSeek(std::shared_ptr<DirectiveInfo> info, 
         return;
     }
 
-    m_executor.submit([this, info, playerId, deltaPosition]() {
+    m_executor.execute([this, info, playerId, deltaPosition]() {
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
@@ -1290,35 +1244,12 @@ void ExternalMediaPlayer::handlePlayControl(std::shared_ptr<DirectiveInfo> info,
         // fall through, alias name is not required
     }
 
-#ifdef MEDIA_PORTABILITY_ENABLED
-    std::string mediaSessionId;
-    std::string correlationToken;
-    if (mediaPortabilityEnabled()) {
-        if (requestTypeIncludesMediaSessionId(request)) {
-            if (!jsonUtils::retrieveValue(payload, "mediaSessionId", &mediaSessionId)) {
-                ACSDK_ERROR(LX("handleDirective").m("NoMediaSessionId"));
-            }
-        }
-
-        if (request == RequestType::RESUME) {
-            correlationToken = info->directive->getCorrelationToken();
-        }
-    }
-
-    m_executor.submit([this, info, playerId, request, playbackSessionId, alias, mediaSessionId, correlationToken]() {
-#else
-    m_executor.submit([this, info, playerId, request, playbackSessionId, alias]() {
-#endif
+    m_executor.execute([this, info, playerId, request, playbackSessionId, alias]() {
         std::string playbackSessId = playbackSessionId;
         auto maybeHandler = getHandlerFromPlayerId(playerId);
         if (maybeHandler.hasValue()) {
             auto handler = maybeHandler.value();
-#ifdef MEDIA_PORTABILITY_ENABLED
-            if (handler.adapterHandler->playControl(
-                    handler.localPlayerId, request, mediaSessionId, correlationToken, alias)) {
-#else
             if (handler.adapterHandler->playControl(handler.localPlayerId, request, alias)) {
-#endif
                 if (request == RequestType::STOP || request == RequestType::PAUSE) {
                     if (playbackSessId.empty()) {
                         auto state = handler.adapterHandler->getAdapterState(handler.localPlayerId);
@@ -1393,11 +1324,7 @@ bool ExternalMediaPlayer::localOperation(PlaybackOperation op) {
                 requestType = RequestType::RESUME;
                 break;
         }
-#ifdef MEDIA_PORTABILITY_ENABLED
-        adapterHandler->playControl(localPlayerId, requestType, "", "", "");
-#else
         adapterHandler->playControl(localPlayerId, requestType, "");
-#endif
         return true;
     }
     return false;
@@ -1516,7 +1443,7 @@ void ExternalMediaPlayer::updateDiscoveredPlayers(
         }
     }
 
-    m_executor.submit([this, addedPlayers, removedLocalPlayerIds] {
+    m_executor.execute([this, addedPlayers, removedLocalPlayerIds] {
         for (const auto& playerId : removedLocalPlayerIds) {
             m_reportedDiscoveredPlayers.erase(playerId);
         }
@@ -1556,7 +1483,7 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
         return;
     }
 
-    m_executor.submit([this, buttonIt]() {
+    m_executor.execute([this, buttonIt]() {
         std::string playerInFocus;
         {
             std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
@@ -1567,11 +1494,7 @@ void ExternalMediaPlayer::onButtonPressed(PlaybackButton button) {
             auto maybeHandler = getHandlerFromPlayerId(playerInFocus);
             if (maybeHandler.hasValue()) {
                 const auto& handler = maybeHandler.value();
-#ifdef MEDIA_PORTABILITY_ENABLED
-                handler.adapterHandler->playControl(handler.localPlayerId, buttonIt->second, "", "", "");
-#else
                 handler.adapterHandler->playControl(handler.localPlayerId, buttonIt->second, "");
-#endif
             }
         }
     });
@@ -1587,7 +1510,7 @@ void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
     // toggleStates map is <SELECTED,DESELECTED>
     auto toggleStates = toggleIt->second;
 
-    m_executor.submit([this, action, toggleStates]() {
+    m_executor.execute([this, action, toggleStates]() {
         std::string playerInFocus;
         {
             std::lock_guard<std::mutex> lock{m_inFocusAdapterMutex};
@@ -1598,17 +1521,9 @@ void ExternalMediaPlayer::onTogglePressed(PlaybackToggle toggle, bool action) {
             if (maybeHandler.hasValue()) {
                 const auto& handler = maybeHandler.value();
                 if (action) {
-#ifdef MEDIA_PORTABILITY_ENABLED
-                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.first, "", "", "");
-#else
                     handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.first, "");
-#endif
                 } else {
-#ifdef MEDIA_PORTABILITY_ENABLED
-                    handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.second, "", "", "");
-#else
                     handler.adapterHandler->playControl(handler.localPlayerId, toggleStates.second, "");
-#endif
                 }
             }
         }
@@ -1948,7 +1863,7 @@ void ExternalMediaPlayer::addAdapterHandler(std::shared_ptr<ExternalMediaAdapter
         ACSDK_ERROR(LX("addAdapterHandler").d("reason", "nullAdapterHandler"));
         return;
     }
-    m_executor.submit([this, adapterHandler]() {
+    m_executor.execute([this, adapterHandler]() {
         if (!m_adapterHandlers.insert(adapterHandler).second) {
             ACSDK_ERROR(LX("addAdapterHandler").d("reason", "duplicateAdapterHandler"));
         } else {
@@ -1963,7 +1878,7 @@ void ExternalMediaPlayer::removeAdapterHandler(std::shared_ptr<ExternalMediaAdap
         ACSDK_ERROR(LX("removeAdapterHandler").d("reason", "nullAdapterHandler"));
         return;
     }
-    m_executor.submit([this, adapterHandler]() {
+    m_executor.execute([this, adapterHandler]() {
         if (m_adapterHandlers.erase(adapterHandler) == 0) {
             ACSDK_WARN(LX("removeAdapterHandler").d("reason", "adapterHandlerNotFound"));
         }

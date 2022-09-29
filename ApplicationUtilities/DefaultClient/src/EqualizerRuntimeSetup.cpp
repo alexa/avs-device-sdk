@@ -24,7 +24,7 @@ namespace defaultClient {
 using namespace alexaClientSDK::acsdkEqualizerInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("EqualizerRuntimeSetup");
+#define TAG "EqualizerRuntimeSetup"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

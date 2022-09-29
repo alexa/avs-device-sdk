@@ -18,9 +18,6 @@
 
 #include <condition_variable>
 #include <list>
-#ifdef THREAD_AFFINITY
-#include <map>
-#endif
 #include <string>
 
 #include "WorkerThread.h"
@@ -57,10 +54,12 @@ public:
     /**
      * Obtain a worker thread to operate on.
      *
-     * @param optionalMoniker the moniker of the worker desired.
-     * @return the worker thread obtained.
+     * This method returns a reference to worker object. If thread pool has worker objects in the pool, it returns one
+     * of them. If thread pool is empty, a newly constructed object is returned.
+     *
+     * @return Worker thread object.
      */
-    std::unique_ptr<WorkerThread> obtainWorker(std::string optionalMoniker = "");
+    std::unique_ptr<WorkerThread> obtainWorker();
 
     /**
      * Release a worker
@@ -81,7 +80,7 @@ public:
      * Obtain the current maximum threads for the thread pool.
      * @return the max threads the thread pool is currently set to hold.
      */
-    uint32_t getMaxThreads();
+    size_t getMaxThreads();
 
     /**
      * Obtain statics for the thread pool
@@ -103,10 +102,6 @@ public:
     static std::shared_ptr<ThreadPool> getDefaultThreadPool();
 
 private:
-#ifdef THREAD_AFFINITY
-    /// Map of Worker thread monikers to worker thread iterator in the worker queue.
-    std::map<std::string, std::list<std::unique_ptr<WorkerThread>>::iterator> m_workerMap;
-#endif
     /// Queue of worker threads to vend.
     std::list<std::unique_ptr<WorkerThread>> m_workerQueue;
 

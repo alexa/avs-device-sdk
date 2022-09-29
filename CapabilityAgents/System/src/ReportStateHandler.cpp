@@ -31,7 +31,7 @@ using namespace avsCommon::utils::error;
 using namespace settings;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("ReportStateHandler");
+#define TAG "ReportStateHandler"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -171,7 +171,7 @@ void ReportStateHandler::handleDirectiveImmediately(std::shared_ptr<AVSDirective
         return;
     }
 
-    m_executor.submit([this, directive] { handleReportState(*directive); });
+    m_executor.execute([this, directive] { handleReportState(*directive); });
 }
 
 void ReportStateHandler::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {
@@ -185,7 +185,7 @@ void ReportStateHandler::handleDirective(std::shared_ptr<CapabilityAgent::Direct
         return;
     }
 
-    m_executor.submit([this, info] {
+    m_executor.execute([this, info] {
         auto ok = handleReportState(*(info->directive));
         if (info->result) {
             if (ok) {
@@ -241,7 +241,7 @@ void ReportStateHandler::initialize() {
     m_connectionObserver = SettingConnectionObserver::create([this](bool isConnected) {
         if (isConnected) {
             std::lock_guard<std::mutex> lock(m_stateMutex);
-            m_executor.submit([this] { sendReportState(); });
+            m_executor.execute([this] { sendReportState(); });
         }
     });
     m_connectionManager->addConnectionStatusObserver(m_connectionObserver);

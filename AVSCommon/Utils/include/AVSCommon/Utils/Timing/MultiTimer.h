@@ -45,17 +45,17 @@ public:
      * Factory method that creates a shared pointer to a MultiTimer.
      * @return A new instance of MultiTimer.
      */
-    static std::shared_ptr<MultiTimer> createMultiTimer();
+    static std::shared_ptr<MultiTimer> createMultiTimer() noexcept;
 
     /**
      * Constructor.
      */
-    MultiTimer();
+    MultiTimer() noexcept;
 
     /**
      * Destructor.
      */
-    ~MultiTimer();
+    ~MultiTimer() noexcept;
 
     /**
      * Submits a task to be executed after a given delay.
@@ -66,14 +66,14 @@ public:
      * @param task The task to be executed.
      * @return A unique token that can be used to cancel this task.
      */
-    Token submitTask(const std::chrono::milliseconds& delay, std::function<void()> task);
+    Token submitTask(const std::chrono::milliseconds& delay, std::function<void()> task) noexcept;
 
     /**
      * Removes a task from the queue.
      *
      * @param token The token used to identify the task to be canceled.
      */
-    void cancelTask(Token token);
+    void cancelTask(Token token) noexcept;
 
 private:
     /**
@@ -81,7 +81,7 @@ private:
      *
      * @return @c true if there are more timers scheduled; @c false otherwise.
      */
-    bool executeTimer();
+    bool executeTimer() noexcept;
 
     /**
      * Checks if there are any pending tasks within a grace period determined by an internal timeout.
@@ -89,10 +89,14 @@ private:
      * @param lock The lock being held during the check.
      * @return @c true if there's at least one task left; @c false if there is no pending task.
      */
-    bool hasNextLocked(std::unique_lock<std::mutex>& lock);
+    bool hasNextLocked(std::unique_lock<std::mutex>& lock) noexcept;
 
     /// Alias for the time point used in this class.
     using TimePoint = std::chrono::time_point<std::chrono::steady_clock>;
+
+    /// Moniker for timer tasks.
+    /// Whenever timer runs a task, it guarantees that task's thread has this value set with @c ThreadMoniker.
+    const std::string m_timerMoniker;
 
     /// The condition variable used to wait for the next task.
     std::condition_variable m_waitCondition;

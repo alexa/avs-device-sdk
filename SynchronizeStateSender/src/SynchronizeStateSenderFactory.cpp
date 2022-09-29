@@ -24,7 +24,7 @@ namespace synchronizeStateSender {
 using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SynchronizeStateSenderFactory");
+#define TAG "SynchronizeStateSenderFactory"
 
 /**
  * Create a LogEntry using the file's TAG and the specified event string.

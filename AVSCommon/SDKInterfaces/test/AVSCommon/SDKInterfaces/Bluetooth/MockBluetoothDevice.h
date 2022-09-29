@@ -30,6 +30,10 @@ namespace bluetooth {
 namespace test {
 
 using namespace ::testing;
+
+static constexpr std::size_t PAIRING_PIN_LENGTH_MIN = 4;
+static constexpr std::size_t PAIRING_PIN_LENGTH_MAX = 16;
+
 /**
  * Mock class that implements BluetoothDeviceInterface.
  * Please note that MockBluetoothDevice doesn't support sending any @c BluetoothEvent to @c BluetoothEventBus,
@@ -47,6 +51,7 @@ public:
     bool isConnected() override;
     std::future<bool> connect() override;
     std::future<bool> disconnect() override;
+    bool setPairingPin(const std::string& pin) override;
     std::vector<std::shared_ptr<services::SDPRecordInterface>> getSupportedServices() override;
     std::shared_ptr<services::BluetoothServiceInterface> getService(std::string uuid) override;
     utils::bluetooth::MediaStreamingState getStreamingState() override;
@@ -130,6 +135,13 @@ inline std::future<bool> MockBluetoothDevice::disconnect() {
     m_isConnected = false;
     m_deviceState = DeviceState::DISCONNECTED;
     return connectionPromise.get_future();
+}
+
+inline bool MockBluetoothDevice::setPairingPin(const std::string& pin) {
+    if (pin.length() < PAIRING_PIN_LENGTH_MIN || pin.length() > PAIRING_PIN_LENGTH_MAX) {
+        return false;
+    }
+    return true;
 }
 
 inline std::vector<std::shared_ptr<services::SDPRecordInterface>> MockBluetoothDevice::getSupportedServices() {

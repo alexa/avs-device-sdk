@@ -118,10 +118,6 @@ bool ExternalMediaAdapterHandler::play(const PlayParams& params) {
 bool ExternalMediaAdapterHandler::playControl(
     const std::string& localPlayerId,
     acsdkExternalMediaPlayerInterfaces::RequestType requestType,
-#ifdef MEDIA_PORTABILITY_ENABLED
-    const std::string& mediaSessionId,
-    const std::string& correlationToken,
-#endif
     const std::string& playbackTarget) {
     if (!validatePlayer(localPlayerId)) {
         ACSDK_WARN(LX("playControlFailed")
@@ -130,11 +126,7 @@ bool ExternalMediaAdapterHandler::playControl(
         return false;
     }
 
-#ifdef MEDIA_PORTABILITY_ENABLED
-    return handlePlayControl(localPlayerId, requestType, mediaSessionId, correlationToken, playbackTarget);
-#else
     return handlePlayControl(localPlayerId, requestType, playbackTarget);
-#endif
 }
 
 bool ExternalMediaAdapterHandler::seek(const std::string& localPlayerId, std::chrono::milliseconds offset) {

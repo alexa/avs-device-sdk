@@ -23,7 +23,7 @@ namespace avsCommon {
 namespace utils {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DeviceInfo");
+#define TAG "DeviceInfo"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

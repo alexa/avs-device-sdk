@@ -28,7 +28,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::configuration;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AVSGatewayManager");
+#define TAG "AVSGatewayManager"
 
 /**
  * Create a LogEntry using the file's TAG and the specified event string.
@@ -54,7 +54,8 @@ std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGateway
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
-            providerRegistrar) {
+            providerRegistrar,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
     if (!configurationRoot) {
         ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "nullConfigurationRoot"));
         return nullptr;
@@ -67,8 +68,12 @@ std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> AVSGateway
         ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "nullAuthDelegater"));
         return nullptr;
     }
-    auto gatewayManager =
-        create(std::move(avsGatewayManagerStorage), customerDataManager, *configurationRoot, authDelegate);
+    auto gatewayManager = create(
+        std::move(avsGatewayManagerStorage),
+        customerDataManager,
+        *configurationRoot,
+        authDelegate,
+        std::move(metricRecorder));
     if (!gatewayManager) {
         ACSDK_ERROR(LX("createAVSGatewayManagerInterfaceFailed").d("reason", "createFailed"));
         return nullptr;
@@ -84,7 +89,8 @@ std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
     std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
     const ConfigurationNode& configurationRoot,
-    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate) {
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) {
     ACSDK_DEBUG5(LX(__func__));
     if (!avsGatewayManagerStorage) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAvsGatewayManagerStorage"));
@@ -102,8 +108,12 @@ std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
             avsGateway = DEFAULT_AVS_GATEWAY;
         }
 
-        auto avsGatewayManager = std::shared_ptr<AVSGatewayManager>(
-            new AVSGatewayManager(avsGatewayManagerStorage, customerDataManager, authDelegate, avsGateway));
+        auto avsGatewayManager = std::shared_ptr<AVSGatewayManager>(new AVSGatewayManager(
+            std::move(avsGatewayManagerStorage),
+            std::move(customerDataManager),
+            std::move(authDelegate),
+            std::move(metricRecorder),
+            avsGateway));
         if (avsGatewayManager->init()) {
             return avsGatewayManager;
         } else {
@@ -115,11 +125,13 @@ std::shared_ptr<AVSGatewayManager> AVSGatewayManager::create(
 
 AVSGatewayManager::AVSGatewayManager(
     std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
-    const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
     const std::string& defaultAVSGateway) :
         CustomerDataHandler{std::move(customerDataManager)},
         m_avsGatewayStorage{std::move(avsGatewayManagerStorage)},
+        m_metricRecorder{std::move(metricRecorder)},
         m_authDelegate{std::move(authDelegate)},
         m_currentState{defaultAVSGateway, false} {
 }
@@ -137,7 +149,7 @@ std::shared_ptr<PostConnectOperationInterface> AVSGatewayManager::createPostConn
     if (!m_currentState.isVerified) {
         auto callback = std::bind(&AVSGatewayManager::onGatewayVerified, this, std::placeholders::_1);
         std::shared_ptr<PostConnectVerifyGatewaySender> verifyGatewaySender =
-            PostConnectVerifyGatewaySender::create(callback);
+            PostConnectVerifyGatewaySender::create(callback, m_metricRecorder);
         m_currentVerifyGatewaySender = verifyGatewaySender;
 
         if (m_authDelegate) {

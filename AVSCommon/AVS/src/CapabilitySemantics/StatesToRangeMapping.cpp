@@ -50,7 +50,7 @@ static constexpr double UNINITIALIZED_DOUBLE = std::numeric_limits<double>::min(
 static const std::string EMPTY_JSON("{}");
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("StatesToRangeMapping");
+#define TAG "StatesToRangeMapping"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

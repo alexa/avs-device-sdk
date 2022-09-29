@@ -17,7 +17,7 @@
 #include <thread>
 #include <gtest/gtest.h>
 
-#include <acsdkPropertiesInterfaces/test/StubPropertiesFactory.h>
+#include <acsdk/PropertiesInterfaces/test/StubPropertiesFactory.h>
 #include <acsdkAuthorization/LWA/LWAAuthorizationStorage.h>
 #include <acsdkAuthorization/private/LWA/LWAStorageConstants.h>
 #include <AVSCommon/AVS/Initialization/AlexaClientSDKInit.h>
@@ -29,7 +29,7 @@ namespace acsdkAuthorization {
 namespace lwa {
 namespace test {
 
-using namespace ::alexaClientSDK::acsdkPropertiesInterfaces::test;
+using namespace ::alexaClientSDK::propertiesInterfaces::test;
 using namespace ::alexaClientSDK::avsCommon::avs::initialization;
 using namespace ::alexaClientSDK::avsCommon::sdkInterfaces::storage;
 using namespace ::alexaClientSDK::avsCommon::utils::configuration;

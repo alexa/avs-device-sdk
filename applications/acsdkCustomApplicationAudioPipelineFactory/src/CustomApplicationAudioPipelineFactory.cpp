@@ -25,7 +25,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace captions;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CustomApplicationAudioPipelineFactory");
+#define TAG "CustomApplicationAudioPipelineFactory"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

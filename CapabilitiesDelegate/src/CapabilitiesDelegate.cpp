@@ -14,6 +14,7 @@
  */
 
 #include <functional>
+#include <vector>
 
 #include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
@@ -31,15 +32,16 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::endpoints;
 using namespace avsCommon::utils;
 using namespace avsCommon::utils::configuration;
+using namespace avsCommon::utils::metrics;
 using namespace capabilitiesDelegate::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CapabilitiesDelegate");
+#define TAG "CapabilitiesDelegate"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -71,7 +73,8 @@ std::shared_ptr<CapabilitiesDelegateInterface> CapabilitiesDelegate::createCapab
         providerRegistrar,
     const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
     const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
-        alexaEventProcessedNotifier) {
+        alexaEventProcessedNotifier,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder) {
     if (!providerRegistrar) {
         ACSDK_ERROR(LX("createCapabilitiesDelegateInterfaceFailed").d("reason", "nullProviderRegistrar"));
         return nullptr;
@@ -82,7 +85,7 @@ std::shared_ptr<CapabilitiesDelegateInterface> CapabilitiesDelegate::createCapab
         return nullptr;
     }
 
-    auto capabilitiesDelegate = create(authDelegate, std::move(storage), customerDataManager);
+    auto capabilitiesDelegate = create(authDelegate, std::move(storage), customerDataManager, metricRecorder);
     if (!capabilitiesDelegate) {
         ACSDK_ERROR(LX("createCapabilitiesDelegateInterfaceFailed").d("reason", "createFailed"));
         return nullptr;
@@ -100,7 +103,8 @@ std::shared_ptr<CapabilitiesDelegateInterface> CapabilitiesDelegate::createCapab
 std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& capabilitiesDelegateStorage,
-    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager) {
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder) {
     if (!authDelegate) {
         ACSDK_ERROR(LX("createFailed").d("reason", "nullAuthDelegate"));
     } else if (!capabilitiesDelegateStorage) {
@@ -109,7 +113,7 @@ std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
         ACSDK_ERROR(LX("createFailed").d("reason", "nullCustomerDataManager"));
     } else {
         std::shared_ptr<CapabilitiesDelegate> instance(
-            new CapabilitiesDelegate(authDelegate, capabilitiesDelegateStorage, customerDataManager));
+            new CapabilitiesDelegate(authDelegate, capabilitiesDelegateStorage, customerDataManager, nullptr));
         if (!(instance->init())) {
             ACSDK_ERROR(LX("createFailed").d("reason", "CapabilitiesDelegateInitFailed"));
             return nullptr;
@@ -124,9 +128,11 @@ std::shared_ptr<CapabilitiesDelegate> CapabilitiesDelegate::create(
 CapabilitiesDelegate::CapabilitiesDelegate(
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
     const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& capabilitiesDelegateStorage,
-    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager) :
+    const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder) :
         RequiresShutdown{"CapabilitiesDelegate"},
         CustomerDataHandler{customerDataManager},
+        m_metricRecorder{metricRecorder},
         m_capabilitiesState{CapabilitiesDelegateObserverInterface::State::UNINITIALIZED},
         m_capabilitiesError{CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED},
         m_authDelegate{authDelegate},
@@ -248,6 +254,12 @@ void CapabilitiesDelegate::invalidateCapabilities() {
     }
 }
 
+/// Check if the endpoint is present in the map of endpoint registrations.
+bool CapabilitiesDelegate::isEndpointDeduplicated(const EndpointIdentifier& endpointId) {
+    ACSDK_DEBUG5(LX(__func__));
+    return m_endpointRegistrations.find(endpointId) != m_endpointRegistrations.end();
+}
+
 bool CapabilitiesDelegate::addOrUpdateEndpoint(
     const AVSDiscoveryEndpointAttributes& endpointAttributes,
     const std::vector<CapabilityConfiguration>& capabilities) {
@@ -272,7 +284,7 @@ bool CapabilitiesDelegate::addOrUpdateEndpoint(
         }
     }
 
-    std::string endpointId = endpointAttributes.endpointId;
+    const EndpointIdentifier& endpointId = endpointAttributes.endpointId;
     {
         std::lock_guard<std::mutex> lock{m_endpointsMutex};
 
@@ -281,6 +293,17 @@ bool CapabilitiesDelegate::addOrUpdateEndpoint(
         if (m_deleteEndpoints.pending.end() != it) {
             ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
                             .d("reason", "already pending deletion")
+                            .sensitive("endpointId", endpointId));
+            return false;
+        }
+
+        // Check that this endpoint's registration is not changing.
+        // If the endpoint is already present in m_endpointRegistrations, confirm that the current registration is not
+        // empty, and is the same as the previous one.
+        if (m_endpointRegistrations.find(endpointId) != m_endpointRegistrations.end() &&
+            m_endpointRegistrations[endpointId] != endpointAttributes.registration) {
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                            .d("reason", "Endpoint registration changed")
                             .sensitive("endpointId", endpointId));
             return false;
         }
@@ -294,19 +317,121 @@ bool CapabilitiesDelegate::addOrUpdateEndpoint(
             return false;
         }
 
+        if (capabilities.size() > getMaxCapabilitiesPerEndpoint()) {
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                            .d("reason", "Maximum number of capabilities reached")
+                            .d("size", capabilities.size()));
+            return false;
+        }
+
         std::string endpointConfigJson = getEndpointConfigJson(endpointAttributes, capabilities);
 
         // Check for endpoint configuration.
         if (endpointConfigJson.size() > MAX_ENDPOINTS_SIZE_IN_PAYLOAD) {
-            ACSDK_ERROR(LX("addOrUpdateEndpointFailed").d("reason", "endpointConfiguration too big"));
+            ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                            .d("reason", "endpointConfiguration too big")
+                            .d("size", endpointConfigJson.size()));
             return false;
         }
 
+        if (endpointAttributes.registration.hasValue()) {
+            if (!m_endpointRegistrations.empty()) {
+                // check that the registration of endpointId matches the others by comparing it to the first one.
+                // Note that if endpointId is already present in m_endpointRegistrations, it has already been confirmed
+                // earlier that its registration is unchanged.
+                auto registration = m_endpointRegistrations.begin()->second;
+                if (endpointAttributes.registration != registration) {
+                    ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                                    .d("reason", "Endpoint registration does not match existing deduplicated endpoints")
+                                    .sensitive("endpointId", endpointId));
+                    return false;
+                }
+            }
+            // If this endpoint needs to be added to m_endpointRegistrations check whether doing so will
+            // exceed the maximum number of endpoints.
+            if (m_endpointRegistrations.find(endpointId) == m_endpointRegistrations.end() &&
+                m_endpointRegistrations.size() + 1 > getMaxEndpoints()) {
+                ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                                .d("reason", "Max number of deduplicated endpoints reached")
+                                .sensitive("endpointId", endpointId));
+                return false;
+            }
+
+            m_endpointRegistrations[endpointId] = endpointAttributes.registration;
+
+            // Check if any of the deduplicated endpoints are pending deletion or in-flight for deletion. If they are,
+            // fail this addOrUpdate. This should never happen.
+            for (auto& iter : m_endpointRegistrations) {
+                if ((m_deleteEndpoints.pending.find(iter.first) != m_deleteEndpoints.pending.end()) ||
+                    (m_deleteEndpoints.inFlight.find(iter.first) != m_deleteEndpoints.inFlight.end())) {
+                    ACSDK_ERROR(LX("addOrUpdateEndpointFailed")
+                                    .d("reason", "Deduplicated endpoint already pending delete")
+                                    .sensitive("endpointId", endpointId));
+                    return false;
+                }
+            }
+
+            // Check that all de-duplicated endpoints can fit into one discovery message by adding the sizes of their
+            // configurations.
+            // First add the size of the current endpoint configuration.
+            size_t totalConfigurationSize = endpointConfigJson.size();
+            for (auto& iter : m_endpointRegistrations) {
+                if (iter.first == endpointId) {
+                    // skip the current endpoint, since we have already added its configuration size.
+                    continue;
+                }
+                // Check pending before in-flight to ensure that the most recent configuration is used, wherever
+                // possible.
+                if (m_addOrUpdateEndpoints.pending.find(iter.first) != m_addOrUpdateEndpoints.pending.end()) {
+                    totalConfigurationSize += m_addOrUpdateEndpoints.pending[iter.first].size();
+                } else if (m_addOrUpdateEndpoints.inFlight.find(iter.first) != m_addOrUpdateEndpoints.inFlight.end()) {
+                    totalConfigurationSize += m_addOrUpdateEndpoints.inFlight[iter.first].size();
+                } else {
+                    totalConfigurationSize += m_endpoints[iter.first].size();
+                }
+            }
+
+            if (totalConfigurationSize > MAX_ENDPOINTS_SIZE_IN_PAYLOAD) {
+                ACSDK_ERROR(
+                    LX("addOrUpdateEndpointFailed")
+                        .d("reason", "Deduplicated endpoint configurations too big to fit into one discovery event"));
+                return false;
+            }
+
+            // All deduplicated endpoints can fit into one discovery message.
+            // Add the de-duplicated endpoints to the list of pending addOrUpdate endpoints, if they are not already
+            // present. If any of them are in flight, use that configuration as it is the most recent.
+            for (auto& iter : m_endpointRegistrations) {
+                auto dedupedEndpointId = iter.first;
+                if (dedupedEndpointId == endpointId) {
+                    // skip adding the endpoint here, as it will be added after.
+                    continue;
+                }
+                if (m_addOrUpdateEndpoints.pending.find(dedupedEndpointId) != m_addOrUpdateEndpoints.pending.end()) {
+                    // already pending update. Nothing to do.
+                } else if (
+                    m_addOrUpdateEndpoints.inFlight.find(dedupedEndpointId) != m_addOrUpdateEndpoints.inFlight.end()) {
+                    // update is in flight.
+                    m_addOrUpdateEndpoints.pending.insert(
+                        std::make_pair(dedupedEndpointId, m_addOrUpdateEndpoints.inFlight[dedupedEndpointId]));
+                    ACSDK_DEBUG0(LX("addOrUpdateEndpoint")
+                                     .m("Adding inflight deduplicated Endpoint")
+                                     .sensitive("endpointId", dedupedEndpointId));
+                } else {
+                    // add de-duped endpoint.
+                    ACSDK_DEBUG0(LX("addOrUpdateEndpoint")
+                                     .m("Adding registered deduplicated Endpoint")
+                                     .sensitive("endpointId", dedupedEndpointId));
+                    m_addOrUpdateEndpoints.pending.insert(
+                        std::make_pair(dedupedEndpointId, m_endpoints[dedupedEndpointId]));
+                }
+            }
+        }
         m_addOrUpdateEndpoints.pending.insert(std::make_pair(endpointId, endpointConfigJson));
     }
 
     if (!m_currentDiscoveryEventSender) {
-        m_executor.submit([this] { executeSendPendingEndpoints(); });
+        m_executor.execute([this] { executeSendPendingEndpoints(); });
     }
 
     return true;
@@ -336,7 +461,7 @@ bool CapabilitiesDelegate::deleteEndpoint(
         }
     }
 
-    std::string endpointId = endpointAttributes.endpointId;
+    const EndpointIdentifier& endpointId = endpointAttributes.endpointId;
 
     {
         std::lock_guard<std::mutex> lock{m_endpointsMutex};
@@ -358,6 +483,23 @@ bool CapabilitiesDelegate::deleteEndpoint(
             return false;
         }
 
+        // Check that this endpoint's registration is not changing
+        if (m_endpointRegistrations.find(endpointId) != m_endpointRegistrations.end() &&
+            m_endpointRegistrations[endpointId] != endpointAttributes.registration) {
+            ACSDK_ERROR(LX("deleteEndpointFailed")
+                            .d("reason", "Endpoint registration changed")
+                            .sensitive("endpointId", endpointId));
+            return false;
+        }
+
+        // Disable deleting de-duped endpoints.
+        if (isEndpointDeduplicated(endpointId)) {
+            ACSDK_ERROR(LX("deleteEndpointFailed")
+                            .d("reason", "Cannot delete a de-duplicated endpoint")
+                            .sensitive("endpointId", endpointId));
+            return false;
+        }
+
         // Add endpoint to pending list.
         it = m_deleteEndpoints.pending.find(endpointId);
         if (m_deleteEndpoints.pending.end() != it) {
@@ -371,7 +513,7 @@ bool CapabilitiesDelegate::deleteEndpoint(
     }
 
     if (!m_currentDiscoveryEventSender) {
-        m_executor.submit([this] { executeSendPendingEndpoints(); });
+        m_executor.execute([this] { executeSendPendingEndpoints(); });
     }
 
     return true;
@@ -395,46 +537,100 @@ void CapabilitiesDelegate::executeSendPendingEndpoints() {
         return;
     }
 
-    if (m_addOrUpdateEndpoints.pending.empty() && m_deleteEndpoints.pending.empty()) {
-        ACSDK_DEBUG5(LX(__func__).d("Skipped", "No endpoints to register or delete"));
-        return;
-    }
-
-    std::unordered_map<std::string, std::string> addOrUpdateEndpointsToSend;
+    std::vector<std::unordered_map<std::string, std::string>> addOrUpdateEndpointsToSendVector;
     std::unordered_map<std::string, std::string> deleteEndpointsToSend;
     {
         std::lock_guard<std::mutex> lock{m_endpointsMutex};
 
-        // Move pending endpoints to in-flight, since we are going to send them.
-        m_addOrUpdateEndpoints.inFlight = m_addOrUpdateEndpoints.pending;
-        addOrUpdateEndpointsToSend = m_addOrUpdateEndpoints.inFlight;
-        m_addOrUpdateEndpoints.pending.clear();
+        if (m_addOrUpdateEndpoints.pending.empty() && m_deleteEndpoints.pending.empty()) {
+            ACSDK_DEBUG5(LX(__func__).d("Skipped", "No endpoints to register or delete"));
+            return;
+        }
 
-        m_deleteEndpoints.inFlight = m_deleteEndpoints.pending;
-        deleteEndpointsToSend = m_deleteEndpoints.inFlight;
-        m_deleteEndpoints.pending.clear();
+        // check if the addOrUpdate Discovery event will need to be split.
+        size_t totalAddOrUpdateConfigSize = 0;
+        for (auto& iter : m_addOrUpdateEndpoints.pending) {
+            totalAddOrUpdateConfigSize += iter.second.size();
+        }
+
+        if (totalAddOrUpdateConfigSize <= MAX_ENDPOINTS_SIZE_IN_PAYLOAD) {
+            ACSDK_DEBUG5(LX("ExecuteSendPendingEndpoints").d("reason", "No need to split discovery message"));
+            // No split necessary.
+            m_addOrUpdateEndpoints.inFlight = m_addOrUpdateEndpoints.pending;
+            addOrUpdateEndpointsToSendVector.push_back(m_addOrUpdateEndpoints.inFlight);
+            m_addOrUpdateEndpoints.pending.clear();
+
+            m_deleteEndpoints.inFlight = m_deleteEndpoints.pending;
+            deleteEndpointsToSend = m_deleteEndpoints.inFlight;
+            m_deleteEndpoints.pending.clear();
+        } else {
+            // Discovery event will need to be split.
+            ACSDK_DEBUG5(LX("ExecuteSendPendingEndpoints").d("reason", "Need to split discovery message"));
+            // first send all endpoints that do not have registration information, i.e. are not de-duplicated. Send the
+            // endpoints to be deleted as well
+            std::unordered_map<std::string, std::string> addOrUpdateEndpointsToSend;
+            for (auto iter = m_addOrUpdateEndpoints.pending.begin(); iter != m_addOrUpdateEndpoints.pending.end();) {
+                if (!isEndpointDeduplicated(iter->first)) {
+                    addOrUpdateEndpointsToSend.insert(*iter);
+                    m_addOrUpdateEndpoints.inFlight.insert(*iter);
+                    iter = m_addOrUpdateEndpoints.pending.erase(iter);
+                } else {
+                    ++iter;
+                }
+            }
+            // No non-deduplicated endpoints are pending add or update.
+            if (!addOrUpdateEndpointsToSend.empty()) {
+                addOrUpdateEndpointsToSendVector.push_back(addOrUpdateEndpointsToSend);
+            }
+
+            m_deleteEndpoints.inFlight = m_deleteEndpoints.pending;
+            deleteEndpointsToSend = m_deleteEndpoints.inFlight;
+            m_deleteEndpoints.pending.clear();
+
+            addOrUpdateEndpointsToSend.clear();
+            deleteEndpointsToSend.clear();
+
+            // Send remaining deduplicated endpoints in a separate discovery event, if any.
+            if (!m_addOrUpdateEndpoints.pending.empty()) {
+                m_addOrUpdateEndpoints.inFlight = m_addOrUpdateEndpoints.pending;
+                addOrUpdateEndpointsToSend = m_addOrUpdateEndpoints.inFlight;
+                m_addOrUpdateEndpoints.pending.clear();
+            }
+            addOrUpdateEndpointsToSendVector.push_back(addOrUpdateEndpointsToSend);
+        }
     }
 
+    for (auto& addOrUpdateEndpointsToSend : addOrUpdateEndpointsToSendVector) {
+        if (!executeSendDiscoveryEvents(addOrUpdateEndpointsToSend, deleteEndpointsToSend)) {
+            return;
+        }
+        deleteEndpointsToSend.clear();
+    }
+}
+
+bool CapabilitiesDelegate::executeSendDiscoveryEvents(
+    const std::unordered_map<std::string, std::string>& addOrUpdateEndpointsToSend,
+    const std::unordered_map<std::string, std::string>& deleteEndpointsToSend) {
     ACSDK_DEBUG5(LX(__func__)
                      .d("num endpoints to add", addOrUpdateEndpointsToSend.size())
                      .d("num endpoints to delete", deleteEndpointsToSend.size()));
 
-    auto discoveryEventSender =
-        DiscoveryEventSender::create(addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate);
+    auto discoveryEventSender = DiscoveryEventSender::create(
+        addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate, true, m_metricRecorder);
 
     if (!discoveryEventSender) {
-        ACSDK_ERROR(LX("failedExecuteSendPendingEndpoints").d("reason", "failed to create DiscoveryEventSender"));
+        ACSDK_ERROR(LX("failedExecuteSendDiscoveryEvents").d("reason", "failed to create DiscoveryEventSender"));
         moveInFlightEndpointsToPending();
         setCapabilitiesState(
             CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
             CapabilitiesDelegateObserverInterface::Error::UNKNOWN_ERROR,
             getEndpointIdentifiers(addOrUpdateEndpointsToSend),
             getEndpointIdentifiers(deleteEndpointsToSend));
-        return;
+        return false;
     }
-
     setDiscoveryEventSender(discoveryEventSender);
     discoveryEventSender->sendDiscoveryEvents(m_messageSender);
+    return true;
 }
 
 void CapabilitiesDelegate::onAlexaEventProcessedReceived(const std::string& eventCorrelationToken) {
@@ -520,11 +716,18 @@ std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostC
     /// even though no Discovery event was sent. This logic is not required for pending delete endpoints, since
     /// calls to CapabilitiesDelegate.deleteEndpoint fail when the endpoint is not already cached with
     /// CapabilitiesDelegate.
-    if (addOrUpdateEndpointsToSend.empty() && !originalPendingAddOrUpdateEndpoints.empty()) {
+    auto unchangedPendingAddOrUpdateEndpoints = originalPendingAddOrUpdateEndpoints;
+    for (const auto& endpoint : addOrUpdateEndpointsToSend) {
+        auto endpointIt = unchangedPendingAddOrUpdateEndpoints.find(endpoint.first);
+        if (endpointIt != unchangedPendingAddOrUpdateEndpoints.end()) {
+            unchangedPendingAddOrUpdateEndpoints.erase(endpointIt);
+        }
+    }
+    if (!unchangedPendingAddOrUpdateEndpoints.empty()) {
         setCapabilitiesState(
             CapabilitiesDelegateObserverInterface::State::SUCCESS,
             CapabilitiesDelegateObserverInterface::Error::SUCCESS,
-            getEndpointIdentifiers(originalPendingAddOrUpdateEndpoints),
+            getEndpointIdentifiers(unchangedPendingAddOrUpdateEndpoints),
             std::vector<std::string>{});
     }
 
@@ -538,8 +741,8 @@ std::shared_ptr<PostConnectOperationInterface> CapabilitiesDelegate::createPostC
                      .d("num endpoints to add", addOrUpdateEndpointsToSend.size())
                      .d("num endpoints to delete", deleteEndpointsToSend.size()));
 
-    std::shared_ptr<DiscoveryEventSenderInterface> newEventSender =
-        DiscoveryEventSender::create(addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate);
+    std::shared_ptr<DiscoveryEventSenderInterface> newEventSender = DiscoveryEventSender::create(
+        addOrUpdateEndpointsToSend, deleteEndpointsToSend, m_authDelegate, true, m_metricRecorder, true);
     if (!newEventSender) {
         ACSDK_ERROR(LX("createPostConnectOperationFailed").m("Could not create DiscoveryEventSender."));
         return nullptr;
@@ -562,9 +765,13 @@ void CapabilitiesDelegate::onDiscoveryCompleted(
     const std::unordered_map<std::string, std::string>& deleteReportEndpoints) {
     ACSDK_DEBUG5(LX(__func__));
 
-    if (m_addOrUpdateEndpoints.inFlight != addOrUpdateReportEndpoints ||
-        m_deleteEndpoints.inFlight != deleteReportEndpoints) {
-        ACSDK_WARN(LX(__func__).m("Cached in-flight endpoints do not match endpoints registered to AVS"));
+    {
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
+
+        if (m_addOrUpdateEndpoints.inFlight != addOrUpdateReportEndpoints ||
+            m_deleteEndpoints.inFlight != deleteReportEndpoints) {
+            ACSDK_WARN(LX(__func__).m("Cached in-flight endpoints do not match endpoints registered to AVS"));
+        }
     }
 
     auto addOrUpdateReportEndpointIdentifiers = getEndpointIdentifiers(addOrUpdateReportEndpoints);
@@ -589,7 +796,7 @@ void CapabilitiesDelegate::onDiscoveryCompleted(
         addOrUpdateReportEndpointIdentifiers,
         deleteReportEndpointIdentifiers);
 
-    m_executor.submit([this] { executeSendPendingEndpoints(); });
+    m_executor.execute([this] { executeSendPendingEndpoints(); });
 }
 
 void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::Status status) {
@@ -601,13 +808,20 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
     }
     ACSDK_ERROR(LX(__func__).d("reason", status));
 
-    auto addOrUpdateReportEndpointIdentifiers = getEndpointIdentifiers(m_addOrUpdateEndpoints.inFlight);
-    auto deleteReportEndpointIdentifiers = getEndpointIdentifiers(m_deleteEndpoints.inFlight);
-
-    switch (status) {
-        case MessageRequestObserverInterface::Status::INVALID_AUTH:
+    std::vector<EndpointIdentifier> addOrUpdateReportEndpointIdentifiers;
+    std::vector<EndpointIdentifier> deleteReportEndpointIdentifiers;
+    {
+        std::lock_guard<std::mutex> lock{m_endpointsMutex};
+        addOrUpdateReportEndpointIdentifiers = getEndpointIdentifiers(m_addOrUpdateEndpoints.inFlight);
+        deleteReportEndpointIdentifiers = getEndpointIdentifiers(m_deleteEndpoints.inFlight);
+        if (status == MessageRequestObserverInterface::Status::INVALID_AUTH ||
+            status == MessageRequestObserverInterface::Status::BAD_REQUEST) {
             m_addOrUpdateEndpoints.inFlight.clear();
             m_deleteEndpoints.inFlight.clear();
+        }
+    }
+    switch (status) {
+        case MessageRequestObserverInterface::Status::INVALID_AUTH:
             resetCurrentDiscoveryEventSender();
 
             setCapabilitiesState(
@@ -617,8 +831,6 @@ void CapabilitiesDelegate::onDiscoveryFailure(MessageRequestObserverInterface::S
                 deleteReportEndpointIdentifiers);
             break;
         case MessageRequestObserverInterface::Status::BAD_REQUEST:
-            m_addOrUpdateEndpoints.inFlight.clear();
-            m_deleteEndpoints.inFlight.clear();
             resetCurrentDiscoveryEventSender();
 
             setCapabilitiesState(
@@ -735,7 +947,7 @@ void CapabilitiesDelegate::onConnectionStatusChanged(
     if (ConnectionStatusObserverInterface::Status::CONNECTED == status) {
         /// If newly connected, send Discovery events for any endpoints that may have been added or deleted
         /// during the post-connect stage.
-        m_executor.submit([this] { executeSendPendingEndpoints(); });
+        m_executor.execute([this] { executeSendPendingEndpoints(); });
     }
 }
 
@@ -759,10 +971,16 @@ void CapabilitiesDelegate::addStaleEndpointsToPendingDeleteLocked(
         ACSDK_ERROR(LX("findEndpointsToDeleteLockedFailed").d("reason", "invalidStoredEndpointConfig"));
         return;
     }
-
+    // Do not allow a deduplicated endpoint to be deleted.
     for (auto& it : *storedEndpointConfig) {
         if (m_endpoints.end() == m_endpoints.find(it.first) &&
             m_addOrUpdateEndpoints.pending.end() == m_addOrUpdateEndpoints.pending.find(it.first)) {
+            if (isEndpointDeduplicated(it.first)) {
+                ACSDK_ERROR(LX(__func__)
+                                .d("reason", "deduplicated endpoint included in deleteReport")
+                                .sensitive("endpointId", it.first));
+                return;
+            }
             ACSDK_DEBUG9(LX(__func__).d("step", "endpoint included in deleteReport").sensitive("endpointId", it.first));
             m_deleteEndpoints.pending.insert({it.first, getDeleteReportEndpointConfigJson(it.first)});
         }

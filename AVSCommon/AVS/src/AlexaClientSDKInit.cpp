@@ -30,7 +30,7 @@ namespace avs {
 namespace initialization {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AlexaClientSdkInit");
+#define TAG "AlexaClientSdkInit"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

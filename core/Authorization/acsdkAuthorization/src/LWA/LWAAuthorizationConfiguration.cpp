@@ -33,7 +33,7 @@ using namespace avsCommon::utils::json::jsonUtils;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LWAAuthorizationConfiguration");
+#define TAG "LWAAuthorizationConfiguration"
 
 /// Name of @c ConfigurationNode for LWAAuthorization
 static const std::string CONFIG_KEY_LWA_AUTHORIZATION = "lwaAuthorization";

@@ -43,8 +43,6 @@ if (BLUETOOTH_ENABLED)
         # Log a warning for this case, but not a fatal error. Applications that use the deprecated DefaultClient::create
         # method may use their own Bluetooth implementation by passing in their implementation of BluetoothDeviceManagerInterface,
         # without specifying a custom ACSDKBLUETOOTHIMPLEMENTATIONS_LIB here.
-        #
-        # However, note that compilation for PreviewAlexaClient will fail in this case.
         message(WARNING "No default library available for ACSDKBLUETOOTHIMPLEMENTATIONS_LIB when BLUETOOTH_ENABLED=ON BLUETOOTH_BLUEZ=OFF")
     endif()
 else()

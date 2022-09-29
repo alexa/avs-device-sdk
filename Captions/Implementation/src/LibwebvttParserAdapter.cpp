@@ -31,7 +31,7 @@ namespace captions {
 using namespace alexaClientSDK::avsCommon::utils::logger;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LibwebvttParserAdapter");
+#define TAG "LibwebvttParserAdapter"
 
 /// Return value indicating an error occurred during parsing.
 static const int WEBVTT_CALLBACK_ERROR = -1;

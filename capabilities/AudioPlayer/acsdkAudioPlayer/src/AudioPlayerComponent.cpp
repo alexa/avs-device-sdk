@@ -130,7 +130,8 @@ Component<
     Import<Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
-    Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>>
+    Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
+    Import<std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>>>
 getComponent(const std::string& configParentKey) {
     return ComponentAccumulator<>()
         .addRetainedFactory(getCreatePooledMediaResourceProviderInterface(configParentKey))
@@ -151,7 +152,8 @@ Component<
     Import<Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
-    Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>>
+    Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
+    Import<std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>>>
 getBackwardsCompatibleComponent() {
     return ComponentAccumulator<>().addRequiredFactory(AudioPlayer::createAudioPlayerInterface);
 }

@@ -15,9 +15,9 @@
 #include <algorithm>
 
 #include <AVSCommon/Utils/Timing/MultiTimer.h>
-
-#include "AVSCommon/Utils/Logger/Logger.h"
-#include "AVSCommon/Utils/Timing/Timer.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Logger/ThreadMoniker.h>
+#include <AVSCommon/Utils/Timing/Timer.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -25,26 +25,31 @@ namespace utils {
 namespace timing {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MultiTimer");
+#define TAG "MultiTimer"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Grace period used to avoid restarting the internal thread too often.
 static const std::chrono::milliseconds GRACE_PERIOD{500};
 
-std::shared_ptr<MultiTimer> MultiTimer::createMultiTimer() {
+std::shared_ptr<MultiTimer> MultiTimer::createMultiTimer() noexcept {
     return std::make_shared<MultiTimer>();
 }
 
-MultiTimer::MultiTimer() : m_isRunning{false}, m_isBeingDestroyed{false}, m_nextToken{0} {
+MultiTimer::MultiTimer() noexcept :
+        m_timerMoniker{utils::logger::ThreadMoniker::generateMoniker(utils::logger::ThreadMoniker::PREFIX_TIMER)},
+        m_isRunning{false},
+        m_isBeingDestroyed{false},
+        m_nextToken{0} {
+    ACSDK_DEBUG5(LX("init").d("moniker", m_timerMoniker));
 }
 
-MultiTimer::~MultiTimer() {
+MultiTimer::~MultiTimer() noexcept {
     std::unique_lock<std::mutex> lock{m_waitMutex};
     m_timers.clear();
     m_tasks.clear();
@@ -57,7 +62,7 @@ MultiTimer::~MultiTimer() {
     }
 }
 
-MultiTimer::Token MultiTimer::submitTask(const std::chrono::milliseconds& delay, std::function<void()> task) {
+MultiTimer::Token MultiTimer::submitTask(const std::chrono::milliseconds& delay, std::function<void()> task) noexcept {
     std::unique_lock<std::mutex> lock{m_waitMutex};
     auto token = m_nextToken++;
 
@@ -69,7 +74,7 @@ MultiTimer::Token MultiTimer::submitTask(const std::chrono::milliseconds& delay,
     // Kick-off task execution if needed.
     if (!m_isRunning) {
         m_isRunning = true;
-        m_timerThread.start(std::bind(&MultiTimer::executeTimer, this));
+        m_timerThread.start(std::bind(&MultiTimer::executeTimer, this), m_timerMoniker);
     } else {
         // Wake up timer thread if the new task is the next to expire.
         if (m_timers.begin()->second == token) {
@@ -80,7 +85,7 @@ MultiTimer::Token MultiTimer::submitTask(const std::chrono::milliseconds& delay,
     return token;
 }
 
-void MultiTimer::cancelTask(Token token) {
+void MultiTimer::cancelTask(Token token) noexcept {
     std::unique_lock<std::mutex> lock{m_waitMutex};
     auto taskIt = m_tasks.find(token);
     if (taskIt != m_tasks.end()) {
@@ -99,7 +104,7 @@ void MultiTimer::cancelTask(Token token) {
     }
 }
 
-bool MultiTimer::executeTimer() {
+bool MultiTimer::executeTimer() noexcept {
     std::unique_lock<std::mutex> lock{m_waitMutex};
     while (!m_timers.empty()) {
         auto now = std::chrono::steady_clock::now();
@@ -115,17 +120,23 @@ bool MultiTimer::executeTimer() {
             // Execute task.
             auto taskIt = m_tasks.find(nextIt->second);
             if (taskIt != m_tasks.end()) {
-                auto& task = taskIt->second.second;
-                task();
+                auto task = std::move(taskIt->second.second);
                 m_tasks.erase(taskIt);
+                m_timers.erase(nextIt);
+                lock.unlock();
+                if (task) {
+                    task();
+                }
+                lock.lock();
+            } else {
+                m_timers.erase(nextIt);
             }
-            m_timers.erase(nextIt);
         }
     }
     return hasNextLocked(lock);
 }
 
-bool MultiTimer::hasNextLocked(std::unique_lock<std::mutex>& lock) {
+bool MultiTimer::hasNextLocked(std::unique_lock<std::mutex>& lock) noexcept {
     m_waitCondition.wait_for(lock, GRACE_PERIOD, [this] { return (!m_tasks.empty()) || m_isBeingDestroyed; });
     m_isRunning = (!m_isBeingDestroyed) && !m_tasks.empty();
     return m_isRunning;

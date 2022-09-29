@@ -220,7 +220,7 @@ std::future<size_t> Source::run(
             for (size_t word = 0; word < blockSizeWords; ++word) {
                 for (size_t byte = 0; byte < wordSize; ++byte) {
                     size_t byteIndex = word * wordSize + byte;
-                    uint8_t byteValue = m_counter >> (byte % wordSize);
+                    uint8_t byteValue = static_cast<uint8_t>(m_counter >> (byte % wordSize));
                     block[byteIndex] = byteValue;
                 }
                 ++m_counter;
@@ -314,7 +314,7 @@ std::future<size_t> Sink::run(
             for (ssize_t word = 0; word < nWords; ++word) {
                 for (size_t byte = 0; byte < wordSize; ++byte) {
                     size_t byteIndex = word * wordSize + byte;
-                    uint8_t byteValue = m_counter >> (byte % wordSize);
+                    uint8_t byteValue = static_cast<uint8_t>(m_counter >> (byte % wordSize));
                     ASSERT_EQ(block[byteIndex], byteValue);
                 }
                 ++m_counter;
@@ -714,7 +714,7 @@ TEST_F(SharedDataStreamTest, test_readerSeek) {
     Sds::Index writerPos = 0;
     uint8_t writeBuf[WORDSIZE * WORDCOUNT];
     for (size_t i = 0; i < sizeof(writeBuf); ++i) {
-        writeBuf[i] = i;
+        writeBuf[i] = static_cast<uint8_t>(i);
     }
     size_t writeWords = WORDCOUNT / 2;
     ASSERT_EQ(writer->write(writeBuf, writeWords), static_cast<ssize_t>(writeWords));

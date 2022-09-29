@@ -27,7 +27,7 @@ using AudioFocusAnnotation = avsCommon::sdkInterfaces::AudioFocusAnnotation;
 using VisualFocusAnnotation = avsCommon::sdkInterfaces::VisualFocusAnnotation;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FocusManagementComponent");
+#define TAG "FocusManagementComponent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

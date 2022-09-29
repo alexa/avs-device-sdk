@@ -41,7 +41,7 @@ using namespace avsCommon::utils::json;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"RangeControllerCapabilityAgent"};
+#define TAG "RangeControllerCapabilityAgent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -271,7 +271,7 @@ void RangeControllerCapabilityAgent::handleDirective(std::shared_ptr<DirectiveIn
         return;
     }
 
-    m_executor.submit([this, info] {
+    m_executor.execute([this, info] {
         ACSDK_DEBUG5(LX("handleDirectiveInExecutor"));
         const std::string directiveName = info->directive->getName();
         if (!info->directive->getEndpoint().hasValue() ||
@@ -313,7 +313,7 @@ void RangeControllerCapabilityAgent::provideState(
     ACSDK_DEBUG5(
         LX(__func__).d("contextRequestToken", contextRequestToken).sensitive("stateProviderName", stateProviderName));
 
-    m_executor.submit([this, stateProviderName, contextRequestToken] {
+    m_executor.execute([this, stateProviderName, contextRequestToken] {
         ACSDK_DEBUG5(LX("provideStateInExecutor"));
         executeProvideState(stateProviderName, contextRequestToken);
     });
@@ -417,7 +417,7 @@ void RangeControllerCapabilityAgent::onRangeChanged(
         return;
     }
 
-    m_executor.submit([this, rangeState, cause] {
+    m_executor.execute([this, rangeState, cause] {
         m_contextManager->reportStateChange(
             CapabilityTag(NAMESPACE, RANGEVALUE_PROPERTY_NAME, m_endpointId, m_instance),
             buildCapabilityState(rangeState),

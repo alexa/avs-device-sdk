@@ -32,7 +32,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::logger;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"AlexaInterfaceMessageSender"};
+#define TAG "AlexaInterfaceMessageSender"
 
 /// Name of response events.
 static const std::string EVENT_NAME_STATE_REPORT_STRING = "StateReport";
@@ -327,7 +327,7 @@ bool AlexaInterfaceMessageSender::sendCommonResponseEvent(
         endpoint,
         jsonPayload,
         responseNamespace == "" ? ALEXA_INTERFACE_NAME : responseNamespace);
-    m_executor.submit([this, event]() {
+    m_executor.execute([this, event]() {
         // Start collecting context for this endpoint.
         auto token = m_contextManager->getContext(shared_from_this(), event->endpoint.endpointId);
         m_pendingResponses[token] = event;
@@ -408,7 +408,7 @@ void AlexaInterfaceMessageSender::onStateChanged(
     const CapabilityState& state,
     const AlexaStateChangeCauseType cause) {
     auto event = std::make_shared<ChangeReportData>(identifier, state, cause);
-    m_executor.submit([this, event]() {
+    m_executor.execute([this, event]() {
         // Start collecting context for this endpoint.
         auto token = m_contextManager->getContext(shared_from_this(), event->tag.endpointId);
         m_pendingChangeReports[token] = event;
@@ -419,7 +419,7 @@ void AlexaInterfaceMessageSender::onContextAvailable(
     const std::string& endpointId,
     const AVSContext& endpointContext,
     ContextRequestToken token) {
-    m_executor.submit([this, endpointId, endpointContext, token]() {
+    m_executor.execute([this, endpointId, endpointContext, token]() {
         ACSDK_DEBUG(LX("onContextAvailable").sensitive("endpointId", endpointId));
 
         // Is this for a pending response event?
@@ -436,7 +436,8 @@ void AlexaInterfaceMessageSender::onContextAvailable(
 }
 
 void AlexaInterfaceMessageSender::onContextFailure(const ContextRequestError error, ContextRequestToken token) {
-    m_executor.submit([this, error, token]() {
+    m_executor.execute([this, error, token]() {
+        (void)error;  // mark capture as used for the case when logging is disabled.
         ACSDK_ERROR(LX("executeOnContextFailure").d("error", error));
 
         // Is this for a pending response event?

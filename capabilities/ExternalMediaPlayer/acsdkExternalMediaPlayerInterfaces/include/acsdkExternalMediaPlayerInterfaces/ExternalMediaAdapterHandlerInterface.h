@@ -77,12 +77,6 @@ public:
         bool preload;
         /// PlayRequestor for indicating who requested playback
         alexaClientSDK::avsCommon::avs::PlayRequestor playRequestor;
-#ifdef MEDIA_PORTABILITY_ENABLED
-        /// mediaSessionId used to track media playback
-        std::string mediaSessionId;
-        /// correlationToken used to opaquely plumb routing info
-        std::string correlationToken;
-#endif
         /// Playback target to play on
         std::string playbackTarget;
 
@@ -111,10 +105,6 @@ public:
             Navigation navigation,
             bool preload,
             const alexaClientSDK::avsCommon::avs::PlayRequestor& playRequestor,
-#ifdef MEDIA_PORTABILITY_ENABLED
-            const std::string& mediaSessionId,
-            const std::string& correlationToken,
-#endif
             const std::string& playbackTarget) :
                 localPlayerId{localPlayerId},
                 playContextToken{playContextToken},
@@ -125,10 +115,6 @@ public:
                 navigation{navigation},
                 preload{preload},
                 playRequestor(playRequestor),
-#ifdef MEDIA_PORTABILITY_ENABLED
-                mediaSessionId{mediaSessionId},
-                correlationToken{correlationToken},
-#endif
                 playbackTarget{playbackTarget} {
         }
     };
@@ -187,12 +173,6 @@ public:
     virtual bool playControl(
         const std::string& localPlayerId,
         acsdkExternalMediaPlayerInterfaces::RequestType requestType,
-#ifdef MEDIA_PORTABILITY_ENABLED
-        /// @param mediaSessionId The optional @c mediaSessionId used to track media playback
-        /// @param correlationToken The optional @c correlationToken used to opaquely plumb routing info
-        const std::string& mediaSessionId,
-        const std::string& correlationToken,
-#endif
         const std::string& playbackTarget) = 0;
 
     /**

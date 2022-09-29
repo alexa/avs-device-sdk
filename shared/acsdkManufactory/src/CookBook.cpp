@@ -22,7 +22,7 @@ namespace acsdkManufactory {
 namespace internal {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("Cookbook");
+#define TAG "Cookbook"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -39,21 +39,21 @@ bool CookBook::checkForCyclicDependencies() {
     // 'in progress' that indicates a circular dependency.
 
     // Note, std::map<> used here for stability of iterators.
-    using TypeToCompletedMap = std::map<TypeIndex, bool>;
+    using TypeToCompletedMap = std::map<avsCommon::utils::TypeIndex, bool>;
 
     // Position at one level in DFS traversal.
     struct Position {
         TypeToCompletedMap::iterator typeToCompletedIt;
-        std::vector<TypeIndex>::const_iterator nextDependency;
-        std::vector<TypeIndex>::const_iterator endOfDependencies;
+        std::vector<avsCommon::utils::TypeIndex>::const_iterator nextDependency;
+        std::vector<avsCommon::utils::TypeIndex>::const_iterator endOfDependencies;
     };
 
     // Regularize the depth first search to include all types in the CookBook by creating a dummy 'root'
     // type that includes all types as dependencies.
 
     TypeToCompletedMap typeToCompletedMap;
-    auto terminalCompletedIt = typeToCompletedMap.insert({getTypeIndex<CookBook>(), false}).first;
-    std::vector<TypeIndex> allTypes;
+    auto terminalCompletedIt = typeToCompletedMap.insert({avsCommon::utils::getTypeIndex<CookBook>(), false}).first;
+    std::vector<avsCommon::utils::TypeIndex> allTypes;
     for (auto item : m_recipes) {
         allTypes.push_back(item.first);
     }
@@ -142,7 +142,7 @@ void CookBook::deleteFunctionForInstanceRecipe(void* cachedValue) {
 CookBook::FactoryRecipe::FactoryRecipe(
     Factory factory,
     CachedInstanceLifecycle lifecycle,
-    std::vector<TypeIndex> dependencies,
+    std::vector<avsCommon::utils::TypeIndex> dependencies,
     ProduceInstanceFunction produceFunction,
     DeleteInstanceFunction deleteFunction) {
     this->m_objectLifecycle = lifecycle;
@@ -171,7 +171,7 @@ CookBook::FactoryRecipe::Factory CookBook::FactoryRecipe::getFactory() const {
 CookBook::FunctionRecipe::FunctionRecipe(
     Function function,
     CachedInstanceLifecycle lifecycle,
-    std::vector<TypeIndex> dependencies,
+    std::vector<avsCommon::utils::TypeIndex> dependencies,
     ProduceInstanceFunction produceFunction,
     DeleteInstanceFunction deleteFunction,
     DeleteRecipeFunction deleteRecipeFunction) {

@@ -6,7 +6,7 @@ The Alexa Voice Service (AVS) enables developers to integrate Alexa directly int
 
 ### What is the AVS Device SDK
 
-The Alexa Voice Service (AVS) Device SDK provides you with a set of C ++ libraries to build an Alexa Built-in product, meaning your device has direct access to cloud-based Alexa capabilities to receive voice responses instantly. Your device can be almost anything – a smartwatch, a speaker, headphones – the choice is yours.
+The Alexa Voice Service (AVS) Device SDK provides you with a set of C ++ libraries to build an Alexa Built-in product, meaning your device has direct access to cloud-based Alexa capabilities to receive voice responses instantly. You can create a wide range of devices — a smartwatch, speaker, headphones, smart TV, set-top boxes, soundbar, AV receiver, home theater hub, or a gaming console — the choice is yours.
 
 [Learn more »](https://developer.amazon.com/docs/alexa/avs-device-sdk/overview.html)
 
@@ -16,13 +16,10 @@ Feature enhancements, updates, and resolved issues from all releases are availab
 
 ### Get Started
 
-You can set up the SDK on the following platforms:
-* [Ubuntu Linux](https://developer.amazon.com/docs/alexa/avs-device-sdk/ubuntu.html)
-* [Raspberry Pi](https://developer.amazon.com/docs/alexa/avs-device-sdk/raspberry-pi.html)
-* [macOS](https://developer.amazon.com/docs/alexa/avs-device-sdk/mac-os.html)
-* [Windows 64-bit](https://developer.amazon.com/docs/alexa/avs-device-sdk/windows-64.html)
-* [Generic Linux](https://developer.amazon.com/docs/alexa/avs-device-sdk/linux.html)
-* [Android](https://developer.amazon.com/docs/alexa/avs-device-sdk/android.html)
+You can [set up the SDK](https://developer.amazon.com/en-US/docs/alexa/avs-device-sdk/quick-start-guides.html) on the following platforms:
+* Ubuntu Linux
+* Raspberry Pi
+* macOS
 
 ### SDK Architecture
 
@@ -34,9 +31,6 @@ The SDK is modular and abstract. It provides [separate components](https://devel
 
 View the [C++ API References](https://alexa.github.io/avs-device-sdk/) for detailed information about implementation.
 
-### Security Best Practices and Important Considerations
+### Security Requirements
 
-All Alexa products should adopt the [Security Best Practices for Alexa](https://developer.amazon.com/docs/alexa/alexa-voice-service/security-best-practices.html).
-
-When building Alexa with the SDK, you should also adhere to the [following security principles](https://developer.amazon.com/docs/alexa/avs-device-sdk/overview.html#security-best-practices).
-
+All Alexa products must meet the [AVS Security Requirements](https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/avs-security-reqs.html). In addition, when building the AVS Device SDK, you are required to adhere to the [following security principles](https://developer.amazon.com/en-US/docs/alexa/avs-device-sdk/overview.html#security-requirements).

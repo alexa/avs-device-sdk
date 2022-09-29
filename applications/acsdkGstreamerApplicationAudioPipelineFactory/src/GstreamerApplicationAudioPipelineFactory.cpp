@@ -28,7 +28,7 @@ using namespace avsCommon::utils::mediaPlayer;
 using namespace captions;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("GstreamerApplicationAudioPipelineFactory");
+#define TAG "GstreamerApplicationAudioPipelineFactory"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

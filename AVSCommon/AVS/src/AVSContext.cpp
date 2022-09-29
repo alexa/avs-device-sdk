@@ -39,7 +39,7 @@ static const std::string TIME_OF_SAMPLE_KEY_STRING = "timeOfSample";
 static const std::string UNCERTAINTY_KEY_STRING = "uncertaintyInMilliseconds";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AVSContext");
+#define TAG "AVSContext"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

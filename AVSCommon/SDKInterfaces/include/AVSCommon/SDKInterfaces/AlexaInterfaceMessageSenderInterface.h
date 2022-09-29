@@ -30,7 +30,8 @@ namespace sdkInterfaces {
  */
 class AlexaInterfaceMessageSenderInterface {
 public:
-    /// The type of error when calling sendErrorResponseEvent().
+    /// The type of error when calling sendErrorResponseEvent() with @c Alexa.ErrorResponse event.
+    /// https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-errorresponse.html
     enum class ErrorResponseType {
         /// The operation can't be performed because the endpoint is already in operation.
         ALREADY_IN_OPERATION,
@@ -94,6 +95,41 @@ public:
 
         /// The endpoint can't be set to the specified value because it's outside the acceptable range.
         VALUE_OUT_OF_RANGE
+    };
+
+    /// The type of video error when calling sendErrorResponseEvent() with @c Alexa.Video.ErrorResponse event.
+    /// https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-video-errorresponse.html
+    enum class AlexaVideoErrorResponseType {
+        /// Indicates the content does not allow the action requested. For example, if the user tries to delete
+        /// a recording that is marked as not deletable.
+        ACTION_NOT_PERMITTED_FOR_CONTENT,
+
+        /// Indicates an additional confirmation must occur before the requested action can be completed.
+        CONFIRMATION_REQUIRED,
+
+        /// Indicates the record operation failed due to restrictions on the content.
+        CONTENT_NOT_RECORDABLE,
+
+        /// The user is not subscribed to the content for a channel or other subscription-based content.
+        NOT_SUBSCRIBED,
+
+        /// Indicates that a recording request failed because the recording already exists.
+        RECORDING_EXISTS,
+
+        /// Indicates that a recording request failed because the DVR storage is full.
+        STORAGE_FULL,
+
+        /// Indicates the title specified yielded multiple results, and disambiguation is required to determine
+        /// the program to record. This value should be used to indicate that the target device will provide a
+        /// mechanism for disambiguation. For example, this error could indicate that there are multiple airings
+        /// of a program or that the entity requested for recording has multiple programs associated with it.
+        TITLE_DISAMBIGUATION_REQUIRED,
+
+        /// Indicates that a recording request failed because of a scheduling conflict with another recording.
+        TUNER_OCCUPIED,
+
+        /// Indicates an invalid error type
+        NONE
     };
 
     /**
@@ -190,6 +226,15 @@ public:
         const int estimatedDeferralInSeconds = 0) = 0;
 
     /**
+     * Convert @c AlexaVideoErrorResponseType type to its corresponding string.  Note that any invalid
+     * @c AlexaVideoErrorResponseType will return an empty string.
+     *
+     * @param responseType the response type to convert.
+     * @return the corresponding string for video error response type
+     */
+    static std::string alexaVideoErrorResponseToString(AlexaVideoErrorResponseType responseType);
+
+    /**
      * Convert an AlexaResponseType to its corresponding ErrorResponseType.  Note that any AlexaResponseType that does
      * not map to ErrorResponseType will return INTERNAL_ERROR.
      *
@@ -198,6 +243,31 @@ public:
      */
     static ErrorResponseType alexaResponseTypeToErrorType(const avsCommon::avs::AlexaResponseType responseType);
 };
+
+inline std::string AlexaInterfaceMessageSenderInterface::alexaVideoErrorResponseToString(
+    AlexaVideoErrorResponseType responseType) {
+    switch (responseType) {
+        case AlexaVideoErrorResponseType::ACTION_NOT_PERMITTED_FOR_CONTENT:
+            return "ACTION_NOT_PERMITTED_FOR_CONTENT";
+        case AlexaVideoErrorResponseType::CONFIRMATION_REQUIRED:
+            return "CONFIRMATION_REQUIRED";
+        case AlexaVideoErrorResponseType::CONTENT_NOT_RECORDABLE:
+            return "CONTENT_NOT_RECORDABLE";
+        case AlexaVideoErrorResponseType::NOT_SUBSCRIBED:
+            return "NOT_SUBSCRIBED";
+        case AlexaVideoErrorResponseType::RECORDING_EXISTS:
+            return "RECORDING_EXISTS";
+        case AlexaVideoErrorResponseType::STORAGE_FULL:
+            return "STORAGE_FULL";
+        case AlexaVideoErrorResponseType::TITLE_DISAMBIGUATION_REQUIRED:
+            return "TITLE_DISAMBIGUATION_REQUIRED";
+        case AlexaVideoErrorResponseType::TUNER_OCCUPIED:
+            return "TUNER_OCCUPIED";
+        case AlexaVideoErrorResponseType::NONE:
+            return "";
+    }
+    return "UNKNOWN";
+}
 
 inline AlexaInterfaceMessageSenderInterface::ErrorResponseType AlexaInterfaceMessageSenderInterface::
     alexaResponseTypeToErrorType(const avsCommon::avs::AlexaResponseType responseType) {

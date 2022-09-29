@@ -28,13 +28,13 @@ namespace avsCommon {
 namespace avs {
 
 /// Key for interface type in the @c CapabilityConfiguration map
-static const std::string CAPABILITY_INTERFACE_TYPE_KEY = "type";
+static const auto CAPABILITY_INTERFACE_TYPE_KEY = "type";
 /// Key for interface name in the @c CapabilityConfiguration map
-static const std::string CAPABILITY_INTERFACE_NAME_KEY = "interface";
+static const auto CAPABILITY_INTERFACE_NAME_KEY = "interface";
 /// Key for interface version in the @c CapabilityConfiguration map
-static const std::string CAPABILITY_INTERFACE_VERSION_KEY = "version";
+static const auto CAPABILITY_INTERFACE_VERSION_KEY = "version";
 /// Key for interface configurations in the @c CapabilityConfiguration map
-static const std::string CAPABILITY_INTERFACE_CONFIGURATIONS_KEY = "configurations";
+static const auto CAPABILITY_INTERFACE_CONFIGURATIONS_KEY = "configurations";
 
 /**
  * Class to encapsulate the capability configuration implemented by a capability agent.

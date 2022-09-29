@@ -26,7 +26,7 @@ using namespace avsCommon::utils::sds;
 using namespace utils::timing;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("InternetConnectionMonitor");
+#define TAG "InternetConnectionMonitor"
 
 /**
  * Create a @c LogEntry using this file's @c TAG and the specified event string.

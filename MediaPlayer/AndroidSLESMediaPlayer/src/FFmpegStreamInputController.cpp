@@ -28,7 +28,7 @@ extern "C" {
 #include "AndroidSLESMediaPlayer/FFmpegStreamInputController.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FFmpegStreamInputController");
+#define TAG "FFmpegStreamInputController"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

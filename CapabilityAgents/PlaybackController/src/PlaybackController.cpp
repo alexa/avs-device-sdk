@@ -40,7 +40,7 @@ static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_NAME = "Playbac
 static const std::string PLAYBACKCONTROLLER_CAPABILITY_INTERFACE_VERSION = "1.1";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PlaybackController");
+#define TAG "PlaybackController"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -120,7 +120,7 @@ void PlaybackController::handleCommand(const PlaybackCommand& command) {
     };
 
     ACSDK_DEBUG9(LX("buttonPressed").d("Button", command));
-    m_executor.submit(task);
+    m_executor.execute(task);
 }
 
 void PlaybackController::onButtonPressed(PlaybackButton button) {
@@ -167,11 +167,12 @@ void PlaybackController::onContextAvailable(const std::string& jsonContext) {
     };
 
     ACSDK_DEBUG9(LX("onContextAvailable"));
-    m_executor.submit(task);
+    m_executor.execute(task);
 }
 
 void PlaybackController::onContextFailure(const ContextRequestError error) {
     auto task = [this, error]() {
+        (void)error;  // mark capture as used when logging is disabled.
         if (m_commands.empty()) {
             // The queue shouldn't be empty, log a warning message and return here.
             ACSDK_WARN(LX("onContextFailureExecutor").m("Queue is empty, return."));
@@ -189,7 +190,7 @@ void PlaybackController::onContextFailure(const ContextRequestError error) {
     };
 
     ACSDK_DEBUG9(LX("onContextFailure"));
-    m_executor.submit(task);
+    m_executor.execute(task);
 }
 
 PlaybackController::PlaybackController(

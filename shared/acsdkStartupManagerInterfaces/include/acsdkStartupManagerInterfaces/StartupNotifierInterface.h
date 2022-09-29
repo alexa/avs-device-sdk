@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 
 #include "acsdkStartupManagerInterfaces/RequiresStartupInterface.h"
 
@@ -28,7 +28,7 @@ namespace acsdkStartupManagerInterfaces {
 /**
  * Interface for registering to observe startup notifications.
  */
-using StartupNotifierInterface = acsdkNotifierInterfaces::NotifierInterface<RequiresStartupInterface>;
+using StartupNotifierInterface = notifierInterfaces::NotifierInterface<RequiresStartupInterface>;
 
 }  // namespace acsdkStartupManagerInterfaces
 }  // namespace alexaClientSDK

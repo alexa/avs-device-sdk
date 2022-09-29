@@ -25,7 +25,7 @@ using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"DevicePropertyAggregator"};
+#define TAG "DevicePropertyAggregator"
 
 /// String to identify invalid property value.
 static const std::string INVALID_VALUE{"INVALID"};
@@ -127,7 +127,7 @@ void DevicePropertyAggregator::onAuthStateChange(
             break;
     }
 
-    m_executor.submit([this, registered]() {
+    m_executor.execute([this, registered]() {
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::REGISTRATION_STATUS] = toString(registered);
     });
 }
@@ -260,7 +260,7 @@ Optional<std::string> DevicePropertyAggregator::getDeviceContextJson() {
 
 void DevicePropertyAggregator::onAlertStateChange(const AlertObserverInterface::AlertInfo& alertInfo) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, alertInfo]() {
+    m_executor.execute([this, alertInfo]() {
         std::stringstream ss;
         ss << alertInfo.type << ":" << alertInfo.state;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::ALERT_TYPE_AND_STATE] = ss.str();
@@ -271,7 +271,7 @@ void DevicePropertyAggregator::onPlayerActivityChanged(
     PlayerActivity state,
     const AudioPlayerObserverInterface::Context& context) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, state, context]() {
+    m_executor.execute([this, state, context]() {
         std::string playerActivityState = avsCommon::avs::playerActivityToString(state);
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::AUDIO_PLAYER_STATE] = playerActivityState;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::CONTENT_ID] = context.audioItemId;
@@ -280,7 +280,7 @@ void DevicePropertyAggregator::onPlayerActivityChanged(
 
 void DevicePropertyAggregator::onConnectionStatusChanged(const Status status, const ChangedReason reason) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, status]() {
+    m_executor.execute([this, status]() {
         std::stringstream ss;
         ss << status;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::CONNECTION_STATE] = ss.str();
@@ -289,7 +289,7 @@ void DevicePropertyAggregator::onConnectionStatusChanged(const Status status, co
 
 void DevicePropertyAggregator::onSetIndicator(IndicatorState state) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, state]() {
+    m_executor.execute([this, state]() {
         std::stringstream ss;
         ss << state;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::NOTIFICATION_INDICATOR] = ss.str();
@@ -302,7 +302,7 @@ void DevicePropertyAggregator::onNotificationReceived() {
 
 void DevicePropertyAggregator::onDialogUXStateChanged(DialogUXStateObserverInterface::DialogUXState newState) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, newState]() {
+    m_executor.execute([this, newState]() {
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::TTS_PLAYER_STATE] =
             DialogUXStateObserverInterface::stateToString(newState);
     });
@@ -313,7 +313,7 @@ void DevicePropertyAggregator::onSpeakerSettingsChanged(
     const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& settings) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, type, settings]() { updateSpeakerSettingsInPropertyMap(type, settings); });
+    m_executor.execute([this, type, settings]() { updateSpeakerSettingsInPropertyMap(type, settings); });
 }
 
 void DevicePropertyAggregator::updateSpeakerSettingsInPropertyMap(
@@ -338,7 +338,7 @@ void DevicePropertyAggregator::updateSpeakerSettingsInPropertyMap(
 
 void DevicePropertyAggregator::onRangeChanged(const RangeState& rangeState, const AlexaStateChangeCauseType cause) {
     ACSDK_DEBUG5(LX(__func__).d("range value", rangeState.value));
-    m_executor.submit([this, rangeState]() {
+    m_executor.execute([this, rangeState]() {
         std::stringstream ss;
         ss << rangeState.value;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::RANGE_CONTROLLER_STATUS] = ss.str();
@@ -349,7 +349,7 @@ void DevicePropertyAggregator::onPowerStateChanged(
     const PowerState& powerState,
     const AlexaStateChangeCauseType cause) {
     ACSDK_DEBUG5(LX(__func__).d("power state", powerState.powerState));
-    m_executor.submit([this, powerState]() {
+    m_executor.execute([this, powerState]() {
         std::stringstream ss;
         ss << powerState.powerState;
         m_asyncPropertyMap[DevicePropertyAggregatorInterface::POWER_CONTROLLER_STATUS] = ss.str();

@@ -29,6 +29,7 @@ namespace test {
 class MockObserver : public avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface {
 public:
     MOCK_METHOD1(onStateChanged, void(avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface::State state));
+    MOCK_METHOD1(onASRProfileChanged, void(const std::string& profile));
 };
 
 }  // namespace test

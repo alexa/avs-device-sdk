@@ -16,6 +16,8 @@
 #include <acsdkExternalMediaPlayerInterfaces/ExternalMediaAdapterConstants.h>
 #include <acsdkNotifications/NotificationRenderer.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h>
+#include <acsdk/SDKClient/SDKClientRegistry.h>
+#include <acsdk/TemplateRuntime/TemplateRuntimeFactory.h>
 #include <ADSL/MessageInterpreter.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/AVS/CapabilityChangeNotifier.h>
@@ -38,17 +40,6 @@
 #include <acsdkBluetooth/Bluetooth.h>
 #include <acsdkBluetooth/DeviceConnectionRulesAdapter.h>
 
-#ifdef ENABLE_PCC
-#include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
-#include <PhoneCallController/PhoneCallController.h>
-#endif
-
-#ifdef ENABLE_MCC
-#include <AVSCommon/SDKInterfaces/Calendar/CalendarClientInterface.h>
-#include <AVSCommon/SDKInterfaces/Meeting/MeetingClientInterface.h>
-#include <MeetingClientController/MeetingClientController.h>
-#endif
-
 #include "DefaultClient/DefaultClient.h"
 #include "DefaultClient/DefaultClientComponent.h"
 #include "DefaultClient/StubApplicationAudioPipelineFactory.h"
@@ -67,7 +58,7 @@ using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 using namespace alexaClientSDK::avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DefaultClient");
+#define TAG "DefaultClient"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -85,12 +76,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
 #ifdef ENABLE_PCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+    std::shared_ptr<phoneCallControllerInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
 #ifdef ENABLE_MCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
-    std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+    std::shared_ptr<meetingClientControllerInterfaces::meeting::MeetingClientInterface> meetingClient,
+    std::shared_ptr<meetingClientControllerInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -107,7 +98,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
     const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder,
-    capabilityAgents::aip::AudioProvider firstInteractionAudioProvider) {
+    capabilityAgents::aip::AudioProvider firstInteractionAudioProvider,
+    const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry) {
     std::unique_ptr<DefaultClient> defaultClient(new DefaultClient());
     if (!defaultClient->initialize(
             manufactory,
@@ -136,7 +128,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
             softwareInfoSenderObserver,
             diagnostics,
             externalCapabilitiesBuilder,
-            firstInteractionAudioProvider)) {
+            firstInteractionAudioProvider,
+            sdkClientRegistry)) {
+        auto shutdownManager = defaultClient->getShutdownManager();
+        if (shutdownManager) {
+            shutdownManager->shutdown();
+        }
         return nullptr;
     }
     return defaultClient;
@@ -169,12 +166,12 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
 #ifdef ENABLE_PCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+    std::shared_ptr<phoneCallControllerInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
 #ifdef ENABLE_MCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
-    std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+    std::shared_ptr<meetingClientControllerInterfaces::meeting::MeetingClientInterface> meetingClient,
+    std::shared_ptr<meetingClientControllerInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -216,7 +213,9 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
     bool startAlertSchedulingOnInitialization,
     std::shared_ptr<alexaClientSDK::acl::MessageRouterFactoryInterface> messageRouterFactory,
     const std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>& expectSpeechTimeoutHandler,
-    capabilityAgents::aip::AudioProvider firstInteractionAudioProvider) {
+    capabilityAgents::aip::AudioProvider firstInteractionAudioProvider,
+    const std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
+    const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry) {
 
     if (!equalizerRuntimeSetup) {
         equalizerRuntimeSetup = std::make_shared<defaultClient::EqualizerRuntimeSetup>(false);
@@ -304,7 +303,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         std::move(bluetoothDeviceManager),
         std::move(bluetoothStorage),
         bluetoothConnectionRulesProvider,
-        std::move(notificationsStorage));
+        std::move(notificationsStorage),
+        cryptoFactory);
     auto manufactory = DefaultClientManufactory::create(component);
 
     auto speakerManager = manufactory->get<std::shared_ptr<SpeakerManagerInterface>>();
@@ -350,7 +350,8 @@ std::unique_ptr<DefaultClient> DefaultClient::create(
         softwareInfoSenderObserver,
         diagnostics,
         externalCapabilitiesBuilder,
-        firstInteractionAudioProvider);
+        firstInteractionAudioProvider,
+        sdkClientRegistry);
 }
 
 bool DefaultClient::initialize(
@@ -362,12 +363,12 @@ bool DefaultClient::initialize(
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
 #ifdef ENABLE_PCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+    std::shared_ptr<phoneCallControllerInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
 #ifdef ENABLE_MCC
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
-    std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
-    std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+    std::shared_ptr<meetingClientControllerInterfaces::meeting::MeetingClientInterface> meetingClient,
+    std::shared_ptr<meetingClientControllerInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
     std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -384,7 +385,15 @@ bool DefaultClient::initialize(
     std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
     std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
     const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder,
-    capabilityAgents::aip::AudioProvider firstInteractionAudioProvider) {
+    capabilityAgents::aip::AudioProvider firstInteractionAudioProvider,
+    const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry) {
+
+    m_shutdownManager = manufactory->get<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>>();
+    if (!m_shutdownManager) {
+        ACSDK_ERROR(LX("initializeFailed").m("Failed to get ShutdownManager!"));
+        return false;
+    }
+
     if (!ringtoneMediaPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullRingtoneMediaPlayer"));
         return false;
@@ -475,13 +484,13 @@ bool DefaultClient::initialize(
     m_internetConnectionMonitor =
         manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>>();
     if (!m_internetConnectionMonitor) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullConnectionManager"));
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullInternetConnectionMonitor"));
         return false;
     }
 
     m_connectionManager = manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::AVSConnectionManagerInterface>>();
     if (!m_connectionManager) {
-        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullDefaultEndpointBuilder"));
+        ACSDK_ERROR(LX("initializeFailed").d("reason", "nullConnectionManager"));
         return false;
     }
 
@@ -521,6 +530,10 @@ bool DefaultClient::initialize(
     if (!m_alexaMessageSender) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAlexaMessageSender"));
         return false;
+    }
+    if (externalCapabilitiesBuilder) {
+        ACSDK_INFO(LX(__FUNCTION__).m("Supply m_alexaMessageSender to externalCapabilitiesBuilder"));
+        externalCapabilitiesBuilder->withAlexaInterfaceMessageSender(m_alexaMessageSender);
     }
 
     m_speakerManager = manufactory->get<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>>();
@@ -566,12 +579,6 @@ bool DefaultClient::initialize(
     m_audioPlayer = manufactory->get<std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface>>();
     if (!m_audioPlayer) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "nullAudioPlayer"));
-        return false;
-    }
-
-    m_shutdownManager = manufactory->get<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownManagerInterface>>();
-    if (!m_shutdownManager) {
-        ACSDK_ERROR(LX("initializeFailed").m("Failed to get ShutdownManager!"));
         return false;
     }
 
@@ -740,7 +747,7 @@ bool DefaultClient::initialize(
         speechConfirmationSetting,
         capabilityChangeNotifier,
         wakeWordsSetting,
-        manufactory->get<std::shared_ptr<speechencoder::SpeechEncoder>>(),
+        manufactory->get<std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface>>(),
         firstInteractionAudioProvider,
         powerResourceManager,
         metricRecorder,
@@ -832,7 +839,7 @@ bool DefaultClient::initialize(
      * that implements the
      * PhoneCallController interface of AVS
      */
-    m_phoneCallControllerCapabilityAgent = capabilityAgents::phoneCallController::PhoneCallController::create(
+    m_phoneCallControllerCapabilityAgent = phoneCallController::PhoneCallController::create(
         m_contextManager, m_connectionManager, phoneCaller, phoneSpeaker, m_audioFocusManager, m_exceptionSender);
     if (!m_phoneCallControllerCapabilityAgent) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreatePhoneCallControllerCapabilityAgent"));
@@ -844,23 +851,20 @@ bool DefaultClient::initialize(
      * Creating the MeetingClientController - This component is the Capability Agent that implements the
      * MeetingClientController interface of AVS
      */
-    m_meetingClientControllerCapabilityAgent =
-        capabilityAgents::meetingClientController::MeetingClientController::create(
-            m_contextManager,
-            m_connectionManager,
-            meetingClient,
-            calendarClient,
-            m_speakerManager,
-            m_audioFocusManager,
-            m_exceptionSender);
+    m_meetingClientControllerCapabilityAgent = meetingClientController::MeetingClientController::create(
+        m_contextManager,
+        m_connectionManager,
+        meetingClient,
+        calendarClient,
+        m_speakerManager,
+        m_audioFocusManager,
+        m_exceptionSender);
     if (!m_meetingClientControllerCapabilityAgent) {
         ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateMeetingClientControllerCapabilityAgent"));
     }
 #endif
 
     if (isGuiSupported) {
-        m_visualFocusManager = manufactory->get<
-            acsdkManufactory::Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, FocusManagerInterface>>();
         auto renderPlayerInfoCardsProviderRegistrar =
             manufactory
                 ->get<std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>>();
@@ -874,13 +878,14 @@ bool DefaultClient::initialize(
          * Capability Agent that implements the
          * TemplateRuntime interface of AVS.
          */
-        m_templateRuntime = capabilityAgents::templateRuntime::TemplateRuntime::createTemplateRuntime(
-            renderPlayerInfoCardsProviderRegistrar, m_visualFocusManager, m_exceptionSender);
-        if (!m_templateRuntime) {
+        auto templateRuntimeData = templateRuntime::TemplateRuntimeFactory::create(
+            renderPlayerInfoCardsProviderRegistrar, m_exceptionSender, m_defaultEndpointBuilder);
+        if (!templateRuntimeData.hasValue()) {
             ACSDK_ERROR(LX("initializeFailed").d("reason", "unableToCreateTemplateRuntimeCapabilityAgent"));
             return false;
         }
-        m_dialogUXStateAggregator->addObserver(m_templateRuntime);
+        m_templateRuntime = templateRuntimeData.value().templateRuntime;
+        m_shutdownObjects.push_back(templateRuntimeData.value().requiresShutdown);
         if (externalCapabilitiesBuilder) {
             externalCapabilitiesBuilder->withTemplateRunTime(m_templateRuntime);
         }
@@ -1059,10 +1064,6 @@ bool DefaultClient::initialize(
     }
 #endif
 
-    if (isGuiSupported) {
-        m_defaultEndpointBuilder->withCapability(m_templateRuntime, m_templateRuntime);
-    }
-
     if (m_equalizerCapabilityAgent) {
         m_defaultEndpointBuilder->withCapability(m_equalizerCapabilityAgent, m_equalizerCapabilityAgent);
     }
@@ -1111,7 +1112,8 @@ bool DefaultClient::initialize(
             powerResourceManager,
             m_softwareReporterCapabilityAgent,
             m_playbackRouter,
-            m_endpointRegistrationManager);
+            m_endpointRegistrationManager,
+            metricRecorder);
         for (auto& capability : externalCapabilities.first) {
             if (capability.configuration.hasValue()) {
                 m_defaultEndpointBuilder->withCapability(capability.configuration.value(), capability.directiveHandler);
@@ -1150,6 +1152,29 @@ bool DefaultClient::initialize(
     }
 
     m_defaultEndpointBuilder->withCapabilityConfiguration(m_softwareReporterCapabilityAgent);
+
+    if (sdkClientRegistry) {
+        sdkClientRegistry->registerComponent(m_defaultEndpointBuilder);
+        sdkClientRegistry->registerComponent(m_connectionManager);
+        sdkClientRegistry->registerComponent(m_exceptionSender);
+        sdkClientRegistry->registerComponent(m_certifiedSender);
+        sdkClientRegistry->registerComponent(m_audioFocusManager);
+        sdkClientRegistry->registerComponent(customerDataManager);
+        sdkClientRegistry->registerComponent(reportStateHandler);
+        sdkClientRegistry->registerComponent(m_audioInputProcessor);
+        sdkClientRegistry->registerComponent(m_speakerManager);
+        sdkClientRegistry->registerComponent(m_directiveSequencer);
+        sdkClientRegistry->registerComponent(userInactivityMonitor);
+        sdkClientRegistry->registerComponent(m_contextManager);
+        sdkClientRegistry->registerComponent(m_avsGatewayManager);
+        sdkClientRegistry->registerComponent(audioFactory);
+        sdkClientRegistry->registerComponent(powerResourceManager);
+        sdkClientRegistry->registerComponent(m_softwareReporterCapabilityAgent);
+        sdkClientRegistry->registerComponent(m_playbackRouter);
+        sdkClientRegistry->registerComponent(m_endpointRegistrationManager);
+        sdkClientRegistry->registerComponent(metricRecorder);
+        sdkClientRegistry->registerComponent(m_alexaMessageSender);
+    }
     return true;
 }
 
@@ -1265,7 +1290,7 @@ void DefaultClient::removeAudioPlayerObserver(
 }
 
 void DefaultClient::addTemplateRuntimeObserver(
-    std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer) {
+    std::shared_ptr<templateRuntimeInterfaces::TemplateRuntimeObserverInterface> observer) {
     if (!m_templateRuntime) {
         ACSDK_ERROR(LX("addTemplateRuntimeObserverFailed").d("reason", "guiNotSupported"));
         return;
@@ -1274,20 +1299,12 @@ void DefaultClient::addTemplateRuntimeObserver(
 }
 
 void DefaultClient::removeTemplateRuntimeObserver(
-    std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer) {
+    std::shared_ptr<templateRuntimeInterfaces::TemplateRuntimeObserverInterface> observer) {
     if (!m_templateRuntime) {
         ACSDK_ERROR(LX("removeTemplateRuntimeObserverFailed").d("reason", "guiNotSupported"));
         return;
     }
     m_templateRuntime->removeObserver(observer);
-}
-
-void DefaultClient::TemplateRuntimeDisplayCardCleared() {
-    if (!m_templateRuntime) {
-        ACSDK_ERROR(LX("TemplateRuntimeDisplayCardClearedFailed").d("reason", "guiNotSupported"));
-        return;
-    }
-    m_templateRuntime->displayCardCleared();
 }
 
 void DefaultClient::addNotificationsObserver(
@@ -1690,6 +1707,31 @@ std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface> DefaultClient
 }
 
 DefaultClient::~DefaultClient() {
+    shutdown();
+}
+
+bool DefaultClient::setEncodingAudioFormat(AudioFormat::Encoding encoding) {
+    return m_audioInputProcessor->setEncodingAudioFormat(encoding);
+}
+
+capabilityAgents::aip::AudioInputProcessor::EncodingFormatResponse DefaultClient::requestEncodingAudioFormats(
+    const capabilityAgents::aip::AudioInputProcessor::EncodingFormatRequest& encodings) {
+    return m_audioInputProcessor->requestEncodingAudioFormats(encodings);
+}
+
+bool DefaultClient::configure(const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry) {
+    return true;
+}
+
+DefaultClient::DefaultClient() : FeatureClientInterface(TAG) {
+}
+
+void DefaultClient::doShutdown() {
+    if (m_shutdownManager) {
+        m_shutdownManager->shutdown();
+        m_shutdownManager.reset();
+    }
+
     while (!m_shutdownObjects.empty()) {
         if (m_shutdownObjects.back()) {
             m_shutdownObjects.back()->shutdown();
@@ -1700,10 +1742,6 @@ DefaultClient::~DefaultClient() {
     if (m_endpointRegistrationManager) {
         ACSDK_DEBUG5(LX("EndpointRegistrationManagerShutdown"));
         m_endpointRegistrationManager->shutdown();
-    }
-    if (m_templateRuntime) {
-        ACSDK_DEBUG5(LX("TemplateRuntimeShutdown"));
-        m_templateRuntime->shutdown();
     }
     if (m_audioInputProcessor) {
         ACSDK_DEBUG5(LX("AIPShutdown"));
@@ -1774,13 +1812,15 @@ DefaultClient::~DefaultClient() {
     }
 }
 
-bool DefaultClient::setEncodingAudioFormat(AudioFormat::Encoding encoding) {
-    return m_audioInputProcessor->setEncodingAudioFormat(encoding);
+void DefaultClient::stopInteraction() {
+    if (m_audioInputProcessor) {
+        m_audioInputProcessor->resetState();
+    }
 }
 
-capabilityAgents::aip::AudioInputProcessor::EncodingFormatResponse DefaultClient::requestEncodingAudioFormats(
-    const capabilityAgents::aip::AudioInputProcessor::EncodingFormatRequest& encodings) {
-    return m_audioInputProcessor->requestEncodingAudioFormats(encodings);
+std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> DefaultClient::getAudioFocusManager() {
+    return m_audioFocusManager;
 }
+
 }  // namespace defaultClient
 }  // namespace alexaClientSDK

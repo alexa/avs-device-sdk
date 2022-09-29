@@ -26,7 +26,7 @@ namespace acl {
 using namespace alexaClientSDK::avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AVSConnectionManager");
+#define TAG "AVSConnectionManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

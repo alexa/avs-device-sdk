@@ -20,7 +20,7 @@ endif()
 
 # acsdkPkcs11 requires an absolute path to PKCS11 library. We use stubs in unit tests by default, and the default
 # library location corresponds to project directory, but the location can be overridden.
-set(PKCS11_TEST_LIBRARY_DIR "${PROJECT_BINARY_DIR}/core/Crypto/acsdkPkcs11/testStubs/")
+set(PKCS11_TEST_LIBRARY_DIR "${PROJECT_BINARY_DIR}/core/Crypto/Pkcs11/testStubs/")
 if (WIN32 AND NOT "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" STREQUAL "")
     set(PKCS11_TEST_LIBRARY_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 elseif(NOT WIN32 AND NOT "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" STREQUAL "")

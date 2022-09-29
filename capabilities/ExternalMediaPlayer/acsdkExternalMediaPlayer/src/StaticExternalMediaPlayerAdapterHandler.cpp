@@ -131,10 +131,6 @@ bool StaticExternalMediaPlayerAdapterHandler::play(const PlayParams& params) {
         params.navigation,
         params.preload,
         params.playRequestor,
-#ifdef MEDIA_PORTABILITY_ENABLED
-        params.mediaSessionId,
-        params.correlationToken,
-#endif
         params.playbackTarget);
     player->handlePlay(handlePlayParams);
     return true;
@@ -143,10 +139,6 @@ bool StaticExternalMediaPlayerAdapterHandler::play(const PlayParams& params) {
 bool StaticExternalMediaPlayerAdapterHandler::playControl(
     const std::string& localPlayerId,
     acsdkExternalMediaPlayerInterfaces::RequestType requestType,
-#ifdef MEDIA_PORTABILITY_ENABLED
-    const std::string& mediaSessionId,
-    const std::string& correlationToken,
-#endif
     const std::string& playbackTarget) {
     auto player = getAdapterByLocalPlayerId(localPlayerId);
     if (!player) {
@@ -154,11 +146,7 @@ bool StaticExternalMediaPlayerAdapterHandler::playControl(
     }
 
     ACSDK_DEBUG5(LX(__func__).d("localPlayerId", localPlayerId).sensitive("playbackTarget", playbackTarget));
-#ifdef MEDIA_PORTABILITY_ENABLED
-    player->handlePlayControl(requestType, mediaSessionId, correlationToken, playbackTarget);
-#else
     player->handlePlayControl(requestType, playbackTarget);
-#endif
     return true;
 }
 

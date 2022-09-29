@@ -20,7 +20,7 @@
 
 #include <acsdkBluetoothInterfaces/BluetoothDeviceObserverInterface.h>
 #include <acsdkBluetoothInterfaces/BluetoothNotifierInterface.h>
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkBluetooth {
@@ -28,7 +28,7 @@ namespace acsdkBluetooth {
 /**
  * Relays notifications related to Bluetooth.
  */
-class BluetoothNotifier : public acsdkNotifier::Notifier<acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface> {
+class BluetoothNotifier : public notifier::Notifier<acsdkBluetoothInterfaces::BluetoothDeviceObserverInterface> {
 public:
     /*
      * Factory method.

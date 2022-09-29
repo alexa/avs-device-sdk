@@ -4,9 +4,6 @@
 /// See https://developer.amazon.com/en-US/docs/alexa/avs-device-sdk/alexa-client-sdk-config-json.html
 /// to learn more about configuration options and default behaviours.
 {
-    "cblAuthDelegate":{
-        "databaseFilePath":"${SDK_CBL_AUTH_DELEGATE_DATABASE_FILE_PATH}"
-    },
     "deviceInfo":{
         "deviceSerialNumber":"${SDK_CONFIG_DEVICE_SERIAL_NUMBER}",
         "clientId":"${SDK_CONFIG_CLIENT_ID}",
@@ -27,6 +24,7 @@
         "databaseFilePath":"${SDK_LWA_AUTHORIZATION_ADAPTER_DATABASE_FILE_PATH}"
     },
     "speakerManagerCapabilityAgent":{
+        "persistentStorage":true,
         "defaultSpeakerVolume":40,
         "defaultAlertsVolume":40,
         "restoreMuteState":true
@@ -42,6 +40,12 @@
         "locales":["en-US","en-GB","de-DE","en-IN","en-CA","ja-JP","en-AU","fr-FR","it-IT","es-ES","es-MX","fr-CA",
             "es-US", "hi-IN", "pt-BR", "ar-SA"],
         "defaultLocale":"en-US",
+        "davs": {
+            "artifactDirectory": "${SDK_DAVS_ARTIFACT_DIR}",
+            "segmentId": "${SDK_DAVS_SEGMENT_ID}",
+            "artifactBudgetSizeInMB": 100,
+            "pollingIntervalInSeconds": 0
+        },
         "localeCombinations":[
             ["en-US", "es-US"],
             ["es-US", "en-US"],
@@ -58,7 +62,21 @@
             ["en-IN", "hi-IN"],
             ["hi-IN", "en-IN"],
             ["fr-CA", "en-CA"],
-            ["en-CA", "fr-CA"]
+            ["en-CA", "fr-CA"],
+            ["en-GB", "fr-FR"],
+            ["fr-FR", "en-GB"],
+            ["en-GB", "es-ES"],
+            ["es-ES", "en-GB"],
+            ["en-GB", "de-DE"],
+            ["de-DE", "en-GB"],
+            ["en-GB", "it-IT"],
+            ["it-IT", "en-GB"],
+            ["hi-IN", "en-US"],
+            ["en-US", "hi-IN"],
+            ["pt-BR", "en-US"],
+            ["en-US", "pt-BR"],
+            ["es-MX", "en-US"],
+            ["en-US", "es-MX"]
         ],
         "defaultTimezone":"America/Vancouver"
     },
@@ -75,9 +93,6 @@
         "agentString": "CQCAFYNYDC"
     },
     "sampleApp": {
-        "displayCardsSupported":true,
-        "sensory": {
-            "modelFilePath": "${SDK_SENSORY_MODEL_FILE_PATH}"
-        }
+        "displayCardsSupported":true
     }
 }

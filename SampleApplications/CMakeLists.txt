@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+
+if (INSTALL_COMMON_SAMPLE_LIBS)
+    add_subdirectory("Common")
+else()
+    add_subdirectory("Common" EXCLUDE_FROM_ALL)
+endif()
+
+set(HAS_CONSOLE_SAMPLE_APP_DEPENDENCIES FALSE)
+
+if (PORTAUDIO AND (GSTREAMER_MEDIA_PLAYER OR CUSTOM_MEDIA_PLAYER))
+    set(HAS_CONSOLE_SAMPLE_APP_DEPENDENCIES TRUE)
+elseif (ANDROID_MEDIA_PLAYER AND ANDROID_MICROPHONE)
+    set(HAS_CONSOLE_SAMPLE_APP_DEPENDENCIES TRUE)
+elseif (AUDIO_INJECTION AND (GSTREAMER_MEDIA_PLAYER OR ANDROID_MEDIA_PLAYER OR CUSTOM_MEDIA_PLAYER))
+    set(HAS_CONSOLE_SAMPLE_APP_DEPENDENCIES TRUE)
+endif()
+
+if (HAS_CONSOLE_SAMPLE_APP_DEPENDENCIES)
+    message("ConsoleSampleApplication build enabled.")
+    add_subdirectory("ConsoleSampleApplication" EXCLUDE_FROM_ALL)
+else()
+    message("ConsoleSampleApplication build disabled.")
+    message("\tTo enable ConsoleSampleApplication build please enable microphone and media player modules.")
+endif()

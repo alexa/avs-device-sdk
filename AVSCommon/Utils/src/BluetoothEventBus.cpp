@@ -23,7 +23,7 @@ namespace utils {
 namespace bluetooth {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"BluetoothEventBus"};
+#define TAG "BluetoothEventBus"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

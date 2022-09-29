@@ -32,7 +32,7 @@ namespace utils {
 namespace filesystem {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FileSystemUtils");
+#define TAG "FileSystemUtils"
 /// Create a LogEntry using this file's TAG and the specified event std::string.
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -47,6 +47,7 @@ const Permissions DEFAULT_FILE_PERMISSIONS = OWNER_READ | OWNER_WRITE | GROUP_RE
 #define S_ISREG(mode) (((mode)&S_IFMT) == S_IFREG)
 #endif
 
+#ifdef ACSDK_LOG_ENABLED
 static std::string getStrError(int error) {
     static const size_t BUFFER_SIZE = 255;
     char buffer[BUFFER_SIZE + 1]{};
@@ -54,6 +55,10 @@ static std::string getStrError(int error) {
     (void)ignore;  // unused since the type can differ depending on the gnu or posix
     return buffer;
 }
+#else
+// Declaref function so it can be used in sizeof() expression when logging is disabled.
+std::string getStrError(int);
+#endif
 
 static std::string getBackslashPath(std::string path) {
     replace(path.begin(), path.end(), '/', '\\');
@@ -252,7 +257,7 @@ static bool removeDirectory(const std::string& path) {
     } while (FindNextFileA(handle, &data));
 
     FindClose(handle);
-    result &= RemoveDirectoryA(path.c_str());
+    result &= static_cast<bool>(RemoveDirectoryA(path.c_str()));
     return result;
 }
 

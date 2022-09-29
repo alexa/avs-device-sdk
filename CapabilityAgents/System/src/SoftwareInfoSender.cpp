@@ -34,7 +34,7 @@ using namespace avsCommon::utils::json;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"SoftwareInfoSender"};
+#define TAG "SoftwareInfoSender"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

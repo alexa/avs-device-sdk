@@ -35,7 +35,6 @@ TEST(TaskThreadTest, test_runWorkSeveralTimes) {
     std::atomic_int count{0};
     WaitEvent waitEvent;
     WorkerThread workerThread;
-    EXPECT_TRUE(!workerThread.getMoniker().empty());
 
     for (int i = 1; i <= 10; i++) {
         waitEvent.reset();

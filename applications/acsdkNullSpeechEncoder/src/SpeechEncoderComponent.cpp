@@ -13,18 +13,18 @@
  * permissions and limitations under the License.
  */
 
+#include <acsdk/AudioEncoderComponent/ComponentFactory.h>
 #include <acsdkManufactory/ComponentAccumulator.h>
 
-#include "acsdkSpeechEncoder/SpeechEncoderComponent.h"
-
 namespace alexaClientSDK {
-namespace acsdkSpeechEncoder {
+namespace audioEncoderComponent {
 
+using namespace audioEncoderInterfaces;
 using namespace acsdkManufactory;
 
-SpeechEncoderComponent getComponent() {
-    return ComponentAccumulator<>().addInstance<std::shared_ptr<speechencoder::SpeechEncoder>>(nullptr);
+AudioEncoderComponent getComponent() {
+    return ComponentAccumulator<>().addInstance<std::shared_ptr<AudioEncoderInterface>>(nullptr);
 }
 
-}  // namespace acsdkSpeechEncoder
+}  // namespace audioEncoderComponent
 }  // namespace alexaClientSDK

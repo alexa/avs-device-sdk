@@ -16,10 +16,11 @@
 #ifndef ACSDKMANUFACTORY_INTERNAL_RUNTIMEMANUFACTORY_IMP_H_
 #define ACSDKMANUFACTORY_INTERNAL_RUNTIMEMANUFACTORY_IMP_H_
 
+#include <AVSCommon/Utils/TypeIndex.h>
+
 #include "acsdkManufactory/internal/CookBook.h"
 #include "acsdkManufactory/internal/SharedPointerCache.h"
 #include "acsdkManufactory/internal/RuntimeManufactory.h"
-#include "acsdkManufactory/internal/TypeIndex.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -45,7 +46,7 @@ inline std::shared_ptr<Type> RuntimeManufactory::innerGet(std::shared_ptr<Type>*
     using ResultType = std::shared_ptr<Type>;
     ResultType ret;
 
-    auto resultTypeIndex = getTypeIndex<ResultType>();
+    auto resultTypeIndex = avsCommon::utils::getTypeIndex<ResultType>();
 
     auto it = m_values.find(resultTypeIndex);
     if (m_values.end() == it || !it->second) {
@@ -67,7 +68,7 @@ inline Annotated<Annotation, Type> RuntimeManufactory::innerGet(Annotated<Annota
     using ResultType = Annotated<Annotation, Type>;
     ResultType ret;
 
-    auto resultTypeIndex = getTypeIndex<ResultType>();
+    auto resultTypeIndex = avsCommon::utils::getTypeIndex<ResultType>();
 
     auto it = m_values.find(resultTypeIndex);
     if (m_values.end() == it || !it->second) {

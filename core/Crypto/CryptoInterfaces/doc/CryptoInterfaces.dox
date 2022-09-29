@@ -1,0 +1,36 @@
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+/**
+ * \defgroup Lib_acsdkCryptoInterfaces Cryptography API
+ * @brief Cryptographic Functions for ACSDK
+ *
+ * This module provides APIs for encrypting and decrypting data, and for computing secure digests.
+ *
+ * There are two ways for data encryption and decryption: through user-space cryptographic functions, accessible through
+ * \ref alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface and through hardware security module (HSM)
+ * accessible through \ref alexaClientSDK::cryptoInterfaces::KeyStoreInterface.
+ *
+ * When using \ref alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface user can generate keys and
+ * initialization vectors through \ref alexaClientSDK::cryptoInterfaces::KeyFactoryInterface to use with
+ * cryptographic functions. When working with \ref alexaClientSDK::cryptoInterfaces::KeyStoreInterface, keys must
+ * be pre-provisioned by device manufacturer and those keys can be used through references (aliases).
+ *
+ * \sa Lib_acsdkCrypto
+ * \sa Lib_acsdkPkcs11
+ *
+ * \sa alexaClientSDK::cryptoInterfaces
+ * \sa alexaClientSDK::cryptoInterfaces::test
+ */

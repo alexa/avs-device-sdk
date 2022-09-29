@@ -26,17 +26,16 @@ namespace avsCommon {
 namespace avs {
 
 using namespace rapidjson;
-using namespace avsCommon::avs;
 using namespace avsCommon::utils::json;
 
 /// Flag indicating @c AUDIO medium is used.
-static const long MEDIUM_FLAG_AUDIO = 1;
+static const unsigned long MEDIUM_FLAG_AUDIO = 1;
 
 /// Flag indicating @c VISUAL medium is used.
-static const long MEDIUM_FLAG_VISUAL = 2;
+static const unsigned long MEDIUM_FLAG_VISUAL = 2;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("BlockingPolicy");
+#define TAG "BlockingPolicy"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -27,6 +27,8 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#include <acsdk/AudioEncoderInterfaces/BlockAudioEncoderInterface.h>
+#include <acsdk/AudioEncoder/AudioEncoderFactory.h>
 #include <AVSCommon/AVS/CapabilityChangeNotifier.h>
 #include <AVSCommon/AVS/CapabilityChangeNotifierInterface.h>
 #include <AVSCommon/AVS/Attachment/MockAttachmentManager.h>
@@ -110,6 +112,9 @@ static const avsCommon::avs::NamespaceAndName DIRECTIVES[] = {STOP_CAPTURE,
 
 /// The SpeechRecognizer context state signature.
 static const avsCommon::avs::NamespaceAndName RECOGNIZER_STATE{NAMESPACE, "RecognizerState"};
+
+/// Byte array for audio sample data passing.
+using Bytes = audioEncoderInterfaces::BlockAudioEncoderInterface::Bytes;
 
 /// Sample rate for audio input stream.
 static const unsigned int SAMPLE_RATE_HZ = 16000;
@@ -632,7 +637,7 @@ void RecognizeEvent::verifyMessage(
         auto bytesRead = namedReader->reader->read(
             samples.data() + samplesRead, (samples.size() - samplesRead) * SDS_WORDSIZE, &status);
         if (avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK_WOULDBLOCK == status) {
-            std::this_thread::yield();
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
             continue;
         }
         EXPECT_EQ(status, avsCommon::avs::attachment::AttachmentReader::ReadStatus::OK);
@@ -683,8 +688,8 @@ public:
         bool(std::chrono::milliseconds timeout, const std::function<std::future<bool>()>& expectSpeechTimedOut));
 };
 
-/// Mock class that implements the SpeechEncoderContext.
-class MockEncoderContext : public speechencoder::EncoderContext {
+/// Mock class that implements the @c BlockAudioEncoderInterface.
+class MockBlockAudioEncoder : public audioEncoderInterfaces::BlockAudioEncoderInterface {
 public:
     MOCK_METHOD1(init, bool(alexaClientSDK::avsCommon::utils::AudioFormat inputFormat));
     MOCK_METHOD0(getInputFrameSize, size_t());
@@ -692,8 +697,9 @@ public:
     MOCK_METHOD0(requiresFullyRead, bool());
     MOCK_METHOD0(getAudioFormat, alexaClientSDK::avsCommon::utils::AudioFormat());
     MOCK_METHOD0(getAVSFormatName, std::string());
-    MOCK_METHOD0(start, bool());
-    MOCK_METHOD3(processSamples, ssize_t(void* samples, size_t numberOfWords, uint8_t* buffer));
+    MOCK_METHOD1(start, bool(Bytes&));
+    MOCK_METHOD3(processSamples, bool(Bytes::const_iterator, Bytes::const_iterator, Bytes&));
+    MOCK_METHOD1(flush, bool(Bytes&));
     MOCK_METHOD0(close, void());
 };
 
@@ -1018,10 +1024,10 @@ protected:
     std::string m_dialogRequestId;
 
     /// The audio encoder object
-    std::shared_ptr<speechencoder::SpeechEncoder> m_speechEncoder;
+    std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface> m_audioEncoder;
 
-    /// The mock @c EncoderContext
-    std::shared_ptr<MockEncoderContext> m_mockEncoderContext;
+    /// The mock @c BlockAudioEncoderInterface
+    std::shared_ptr<MockBlockAudioEncoder> m_mockBlockAudioEncoder;
 
     /// Message ID in directive
     std::string m_messageId;
@@ -1123,30 +1129,30 @@ void AudioInputProcessorTest::SetUp() {
     m_pattern.resize(PATTERN_WORDS);
     std::iota(m_pattern.begin(), m_pattern.end(), 0);
 
-    m_mockEncoderContext = std::make_shared<MockEncoderContext>();
-    m_speechEncoder = std::make_shared<speechencoder::SpeechEncoder>(m_mockEncoderContext);
-    EXPECT_CALL(*m_mockEncoderContext, init(_)).Times(AtLeast(0)).WillRepeatedly(Return(true));
-    EXPECT_CALL(*m_mockEncoderContext, requiresFullyRead()).Times(AtLeast(0)).WillRepeatedly(Return(true));
-    EXPECT_CALL(*m_mockEncoderContext, getAVSFormatName()).WillRepeatedly(Return(std::string(AUDIO_FORMAT_OPUS)));
-    EXPECT_CALL(*m_mockEncoderContext, getInputFrameSize()).WillRepeatedly(Return(1));
-    EXPECT_CALL(*m_mockEncoderContext, getOutputFrameSize()).WillRepeatedly(Return(2));
-    EXPECT_CALL(*m_mockEncoderContext, processSamples(_, _, _))
-        .WillRepeatedly(Invoke([](void* samples, size_t numberOfWords, uint8_t* buffer) {
-            uint8_t* src = static_cast<uint8_t*>(samples);
-            buffer[0] = src[0];
-            buffer[1] = src[1];
-            return 2;
+    m_mockBlockAudioEncoder = std::make_shared<MockBlockAudioEncoder>();
+    m_audioEncoder = audioEncoder::createAudioEncoder(m_mockBlockAudioEncoder);
+    EXPECT_CALL(*m_mockBlockAudioEncoder, init(_)).Times(AtLeast(0)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, requiresFullyRead()).Times(AtLeast(0)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, getAVSFormatName()).WillRepeatedly(Return(std::string(AUDIO_FORMAT_OPUS)));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, getInputFrameSize()).WillRepeatedly(Return(1));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, getOutputFrameSize()).WillRepeatedly(Return(2));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, processSamples(_, _, _))
+        .WillRepeatedly(Invoke([](Bytes::const_iterator begin, Bytes::const_iterator end, Bytes& buffer) {
+            const size_t bufferOffset = buffer.size();
+            buffer.resize(bufferOffset + 2);
+            std::memcpy(buffer.data() + bufferOffset, &*begin, 2);
+            return true;
         }));
-    EXPECT_CALL(*m_mockEncoderContext, getAudioFormat())
-        .WillRepeatedly(
-            Return(avsCommon::utils::AudioFormat{.encoding = avsCommon::utils::AudioFormat::Encoding::OPUS,
-                                                 .endianness = avsCommon::utils::AudioFormat::Endianness::LITTLE,
-                                                 .sampleRateHz = 16000,
-                                                 .sampleSizeInBits = 16,
-                                                 .numChannels = 1,
-                                                 .dataSigned = false,
-                                                 .layout = avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED}));
-    EXPECT_CALL(*m_mockEncoderContext, start()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, getAudioFormat())
+        .WillRepeatedly(Return(avsCommon::utils::AudioFormat{avsCommon::utils::AudioFormat::Encoding::OPUS,
+                                                             avsCommon::utils::AudioFormat::Endianness::LITTLE,
+                                                             16000,
+                                                             16,
+                                                             1,
+                                                             false,
+                                                             avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED}));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, start(_)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, flush(_)).WillRepeatedly(Return(true));
 }
 
 void AudioInputProcessorTest::setupEncoderTest() {
@@ -1165,7 +1171,7 @@ void AudioInputProcessorTest::setupEncoderTest() {
         m_mockSpeechConfirmation,
         m_capabilityChangeNotifier,
         m_mockWakeWordSetting,
-        m_speechEncoder,
+        m_audioEncoder,
         *m_audioProvider,
         m_mockPowerResourceManager,
         m_metricRecorder);
@@ -1261,7 +1267,6 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
     }
 
     if (!bargeIn) {
-        EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
         EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
         EXPECT_CALL(*m_mockFocusManager, acquireChannel(CHANNEL_NAME, _)).WillOnce(InvokeWithoutArgs([this, stopPoint] {
             m_audioInputProcessor->onFocusChanged(avsCommon::avs::FocusState::FOREGROUND, MixingBehavior::PRIMARY);
@@ -1324,6 +1329,7 @@ bool AudioInputProcessorTest::testRecognizeSucceeds(
         EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
     }
 
+    EXPECT_CALL(*m_mockObserver, onASRProfileChanged(asrProfileToString(audioProvider.profile))).Times(AtLeast(1));
     auto sentFuture = m_recognizeEvent->send(m_audioInputProcessor);
 
     // If a valid begin index was not provided, load the SDS buffer with the test pattern after recognize() is sent.
@@ -1384,7 +1390,6 @@ bool AudioInputProcessorTest::testContextFailure(avsCommon::sdkInterfaces::Conte
             return CONTEXT_REQUEST_TOKEN;
         }));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::IDLE))
         .WillOnce(InvokeWithoutArgs([&] {
             std::lock_guard<std::mutex> lock(mutex);
@@ -1393,6 +1398,8 @@ bool AudioInputProcessorTest::testContextFailure(avsCommon::sdkInterfaces::Conte
         }));
     EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
     EXPECT_CALL(*m_mockPowerResourceManager, release(IsSamePowerResource(COMPONENT_NAME))).Times(AtLeast(1));
+
+    EXPECT_CALL(*m_mockObserver, onASRProfileChanged(asrProfileToString(m_audioProvider->profile))).Times((AtLeast(1)));
 
     if (recognize.send(m_audioInputProcessor).get()) {
         std::unique_lock<std::mutex> lock(mutex);
@@ -1470,7 +1477,6 @@ bool AudioInputProcessorTest::testExpectSpeechSucceeds(bool withDialogRequestId)
 
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
     if (withDialogRequestId) {
         EXPECT_CALL(*result, setCompleted());
@@ -1482,7 +1488,7 @@ bool AudioInputProcessorTest::testExpectSpeechSucceeds(bool withDialogRequestId)
             conditionVariable.notify_one();
             return CONTEXT_REQUEST_TOKEN;
         }));
-
+    EXPECT_CALL(*m_mockObserver, onASRProfileChanged(asrProfileToString(m_audioProvider->profile))).Times(AtLeast(1));
     if (!withDialogRequestId) {
         directiveHandler->handleDirectiveImmediately(avsDirective);
     } else {
@@ -1655,11 +1661,10 @@ bool AudioInputProcessorTest::testRecognizeWithExpectSpeechInitiator(bool withIn
     EXPECT_CALL(*result, setCompleted());
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::EXPECTING_SPEECH));
     EXPECT_CALL(*m_mockObserver, onStateChanged(AudioInputProcessorObserverInterface::State::RECOGNIZING));
-    EXPECT_CALL(*m_mockUserInactivityMonitor, onUserActive()).Times(2);
     EXPECT_CALL(*m_mockContextManager, getContextWithoutReportableStateProperties(_, _, _))
         .WillOnce(Return(CONTEXT_REQUEST_TOKEN));
     EXPECT_CALL(*m_mockPowerResourceManager, acquire(IsSamePowerResource(COMPONENT_NAME), _)).Times(AtLeast(1));
-
+    EXPECT_CALL(*m_mockObserver, onASRProfileChanged(asrProfileToString(m_audioProvider->profile))).Times(AtLeast(1));
     // Set AIP to a sane state.
     directiveHandler->preHandleDirective(avsDirective, std::move(result));
     EXPECT_TRUE(directiveHandler->handleDirective(avsDirective->getMessageId()));
@@ -3636,16 +3641,15 @@ TEST_F(AudioInputProcessorTest, test_requestEncodingAudioFormatsSuccess) {
  */
 TEST_F(AudioInputProcessorTest, test_requestEncodingAudioFormatsWithFallbackAndUnsupportedFormats) {
     setupEncoderTest();
-    EXPECT_CALL(*m_mockEncoderContext, getAVSFormatName()).WillRepeatedly(Return(std::string(AUDIO_FORMAT_LPCM)));
-    EXPECT_CALL(*m_mockEncoderContext, getAudioFormat())
-        .WillRepeatedly(
-            Return(avsCommon::utils::AudioFormat{.encoding = avsCommon::utils::AudioFormat::Encoding::LPCM,
-                                                 .endianness = avsCommon::utils::AudioFormat::Endianness::LITTLE,
-                                                 .sampleRateHz = 16000,
-                                                 .sampleSizeInBits = 16,
-                                                 .numChannels = 1,
-                                                 .dataSigned = false,
-                                                 .layout = avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED}));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, getAVSFormatName()).WillRepeatedly(Return(std::string(AUDIO_FORMAT_LPCM)));
+    EXPECT_CALL(*m_mockBlockAudioEncoder, getAudioFormat())
+        .WillRepeatedly(Return(avsCommon::utils::AudioFormat{avsCommon::utils::AudioFormat::Encoding::LPCM,
+                                                             avsCommon::utils::AudioFormat::Endianness::LITTLE,
+                                                             16000,
+                                                             16,
+                                                             1,
+                                                             false,
+                                                             avsCommon::utils::AudioFormat::Layout::NON_INTERLEAVED}));
 
     AudioInputProcessor::EncodingFormatRequest encodingReq = {
         {"CLOUD", {avsCommon::utils::AudioFormat::Encoding::OPUS, avsCommon::utils::AudioFormat::Encoding::OPUS}},
@@ -3822,7 +3826,7 @@ TEST_F(AudioInputProcessorTest, test_recognizeWakewordWithGoodBeginAndEndForMult
 }
 
 /// This function verifies that recognize() works for multiple audio streams in State::RECOGNIZING when the previous *
-/// recognize used the CLOSE_TALK profile. Disabled for potential race condition in SpeechEncoder.
+/// recognize used the CLOSE_TALK profile. Disabled for potential race condition in audio encoder.
 TEST_F(AudioInputProcessorTest, test_recognizeBargeInWhileRecognizingCloseTalkForMultiStreams) {
     auto audioProvider = *m_audioProvider;
     audioProvider.profile = ASRProfile::CLOSE_TALK;

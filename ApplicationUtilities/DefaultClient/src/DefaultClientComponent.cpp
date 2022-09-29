@@ -29,7 +29,7 @@
 #include <acsdkNotifications/NotificationsComponent.h>
 #include <acsdkShared/SharedComponent.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
-#include <acsdkSpeechEncoder/SpeechEncoderComponent.h>
+#include <acsdk/AudioEncoderComponent/ComponentFactory.h>
 #include <acsdkSystemClockMonitor/SystemClockMonitor.h>
 #include <acsdkSystemClockMonitor/SystemClockNotifier.h>
 #include <ADSL/ADSLComponent.h>
@@ -51,12 +51,11 @@
 #include <Endpoints/DefaultEndpointBuilder.h>
 #include <PlaybackController/PlaybackControllerComponent.h>
 #include <RegistrationManager/RegistrationManagerComponent.h>
-#include <SpeakerManager/DefaultChannelVolumeFactory.h>
-#include <SpeakerManager/SpeakerManagerComponent.h>
+#include <acsdk/SpeakerManager/SpeakerManagerComponent.h>
 #include <SynchronizeStateSender/SynchronizeStateSenderFactory.h>
 #include <System/SystemComponent.h>
 #include <SystemSoundPlayer/SystemSoundPlayer.h>
-#include <TemplateRuntime/RenderPlayerInfoCardsProviderRegistrar.h>
+#include <acsdk/TemplateRuntime/RenderPlayerInfoCardsProviderRegistrarFactory.h>
 #include <acsdkDeviceSetup/DeviceSetupComponent.h>
 
 #include "DefaultClient/DefaultClientComponent.h"
@@ -83,7 +82,7 @@ using namespace capabilityAgents::alexa;
 using namespace capabilityAgents::system;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DefaultClientComponent");
+#define TAG "DefaultClientComponent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -222,7 +221,8 @@ DefaultClientComponent getComponent(
     const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface>& bluetoothStorage,
     const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceConnectionRulesProviderInterface>&
         bluetoothConnectionRulesProvider,
-    const std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface>& notificationsStorage) {
+    const std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface>& notificationsStorage,
+    const std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory) {
     std::shared_ptr<avsCommon::utils::bluetooth::BluetoothEventBus> bluetoothEventBus;
     if (bluetoothDeviceManager) {
         bluetoothEventBus = bluetoothDeviceManager->getEventBus();
@@ -259,6 +259,7 @@ DefaultClientComponent getComponent(
         .addInstance(bluetoothEventBus)
         .addInstance(bluetoothStorage)
         .addInstance(notificationsStorage)
+        .addInstance(cryptoFactory)
         .addRetainedFactory(getCreateApplicationAudioPipelineFactory(stubAudioPipelineFactory))
         .addRetainedFactory(getCreateDeviceSettingStorageInterface(deviceSettingStorage))
 
@@ -292,7 +293,7 @@ DefaultClientComponent getComponent(
                               createCapabilitiesDelegateStorageInterface)
 
         /// Optional, horizontal components.
-        .addComponent(acsdkSpeechEncoder::getComponent())
+        .addComponent(audioEncoderComponent::getComponent())
         .addComponent(captions::getComponent())
 
         /// Capability Agents. Some CAs are still instantiated in DefaultClient.cpp.
@@ -308,10 +309,9 @@ DefaultClientComponent getComponent(
 #endif
         .addComponent(acsdkNotifications::getComponent())
         .addComponent(capabilityAgents::playbackController::getComponent())
-        .addComponent(capabilityAgents::speakerManager::getComponent())
+        .addComponent(speakerManagerComponent::getSpeakerManagerComponent())
         .addComponent(capabilityAgents::system::getComponent())
-        .addRetainedFactory(capabilityAgents::templateRuntime::RenderPlayerInfoCardsProviderRegistrar::
-                                createRenderPlayerInfoCardsProviderRegistrarInterface)
+        .addRetainedFactory(templateRuntime::createRenderPlayerInfoCardsProviderRegistrarInterface)
         .addComponent(acsdkDeviceSetup::getComponent());
 }
 

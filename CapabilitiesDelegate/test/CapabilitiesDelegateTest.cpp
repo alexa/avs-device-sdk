@@ -57,6 +57,22 @@ static const std::string EVENT_CORRELATION_TOKEN_KEY = "eventCorrelationToken";
 /// Constant representing the timeout for test events.
 /// @note Use a large enough value that should not fail even in slower systems.
 static const std::chrono::seconds MY_WAIT_TIMEOUT{5};
+/// A Test client Id.
+static const std::string TEST_CLIENT_ID = "TEST_CLIENT_ID";
+/// A Test product Id.
+static const std::string TEST_PRODUCT_ID = "TEST_PRODUCT_ID";
+/// A Test serial number.
+static const std::string TEST_SERIAL_NUMBER = "TEST_SERIAL_NUMBER";
+/// A Test product Id.
+static const std::string TEST_REGISTRATION_KEY = "TEST_REGISTRATION_KEY";
+/// A Test product Id Key.
+static const std::string TEST_PRODUCT_ID_KEY = "TEST_PRODUCT_ID_KEY";
+/// A Test manufacturer name.
+static const std::string TEST_MANUFACTURER_NAME = "TEST_MANUFACTURER_NAME";
+/// A Test description.
+static const std::string TEST_DESCRIPTION = "TEST_DESCRIPTION";
+/// A Test display category.
+static const std::string TEST_DISPLAY_CATEGORY = "TEST_DISPLAY_CATEGORY";
 
 /**
  * Structure to store event data from a Discovery event JSON.
@@ -79,11 +95,27 @@ AVSDiscoveryEndpointAttributes createEndpointAttributes(const std::string endpoi
     AVSDiscoveryEndpointAttributes attributes;
 
     attributes.endpointId = endpointId;
-    attributes.description = "TEST_DESCRIPTION";
-    attributes.manufacturerName = "TEST_MANUFACTURER_NAME";
-    attributes.displayCategories = {"TEST_DISPLAY_CATEGORY"};
+    attributes.description = TEST_DESCRIPTION;
+    attributes.manufacturerName = TEST_MANUFACTURER_NAME;
+    attributes.displayCategories = {TEST_DISPLAY_CATEGORY};
 
     return attributes;
+}
+
+/**
+ * Create a test @c AVSDiscoveryEndpointAttributes::Registration object.
+ * @param productId Optional product Id to use in these attributes.
+ * @param serialNumber Optional device serial number to use in these attributes.
+ * @param registrationKey Optional registration key to use in these attributes.
+ * @param productIdKey Optional product Id Key to use in these attributes.
+ * @return a @c AVSDiscoveryEndpointAttributes::Registration structure.
+ */
+AVSDiscoveryEndpointAttributes::Registration createEndpointRegistration(
+    const std::string productID = TEST_PRODUCT_ID,
+    const std::string serialNumber = TEST_SERIAL_NUMBER,
+    const std::string registrationKey = TEST_REGISTRATION_KEY,
+    const std::string productIdKey = TEST_PRODUCT_ID_KEY) {
+    return AVSDiscoveryEndpointAttributes::Registration(productID, serialNumber, registrationKey, productIdKey);
 }
 
 /**
@@ -124,6 +156,12 @@ protected:
     /// Helper that validates dynamically adding an endpoint. Used for testing dynamic delete.
     void addEndpoint(AVSDiscoveryEndpointAttributes attributes, CapabilityConfiguration configuration);
 
+    /// Helper that validates dynamically adding an endpoint. Used for testing dynamic delete.
+    void addEndpointToCapabilitiesDelegate(
+        std::shared_ptr<CapabilitiesDelegate>,
+        AVSDiscoveryEndpointAttributes attributes,
+        CapabilityConfiguration configuration);
+
     /*
      * Gets the event correlation token string.
      * @param request The message request to parse.
@@ -162,6 +200,7 @@ void CapabilitiesDelegateTest::SetUp() {
     /// Expect calls to storage.
     EXPECT_CALL(*m_mockCapabilitiesStorage, open()).WillOnce(Return(true));
     m_capabilitiesDelegate = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+
     ASSERT_NE(m_capabilitiesDelegate, nullptr);
 
     /// Add a new observer and it receives notifications of the current capabilities state.
@@ -281,6 +320,7 @@ TEST_F(CapabilitiesDelegateTest, test_init) {
     EXPECT_CALL(*m_mockCapabilitiesStorage, createDatabase()).WillOnce(Return(true));
 
     instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+
     ASSERT_NE(instance, nullptr);
     instance->shutdown();
 }
@@ -656,8 +696,8 @@ TEST_F(CapabilitiesDelegateTest, test_createPostConnectOperationWithDifferentEnd
             }));
 
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
-    instance->addOrUpdateEndpoint(endpointAttributes, {capabilityConfig});
 
+    instance->addOrUpdateEndpoint(endpointAttributes, {capabilityConfig});
     /// Endpoint config is different from the endpoint config created with the test endpoint attributes so a
     /// post connect operation is created.
     auto publisher = instance->createPostConnectOperation();
@@ -1014,6 +1054,69 @@ TEST_F(
     auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
     instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
     instance->addOrUpdateEndpoint(unchangedEndpointAttributes, unchangedCapabilityConfigs);
+
+    /// Observer callback should only contain the pending endpoint to add (since that is already registered),
+    /// but not the stale endpoint to delete (since that still needs to be sent to AVS).
+    EXPECT_CALL(
+        *m_mockCapabilitiesDelegateObserver,
+        onCapabilitiesStateChange(
+            CapabilitiesDelegateObserverInterface::State::SUCCESS,
+            CapabilitiesDelegateObserverInterface::Error::SUCCESS,
+            std::vector<std::string>{unchangedEndpointAttributes.endpointId},
+            std::vector<std::string>{}));
+
+    auto publisher = instance->createPostConnectOperation();
+    ASSERT_NE(publisher, nullptr);
+
+    // Clean-up.
+    instance->shutdown();
+}
+
+/**
+ * Tests if the createPostConnectOperation() creates a new @c PostConnectCapabilitiesPublisher when registered
+ * endpoint configurations are same as the ones in storage, but there is one additional stored endpoint that is
+ * not registered (and needs to be deleted).
+ * Tests CapabilitiesObservers are notified of added endpoints even though they were not published in an event.
+ * Tests if CapabilitiesDelegate returns a non-null post connect operation, since there is a stale endpoint to delete.
+ */
+TEST_F(
+    CapabilitiesDelegateTest,
+    test_createPostConnectOperationWithNewEndpointAndPendingEndpointsWithSameEndpointConfigs) {
+    auto unchangedEndpointAttributes = createEndpointAttributes("endpointId");
+    auto unchangedEndpointConfiguration = createCapabilityConfiguration();
+    std::vector<CapabilityConfiguration> unchangedCapabilityConfigs = {unchangedEndpointConfiguration};
+
+    auto newEndpointAttributes = createEndpointAttributes("newEndpointId");
+    auto newEndpointConfiguration = createCapabilityConfiguration();
+    std::vector<CapabilityConfiguration> newCapabilityConfigs = {newEndpointConfiguration};
+
+    std::string unchangedEndpointConfig =
+        utils::getEndpointConfigJson(unchangedEndpointAttributes, unchangedCapabilityConfigs);
+    std::string newEndpointConfig = utils::getEndpointConfigJson(newEndpointAttributes, newCapabilityConfigs);
+    EXPECT_CALL(*m_mockCapabilitiesStorage, open()).Times(1).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, load(_))
+        .Times(1)
+        .WillOnce(
+            Invoke([unchangedEndpointAttributes, unchangedEndpointConfig, newEndpointAttributes, newEndpointConfig](
+                       std::unordered_map<std::string, std::string>* storedEndpoints) {
+                storedEndpoints->insert({unchangedEndpointAttributes.endpointId, unchangedEndpointConfig});
+                return true;
+            }));
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([](CapabilitiesDelegateObserverInterface::State newState,
+                            CapabilitiesDelegateObserverInterface::Error newError,
+                            std::vector<std::string> addOrUpdateReportEndpointIdentifiers,
+                            std::vector<std::string> deleteReportEndpointIdentifiers) {
+            EXPECT_EQ(newState, CapabilitiesDelegateObserverInterface::State::UNINITIALIZED);
+            EXPECT_EQ(newError, CapabilitiesDelegateObserverInterface::Error::UNINITIALIZED);
+            EXPECT_EQ(addOrUpdateReportEndpointIdentifiers, std::vector<std::string>{});
+            EXPECT_EQ(deleteReportEndpointIdentifiers, std::vector<std::string>{});
+        }));
+
+    auto instance = CapabilitiesDelegate::create(m_mockAuthDelegate, m_mockCapabilitiesStorage, m_dataManager);
+    instance->addCapabilitiesObserver(m_mockCapabilitiesDelegateObserver);
+    instance->addOrUpdateEndpoint(unchangedEndpointAttributes, unchangedCapabilityConfigs);
+    instance->addOrUpdateEndpoint(newEndpointAttributes, newCapabilityConfigs);
 
     /// Observer callback should only contain the pending endpoint to add (since that is already registered),
     /// but not the stale endpoint to delete (since that still needs to be sent to AVS).
@@ -1532,6 +1635,537 @@ TEST_F(CapabilitiesDelegateTest, test_duplicateEndpointInPendingAddOrUpdateAndDe
 
     ASSERT_TRUE(m_capabilitiesDelegate->deleteEndpoint(deleteEndpointAttributes, {capabilityConfig}));
     ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(deleteEndpointAttributes, {capabilityConfig}));
+}
+
+/**
+ * Test endpoint registrations.
+ * Confirm that changing the registration of an endpoint results in a failure.
+ * Also confirm that adding an endpoint with a different registration results in a failure.
+ */
+TEST_F(CapabilitiesDelegateTest, test_registration) {
+    const std::string endpointID1{"TEST_ENDPOINT_ID_1"};
+    const std::string endpointID2{"TEST_ENDPOINT_ID_2"};
+    const std::string endpointID3{"TEST_ENDPOINT_ID_3"};
+
+    /// Configure endpointId1 attributes with a non-empty registration.
+    auto endpointAttributes1 = createEndpointAttributes(endpointID1);
+    endpointAttributes1.registration = createEndpointRegistration();
+
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes1, {capabilityConfig}));
+
+    /// Try endpointId1 with empty registration.
+    auto updatedEndpointAttributes1 = createEndpointAttributes(endpointID1);
+    ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(updatedEndpointAttributes1, {capabilityConfig}));
+
+    /// Configure endpointId2 attributes with a non-empty registration.
+    auto endpointAttributes2 = createEndpointAttributes(endpointID2);
+    endpointAttributes2.registration = createEndpointRegistration();
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes2, {capabilityConfig}));
+
+    /// Try endpointId2 with non-empty registration.
+    auto updatedEndpointAttributes2 = createEndpointAttributes(endpointID2);
+    updatedEndpointAttributes2.registration = createEndpointRegistration("UPDATED_PRODUCT_ID");
+    ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(updatedEndpointAttributes2, {capabilityConfig}));
+
+    /// Try endpointId3 with different and non-empty registration.
+    auto updatedEndpointAttributes3 = createEndpointAttributes(endpointID3);
+    updatedEndpointAttributes3.registration = createEndpointRegistration("UPDATED_PRODUCT_ID");
+    ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(updatedEndpointAttributes3, {capabilityConfig}));
+}
+
+/**
+ * Test adding 3 endpoints that share registration information (i.e. they are de-duplicated in the cloud).
+ * Verify that other endpoints are sent in the discovery message whenever an endpoint is added.
+ * Finally, update the first endpoint that was sent and confirm that all endpoints are sent in the discovery message.
+ */
+TEST_F(CapabilitiesDelegateTest, test_addAndUpdateOfDeduplicatedEndpoints) {
+    m_capabilitiesDelegate->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+
+    WaitEvent e;
+    validateAuthDelegate();
+
+    const std::string endpointID1{"TEST_ENDPOINT_ID_1"};
+    const std::string endpointID2{"TEST_ENDPOINT_ID_2"};
+    const std::string endpointID3{"TEST_ENDPOINT_ID_3"};
+
+    /// Set-up.
+    auto endpointAttributes1 = createEndpointAttributes(endpointID1);
+    endpointAttributes1.registration = createEndpointRegistration();
+
+    auto endpointAttributes2 = createEndpointAttributes(endpointID2);
+    endpointAttributes2.registration = createEndpointRegistration();
+
+    auto endpointAttributes3 = createEndpointAttributes(endpointID3);
+    endpointAttributes3.registration = createEndpointRegistration();
+
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    /// endpointId1 is being registered first. The Discovery message should only contain it.
+    /// Expect calls to MessageSender.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .Times(Exactly(1))
+        .WillOnce(Invoke([this](std::shared_ptr<MessageRequest> request) {
+            std::string eventCorrelationTokenString;
+            getEventCorrelationTokenString(request, eventCorrelationTokenString);
+
+            request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+            m_capabilitiesDelegate->onAlexaEventProcessedReceived(eventCorrelationTokenString);
+        }));
+    /// Expect call to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase((std::unordered_map<std::string, std::string>{})))
+        .WillOnce(Return(true));
+
+    /// Expect callback to CapabilitiesObserver.
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(addedEndpoints, std::vector<std::string>{endpointID1});
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+
+            e.wakeUp();
+        }));
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes1, {capabilityConfig}));
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+    e.reset();
+
+    /// endpointId1 has already been registered. Confirm that it is added when endpointId2 is added.
+    /// Expect calls to MessageSender.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .Times(Exactly(1))
+        .WillOnce(Invoke([this](std::shared_ptr<MessageRequest> request) {
+            std::string eventCorrelationTokenString;
+            getEventCorrelationTokenString(request, eventCorrelationTokenString);
+
+            request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+            m_capabilitiesDelegate->onAlexaEventProcessedReceived(eventCorrelationTokenString);
+        }));
+    /// Expect call to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase((std::unordered_map<std::string, std::string>{})))
+        .WillOnce(Return(true));
+
+    /// Expect callback to CapabilitiesObserver.
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            std::vector<std::string> expectedAddedEndpoints{endpointID1, endpointID2};
+            std::sort(expectedAddedEndpoints.begin(), expectedAddedEndpoints.end());
+            std::sort(addedEndpoints.begin(), addedEndpoints.end());
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(addedEndpoints, expectedAddedEndpoints);
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+
+            e.wakeUp();
+        }));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes2, {capabilityConfig}));
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+    e.reset();
+
+    /// endpointId1 and endpointId2 have already been registered. Confirm that they are added when endpointId3 is added.
+    /// Expect calls to MessageSender.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .Times(Exactly(1))
+        .WillOnce(Invoke([this](std::shared_ptr<MessageRequest> request) {
+            std::string eventCorrelationTokenString;
+            getEventCorrelationTokenString(request, eventCorrelationTokenString);
+
+            request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+            m_capabilitiesDelegate->onAlexaEventProcessedReceived(eventCorrelationTokenString);
+        }));
+    /// Expect call to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase((std::unordered_map<std::string, std::string>{})))
+        .WillOnce(Return(true));
+
+    /// Expect callback to CapabilitiesObserver.
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            std::vector<std::string> expectedAddedEndpoints{endpointID1, endpointID2, endpointID3};
+            std::sort(expectedAddedEndpoints.begin(), expectedAddedEndpoints.end());
+            std::sort(addedEndpoints.begin(), addedEndpoints.end());
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(addedEndpoints, expectedAddedEndpoints);
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+
+            e.wakeUp();
+        }));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes3, {capabilityConfig}));
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+    e.reset();
+
+    /// Update the configuration
+    std::string additionalAttribute(256 * 10, 'X');
+    std::map<std::string, std::string> additionalAttributes;
+    additionalAttributes["test"] = "{\"test\":\"" + additionalAttribute + "\"}";
+    auto updatedCapabilityConfig = createCapabilityConfiguration(additionalAttributes);
+
+    auto updatedEndpointAttributes1 = createEndpointAttributes(endpointID1);
+    updatedEndpointAttributes1.registration = createEndpointRegistration();
+
+    /// endpointId1, endpointId2 and endpointId3 have already been registered. Confirm that they are added when
+    /// endpointId1 is updated.
+    /// Expect calls to MessageSender.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .Times(Exactly(1))
+        .WillOnce(Invoke([this](std::shared_ptr<MessageRequest> request) {
+            std::string eventCorrelationTokenString;
+            getEventCorrelationTokenString(request, eventCorrelationTokenString);
+
+            request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+            m_capabilitiesDelegate->onAlexaEventProcessedReceived(eventCorrelationTokenString);
+        }));
+    /// Expect call to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase((std::unordered_map<std::string, std::string>{})))
+        .WillOnce(Return(true));
+
+    /// Expect callback to CapabilitiesObserver.
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            std::vector<std::string> expectedAddedEndpoints{endpointID1, endpointID2, endpointID3};
+            std::sort(expectedAddedEndpoints.begin(), expectedAddedEndpoints.end());
+            std::sort(addedEndpoints.begin(), addedEndpoints.end());
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(addedEndpoints, expectedAddedEndpoints);
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+
+            e.wakeUp();
+        }));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(updatedEndpointAttributes1, {updatedCapabilityConfig}));
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test that deleting a de-duplicated endpoint fails.
+ */
+TEST_F(CapabilitiesDelegateTest, test_deduplictedDeletionFailure) {
+    m_capabilitiesDelegate->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+
+    WaitEvent e;
+    validateAuthDelegate();
+
+    const std::string endpointID1{"TEST_ENDPOINT_ID_1"};
+    const std::string endpointID2{"TEST_ENDPOINT_ID_2"};
+
+    auto endpointAttributes1 = createEndpointAttributes(endpointID1);
+    endpointAttributes1.registration = createEndpointRegistration();
+
+    auto capabilityConfig = createCapabilityConfiguration();
+    auto capabilityConfigJson = utils::getEndpointConfigJson(endpointAttributes1, {capabilityConfig});
+
+    /// endpointId1 is being registered first. The Discovery message should only contain it.
+    /// Expect calls to MessageSender.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .Times(Exactly(1))
+        .WillOnce(Invoke([this](std::shared_ptr<MessageRequest> request) {
+            std::string eventCorrelationTokenString;
+            getEventCorrelationTokenString(request, eventCorrelationTokenString);
+
+            request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+            m_capabilitiesDelegate->onAlexaEventProcessedReceived(eventCorrelationTokenString);
+        }));
+    /// Expect call to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(_)).WillOnce(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase((std::unordered_map<std::string, std::string>{})))
+        .WillOnce(Return(true));
+
+    /// Expect callback to CapabilitiesObserver.
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(addedEndpoints, std::vector<std::string>{endpointID1});
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+
+            e.wakeUp();
+        }));
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes1, {capabilityConfig}));
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+    e.reset();
+
+    /// Deleting endpoint 1 should fail.
+    ASSERT_FALSE(m_capabilitiesDelegate->deleteEndpoint(endpointAttributes1, {capabilityConfig}));
+}
+
+/**
+ * Test adding two pairs of 3 endpoints that share registration information (i.e. they are de-duplicated in the cloud).
+ * For this test, endpointid3 and endpointId6 have large configurations, preventing them from being sent in the same
+ * message.
+ * Verify that the endpoints are split into two messages, each containing 3 endpoints.
+ */
+TEST_F(CapabilitiesDelegateTest, test_SplitMessagePendingDeduplicatedEndpoints) {
+    m_capabilitiesDelegate->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::DISCONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SERVER_SIDE_DISCONNECT);
+
+    WaitEvent e;
+    validateAuthDelegate();
+
+    const std::string endpointID1{"TEST_ENDPOINT_ID_1"};
+    const std::string endpointID2{"TEST_ENDPOINT_ID_2"};
+    const std::string endpointID3{"TEST_ENDPOINT_ID_3"};
+
+    /// Set-up the first set of deduplicated endpoints.
+    auto endpointAttributes1 = createEndpointAttributes(endpointID1);
+    endpointAttributes1.registration = createEndpointRegistration();
+
+    auto endpointAttributes2 = createEndpointAttributes(endpointID2);
+    endpointAttributes2.registration = createEndpointRegistration();
+
+    auto endpointAttributes3 = createEndpointAttributes(endpointID3);
+    endpointAttributes3.registration = createEndpointRegistration();
+
+    const std::string endpointID4{"TEST_ENDPOINT_ID_4"};
+    const std::string endpointID5{"TEST_ENDPOINT_ID_5"};
+    const std::string endpointID6{"TEST_ENDPOINT_ID_6"};
+
+    /// Set-up the second set of endpoints.
+    auto endpointAttributes4 = createEndpointAttributes(endpointID4);
+
+    auto endpointAttributes5 = createEndpointAttributes(endpointID5);
+
+    auto endpointAttributes6 = createEndpointAttributes(endpointID6);
+
+    /// Create a large capability configuration for endpoint3 and endpoint6.
+    std::string additionalAttribute(240 * 1024, 'X');
+    std::map<std::string, std::string> additionalAttributes;
+    additionalAttributes["test"] = "{\"test\":\"" + additionalAttribute + "\"}";
+    auto largeCapabilityConfig = createCapabilityConfiguration(additionalAttributes);
+
+    /// Create a default capability configuration for the other endpoints.
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes1, {capabilityConfig}));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes2, {capabilityConfig}));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes3, {largeCapabilityConfig}));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes4, {capabilityConfig}));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes5, {capabilityConfig}));
+
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes6, {largeCapabilityConfig}));
+
+    /// Upon connect, expect two messages to be sent. One with endpoints 1,2 and 3, and the other with endpoints 4, 5
+    /// and 6. Expect calls to MessageSender.
+    EXPECT_CALL(*m_mockMessageSender, sendMessage(_))
+        .Times(Exactly(2))
+        .WillRepeatedly(Invoke([this](std::shared_ptr<MessageRequest> request) {
+            std::string eventCorrelationTokenString;
+            getEventCorrelationTokenString(request, eventCorrelationTokenString);
+
+            request->sendCompleted(MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED);
+            m_capabilitiesDelegate->onAlexaEventProcessedReceived(eventCorrelationTokenString);
+        }));
+    /// Expect call to storage.
+    EXPECT_CALL(*m_mockCapabilitiesStorage, store(_)).WillRepeatedly(Return(true));
+    EXPECT_CALL(*m_mockCapabilitiesStorage, erase((std::unordered_map<std::string, std::string>{})))
+        .WillRepeatedly(Return(true));
+
+    /// Expect callback to CapabilitiesObserver.
+    std::vector<std::vector<std::string>> expectedAddedEndpoints{{endpointID1, endpointID2, endpointID3},
+                                                                 {endpointID4, endpointID5, endpointID6}};
+    int other{0};
+    EXPECT_CALL(*m_mockCapabilitiesDelegateObserver, onCapabilitiesStateChange(_, _, _, _))
+        .Times(Exactly(2))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            std::sort(addedEndpoints.begin(), addedEndpoints.end());
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            if (addedEndpoints[0] == endpointID1) {
+                other = 1;
+                EXPECT_EQ(addedEndpoints, expectedAddedEndpoints[0]);
+            } else {
+                EXPECT_EQ(addedEndpoints, expectedAddedEndpoints[1]);
+            }
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+        }))
+        .WillOnce(Invoke([&](CapabilitiesDelegateObserverInterface::State state,
+                             CapabilitiesDelegateObserverInterface::Error error,
+                             std::vector<std::string> addedEndpoints,
+                             std::vector<std::string> deletedEndpoints) {
+            std::sort(addedEndpoints.begin(), addedEndpoints.end());
+            EXPECT_EQ(state, CapabilitiesDelegateObserverInterface::State::SUCCESS);
+            EXPECT_EQ(error, CapabilitiesDelegateObserverInterface::Error::SUCCESS);
+            EXPECT_EQ(addedEndpoints, expectedAddedEndpoints[other]);
+            EXPECT_EQ(deletedEndpoints, (std::vector<std::string>{}));
+            e.wakeUp();
+        }));
+
+    m_capabilitiesDelegate->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+
+    ASSERT_TRUE(e.wait(MY_WAIT_TIMEOUT));
+}
+
+/**
+ * Test limits of the Alexa.Discovery interface.
+ * Specifically test :
+ * 1. Adding more than 300 deduplicated endpoints triggers a failure.
+ * 2. Having more than 100 capabilities per deduplicated endpoint triggers a failure.
+ * This is because a single discovery message cannot contain more than 300 endpoints, per the limits imposed here:
+ * https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html#limits
+ */
+TEST_F(CapabilitiesDelegateTest, test_endpointLimits) {
+    // Create deduplicated endpoints
+    for (size_t i = 0; i < getMaxEndpoints(); ++i) {
+        const std::string testEndpointID = "TEST_ENDPOINT_ID_" + std::to_string(i);
+
+        auto endpointAttributes = createEndpointAttributes(testEndpointID);
+        endpointAttributes.registration = createEndpointRegistration();
+        auto capabilityConfig = createCapabilityConfiguration();
+
+        ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes, {capabilityConfig}));
+    }
+    const std::string lastEndpointID = "TEST_ENDPOINT_ID_LAST";
+    auto lastEndpointAttributes = createEndpointAttributes(lastEndpointID);
+    lastEndpointAttributes.registration = createEndpointRegistration();
+    auto lastCapabilityConfig = createCapabilityConfiguration();
+
+    ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(lastEndpointAttributes, {lastCapabilityConfig}));
+
+    const std::string endpointID = "TEST_ENDPOINT_ID";
+
+    /// Add a deduplicated endpoint with more than MAX_CAPABILITIES_PER_ENDPOINT capabilities.
+    auto endpointAttributes = createEndpointAttributes(endpointID);
+    endpointAttributes.registration = createEndpointRegistration();
+    std::vector<CapabilityConfiguration> largeConfig;
+    for (size_t i = 0; i <= getMaxCapabilitiesPerEndpoint(); ++i) {
+        largeConfig.push_back(createCapabilityConfiguration());
+    }
+
+    ASSERT_FALSE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes, largeConfig));
+}
+
+/**
+ * Test updating a deduplicated endpoint when it is in flight.
+ */
+TEST_F(CapabilitiesDelegateTest, test_updateDeduplicatedEndpointWhenInflight) {
+    m_capabilitiesDelegate->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+    WaitEvent e;
+    validateAuthDelegate();
+
+    const std::string endpointID{"TEST_ENDPOINT_ID"};
+
+    /// Set-up.
+    auto endpointAttributes = createEndpointAttributes(endpointID);
+    endpointAttributes.registration = createEndpointRegistration();
+
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    addEndpoint(endpointAttributes, {capabilityConfig});
+
+    /// Add a DiscoveryEventSender to simulate Discovery event in-flight.
+    auto discoveryEventSender = std::make_shared<StrictMock<MockDiscoveryEventSender>>();
+    EXPECT_CALL(*discoveryEventSender, addDiscoveryStatusObserver(_))
+        .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
+            EXPECT_EQ(observer, m_capabilitiesDelegate);
+        }));
+    EXPECT_CALL(*discoveryEventSender, removeDiscoveryStatusObserver(_))
+        .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
+            EXPECT_EQ(observer, m_capabilitiesDelegate);
+        }));
+    EXPECT_CALL(*discoveryEventSender, stop());
+    m_capabilitiesDelegate->setDiscoveryEventSender(discoveryEventSender);
+
+    /// Create an updated capability configuration for the update to endpoint1.
+    std::string additionalAttribute(2 * 1024, 'X');
+    std::map<std::string, std::string> additionalAttributes;
+    additionalAttributes["test"] = "{\"test\":\"" + additionalAttribute + "\"}";
+    auto updatedCapabilityConfig = createCapabilityConfiguration(additionalAttributes);
+
+    /// Expect no callback to CapabilitiesObserver, since the update remains in pending.
+    EXPECT_CALL(
+        *m_mockCapabilitiesDelegateObserver,
+        onCapabilitiesStateChange(_, _, std::vector<std::string>{endpointID}, std::vector<std::string>{}))
+        .Times(0);
+
+    /// endpointId1 is inflight. Should be able to add it again to the pending update set.
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes, {updatedCapabilityConfig}));
+}
+
+/**
+ * Test adding a deduplicated endpoint when another one is in flight.
+ * Verify that the first endpoint is also sent in the discovery message when the second endpoint is added.
+ */
+TEST_F(CapabilitiesDelegateTest, test_addDeduplicatedEndpointWhenOtherInflight) {
+    m_capabilitiesDelegate->onConnectionStatusChanged(
+        ConnectionStatusObserverInterface::Status::CONNECTED,
+        ConnectionStatusObserverInterface::ChangedReason::SUCCESS);
+
+    WaitEvent e;
+    validateAuthDelegate();
+
+    const std::string endpointID1{"TEST_ENDPOINT_ID_1"};
+    const std::string endpointID2{"TEST_ENDPOINT_ID_2"};
+
+    /// Set-up.
+    auto endpointAttributes1 = createEndpointAttributes(endpointID1);
+    endpointAttributes1.registration = createEndpointRegistration();
+
+    auto endpointAttributes2 = createEndpointAttributes(endpointID2);
+    endpointAttributes2.registration = createEndpointRegistration();
+
+    auto capabilityConfig = createCapabilityConfiguration();
+
+    addEndpoint(endpointAttributes1, {capabilityConfig});
+
+    /// Add a DiscoveryEventSender to simulate Discovery event in-flight.
+    auto discoveryEventSender = std::make_shared<StrictMock<MockDiscoveryEventSender>>();
+    EXPECT_CALL(*discoveryEventSender, addDiscoveryStatusObserver(_))
+        .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
+            EXPECT_EQ(observer, m_capabilitiesDelegate);
+        }));
+    EXPECT_CALL(*discoveryEventSender, removeDiscoveryStatusObserver(_))
+        .WillOnce(Invoke([this](const std::shared_ptr<DiscoveryStatusObserverInterface>& observer) {
+            EXPECT_EQ(observer, m_capabilitiesDelegate);
+        }));
+    EXPECT_CALL(*discoveryEventSender, stop());
+    m_capabilitiesDelegate->setDiscoveryEventSender(discoveryEventSender);
+
+    /// Expect no callback to CapabilitiesObserver, since the add of endpoint2 remains in pending.
+    EXPECT_CALL(
+        *m_mockCapabilitiesDelegateObserver,
+        onCapabilitiesStateChange(_, _, std::vector<std::string>{endpointID1, endpointID2}, std::vector<std::string>{}))
+        .Times(0);
+
+    /// Endpoint1 is in flight. Confirm that Endpoint2 is added to the pending endpoints.
+    ASSERT_TRUE(m_capabilitiesDelegate->addOrUpdateEndpoint(endpointAttributes2, {capabilityConfig}));
 }
 
 }  // namespace test

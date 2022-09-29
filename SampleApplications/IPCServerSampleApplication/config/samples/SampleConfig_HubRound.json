@@ -1,0 +1,159 @@
+{
+    "version": "3.0",
+    "visualCharacteristics": [
+        {
+            "type": "AlexaInterface",
+            "interface": "Alexa.InteractionMode",
+            "version": "1.1",
+            "configurations": {
+                "interactionModes": [
+                    {
+                        "id": "hub_fullscreen_mode",
+                        "uiMode": "HUB",
+                        "interactionDistance": {
+                            "unit": "INCHES",
+                            "value": 84
+                        },
+                        "touch": "SUPPORTED",
+                        "keyboard": "UNSUPPORTED",
+                        "video": "SUPPORTED",
+                        "dialog": "SUPPORTED"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "AlexaInterface",
+            "interface": "Alexa.Display.Window",
+            "version": "1.0",
+            "configurations": {
+                "templates": [
+                    {
+                        "id": "hubRound",
+                        "type": "STANDARD",
+                        "configuration": {
+                            "sizes": [
+                                {
+                                    "type": "DISCRETE",
+                                    "id": "fullscreen",
+                                    "value": {
+                                        "unit": "PIXEL",
+                                        "value": {
+                                            "width": 480,
+                                            "height": 480
+                                        }
+                                    }
+                                }
+                            ],
+                            "interactionModes": [
+                                "hub_fullscreen_mode"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "AlexaInterface",
+            "interface": "Alexa.Display",
+            "version": "1.0",
+            "configurations": {
+                "display": {
+                    "type": "PIXEL",
+                    "touch": [
+                        "SINGLE"
+                    ],
+                    "shape": "ROUND",
+                    "dimensions": {
+                        "resolution": {
+                            "unit": "PIXEL",
+                            "value": {
+                                "width": 480,
+                                "height": 480
+                            }
+                        },
+                        "physicalSize": {
+                            "unit": "INCHES",
+                            "value": {
+                                "width": 8.6,
+                                "height": 8.6
+                            }
+                        },
+                        "pixelDensity": {
+                            "unit": "DPI",
+                            "value": 160
+                        },
+                        "densityIndependentResolution": {
+                            "unit": "DP",
+                            "value": {
+                                "width": 480,
+                                "height": 480
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "sampleClientConfig": {
+        "version": "1.0.0",
+        "description": "Hub Round Device",
+        "mode": "HUB",
+        "emulateDisplayDimensions": true,
+        "scaleToFill": false,
+        "audioInputInitiator": "TAP",
+        "displayMode": "FIXED",
+        "deviceKeys": {
+            "talkKey": {
+                "code": "KeyA",
+                "keyCode": 65,
+                "key": "a"
+            },
+            "backKey": {
+                "code": "KeyB",
+                "keyCode": 66,
+                "key": "b"
+            },
+            "exitKey": {
+                "code": "Escape",
+                "keyCode": 27,
+                "key": "Escape"
+            },
+            "toggleCaptionsKey": {
+                "code": "KeyC",
+                "keyCode": 67,
+                "key": "c"
+            },
+            "toggleDoNotDisturbKey": {
+                "code": "KeyD",
+                "keyCode": 68,
+                "key": "d"
+            }
+        },
+        "windows": [
+            {
+                "id": "hubRound",
+                "displayWindowConfig": {
+                    "templateId": "hubRound",
+                    "configurations": {
+                        "landscape" : {
+                            "sizeConfigurationId": "fullscreen",
+                            "interactionMode": "hub_fullscreen_mode"
+                        }
+                    }
+                },
+                "aplRendererParameters": {
+                    "supportedExtensions": [
+                        "aplext:backstack:10"
+                    ]
+                },
+                "supportedInterfaces": [
+                    "Alexa.Presentation.APL",
+                    "TemplateRuntime"
+                ],
+                "zOrderIndex": 0
+            }
+        ],
+        "defaultWindowId": "hubRound"
+    }
+}

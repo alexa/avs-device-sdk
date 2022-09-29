@@ -20,7 +20,7 @@
 
 #include <acsdkKWDInterfaces/KeywordDetectorStateNotifierInterface.h>
 #include <acsdkKWDInterfaces/KeywordNotifierInterface.h>
-#include <acsdkNotifierInterfaces/internal/MockNotifier.h>
+#include <acsdk/NotifierInterfaces/test/MockNotifier.h>
 #include <AVSCommon/AVS/AudioInputStream.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordObserverInterface.h>
@@ -70,11 +70,11 @@ public:
 
 /// A test KeywordNotifier.
 class MockKeywordNotifier
-        : public acsdkNotifierInterfaces::test::MockNotifier<avsCommon::sdkInterfaces::KeyWordObserverInterface> {};
+        : public notifierInterfaces::test::MockNotifier<avsCommon::sdkInterfaces::KeyWordObserverInterface> {};
 
 /// A test KeywordDetectorStateNotifier.
 class MockKeywordDetectorStateNotifier
-        : public acsdkNotifierInterfaces::test::MockNotifier<
+        : public notifierInterfaces::test::MockNotifier<
               avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface> {};
 
 /**

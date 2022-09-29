@@ -28,6 +28,7 @@ namespace manager {
 
 using namespace std;
 using namespace alexaClientSDK::avsCommon::utils;
+using namespace common;
 
 #if UNIT_TEST == 1
 // For tests, because we don't want to create megabytes worth of files...
@@ -39,6 +40,8 @@ static const string BUDGET_FILE_SUFFIX = "/budget.config";
 
 // when looking at how much space is available on the system, be sure to leave out a few MBs
 static constexpr size_t SYSTEM_STORAGE_BUFFER = 5 * BYTES_IN_MB;
+
+static const auto s_metrics = AmdMetricsWrapper::creator("StorageManager");
 
 /// String to identify log entries originating from this file.
 static const std::string TAG{"StorageManager"};
@@ -69,7 +72,10 @@ shared_ptr<StorageManager> StorageManager::create(
     if (configFile.good()) {
         configFile >> budget;
     }
-
+    if (budget <= 0) {
+        budget = MAX_BUDGET_MB;
+        s_metrics().addCounter(METRIC_PREFIX_ERROR("budgetSetToZero"));
+    }
     auto sm = shared_ptr<StorageManager>(new StorageManager(workingDirectory, assetManager, budget));
 
     if (!sm->init()) {

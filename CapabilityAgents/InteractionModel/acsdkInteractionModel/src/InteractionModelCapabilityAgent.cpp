@@ -34,7 +34,7 @@ using namespace avsCommon::utils;
 using namespace json::jsonUtils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"InteractionModel"};
+#define TAG "InteractionModel"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -139,10 +139,44 @@ DirectiveHandlerConfiguration InteractionModelCapabilityAgent::getConfiguration(
 }
 void InteractionModelCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDirective> directive) {
     ACSDK_DEBUG5(LX(__func__));
-    handleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
+
+    // The logic for handleDirectiveImmediately and preHandleDirective should be same,
+    // which we only process directive without dialogRequestId
+    preHandleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
 }
 void InteractionModelCapabilityAgent::preHandleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {
-    // No-op
+    ACSDK_DEBUG5(LX(__func__));
+    if (!info) {
+        ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "nullInfo"));
+        return;
+    }
+
+    if (!info->directive) {
+        ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "nullDirective"));
+        return;
+    }
+
+    // Both preHandleDirective and handleDirectiveImmediately interfaces only handle message
+    // with empty dialogRequestId. Other messages (having dialogRequestId in header) will be
+    // queued to handle sequentially.
+    if (info->directive->getDialogRequestId().empty()) {
+        std::string errMessage;
+        ExceptionErrorType errType;
+
+        if (handleDirectiveHelper(info, &errMessage, &errType)) {
+            if (info->result) {
+                info->result->setCompleted();
+            }
+        } else {
+            ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", errMessage));
+            m_exceptionEncounteredSender->sendExceptionEncountered(
+                info->directive->getUnparsedDirective(), errType, errMessage);
+            if (info->result) {
+                info->result->setFailed(errMessage);
+            }
+        }
+        removeDirective(info->directive->getMessageId());
+    }
 }
 
 bool InteractionModelCapabilityAgent::handleDirectiveHelper(
@@ -198,6 +232,7 @@ bool InteractionModelCapabilityAgent::handleDirectiveHelper(
                 return false;
             }
             m_directiveSequencer->setDialogRequestId(uuid);
+            ACSDK_DEBUG(LX(__func__).d("processDirective", directiveName).d("dialogRequestId", uuid));
         } else {
             *errMessage = "Dialog Request ID not specified";
             *type = ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED;
@@ -233,10 +268,12 @@ void InteractionModelCapabilityAgent::handleDirective(std::shared_ptr<Capability
         return;
     }
 
-    std::string errMessage;
-    ExceptionErrorType errType;
+    std::string errMessage = "emptyDialogRequestId";
+    ExceptionErrorType errType = ExceptionErrorType::UNEXPECTED_INFORMATION_RECEIVED;
 
-    if (handleDirectiveHelper(info, &errMessage, &errType)) {
+    // Directives without dialogRequestId must be handled in preHandle or handleImmediately
+    // which happen on receiving thread.
+    if (!info->directive->getDialogRequestId().empty() && handleDirectiveHelper(info, &errMessage, &errType)) {
         if (info->result) {
             info->result->setCompleted();
         }

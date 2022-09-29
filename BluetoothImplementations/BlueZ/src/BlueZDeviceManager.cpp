@@ -79,7 +79,7 @@ static const std::string STATE_IDLE = "idle";
 static const std::string STATE_ACTIVE = "active";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"BlueZDeviceManager"};
+#define TAG "BlueZDeviceManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

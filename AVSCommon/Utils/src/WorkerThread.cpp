@@ -23,10 +23,7 @@ namespace avsCommon {
 namespace utils {
 namespace threading {
 
-WorkerThread::WorkerThread() :
-        m_moniker{alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::generateMoniker()},
-        m_stop{false},
-        m_cancel{false} {
+WorkerThread::WorkerThread() : m_stop{false}, m_cancel{false} {
     m_thread = std::thread{std::bind(&WorkerThread::runInternal, this)};
 }
 
@@ -45,12 +42,12 @@ WorkerThread::~WorkerThread() {
     }
 }
 
-std::string WorkerThread::getMoniker() const {
-    return m_moniker;
-}
-
 void WorkerThread::cancel() {
     m_cancel = true;
+}
+
+std::thread::id WorkerThread::getThreadId() const {
+    return m_thread.get_id();
 }
 
 void WorkerThread::run(std::function<bool()> workFunc) {
@@ -61,7 +58,6 @@ void WorkerThread::run(std::function<bool()> workFunc) {
 }
 
 void WorkerThread::runInternal() {
-    alexaClientSDK::avsCommon::utils::logger::ThreadMoniker::setThisThreadMoniker(m_moniker);
     std::unique_lock<std::mutex> lock(m_mutex);
     do {
         // If run is called before the thread starts, it will notify before we wait, so we guard against that by

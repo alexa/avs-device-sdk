@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -28,7 +28,7 @@ namespace acsdkKWDInterfaces {
  * Interface for registering to observe Bluetooth notifications.
  */
 using KeywordDetectorStateNotifierInterface =
-    acsdkNotifierInterfaces::NotifierInterface<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>;
+    notifierInterfaces::NotifierInterface<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>;
 
 }  // namespace acsdkKWDInterfaces
 }  // namespace alexaClientSDK

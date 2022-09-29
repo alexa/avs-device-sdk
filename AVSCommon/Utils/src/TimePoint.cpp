@@ -26,7 +26,7 @@ namespace timing {
 using namespace avsCommon::utils::logger;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("TimePoint");
+#define TAG "TimePoint"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

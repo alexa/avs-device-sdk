@@ -8,7 +8,6 @@ target_include_directories(AIP PUBLIC
     "${AFML_SOURCE_DIR}/include"
     "${AVSCommon_INCLUDE_DIRS}"
     "${DeviceSettings_INCLUDE_DIRS}"
-    "${SpeechEncoder_SOURCE_DIR}/include"
     "${SystemSoundPlayer_INCLUDE_DIRS}")
 
 target_link_libraries(AIP
@@ -16,7 +15,7 @@ target_link_libraries(AIP
     ADSL
     AFML
     DeviceSettings
-    SpeechEncoder
+    acsdkAudioEncoderInterfaces
     SystemSoundPlayer
     acsdkNotifier)
 

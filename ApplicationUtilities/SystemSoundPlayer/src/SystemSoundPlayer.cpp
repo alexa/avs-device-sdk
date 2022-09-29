@@ -24,7 +24,7 @@ using namespace avsCommon::utils::logger;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SystemSoundPlayer");
+#define TAG "SystemSoundPlayer"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -27,7 +27,7 @@
 #include "ADSL/DirectiveRouter.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DirectiveRouter");
+#define TAG "DirectiveRouter"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

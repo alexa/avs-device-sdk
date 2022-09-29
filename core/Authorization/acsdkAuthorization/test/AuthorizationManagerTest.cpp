@@ -258,8 +258,8 @@ TEST_F(AuthorizationManagerTest, test_refreshedState_Persisted) {
     EXPECT_TRUE(storageHasKeyValue(MISC_TABLE_USER_ID_KEY, USER_ID));
 }
 
-/// Check logout behavior if AuthorizationManager is in the UNRECOVERABLE_ERROR state.
-TEST_F(AuthorizationManagerTest, test_unrecoverableError_Logout) {
+/// Check the behavior if AuthorizationManager is in the UNRECOVERABLE_ERROR state.
+TEST_F(AuthorizationManagerTest, test_unrecoverableError_Success) {
     {
         InSequence s;
 
@@ -270,16 +270,9 @@ TEST_F(AuthorizationManagerTest, test_unrecoverableError_Logout) {
         EXPECT_CALL(
             *m_mockAuthObsv,
             onAuthStateChange(
-                AuthObserverInterface::State::UNRECOVERABLE_ERROR, AuthObserverInterface::Error::UNKNOWN_ERROR));
-
-        EXPECT_CALL(
-            *m_mockAuthObsv,
-            onAuthStateChange(AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS))
+                AuthObserverInterface::State::UNRECOVERABLE_ERROR, AuthObserverInterface::Error::UNKNOWN_ERROR))
             .WillOnce(InvokeWithoutArgs([this]() { m_wait.wakeUp(); }));
     }
-
-    EXPECT_CALL(*m_mockRegMgr, logout());
-    EXPECT_CALL(*m_mockAdapter, reset());
 
     m_authMgr->reportStateChange(
         {AuthObserverInterface::State::AUTHORIZING, AuthObserverInterface::Error::SUCCESS}, ADAPTER_ID, USER_ID);
@@ -290,9 +283,6 @@ TEST_F(AuthorizationManagerTest, test_unrecoverableError_Logout) {
         USER_ID);
 
     EXPECT_TRUE(m_wait.wait(TIMEOUT));
-
-    EXPECT_FALSE(storageHasKey(MISC_TABLE_ADAPTER_ID_KEY));
-    EXPECT_FALSE(storageHasKey(MISC_TABLE_USER_ID_KEY));
 }
 
 /// Check invalid transitions.

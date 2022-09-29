@@ -315,7 +315,7 @@ void runTestForCombination(std::vector<int>& partition, const std::string& paylo
 void generateCombinationsAndRunTest(
     std::vector<int>& partitions,
     size_t pos,
-    size_t remaining,
+    int remaining,
     const std::string& words,
     const std::string& boundary) {
     if (remaining == 0) {
@@ -351,7 +351,7 @@ TEST_F(MIMEParserTest, test_multipleCombinations) {
     for (size_t numberOfPartitions = 1; numberOfPartitions <= maxNumberOfPartitions;
          numberOfPartitions += numberOfPartitionsIncrement) {
         std::vector<int> partitions(numberOfPartitions);
-        generateCombinationsAndRunTest(partitions, 0, payload.size(), payload, "WWWoooAAA");
+        generateCombinationsAndRunTest(partitions, 0, static_cast<int>(payload.size()), payload, "WWWoooAAA");
     }
 }
 
@@ -379,12 +379,12 @@ TEST_F(MIMEParserTest, test_fixedSizeGroups) {
         decoder.onReceiveResponseCode(HTTPResponseCode::SUCCESS_OK);
 
         std::vector<std::string> groups;
-        int nGroups = (parts.size() + groupSize - 1) / groupSize;
-        for (int i = 0; i < nGroups; i++) {
+        size_t nGroups = (parts.size() + groupSize - 1) / groupSize;
+        for (size_t i = 0; i < nGroups; i++) {
             groups.push_back("");
         }
 
-        int currentGroup = 0;
+        size_t currentGroup = 0;
         for (size_t i = 0; i < parts.size(); ++i) {
             if (i != 0 && i % groupSize == 0) {
                 currentGroup++;
@@ -480,7 +480,7 @@ TEST_F(MIMEParserTest, test_decodingRandomBoundaries) {
     const std::string CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'()+_,-.:=?";
     std::random_device random_device;
     std::mt19937 generator(random_device());
-    std::uniform_int_distribution<> distribution(0, CHARACTERS.size() - 1);
+    std::uniform_int_distribution<> distribution(0, static_cast<int>(CHARACTERS.size() - 1));
 
     for (size_t length = 5; length < 50; length++) {
         std::string quotedRandomBoundary = QUOTE_CHAR;
@@ -523,9 +523,9 @@ TEST_F(MIMEParserTest, test_decodingInvalidBoundaries) {
         "thisstringhasmorethanseventycharacterssoitsinvalid123123123123123123123",
         "^invalidchar",
         "\"^invalidchar\""};
-    for (auto boundary : invalid_boundaries) {
+    for (auto testBoundary : invalid_boundaries) {
         for (auto header : headerAfterBoundary) {
-            const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary + header};
+            const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + testBoundary + header};
             auto sink = std::make_shared<MockHTTP2MimeResponseDecodeSink>();
             HTTP2MimeResponseDecoder decoder{sink};
             ASSERT_FALSE(decoder.onReceiveHeaderLine(boundaryHeader));
@@ -538,9 +538,10 @@ TEST_F(MIMEParserTest, test_decodingInvalidBoundaries) {
  * Expected Result: pass
  */
 TEST_F(MIMEParserTest, test_decodingBoundaryAfteraNonBoundaryHeader) {
-    std::string boundary = "myboundary";
-    const std::vector<std::string> headers = {"content-type:nana;myprop:abc\r\n", BOUNDARY_HEADER_PREFIX + boundary};
-    generatePayloadAndTest(headers, boundary);
+    std::string testBoundary = "myboundary";
+    const std::vector<std::string> headers = {"content-type:nana;myprop:abc\r\n",
+                                              BOUNDARY_HEADER_PREFIX + testBoundary};
+    generatePayloadAndTest(headers, testBoundary);
 }
 
 /*
@@ -549,10 +550,10 @@ TEST_F(MIMEParserTest, test_decodingBoundaryAfteraNonBoundaryHeader) {
  */
 TEST_F(MIMEParserTest, test_decodingValidBoundariesWithMoreHeaders) {
     std::vector<std::string> headerAfterBoundary = {"", ";otherprop=yes", " somethingelse"};
-    std::string boundary = "myboundary";
+    std::string testBoundary = "myboundary";
     for (auto header : headerAfterBoundary) {
-        const std::string boundaryHeader{boundary + header};
-        generatePayloadAndTest(boundaryHeader, boundary);
+        const std::string boundaryHeader{testBoundary + header};
+        generatePayloadAndTest(boundaryHeader, testBoundary);
     }
 }
 
@@ -970,8 +971,8 @@ TEST_F(MIMEParserTest, test_aBORT) {
     sink->m_abort = true;
 
     // setup encoder
-    std::string boundary = createRandomAlphabetString(10);
-    HTTP2MimeRequestEncoder encoder{boundary, source};
+    std::string testBoundary = createRandomAlphabetString(10);
+    HTTP2MimeRequestEncoder encoder{testBoundary, source};
     char buf[LARGE];
     // Ensure repeated calls return ABORT
     ASSERT_TRUE(encoder.onSendData(buf, SMALL).status == HTTP2SendStatus::ABORT);
@@ -1041,8 +1042,8 @@ TEST_F(MIMEParserTest, test_variableChunkSizes) {
     char buf[XLARGE];
 
     // setup encoder
-    std::string boundary = createRandomAlphabetString(10);
-    HTTP2MimeRequestEncoder encoder{boundary, source};
+    std::string testBoundary = createRandomAlphabetString(10);
+    HTTP2MimeRequestEncoder encoder{testBoundary, source};
 
     // setup decoder
     HTTP2MimeResponseDecoder decoder{sink};
@@ -1075,7 +1076,7 @@ TEST_F(MIMEParserTest, test_variableChunkSizes) {
     index = 0;
     pauseCount = 0;
     HTTP2ReceiveDataStatus status{HTTP2ReceiveDataStatus::SUCCESS};
-    const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + boundary};
+    const std::string boundaryHeader{BOUNDARY_HEADER_PREFIX + testBoundary};
     bool resp = decoder.onReceiveHeaderLine(boundaryHeader);
     decoder.onReceiveResponseCode(
         static_cast<std::underlying_type<HTTPResponseCode>::type>(HTTPResponseCode::SUCCESS_OK));

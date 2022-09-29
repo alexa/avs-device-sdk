@@ -73,6 +73,26 @@ struct AVSDiscoveryEndpointAttributes {
          * Default constructor.
          */
         Registration() = default;
+
+        /**
+         * Operator == for @c Registration.
+         * @param rhs The object to compare to @c this.
+         * @return Whether the operation holds.
+         */
+        bool operator==(const Registration& rhs) {
+            return (
+                productId == rhs.productId && serialNumber == rhs.serialNumber &&
+                registrationKey == rhs.registrationKey && productIdKey == rhs.productIdKey);
+        }
+
+        /**
+         * Operator != for @c Registration.
+         * @param rhs The object to compare to @c this.
+         * @return Whether the operation holds.
+         */
+        bool operator!=(const Registration& rhs) {
+            return !(*this == rhs);
+        }
     };
 
     /**

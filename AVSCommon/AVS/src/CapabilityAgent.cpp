@@ -31,7 +31,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CapabilityAgent");
+#define TAG "CapabilityAgent"
 
 /// Maximum number of directives that Can be Queued before we emit warning logs.
 static const int CAPABILITY_QUEUE_WARN_SIZE = 10;
@@ -67,6 +67,10 @@ CapabilityAgent::DirectiveInfo::DirectiveInfo(
 void CapabilityAgent::preHandleDirective(
     std::shared_ptr<AVSDirective> directive,
     std::unique_ptr<DirectiveHandlerResultInterface> result) {
+    if (!directive) {
+        ACSDK_ERROR(LX("preHandleDirectiveFailed").d("reason", "nullDirective"));
+        return;
+    }
     std::string messageId = directive->getMessageId();
     auto info = getDirectiveInfo(messageId);
     if (info) {

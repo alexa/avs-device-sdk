@@ -69,7 +69,7 @@ inline MediaDescription emptyMediaDescription() {
                             "",
                             Optional<captions::CaptionData>(),
                             Optional<std::vector<audioAnalyzer::AudioAnalyzerState>>(),
-                            {},
+                            std::unordered_map<std::string, std::string>(),
                             false};
 }
 
@@ -81,6 +81,7 @@ inline MediaDescription emptyMediaDescription() {
  * @return The stream that was passed in and written to.
  */
 inline std::ostream& operator<<(std::ostream& stream, const MediaDescription& mediaDescription) {
+    stream << "MixingBehavior:";
     switch (mediaDescription.mixingBehavior) {
         case sdkInterfaces::audio::MixingBehavior::BEHAVIOR_PAUSE:
             stream << "BEHAVIOR_PAUSE";

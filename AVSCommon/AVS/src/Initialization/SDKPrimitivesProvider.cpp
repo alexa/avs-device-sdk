@@ -23,7 +23,7 @@ namespace avs {
 namespace initialization {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SDKPrimitivesProvider");
+#define TAG "SDKPrimitivesProvider"
 
 std::shared_ptr<SDKPrimitivesProvider> SDKPrimitivesProvider::m_provider;
 std::mutex SDKPrimitivesProvider::m_mutex;

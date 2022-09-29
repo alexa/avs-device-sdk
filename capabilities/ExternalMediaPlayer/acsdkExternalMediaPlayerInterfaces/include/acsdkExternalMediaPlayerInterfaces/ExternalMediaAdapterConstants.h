@@ -45,10 +45,6 @@ const char SPI_VERSION[] = "spiVersion";
 const char PLAYER_COOKIE[] = "playerCookie";
 const char SKILL_TOKEN[] = "skillToken";
 const char PLAYBACK_SESSION_ID[] = "playbackSessionId";
-#ifdef MEDIA_PORTABILITY_ENABLED
-const char MEDIA_SESSION_ID[] = "mediaSessionId";
-static const std::string CORRELATION_TOKEN = "correlationToken";
-#endif
 
 // The key values used in the context payload from External Media Player to AVS.
 const char STATE[] = "state";

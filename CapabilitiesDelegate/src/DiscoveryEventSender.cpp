@@ -17,6 +17,8 @@
 #include "CapabilitiesDelegate/Utils/DiscoveryUtils.h"
 
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/RetryTimer.h>
 
 namespace alexaClientSDK {
@@ -24,10 +26,20 @@ namespace capabilitiesDelegate {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::metrics;
 using namespace capabilitiesDelegate::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DiscoveryEventSender");
+#define TAG "DiscoveryEventSender"
+
+/// Activity name for post-connect metrics after sending a report.
+#define POST_CONNECT_ADD_OR_UPDATE_REPORT_ACTIVITY "PostConnect" TAG "-sendAddOrUpdateReport"
+
+/// Activity name for post-connect metrics after sending a report.
+#define POST_CONNECT_DELETE_REPORT_ACTIVITY "PostConnect" TAG "-sendDeleteReport"
+
+/// Prefix for post-connect data point with status value.
+#define POST_CONNECT_STATUS_PREFIX "STATUS-"
 
 /**
  * Create a LogEntry using the file's TAG and the specified event string.
@@ -61,14 +73,21 @@ std::shared_ptr<DiscoveryEventSender> DiscoveryEventSender::create(
     const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
     const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
-    const bool waitForEventProcessed) {
+    bool waitForEventProcessed,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    bool postConnect) {
     if (addOrUpdateReportEndpoints.empty() && deleteReportEndpoints.empty()) {
         ACSDK_ERROR(LX("createFailed").d("reason", "endpoint map empty"));
     } else if (!authDelegate) {
         ACSDK_ERROR(LX("createFailed").d("reason", "invalid auth delegate"));
     } else {
         auto instance = std::shared_ptr<DiscoveryEventSender>(new DiscoveryEventSender(
-            addOrUpdateReportEndpoints, deleteReportEndpoints, authDelegate, waitForEventProcessed));
+            addOrUpdateReportEndpoints,
+            deleteReportEndpoints,
+            authDelegate,
+            waitForEventProcessed,
+            metricRecorder,
+            postConnect));
 
         return instance;
     }
@@ -79,14 +98,18 @@ DiscoveryEventSender::DiscoveryEventSender(
     const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
     const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
     const std::shared_ptr<AuthDelegateInterface>& authDelegate,
-    const bool waitForEventProcessed) :
+    bool waitForEventProcessed,
+    const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
+    bool postConnect) :
         m_addOrUpdateReportEndpoints{addOrUpdateReportEndpoints},
         m_deleteReportEndpoints{deleteReportEndpoints},
         m_authDelegate{authDelegate},
+        m_metricRecorder{metricRecorder},
         m_currentAuthState{AuthObserverInterface::State::UNINITIALIZED},
         m_isStopping{false},
         m_isSendDiscoveryEventsInvoked{false},
-        m_waitForEventProcessed{waitForEventProcessed} {
+        m_waitForEventProcessed{waitForEventProcessed},
+        m_postConnect{postConnect} {
 }
 
 DiscoveryEventSender::~DiscoveryEventSender() {
@@ -188,6 +211,7 @@ MessageRequestObserverInterface::Status DiscoveryEventSender::sendDiscoveryEvent
     const std::shared_ptr<MessageSenderInterface>& messageSender,
     const std::string& eventString,
     bool waitForEventProcessed) {
+    ACSDK_INFO(LX(__func__));
     ACSDK_DEBUG5(LX(__func__).sensitive("discoveryEvent", eventString));
     std::unique_lock<std::mutex> lock{m_mutex};
     m_eventProcessedWaitEvent.reset();
@@ -237,6 +261,27 @@ bool DiscoveryEventSender::sendDiscoveryEventWithRetries(
         }
 
         auto status = sendDiscoveryEvent(messageSender, eventString, isAddOrUpdateReportEvent);
+
+#ifdef ACSDK_ENABLE_METRICS_RECORDING
+        if (m_postConnect && m_metricRecorder) {
+            const auto activityName = isAddOrUpdateReportEvent ? POST_CONNECT_ADD_OR_UPDATE_REPORT_ACTIVITY
+                                                               : POST_CONNECT_DELETE_REPORT_ACTIVITY;
+            std::stringstream eventNameBuilder;
+            eventNameBuilder << POST_CONNECT_STATUS_PREFIX << status;
+            auto metricEvent =
+                MetricEventBuilder{}
+                    .setActivityName(activityName)
+                    .addDataPoint(DataPointCounterBuilder{}.setName(eventNameBuilder.str()).increment(1).build())
+                    .build();
+            if (metricEvent) {
+                m_metricRecorder->recordMetric(std::move(metricEvent));
+            }
+        }
+#else
+        (void)m_postConnect;
+        (void)m_metricRecorder;
+#endif
+
         switch (status) {
             case MessageRequestObserverInterface::Status::SUCCESS_ACCEPTED:
                 /// Successful response, proceed to send next event if available.
@@ -265,12 +310,12 @@ bool DiscoveryEventSender::sendDiscoveryEvents(
     const std::vector<std::string>& endpointConfigurations,
     const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender,
     bool isAddOrUpdateReportEvent) {
-    int currentEventSize = 0;
+    size_t currentEventSize = 0;
     std::vector<std::string> currentEndpointConfigurationsBuffer;
     auto currentEndpointConfigIt = endpointConfigurations.begin();
 
     while (currentEndpointConfigIt != endpointConfigurations.end()) {
-        int currentEndpointConfigSize = currentEndpointConfigIt->size();
+        size_t currentEndpointConfigSize = currentEndpointConfigIt->size();
 
         bool sendEvent = false;
 
@@ -309,7 +354,7 @@ bool DiscoveryEventSender::sendDiscoveryEvents(
 
 bool DiscoveryEventSender::sendAddOrUpdateReportEvents(
     const std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface>& messageSender) {
-    ACSDK_DEBUG5(LX(__func__).d("num endpoints", m_addOrUpdateReportEndpoints.size()));
+    ACSDK_INFO(LX(__func__).d("num endpoints", m_addOrUpdateReportEndpoints.size()));
 
     if (m_addOrUpdateReportEndpoints.empty()) {
         ACSDK_DEBUG5(LX(__func__).m("endpoints list empty"));
@@ -380,7 +425,7 @@ void DiscoveryEventSender::removeDiscoveryStatusObserver(
 }
 
 void DiscoveryEventSender::reportDiscoveryStatus(MessageRequestObserverInterface::Status status) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_INFO(LX(__func__).d("status", status));
 
     std::shared_ptr<DiscoveryStatusObserverInterface> observer;
     {

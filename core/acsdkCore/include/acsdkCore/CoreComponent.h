@@ -43,7 +43,6 @@
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointCapabilitiesRegistrarInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/DefaultEndpointAnnotation.h>
-#include <AVSCommon/SDKInterfaces/VisualFocusAnnotation.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
 #include <InterruptModel/InterruptModel.h>
 #include <RegistrationManager/CustomerDataManagerInterface.h>
@@ -80,8 +79,6 @@ using CoreComponent = acsdkManufactory::Component<
     std::shared_ptr<afml::interruptModel::InterruptModel>,
     acsdkManufactory::
         Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
-    acsdkManufactory::
-        Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
     std::shared_ptr<registrationManager::CustomerDataManagerInterface>,
     std::shared_ptr<registrationManager::RegistrationManagerInterface>,
     std::shared_ptr<registrationManager::RegistrationNotifierInterface>,

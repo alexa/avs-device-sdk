@@ -489,6 +489,13 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders,
                                .d("maxReadersLimit", max_field_limit(&Header::maxReaders)));
         return false;
     }
+    if (maxEphemeralReaders > max_field_limit(&Header::maxEphemeralReaders)) {
+        logger::acsdkError(logger::LogEntry(TAG, "initFailed")
+                               .d("reason", "maxEphermalReadersTooLarge")
+                               .d("maxEphemeralReaders", maxEphemeralReaders)
+                               .d("maxEphemeralReaders", max_field_limit(&Header::maxEphemeralReaders)));
+        return false;
+    }
 
     // Pre-calculate some pointers and sizes that are frequently accessed.
     calculateAndCacheConstants(wordSize, maxReaders);
@@ -508,9 +515,9 @@ bool SharedDataStream<T>::BufferLayout::init(size_t wordSize, size_t maxReaders,
     header->magic = MAGIC_NUMBER;
     header->version = VERSION;
     header->traitsNameHash = stableHash(T::traitsName);
-    header->wordSize = wordSize;
-    header->maxReaders = maxReaders;
-    header->maxEphemeralReaders = maxEphemeralReaders;
+    header->wordSize = static_cast<uint16_t>(wordSize);
+    header->maxReaders = static_cast<uint8_t>(maxReaders);
+    header->maxEphemeralReaders = static_cast<uint8_t>(maxEphemeralReaders);
     header->isWriterEnabled = false;
     header->hasWriterBeenClosed = false;
     header->writeStartCursor = 0;

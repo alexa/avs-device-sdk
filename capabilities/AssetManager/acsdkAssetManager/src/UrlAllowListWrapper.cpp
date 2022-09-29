@@ -68,12 +68,9 @@ void UrlAllowListWrapper::addUrlToAllowList(std::string url) {
 }
 
 bool UrlAllowListWrapper::allowAllUrls(bool allow) {
-#ifdef DEBUG
     lock_guard<mutex> lock(m_allowListMutex);
     m_allowAllUrls = allow;
     return true;
-#endif
-    return false;
 }
 
 }  // namespace manager

@@ -57,6 +57,7 @@ public:
      * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
      * @param configurationRoot The @c ConfigurationNode to get AVS gateway information from the config file.
      * @param providerRegistrar Object with which to register the new instance as a post connect operation provider.
+     * @param metricRecorder Optional @c MetricRecorderInterface object for sending metrics.
      * @return A new instance of the @c AVSGatewayManager.
      */
     static std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayManagerInterface> createAVSGatewayManagerInterface(
@@ -66,7 +67,8 @@ public:
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::shared_ptr<
             acsdkPostConnectOperationProviderRegistrarInterfaces::PostConnectOperationProviderRegistrarInterface>&
-            providerRegistrar);
+            providerRegistrar,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * Creates an instance of the @c AVSGatewayManager.
@@ -76,13 +78,15 @@ public:
      * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
      * @param configurationRoot The @c ConfigurationNode to get AVS gateway information from the config file.
      * @param authDelegate The @c AuthDelegateInterface to add AuthObservers to take action once Auth state changes
+     * @param metricRecorder Optional @c MetricRecorderInterface object for sending metrics.
      * @return A new instance of the @c AVSGatewayManager.
      */
     static std::shared_ptr<AVSGatewayManager> create(
         std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
         std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
         const avsCommon::utils::configuration::ConfigurationNode& configurationRoot,
-        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate = nullptr);
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate = nullptr,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
     /// @name AVSGatewayManagerInterface Functions
     /// @{
@@ -124,12 +128,14 @@ private:
      *
      * @param avsGatewayManagerStorage The @c AVSGatewayManagerInterface to store avs gateway information.
      * @param customerDataManager The @c CustomerDataManager object that will track the CustomerDataHandler.
+     * @param metricRecorder Optional @c MetricRecorderInterface object for sending metrics.
      * @param defaultGateway The default AVS Gateway URL to use.
      */
     AVSGatewayManager(
         std::shared_ptr<storage::AVSGatewayManagerStorageInterface> avsGatewayManagerStorage,
-        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
-        const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> customerDataManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> authDelegate,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder,
         const std::string& defaultGateway);
 
     /**
@@ -152,6 +158,9 @@ private:
 
     /// The AVS Gateway Assigner.
     std::shared_ptr<avsCommon::sdkInterfaces::AVSGatewayAssignerInterface> m_avsGatewayAssigner;
+
+    /// Optional (may be nullptr) interface for recording metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// The mutex to synchronize access to members.
     mutable std::mutex m_mutex;

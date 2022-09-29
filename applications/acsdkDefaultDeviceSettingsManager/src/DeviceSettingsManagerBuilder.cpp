@@ -26,7 +26,7 @@
 #include "acsdkDeviceSettingsManager/DeviceSettingsManagerBuilder.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DeviceSettingsManagerBuilder");
+#define TAG "DeviceSettingsManagerBuilder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

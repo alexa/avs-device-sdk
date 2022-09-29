@@ -47,7 +47,7 @@ static const std::string MIME_OCTET_STREAM_CONTENT_TYPE = "application/octet-str
 static const size_t NON_MIME_BODY_MAX_SIZE = 4096;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MimeResponseSink");
+#define TAG "MimeResponseSink"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

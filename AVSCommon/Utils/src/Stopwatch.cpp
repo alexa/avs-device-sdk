@@ -22,7 +22,7 @@ namespace utils {
 namespace timing {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("Stopwatch");
+#define TAG "Stopwatch"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

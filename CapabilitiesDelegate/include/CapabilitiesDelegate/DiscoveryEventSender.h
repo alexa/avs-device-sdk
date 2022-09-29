@@ -26,6 +26,7 @@
 #include <AVSCommon/SDKInterfaces/AuthDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/AuthObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/MessageSenderInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Threading/ConditionVariableWrapper.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 
@@ -50,14 +51,18 @@ public:
      * @param deleteReportEndpoints The map of endpoints for which the @c Discovery.DeleteReport event will be sent.
      * @param authDelegate The auth delegate instance to request the auth token from to be sent in the @c Discovery
      * events.
-     * @param waitForEventProcessed Indicate if sender should wait for the EventProcessed directive.
+     * @param waitForEventProcessed Indicate if sender should wait for the EventProcessed directive. Default is true.
+     * @param metricRecorder Optional (may be nullptr) reference to metric recorder.
+     * @param postConnect Indicate if sender is operating in post-connect operation context. Default is false.
      * @return a new instance of the @c DiscoveryEventSender.
      */
     static std::shared_ptr<DiscoveryEventSender> create(
         const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
         const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
-        const bool waitForEventProcessed = true);
+        bool waitForEventProcessed = true,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr,
+        bool postConnect = false);
 
     /**
      * Destructor.
@@ -92,12 +97,16 @@ private:
      * @param authDelegate The auth delegate instance to request the auth token from to be sent in the @c Discovery
      * events.
      * @param waitForEventProcessed Indicate if sender should wait for the EventProcessed directive.
+     * @param metricRecorder Optional (may be nullptr) reference to metric recorder.
+     * @param postConnect Indicate if sender is operating in post-connect operation context.
      */
     DiscoveryEventSender(
         const std::unordered_map<std::string, std::string>& addOrUpdateReportEndpoints,
         const std::unordered_map<std::string, std::string>& deleteReportEndpoints,
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
-        const bool waitForEventProcessed);
+        bool waitForEventProcessed,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder,
+        bool postConnect);
 
     /**
      * Sends the discovery event while taking into account retries.
@@ -193,6 +202,9 @@ private:
     /// Auth delegate used to get the access token
     std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface> m_authDelegate;
 
+    /// Optional (may be nullptr) interface for metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// The authDelegate's auth status.
     AuthObserverInterface::State m_currentAuthState;
 
@@ -235,6 +247,9 @@ private:
 
     /// Flag indicating if the event should wait for the EventProcessed directive.
     const bool m_waitForEventProcessed;
+
+    /// Flag indicating if the object is used for post-connect operations.
+    const bool m_postConnect;
 };
 
 }  // namespace capabilitiesDelegate

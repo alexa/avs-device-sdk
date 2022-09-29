@@ -35,6 +35,13 @@ public:
             const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties));
 
     MOCK_METHOD3(
+        onExternalSpeakerSettingsUpdate,
+        void(
+            avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,
+            const avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings& speakerSettings,
+            const avsCommon::sdkInterfaces::SpeakerManagerInterface::NotificationProperties& properties));
+
+    MOCK_METHOD3(
         adjustVolume,
         std::future<bool>(
             avsCommon::sdkInterfaces::ChannelVolumeInterface::Type type,

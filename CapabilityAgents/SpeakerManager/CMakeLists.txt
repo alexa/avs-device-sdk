@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(SpeakerManager LANGUAGES CXX)
+project(acsdkSpeakerManager LANGUAGES CXX)
 
-include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
-
-add_subdirectory("src")
-add_subdirectory("test")
+add_subdirectory("SpeakerManager")
+add_subdirectory("SpeakerManagerComponent")

@@ -17,7 +17,7 @@
 #include <AndroidUtilities/AndroidSLESObject.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"AndroidSLESBufferQueue"};
+#define TAG "AndroidSLESBufferQueue"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -1,0 +1,54 @@
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+/**
+ * \defgroup Lib_acsdkProperties Properties Implementation
+ * @brief Implementations for \ref Lib_acsdkPropertiesInterfaces
+ *
+ * Lib_acsdkProperties enables users to use Lib_acsdkPropertiesInterfaces instead of lower level MiscStorageInterface and SQLiteDatabase. In
+ * addition, this module offers data at rest protection using hardware security module.
+ *
+ * To use unencrypted adapter for \ref alexaClientSDK::properties::MiscStorageInterface:
+ * \code{.cpp}
+ * #include <acsdk/Properties/PropertiesFactories.h>
+ *
+ * std::shared_ptr<MiscStorageInterface> miscStorage = ...;
+ * auto factory = createPropertiesFactory(miscStorage);
+ * auto properties = propertiesFactory->getProperties("componentName", "configNamespace");
+ * properties->putString("propertyName", "stringValue");
+ * \endcode
+ *
+ * The following example demonstrates how to use encrypted properties:
+ * \code{.cpp}
+ * #include <acsdk/Properties/EncryptedPropertiesFactories.h>
+ *
+ * std::shared_ptr<MiscStorageInterface> miscStorage = ...;
+ * std::shared_ptr<CryptoFactoryInterface> cryptoFactory = ...;
+ * std::shared_ptr<KeyStoreInterface> keyStore = ...;
+ *
+ * auto factory = createEncryptedPropertiesFactory(cryptoFactory, keyStore, miscStorage);
+ * auto properties = propertiesFactory->getProperties("componentName", "configNamespace");
+ * properties->putString("propertyName", "stringValue");
+ * \endcode
+ *
+ * Encryption at rest requires that CryptoAPI support is available and the platform has correctly configured
+ * hardware security module.
+ *
+ * \sa CryptoIMPL how to obtain \ref alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface.
+ * \sa PKCS11IMPL how to obtain \ref alexaClientSDK::cryptoInterfaces::KeyStoreInterface and configure HSM.
+ *
+ * \sa alexaClientSDK::properties
+ * \sa alexaClientSDK::properties::test
+ */

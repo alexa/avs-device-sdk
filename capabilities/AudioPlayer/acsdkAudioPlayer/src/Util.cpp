@@ -16,7 +16,7 @@
 #include "acsdkAudioPlayer/Util.h"
 #include <AVSCommon/Utils/Logger/Logger.h>
 
-#include <openssl/md5.h>
+#include <acsdk/CodecUtils/Hex.h>
 
 namespace alexaClientSDK {
 namespace acsdkAudioPlayer {
@@ -29,40 +29,59 @@ static const std::string TAG("AudioPlayerUtil");
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
-// Number of Bits In Byte.
-static const int kBitsInByte(8);
-// Number of Bits In Hex.
-static const int kBitsInHex(4);
-// Number of Hex characters in Byte.
-static const int kHexInByte(kBitsInByte / kBitsInHex);
+std::string Util::generateMD5Hash(
+    const std::string& key,
+    const std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory) {
+    using namespace alexaClientSDK::cryptoInterfaces;
+    using namespace alexaClientSDK::codecUtils;
 
-std::string Util::generateMD5Hash(const std::string& key) {
+    static std::mutex keyMutex;
     // mini cache
     static std::string lastKey;
     static std::string lastHash;
+    {
+        std::lock_guard<std::mutex> lock{keyMutex};
+        if (lastKey == key) {
+            return lastHash;
+        }
+    }
 
-    if (lastKey == key) {
+    if (!cryptoFactory) {
+        ACSDK_ERROR(LX("generateMD5Hashfailed").d("reason", "nullcryptoFactory"));
+        return "";
+    }
+
+    auto digest = cryptoFactory->createDigest(DigestType::MD5);
+    if (!digest) {
+        ACSDK_ERROR(LX("generateMD5Hashfailed").d("reason", "createDigestFailed"));
+        return "";
+    }
+
+    if (!digest->processString(key)) {
+        ACSDK_ERROR(LX("generateMD5Hashfailed").d("reason", "digestProcessFailed"));
+        return "";
+    }
+
+    DigestInterface::DataBlock digestData;
+    if (!digest->finalize(digestData)) {
+        ACSDK_ERROR(LX("generateMD5Hashfailed").d("reason", "digestFinalizeFailed"));
+        return "";
+    }
+    std::string hashString;
+    if (!encodeHex(digestData, hashString)) {
+        ACSDK_ERROR(LX("generateMD5Hashfailed").d("reason", "encodeHexFailed"));
+        return "";
+    }
+    {
+        std::lock_guard<std::mutex> lock{keyMutex};
+        lastKey = key;
+        lastHash = std::move(hashString);
         return lastHash;
     }
-
-    uint8_t hashOutput[MD5_DIGEST_LENGTH];
-    if (!MD5((uint8_t*)key.data(), key.size(), hashOutput)) {
-        ACSDK_ERROR(LX(__FUNCTION__).d("reason", "failedToGenerateHash"));
-        return std::string();
-    }
-
-    char hashString[MD5_DIGEST_LENGTH * kHexInByte + 1];
-    // Generate Hexadecimal string from given hash output.
-    for (int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        snprintf(hashString + (i * kHexInByte), kHexInByte + 1, "%02x", hashOutput[i]);
-    }
-    lastKey = key;
-    lastHash = std::string(hashString);
-    return lastHash;
 }
 
 std::string Util::getDomainNameFromUrl(const std::string& url) {

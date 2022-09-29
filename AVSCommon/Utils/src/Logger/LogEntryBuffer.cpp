@@ -50,7 +50,7 @@ LogEntryBuffer::int_type LogEntryBuffer::overflow(int_type ch) {
     setg(newBase, gptr() + delta, newEnd);
     m_base = newBase;
 
-    *pptr() = ch;
+    *pptr() = static_cast<char>(ch);
     pbump(1);
     return ch;
 }

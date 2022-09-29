@@ -8,8 +8,7 @@ add_library(AudioResources
         SystemSoundAudioFactory.cpp)
 
 target_include_directories(AudioResources PUBLIC
-        "${AudioResources_SOURCE_DIR}/include"
-	"${AVSCommon_SOURCE_DIR}/Utils/include")
+        "${AudioResources_SOURCE_DIR}/include")
 
 target_link_libraries(AudioResources AVSCommon)
 

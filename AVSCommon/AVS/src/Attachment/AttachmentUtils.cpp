@@ -28,7 +28,7 @@ namespace avs {
 namespace attachment {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AttachmentUtils");
+#define TAG "AttachmentUtils"
 
 /// Maximum size of the reader is 4KB.
 static const std::size_t MAX_READER_SIZE = 4 * 1024;

@@ -27,7 +27,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace acsdkPostConnectOperationProviderRegistrarInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PostConnectSequencerFactory");
+#define TAG "PostConnectSequencerFactory"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -37,7 +37,7 @@ using namespace avsCommon::sdkInterfaces::bluetooth;
 using namespace avsCommon::sdkInterfaces::bluetooth::services;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"BlueZBluetoothDevice"};
+#define TAG "BlueZBluetoothDevice"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -503,6 +503,11 @@ bool BlueZBluetoothDevice::executeDisconnect() {
     return true;
 }
 
+bool BlueZBluetoothDevice::setPairingPin(const std::string& pin) {
+    // This feature is not supported currently.
+    return false;
+}
+
 std::vector<std::shared_ptr<SDPRecordInterface>> BlueZBluetoothDevice::getSupportedServices() {
     ACSDK_DEBUG5(LX(__func__));
 
@@ -750,7 +755,7 @@ void BlueZBluetoothDevice::onPropertyChanged(const GVariantMapReader& changesMap
         initializeServices(uuids);
     }
 
-    m_executor.submit([this, pairedChanged, paired, connectedChanged, connected, aliasChanged, aliasStr] {
+    m_executor.execute([this, pairedChanged, paired, connectedChanged, connected, aliasChanged, aliasStr] {
         if (aliasChanged) {
             ACSDK_DEBUG5(LX("nameChanged").d("oldName", m_friendlyName).d("newName", aliasStr));
             m_friendlyName = aliasStr;

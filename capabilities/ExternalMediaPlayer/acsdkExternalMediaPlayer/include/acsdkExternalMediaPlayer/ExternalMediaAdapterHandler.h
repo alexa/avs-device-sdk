@@ -163,12 +163,6 @@ protected:
     virtual bool handlePlayControl(
         const std::string& localPlayerId,
         acsdkExternalMediaPlayerInterfaces::RequestType requestType,
-#ifdef MEDIA_PORTABILITY_ENABLED
-        /// @param mediaSessionId The optional @c mediaSessionId used to track media playback
-        /// @param correlationToken The optional @c correlationToken used to opaquely plumb routing info
-        const std::string& mediaSessionId,
-        const std::string& correlationToken,
-#endif
         const std::string& playbackTarget) = 0;
 
     /**
@@ -241,12 +235,6 @@ public:
     bool playControl(
         const std::string& localPlayerId,
         acsdkExternalMediaPlayerInterfaces::RequestType requestType,
-#ifdef MEDIA_PORTABILITY_ENABLED
-        /// @param mediaSessionId The optional @c mediaSessionId used to track media playback
-        /// @param correlationToken The optional @c correlationToken used to opaquely plumb routing info
-        const std::string& mediaSessionId,
-        const std::string& correlationToken,
-#endif
         const std::string& playbackTarget) override;
     bool seek(const std::string& localPlayerId, std::chrono::milliseconds offset) override;
     bool adjustSeek(const std::string& localPlayerId, std::chrono::milliseconds deltaOffset) override;

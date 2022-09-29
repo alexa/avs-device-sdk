@@ -29,7 +29,7 @@ using namespace avsCommon::utils::logger;
 static const std::string SDK_COMPONENT_NAME = "com.amazon.alexa.deviceSDK";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SDKComponent");
+#define TAG "SDKComponent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

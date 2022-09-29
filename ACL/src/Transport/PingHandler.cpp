@@ -40,7 +40,7 @@ static const uint8_t PING_PRIORITY = 200;
 static const std::string PING_ID_PREFIX = "AVSPing-";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PingHandler");
+#define TAG "PingHandler"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

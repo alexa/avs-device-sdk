@@ -14,11 +14,12 @@
  */
 
 #include <AVSCommon/Utils/Error/FinallyGuard.h>
-#include "AVSCommon/Utils/Timing/TimerDelegate.h"
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Logger/ThreadMoniker.h>
+#include <AVSCommon/Utils/Timing/TimerDelegate.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("TimerDelegate");
+#define TAG "TimerDelegate"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -31,6 +32,27 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace timing {
+
+using utils::logger::ThreadMoniker;
+
+/**
+ * @brief Helper method to invoke task and catch exception.
+ *
+ * @param[in, out] task Task reference. The reference is cleared before the method returns.
+ */
+static void safeInvokeTask(std::function<void()>& task) {
+#if __cpp_exceptions || defined(__EXCEPTIONS)
+    try {
+#endif
+        task();
+#if __cpp_exceptions || defined(__EXCEPTIONS)
+    } catch (const std::exception& ex) {
+        ACSDK_ERROR(LX(__func__).d("taskException", ex.what()));
+    } catch (...) {
+        ACSDK_ERROR(LX(__func__).d("taskException", "other"));
+    }
+#endif
+}
 
 TimerDelegate::TimerDelegate() : m_running{false}, m_stopping{false} {
 }
@@ -45,10 +67,18 @@ void TimerDelegate::start(
     PeriodType periodType,
     size_t maxCount,
     std::function<void()> task) {
+    auto moniker = ThreadMoniker::generateMoniker(ThreadMoniker::PREFIX_TIMER);
+    ACSDK_DEBUG5(LX("init").d("moniker", moniker));
+
+    if (!task) {
+        ACSDK_ERROR(LX(__func__).d("reason", "nullTask"));
+    }
+
     std::lock_guard<std::mutex> lock(m_callMutex);
     cleanupLocked();
     activateLocked();
-    m_thread = std::thread(&TimerDelegate::timerLoop, this, delay, period, periodType, maxCount, task);
+    m_thread = std::thread(
+        &TimerDelegate::timerLoop, this, delay, period, periodType, maxCount, std::move(task), std::move(moniker));
 }
 
 void TimerDelegate::timerLoop(
@@ -56,9 +86,13 @@ void TimerDelegate::timerLoop(
     std::chrono::nanoseconds period,
     PeriodType periodType,
     size_t maxCount,
-    std::function<void()> task) {
+    std::function<void()> task,
+    std::string moniker) {
+    ThreadMoniker::setThisThreadMoniker(std::move(moniker));
+
     // Timepoint to measure delay/period against.
     auto now = std::chrono::steady_clock::now();
+    using utils::logger::ThreadMoniker;
 
     // Flag indicating whether we've drifted off schedule.
     bool offSchedule = false;
@@ -83,7 +117,7 @@ void TimerDelegate::timerLoop(
 
                 // Run the task if we're still on schedule.
                 if (!offSchedule) {
-                    task();
+                    safeInvokeTask(task);
                 }
 
                 // If the task runtime put us off schedule, skip the next task run.
@@ -95,11 +129,15 @@ void TimerDelegate::timerLoop(
                 break;
 
             case PeriodType::RELATIVE:
-                task();
+                safeInvokeTask(task);
                 now = std::chrono::steady_clock::now();
                 break;
         }
     }
+
+    // release task reference
+    task = nullptr;
+
     std::lock_guard<std::mutex> lockGuard(m_waitMutex);
     m_stopping = false;
     m_running = false;
@@ -108,7 +146,7 @@ void TimerDelegate::timerLoop(
 void TimerDelegate::stop() {
     std::lock_guard<std::mutex> lock(m_callMutex);
     {
-        std::lock_guard<std::mutex> lock(m_waitMutex);
+        std::lock_guard<std::mutex> stateLock(m_waitMutex);
         if (m_running) {
             m_stopping = true;
         }

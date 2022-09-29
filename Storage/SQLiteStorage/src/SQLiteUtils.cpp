@@ -31,7 +31,7 @@ using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SQLiteUtils");
+#define TAG "SQLiteUtils"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

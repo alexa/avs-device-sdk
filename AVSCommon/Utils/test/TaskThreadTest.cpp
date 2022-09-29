@@ -27,6 +27,10 @@ namespace test {
 
 /// Timeout used while waiting for synchronization events.
 const std::chrono::milliseconds MY_WAIT_TIMEOUT{100};
+/// Default thread moniker to use in tests.
+const auto THREAD_MONIKER = "1a1";
+/// Another thread moniker to use in tests.
+const auto THREAD_MONIKER2 = "1a2";
 
 using namespace logger;
 
@@ -39,7 +43,7 @@ TEST(TaskThreadTest, test_waitForNothing) {
 TEST(TaskThreadTest, test_startFailsDueToEmptyFunction) {
     TaskThread taskThread;
     std::function<bool()> emptyFunction;
-    EXPECT_FALSE(taskThread.start(emptyFunction));
+    EXPECT_FALSE(taskThread.start(emptyFunction, THREAD_MONIKER));
 }
 
 /// Test that start will trigger the provided job and thread will exit once the job is done and return @c false.
@@ -54,7 +58,7 @@ TEST(TaskThreadTest, test_simpleJob) {
 
     {
         TaskThread taskThread;
-        EXPECT_TRUE(taskThread.start(simpleJob));
+        EXPECT_TRUE(taskThread.start(simpleJob, THREAD_MONIKER));
         EXPECT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
     }
 
@@ -78,7 +82,7 @@ TEST(TaskThreadTest, test_sequenceJobs) {
 
     {
         TaskThread taskThread;
-        EXPECT_TRUE(taskThread.start(jobSequence));
+        EXPECT_TRUE(taskThread.start(jobSequence, THREAD_MONIKER));
         EXPECT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
     }
 
@@ -108,10 +112,10 @@ TEST(TaskThreadTest, test_startNewJob) {
     };
 
     TaskThread taskThread;
-    EXPECT_TRUE(taskThread.start(increment));
+    EXPECT_TRUE(taskThread.start(increment, THREAD_MONIKER));
 
     EXPECT_TRUE(waitEvent.wait(MY_WAIT_TIMEOUT));
-    EXPECT_TRUE(taskThread.start(decrement));
+    EXPECT_TRUE(taskThread.start(decrement, THREAD_MONIKER));
     EXPECT_TRUE(waitEvent2.wait(MY_WAIT_TIMEOUT));
     EXPECT_TRUE(taskCounter == 0);
 }
@@ -126,11 +130,11 @@ TEST(TaskThreadTest, testTimer_startFailDueTooManyThreads) {
     };
 
     TaskThread taskThread;
-    EXPECT_TRUE(taskThread.start(simpleJob));
+    EXPECT_TRUE(taskThread.start(simpleJob, THREAD_MONIKER));
 
     // Wait until first job has started.
-    waitStart.wait(MY_WAIT_TIMEOUT);
-    EXPECT_TRUE(taskThread.start([] { return false; }));
+    EXPECT_TRUE(waitStart.wait(MY_WAIT_TIMEOUT));
+    EXPECT_TRUE(taskThread.start([] { return false; }, THREAD_MONIKER));
 
     // Starting a thread again immediately should fail, unless the system is so fast in starting
     // the thread on the other core that it starts and runs a few instructions before this can
@@ -138,7 +142,7 @@ TEST(TaskThreadTest, testTimer_startFailDueTooManyThreads) {
     int threadStartCount;
     for (threadStartCount = 0; threadStartCount < 100; threadStartCount++) {
         // This should fail since the task thread is starting.
-        if (!taskThread.start([] { return false; })) {
+        if (!taskThread.start([] { return false; }, THREAD_MONIKER)) {
             break;
         }
     }
@@ -147,7 +151,7 @@ TEST(TaskThreadTest, testTimer_startFailDueTooManyThreads) {
     waitEnqueue.wakeUp();
 }
 
-/// Test that threads related to this task thread will always have the same moniker.
+/// Test that threads related to this task thread will always have specified moniker.
 TEST(TaskThreadTest, DISABLED_test_moniker) {
     WaitEvent waitGetMoniker, waitValidateMoniker;
     std::string moniker;
@@ -157,18 +161,22 @@ TEST(TaskThreadTest, DISABLED_test_moniker) {
         return false;
     };
 
-    auto validateMoniker = [&moniker, &waitValidateMoniker] {
-        EXPECT_EQ(moniker, ThreadMoniker::getThisThreadMoniker());
+    std::string moniker2;
+    auto validateMoniker = [&moniker2, &waitValidateMoniker] {
+        moniker2 = ThreadMoniker::getThisThreadMoniker();
         waitValidateMoniker.wakeUp();
         return false;
     };
 
     TaskThread taskThread;
-    EXPECT_TRUE(taskThread.start(getMoniker));
-    waitGetMoniker.wait(MY_WAIT_TIMEOUT);
+    EXPECT_TRUE(taskThread.start(getMoniker, THREAD_MONIKER));
+    EXPECT_TRUE(waitGetMoniker.wait(MY_WAIT_TIMEOUT));
 
-    EXPECT_TRUE(taskThread.start(validateMoniker));
-    waitValidateMoniker.wait(MY_WAIT_TIMEOUT);
+    EXPECT_TRUE(taskThread.start(validateMoniker, THREAD_MONIKER2));
+    EXPECT_TRUE(waitValidateMoniker.wait(MY_WAIT_TIMEOUT));
+
+    EXPECT_EQ(THREAD_MONIKER, moniker);
+    EXPECT_EQ(THREAD_MONIKER2, moniker2);
 }
 
 /// Test that threads from different @c TaskThreads will have different monikers.
@@ -183,19 +191,23 @@ TEST(TaskThreadTest, test_monikerDifferentObjects) {
         return false;
     };
 
-    auto validateMoniker = [&moniker, &waitValidateMoniker] {
-        EXPECT_NE(moniker, ThreadMoniker::getThisThreadMoniker());
+    std::string moniker2;
+    auto validateMoniker = [&moniker2, &waitValidateMoniker] {
+        moniker2 = ThreadMoniker::getThisThreadMoniker();
         waitValidateMoniker.wakeUp();
         return false;
     };
 
     TaskThread taskThread1;
     TaskThread taskThread2;
-    EXPECT_TRUE(taskThread1.start(getMoniker));
-    EXPECT_TRUE(taskThread2.start(validateMoniker));
+    EXPECT_TRUE(taskThread1.start(getMoniker, THREAD_MONIKER));
+    EXPECT_TRUE(taskThread2.start(validateMoniker, THREAD_MONIKER2));
     waitThread2Start.wakeUp();
-    waitGetMoniker.wait(MY_WAIT_TIMEOUT);
-    waitValidateMoniker.wait(MY_WAIT_TIMEOUT);
+    EXPECT_TRUE(waitGetMoniker.wait(MY_WAIT_TIMEOUT));
+    EXPECT_TRUE(waitValidateMoniker.wait(MY_WAIT_TIMEOUT));
+
+    EXPECT_EQ(THREAD_MONIKER, moniker);
+    EXPECT_EQ(THREAD_MONIKER2, moniker2);
 }
 
 }  // namespace test

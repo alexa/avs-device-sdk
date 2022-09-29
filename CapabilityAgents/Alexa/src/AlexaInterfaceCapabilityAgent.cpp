@@ -31,7 +31,7 @@ using namespace avsCommon::utils;
 using DefaultEndpointAnnotation = avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"AlexaInterfaceCapabilityAgent"};
+#define TAG "AlexaInterfaceCapabilityAgent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -168,7 +168,7 @@ void AlexaInterfaceCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<A
 
 void AlexaInterfaceCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, info] {
+    m_executor.execute([this, info] {
         if (!info || !info->directive) {
             ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirective"));
             return;

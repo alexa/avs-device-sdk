@@ -34,7 +34,9 @@ enum class ASRProfile {
     /// Cloud determines end of user speech (0 to 5 ft).
     NEAR_FIELD,
     /// Cloud determines end of user speech (0 to 20+ ft).
-    FAR_FIELD
+    FAR_FIELD,
+    /// Indicates that ASR profile is undefined.
+    UNDEFINED
 };
 
 /**
@@ -55,6 +57,9 @@ inline std::ostream& operator<<(std::ostream& stream, ASRProfile profile) {
         case ASRProfile::FAR_FIELD:
             stream << "FAR_FIELD";
             break;
+        case ASRProfile::UNDEFINED:
+            stream << "";
+            break;
     }
     return stream;
 }
@@ -73,8 +78,29 @@ inline std::string asrProfileToString(ASRProfile profile) {
             return "NEAR_FIELD";
         case ASRProfile::FAR_FIELD:
             return "FAR_FIELD";
+        case ASRProfile::UNDEFINED:
+            return "";
     }
     return "";
+}
+
+/**
+ * This function reverse maps the provided string to corresponding ASRProfile Implementation as specified by
+ * asrProfileToString
+ * @param input string to convert to corresponding ASRProfile
+ * @return @c ASRProfile that corresponds to the input string. In case of error
+ * the API returns ASRProfile::UNDEFINED
+ */
+inline ASRProfile getASRProfile(const std::string& input) {
+    ASRProfile profile = ASRProfile::UNDEFINED;
+    if (asrProfileToString(ASRProfile::CLOSE_TALK) == input) {
+        profile = ASRProfile::CLOSE_TALK;
+    } else if (asrProfileToString(ASRProfile::NEAR_FIELD) == input) {
+        profile = ASRProfile::NEAR_FIELD;
+    } else if (asrProfileToString(ASRProfile::FAR_FIELD) == input) {
+        profile = ASRProfile::FAR_FIELD;
+    }
+    return profile;
 }
 
 }  // namespace aip

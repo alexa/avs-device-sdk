@@ -56,6 +56,14 @@ public:
     virtual void onStateChanged(State state) = 0;
 
     /**
+     * This function is called when the active @c ASRProfile changes.
+     *
+     * @param profile The string representation of the active @c ASRProfile.
+     * Use the associated getASRProfile to retrieve the @c ASRProfile value.
+     */
+    virtual void onASRProfileChanged(const std::string& profile){};
+
+    /**
      * This function converts the provided @c State to a string.
      *
      * @param state The @c State to convert to a string.

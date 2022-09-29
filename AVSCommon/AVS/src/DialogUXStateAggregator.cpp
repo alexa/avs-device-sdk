@@ -26,7 +26,7 @@ using namespace avsCommon::utils::metrics;
 using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DialogUXStateAggregator");
+#define TAG "DialogUXStateAggregator"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -114,7 +114,7 @@ void DialogUXStateAggregator::addObserver(std::shared_ptr<DialogUXStateObserverI
         ACSDK_ERROR(LX("addObserverFailed").d("reason", "nullObserver"));
         return;
     }
-    m_executor.submit([this, observer]() {
+    m_executor.execute([this, observer]() {
         m_observers.insert(observer);
         observer->onDialogUXStateChanged(m_currentState);
     });
@@ -131,7 +131,7 @@ void DialogUXStateAggregator::removeObserver(std::shared_ptr<DialogUXStateObserv
 void DialogUXStateAggregator::onStateChanged(AudioInputProcessorObserverInterface::State state) {
     ACSDK_DEBUG0(LX("onStateChanged").d("AudioInputProcessorState", state));
     m_audioInputProcessorState = state;
-    m_executor.submit([this, state]() {
+    m_executor.execute([this, state]() {
         ACSDK_DEBUG0(LX("onStateChangedLambda").d("AudioInputProcessorState", state));
         switch (state) {
             case AudioInputProcessorObserverInterface::State::IDLE:
@@ -168,7 +168,7 @@ void DialogUXStateAggregator::onStateChanged(
     const std::vector<avsCommon::utils::audioAnalyzer::AudioAnalyzerState>& audioAnalyzerState) {
     ACSDK_DEBUG0(LX("onStateChanged").d("SpeechSynthesizerState", state));
     m_speechSynthesizerState = state;
-    m_executor.submit([this, state]() {
+    m_executor.execute([this, state]() {
         ACSDK_DEBUG0(LX("onStateChangedLambda").d("SpeechSynthesizerState", state));
         switch (state) {
             case SpeechSynthesizerObserverInterface::SpeechSynthesizerState::PLAYING:
@@ -222,7 +222,7 @@ void DialogUXStateAggregator::onConnectionStatusChanged(
     const DialogUXStateAggregator::Status status,
     const std::vector<DialogUXStateAggregator::EngineConnectionStatus>& engineStatuses) {
     ACSDK_DEBUG(LX("onConnectionStatusChanged").d("engineAggregatedStatus", status));
-    m_executor.submit([this, engineStatuses]() {
+    m_executor.execute([this, engineStatuses]() {
         bool isDisconnected = true;
         for (const auto& engineStatus : engineStatuses) {
             ACSDK_DEBUG(LX("onConnectionStatusChangedLambda")
@@ -244,7 +244,7 @@ void DialogUXStateAggregator::onConnectionStatusChanged(
 
 void DialogUXStateAggregator::onRequestProcessingStarted() {
     ACSDK_DEBUG0(LX("onRequestProcessingStarted"));
-    m_executor.submit([this]() {
+    m_executor.execute([this]() {
         ACSDK_DEBUG0(LX("onRequestProcessingStartedLambda").d("currentState", m_currentState));
         // Stop the listening timer
         m_listeningTimeoutTimer.stop();
@@ -274,7 +274,7 @@ void DialogUXStateAggregator::onRequestProcessingStarted() {
 
 void DialogUXStateAggregator::onRequestProcessingCompleted() {
     ACSDK_DEBUG(LX("onRequestProcessingCompleted"));
-    m_executor.submit([this]() {
+    m_executor.execute([this]() {
         if (DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
             /// It is possible that the cloud sends RPC without sending RPS. In those situations, if we are in
             /// LISTENING state, switch back to IDLE.
@@ -295,7 +295,7 @@ void DialogUXStateAggregator::notifyObserversOfState() {
 
 void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
     ACSDK_DEBUG5(LX("transitionFromThinkingTimedOut"));
-    m_executor.submit([this]() {
+    m_executor.execute([this]() {
         ACSDK_DEBUG5(LX("transitionFromThinkingTimedOutExecutor").d("m_currentState", m_currentState));
         if (DialogUXStateObserverInterface::DialogUXState::THINKING == m_currentState) {
             ACSDK_DEBUG(LX("transitionFromThinkingTimedOut"));
@@ -308,7 +308,7 @@ void DialogUXStateAggregator::transitionFromThinkingTimedOut() {
 
 void DialogUXStateAggregator::transitionFromListeningTimedOut() {
     ACSDK_DEBUG5(LX("transitionFromListeningTimedOut"));
-    m_executor.submit([this]() {
+    m_executor.execute([this]() {
         ACSDK_DEBUG5(LX("transitionFromListeningTimedOutExecutor").d("m_currentState", m_currentState));
         if (DialogUXStateObserverInterface::DialogUXState::LISTENING == m_currentState) {
             ACSDK_DEBUG(LX("transitionFromListeningTimedOut"));
@@ -321,7 +321,7 @@ void DialogUXStateAggregator::transitionFromListeningTimedOut() {
 
 void DialogUXStateAggregator::tryEnterIdleStateOnTimer() {
     ACSDK_DEBUG5(LX("tryEnterIdleStateOnTimer"));
-    m_executor.submit([this]() {
+    m_executor.execute([this]() {
         ACSDK_DEBUG5(LX("tryEnterIdleStateOnTimerExecutor")
                          .d("m_currentState", m_currentState)
                          .d("m_audioInputProcessorState", m_audioInputProcessorState)

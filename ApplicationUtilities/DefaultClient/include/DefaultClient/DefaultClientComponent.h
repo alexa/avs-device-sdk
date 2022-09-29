@@ -18,6 +18,7 @@
 
 #include <memory>
 
+#include <acsdk/AudioEncoderInterfaces/AudioEncoderInterface.h>
 #include <ACL/Transport/MessageRouterFactoryInterface.h>
 #include <acsdkAlerts/Storage/AlertStorageInterface.h>
 #include <acsdkAlertsInterfaces/AlertsCapabilityAgentInterface.h>
@@ -34,6 +35,7 @@
 #include <acsdkNotificationsInterfaces/NotificationsStorageInterface.h>
 #include <acsdkStartupManagerInterfaces/StartupManagerInterface.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorInterface.h>
+#include <acsdk/CryptoInterfaces/CryptoFactoryInterface.h>
 #include <Alexa/AlexaInterfaceMessageSender.h>
 #include <AVSCommon/AVS/DialogUXStateAggregator.h>
 #include <AVSCommon/SDKInterfaces/AudioFocusAnnotation.h>
@@ -57,7 +59,6 @@
 #include <AVSCommon/SDKInterfaces/Bluetooth/BluetoothDeviceManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointBuilderInterface.h>
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
-#include <AVSCommon/SDKInterfaces/VisualFocusAnnotation.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <Captions/CaptionManagerInterface.h>
@@ -68,7 +69,6 @@
 #include <RegistrationManager/CustomerDataManagerInterface.h>
 #include <RegistrationManager/RegistrationManagerInterface.h>
 #include <RegistrationManager/RegistrationNotifierInterface.h>
-#include <SpeechEncoder/SpeechEncoder.h>
 
 #include "DefaultClient/EqualizerRuntimeSetup.h"
 #include "DefaultClient/StubApplicationAudioPipelineFactory.h"
@@ -108,8 +108,6 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
     acsdkManufactory::
         Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
-    acsdkManufactory::
-        Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
     std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
@@ -139,8 +137,9 @@ using DefaultClientComponent = acsdkManufactory::Component<
     std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
     std::shared_ptr<settings::DeviceSettingsManager>,
     std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
-    std::shared_ptr<speechencoder::SpeechEncoder>,
-    std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>>;
+    std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface>,
+    std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>,
+    std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>>;
 
 /**
  * Get the manufactory @c Component for (legacy) @c DefaultClient initialization.
@@ -179,7 +178,8 @@ DefaultClientComponent getComponent(
     const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothStorageInterface>& bluetoothStorage,
     const std::shared_ptr<acsdkBluetoothInterfaces::BluetoothDeviceConnectionRulesProviderInterface>&
         bluetoothConnectionRulesProvider,
-    const std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface>& notificationsStorage);
+    const std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface>& notificationsStorage,
+    const std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory);
 
 }  // namespace defaultClient
 }  // namespace alexaClientSDK

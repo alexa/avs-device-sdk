@@ -19,7 +19,7 @@
 #include <memory>
 
 #include <acsdkAlexaEventProcessedNotifierInterfaces/AlexaEventProcessedNotifierInterface.h>
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -30,7 +30,7 @@ namespace alexa {
  * Relays notifications when Alexa.EventProcessed directive is received.
  */
 class AlexaEventProcessedNotifier
-        : public acsdkNotifier::Notifier<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface> {
+        : public notifier::Notifier<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface> {
 public:
     /**
      * Factory method.

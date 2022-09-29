@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
 namespace alexaClientSDK {
@@ -27,7 +27,7 @@ namespace acsdkShutdownManagerInterfaces {
 /**
  * Interface for registering to observe shutdown notifications.
  */
-using ShutdownNotifierInterface = acsdkNotifierInterfaces::NotifierInterface<avsCommon::utils::RequiresShutdown>;
+using ShutdownNotifierInterface = notifierInterfaces::NotifierInterface<avsCommon::utils::RequiresShutdown>;
 
 }  // namespace acsdkShutdownManagerInterfaces
 }  // namespace alexaClientSDK

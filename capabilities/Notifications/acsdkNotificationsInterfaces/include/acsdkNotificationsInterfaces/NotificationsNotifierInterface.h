@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 
 #include "acsdkNotificationsInterfaces/NotificationsObserverInterface.h"
 
@@ -28,7 +28,7 @@ namespace acsdkNotificationsInterfaces {
 /**
  * Interface for registering to observe Bluetooth notifications.
  */
-using NotificationsNotifierInterface = acsdkNotifierInterfaces::NotifierInterface<NotificationsObserverInterface>;
+using NotificationsNotifierInterface = notifierInterfaces::NotifierInterface<NotificationsObserverInterface>;
 
 }  // namespace acsdkNotificationsInterfaces
 }  // namespace alexaClientSDK

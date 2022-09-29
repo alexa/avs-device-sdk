@@ -49,6 +49,11 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
+    /**
+     * Destructor.
+     */
+    ~PostConnectSynchronizeStateSender();
+
     /// ContextRequesterInterface Methods.
     /// @{
     void onContextAvailable(const std::string& jsonContext) override;

@@ -26,7 +26,7 @@ using namespace avsCommon::utils::playlistParser;
 using namespace avsCommon::utils::sds;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("UrlContentToAttachmentConverter");
+#define TAG "UrlContentToAttachmentConverter"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -118,7 +118,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
     if (playlistEntry.type == PlaylistEntry::Type::MEDIA_INIT_INFO &&
         encryptionInfo.method == EncryptionInfo::Method::SAMPLE_AES) {
         auto totalDuration = encryptionInfo.totalDuration;
-        m_executor.submit([this, url, headers, totalDuration, playlistEntry]() {
+        m_executor.execute([this, url, headers, totalDuration, playlistEntry]() {
             ByteVector mediaInitSection;
             if (!download(url, headers, &mediaInitSection, playlistEntry.contentFetcher)) {
                 closeStreamWriter();
@@ -158,14 +158,14 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
     auto contentFetcher = playlistEntry.contentFetcher;
     switch (parseResult) {
         case avsCommon::utils::playlistParser::PlaylistParseResult::ERROR:
-            m_executor.submit([this]() {
+            m_executor.execute([this]() {
                 ACSDK_DEBUG9(LX("closingWriter"));
                 closeStreamWriter();
                 notifyError();
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::FINISHED:
-            m_executor.submit([this, url, headers, encryptionInfo, contentFetcher]() {
+            m_executor.execute([this, url, headers, encryptionInfo, contentFetcher]() {
                 ACSDK_DEBUG9(LX("calling writeDecryptedUrlContentIntoStream"));
                 if (!m_streamWriterClosed &&
                     !writeDecryptedUrlContentIntoStream(url, headers, encryptionInfo, contentFetcher)) {
@@ -178,7 +178,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::STILL_ONGOING:
-            m_executor.submit([this, url, headers, encryptionInfo, contentFetcher]() {
+            m_executor.execute([this, url, headers, encryptionInfo, contentFetcher]() {
                 if (!m_streamWriterClosed &&
                     !writeDecryptedUrlContentIntoStream(url, headers, encryptionInfo, contentFetcher)) {
                     ACSDK_ERROR(LX("writeUrlContentToStreamFailed").d("info", "closingWriter"));
@@ -188,7 +188,7 @@ void UrlContentToAttachmentConverter::onPlaylistEntryParsed(int requestId, Playl
             });
             break;
         case avsCommon::utils::playlistParser::PlaylistParseResult::SHUTDOWN:
-            m_executor.submit([this]() {
+            m_executor.execute([this]() {
                 ACSDK_DEBUG9(LX("closingWriter"));
                 closeStreamWriter();
             });

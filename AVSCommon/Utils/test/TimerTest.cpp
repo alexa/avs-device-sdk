@@ -18,7 +18,7 @@
 #include <deque>
 #include <gtest/gtest.h>
 
-#include "AVSCommon/Utils/Timing/Timer.h"
+#include <AVSCommon/Utils/Timing/Timer.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -111,7 +111,7 @@ protected:
 };
 
 void TimerTest::SetUp() {
-    m_timer = std::shared_ptr<Timer>(new Timer);
+    m_timer = std::make_shared<Timer>();
 }
 
 void TimerTest::simpleTask(std::chrono::milliseconds duration) {

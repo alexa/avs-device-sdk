@@ -49,7 +49,7 @@ using namespace avsCommon::utils::memory;
 using namespace ::testing;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MediaPlayerTest");
+#define TAG "MediaPlayerTest"
 
 static const MediaPlayer::SourceId ERROR_SOURCE_ID = MediaPlayer::ERROR;
 

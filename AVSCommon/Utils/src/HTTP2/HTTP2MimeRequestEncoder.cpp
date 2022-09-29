@@ -25,7 +25,7 @@
 #include "AVSCommon/Utils/HTTP2/HTTP2MimeRequestSourceInterface.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("HTTP2MimeRequestEncoder");
+#define TAG "HTTP2MimeRequestEncoder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

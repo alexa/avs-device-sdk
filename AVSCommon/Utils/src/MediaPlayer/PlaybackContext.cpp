@@ -24,7 +24,7 @@ namespace utils {
 namespace mediaPlayer {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PlaybackContext");
+#define TAG "PlaybackContext"
 
 /**
  * Create a @c LogEntry using this file's @c TAG and the specified event string.

@@ -149,7 +149,7 @@ TEST_F(MessageRouterTest, test_sendMessageDoesNotSendAfterDisconnected) {
     m_router->sendMessage(messageRequest);
 }
 
-TEST_F(MessageRouterTest, test_shutdownCalledWithMultipleMessages) {
+TEST_F(MessageRouterTest, testTimer_shutdownCalledWithMultipleMessages) {
     setupStateToConnected();
 
     // wait for the result to propagate by scheduling a task on the client executor

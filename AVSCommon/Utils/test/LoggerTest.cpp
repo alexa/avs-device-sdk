@@ -191,7 +191,7 @@ void MockLogger::mockEmit(
     m_lastText = text;
 }
 
-MockModuleLogger::MockModuleLogger() : ModuleLogger(ACSDK_STRINGIFY(ACSDK_LOG_SINK)) {
+MockModuleLogger::MockModuleLogger() : ModuleLogger("ConsoleLogger") {
 }
 
 MockModuleLogger::~MockModuleLogger() {
@@ -231,7 +231,7 @@ void LoggerTest::TearDown() {
 }
 
 void LoggerTest::setLevelExpectations(Level level) {
-    ACSDK_GET_LOGGER_FUNCTION()->setLevel(level);
+    getLoggerTestLogger()->setLevel(level);
 
     switch (level) {
         case Level::UNKNOWN:
@@ -469,16 +469,19 @@ TEST_F(LoggerTest, test_logNoneLevel) {
 
 /**
  * Test observer mechanism in the MockModuleLogger.  Expects that when the logLevel changes for the sink, the
- * callback of the MockModuleLogger is triggered.  Also make sure any changes to sink's logLevel is ignored
- * after the MockModuleLogger's logLevel has been set.
+ * callback of the MockModuleLogger is triggered.  Also make sure any changes to MockModuleLogger's logLevel will
+ * override set log level of the MockModuleLogger and the MockModuleLogger will ignore further changes to the logLevel
+ * to the sink.
  */
 TEST_F(LoggerTest, test_moduleLoggerObserver) {
     MockModuleLogger mockModuleLogger;
-    getLoggerTestLogger()->setLevel(Level::WARN);
+    getLoggerTestLogger()->setLevel(Level::ERROR);
+    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::ERROR);
+    mockModuleLogger.setLevel(Level::WARN);
     ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::WARN);
-    mockModuleLogger.setLevel(Level::CRITICAL);
-    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::CRITICAL);
     getLoggerTestLogger()->setLevel(Level::NONE);
+    ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::WARN);
+    mockModuleLogger.setLevel(Level::NONE);
     ASSERT_EQ(mockModuleLogger.getLogLevel(), Level::NONE);
 }
 
@@ -490,20 +493,20 @@ TEST_F(LoggerTest, test_multipleModuleLoggerObservers) {
     MockModuleLogger mockModuleLogger2;
     MockModuleLogger mockModuleLogger3;
 
-    getLoggerTestLogger()->setLevel(Level::WARN);
-    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::WARN);
-    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
-    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
-
-    mockModuleLogger1.setLevel(Level::CRITICAL);
-    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
-    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
-    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
-
     getLoggerTestLogger()->setLevel(Level::NONE);
     ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::NONE);
     ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::NONE);
     ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::NONE);
+
+    mockModuleLogger1.setLevel(Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::NONE);
+    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::NONE);
+
+    getLoggerTestLogger()->setLevel(Level::WARN);
+    ASSERT_EQ(mockModuleLogger1.getLogLevel(), Level::CRITICAL);
+    ASSERT_EQ(mockModuleLogger2.getLogLevel(), Level::WARN);
+    ASSERT_EQ(mockModuleLogger3.getLogLevel(), Level::WARN);
 }
 
 #ifdef ACSDK_LOG_ENABLED

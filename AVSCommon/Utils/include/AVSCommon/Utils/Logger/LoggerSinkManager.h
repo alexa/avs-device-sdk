@@ -67,8 +67,7 @@ public:
      *
      * @param sink The new @c Logger to forward logs to.
      *
-     * @note If this function is not called, the default sink logger
-     * will be the one returned by get<ACSDK_LOG_SINK>Logger().
+     * @note If this function is not called, the default sink logger is @c ConsoleLogger.
      */
     void initialize(const std::shared_ptr<Logger>& sink);
 

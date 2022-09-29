@@ -33,33 +33,35 @@ using namespace avsCommon::utils::logger;
 using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("TimeUtils");
+#define TAG "TimeUtils"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// The length of the year element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_YEAR_STRING_LENGTH = 4;
+static const std::size_t ENCODED_TIME_STRING_YEAR_STRING_LENGTH = 4;
 /// The length of the month element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_MONTH_STRING_LENGTH = 2;
+static const std::size_t ENCODED_TIME_STRING_MONTH_STRING_LENGTH = 2;
 /// The length of the day element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_DAY_STRING_LENGTH = 2;
+static const std::size_t ENCODED_TIME_STRING_DAY_STRING_LENGTH = 2;
 /// The length of the hour element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_HOUR_STRING_LENGTH = 2;
+static const std::size_t ENCODED_TIME_STRING_HOUR_STRING_LENGTH = 2;
 /// The length of the minute element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_MINUTE_STRING_LENGTH = 2;
+static const std::size_t ENCODED_TIME_STRING_MINUTE_STRING_LENGTH = 2;
 /// The length of the second element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_SECOND_STRING_LENGTH = 2;
+static const std::size_t ENCODED_TIME_STRING_SECOND_STRING_LENGTH = 2;
 /// The length of the post-fix element in an ISO-8601 formatted string.
-static const int ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH = 4;
+static const std::size_t ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH = 4;
 /// The dash separator used in an ISO-8601 formatted string.
 static const std::string ENCODED_TIME_STRING_DASH_SEPARATOR_STRING = "-";
 /// The 'T' separator used in an ISO-8601 formatted string.
 static const std::string ENCODED_TIME_STRING_T_SEPARATOR_STRING = "T";
+/// The 'Z' zone designator used in an ISO-8601 formatted string for zero UTC offset.
+static const std::string ENCODED_TIME_STRING_Z_DESIGNATOR = "Z";
 /// The colon separator used in an ISO-8601 formatted string.
 static const std::string ENCODED_TIME_STRING_COLON_SEPARATOR_STRING = ":";
 /// The plus separator used in an ISO-8601 formatted string.
@@ -68,30 +70,35 @@ static const std::string ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING = "+";
 /// The offset into an ISO-8601 formatted string where the year begins.
 static const unsigned long ENCODED_TIME_STRING_YEAR_OFFSET = 0;
 /// The offset into an ISO-8601 formatted string where the month begins.
-static const unsigned long ENCODED_TIME_STRING_MONTH_OFFSET = ENCODED_TIME_STRING_YEAR_OFFSET +
-                                                              ENCODED_TIME_STRING_YEAR_STRING_LENGTH +
-                                                              ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
-/// The offset into an ISO-8601 formatted string where the day begins.
-static const unsigned long ENCODED_TIME_STRING_DAY_OFFSET = ENCODED_TIME_STRING_MONTH_OFFSET +
-                                                            ENCODED_TIME_STRING_MONTH_STRING_LENGTH +
+static const std::size_t ENCODED_TIME_STRING_MONTH_OFFSET = ENCODED_TIME_STRING_YEAR_OFFSET +
+                                                            ENCODED_TIME_STRING_YEAR_STRING_LENGTH +
                                                             ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
+/// The offset into an ISO-8601 formatted string where the day begins.
+static const std::size_t ENCODED_TIME_STRING_DAY_OFFSET = ENCODED_TIME_STRING_MONTH_OFFSET +
+                                                          ENCODED_TIME_STRING_MONTH_STRING_LENGTH +
+                                                          ENCODED_TIME_STRING_DASH_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the hour begins.
-static const unsigned long ENCODED_TIME_STRING_HOUR_OFFSET = ENCODED_TIME_STRING_DAY_OFFSET +
-                                                             ENCODED_TIME_STRING_DAY_STRING_LENGTH +
-                                                             ENCODED_TIME_STRING_T_SEPARATOR_STRING.length();
+static const std::size_t ENCODED_TIME_STRING_HOUR_OFFSET = ENCODED_TIME_STRING_DAY_OFFSET +
+                                                           ENCODED_TIME_STRING_DAY_STRING_LENGTH +
+                                                           ENCODED_TIME_STRING_T_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the minute begins.
-static const unsigned long ENCODED_TIME_STRING_MINUTE_OFFSET = ENCODED_TIME_STRING_HOUR_OFFSET +
-                                                               ENCODED_TIME_STRING_HOUR_STRING_LENGTH +
-                                                               ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
+static const std::size_t ENCODED_TIME_STRING_MINUTE_OFFSET = ENCODED_TIME_STRING_HOUR_OFFSET +
+                                                             ENCODED_TIME_STRING_HOUR_STRING_LENGTH +
+                                                             ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
 /// The offset into an ISO-8601 formatted string where the second begins.
-static const unsigned long ENCODED_TIME_STRING_SECOND_OFFSET = ENCODED_TIME_STRING_MINUTE_OFFSET +
-                                                               ENCODED_TIME_STRING_MINUTE_STRING_LENGTH +
-                                                               ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
+static const std::size_t ENCODED_TIME_STRING_SECOND_OFFSET = ENCODED_TIME_STRING_MINUTE_OFFSET +
+                                                             ENCODED_TIME_STRING_MINUTE_STRING_LENGTH +
+                                                             ENCODED_TIME_STRING_COLON_SEPARATOR_STRING.length();
 
 /// The total expected length of an ISO-8601 formatted string.
-static const unsigned long ENCODED_TIME_STRING_EXPECTED_LENGTH =
+static const std::size_t ENCODED_TIME_STRING_EXPECTED_LENGTH =
     ENCODED_TIME_STRING_SECOND_OFFSET + ENCODED_TIME_STRING_SECOND_STRING_LENGTH +
     ENCODED_TIME_STRING_PLUS_SEPARATOR_STRING.length() + ENCODED_TIME_STRING_POSTFIX_STRING_LENGTH;
+
+/// The total expected length of an ISO-8601 formatted string with UTC time.
+static const std::size_t ENCODED_TIME_STRING_EXPECTED_LENGTH_UTC = ENCODED_TIME_STRING_SECOND_OFFSET +
+                                                                   ENCODED_TIME_STRING_SECOND_STRING_LENGTH +
+                                                                   ENCODED_TIME_STRING_Z_DESIGNATOR.length();
 
 /**
  * Utility function that wraps localtime conversion to std::time_t.
@@ -178,7 +185,8 @@ bool TimeUtils::convert8601TimeStringToTimeT(const std::string& iso8601TimeStrin
 
     std::tm timeInfo;
 
-    if (iso8601TimeString.length() != ENCODED_TIME_STRING_EXPECTED_LENGTH) {
+    if (iso8601TimeString.length() != ENCODED_TIME_STRING_EXPECTED_LENGTH &&
+        iso8601TimeString.length() != ENCODED_TIME_STRING_EXPECTED_LENGTH_UTC) {
         ACSDK_ERROR(
             LX("convert8601TimeStringToTimeTFailed").d("unexpected time string length:", iso8601TimeString.length()));
         return false;

@@ -33,7 +33,7 @@ int FFMpegInputBuffer::read(int size, uint8_t* data) {
         std::memcpy(data, m_inputBytes.data() + m_offset, readSize);
         m_offset += readSize;
     }
-    return readSize;
+    return static_cast<int>(readSize);
 }
 
 bool FFMpegInputBuffer::setOffset(int64_t offset) {

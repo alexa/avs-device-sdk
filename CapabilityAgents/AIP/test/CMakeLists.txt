@@ -5,4 +5,4 @@ set(INCLUDE_PATH
     "${AVSCommon_SOURCE_DIR}/AVS/test"
     "${DeviceSettings_SOURCE_DIR}/test")
 
-discover_unit_tests("${INCLUDE_PATH}" "AIP;UtilsCommonTestLib;CertifiedSenderCommonTestLib;AVSSystem;SDKInterfacesTests")
+discover_unit_tests("${INCLUDE_PATH}" "AIP;UtilsCommonTestLib;CertifiedSenderCommonTestLib;AVSSystem;SDKInterfacesTests;acsdkAudioEncoder")

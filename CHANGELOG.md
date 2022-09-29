@@ -1,5 +1,11 @@
 ## ChangeLog
 
+### Version 3.0.0 - September 30 2022
+Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
+
+### Version 1.26.0 - November 15 2021
+Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/en-US/docs/alexa/avs-device-sdk-1-2x/release-notes.html)
+
 ### Version 1.25.0 - August 23 2021
 Feature enhancements, updates, and resolved issues from all releases are available on the [Amazon developer portal](https://developer.amazon.com/docs/alexa/avs-device-sdk/release-notes.html)
 

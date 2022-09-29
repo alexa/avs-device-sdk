@@ -23,7 +23,7 @@ namespace mediaPlayer {
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("OffsetManager");
+#define TAG "OffsetManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -15,6 +15,7 @@
 
 #include <AVSCommon/Utils/MacAddressString.h>
 
+#include <cctype>
 #include <memory>
 #include <string>
 

@@ -19,7 +19,7 @@
 #include <memory>
 #include <string>
 
-#include <acsdkPropertiesInterfaces/PropertiesFactoryInterface.h>
+#include <acsdk/PropertiesInterfaces/PropertiesFactoryInterface.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 
 namespace alexaClientSDK {
@@ -38,7 +38,7 @@ class LWAStorageDataMigration {
 public:
     LWAStorageDataMigration(
         const std::shared_ptr<storage::sqliteStorage::SQLiteMiscStorage>& storage,
-        const std::shared_ptr<acsdkPropertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory) noexcept;
+        const std::shared_ptr<propertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory) noexcept;
 
     /**
      * @brief Upgrades storage structure if required.
@@ -68,12 +68,12 @@ private:
     bool migrateSinglePropertyTable(
         const std::string& tableName,
         const std::string& columnName,
-        const std::shared_ptr<alexaClientSDK::acsdkPropertiesInterfaces::PropertiesInterface>& properties,
+        const std::shared_ptr<alexaClientSDK::propertiesInterfaces::PropertiesInterface>& properties,
         const std::string& propertyName) noexcept;
 
 private:
     const std::shared_ptr<storage::sqliteStorage::SQLiteMiscStorage> m_storage;
-    const std::shared_ptr<acsdkPropertiesInterfaces::PropertiesFactoryInterface> m_propertiesFactory;
+    const std::shared_ptr<propertiesInterfaces::PropertiesFactoryInterface> m_propertiesFactory;
 };
 
 }  // namespace lwa

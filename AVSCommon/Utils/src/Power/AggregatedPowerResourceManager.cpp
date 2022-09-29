@@ -26,7 +26,7 @@ namespace power {
 using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AggregatedPowerResourceManager");
+#define TAG "AggregatedPowerResourceManager"
 
 /// Prefix to uniquely identify the resource.
 static const std::string PREFIX = "ACSDK_";
@@ -89,24 +89,16 @@ AggregatedPowerResourceManager::AggregatedPowerResourceManager(
 void AggregatedPowerResourceManager::acquirePowerResource(
     const std::string& component,
     const PowerResourceLevel level) {
-    ACSDK_DEBUG9(LX(__func__));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_appPowerResourceManager->acquirePowerResource(component, level);
+    ACSDK_ERROR(LX(__func__).m("API is deprecated.Please see PowerResourceManagerInterface for alternatives"));
 }
 
 void AggregatedPowerResourceManager::releasePowerResource(const std::string& component) {
-    ACSDK_DEBUG9(LX(__func__));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-    m_appPowerResourceManager->releasePowerResource(component);
+    ACSDK_ERROR(LX(__func__).m("API is deprecated.Please see PowerResourceManagerInterface for alternatives"));
 };
 
 bool AggregatedPowerResourceManager::isPowerResourceAcquired(const std::string& component) {
-    ACSDK_DEBUG9(LX(__func__));
-
-    std::lock_guard<std::mutex> lock(m_mutex);
-    return m_appPowerResourceManager->isPowerResourceAcquired(component);
+    ACSDK_ERROR(LX(__func__).m("API is deprecated.Please see PowerResourceManagerInterface for alternatives"));
+    return false;
 }
 
 std::shared_ptr<PowerResourceManagerInterface::PowerResourceId> AggregatedPowerResourceManager::

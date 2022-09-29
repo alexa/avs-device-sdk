@@ -31,10 +31,9 @@ namespace libcurlUtils {
 
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::http;
-using namespace avsCommon::utils::libcurlUtils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LibCurlHttpContentFetcher");
+#define TAG "LibCurlHttpContentFetcher"
 
 /**
  * The timeout for a blocking write call to an @c AttachmentWriter. This value may be increased to decrease wakeups but
@@ -412,7 +411,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                     }
 
                     int numTransfersUpdated = 0;
-                    result = curlMultiHandle->wait(WAIT_FOR_ACTIVITY_TIMEOUT, &numTransfersUpdated);
+                    result = curlMultiHandle->poll(WAIT_FOR_ACTIVITY_TIMEOUT, &numTransfersUpdated);
                     if (result != CURLM_OK) {
                         ACSDK_ERROR(LX("getContentFailed")
                                         .d("reason", "multiWaitFailed")
@@ -470,7 +469,7 @@ std::unique_ptr<avsCommon::utils::HTTPContent> LibCurlHttpContentFetcher::getCon
                     }
 
                     int numTransfersUpdated = 0;
-                    result = curlMultiHandle->wait(WAIT_FOR_ACTIVITY_TIMEOUT, &numTransfersUpdated);
+                    result = curlMultiHandle->poll(WAIT_FOR_ACTIVITY_TIMEOUT, &numTransfersUpdated);
                     if (result != CURLM_OK) {
                         ACSDK_ERROR(LX("getContentFailed")
                                         .d("reason", "multiWaitFailed")

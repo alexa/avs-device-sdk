@@ -51,12 +51,10 @@ void ModuleLogger::onSinkChanged(const std::shared_ptr<Logger>& logger) {
 }
 
 void ModuleLogger::updateLogLevel() {
-    if (Level::UNKNOWN == m_sinkLogLevel) {
+    if (Level::UNKNOWN != m_moduleLogLevel) {
         Logger::setLevel(m_moduleLogLevel);
-    } else if (Level::UNKNOWN == m_moduleLogLevel) {
-        Logger::setLevel(m_sinkLogLevel);
     } else {
-        Logger::setLevel((m_sinkLogLevel > m_moduleLogLevel) ? m_sinkLogLevel : m_moduleLogLevel);
+        Logger::setLevel(m_sinkLogLevel);
     }
 }
 

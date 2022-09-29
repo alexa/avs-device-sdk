@@ -28,7 +28,7 @@ using namespace std::chrono;
 static constexpr long INVALID_RESPONSE_CODE = -1L;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LibcurlHTTP2Request");
+#define TAG "LibcurlHTTP2Request"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -142,7 +142,7 @@ static void callSafeCTimeFunction(
     auto safeCTimeAccess = SafeCTimeAccess::instance();
     std::vector<std::pair<time_t, std::tm>> internalResults;
     for (int i = 0; i < 4; ++i) {
-        for (time_t t = startingSeed; t < LARGE_TIME_VALUE; t = 1.5 * (t + 1)) {
+        for (time_t t = startingSeed; t < LARGE_TIME_VALUE; t = static_cast<time_t>(1.5 * (t + 1))) {
             std::tm result;
             switch (type) {
                 case TestType::GMTIME:

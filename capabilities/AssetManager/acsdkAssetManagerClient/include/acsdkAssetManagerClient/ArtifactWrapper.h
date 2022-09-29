@@ -16,7 +16,7 @@
 #ifndef ACSDKASSETMANAGERCLIENT_ARTIFACTWRAPPER_H_
 #define ACSDKASSETMANAGERCLIENT_ARTIFACTWRAPPER_H_
 
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 
 #include <condition_variable>
 #include <memory>
@@ -39,7 +39,7 @@ namespace client {
  */
 class ArtifactWrapper
         : public clientInterfaces::ArtifactWrapperInterface
-        , public acsdkNotifier::Notifier<clientInterfaces::ArtifactChangeObserver>
+        , public notifier::Notifier<clientInterfaces::ArtifactChangeObserver>
         , public acsdkCommunicationInterfaces::CommunicationPropertyChangeSubscriber<int>
         , public acsdkCommunicationInterfaces::CommunicationPropertyChangeSubscriber<std::string> {
 public:
@@ -124,11 +124,11 @@ public:
     void erase() override;
 
     void addWeakPtrObserver(const std::weak_ptr<clientInterfaces::ArtifactChangeObserver>& observer) override {
-        return acsdkNotifier::Notifier<clientInterfaces::ArtifactChangeObserver>::addWeakPtrObserver(observer);
+        return notifier::Notifier<clientInterfaces::ArtifactChangeObserver>::addWeakPtrObserver(observer);
     }
 
     void removeWeakPtrObserver(const std::weak_ptr<clientInterfaces::ArtifactChangeObserver>& observer) override {
-        return acsdkNotifier::Notifier<clientInterfaces::ArtifactChangeObserver>::removeWeakPtrObserver(observer);
+        return notifier::Notifier<clientInterfaces::ArtifactChangeObserver>::removeWeakPtrObserver(observer);
     }
 
 private:

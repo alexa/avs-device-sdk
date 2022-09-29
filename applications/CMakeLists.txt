@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 add_subdirectory("acsdkApplicationAudioPipelineFactoryInterfaces")
-add_subdirectory("acsdkCBLAuthorizationDelegate")
 add_subdirectory("acsdkAudioInputStream")
 add_subdirectory("acsdkDefaultDeviceSettingsManager")
 add_subdirectory("acsdkDefaultInternetConnectionMonitor")
@@ -10,9 +9,9 @@ add_subdirectory("acsdkLibcurlAlexaCommunications")
 add_subdirectory("acsdkLibcurlHTTPContentFetcher")
 add_subdirectory("acsdkNullMetricRecorder")
 add_subdirectory("acsdkNullSystemTimeZone")
-add_subdirectory("acsdkPreviewAlexaClient")
 add_subdirectory("acsdkSampleApplicationCBLAuthRequester")
 add_subdirectory("acsdkSampleApplicationInterfaces")
+add_subdirectory("FeatureClients")
 
 if (BLUETOOTH_ENABLED)
     if (BLUETOOTH_BLUEZ)
@@ -30,8 +29,12 @@ elseif(CUSTOM_MEDIA_PLAYER)
     add_subdirectory("acsdkCustomApplicationAudioPipelineFactory")
 endif()
 
-if (OPUS)
+if(ACSDKSPEECHENCODER_LIB STREQUAL acsdkOpusSpeechEncoder)
+    # Build component only if OPUS-based audio encoder is used.
     add_subdirectory("acsdkOpusSpeechEncoder")
-else()
+endif()
+if(ACSDKSPEECHENCODER_LIB STREQUAL acsdkNullSpeechEncoder)
+    # Build component only if audio encoder is not used.
     add_subdirectory("acsdkNullSpeechEncoder")
 endif()
+

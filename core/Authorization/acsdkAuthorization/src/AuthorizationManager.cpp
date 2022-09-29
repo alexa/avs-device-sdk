@@ -17,7 +17,7 @@
 #include <acsdkAuthorization/private/Logging.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"AuthorizationManager"};
+#define TAG "AuthorizationManager"
 
 namespace alexaClientSDK {
 namespace acsdkAuthorization {
@@ -115,7 +115,7 @@ void AuthorizationManager::reportStateChange(
         return;
     }
 
-    m_executor.submit([this, state, authId, userId] { handleTransition(state, authId, userId); });
+    m_executor.execute([this, state, authId, userId] { handleTransition(state, authId, userId); });
 }
 
 void AuthorizationManager::setStateLocked(const avsCommon::sdkInterfaces::AuthObserverInterface::FullState& state) {
@@ -258,7 +258,6 @@ void AuthorizationManager::handleTransition(
             break;
         case AuthObserverInterface::State::UNRECOVERABLE_ERROR:
             setStateLocked(newState);
-            logoutHelper(lock);
             return;
     };
 

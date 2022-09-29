@@ -1,5 +1,4 @@
-#
-# Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
 # You may not use this file except in compliance with the License.
@@ -11,7 +10,6 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
-#
 
 if [ -z "$PLATFORM" ]; then
 	echo "You should run the main script."
@@ -46,9 +44,6 @@ CURL_CA_BUNDLE=${CURL_CA_BUNDLE:-"${DEVICE_INSTALL_PATH}/cacert.pem"}
 
 # Path to the start script that may be used to start the sample app.
 START_SCRIPT="${INSTALL_BASE}/startsample.sh"
-
-# Path to the start script that may be used to start the preview app.
-START_PREVIEW_SCRIPT="${INSTALL_BASE}/startpreview.sh"
 
 # Path to the sdk sqllite databases.
 CONFIG_DB_PATH="${DEVICE_INSTALL_PATH}/databases"
@@ -102,8 +97,10 @@ set_cmake_var() {
         -DFFMPEG_LIB_PATH=${INSTALL_TARGET_LIB} \
         -DFFMPEG_INCLUDE_DIR=${INSTALL_TARGET}/include \
         -DTARGET_RPATH=${INSTALL_TARGET_LIB} \
+        -DASSET_MANAGER=ON \
         -DLibArchive_LIBRARIES="${INSTALL_TARGET_LIB}/libarchive.so" \
         -DLibArchive_INCLUDE_DIRS="${INSTALL_TARGET_INCLUDE}" \
+        -DINSTALL_COMMON_SAMPLE_LIBS=ON \
         -DCMAKE_CXX_FLAGS="-I${LIBARCHIVE_LIBRARY_SOURCE}/contrib/android/include")
         #-DBUILD_SHARED_LIBS="ON" \
 }
@@ -132,14 +129,6 @@ generate_start_script() {
 
   ${ADB} shell LD_LIBRARY_PATH=${DEVICE_INSTALL_PATH}/lib \
       ${DEVICE_BIN_PATH}/SampleApp \
-      ${DEVICE_INSTALL_PATH}/${CONFIG_BASENAME} DEBUG9
-EOF
-
-  # Script for starting the Preview App.
-  cat << EOF > "${START_PREVIEW_SCRIPT}"
-
-  ${ADB} shell LD_LIBRARY_PATH=${DEVICE_INSTALL_PATH}/lib \
-      ${DEVICE_BIN_PATH}/PreviewAlexaClient \
       ${DEVICE_INSTALL_PATH}/${CONFIG_BASENAME} DEBUG9
 EOF
 }
@@ -624,6 +613,7 @@ install_dependencies() {
           --host="${TOOLCHAIN_HOST}" \
           --build="${TOOLCHAIN_BUILD}" \
           --prefix="${INSTALL_TARGET}" \
+          --without-xml2 \
           CPPFLAGS="-I${LIBARCHIVE_LIBRARY_SOURCE}/contrib/android/include"
           popd
       fi
@@ -776,8 +766,7 @@ adb_push() {
   configure_target
 
   ${ADB} push ${INSTALL_TARGET_LIB} ${DEVICE_INSTALL_PATH}
-  ${ADB} push ${BUILD_PATH}/SampleApp/src/SampleApp ${DEVICE_BIN_PATH}
-  ${ADB} push ${BUILD_PATH}/applications/acsdkPreviewAlexaClient/src/PreviewAlexaClient ${DEVICE_BIN_PATH}
+  ${ADB} push ${BUILD_PATH}/SampleApplications/ConsoleSampleApplication/src/SampleApp ${DEVICE_BIN_PATH}
   ${ADB} push ${OUTPUT_CONFIG_FILE} ${DEVICE_INSTALL_PATH}
 }
 

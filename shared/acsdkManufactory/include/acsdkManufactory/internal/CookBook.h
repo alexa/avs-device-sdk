@@ -23,10 +23,11 @@
 #include <unordered_set>
 #include <vector>
 
+#include <AVSCommon/Utils/TypeIndex.h>
+
 #include "acsdkManufactory/Annotated.h"
 #include "acsdkManufactory/internal/AbstractPointerCache.h"
 #include "acsdkManufactory/internal/AbstractRecipe.h"
-#include "acsdkManufactory/internal/TypeIndex.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -353,7 +354,7 @@ private:
         FactoryRecipe(
             Factory factory,
             CachedInstanceLifecycle lifecycle,
-            std::vector<TypeIndex> dependencies,
+            std::vector<avsCommon::utils::TypeIndex> dependencies,
             ProduceInstanceFunction produceFunction,
             DeleteInstanceFunction deleteFunction);
 
@@ -403,7 +404,7 @@ private:
         FunctionRecipe(
             Function function,
             CachedInstanceLifecycle lifecycle,
-            std::vector<TypeIndex> dependencies,
+            std::vector<avsCommon::utils::TypeIndex> dependencies,
             ProduceInstanceFunction produceFunction,
             DeleteInstanceFunction deleteFunction,
             DeleteRecipeFunction deleteRecipeFunction);
@@ -783,7 +784,7 @@ private:
 
     private:
         /// Map of TypeIndex to the index of the GetWrapper in m_orderedGetWrappers.
-        std::unordered_map<TypeIndex, std::size_t> m_types;
+        std::unordered_map<avsCommon::utils::TypeIndex, std::size_t> m_types;
 
         /// Vector of GetWrappers.
         std::vector<GetWrapper> m_orderedGetWrappers;
@@ -802,7 +803,7 @@ private:
      * @param newRecipe The new instance recipe to add.
      * @return Whether adding the instance was successful.
      */
-    bool addInstance(TypeIndex type, const std::shared_ptr<AbstractRecipe>& newInstanceRecipe);
+    bool addInstance(avsCommon::utils::TypeIndex type, const std::shared_ptr<AbstractRecipe>& newInstanceRecipe);
 
     /**
      * Add a recipe to the CookBook.
@@ -811,7 +812,7 @@ private:
      * @param newRecipe The new recipe to add.
      * @return Whether adding the recipe was successful.
      */
-    bool addRecipe(TypeIndex type, const std::shared_ptr<AbstractRecipe>& newRecipe);
+    bool addRecipe(avsCommon::utils::TypeIndex type, const std::shared_ptr<AbstractRecipe>& newRecipe);
 
     /**
      * Check this cookbook for cyclic dependency relationships.
@@ -878,7 +879,7 @@ private:
     bool m_isValid;
 
     /// Map from interface types to the recipe for getting an instance of that type.
-    std::unordered_map<TypeIndex, std::shared_ptr<AbstractRecipe>> m_recipes;
+    std::unordered_map<avsCommon::utils::TypeIndex, std::shared_ptr<AbstractRecipe>> m_recipes;
 
     /// The collection of functions that need to be called to trigger @c get<Type>() calls for all primary types in this
     /// @c CookBook.

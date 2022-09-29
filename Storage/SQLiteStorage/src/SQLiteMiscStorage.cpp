@@ -30,7 +30,7 @@ using namespace avsCommon::utils::configuration;
 using namespace avsCommon::utils::logger;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SQLiteMiscStorage");
+#define TAG "SQLiteMiscStorage"
 
 /// Names of the columns in the database
 static const std::string KEY_COLUMN_NAME = "key";

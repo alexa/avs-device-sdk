@@ -20,6 +20,7 @@
 
 #include <acsdkApplicationAudioPipelineFactoryInterfaces/ApplicationAudioPipelineFactoryInterface.h>
 #include <acsdkAudioPlayerInterfaces/AudioPlayerInterface.h>
+#include <acsdk/CryptoInterfaces/CryptoFactoryInterface.h>
 #include <acsdkManufactory/Annotated.h>
 #include <acsdkManufactory/Component.h>
 #include <acsdkManufactory/Import.h>
@@ -70,7 +71,8 @@ acsdkManufactory::Component<
     acsdkManufactory::Import<acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
-    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>>
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface>>>
 getComponent(const std::string& configParentKey = "");
 
 /**
@@ -97,7 +99,8 @@ acsdkManufactory::Component<
     acsdkManufactory::Import<acsdkManufactory::Annotated<
         avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
         avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>>,
-    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>>
+    acsdkManufactory::Import<std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>>,
+    acsdkManufactory::Import<std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface>>>
 getBackwardsCompatibleComponent();
 
 }  // namespace acsdkAudioPlayer

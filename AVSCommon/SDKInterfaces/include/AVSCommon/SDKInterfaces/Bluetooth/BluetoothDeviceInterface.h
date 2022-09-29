@@ -209,6 +209,17 @@ public:
      */
     virtual std::future<bool> disconnect() = 0;
 
+    /**
+     * Sets the pairing pin for the current pairing attempt.  PIN length can range from 4 to 16
+     * alphanumeric characters, though most devices will only accept numeric characters in the PIN.
+     * Expected call flow is:
+     * pair() -> PIN request callback -> setPairingPin()
+     *
+     * @param pin BT pairing pin
+     * @return Indicates whether pairing pin was set.
+     */
+    virtual bool setPairingPin(const std::string& pin) = 0;
+
     /// @return The Bluetooth Services that this device supports.
     virtual std::vector<std::shared_ptr<services::SDPRecordInterface>> getSupportedServices() = 0;
 

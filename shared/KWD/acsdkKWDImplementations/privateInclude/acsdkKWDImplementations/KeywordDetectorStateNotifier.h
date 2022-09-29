@@ -19,7 +19,7 @@
 #include <memory>
 
 #include <acsdkKWDInterfaces/KeywordDetectorStateNotifierInterface.h>
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 #include <AVSCommon/SDKInterfaces/KeyWordDetectorStateObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -29,7 +29,7 @@ namespace acsdkKWDImplementations {
  * Relays notifications related to KeywordDetectorState.
  */
 class KeywordDetectorStateNotifier
-        : public acsdkNotifier::Notifier<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface> {
+        : public notifier::Notifier<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface> {
 public:
     /**
      * Factory method.

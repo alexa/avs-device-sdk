@@ -22,10 +22,69 @@
 using namespace ::testing;
 
 namespace alexaClientSDK {
-
 namespace avsCommon {
 namespace avs {
 namespace test {
+
+/// Valid test event.
+// clang-format off
+static const std::string VALID_TEST_EVENT = R"({
+    "event": {
+        "header": {
+            "namespace": "test_namespace",
+            "name": "test_name",
+            "messageId": "test_messageId",
+            "dialogRequestId": "test_dialogRequestId"
+        },
+        "payload": {}
+    }
+})";
+// clang-format on
+
+/// Partially valid test event.
+// clang-format off
+static const std::string PARTIALLY_VALID_TEST_EVENT = R"({
+    "event": {
+        "header": {
+            "namespace": "test_namespace",
+            "messageId": "test_messageId",
+            "dialogRequestId": "test_dialogRequestId"
+        },
+        "payload": {}
+    }
+})";
+// clang-format on
+
+/// Incorrectly formatted test event.
+// clang-format off
+static const std::string INCORRECTLY_FORMATTED_TEST_EVENT = R"({
+    "event": {
+        "namespace": "test_namespace",
+        "messageId": "test_messageId",
+        "dialogRequestId": "test_dialogRequestId",
+        "payload": {}
+    }
+})";
+// clang-format on
+
+/// Invalid test event.
+// clang-format off
+static const std::string INVALID_TEST_EVENT = R"({
+    "event": {
+        "header": {
+            "messageId": "test_messageId",
+            "dialogRequestId": "test_dialogRequestId"
+        },
+        "payload": {}
+    }
+})";
+// clang-format on
+
+/// Test event namespace header value.
+static const std::string TEST_NAMESPACE = "test_namespace";
+
+/// Test event name header value.
+static const std::string TEST_NAME = "test_name";
 
 class MockAttachmentReader : public attachment::AttachmentReader {
 public:
@@ -85,6 +144,42 @@ TEST_F(MessageRequestTest, test_extraHeaders) {
     auto actual = messageRequest.getHeaders();
 
     EXPECT_EQ(expected, actual);
+}
+
+TEST_F(MessageRequestTest, test_eventHeaders) {
+    auto expectedEventHeaders = MessageRequest::EventHeaders(TEST_NAMESPACE, TEST_NAME);
+    MessageRequest messageRequest(VALID_TEST_EVENT, true, "", {});
+    auto actualEventHeaders = messageRequest.retrieveEventHeaders();
+
+    EXPECT_EQ(expectedEventHeaders.eventNamespace, actualEventHeaders.eventNamespace);
+    EXPECT_EQ(expectedEventHeaders.eventName, actualEventHeaders.eventName);
+}
+
+TEST_F(MessageRequestTest, test_partialEventHeaders) {
+    auto expectedEventHeaders = MessageRequest::EventHeaders(TEST_NAMESPACE, "");
+    MessageRequest messageRequest(PARTIALLY_VALID_TEST_EVENT, true, "", {});
+    auto actualEventHeaders = messageRequest.retrieveEventHeaders();
+
+    EXPECT_EQ(expectedEventHeaders.eventNamespace, actualEventHeaders.eventNamespace);
+    EXPECT_EQ(expectedEventHeaders.eventName, actualEventHeaders.eventName);
+}
+
+TEST_F(MessageRequestTest, test_incorrectlyFormattedEventHeaders) {
+    auto expectedEventHeaders = MessageRequest::EventHeaders();
+    MessageRequest messageRequest(INCORRECTLY_FORMATTED_TEST_EVENT, true, "", {});
+    auto actualEventHeaders = messageRequest.retrieveEventHeaders();
+
+    EXPECT_EQ(expectedEventHeaders.eventNamespace, actualEventHeaders.eventNamespace);
+    EXPECT_EQ(expectedEventHeaders.eventName, actualEventHeaders.eventName);
+}
+
+TEST_F(MessageRequestTest, test_emptyEventHeaders) {
+    auto expectedEventHeaders = MessageRequest::EventHeaders();
+    MessageRequest messageRequest(INVALID_TEST_EVENT, true, "", {});
+    auto actualEventHeaders = messageRequest.retrieveEventHeaders();
+
+    EXPECT_EQ(expectedEventHeaders.eventNamespace, actualEventHeaders.eventNamespace);
+    EXPECT_EQ(expectedEventHeaders.eventName, actualEventHeaders.eventName);
 }
 
 TEST_F(MessageRequestTest, test_isResolved) {

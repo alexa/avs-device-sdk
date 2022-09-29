@@ -22,7 +22,7 @@ namespace avs {
 namespace directiveRoutingRule {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DirectiveRoutingRule");
+#define TAG "DirectiveRoutingRule"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

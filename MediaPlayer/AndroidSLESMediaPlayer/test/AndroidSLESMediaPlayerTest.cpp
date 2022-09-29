@@ -34,7 +34,7 @@
 #include <Audio/Data/med_system_alerts_melodic_01_short.wav.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AndroidSLESMediaPlayerTest");
+#define TAG "AndroidSLESMediaPlayerTest"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

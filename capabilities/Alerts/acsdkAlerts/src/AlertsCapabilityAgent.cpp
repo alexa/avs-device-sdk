@@ -484,7 +484,7 @@ void AlertsCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon
         ACSDK_ERROR(LX("handleDirectiveImmediatelyFailed").d("reason", "directive is nullptr."));
     }
     auto info = createDirectiveInfo(directive, nullptr);
-    m_executor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
+    m_executor.execute([this, info]() { executeHandleDirectiveImmediately(info); });
 }
 
 void AlertsCapabilityAgent::preHandleDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -495,7 +495,7 @@ void AlertsCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info)
     if (!info) {
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "info is nullptr."));
     }
-    m_executor.submit([this, info]() { executeHandleDirectiveImmediately(info); });
+    m_executor.execute([this, info]() { executeHandleDirectiveImmediately(info); });
 }
 
 void AlertsCapabilityAgent::cancelDirective(std::shared_ptr<DirectiveInfo> info) {
@@ -507,7 +507,7 @@ void AlertsCapabilityAgent::onDeregistered() {
 }
 
 void AlertsCapabilityAgent::onConnectionStatusChanged(const Status status, const ChangedReason reason) {
-    m_executor.submit([this, status, reason]() { executeOnConnectionStatusChanged(status, reason); });
+    m_executor.execute([this, status, reason]() { executeOnConnectionStatusChanged(status, reason); });
 }
 
 void AlertsCapabilityAgent::onFocusChanged(
@@ -559,7 +559,7 @@ void AlertsCapabilityAgent::onAlertStateChange(const AlertObserverInterface::Ale
                      .d("alertType", alertInfo.type)
                      .d("state", alertInfo.state)
                      .d("reason", alertInfo.reason));
-    m_executor.submit([this, alertInfo]() { executeOnAlertStateChange(alertInfo); });
+    m_executor.execute([this, alertInfo]() { executeOnAlertStateChange(alertInfo); });
 }
 
 void AlertsCapabilityAgent::addObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -568,7 +568,7 @@ void AlertsCapabilityAgent::addObserver(std::shared_ptr<AlertObserverInterface> 
         return;
     }
 
-    m_executor.submit([this, observer]() { executeAddObserver(observer); });
+    m_executor.execute([this, observer]() { executeAddObserver(observer); });
 }
 
 void AlertsCapabilityAgent::removeObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -577,11 +577,11 @@ void AlertsCapabilityAgent::removeObserver(std::shared_ptr<AlertObserverInterfac
         return;
     }
 
-    m_executor.submit([this, observer]() { executeRemoveObserver(observer); });
+    m_executor.execute([this, observer]() { executeRemoveObserver(observer); });
 }
 
 void AlertsCapabilityAgent::removeAllAlerts() {
-    m_executor.submit([this]() { executeRemoveAllAlerts(); });
+    m_executor.execute([this]() { executeRemoveAllAlerts(); });
 }
 
 void AlertsCapabilityAgent::onLocalStop() {
@@ -1164,6 +1164,12 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(const AlertObserverInterfa
 
     bool alertIsActive = false;
     int alertVolume;
+    std::string scheduledTime;
+    if (!alexaClientSDK::avsCommon::utils::timing::TimeUtils().convertTimeToUtcIso8601Rfc3339(
+            alertInfo.scheduledTime, &scheduledTime)) {
+        ACSDK_ERROR(LX("executeOnAlertStateChange").m("couldn't convert time point to string"));
+        scheduledTime = "";
+    }
 
     switch (alertInfo.state) {
         case AlertObserverInterface::State::READY:
@@ -1171,7 +1177,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(const AlertObserverInterfa
             break;
 
         case AlertObserverInterface::State::STARTED:
-            sendEvent(ALERT_STARTED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STARTED_EVENT_NAME, alertInfo.token, true, scheduledTime, currentISO8601TimeUTC());
             alertVolume = getAlertVolume();
             if ((alertVolume != -1) && (alertVolume < ALERT_VOLUME_METRIC_LIMIT)) {
                 submitMetric(m_metricRecorder, ALERT_RINGING_LESS_THAN_30_PERCENT_MAX_VOLUME, 1);
@@ -1190,13 +1196,13 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(const AlertObserverInterfa
             break;
 
         case AlertObserverInterface::State::STOPPED:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, scheduledTime, currentISO8601TimeUTC());
             releaseChannel();
             updateContextManager();
             break;
 
         case AlertObserverInterface::State::COMPLETED:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, scheduledTime, currentISO8601TimeUTC());
             releaseChannel();
             updateContextManager();
             break;
@@ -1207,9 +1213,9 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(const AlertObserverInterfa
             break;
 
         case AlertObserverInterface::State::PAST_DUE:
-            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, alertInfo.reason, currentISO8601TimeUTC());
+            sendEvent(ALERT_STOPPED_EVENT_NAME, alertInfo.token, true, scheduledTime, currentISO8601TimeUTC());
             submitAlertCanceledMetricWithMetadata(
-                alertInfo.token, AlertObserverInterface::typeToString(alertInfo.type), alertInfo.reason);
+                alertInfo.token, AlertObserverInterface::typeToString(alertInfo.type), scheduledTime);
             break;
 
         case AlertObserverInterface::State::FOCUS_ENTERED_FOREGROUND:
@@ -1259,7 +1265,7 @@ void AlertsCapabilityAgent::executeOnAlertStateChange(const AlertObserverInterfa
         }
     }
 
-    m_executor.submit([this, alertInfo]() { executeNotifyObservers(alertInfo); });
+    m_executor.execute([this, alertInfo]() { executeNotifyObservers(alertInfo); });
 }
 
 void AlertsCapabilityAgent::executeAddObserver(std::shared_ptr<AlertObserverInterface> observer) {
@@ -1342,7 +1348,7 @@ void AlertsCapabilityAgent::onSpeakerSettingsChanged(
     const SpeakerManagerObserverInterface::Source& source,
     const ChannelVolumeInterface::Type& type,
     const SpeakerInterface::SpeakerSettings& settings) {
-    m_executor.submit([this, settings, type]() { executeOnSpeakerSettingsChanged(type, settings); });
+    m_executor.execute([this, settings, type]() { executeOnSpeakerSettingsChanged(type, settings); });
 }
 
 void AlertsCapabilityAgent::onSystemClockSynchronized() {

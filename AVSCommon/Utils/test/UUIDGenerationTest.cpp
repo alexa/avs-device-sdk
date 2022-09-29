@@ -157,7 +157,7 @@ TEST_F(UUIDGenerationTest, test_multipleConcurrentSaltSettings) {
     }
 
     for (auto& future : uuidRequesters) {
-        unsigned int prevSizeOfSet = uuidsGenerated.size();
+        auto prevSizeOfSet = uuidsGenerated.size();
         auto uuid = future.get();
         uuidsGenerated.insert(uuid);
         ASSERT_EQ(UUID_LENGTH, uuid.length());
@@ -186,7 +186,7 @@ TEST_F(UUIDGenerationTest, test_multipleRequests) {
     std::unordered_set<std::string> uuidsGenerated;
 
     for (unsigned int i = 0; i < MAX_UUIDS_TO_GENERATE; ++i) {
-        unsigned int prevSizeOfSet = uuidsGenerated.size();
+        auto prevSizeOfSet = uuidsGenerated.size();
         auto uuid = generateUUID();
         uuidsGenerated.insert(uuid);
         ASSERT_EQ(UUID_LENGTH, uuid.length());
@@ -211,7 +211,7 @@ TEST_F(UUIDGenerationTest, test_multipleConcurrentRequests) {
     }
 
     for (auto& future : uuidRequesters) {
-        unsigned int prevSizeOfSet = uuidsGenerated.size();
+        auto prevSizeOfSet = uuidsGenerated.size();
         auto uuid = future.get();
         uuidsGenerated.insert(uuid);
         ASSERT_EQ(UUID_LENGTH, uuid.length());

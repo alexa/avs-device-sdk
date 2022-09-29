@@ -27,7 +27,7 @@ using namespace avsCommon::sdkInterfaces::storage;
 using namespace avsCommon::utils::json;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AVSGatewayManagerStorage");
+#define TAG "AVSGatewayManagerStorage"
 
 /**
  * Create a LogEntry using the file's TAG and the specified event string.

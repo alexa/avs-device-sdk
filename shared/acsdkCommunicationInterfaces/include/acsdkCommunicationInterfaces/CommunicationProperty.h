@@ -20,7 +20,7 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <acsdkCommunicationInterfaces/CommunicationPropertyChangeSubscriber.h>
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkCommunicationInterfaces {
@@ -33,10 +33,6 @@ namespace acsdkCommunicationInterfaces {
 template <typename T>
 class CommunicationProperty {
 public:
-    ~CommunicationProperty() {
-        m_executor.waitForSubmittedTasks();
-        m_executor.shutdown();
-    }
     /**
      * setValue allows setting of the value without going through the CommunicationPropertiesHandlerInterface
      * @param newValue The newValue which we are setting the value to.
@@ -45,7 +41,16 @@ public:
     bool setValue(T newValue) {
         std::unique_lock<std::mutex> lock(m_propertyMutex);
         m_value = newValue;
-        m_executor.submit([this, newValue]() { notifyOnCommunicationPropertyChange(m_name, newValue); });
+        auto weakSubscriptionProxy = m_weakSubscriptionProxy;
+        auto propertyName = m_name;
+        /// Capturing a snapshot of this communication property and notifying the subscribers by submitting this
+        /// to the executor.
+        m_staticExecutor.execute([weakSubscriptionProxy, newValue, propertyName]() {
+            weakSubscriptionProxy->notifyObservers(
+                [=](const std::shared_ptr<CommunicationPropertyChangeSubscriber<T>>& obs) {
+                    obs->onCommunicationPropertyChange(propertyName, newValue);
+                });
+        });
         return true;
     }
 
@@ -84,7 +89,7 @@ public:
      * @return true if subscriber is valid and was added, false otherwise.
      */
     bool addSubscriber(const std::weak_ptr<CommunicationPropertyChangeSubscriber<T>>& subscriber) {
-        m_weakSubscriptionProxy.addWeakPtrObserver(subscriber);
+        m_weakSubscriptionProxy->addWeakPtrObserver(subscriber);
         return !subscriber.expired();
     }
 
@@ -93,7 +98,7 @@ public:
      * @param subscriber The subscriber that doesn't want to listen to property change events.
      */
     void removeSubscriber(const std::shared_ptr<CommunicationPropertyChangeSubscriber<T>>& subscriber) {
-        m_weakSubscriptionProxy.removeWeakPtrObserver(subscriber);
+        m_weakSubscriptionProxy->removeWeakPtrObserver(subscriber);
     }
 
 private:
@@ -101,7 +106,7 @@ private:
      * Notify subscribers of a change to a the property value. This is called from an executor.
      */
     bool notifyOnCommunicationPropertyChange(const std::string& propertyName, T newValue) {
-        m_weakSubscriptionProxy.notifyObservers(
+        m_weakSubscriptionProxy->notifyObservers(
             [=](const std::shared_ptr<CommunicationPropertyChangeSubscriber<T>>& obs) {
                 obs->onCommunicationPropertyChange(propertyName, newValue);
             });
@@ -115,6 +120,7 @@ private:
      * @param writeable If the property is writeable or not.
      */
     CommunicationProperty<T>(std::string name, T initValue, bool writeable) :
+            m_weakSubscriptionProxy{std::make_shared<notifier::Notifier<CommunicationPropertyChangeSubscriber<T>>>()},
             m_name{std::move(name)},
             m_value{std::move(initValue)},
             m_writeable{writeable} {
@@ -122,7 +128,7 @@ private:
 
 private:
     /// The communication Property to notify on setValue events.
-    acsdkNotifier::Notifier<CommunicationPropertyChangeSubscriber<T>> m_weakSubscriptionProxy;
+    const std::shared_ptr<notifier::Notifier<CommunicationPropertyChangeSubscriber<T>>> m_weakSubscriptionProxy;
 
     /// The name of property
     const std::string m_name;
@@ -133,11 +139,15 @@ private:
     /// Is the property writeable
     const bool m_writeable;
 
-    /// Mutex to protect the poperty value
+    /// Mutex to protect the property value
     std::mutex m_propertyMutex;
 
-    avsCommon::utils::threading::Executor m_executor;
+    /// Static executor for all Communication Properties.
+    static avsCommon::utils::threading::Executor m_staticExecutor;
 };
+
+template <typename T>
+avsCommon::utils::threading::Executor CommunicationProperty<T>::m_staticExecutor;
 
 }  // namespace acsdkCommunicationInterfaces
 }  // namespace alexaClientSDK

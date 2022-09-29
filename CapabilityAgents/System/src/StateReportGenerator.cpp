@@ -27,7 +27,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::utils::json;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("StateReportGenerator");
+#define TAG "StateReportGenerator"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

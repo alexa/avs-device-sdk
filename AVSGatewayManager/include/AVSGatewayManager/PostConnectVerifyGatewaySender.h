@@ -22,6 +22,7 @@
 
 #include <AVSCommon/SDKInterfaces/PostConnectOperationInterface.h>
 #include <AVSCommon/AVS/WaitableMessageRequest.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/WaitEvent.h>
 #include <AVSGatewayManager/GatewayVerifyState.h>
 
@@ -39,10 +40,17 @@ public:
      * Creates a new instance of @c PostConnectVerifyGatewaySender.
      *
      * @param gatewayVerifiedCallback The callback method that should be called on successful gateway verification.
+     * @param metricRecorder Optional (may be nullptr) reference to metric recorder.
      * @return a new instance of the @c PostConnectVerifyGatewaySender.
      */
     static std::shared_ptr<PostConnectVerifyGatewaySender> create(
-        std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> gatewayVerifiedCallback);
+        std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> gatewayVerifiedCallback,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+
+    /**
+     * Destructor for tracking lifecycle.
+     */
+    ~PostConnectVerifyGatewaySender();
 
     /// @name PostConnectOperationInterface Methods
     /// @{
@@ -76,9 +84,11 @@ private:
      * Constructor.
      *
      * @param gatewayVerifiedCallback The callback method that should be called on successful gateway verification.
+     * @param metricRecorder Optional (may be nullptr) reference to metric recorder.
      */
     explicit PostConnectVerifyGatewaySender(
-        std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> gatewayVerifiedCallback);
+        std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> gatewayVerifiedCallback,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder);
 
     /**
      * The VerifyGateway operation which sends the @c ApiGateway.VerifyGateway event.
@@ -102,6 +112,9 @@ private:
 
     /// The Callback function that will be called after successful response to @c VerifyGateway event.
     std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>&)> m_gatewayVerifiedCallback;
+
+    /// Optional (may be nullptr) interface for metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
 
     /// Mutex to synchronize access to @c WaitableMessageRequest.
     std::mutex m_mutex;

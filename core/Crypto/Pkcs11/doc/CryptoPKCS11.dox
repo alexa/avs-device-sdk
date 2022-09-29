@@ -1,0 +1,74 @@
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+/**
+ * \defgroup Lib_acsdkPkcs11 Hardware Security Module Functions
+ * @brief HSM functions for \ref Lib_acsdkCryptoInterfaces.
+ *
+ * \ref Lib_acsdkPkcs11 implements a subset of \ref Lib_acsdkCryptoInterfaces for hardware security module operations. Module provides
+ * access to data encryption and decryption functions using HSM-managed secrets.
+ *
+ * This module requires platform configuration that provides the following information:
+ * - Path to vendor-specific PKCS#11 interface library
+ * - Token name
+ * - User PIN for accessing key functions
+ * - Default main key alias.
+ *
+ * Vendor-specific PKCS#11 library provides low-level access to HSM functions. In production environment the
+ * configuration access must be restricted to a service user account, and library path must point to vendor-specific
+ * interface library.
+ *
+ * In test environment, a software emulation or interception library can be used for development and debugging, but
+ * this doesn't provide any additional security.
+ *
+ * The library provides a single method:
+ * \code{.cpp}
+ * #include <acsdk/Pkcs11/KeyStoreFactory.h>
+ *
+ * auto metricRecorder = ...;
+ * auto factory = createKeyStoreFactory(metricRecorder);
+ * \endcode
+ *
+ * Metric recorder interface enables failure reporting in a form of metrics. The table summarizes activities:
+ * Activity         | Description
+ * ---------------- | --------------------------
+ * "PKCS11-ENCRYPT" | Data encryption operation.
+ * "PKCS11-DECRYPT" | Data decryption operation.
+ *
+ * The next table summarizes metric counters:
+ * Counter              | Description
+ * -------------------- | ---------------------------------------------------------------------------------------------
+ * "FAILURE"            | General purpose failure counter. This counter is always present if a failure occurrs.
+ * "DECRYPT_ERROR"      | Decryption failure. This counter is present when decryption operation fails.
+ * "ENCRYPT_ERROR"      | Encryption failure. This counter is present when encryption operation fails.
+ * "CHECKSUM_ERROR"     | Checksum check error. This counter is present when supplied checksum doesn't match one in HSM. The failure indicates the key has been replaces.
+ * "GET_KEY_ERROR"      | Key access failure. This counter indicates the key is no longer accessible.
+ * "GET_CHECKSUM_ERROR" | Checksum check error. This error indicates the checksum is not available.
+ * "EXTRACTABLE_KEY"    | This counters indicate the key may have been compromized.
+ *
+ * \sa Lib_acsdkCryptoInterfaces
+ * \sa alexaClientSDK::pkcs11
+ * \sa alexaClientSDK::pkcs11::test
+ *
+ * \namespace alexaClientSDK::pkcs11
+ * \brief HSM interface implementation.
+ * \ingroup Lib_acsdkPkcs11
+ * \sa Lib_acsdkPkcs11
+ *
+ * \namespace alexaClientSDK::pkcs11::test
+ * \brief Test cases for \ref Lib_acsdkPkcs11
+ * \ingroup Lib_acsdkPkcs11
+ * \sa Lib_acsdkPkcs11
+ */

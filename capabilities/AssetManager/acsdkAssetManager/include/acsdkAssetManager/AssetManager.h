@@ -71,7 +71,7 @@ public:
 
     /** Queues up a call to downloadArtifact in an executor. Returns immediately. */
     inline void queueDownloadArtifact(const std::shared_ptr<commonInterfaces::ArtifactRequest>& request) {
-        m_executor.submit([this, request] { downloadArtifact(request); });
+        m_executor.execute([this, request] { downloadArtifact(request); });
     }
 
     /** Takes string and tries to make it a ArtifactRequest
@@ -91,7 +91,7 @@ public:
 
     /** Queues up a call to deleteArtifact in an executor. Returns immediately. */
     inline void queueDeleteArtifact(const std::string& summaryString) {
-        m_executor.submit([this, summaryString] { deleteArtifact(summaryString); });
+        m_executor.execute([this, summaryString] { deleteArtifact(summaryString); });
     }
 
     /**
@@ -104,7 +104,7 @@ public:
 
     /** Queues up a call to handleUpdate in an executor. Returns immediately. */
     inline void queueHandleUpdate(const std::string& summaryString, bool acceptUpdate) {
-        m_executor.submit([this, summaryString, acceptUpdate] { handleUpdate(summaryString, acceptUpdate); });
+        m_executor.execute([this, summaryString, acceptUpdate] { handleUpdate(summaryString, acceptUpdate); });
     }
 
     /**
@@ -120,7 +120,7 @@ public:
 
     /** Queues up a call to freeUpSpace in an executor. Returns immediately. */
     inline void queueFreeUpSpace(size_t requestedAmount) {
-        m_executor.submit([this, requestedAmount] { freeUpSpace(requestedAmount); });
+        m_executor.execute([this, requestedAmount] { freeUpSpace(requestedAmount); });
     }
 
     /**

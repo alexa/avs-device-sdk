@@ -1,0 +1,165 @@
+{
+    "version": "3.0",
+    "visualCharacteristics": [
+        {
+            "type": "AlexaInterface",
+            "interface": "Alexa.InteractionMode",
+            "version": "1.1",
+            "configurations": {
+                "interactionModes": [
+                    {
+                        "id": "tv",
+                        "uiMode": "TV",
+                        "interactionDistance": {
+                            "unit": "INCHES",
+                            "value": 130
+                        },
+                        "touch": "UNSUPPORTED",
+                        "keyboard": "SUPPORTED",
+                        "video": "SUPPORTED",
+                        "dialog": "SUPPORTED"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "AlexaInterface",
+            "interface": "Alexa.Display.Window",
+            "version": "1.0",
+            "configurations": {
+                "templates": [
+                    {
+                        "id": "tvFullscreen",
+                        "type": "STANDARD",
+                        "configuration": {
+                            "sizes": [
+                                {
+                                    "type": "DISCRETE",
+                                    "id": "fullscreen",
+                                    "value": {
+                                        "unit": "PIXEL",
+                                        "value": {
+                                            "width": 1920,
+                                            "height": 1080
+                                        }
+                                    }
+                                }
+                            ],
+                            "interactionModes": [
+                                "tv"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "AlexaInterface",
+            "interface": "Alexa.Display",
+            "version": "1.0",
+            "configurations": {
+                "display": {
+                    "type": "PIXEL",
+                    "touch": [
+                        "UNSUPPORTED"
+                    ],
+                    "shape": "RECTANGLE",
+                    "dimensions": {
+                        "resolution": {
+                            "unit": "PIXEL",
+                            "value": {
+                                "width": 1920,
+                                "height": 1080
+                            }
+                        },
+                        "physicalSize": {
+                            "unit": "INCHES",
+                            "value": {
+                                "width": 56.7,
+                                "height": 31.9
+                            }
+                        },
+                        "pixelDensity": {
+                            "unit": "DPI",
+                            "value": 320
+                        },
+                        "densityIndependentResolution": {
+                            "unit": "DP",
+                            "value": {
+                                "width": 960,
+                                "height": 540
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "sampleClientConfig": {
+        "version": "1.0.0",
+        "description": "TV PTT Device - Fullscreen Only",
+        "mode": "TV",
+        "emulateDisplayDimensions": true,
+        "scaleToFill": true,
+        "audioInputInitiator": "PRESS_AND_HOLD",
+        "displayMode": "FIXED",
+        "deviceKeys": {
+            "talkKey": {
+                "code": "KeyA",
+                "keyCode": 65,
+                "key": "a"
+            },
+            "backKey": {
+                "code": "KeyB",
+                "keyCode": 66,
+                "key": "b"
+            },
+            "exitKey": {
+                "code": "Escape",
+                "keyCode": 27,
+                "key": "Escape"
+            },
+            "toggleCaptionsKey": {
+                "code": "KeyC",
+                "keyCode": 67,
+                "key": "c"
+            },
+            "toggleDoNotDisturbKey": {
+                "code": "KeyD",
+                "keyCode": 68,
+                "key": "d"
+            }
+        },
+        "windows": [
+            {
+                "id": "tvFullscreen",
+                "displayWindowConfig": {
+                    "templateId": "tvFullscreen",
+                    "configurations": {
+                        "landscape" : {
+                            "sizeConfigurationId": "fullscreen",
+                            "interactionMode": "tv"
+                        }
+                    }
+                },
+                "aplRendererParameters": {
+                    "supportedExtensions": [
+                        "aplext:backstack:10"
+                    ]
+                },
+                "supportedInterfaces": [
+                    "Alexa.Presentation.APL",
+                    "TemplateRuntime"
+                ],
+                "zOrderIndex": 0
+            }
+        ],
+        "defaultWindowId": "tvFullscreen",
+        "liveViewCameraOptions": {
+            "physicalMicButtonHint": {
+                "micButtonHintType": "Text",
+                "micButtonHintSource": "A"
+            }
+        }
+    }
+}

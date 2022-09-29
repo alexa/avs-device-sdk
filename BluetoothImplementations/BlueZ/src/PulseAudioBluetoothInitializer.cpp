@@ -21,7 +21,7 @@
 #include <AVSCommon/Utils/Logger/Logger.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"PulseAudioBluetoothInitializer"};
+#define TAG "PulseAudioBluetoothInitializer"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -414,7 +414,7 @@ void PulseAudioBluetoothInitializer::onEventFired(const BluetoothEvent& event) {
         return;
     }
 
-    m_executor.submit([this] {
+    m_executor.execute([this] {
         if (!m_paLoopStarted) {
             m_paLoopStarted = true;
             run();

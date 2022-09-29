@@ -16,6 +16,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <acsdkAlertsInterfaces/AlertObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/Audio/AlertsAudioFactoryInterface.h>
 
 #include "acsdkAlerts/Alert.h"
 #include "AVSCommon/Utils/Timing/TimeUtils.h"
@@ -65,6 +66,9 @@ static const std::string LABEL_TEST("Test label");
 /// Original time for testing.
 static const std::string ORIGINAL_TIME_TEST("17:00:00.000");
 static const std::string INVALID_ORIGINAL_TIME_TEST{"-1:00:00.000"};
+
+/// reason for alert state change
+static const std::string INTERRUPTED("interrupted");
 
 class MockAlert : public Alert {
 public:
@@ -218,6 +222,19 @@ TEST_F(AlertTest, test_parseFromJsonHappyCase) {
     ASSERT_EQ(m_alert->getLoopPause(), std::chrono::milliseconds{LOOP_PAUSE_MS});
     ASSERT_EQ(m_alert->getOriginalTime(), m_alert->validateOriginalTimeString(ORIGINAL_TIME_TEST));
     ASSERT_EQ(m_alert->getLabel(), m_alert->validateLabelString(LABEL_TEST));
+
+    auto alertInfo =
+        m_alert->createAlertInfo(acsdkAlertsInterfaces::AlertObserverInterface::State::STARTED, INTERRUPTED);
+    ASSERT_EQ(alertInfo.token, TOKEN_TEST);
+
+    // ALERT_TYPE("MOCK_ALERT_TYPE") will be mapped to default value ALARM
+    ASSERT_EQ(alertInfo.type, acsdkAlertsInterfaces::AlertObserverInterface::Type::ALARM);
+
+    ASSERT_EQ(alertInfo.state, acsdkAlertsInterfaces::AlertObserverInterface::State::STARTED);
+    ASSERT_EQ(alertInfo.scheduledTime, m_alert->getScheduledTime_Utc_TimePoint());
+    ASSERT_EQ(alertInfo.originalTime, m_alert->validateOriginalTimeString(ORIGINAL_TIME_TEST));
+    ASSERT_EQ(alertInfo.label, m_alert->validateLabelString(LABEL_TEST));
+    ASSERT_EQ(alertInfo.reason, INTERRUPTED);
 
     std::vector<std::string> assetPlayOrderItems;
     assetPlayOrderItems.push_back(ASSET_ID1);

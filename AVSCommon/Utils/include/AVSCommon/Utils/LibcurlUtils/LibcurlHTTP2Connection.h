@@ -69,7 +69,10 @@ protected:
     LibcurlHTTP2Connection(
         const std::shared_ptr<LibcurlSetCurlOptionsCallbackInterface>& setCurlOptionsCallback = nullptr);
 
-private:
+    /**
+     * Alias for c++ ordered map where key is curl handle and value is pointer to LibcurlHTTP2Request.
+     */
+    using ActiveStreamMap = std::map<CURL*, std::shared_ptr<LibcurlHTTP2Request>>;
     /**
      * Adds a configured stream into this connection.
      * @param stream Request object with a configured curl handle.
@@ -86,10 +89,10 @@ private:
 
     /** Release a stream.
      *
-     * @param stream The stream to release.
+     * @param[in,out] iterator The iterator to ActiveStreamMap to erase.
      * @return Whether the operation was successful.
      */
-    bool releaseStream(LibcurlHTTP2Request& stream);
+    bool releaseStream(ActiveStreamMap::iterator& iterator);
 
     /**
      * Main network loop. Repeatedly call curl_multi_perform in order to transfer data on the incorporated streams.
@@ -134,10 +137,10 @@ private:
     /**
      * Cancel an active stream and report CANCELLED completion status.
      *
-     * @param stream The stream to cancel.
+     * @param[in,out] iterator The iterator to ActiveStreamMap to erase.
      * @return Whether the operation was successful.
      */
-    bool cancelActiveStream(LibcurlHTTP2Request& stream);
+    bool cancelActiveStream(ActiveStreamMap::iterator& iterator);
 
     /**
      * Release any active streams and report CANCELLED completion status.
@@ -174,8 +177,8 @@ private:
     /// Main thread for this class.
     std::thread m_networkThread;
 
-    /// Represents a CURL multi handle.  Intended to only be accessed by the network loop thread.
-    std::unique_ptr<avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper> m_multi;
+    /// Represents a CURL multi handle.  Intended to only be accessed by the network loop thread and in @c addStream.
+    std::shared_ptr<avsCommon::utils::libcurlUtils::CurlMultiHandleWrapper> m_multi;
 
     /// Serializes concurrent access to the m_requestQueue and m_isStopping members.
     std::mutex m_mutex;
@@ -186,7 +189,7 @@ private:
 
     /// The list of streams that either do not have HTTP response headers, or have outstanding response data.
     /// Only accessed from the network loop thread.
-    std::map<CURL*, std::shared_ptr<LibcurlHTTP2Request>> m_activeStreams;
+    ActiveStreamMap m_activeStreams;
 
     /// Queue of requests send. Serialized by @c m_mutex.
     std::deque<std::shared_ptr<LibcurlHTTP2Request>> m_requestQueue;

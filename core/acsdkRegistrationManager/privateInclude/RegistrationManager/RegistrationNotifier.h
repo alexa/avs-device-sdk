@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 #include <RegistrationManager/RegistrationNotifierInterface.h>
 #include <RegistrationManager/RegistrationObserverInterface.h>
 
@@ -28,7 +28,7 @@ namespace registrationManager {
 /**
  * Implementation of the @c RegistrationNotifier.
  */
-class RegistrationNotifier : public acsdkNotifier::Notifier<registrationManager::RegistrationObserverInterface> {
+class RegistrationNotifier : public notifier::Notifier<registrationManager::RegistrationObserverInterface> {
 public:
     /**
      * Factory method to create a @c RegistrationNotifier.

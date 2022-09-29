@@ -21,9 +21,10 @@
 #include <unordered_map>
 #include <vector>
 
+#include <AVSCommon/Utils/TypeIndex.h>
+
 #include "acsdkManufactory/Annotated.h"
 #include "acsdkManufactory/internal/AbstractPointerCache.h"
-#include "acsdkManufactory/internal/TypeIndex.h"
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -86,7 +87,7 @@ private:
     std::unique_ptr<CookBook> m_cookBook;
 
     /// Map from interface types to cached values.
-    std::unordered_map<TypeIndex, std::shared_ptr<AbstractPointerCache>> m_values;
+    std::unordered_map<avsCommon::utils::TypeIndex, std::shared_ptr<AbstractPointerCache>> m_values;
 };
 
 }  // namespace internal

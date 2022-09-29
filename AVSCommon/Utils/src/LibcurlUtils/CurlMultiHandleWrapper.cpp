@@ -22,7 +22,7 @@ namespace utils {
 namespace libcurlUtils {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CurlMultiHandleWrapper");
+#define TAG "CurlMultiHandleWrapper"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -91,12 +91,30 @@ CURLMcode CurlMultiHandleWrapper::perform(int* runningHandles) {
     return result;
 }
 
-CURLMcode CurlMultiHandleWrapper::wait(std::chrono::milliseconds timeout, int* countHandlesUpdated) {
-    auto result = curl_multi_wait(m_handle, NULL, 0, timeout.count(), countHandlesUpdated);
+CURLMcode CurlMultiHandleWrapper::poll(std::chrono::milliseconds timeout, int* countHandlesUpdated) {
+#if CURL_AT_LEAST_VERSION(7, 68, 0)
+    auto result = curl_multi_poll(m_handle, nullptr, 0, timeout.count(), countHandlesUpdated);
+#else
+    auto result = curl_multi_wait(m_handle, nullptr, 0, static_cast<int>(timeout.count()), countHandlesUpdated);
+#endif
     if (result != CURLM_OK) {
         ACSDK_ERROR(LX("curlMultiWaitFailed").d("error", curl_multi_strerror(result)));
     }
     return result;
+}
+
+bool CurlMultiHandleWrapper::wakeup() {
+    bool returnVal = true;
+#if CURL_AT_LEAST_VERSION(7, 68, 0)
+    auto result = curl_multi_wakeup(m_handle);
+    if (result != CURLM_OK) {
+        ACSDK_ERROR(LX("curlMultiWakeupFailed").d("error", curl_multi_strerror(result)));
+        returnVal = false;
+    }
+#else
+    // no-op
+#endif
+    return returnVal;
 }
 
 CURLMsg* CurlMultiHandleWrapper::infoRead(int* messagesInQueue) {

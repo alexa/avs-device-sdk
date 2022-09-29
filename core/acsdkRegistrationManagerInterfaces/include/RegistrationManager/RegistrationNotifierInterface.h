@@ -15,7 +15,7 @@
 #ifndef REGISTRATIONMANAGER_REGISTRATIONNOTIFIERINTERFACE_H_
 #define REGISTRATIONMANAGER_REGISTRATIONNOTIFIERINTERFACE_H_
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 
 #include "RegistrationManager/RegistrationObserverInterface.h"
 
@@ -25,7 +25,7 @@ namespace registrationManager {
 /**
  * Interface for registering to observe changes to RegistrationManager.
  */
-using RegistrationNotifierInterface = acsdkNotifierInterfaces::NotifierInterface<RegistrationObserverInterface>;
+using RegistrationNotifierInterface = notifierInterfaces::NotifierInterface<RegistrationObserverInterface>;
 
 }  // namespace registrationManager
 }  // namespace alexaClientSDK

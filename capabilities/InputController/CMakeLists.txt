@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+project(AlexaInputController LANGUAGES CXX)
 
-add_subdirectory("acsdkInputController")
-add_subdirectory("acsdkInputControllerInterfaces")
+add_subdirectory("AlexaInputController")
+add_subdirectory("AlexaInputControllerInterfaces")

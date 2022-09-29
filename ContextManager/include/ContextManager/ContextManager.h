@@ -186,16 +186,11 @@ private:  // Private type declarations.
      */
     struct RequestTracker {
         /// The token returned by the @c MultiTimer.
-        avsCommon::utils::timing::MultiTimer::Token timerToken;
+        const avsCommon::utils::timing::MultiTimer::Token timerToken;
         /// The context requester.
-        std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester;
+        const std::shared_ptr<avsCommon::sdkInterfaces::ContextRequesterInterface> contextRequester;
         /// If Reportable Properties should be skipped for this request.
-        bool skipReportableStateProperties;
-
-        /**
-         * Default Constructor.
-         */
-        RequestTracker();
+        const bool skipReportableStateProperties;
 
         /**
          * Constructor.

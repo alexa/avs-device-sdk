@@ -32,6 +32,7 @@ enum class ResultCode {
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
     NO_ARTIFACT_FOUND = 404,
+    UNPACK_FAILURE = -997,
     UNHANDLED_MIME_TYPE = -998,
     CATASTROPHIC_FAILURE = -999
 };
@@ -62,6 +63,8 @@ inline std::ostream& operator<<(std::ostream& os, ResultCode result) {
             return os << "UNHANDLED_MIME_TYPE";
         case ResultCode::CATASTROPHIC_FAILURE:
             return os << "CATASTROPHIC_FAILURE";
+        case ResultCode::UNPACK_FAILURE:
+            return os << "UNPACK_FAILURE";
     }
     return os;
 }

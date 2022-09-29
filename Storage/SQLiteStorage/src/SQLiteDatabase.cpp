@@ -25,7 +25,7 @@ namespace storage {
 namespace sqliteStorage {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SQLiteDatabase");
+#define TAG "SQLiteDatabase"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

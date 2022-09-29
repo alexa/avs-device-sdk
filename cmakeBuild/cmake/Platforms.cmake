@@ -19,3 +19,8 @@ if (WIN32)
     # in the same directory or add them to the path variable.
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 endif()
+
+# Some Linux distributions don't automatically link libatomic
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    link_libraries(atomic)
+endif()

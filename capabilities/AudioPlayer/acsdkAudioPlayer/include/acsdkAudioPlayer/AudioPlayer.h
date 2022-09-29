@@ -21,6 +21,7 @@
 #include <memory>
 
 #include <acsdkAudioPlayerInterfaces/AudioPlayerInterface.h>
+#include <acsdk/CryptoInterfaces/CryptoFactoryInterface.h>
 #include <acsdkManufactory/Annotated.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
@@ -134,7 +135,7 @@ public:
     /**
      * Destructor.
      */
-    virtual ~AudioPlayer() = default;
+    virtual ~AudioPlayer();
 
     /**
      * Factory method to create a new @c AudioPlayerInterface.
@@ -153,6 +154,7 @@ public:
      * default endpoint.
      * @param renderPlayerInfoCardsProviderRegistrar The object with which to register this AudioPlayer as a
      * @c RenderPlayerInfoCardsProviderInterface.
+     * @param cryptoFactory Encryption facilities factory.
      * @return A shared_ptr to a new @c AudioPlayerInterface.
      */
     static std::shared_ptr<acsdkAudioPlayerInterfaces::AudioPlayerInterface> createAudioPlayerInterface(
@@ -172,7 +174,8 @@ public:
             avsCommon::sdkInterfaces::endpoints::DefaultEndpointAnnotation,
             avsCommon::sdkInterfaces::endpoints::EndpointCapabilitiesRegistrarInterface>& endpointCapabilitiesRegistrar,
         const std::shared_ptr<avsCommon::sdkInterfaces::RenderPlayerInfoCardsProviderRegistrarInterface>&
-            renderPlayerInfoCardsProviderRegistrar);
+            renderPlayerInfoCardsProviderRegistrar,
+        const std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory);
 
     /**
      * Creates a new @c AudioPlayer instance.
@@ -186,6 +189,7 @@ public:
      * @param playbackRouter The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
      * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
      * @param metricRecorder The metric recorder.
+     * @param cryptoFactory Encryption facilities factory.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     static std::shared_ptr<AudioPlayer> create(
@@ -195,6 +199,7 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
+        std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface> cryptoFactory,
         std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
 
@@ -286,6 +291,11 @@ public:
     /// @name CapabilityConfigurationInterface Functions
     /// @{
     std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> getCapabilityConfigurations() override;
+    /// @}
+
+    /// @name RequiresShutdown Functions
+    /// @{
+    void doShutdown() override;
     /// @}
 
 private:
@@ -381,7 +391,6 @@ private:
          *
          * @param messageId The message Id of the @c PLAY directive.
          * @param dialogRequestId The dialog request Id of the @c PLAY directive.
-         * @param correlationToken The message Id of the @c PLAY directive.
          */
         PlayDirectiveInfo(const std::string& messageId, const std::string& dialogRequestId);
     };
@@ -401,6 +410,7 @@ private:
      * provided by @param mediaResourceProvider.
      * @param captionManager The optional @c CaptionManagerInterface instance to use for handling captions.
      * @param metricRecorder The metric recorder.
+     * @param cryptoFactory The optional @c Encryption facilities factory.
      * @return A @c std::shared_ptr to the new @c AudioPlayer instance.
      */
     AudioPlayer(
@@ -411,13 +421,9 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
         std::vector<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeInterface>> audioChannelVolumeInterfaces,
+        std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface> cryptoFactory,
         std::shared_ptr<captions::CaptionManagerInterface> captionManager = nullptr,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
-
-    /// @name RequiresShutdown Functions
-    /// @{
-    void doShutdown() override;
-    /// @}
 
     /**
      * This function deserializes a @c Directive's payload into a @c rapidjson::Document.
@@ -812,7 +818,6 @@ private:
      *
      * @param eventName The name of the event to be include in the header.
      * @param dialogRequestIdString The value associated with the "dialogRequestId" key.
-     * @param correlationToken The correlation toekn of the event to be included in the header.
      * @param payload The payload value associated with the "payload" key.
      * @param context Optional @c context to be sent with the event message.
      */
@@ -828,7 +833,6 @@ private:
      * @param audioItem item associated with the metadata
      * @param vectorOfTags Pointer to vector of tags that should be sent to AVS.
      * @param state Metadata about the media player state
-     * @param correlationToken correlation token of the event
      */
     void sendStreamMetadataExtractedEvent(
         AudioItem& audioItem,
@@ -1011,6 +1015,14 @@ private:
      */
     std::string getDomainNameHash(const std::string& url) const;
 
+    /**
+     * @brief Check if active media playback is happening currently.
+     *
+     * @return true  When we have active playback item and current state is
+     *                'PLAYING', 'BUFFERING', 'BUFFER_UNDERRUN' or 'PAUSED'.
+     */
+    bool isPlaybackActive() const;
+
     /// This is used to safely access the time utilities.
     avsCommon::utils::timing::TimeUtils m_timeUtils;
 
@@ -1029,6 +1041,9 @@ private:
 
     /// The @c PlaybackRouterInterface instance to use when @c AudioPlayer becomes active.
     std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> m_playbackRouter;
+
+    /// The @c CryptoFactoryInterface instance to be used for crypto facilities.
+    std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface> m_cryptoFactory;
 
     /// The @c CaptionManagerInterface used for handling captions.
     std::shared_ptr<captions::CaptionManagerInterface> m_captionManager;
@@ -1053,7 +1068,7 @@ private:
     AudioPlayerState m_currentState;
 
     /// Protects writes to @c m_currentState and waiting on @c m_currentStateConditionVariable.
-    std::mutex m_currentStateMutex;
+    mutable std::mutex m_currentStateMutex;
 
     /// Provides notifications of changes to @c m_currentState.
     std::condition_variable m_currentStateConditionVariable;

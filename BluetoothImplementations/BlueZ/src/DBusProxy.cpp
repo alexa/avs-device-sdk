@@ -25,7 +25,7 @@ namespace bluetoothImplementations {
 namespace blueZ {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"BlueZUtils"};
+#define TAG "BlueZUtils"
 
 static const int PROXY_DEFAULT_TIMEOUT = -1;
 

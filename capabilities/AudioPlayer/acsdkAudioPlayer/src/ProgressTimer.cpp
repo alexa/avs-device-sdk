@@ -273,7 +273,7 @@ bool ProgressTimer::setState(State newState) {
     if (allowed) {
         ACSDK_DEBUG9(LX(__func__).d("state", m_state).d("newState", newState));
         m_state = newState;
-        m_wake.notify_one();
+        m_wake.notify_all();
     } else {
         ACSDK_ERROR(LX("setStateFailed").d("reason", "notAllowed").d("state", m_state).d("newState", newState));
     }

@@ -43,7 +43,7 @@ using namespace avsCommon::utils::metrics;
 using namespace avsCommon::utils::power;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("HTTP2Transport");
+#define TAG "HTTP2Transport"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -288,10 +288,10 @@ HTTP2Transport::HTTP2Transport(
         m_disconnectReason{ConnectionStatusObserverInterface::ChangedReason::NONE} {
     m_observers.insert(transportObserver);
 
-    m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_mainLoop");
+    m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG "_mainLoop");
 
     m_requestActivityPowerResource =
-        PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_requestActivityResource");
+        PowerMonitor::getInstance()->createLocalPowerResource(TAG "_requestActivityResource");
 
     if (m_mainLoopPowerResource) {
         m_mainLoopPowerResource->acquire();
@@ -771,6 +771,8 @@ HTTP2Transport::State HTTP2Transport::handlePostConnecting() {
             return State::SHUTDOWN;
         }
     }
+
+    ACSDK_INFO(LX_P("handlePostConnecting").m("completing"));
 
     return sendMessagesAndPings(State::POST_CONNECTING, m_requestQueue);
 }

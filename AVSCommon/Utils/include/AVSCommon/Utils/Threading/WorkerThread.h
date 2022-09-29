@@ -57,19 +57,17 @@ public:
     void cancel();
 
     /**
-     * Return the moniker for the worker thread.
-     * @return the worker thread moniker.
+     * Return thread id.
+     *
+     * @return Thread id for the allocated thread.
      */
-    std::string getMoniker() const;
+    std::thread::id getThreadId() const;
 
 private:
     /**
      * method for running thread.
      */
     void runInternal();
-
-    /// The thread moniker for the worker thread.
-    const std::string m_moniker;
 
     /// Flag indicating the thread is stopping.
     std::atomic<bool> m_stop;
@@ -88,6 +86,9 @@ private:
 
     /// Condition variable for waking the thread.
     std::condition_variable m_workReady;
+
+    /// Platform-specific thread identifier.
+    std::thread::id m_threadId;
 };
 
 }  // namespace threading

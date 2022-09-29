@@ -28,7 +28,7 @@ namespace utils {
 namespace configuration {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("ConfigurationNode");
+#define TAG "ConfigurationNode"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -59,6 +59,9 @@ static std::string valueToString(const Value& value) {
     ACSDK_ERROR(LX("valueToStringFailed").d("reason", "AcceptReturnedFalse"));
     return "";
 }
+#else
+// This method is not called when debug logging is disabled, but we need it for sizeof() evaluation.
+std::string valueToString(const Value& value);
 #endif  // ACSDK_DEBUG_LOG_ENABLED
 
 /**
@@ -169,10 +172,14 @@ bool ConfigurationNode::getString(const std::string& key, const char** out, cons
 }
 
 ConfigurationNode ConfigurationNode::operator[](const std::string& key) const {
-    if (!*this) {
+    return getChildNode(key.c_str());
+}
+
+ConfigurationNode ConfigurationNode::getChildNode(const char* key) const {
+    if (!*this || !key) {
         return ConfigurationNode();
     }
-    auto it = m_object->FindMember(key.c_str());
+    auto it = m_object->FindMember(key);
     if (m_object->MemberEnd() == it || !it->value.IsObject()) {
         return ConfigurationNode();
     }
@@ -256,7 +263,7 @@ ConfigurationNode ConfigurationNode::operator[](const std::size_t index) const {
         return ConfigurationNode();
     }
     const rapidjson::Value& objectRef = *m_object;
-    return ConfigurationNode(&objectRef[index]);
+    return ConfigurationNode(&objectRef[static_cast<rapidjson::SizeType>(index)]);
 }
 
 }  // namespace configuration

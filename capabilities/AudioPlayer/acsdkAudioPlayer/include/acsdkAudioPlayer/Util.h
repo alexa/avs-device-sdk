@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_ACSDKAUDIOPLAYER_INCLUDE_ACSDKAUDIOPLAYER_UTIL_H_
 
 #include <string>
+#include <acsdk/CryptoInterfaces/CryptoFactoryInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkAudioPlayer {
@@ -27,9 +28,12 @@ public:
      * Generate MD5 Hash.
      *
      * @param input to hash.
-     * @return string MD5 Hash of input.
+     * @param cryptoFactory Encryption facilities factory.
+     * @return string MD5 Hash of input or an empty string if hashing fails.
      */
-    static std::string generateMD5Hash(const std::string& input);
+    static std::string generateMD5Hash(
+        const std::string& input,
+        const std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory);
 
     /**
      * Get domain name from an Url "https://www.xyz.com/sfsf" will return

@@ -1,0 +1,37 @@
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+
+/**
+ * \defgroup Lib_acsdkPropertiesInterfaces
+ * \defgroup Lib_acsdkPropertiesInterfaces Properties API
+ * @brief Interfaces for accessing persistent configuration.
+ *
+ * Properties API provides interfaces for accessing persistent configuration. The API doesn't mandate how the
+ * configuration is stored, but assumes that it can be accessed as a group of containers. A single container can be
+ * identified by configuration URI (Uniform ResourceLocator).
+ *
+ * Usage Example:
+ * \code{.cpp}
+ * auto properties = propertiesFactory->getProperties("componentName/tableName");
+ * properties->putString("propertyName", "stringValue");
+ * \endcode
+ *
+ * ACSDK provides reference implementation of \ref Lib_acsdkPropertiesInterfaces to use with \ref MiscStorageInterface and to store
+ * properties values in encrypted form. See \ref Lib_acsdkProperties for documentation on reference implementation.
+ *
+ * \sa Lib_acsdkProperties
+ * \sa \ref propertiesInterfaces Namespace
+ * \sa \ref propertiesInterfaces::test Namespace
+ */

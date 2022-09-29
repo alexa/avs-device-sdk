@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 
 #include "acsdkInteractionModelInterfaces/InteractionModelRequestProcessingObserverInterface.h"
 
@@ -29,7 +29,7 @@ namespace acsdkInteractionModelInterfaces {
  * Interface for registering to observe acsdkInteractionModel RequestProcessing notifications.
  */
 using InteractionModelNotifierInterface =
-    acsdkNotifierInterfaces::NotifierInterface<InteractionModelRequestProcessingObserverInterface>;
+    notifierInterfaces::NotifierInterface<InteractionModelRequestProcessingObserverInterface>;
 
 }  // namespace acsdkInteractionModelInterfaces
 }  // namespace alexaClientSDK

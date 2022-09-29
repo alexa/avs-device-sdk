@@ -64,7 +64,7 @@ std::vector<char> MockMimeResponseSink::getMimePart(unsigned part) {
 }
 
 unsigned MockMimeResponseSink::getCountOfMimeParts() {
-    return m_mimeContents.size();
+    return static_cast<unsigned>(m_mimeContents.size());
 }
 
 }  // namespace test

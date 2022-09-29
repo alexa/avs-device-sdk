@@ -16,7 +16,7 @@
 #ifndef ACSDKALEXAEVENTPROCESSEDNOTIFIERINTERFACES_ALEXAEVENTPROCESSEDNOTIFIERINTERFACE_H_
 #define ACSDKALEXAEVENTPROCESSEDNOTIFIERINTERFACES_ALEXAEVENTPROCESSEDNOTIFIERINTERFACE_H_
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 #include <AVSCommon/SDKInterfaces/AlexaEventProcessedObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -26,7 +26,7 @@ namespace acsdkAlexaEventProcessedNotifierInterfaces {
  * Interface for registering to observe AlexaEventProcessed notifications.
  */
 using AlexaEventProcessedNotifierInterface =
-    acsdkNotifierInterfaces::NotifierInterface<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>;
+    notifierInterfaces::NotifierInterface<avsCommon::sdkInterfaces::AlexaEventProcessedObserverInterface>;
 
 }  // namespace acsdkAlexaEventProcessedNotifierInterfaces
 }  // namespace alexaClientSDK

@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.1)
+
+project(acsdkTemplateRuntimeInterfaces LANGUAGES CXX)
+add_library(acsdkTemplateRuntimeInterfaces INTERFACE)
+target_include_directories(acsdkTemplateRuntimeInterfaces INTERFACE "${acsdkTemplateRuntimeInterfaces_SOURCE_DIR}/include")
+target_link_libraries(acsdkTemplateRuntimeInterfaces INTERFACE AVSCommon)
+
+# install interface
+asdk_install_interface()

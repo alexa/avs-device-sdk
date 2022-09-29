@@ -37,7 +37,7 @@ namespace utils {
 namespace filesystem {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FileSystemUtils");
+#define TAG "FileSystemUtils"
 /// Create a LogEntry using this file's TAG and the specified event std::string.
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -67,6 +67,7 @@ private:
 
 std::mutex UmaskLocker::s_umaskMutex;
 
+#ifdef ACSDK_LOG_ENABLED
 static std::string getStrError(int error) {
     static const size_t BUFFER_SIZE = 255;
     char buffer[BUFFER_SIZE + 1]{};
@@ -74,6 +75,10 @@ static std::string getStrError(int error) {
     (void)ignore;  // unused since the type can differ depending on the gnu or posix
     return buffer;
 }
+#else
+// Declaref function so it can be used in sizeof() expression when logging is disabled.
+std::string getStrError(int);
+#endif
 
 bool changePermissions(const std::string& path, Permissions perms) {
     if (chmod(path.c_str(), perms) != 0) {

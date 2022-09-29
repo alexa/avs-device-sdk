@@ -29,7 +29,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json::jsonUtils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"ApiGateway"};
+#define TAG "ApiGateway"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -117,7 +117,7 @@ void ApiGatewayCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<AVSDi
 
 void ApiGatewayCapabilityAgent::handleDirective(std::shared_ptr<DirectiveInfo> info) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, info] { executeHandleDirective(info); });
+    m_executor.execute([this, info] { executeHandleDirective(info); });
 }
 
 void ApiGatewayCapabilityAgent::executeHandleDirective(std::shared_ptr<DirectiveInfo> info) {

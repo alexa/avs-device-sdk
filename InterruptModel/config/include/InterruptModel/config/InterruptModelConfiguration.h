@@ -21,7 +21,9 @@
 #include <memory>
 #include <sstream>
 
-#if defined(_MSC_VER)
+#include <AVSCommon/Utils/SDKConfig.h>
+
+#if defined(_MSC_VER) && defined(ACSDK_CONFIG_SHARED_LIBS)
 #if defined(IN_INTERRUPTMODEL)
 #define interruptmodel_EXPORT __declspec(dllexport)
 #else

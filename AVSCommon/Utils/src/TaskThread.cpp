@@ -15,17 +15,17 @@
 
 #include <chrono>
 
-#include "AVSCommon/Utils/Logger/Logger.h"
-#include "AVSCommon/Utils/Logger/ThreadMoniker.h"
-#include "AVSCommon/Utils/Threading/TaskThread.h"
+#include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Logger/ThreadMoniker.h>
+#include <AVSCommon/Utils/Threading/TaskThread.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("TaskThread");
+#define TAG "TaskThread"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -62,7 +62,7 @@ TaskThread::~TaskThread() {
     }
 }
 
-bool TaskThread::start(std::function<bool()> jobRunner) {
+bool TaskThread::start(std::function<bool()> jobRunner, const std::string& moniker) {
     if (!jobRunner) {
         ACSDK_ERROR(LX("startFailed").d("reason", "invalidFunction"));
         return false;
@@ -74,19 +74,17 @@ bool TaskThread::start(std::function<bool()> jobRunner) {
         return false;
     }
 
-    m_startTime = steady_clock::now();
-
     m_stop = true;
     std::lock_guard<std::mutex> guard(m_mutex);
     if (m_shuttingDown) {
         ACSDK_ERROR(LX("startFailed").d("reason", "shuttingDown"));
         return false;
     }
-    m_workerThread = m_threadPool->obtainWorker(m_moniker);
+    m_workerThread = m_threadPool->obtainWorker();
 
-    m_moniker = m_workerThread->getMoniker();
-    m_workerThread->run([this, jobRunner] {
-        TaskThread::run(jobRunner);
+    m_workerThread->run([this, jobRunner, moniker] {
+        utils::logger::ThreadMoniker::setThisThreadMoniker(moniker);
+        TaskThread::run(std::move(jobRunner));
         return false;
     });
     return true;
@@ -94,15 +92,14 @@ bool TaskThread::start(std::function<bool()> jobRunner) {
 
 void TaskThread::run(std::function<bool()> jobRunner) {
     std::lock_guard<std::mutex> guard(m_mutex);
-    ACSDK_DEBUG9(LX("startThread")
-                     .d("moniker", m_moniker)
-                     .d("duration", duration_cast<microseconds>(steady_clock::now() - m_startTime).count()));
+
     // Reset stop flag and already starting flag.
     m_stop = false;
     m_alreadyStarting = false;
 
     while (!m_stop && jobRunner())
         ;
+
     m_threadPool->releaseWorker(std::move(m_workerThread));
 }
 

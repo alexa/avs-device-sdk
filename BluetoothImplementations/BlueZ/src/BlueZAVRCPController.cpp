@@ -24,7 +24,7 @@ using namespace avsCommon::utils;
 using namespace avsCommon::sdkInterfaces::bluetooth::services;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"BlueZAVRCPController"};
+#define TAG "BlueZAVRCPController"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

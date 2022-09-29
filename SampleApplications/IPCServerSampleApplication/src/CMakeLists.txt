@@ -1,0 +1,4 @@
+
+add_executable(IPCServerSampleApp main.cpp)
+
+target_link_libraries(IPCServerSampleApp LibIPCServerSampleApp)

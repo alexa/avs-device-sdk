@@ -89,7 +89,7 @@ void AttachmentWriterTest::testMultipleReads(bool closeWriterBeforeReading) {
     std::vector<uint8_t> result(TEST_SDS_PARTIAL_READ_AMOUNT_IN_BYTES);
     auto readStatus = InProcessAttachmentReader::ReadStatus::OK;
 
-    int totalBytesRead = 0;
+    size_t totalBytesRead = 0;
     bool done = false;
     int iterations = 0;
     int iterationsMax = 10;
@@ -111,7 +111,7 @@ void AttachmentWriterTest::testMultipleReads(bool closeWriterBeforeReading) {
 
     ASSERT_NE(iterations, iterationsMax);
     ASSERT_EQ(readStatus, terminalStatus);
-    ASSERT_EQ(totalBytesRead, static_cast<ssize_t>(m_testPattern.size()));
+    ASSERT_EQ(totalBytesRead, m_testPattern.size());
 }
 
 /**

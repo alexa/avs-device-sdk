@@ -179,7 +179,7 @@ void Renderer::start(
         loopPause = std::chrono::milliseconds{0};
     }
 
-    m_executor.submit([this, observer, audioFactory, volumeRampEnabled, urls, loopCount, loopPause, startWithPause]() {
+    m_executor.execute([this, observer, audioFactory, volumeRampEnabled, urls, loopCount, loopPause, startWithPause]() {
         executeStart(observer, audioFactory, volumeRampEnabled, urls, loopCount, loopPause, startWithPause);
     });
 }
@@ -190,7 +190,7 @@ void Renderer::stop() {
     m_isStopping = true;
     m_waitCondition.notify_all();
 
-    m_executor.submit([this]() { executeStop(); });
+    m_executor.execute([this]() { executeStop(); });
 }
 
 void Renderer::onFirstByteRead(SourceId id, const MediaPlayerState&) {
@@ -198,15 +198,15 @@ void Renderer::onFirstByteRead(SourceId id, const MediaPlayerState&) {
 }
 
 void Renderer::onPlaybackStarted(SourceId sourceId, const MediaPlayerState&) {
-    m_executor.submit([this, sourceId]() { executeOnPlaybackStarted(sourceId); });
+    m_executor.execute([this, sourceId]() { executeOnPlaybackStarted(sourceId); });
 }
 
 void Renderer::onPlaybackStopped(SourceId sourceId, const MediaPlayerState&) {
-    m_executor.submit([this, sourceId]() { executeOnPlaybackStopped(sourceId); });
+    m_executor.execute([this, sourceId]() { executeOnPlaybackStopped(sourceId); });
 }
 
 void Renderer::onPlaybackFinished(SourceId sourceId, const MediaPlayerState&) {
-    m_executor.submit([this, sourceId]() { executeOnPlaybackFinished(sourceId); });
+    m_executor.execute([this, sourceId]() { executeOnPlaybackFinished(sourceId); });
 }
 
 void Renderer::onPlaybackError(
@@ -214,7 +214,7 @@ void Renderer::onPlaybackError(
     const avsCommon::utils::mediaPlayer::ErrorType& type,
     std::string error,
     const MediaPlayerState&) {
-    m_executor.submit([this, sourceId, type, error]() { executeOnPlaybackError(sourceId, type, error); });
+    m_executor.execute([this, sourceId, type, error]() { executeOnPlaybackError(sourceId, type, error); });
 }
 
 Renderer::Renderer(

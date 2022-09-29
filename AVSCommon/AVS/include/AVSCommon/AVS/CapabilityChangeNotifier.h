@@ -16,7 +16,7 @@
 #ifndef ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYCHANGENOTIFIER_H_
 #define ALEXA_CLIENT_SDK_AVSCOMMON_AVS_INCLUDE_AVSCOMMON_AVS_CAPABILITYCHANGENOTIFIER_H_
 
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 #include <AVSCommon/SDKInterfaces/CapabilityConfigurationChangeObserverInterface.h>
 
 namespace alexaClientSDK {
@@ -27,7 +27,7 @@ namespace avs {
  * Implementation of CapabilityChangeNotifierInterface
  */
 using CapabilityChangeNotifier =
-    acsdkNotifier::Notifier<avsCommon::sdkInterfaces::CapabilityConfigurationChangeObserverInterface>;
+    notifier::Notifier<avsCommon::sdkInterfaces::CapabilityConfigurationChangeObserverInterface>;
 
 }  // namespace avs
 }  // namespace avsCommon

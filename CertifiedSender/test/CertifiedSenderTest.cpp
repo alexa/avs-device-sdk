@@ -325,7 +325,7 @@ TEST_F(CertifiedSenderTest, testTimer_SendMessageWithURI) {
 /**
  * Tests if messages are re-submitted when the response is a re-tryable response.
  */
-TEST_F(CertifiedSenderTest, testSlow_retryableResponsesAreRetried) {
+TEST_F(CertifiedSenderTest, testTimer_retryableResponsesAreRetried) {
     std::static_pointer_cast<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>(m_certifiedSender)
         ->onConnectionStatusChanged(
             avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED,
@@ -376,7 +376,7 @@ TEST_F(CertifiedSenderTest, testSlow_retryableResponsesAreRetried) {
 /**
  * Tests if messages are discarded when the response is a non-retryable response.
  */
-TEST_F(CertifiedSenderTest, testSlow_nonRetryableResponsesAreNotRetried) {
+TEST_F(CertifiedSenderTest, testTimer_nonRetryableResponsesAreNotRetried) {
     std::static_pointer_cast<avsCommon::sdkInterfaces::ConnectionStatusObserverInterface>(m_certifiedSender)
         ->onConnectionStatusChanged(
             avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED,

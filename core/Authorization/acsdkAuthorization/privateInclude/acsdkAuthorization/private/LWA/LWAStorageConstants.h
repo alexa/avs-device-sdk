@@ -19,7 +19,7 @@
 #include <memory>
 #include <string>
 
-#include <acsdkPropertiesInterfaces/PropertiesFactoryInterface.h>
+#include <acsdk/PropertiesInterfaces/PropertiesFactoryInterface.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 
 namespace alexaClientSDK {

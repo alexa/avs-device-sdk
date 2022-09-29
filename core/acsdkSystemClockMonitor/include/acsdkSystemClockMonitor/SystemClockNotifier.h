@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockNotifierInterface.h>
 #include <acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h>
 
@@ -29,7 +29,7 @@ namespace acsdkSystemClockMonitor {
  * Implementation of StartupNotifierInterface.
  */
 class SystemClockNotifier
-        : public acsdkNotifier::Notifier<acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface> {
+        : public notifier::Notifier<acsdkSystemClockMonitorInterfaces::SystemClockMonitorObserverInterface> {
 public:
     /**
      * Factory method.

@@ -29,7 +29,7 @@ using namespace avsCommon::sdkInterfaces::rangeController;
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"RangeControllerAttributeBuilder"};
+#define TAG "RangeControllerAttributeBuilder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

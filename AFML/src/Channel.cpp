@@ -25,7 +25,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("Channel");
+#define TAG "Channel"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -49,7 +49,7 @@ Channel::Channel(const std::string& name, const unsigned int priority, bool isVi
         m_state{name} {
     /// Non-refcounted.
     m_powerResource = power::PowerResource::create(
-        TAG + ":" + name,
+        TAG ":" + name,
         power::PowerMonitor::getInstance()->getPowerResourceManager(),
         PowerResourceManagerInterface::PowerResourceLevel::STANDBY_MED,
         false);

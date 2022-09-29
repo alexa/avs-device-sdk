@@ -27,6 +27,7 @@
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 
+#include <acsdk/CryptoInterfaces/test/MockCryptoFactory.h>
 #include <AVSCommon/AVS/Attachment/AttachmentManager.h>
 #include <AVSCommon/SDKInterfaces/MockChannelVolumeInterface.h>
 #include <AVSCommon/SDKInterfaces/MockContextManager.h>
@@ -63,6 +64,7 @@ using namespace avsCommon::utils::memory;
 using namespace avsCommon::utils::metrics::test;
 using namespace captions::test;
 using namespace avsCommon::utils::mediaPlayer::test;
+using namespace cryptoInterfaces::test;
 using namespace rapidjson;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
@@ -110,9 +112,6 @@ static const std::string MESSAGE_ID_TEST_3("MessageId_Test3");
 
 /// PlayRequestId for testing.
 static const std::string PLAY_REQUEST_ID_TEST("PlayRequestId_Test");
-
-/// CorrelationToken for testing.
-static const std::string CORRELATION_TOKEN_TEST("CorrelationToken_Test");
 
 /// Context ID for testing
 static const std::string CONTEXT_ID_TEST("ContextId_Test");
@@ -162,6 +161,9 @@ static const std::string IDLE_STATE{"IDLE"};
 
 /// The offset in milliseconds returned by the mock media player.
 static const long OFFSET_IN_MILLISECONDS_TEST{100};
+
+/// The offset in milliseconds returned by the mock media player.
+static const long OFFSET_IN_MILLISECONDS_TEST2{0};
 
 /// ExpiryTime for testing. Needs to be in ISO 8601 format.
 static const std::string EXPIRY_TEST("481516234248151623421088");
@@ -235,6 +237,56 @@ static std::string createEnqueuePayloadTest(long offsetInMilliseconds, const std
     // clang-format on
 
     return ENQUEUE_PAYLOAD_TEST;
+}
+
+static std::string createReplaceAllPayloadTest(
+    long offsetInMilliseconds,
+    const std::string& audioId = AUDIO_ITEM_ID_1) {
+    const std::string REPLACEALL_PAYLOAD_TEST =
+        "{"
+        "\"playBehavior\":\"" +
+        NAME_REPLACE_ALL +
+        "\","
+        "\"audioItem\": {"
+        "\"audioItemId\":\"" +
+        audioId +
+        "\","
+        "\"stream\": {"
+        "\"url\":\"" +
+        URL_TEST +
+        "\","
+        "\"streamFormat\":\"" +
+        FORMAT_TEST +
+        "\","
+        "\"offsetInMilliseconds\":" +
+        std::to_string(offsetInMilliseconds) +
+        ","
+        "\"expiryTime\":\"" +
+        EXPIRY_TEST +
+        "\","
+        "\"progressReport\": {"
+        "\"progressReportDelayInMilliseconds\":" +
+        std::to_string(PROGRESS_REPORT_DELAY) +
+        ","
+        "\"progressReportIntervalInMilliseconds\":" +
+        std::to_string(PROGRESS_REPORT_INTERVAL) +
+        "},"
+        "\"caption\": {"
+        "\"content\":\"" +
+        CAPTION_CONTENT_SAMPLE +
+        "\","
+        "\"type\":\"WEBVTT\""
+        "},"
+        "\"token\":\"" +
+        TOKEN_TEST +
+        "\","
+        "\"expectedPreviousToken\":\"\""
+        "}"
+        "}"
+        "}";
+    // clang-format on
+
+    return REPLACEALL_PAYLOAD_TEST;
 }
 
 // clang-format off
@@ -674,6 +726,9 @@ public:
     /// The mock @c MetricRecorderInterface
     std::shared_ptr<MockMetricRecorder> m_mockMetricRecorder;
 
+    /// The mock @c MockCryptoFactory
+    std::shared_ptr<MockCryptoFactory> m_cryptoFactory;
+
     /**
      * This is invoked in response to a @c setState call.
      *
@@ -897,6 +952,8 @@ void AudioPlayerTest::SetUp() {
     ASSERT_TRUE(m_mockMediaPlayerTrack2);
     m_mockMediaPlayerTrack3 = MockMediaPlayer::create();
     ASSERT_TRUE(m_mockMediaPlayerTrack3);
+    m_cryptoFactory = std::make_shared<MockCryptoFactory>();
+    ASSERT_TRUE(m_cryptoFactory);
     std::vector<std::shared_ptr<MediaPlayerInterface>> pool = {
         m_mockMediaPlayer, m_mockMediaPlayerTrack2, m_mockMediaPlayerTrack3};
     m_mockMediaResourceProvider = PooledMediaResourceProvider::createPooledMediaResourceProviderInterface(
@@ -911,6 +968,7 @@ void AudioPlayerTest::SetUp() {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
 
@@ -955,6 +1013,7 @@ void AudioPlayerTest::reSetUp(int numberOfPlayers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
 
@@ -987,8 +1046,8 @@ void AudioPlayerTest::wakeOnSendMessage() {
 }
 
 void AudioPlayerTest::sendPlayDirective(long offsetInMilliseconds, long endOffsetInMilliseconds) {
-    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(
-        NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST, CORRELATION_TOKEN_TEST);
+    auto avsMessageHeader =
+        std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST, PLAY_REQUEST_ID_TEST);
     std::string payload;
     if (endOffsetInMilliseconds == 0) {
         payload = createEnqueuePayloadTest(offsetInMilliseconds);
@@ -1373,6 +1432,7 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
@@ -1386,6 +1446,7 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
@@ -1399,6 +1460,7 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
@@ -1412,6 +1474,7 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         nullptr,
         m_mockExceptionSender,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
@@ -1425,6 +1488,7 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         nullptr,
         m_mockPlaybackRouter,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
@@ -1438,6 +1502,7 @@ TEST_F(AudioPlayerTest, test_createWithNullPointers) {
         m_mockContextManager,
         m_mockExceptionSender,
         nullptr,
+        m_cryptoFactory,
         m_mockCaptionManager,
         m_mockMetricRecorder);
     EXPECT_EQ(testAudioPlayer, nullptr);
@@ -1596,6 +1661,47 @@ TEST_F(AudioPlayerTest, testTransitionFromPlayingToPlayingNextEnqueuedTrack) {
     avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_3);
     playDirective =
         AVSDirective::create("", avsMessageHeader, REPLACE_ALL_PAYLOAD_TEST, m_attachmentManager, CONTEXT_ID_TEST_3);
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_3);
+
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::STOPPED, MY_WAIT_TIMEOUT));
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, MY_WAIT_TIMEOUT));
+}
+
+TEST_F(AudioPlayerTest, testTransitionDontPlayEnqueuedTrackIfOffsetDifferent) {
+    // send a play directive
+    sendPlayDirective();
+    ASSERT_TRUE(m_testAudioPlayerObserver->waitFor(PlayerActivity::PLAYING, MY_WAIT_TIMEOUT));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+
+    // Verify that the media player for the enqueued track is used
+    EXPECT_CALL(*(m_mockMediaPlayer.get()), play(_)).Times(0);
+    EXPECT_CALL(*(m_mockMediaPlayerTrack2.get()), play(_)).Times(0);
+    EXPECT_CALL(*(m_mockMediaPlayerTrack3.get()), play(_)).Times(AtLeast(1));
+
+    // Enqueue next track
+    auto avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_2);
+    std::shared_ptr<AVSDirective> playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createEnqueuePayloadTest(OFFSET_IN_MILLISECONDS_TEST, AUDIO_ITEM_ID_2),
+        m_attachmentManager,
+        CONTEXT_ID_TEST_2);
+
+    m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
+    m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_2);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(EVENT_PROCESS_DELAY));
+
+    // Now, send a REPLACE_ALL directive that has the same ID as the enqueued track
+    avsMessageHeader = std::make_shared<AVSMessageHeader>(NAMESPACE_AUDIO_PLAYER, NAME_PLAY, MESSAGE_ID_TEST_3);
+    playDirective = AVSDirective::create(
+        "",
+        avsMessageHeader,
+        createReplaceAllPayloadTest(OFFSET_IN_MILLISECONDS_TEST2, AUDIO_ITEM_ID_2),
+        m_attachmentManager,
+        CONTEXT_ID_TEST_3);
     m_audioPlayer->CapabilityAgent::preHandleDirective(playDirective, std::move(m_mockDirectiveHandlerResult));
     m_audioPlayer->CapabilityAgent::handleDirective(MESSAGE_ID_TEST_3);
 

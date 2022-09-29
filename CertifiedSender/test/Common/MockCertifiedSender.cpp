@@ -25,7 +25,6 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::sdkInterfaces::test;
 using namespace avsCommon::utils;
 using namespace certifiedSender;
-using namespace certifiedSender::test;
 using namespace registrationManager;
 
 using namespace ::testing;

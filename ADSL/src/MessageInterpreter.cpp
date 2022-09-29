@@ -39,7 +39,7 @@ static const std::string PARSE_COMPLETE("PARSE_COMPLETE");
 static const std::string PARSE_COMPLETE_ACTIVITY_NAME("MESSAGE_INTERPRETER-" + PARSE_COMPLETE);
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MessageInterpreter");
+#define TAG "MessageInterpreter"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

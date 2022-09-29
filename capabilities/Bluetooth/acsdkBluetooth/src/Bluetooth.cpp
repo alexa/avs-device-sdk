@@ -694,7 +694,7 @@ void Bluetooth::syncWithDeviceManager() {
                 break;
             case MediaStreamingState::ACTIVE:
                 m_streamingState = StreamingState::ACTIVE;
-                m_executor.submit([this] { executeAcquireFocus(__func__); });
+                m_executor.execute([this] { executeAcquireFocus(__func__); });
                 break;
         }
     }
@@ -823,7 +823,7 @@ std::unordered_set<std::shared_ptr<avsCommon::avs::CapabilityConfiguration>> Blu
 }
 
 void Bluetooth::clearData() {
-    m_executor.submit([this] {
+    m_executor.execute([this] {
         ACSDK_DEBUG5(LX("clearData"));
 
         // Stop scanning and discoverability.
@@ -1321,7 +1321,7 @@ void Bluetooth::executeEnterNone() {
 }
 
 void Bluetooth::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
-    m_executor.submit([this, newFocus, behavior] {
+    m_executor.execute([this, newFocus, behavior] {
         if (FocusState::NONE == newFocus && FocusTransitionState::PENDING_INTERNAL == m_focusTransitionState) {
             m_focusTransitionState = FocusTransitionState::INTERNAL;
         } else if (FocusState::NONE != newFocus && FocusTransitionState::PENDING_INTERNAL != m_focusTransitionState) {
@@ -1364,7 +1364,7 @@ void Bluetooth::onFocusChanged(FocusState newFocus, MixingBehavior behavior) {
 }
 
 void Bluetooth::setDiscoverableMode(bool discoverable) {
-    m_executor.submit([this, discoverable] {
+    m_executor.execute([this, discoverable] {
         ACSDK_DEBUG5(LX(__func__).d("discoverable", discoverable));
         if (discoverable) {
             executeHandleEnterDiscoverableMode();
@@ -1375,7 +1375,7 @@ void Bluetooth::setDiscoverableMode(bool discoverable) {
 }
 
 void Bluetooth::setScanMode(bool scanning) {
-    m_executor.submit([this, scanning] {
+    m_executor.execute([this, scanning] {
         ACSDK_DEBUG5(LX(__func__).d("scanning", scanning));
         if (scanning) {
             executeHandleScanDevices();
@@ -1386,7 +1386,7 @@ void Bluetooth::setScanMode(bool scanning) {
 }
 
 void Bluetooth::pair(const std::string& addr) {
-    m_executor.submit([this, addr] {
+    m_executor.execute([this, addr] {
         ACSDK_DEBUG5(LX(__func__));
         std::string uuid;
         retrieveUuid(addr, &uuid);
@@ -1397,7 +1397,7 @@ void Bluetooth::pair(const std::string& addr) {
 }
 
 void Bluetooth::unpair(const std::string& addr) {
-    m_executor.submit([this, addr] {
+    m_executor.execute([this, addr] {
         ACSDK_DEBUG5(LX(__func__));
         std::string uuid;
         retrieveUuid(addr, &uuid);
@@ -1408,7 +1408,7 @@ void Bluetooth::unpair(const std::string& addr) {
 }
 
 void Bluetooth::connect(const std::string& addr) {
-    m_executor.submit([this, addr] {
+    m_executor.execute([this, addr] {
         ACSDK_DEBUG5(LX(__func__));
         std::string uuid;
         retrieveUuid(addr, &uuid);
@@ -1419,7 +1419,7 @@ void Bluetooth::connect(const std::string& addr) {
 }
 
 void Bluetooth::disconnect(const std::string& addr) {
-    m_executor.submit([this, addr] {
+    m_executor.execute([this, addr] {
         ACSDK_DEBUG5(LX(__func__));
         std::string uuid;
         retrieveUuid(addr, &uuid);
@@ -1429,8 +1429,15 @@ void Bluetooth::disconnect(const std::string& addr) {
     });
 }
 
+void Bluetooth::setPairingPin(const std::string& addr, const std::string& pin) {
+    m_executor.execute([this, addr, pin] {
+        ACSDK_DEBUG5(LX(__func__));
+        executeSetPairingPin(addr, pin);
+    });
+}
+
 void Bluetooth::onContextAvailable(const std::string& jsonContext) {
-    m_executor.submit([this, jsonContext] {
+    m_executor.execute([this, jsonContext] {
         ACSDK_DEBUG9(LX("onContextAvailableLambda"));
 
         if (m_eventQueue.empty()) {
@@ -1512,7 +1519,7 @@ void Bluetooth::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> 
         return;
     }
 
-    m_executor.submit([this, info] {
+    m_executor.execute([this, info] {
         const std::string directiveName = info->directive->getName();
 
         Document payload(kObjectType);
@@ -2148,6 +2155,18 @@ void Bluetooth::executeDisconnectDevices(const std::unordered_set<std::string>& 
     }
 }
 
+void Bluetooth::executeSetPairingPin(const std::string& addr, const std::string& pin) {
+    std::string truncatedMac = truncateWithDefault(addr);
+    ACSDK_DEBUG5(LX(__func__).d("mac", truncatedMac));
+
+    auto device = retrieveDeviceByMac(addr);
+    if (!device) {
+        ACSDK_ERROR(LX(__func__).d("reason", "deviceNotFound").d("mac", truncatedMac));
+        return;
+    }
+    device->setPairingPin(pin);
+}
+
 void Bluetooth::cancelDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {
     removeDirective(info);
 }
@@ -2334,7 +2353,7 @@ void Bluetooth::onFirstByteRead(MediaPlayerObserverInterface::SourceId id, const
 
 void Bluetooth::onPlaybackStarted(MediaPlayerObserverInterface::SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX(__func__).d("sourceId", id));
-    m_executor.submit([this] {
+    m_executor.execute([this] {
         // It means we were pending a pause before the onPlaybackStarted was received.
         if (m_streamingState == StreamingState::PENDING_PAUSED) {
             executeSendStreamingStarted(m_activeA2DPDevice);
@@ -2355,7 +2374,7 @@ void Bluetooth::onPlaybackStarted(MediaPlayerObserverInterface::SourceId id, con
 
 void Bluetooth::onPlaybackStopped(MediaPlayerObserverInterface::SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX(__func__).d("sourceId", id));
-    m_executor.submit([this] {
+    m_executor.execute([this] {
         // Playback has been stopped, cleanup the source.
         cleanupMediaSource();
         if (m_activeA2DPDevice) {
@@ -2369,7 +2388,7 @@ void Bluetooth::onPlaybackStopped(MediaPlayerObserverInterface::SourceId id, con
 
 void Bluetooth::onPlaybackFinished(MediaPlayerObserverInterface::SourceId id, const MediaPlayerState&) {
     ACSDK_DEBUG5(LX(__func__).d("sourceId", id));
-    m_executor.submit([this] {
+    m_executor.execute([this] {
         m_streamingState = StreamingState::INACTIVE;
 
         cleanupMediaSource();
@@ -2386,7 +2405,7 @@ void Bluetooth::onPlaybackError(
     const MediaPlayerState&) {
     ACSDK_DEBUG5(LX(__func__).d("id", id).d("type", type).d("error", error));
 
-    m_executor.submit([this, id] {
+    m_executor.execute([this, id] {
         // Do not attempt to stop the media player here. This could result in a infinite loop if the stop fails.
         if (id == m_sourceId) {
             cleanupMediaSource();
@@ -3191,7 +3210,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
 
             ACSDK_INFO(LX(__func__).d("reason", "DEVICE_DISCOVERED").d("mac", truncateWithDefault(device->getMac())));
             ACSDK_DEBUG5(LX(__func__).d("friendlyName", device->getFriendlyName()));
-            m_executor.submit([this] {
+            m_executor.execute([this] {
                 if (ScanningTransitionState::ACTIVE == m_scanningTransitionState) {
                     executeSendScanDevicesReport(m_deviceManager->getDiscoveredDevices(), true);
                 }
@@ -3200,7 +3219,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
         }
         case avsCommon::utils::bluetooth::BluetoothEventType::SCANNING_STATE_CHANGED: {
             ACSDK_INFO(LX(__func__).d("reason", "SCANNING_STATE_CHANGED").d("isScanning", event.isScanning()));
-            m_executor.submit([this, event] {
+            m_executor.execute([this, event] {
                 bool isScanning = event.isScanning();
                 if (!isScanning) {
                     if (ScanningTransitionState::PENDING_INACTIVE == m_scanningTransitionState) {
@@ -3235,7 +3254,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::IDLE:
                     break;
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::PAIRED: {
-                    m_executor.submit([this, device] {
+                    m_executor.execute([this, device] {
                         /*
                          * Send one of these so we remove the freshly paired device
                          * from the "Available Devices" page.
@@ -3250,7 +3269,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                     break;
                 }
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::DISCONNECTED: {
-                    m_executor.submit([this, device] {
+                    m_executor.execute([this, device] {
                         std::shared_ptr<BluetoothEventState> disconnectEvent =
                             executeRemoveBluetoothEventState(device, DeviceState::DISCONNECTED);
                         if (disconnectEvent) {
@@ -3309,7 +3328,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                     break;
                 }
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::UNPAIRED: {
-                    m_executor.submit([this, device] {
+                    m_executor.execute([this, device] {
                         executeRemoveBluetoothEventState(device, DeviceState::UNPAIRED);
 
                         std::unordered_set<
@@ -3320,7 +3339,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                     break;
                 }
                 case avsCommon::sdkInterfaces::bluetooth::DeviceState::CONNECTED: {
-                    m_executor.submit([this, device] {
+                    m_executor.execute([this, device] {
                         std::shared_ptr<BluetoothEventState> connectEvent =
                             executeRemoveBluetoothEventState(device, DeviceState::CONNECTED);
                         if (connectEvent) {
@@ -3407,7 +3426,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                 if (MediaStreamingState::ACTIVE == event.getMediaStreamingState()) {
                     ACSDK_DEBUG5(LX(__func__).m("Streaming is active"));
 
-                    m_executor.submit([this] {
+                    m_executor.execute([this] {
                         if (m_streamingState == StreamingState::INACTIVE ||
                             m_streamingState == StreamingState::PAUSED ||
                             m_streamingState == StreamingState::PENDING_PAUSED) {
@@ -3420,7 +3439,7 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
                      * We should be observing a separate playback based signal instead for these decisions.
                      */
                 } else if (MediaStreamingState::IDLE == event.getMediaStreamingState()) {
-                    m_executor.submit([this] {
+                    m_executor.execute([this] {
                         if (StreamingState::ACTIVE == m_streamingState) {
                             if (FocusState::FOREGROUND == m_focusState || FocusState::BACKGROUND == m_focusState) {
                                 executeReleaseFocus(__func__);
@@ -3431,14 +3450,14 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
             } else if (A2DPRole::SOURCE == *event.getA2DPRole()) {
                 // Ignore the PENDING state and only act on ACTIVE.
                 if (MediaStreamingState::ACTIVE == event.getMediaStreamingState()) {
-                    m_executor.submit([this] {
+                    m_executor.execute([this] {
                         if (StreamingState::ACTIVE != m_streamingState) {
                             m_streamingState = StreamingState::ACTIVE;
                             executeSendStreamingStarted(m_activeA2DPDevice);
                         }
                     });
                 } else if (MediaStreamingState::IDLE == event.getMediaStreamingState()) {
-                    m_executor.submit([this] {
+                    m_executor.execute([this] {
                         if (StreamingState::ACTIVE == m_streamingState) {
                             m_streamingState = StreamingState::PAUSED;
                             executeSendStreamingEnded(m_activeA2DPDevice);
@@ -3452,9 +3471,9 @@ void Bluetooth::onEventFired(const avsCommon::utils::bluetooth::BluetoothEvent& 
             ACSDK_DEBUG5(
                 LX(__func__).d("event", "TOGGLE_A2DP_PROFILE_STATE_CHANGED").d("a2dpEnable", event.isA2DPEnabled()));
             if (event.isA2DPEnabled()) {
-                m_executor.submit([this] { executeUnrestrictA2DPDevices(); });
+                m_executor.execute([this] { executeUnrestrictA2DPDevices(); });
             } else {
-                m_executor.submit([this] { executeRestrictA2DPDevices(); });
+                m_executor.execute([this] { executeRestrictA2DPDevices(); });
             }
             break;
         }

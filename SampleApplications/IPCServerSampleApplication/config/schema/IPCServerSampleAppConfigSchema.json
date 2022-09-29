@@ -1,0 +1,545 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "definitions": {
+    "sampleApp": {
+      "type": "object",
+      "properties": {
+        "websocket": {
+          "type": "object",
+          "properties": {
+            "websocketInterface": {
+              "type": "string"
+            },
+            "websocketPort": {
+              "type": "number"
+            },
+            "websocketCertificateAuthority": {
+              "type": "string"
+            },
+            "websocketCertificate": {
+              "type": "string"
+            }
+          }
+        },
+        "aplContentCache": {
+          "type": "object",
+          "properties": {
+            "contentCacheReusePeriodInSeconds": {
+              "type": "string"
+            },
+            "contentCacheMaxSize": {
+              "type": "string"
+            },
+            "maxNumberOfConcurrentDownloads": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": []
+    },
+    "alexaPresentationCapabilityAgent": {
+      "definitions": {
+        "codecs_item": {
+          "type": "string",
+          "enum": [
+            "H_264_41",
+            "H_264_42"
+          ]
+        }
+      },
+      "type": "object",
+      "properties": {
+        "minStateReportIntervalMs": {
+          "type": "number"
+        },
+        "stateReportCheckIntervalMs": {
+          "type": "number"
+        },
+        "video": {
+          "type": "object",
+          "properties": {
+            "codecs": {
+              "type":"array",
+              "items": {
+                "$ref": "#/definitions/alexaPresentationCapabilityAgent/definitions/codecs_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "visualCharacteristics": {
+      "type": "array",
+      "definitions": {
+        "value_int": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer"
+            },
+            "height": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ]
+        },
+        "value_dec": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ]
+        },
+        "resolution": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "type": "string",
+              "enum": [
+                "PIXEL"
+              ]
+            },
+            "value": {
+              "$ref": "#/definitions/visualCharacteristics/definitions/value_int"
+            }
+          },
+          "required": [
+            "unit",
+            "value"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "AlexaInterface"
+          ]
+        },
+        "version": {
+          "type": "string"
+        },
+        "alexa.interactionmode.configurations": {
+          "type": "object",
+          "definitions": {
+            "uiMode": {
+              "type": "string",
+              "enum": [
+                "HUB",
+                "TV",
+                "MOBILE",
+                "PC",
+                "AUTO",
+                "HEADLESS"
+              ]
+            },
+            "interactionDistance": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "CENTIMETERS",
+                    "INCHES"
+                  ]
+                },
+                "value": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "unit",
+                "value"
+              ]
+            }
+          },
+          "properties": {
+            "interactionModes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uiMode": {
+                    "$ref": "#/definitions/visualCharacteristics/definitions/alexa.interactionmode.configurations/definitions/uiMode"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "interactionDistance": {
+                    "$ref": "#/definitions/visualCharacteristics/definitions/alexa.interactionmode.configurations/definitions/interactionDistance"
+                  },
+                  "touch": {
+                    "type": "string",
+                    "enum": [
+                      "SUPPORTED",
+                      "UNSUPPORTED"
+                    ]
+                  },
+                  "keyboard": {
+                    "type": "string",
+                    "enum": [
+                      "SUPPORTED",
+                      "UNSUPPORTED"
+                    ]
+                  },
+                  "video": {
+                    "type": "string",
+                    "enum": [
+                      "SUPPORTED",
+                      "UNSUPPORTED"
+                    ]
+                  },
+                  "dialog": {
+                    "type": "string",
+                    "enum": [
+                      "SUPPORTED",
+                      "UNSUPPORTED"
+                    ]
+                  }
+                },
+                "required": [
+                  "uiMode",
+                  "id",
+                  "interactionDistance",
+                  "touch",
+                  "keyboard",
+                  "video",
+                  "dialog"
+                ]
+              }
+            }
+          },
+          "required": [
+            "interactionModes"
+          ]
+        },
+        "alexa.display.configurations": {
+          "type": "object",
+          "definitions": {
+            "pixelDensity": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "DPI"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "densityIndependentResolution": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "DP"
+                  ]
+                },
+                "value": {
+                  "$ref": "#/definitions/visualCharacteristics/definitions/value_int"
+                }
+              }
+            },
+            "physicalSize": {
+              "type": "object",
+              "properties": {
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "CENTIMETERS",
+                    "INCHES"
+                  ]
+                },
+                "value": {
+                  "$ref": "#/definitions/visualCharacteristics/definitions/value_dec"
+                }
+              },
+              "required": [
+                "unit",
+                "value"
+              ]
+            }
+          },
+          "properties": {
+            "display": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "PIXEL"
+                  ]
+                },
+                "touch": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "SINGLE",
+                      "UNSUPPORTED"
+                    ]
+                  }
+                },
+                "shape": {
+                  "type": "string",
+                  "enum": [
+                    "RECTANGLE",
+                    "ROUND"
+                  ]
+                },
+                "dimensions": {
+                  "type": "object",
+                  "properties": {
+                    "resolution": {
+                      "$ref": "#/definitions/visualCharacteristics/definitions/resolution"
+                    },
+                    "pixelDensity": {
+                      "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.configurations/definitions/pixelDensity"
+                    },
+                    "densityIndependentResolution": {
+                      "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.configurations/definitions/densityIndependentResolution"
+                    },
+                    "physicalSize": {
+                      "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.configurations/definitions/physicalSize"
+                    }
+                  },
+                  "required": [
+                    "physicalSize"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "touch",
+                "shape",
+                "dimensions"
+              ]
+            }
+          },
+          "required": [
+            "display"
+          ]
+        },
+        "alexa.display.window.configurations": {
+          "type": "object",
+          "definitions": {
+            "discrete": {
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "DISCRETE"
+                  ]
+                },
+                "value": {
+                  "$ref": "#/definitions/visualCharacteristics/definitions/resolution"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            },
+            "continuous": {
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "CONTINUOUS"
+                  ]
+                },
+                "maximum": {
+                  "$ref": "#/definitions/visualCharacteristics/definitions/resolution"
+                },
+                "minimum": {
+                  "$ref": "#/definitions/visualCharacteristics/definitions/resolution"
+                }
+              },
+              "required": [
+                "minimum",
+                "maximum"
+              ]
+            }
+          },
+          "properties": {
+            "templates": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "configuration": {
+                    "type": "object",
+                    "properties": {
+                      "sizes": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            }
+                          },
+                          "anyOf": [
+                            {
+                              "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.window.configurations/definitions/discrete"
+                            },
+                            {
+                              "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.window.configurations/definitions/continuous"
+                            }
+                          ],
+                          "required": [
+                            "type",
+                            "id"
+                          ]
+                        }
+                      },
+                      "interactionModes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "sizes",
+                      "interactionModes"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "type",
+                  "configuration"
+                ]
+              }
+            }
+          },
+          "required": [
+            "templates"
+          ]
+        }
+      },
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/visualCharacteristics/definitions/type"
+          },
+          "version": {
+            "$ref": "#/definitions/visualCharacteristics/definitions/version"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "interface": {
+                "type": "string",
+                "enum": [
+                  "Alexa.InteractionMode"
+                ]
+              },
+              "configurations": {
+                "$ref": "#/definitions/visualCharacteristics/definitions/alexa.interactionmode.configurations"
+              }
+            }
+          },
+          {
+            "properties": {
+              "interface": {
+                "type": "string",
+                "enum": [
+                  "Alexa.Display"
+                ]
+              },
+              "configurations": {
+                "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.configurations"
+              }
+            }
+          },
+          {
+            "properties": {
+              "interface": {
+                "type": "string",
+                "enum": [
+                  "Alexa.Display.Window"
+                ]
+              },
+              "configurations": {
+                "$ref": "#/definitions/visualCharacteristics/definitions/alexa.display.window.configurations"
+              }
+            }
+          }
+        ],
+        "required": [
+          "type",
+          "interface",
+          "version",
+          "configurations"
+        ]
+      }
+    },
+    "presentationOptions": {
+      "type": "object",
+      "properties": {
+        "shortPresentationTimeoutMs": {
+          "type": "number"
+        },
+        "transientPresentationTimeoutMs": {
+          "type": "number"
+        },
+        "longPresentationTimeoutMs": {
+          "type": "number"
+        }
+      }
+    },
+    "sampleClientConfig": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  "properties": {
+    "version": {
+      "const": "3.0"
+    },
+    "sampleApp": {
+      "$ref": "#/definitions/sampleApp"
+    },
+    "alexaPresentationCapabilityAgent": {
+      "$ref": "#/definitions/alexaPresentationCapabilityAgent"
+    },
+    "visualCharacteristics": {
+      "$ref": "#/definitions/visualCharacteristics"
+    },
+    "presentationOptions": {
+      "$ref": "#/definitions/presentationOptions"
+    },
+    "sampleClientConfig": {
+      "$ref": "#/definitions/sampleClientConfig"
+    }
+  },
+  "required": [
+    "version",
+    "visualCharacteristics",
+    "sampleClientConfig"
+  ]
+}

@@ -10,6 +10,7 @@
 
 option(COMMS "Enable Alexa Comms (Calling)." OFF)
 option(COMMS_AUDIO_PROXY "Enable Alexa Comms (Calling) using audio proxy." OFF)
+option(COMMS_VISUAL_FOCUS_MANAGER "Enable Alexa Comms (Calling) using visual focus manager." OFF)
 
 if(COMMS)
     if(NOT COMMS_LIB_PATH)
@@ -24,5 +25,10 @@ if(COMMS)
     if (COMMS_AUDIO_PROXY)
         message("Creating ${PROJECT_NAME} with Alexa Comms (Calling) using audio proxy")
         add_definitions(-DENABLE_COMMS_AUDIO_PROXY)
+    endif()
+
+    if(COMMS_VISUAL_FOCUS_MANAGER)
+        message("Creating ${PROJECT_NAME} with Alexa Comms (Calling) using visual focus manager")
+        add_definitions(-DENABLE_COMMS_VISUAL_FOCUS_MANAGER)
     endif()
 endif()

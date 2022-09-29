@@ -97,8 +97,8 @@ include_once(MRM)
 # Setup A4B variables.
 include_once(A4B)
 
-# Setup speech encoder variables.
-include_once(SpeechEncoder)
+# Setup OPUS audio encoding variables.
+include_once(Opus)
 
 # Setup Metrics variables.
 include_once(Metrics)
@@ -145,11 +145,14 @@ include_once(AuthorizationManager)
 # Setup FileSystemUtils options.
 include_once(FileSystemUtils)
 
-# Setup InputController options.
-include_once(InputController)
+# Setup EndpointVideoControllers options.
+include_once(EndpointVideoControllers)
 
 # Setup LibArchive options.
 include_once(LibArchive)
 
 # Setup AssetManager options.
 include_once(AssetManager)
+
+# Setup Sample Applications
+include_once(SampleApplications)

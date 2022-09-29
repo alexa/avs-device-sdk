@@ -163,6 +163,43 @@ std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::crea
     return notificationsCapabilityAgent;
 }
 
+std::shared_ptr<NotificationsCapabilityAgent> NotificationsCapabilityAgent::create(
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
+    std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface> renderer,
+    std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+    std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+    std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
+    std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) {
+    ACSDK_DEBUG5(LX(__func__));
+    if (!notificationsStorage || !renderer || !contextManager || !exceptionSender || !notificationsAudioFactory ||
+        !dataManager) {
+        ACSDK_ERROR(LX("createNotificationsCapabilityAgentFailed")
+                        .d("isNotificationsStorageNull", !notificationsStorage)
+                        .d("isRendererNull", !renderer)
+                        .d("isContextManagerNull", !contextManager)
+                        .d("isExceptionManagerNull", !exceptionSender)
+                        .d("isAudioFactoryNull", !notificationsAudioFactory)
+                        .d("isDataManagerNull", !dataManager));
+        return nullptr;
+    }
+
+    auto notificationsCapabilityAgent = std::shared_ptr<NotificationsCapabilityAgent>(new NotificationsCapabilityAgent(
+        std::move(notificationsStorage),
+        std::move(renderer),
+        std::move(contextManager),
+        std::move(exceptionSender),
+        std::move(notificationsAudioFactory),
+        std::move(dataManager),
+        std::move(metricRecorder)));
+
+    if (!notificationsCapabilityAgent->init()) {
+        ACSDK_ERROR(LX("createFailed").d("reason", "initFailed"));
+        return nullptr;
+    }
+    return notificationsCapabilityAgent;
+}
+
 NotificationsCapabilityAgent::NotificationsCapabilityAgent(
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
     std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface> renderer,
@@ -186,7 +223,7 @@ NotificationsCapabilityAgent::NotificationsCapabilityAgent(
     m_notifier = std::make_shared<NotificationsNotifier>();
     m_notifier->setAddObserverFunction(
         [this](const std::shared_ptr<acsdkNotificationsInterfaces::NotificationsObserverInterface>& observer) {
-            m_executor.submit([this, observer]() {
+            m_executor.execute([this, observer]() {
                 IndicatorState currentIndicatorState = IndicatorState::OFF;
                 if (!m_notificationsStorage->getIndicatorState(&currentIndicatorState)) {
                     ACSDK_ERROR(LX("addObserverFunctionLambdaFailed")
@@ -199,6 +236,10 @@ NotificationsCapabilityAgent::NotificationsCapabilityAgent(
                 observer->onSetIndicator(currentIndicatorState);
             });
         });
+}
+
+NotificationsCapabilityAgent::~NotificationsCapabilityAgent() {
+    m_notifier->setAddObserverFunction(nullptr);
 }
 
 std::shared_ptr<CapabilityConfiguration> getNotificationsCapabilityConfiguration() {
@@ -221,7 +262,7 @@ bool NotificationsCapabilityAgent::init() {
         }
     }
 
-    m_executor.submit([this] { executeInit(); });
+    m_executor.execute([this] { executeInit(); });
 
     return true;
 }
@@ -279,7 +320,7 @@ void NotificationsCapabilityAgent::provideState(
     const NamespaceAndName& stateProviderName,
     unsigned int stateRequestToken) {
     ACSDK_DEBUG5(LX(__func__).d("stateRequestToken", stateRequestToken));
-    m_executor.submit([this, stateRequestToken] { executeProvideState(true, stateRequestToken); });
+    m_executor.execute([this, stateRequestToken] { executeProvideState(true, stateRequestToken); });
 }
 
 void NotificationsCapabilityAgent::handleDirectiveImmediately(std::shared_ptr<avsCommon::avs::AVSDirective> directive) {
@@ -384,7 +425,7 @@ void NotificationsCapabilityAgent::handleSetIndicatorDirective(std::shared_ptr<D
     }
 
     const NotificationIndicator nextNotificationIndicator(persistVisualIndicator, playAudioIndicator, assetId, url);
-    m_executor.submit(
+    m_executor.execute(
         [this, nextNotificationIndicator, info] { executeSetIndicator(nextNotificationIndicator, info); });
 }
 
@@ -486,7 +527,7 @@ void NotificationsCapabilityAgent::executeSetIndicator(
 }
 
 void NotificationsCapabilityAgent::handleClearIndicatorDirective(std::shared_ptr<DirectiveInfo> info) {
-    m_executor.submit([this, info] { executeClearIndicator(info); });
+    m_executor.execute([this, info] { executeClearIndicator(info); });
 }
 
 void NotificationsCapabilityAgent::executeClearIndicator(std::shared_ptr<DirectiveInfo> info) {
@@ -602,7 +643,7 @@ void NotificationsCapabilityAgent::executeStartQueueNotEmpty() {
 
 void NotificationsCapabilityAgent::onNotificationRenderingFinished() {
     ACSDK_DEBUG5(LX(__func__).d("currentAssetId", m_currentAssetId));
-    m_executor.submit([this] { executeOnPlayFinished(); });
+    m_executor.execute([this] { executeOnPlayFinished(); });
 }
 
 void NotificationsCapabilityAgent::executeOnPlayFinished() {
@@ -767,7 +808,7 @@ void NotificationsCapabilityAgent::doShutdown() {
 
     m_notifier->setAddObserverFunction(nullptr);
 
-    m_executor.submit([this] { executeShutdown(); });
+    m_executor.execute([this] { executeShutdown(); });
 
     bool successfulShutdown = m_shutdownTrigger.wait_for(
         lock, SHUTDOWN_TIMEOUT, [this]() { return m_currentState == NotificationsCapabilityAgentState::SHUTDOWN; });

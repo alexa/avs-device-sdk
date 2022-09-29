@@ -23,7 +23,7 @@
 #include <acsdkManufactory/Component.h>
 #include <acsdkManufactory/Import.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
-#include <AndroidUtilities/PlatformSpecificValues.h>
+#include <AndroidUtilities/AndroidSLESEngine.h>
 #include <AVSCommon/SDKInterfaces/ChannelVolumeFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
@@ -39,7 +39,7 @@ using AndroidApplicationAudioPipelineFactoryComponent = acsdkManufactory::Compon
     std::shared_ptr<acsdkApplicationAudioPipelineFactoryInterfaces::ApplicationAudioPipelineFactoryInterface>,
     acsdkManufactory::Import<std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>>,
     acsdkManufactory::Import<std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>>,
-    acsdkManufactory::Import<std::shared_ptr<applicationUtilities::androidUtilities::PlatformSpecificValues>>,
+    acsdkManufactory::Import<std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface>>,
     acsdkManufactory::Import<std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>>,

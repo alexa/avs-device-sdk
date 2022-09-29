@@ -26,8 +26,9 @@
 #include <mutex>
 #include <utility>
 
-#include "AVSCommon/Utils/Threading/TaskThread.h"
-#include "AVSCommon/Utils/Power/PowerResource.h"
+#include <AVSCommon/Utils/Threading/ExecutorInterface.h>
+#include <AVSCommon/Utils/Threading/TaskThread.h>
+#include <AVSCommon/Utils/Power/PowerResource.h>
 
 namespace alexaClientSDK {
 namespace avsCommon {
@@ -35,134 +36,174 @@ namespace utils {
 namespace threading {
 
 /**
+ * @brief Single-thread executor implementation.
+ *
  * An Executor is used to run callable types asynchronously.
+ *
+ * This type is a wrapper around ExecutorInterface implementation.
  */
 class Executor {
 public:
     /**
      * Constructs an Executor.
-     *
-     * @param delayExit The period of time that this executor will keep its thread running while waiting
-     * for a new job. We use 1s by default.
      */
-    Executor(const std::chrono::milliseconds& delayExit = std::chrono::milliseconds(1000));
+    Executor() noexcept;
+
+    /**
+     * Constructs an Executor.
+     *
+     * @param unused Unused parameter.
+     *
+     * @deprecated This method is kept for backwards compatibility.
+     */
+    Executor(const std::chrono::milliseconds& unused) noexcept;
 
     /**
      * Destructs an Executor.
      */
-    ~Executor();
+    ~Executor() noexcept;
+
+    /**
+     * @brief Schedules a function for execution.
+     *
+     * Submits a function to be executed on an Executor thread.
+     *
+     * @param[in] function Function to execute. Function must not be empty.
+     * @return True if @a function is accepted for execution, false if @a function is empty or executor is shutdown.
+     */
+    bool execute(std::function<void()>&& function) noexcept;
+
+    /**
+     * @brief Schedules a function for execution.
+     *
+     * Submits a function to be executed on an Executor thread.
+     *
+     * @param[in] function Function to execute.
+     * @return True if @a function is accepted for execution, false if @a function is empty or executor is shutdown.
+     */
+    bool execute(const std::function<void()>& function) noexcept;
 
     /**
      * Submits a callable type (function, lambda expression, bind expression, or another function object) to be executed
      * on an Executor thread. The future must be checked for validity before waiting on it.
      *
+     * @tparam Task Callable type.
+     * @tparam Args Argument types.
+     *
      * @param task A callable type representing a task.
      * @param args The arguments to call the task with.
-     * @returns A @c std::future for the return value of the task.
+     * @return A @c std::future for the return value of the task.
+     *
+     * @note This method is less memory and speed efficient then #execute() and should not be used unless std::future
+     *       result is required.
      */
     template <typename Task, typename... Args>
-    auto submit(Task task, Args&&... args) -> std::future<decltype(task(args...))>;
+    auto submit(Task task, Args&&... args) noexcept -> std::future<decltype(task(args...))>;
 
     /**
      * Submits a callable type (function, lambda expression, bind expression, or another function object) to the front
      * of the internal queue to be executed on an Executor thread. The future must be checked for validity before
      * waiting on it.
      *
+     * @tparam Task Callable type.
+     * @tparam Args Argument types.
+     *
      * @param task A callable type representing a task.
      * @param args The arguments to call the task with.
-     * @returns A @c std::future for the return value of the task.
+     * @return A @c std::future for the return value of the task.
+     *
+     * @note This method is less memory and speed efficient then #execute() and should not be used unless std::future
+     *       result is required.
      */
     template <typename Task, typename... Args>
-    auto submitToFront(Task task, Args&&... args) -> std::future<decltype(task(args...))>;
+    auto submitToFront(Task task, Args&&... args) noexcept -> std::future<decltype(task(args...))>;
 
     /**
      * Waits for any previously submitted tasks to complete.
      */
-    void waitForSubmittedTasks();
+    void waitForSubmittedTasks() noexcept;
 
     /// Clears the executor of outstanding tasks and refuses any additional tasks to be submitted.
-    void shutdown();
+    void shutdown() noexcept;
 
     /// Returns whether or not the executor is shutdown.
-    bool isShutdown();
+    bool isShutdown() noexcept;
+
+    /**
+     * @brief Provides access to ExecutorInterface reference.
+     *
+     * @return Reference to internal ExecutorInterface.
+     */
+    operator std::shared_ptr<ExecutorInterface>() const noexcept;
 
 private:
-    /// The queue type to use for holding tasks.
-    using Queue = std::deque<std::function<void()>>;
+    // Friend declaration.
+    friend class SharedExecutor;
 
     /**
-     * Executes the next job in the queue.
-     *
-     * @return @c true if there's a next job; @c false if the job queue is empty.
+     * @brief Ordering hint when submitting a new task to executor.
      */
-    bool runNext();
+    enum class QueuePosition {
+        /// Add task to front of task queue.
+        Front = 1,
+        /// Add task to back of task queue.
+        Back
+    };
 
     /**
-     * Checks if the job queue is empty and that no job is added in the grace period determined by @c m_timeout.
+     * @brief Schedules a function for execution.
      *
-     * @return @c true if there's at least one job left in the queue; @c false if the job queue is empty.
-     */
-    bool hasNext();
-
-    /**
-     * Returns and removes the task at the front of the queue. If there are no tasks, this call will return an empty
-     * function.
+     * Submits a function to be executed on an Executor thread.
      *
-     * @returns A function that represents a new task. The function will be empty if the queue has no job.
+     * @param[in] function Function to execute.
+     * @param[in] queuePosition Position in the queue for the new task.
+     * @return True on success, false on error: if @a function is empty, @a queuePosition is not valid, or executor is
+     *         in shutdown.
      */
-    std::function<void()> pop();
+    bool execute(std::function<void()>&& function, QueuePosition queuePosition) noexcept;
 
     /**
      * Pushes a task on the the queue. If the queue is shutdown, the task will be dropped, and an invalid
      * future will be returned.
      *
-     * @param front If @c true, push to the front of the queue, else push to the back.
+     * @param queuePosition Position in the queue for the new task.
      * @param task A task to push to the front or back of the queue.
      * @param args The arguments to call the task with.
      * @returns A @c std::future to access the return value of the task. If the queue is shutdown, the task will be
      *     dropped, and an invalid future will be returned.
      */
     template <typename Task, typename... Args>
-    auto pushTo(bool front, Task task, Args&&... args) -> std::future<decltype(task(args...))>;
+    auto pushTo(QueuePosition queuePosition, Task&& task, Args&&... args) noexcept
+        -> std::future<decltype(task(args...))>;
 
-    /// The queue of tasks
-    Queue m_queue;
+    /**
+     * Pushes a function on the the queue. If the queue is shutdown, the function will be dropped, and an invalid
+     * future will be returned.
+     *
+     * @tparam T Return type for @a function and resulting future value type.
+     * @param queuePosition Position in the queue for the new task.
+     * @param function A function to push.
+     * @returns A @c std::future to access the return value of the task. If the queue is shutdown, the task will be
+     *     dropped, and an invalid future will be returned.
+     */
+    template <typename T>
+    std::future<T> pushFunction(QueuePosition queuePosition, std::function<T()>&& function) noexcept;
 
-    /// Flag to indicate if the taskThread already have an executing job.
-    bool m_threadRunning;
-
-    /// Period that this queue will wait for a new job until it releases the task thread.
-    std::chrono::milliseconds m_timeout;
-
-    /// A mutex to protect access to the tasks in m_queue.
-    std::mutex m_queueMutex;
-
-    /// A flag for whether or not the queue is expecting more tasks.
-    std::atomic_bool m_shutdown;
-
-    /// A @c PowerResource.
-    std::shared_ptr<power::PowerResource> m_powerResource;
-
-    /// The condition variable used to detect new job or timeout.
-    std::condition_variable m_delayedCondition;
-
-    /// The id of this instance.
-    const uint64_t m_id;
-
-    /// The thread to execute tasks on. The thread must be declared last to be destructed first.
-    TaskThread m_taskThread;
+    /// Internal shared executor reference.
+    std::shared_ptr<class SharedExecutor> m_executor;
 };
 
-template <typename Task, typename... Args>
-auto Executor::submit(Task task, Args&&... args) -> std::future<decltype(task(args...))> {
-    bool front = false;
-    return pushTo(front, std::forward<Task>(task), std::forward<Args>(args)...);
+inline Executor::Executor(const std::chrono::milliseconds&) noexcept : Executor() {
 }
 
 template <typename Task, typename... Args>
-auto Executor::submitToFront(Task task, Args&&... args) -> std::future<decltype(task(args...))> {
-    bool front = true;
-    return pushTo(front, std::forward<Task>(task), std::forward<Args>(args)...);
+auto Executor::submit(Task task, Args&&... args) noexcept -> std::future<decltype(task(args...))> {
+    return pushTo(QueuePosition::Back, std::forward<Task>(task), std::forward<Args>(args)...);
+}
+
+template <typename Task, typename... Args>
+auto Executor::submitToFront(Task task, Args&&... args) noexcept -> std::future<decltype(task(args...))> {
+    return pushTo(QueuePosition::Front, std::forward<Task>(task), std::forward<Args>(args)...);
 }
 
 /**
@@ -172,14 +213,14 @@ auto Executor::submitToFront(Task task, Args&&... args) -> std::future<decltype(
  * @param future The @c std::future on which to wait for a result to forward to @c promise.
  */
 template <typename T>
-inline static void forwardPromise(std::shared_ptr<std::promise<T>> promise, std::future<T>* future) {
+inline static void forwardPromise(std::promise<T>& promise, std::future<T>& future) noexcept {
 #if __cpp_exceptions || defined(__EXCEPTIONS)
     try {
 #endif
-        promise->set_value(future->get());
+        promise.set_value(future.get());
 #if __cpp_exceptions || defined(__EXCEPTIONS)
     } catch (...) {
-        promise->set_exception(std::current_exception());
+        promise.set_exception(std::current_exception());
     }
 #endif
 }
@@ -191,28 +232,32 @@ inline static void forwardPromise(std::shared_ptr<std::promise<T>> promise, std:
  * @param future The @c std::future on which to wait before fulfilling @c promise.
  */
 template <>
-inline void forwardPromise<void>(std::shared_ptr<std::promise<void>> promise, std::future<void>* future) {
+inline void forwardPromise<void>(std::promise<void>& promise, std::future<void>& future) noexcept {
 #if __cpp_exceptions || defined(__EXCEPTIONS)
     try {
 #endif
-        future->get();
-        promise->set_value();
+        future.get();
+        promise.set_value();
 #if __cpp_exceptions || defined(__EXCEPTIONS)
     } catch (...) {
-        promise->set_exception(std::current_exception());
+        promise.set_exception(std::current_exception());
     }
 #endif
 }
 
 template <typename Task, typename... Args>
-auto Executor::pushTo(bool front, Task task, Args&&... args) -> std::future<decltype(task(args...))> {
+inline auto Executor::pushTo(QueuePosition queuePosition, Task&& task, Args&&... args) noexcept
+    -> std::future<decltype(task(args...))> {
+    using ValueType = decltype(task(args...));
     // Remove arguments from the tasks type by binding the arguments to the task.
-    auto boundTask = std::bind(std::forward<Task>(task), std::forward<Args>(args)...);
+    std::function<ValueType()> fn{std::bind(std::forward<Task>(task), std::forward<Args>(args)...)};
+    return pushFunction(queuePosition, std::move(fn));
+}
 
+template <typename T>
+std::future<T> Executor::pushFunction(QueuePosition queuePosition, std::function<T()>&& function) noexcept {
     /*
-     * Create a std::packaged_task with the correct return type. The decltype only returns the return value of the
-     * boundTask. The following parentheses make it a function call with the boundTask return type. The package task
-     * will then return a future of the correct type.
+     * Create a std::packaged_task with the correct return type.
      *
      * Note: A std::packaged_task fulfills its future *during* the call to operator().  If the user of a
      * std::packaged_task hands it off to another thread to execute, and then waits on the future, they will be able to
@@ -223,52 +268,68 @@ auto Executor::pushTo(bool front, Task task, Args&&... args) -> std::future<decl
      * workaround for this limitation.  It executes the packaged task, then disposes of it before passing the task's
      * return value back to the future that the user is waiting on.
      */
-    using PackagedTaskType = std::packaged_task<decltype(boundTask())()>;
-    auto packaged_task = std::make_shared<PackagedTaskType>(boundTask);
 
-    // Create a promise/future that we will fulfill when we have cleaned up the task.
-    auto cleanupPromise = std::make_shared<std::promise<decltype(task(args...))>>();
-    auto cleanupFuture = cleanupPromise->get_future();
+    /**
+     * @brief Structure to carry parameters into lambda through shared pointer.
+     * @private
+     */
+    struct CallCtx {
+        /**
+         * @brief Construct object and assigned function to packaged task.
+         *
+         * @param function Function to wrap into packaged task.
+         */
+        inline CallCtx(std::function<T()>&& function) : packagedTask{std::move(function)} {
+        }
 
-    // Remove the return type from the task by wrapping it in a lambda with no return value.
-    auto translated_task = [packaged_task, cleanupPromise]() mutable {
-        // Execute the task.
-        packaged_task->operator()();
-        // Note the future for the task's result.
-        auto taskFuture = packaged_task->get_future();
-        // Clean up the task.
-        packaged_task.reset();
-        // Forward the task's result to our cleanup promise/future.
-        forwardPromise(cleanupPromise, &taskFuture);
+        /// Packaged task.
+        std::packaged_task<T()> packagedTask;
+        /// Promise for result forwarding.
+        std::promise<T> cleanupPromise;
     };
 
+    auto callCtx = std::make_shared<CallCtx>(std::move(function));
+
+    // Remove the return type from the task by wrapping it in a lambda with no return value.
+    auto translated_task = [callCtx]() mutable {
+        // Execute the task.
+        callCtx->packagedTask();
+        // Note the future for the task's result.
+        auto taskFuture = callCtx->packagedTask.get_future();
+        // Clean up the task.
+        callCtx->packagedTask.reset();
+        auto cleanupPromise = std::move(callCtx->cleanupPromise);
+        // Release parameters.
+        callCtx.reset();
+        // Forward the task's result to our cleanup promise/future.
+        forwardPromise(cleanupPromise, taskFuture);
+    };
+
+    // Create a promise/future that we will fulfill when we have cleaned up the task.
+    auto cleanupFuture = callCtx->cleanupPromise.get_future();
+
     // Release our local reference to packaged task so that the only remaining reference is inside the lambda.
-    packaged_task.reset();
+    callCtx.reset();
 
-    {
-        bool restart = false;
-        std::lock_guard<std::mutex> queueLock{m_queueMutex};
-        if (!m_shutdown) {
-            restart = !m_threadRunning;
-            if (m_powerResource) {
-                m_powerResource->acquire();
-            }
-            m_queue.emplace(front ? m_queue.begin() : m_queue.end(), std::move(translated_task));
-        } else {
-            using FutureType = decltype(task(args...));
-            return std::future<FutureType>();
-        }
-
-        if (restart) {
-            // Restart task thread.
-            m_taskThread.start(std::bind(&Executor::runNext, this));
-            m_threadRunning = true;
-        }
+    if (!execute(std::move(translated_task), queuePosition)) {
+        return std::future<T>();
     }
 
-    m_delayedCondition.notify_one();
     return cleanupFuture;
 }
+
+/// @name Externalize Executor::pushFunction() for common types.
+/// @{
+extern template std::future<void> Executor::pushFunction(
+    QueuePosition queuePosition,
+    std::function<void()>&& function) noexcept;
+extern template std::future<bool> Executor::pushFunction(
+    QueuePosition queuePosition,
+    std::function<bool()>&& function) noexcept;
+extern template std::future<std::string> Executor::pushFunction(
+    QueuePosition queuePosition,
+    std::function<std::string()>&& function) noexcept;
+/// @}
 
 }  // namespace threading
 }  // namespace utils

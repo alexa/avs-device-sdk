@@ -639,7 +639,7 @@ ResultCode CurlWrapper::download(
     if (CurlWrapper::unpack(downloadChunkQueue, path)) {
         resultCode = ResultCode::SUCCESS;
     } else {
-        resultCode = ResultCode::CATASTROPHIC_FAILURE;
+        resultCode = ResultCode::UNPACK_FAILURE;
     }
 
     downloadThread.join();

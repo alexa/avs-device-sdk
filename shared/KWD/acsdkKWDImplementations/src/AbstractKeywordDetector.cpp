@@ -27,7 +27,7 @@ using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AbstractKeywordDetector");
+#define TAG "AbstractKeywordDetector"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -56,8 +56,10 @@ void AbstractKeywordDetector::removeKeyWordDetectorStateObserver(
 
 AbstractKeywordDetector::AbstractKeywordDetector(
     std::unordered_set<std::shared_ptr<KeyWordObserverInterface>> keyWordObservers,
-    std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers) :
-        m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED} {
+    std::unordered_set<std::shared_ptr<KeyWordDetectorStateObserverInterface>> keyWordDetectorStateObservers,
+    bool supportsDavs) :
+        m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED},
+        m_supportsDavs(supportsDavs) {
     m_keywordNotifier = KeywordNotifier::createKeywordNotifierInterface();
     for (auto kwObserver : keyWordObservers) {
         m_keywordNotifier->addObserver(kwObserver);
@@ -76,10 +78,12 @@ AbstractKeywordDetector::AbstractKeywordDetector(
 
 AbstractKeywordDetector::AbstractKeywordDetector(
     std::shared_ptr<acsdkKWDInterfaces::KeywordNotifierInterface> keywordNotifier,
-    std::shared_ptr<acsdkKWDInterfaces::KeywordDetectorStateNotifierInterface> keyWordDetectorStateNotifier) :
+    std::shared_ptr<acsdkKWDInterfaces::KeywordDetectorStateNotifierInterface> keyWordDetectorStateNotifier,
+    bool supportsDavs) :
         m_keywordNotifier{keywordNotifier},
         m_keywordDetectorStateNotifier{keyWordDetectorStateNotifier},
-        m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED} {
+        m_detectorState{KeyWordDetectorStateObserverInterface::KeyWordDetectorState::STREAM_CLOSED},
+        m_supportsDavs(supportsDavs) {
     m_keywordDetectorStateNotifier->setAddObserverFunction(
         [this](std::shared_ptr<KeyWordDetectorStateObserverInterface> stateObserver) {
             std::lock_guard<std::mutex> lock(m_detectorStateMutex);
@@ -160,6 +164,10 @@ ssize_t AbstractKeywordDetector::readFromStream(
         }
     }
     return wordsRead;
+}
+
+bool AbstractKeywordDetector::isDavsSupported() {
+    return m_supportsDavs;
 }
 
 bool AbstractKeywordDetector::isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat) {

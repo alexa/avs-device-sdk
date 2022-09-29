@@ -43,10 +43,10 @@ public:
 };
 
 /**
- * Inline record metric function to handle if ACSDK_ENABLE_METRICS_RECORDING flag is defined or not
+ * Inline record metric function to handle if ACSDK_ENABLE_METRICS_RECORDING flag is defined or not.
  *
- * @param recorder is the pointer to the MetricRecorderInterface.
- * @param metricEvent is the pointer to the MetricEvent.
+ * @param recorder Optional pointer to MetricRecorderInterface. If this parameter is nullptr, metric is not sent.
+ * @param metricEvent Pointer to the MetricEvent.
  */
 inline void recordMetric(
     const std::shared_ptr<MetricRecorderInterface>& recorder,
@@ -55,6 +55,9 @@ inline void recordMetric(
     if (recorder) {
         recorder->recordMetric(std::move(metricEvent));
     }
+#else
+    (void)recorder;
+    (void)metricEvent;
 #endif
 }
 

@@ -24,11 +24,13 @@ namespace utils {
 namespace logger {
 
 /// Configuration key for root level "logger" object.
-static const std::string CONFIG_KEY_LOGGER = "logger";
+static constexpr auto CONFIG_KEY_LOGGER = "logger";
 
 /// Configuration key for "logLevel" values under "logger" and other per-module objects.
-static const std::string CONFIG_KEY_LOG_LEVEL = "logLevel";
+static constexpr auto CONFIG_KEY_LOG_LEVEL = "logLevel";
 
+/// Predefined thread id for messages that are logged when application exits.
+/// @see Logger::logAtExit()
 static constexpr auto AT_EXIT_THREAD_ID = "0";
 
 Logger::Logger(Level level) : m_level{level} {
@@ -42,7 +44,7 @@ void Logger::log(Level level, const LogEntry& entry) {
 
 void Logger::init(const configuration::ConfigurationNode configuration) {
     if (!initLogLevel(configuration)) {
-        initLogLevel(configuration::ConfigurationNode::getRoot()[CONFIG_KEY_LOGGER]);
+        initLogLevel(configuration::ConfigurationNode::getRoot()[std::string{CONFIG_KEY_LOGGER}]);
     }
 }
 

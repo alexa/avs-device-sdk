@@ -46,15 +46,16 @@ public:
     /**
      * Returns the operation priority. The Priority is used to order the sequence of operations in ascending order.
      *
-     * @return unsigined int that representing the operation priority.
+     * @return unsigned int that representing the operation priority.
      */
     virtual unsigned int getOperationPriority() = 0;
 
     /**
-     * Performs the post connect operation. The implementation should ensure that the performOperation returns
-     * immediately after the abortOperation() method is called.
+     * Performs the post connect operation. The implementation should ensure that the #performOperation() returns
+     * immediately after the #abortOperation() method is called. If #abortOperation() is called before
+     * #performOperation(), the method must immediately return with false result.
      *
-     * @note: The performOperation() method is not expected to be called twice.
+     * @note This method is not expected to be called twice.
      *
      * @param messageSender - The @c MessageSenderInterface to send post connect message.
      * @return True if the post connect operation is successful, else false.
@@ -65,7 +66,8 @@ public:
     /**
      * Aborts an operation that is currently being executed using the performOperation() method.
      *
-     * Note: This method will be called from a different thread from where the performOperation() is being called from.
+     * @note This method will be called from a different thread from where the performOperation() is being called from.
+     *       It is possible, that the method is called before #performOperation() call is made.
      */
     virtual void abortOperation() = 0;
 };

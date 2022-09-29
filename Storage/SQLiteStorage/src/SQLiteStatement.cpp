@@ -24,7 +24,7 @@ namespace sqliteStorage {
 using namespace avsCommon::utils::logger;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SQLiteStatement");
+#define TAG "SQLiteStatement"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

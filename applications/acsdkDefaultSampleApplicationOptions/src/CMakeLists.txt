@@ -10,9 +10,8 @@ target_link_libraries(acsdkDefaultSampleApplicationOptions
     acsdkManufactory
     acsdkNullMetricRecorder
     acsdkSampleApplicationInterfaces
-    acsdkSampleApplicationCBLAuthRequester
     acsdkShared
-    CBLAuthDelegate)
+    AVSCommon)
 
 # install target
 asdk_install()

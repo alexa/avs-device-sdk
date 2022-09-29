@@ -23,7 +23,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::mediaPlayer;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("StubApplicationAudioPipelineFactory");
+#define TAG "StubApplicationAudioPipelineFactory"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

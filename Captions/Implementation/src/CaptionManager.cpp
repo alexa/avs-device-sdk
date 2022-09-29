@@ -243,7 +243,7 @@ void CaptionManager::onParsed(const CaptionFrame& captionFrame) {
             // Attempt to split at the first available break between words before the requested wrap point.
             for (size_t i = wrapIndex; i > 0; i--) {
                 if (' ' == lineText[i]) {
-                    wrapIndex = i;
+                    wrapIndex = static_cast<int>(i);
                     break;
                 }
             }

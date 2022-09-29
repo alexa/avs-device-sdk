@@ -57,6 +57,21 @@ static const std::string CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING = R"de
         }
     })delim";
 
+/// A sample Directive JSON string for the purposes of creating an AVSDirective object.
+static const std::string CORRECT_REQUEST_PROCESSING_STARTED_DIRECTIVE_JSON_STRING = R"delim(
+    {
+        "directive": {
+            "header": {
+                "namespace": "InteractionModel",
+                "name": "RequestProcessingStarted",
+                "messageId": "12345",
+                "dialogRequestId": "3456"
+            },
+            "payload": {
+            }
+        }
+    })delim";
+
 /// An invalid NewDialogRequest directive with an incorrect name
 static const std::string INCORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING_1 = R"delim(
     {
@@ -146,6 +161,21 @@ static const std::string RPC_DIRECTIVE_JSON_STRING = R"delim(
 
 // Timeout to wait before indicating a test failed.
 std::chrono::milliseconds TIMEOUT{500};
+
+/// A wrapper for InteractionModelCapabilityAgent for easy testing
+class InteractionModelCapabilityAgentWrapper : public InteractionModelCapabilityAgent {
+public:
+    static void handleDirectiveWrapper(
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::shared_ptr<InteractionModelCapabilityAgent> capabilityAgent) {
+        capabilityAgent->handleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
+    }
+    static void preHandleDirectiveWrapper(
+        std::shared_ptr<avsCommon::avs::AVSDirective> directive,
+        std::shared_ptr<InteractionModelCapabilityAgent> capabilityAgent) {
+        capabilityAgent->preHandleDirective(std::make_shared<DirectiveInfo>(directive, nullptr));
+    }
+};
 
 /// Test harness for @c InteractionModelCapabilityAgent class.
 class InteractionModelCapabilityAgentTest : public Test {
@@ -318,6 +348,55 @@ TEST_F(InteractionModelCapabilityAgentTest, test_processNewDialogRequestID) {
 
     m_interactionModelCA->handleDirectiveImmediately(directive);
     ASSERT_EQ(TEST_DIALOG_REQUEST_AVS, m_mockDirectiveSequencer->getDialogRequestId());
+}
+
+/**
+ * Test to verify if a valid NewDialogRequest directive will set the dialogRequestID in the directive sequencer
+ * in preHandle hook.
+ */
+TEST_F(InteractionModelCapabilityAgentTest, test_preHandledNewDialogRequestID) {
+    // Create a dummy AVSDirective.
+    auto directivePair = AVSDirective::create(CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING, nullptr, "");
+    std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
+    std::shared_ptr<CapabilityAgent> agent = std::dynamic_pointer_cast<CapabilityAgent>(m_interactionModelCA);
+
+    agent->preHandleDirective(directive, nullptr);
+    ASSERT_EQ(TEST_DIALOG_REQUEST_AVS, m_mockDirectiveSequencer->getDialogRequestId());
+}
+
+/**
+ * Test to verify if preHandle interface will NOT process directive having dialogRequestID.
+ */
+TEST_F(InteractionModelCapabilityAgentTest, test_preHandledRequestProcessingStarted) {
+    // Create a dummy AVSDirective.
+    auto directivePair = AVSDirective::create(CORRECT_REQUEST_PROCESSING_STARTED_DIRECTIVE_JSON_STRING, nullptr, "");
+    std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
+
+    InteractionModelCapabilityAgentWrapper::preHandleDirectiveWrapper(directive, m_interactionModelCA);
+    ASSERT_EQ("", m_mockDirectiveSequencer->getDialogRequestId());
+}
+
+/**
+ * Test to verify if preHandle interface will ignore directives with dialogRequestId.
+ */
+TEST_F(InteractionModelCapabilityAgentTest, test_preHandledNullNewDialogRequestID) {
+    std::shared_ptr<CapabilityAgent> agent = std::dynamic_pointer_cast<CapabilityAgent>(m_interactionModelCA);
+
+    agent->preHandleDirective(nullptr, nullptr);
+    ASSERT_EQ("", m_mockDirectiveSequencer->getDialogRequestId());
+}
+
+/**
+ * Test to verify if a valid NewDialogRequest directive with empty dialogRequestId
+ * will not be handled in handleDirective hook.
+ */
+TEST_F(InteractionModelCapabilityAgentTest, test_handledNewDialogRequestID) {
+    // Create a dummy AVSDirective.
+    auto directivePair = AVSDirective::create(CORRECT_NEW_DIALOG_REQUEST_DIRECTIVE_JSON_STRING, nullptr, "");
+    std::shared_ptr<AVSDirective> directive = std::move(directivePair.first);
+
+    InteractionModelCapabilityAgentWrapper::handleDirectiveWrapper(directive, m_interactionModelCA);
+    ASSERT_EQ("", m_mockDirectiveSequencer->getDialogRequestId());
 }
 
 /**

@@ -39,7 +39,7 @@ extern "C" {
 #include "AndroidSLESMediaPlayer/PlaybackConfiguration.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FFmpegDecoder");
+#define TAG "FFmpegDecoder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

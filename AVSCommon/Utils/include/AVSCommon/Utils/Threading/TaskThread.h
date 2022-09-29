@@ -53,9 +53,12 @@ public:
      *
      * @param jobRunner Function that should execute jobs. The function should return @c true if there's more tasks
      * to be executed.
+     * @param moniker Thread moniker to use when executing @a jobRunner. All logging messages will use provided
+     * moniker for identifying the execution owner.
+     *
      * @return @c true if it succeeds to start the new jobRunner thread; @c false if it fails.
      */
-    bool start(std::function<bool()> jobRunner);
+    bool start(std::function<bool()> jobRunner, const std::string& moniker);
 
 private:
     /**
@@ -65,9 +68,6 @@ private:
      * still exists.
      */
     void run(std::function<bool()> jobRunner);
-
-    /// The monotonic start time of the thread.
-    std::chrono::steady_clock::time_point m_startTime;
 
     /// Mutex for protecting the worker thread.
     std::mutex m_mutex;
@@ -80,9 +80,6 @@ private:
 
     /// Flag used to indicate that there is a new job starting.
     std::atomic_bool m_alreadyStarting;
-
-    /// The task thread moniker.
-    std::string m_moniker;
 
     /// ThreadPool to use for obtaining threads.
     std::shared_ptr<ThreadPool> m_threadPool;

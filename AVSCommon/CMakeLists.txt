@@ -44,7 +44,6 @@ add_library(AVSCommon
     Utils/src/BluetoothEventBus.cpp
     Utils/src/Configuration/ConfigurationNode.cpp
     Utils/src/DeviceInfo.cpp
-    Utils/src/Executor.cpp
     Utils/src/FileUtils.cpp
     Utils/src/FormattedAudioStreamAdapter.cpp
     Utils/src/JSON/JSONGenerator.cpp
@@ -106,6 +105,9 @@ add_library(AVSCommon
     Utils/src/TaskThread.cpp
     Utils/src/ThreadPool.cpp
     Utils/src/Threading/ConditionVariableWrapper.cpp
+    Utils/src/Threading/ExecutorFactory.cpp
+    Utils/src/Threading/Executor.cpp
+    Utils/src/Threading/SharedExecutor.cpp
     Utils/src/TimePoint.cpp
     Utils/src/TimeUtils.cpp
     Utils/src/Timer.cpp
@@ -127,6 +129,8 @@ target_include_directories(AVSCommon PUBLIC
     "${MultipartParser_SOURCE_DIR}"
     ${CURL_INCLUDE_DIRS})
 
+target_include_directories(AVSCommon PRIVATE "${AVSCommon_SOURCE_DIR}/Utils/privateInclude")
+
 if (MSVC)
     target_include_directories(AVSCommon PUBLIC
             "${CMAKE_CURRENT_BINARY_DIR}/exports")
@@ -146,6 +150,7 @@ target_link_libraries(AVSCommon
     acsdkApplicationAudioPipelineFactoryInterfaces
     acsdkEqualizerInterfaces
     acsdkInteractionModelInterfaces
+    acsdkNotifierInterfaces
     )
 
 # install target

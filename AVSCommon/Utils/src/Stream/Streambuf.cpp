@@ -12,13 +12,31 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+#include <limits>
 
+#include <AVSCommon/Utils/Logger/Logger.h>
 #include "AVSCommon/Utils/Stream/Streambuf.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 namespace stream {
+
+/// String to identify log entries originating from this file.
+#define TAG "Streambuf"
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param event The event string for this @c LogEntry.
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/// Constant to indicate the MAX stream offset of an integer.
+static constexpr std::streamoff MAX_INT = std::numeric_limits<int>::max();
+
+/// Constant to indicate a invalid offset.
+static constexpr std::streamoff INVALID_OFFSET = std::streamoff(-1);
 
 // There are two casts, as a streambuf uses Type=char.  This requires removing the const and removing the unsigned.
 // setg only is for reading, so this operation is safe, although ugly.
@@ -29,22 +47,27 @@ Streambuf::Streambuf(const unsigned char* data, size_t length) :
 }
 
 std::streampos Streambuf::seekoff(std::streamoff off, std::ios_base::seekdir way, std::ios_base::openmode which) {
+    auto errorPos = std::streampos(INVALID_OFFSET);
     switch (way) {
         case std::ios_base::beg:
             setg(m_begin, m_begin + off, m_end);
             break;
         case std::ios_base::cur:
-            gbump(off);
+            if (off > MAX_INT) {
+                ACSDK_ERROR(LX("seekoffFailed").d("reason", "offset out of limits").d("off", off).d("limit", MAX_INT));
+                return errorPos;
+            }
+            gbump(static_cast<int>(off));
             break;
         case std::ios_base::end:
             setg(m_begin, m_end + off, m_end);
             break;
         default:
-            return std::streampos(std::streamoff(-1));
+            return errorPos;
     }
 
     if (!gptr() || gptr() >= egptr() || gptr() < eback()) {
-        return std::streampos(std::streamoff(-1));
+        return errorPos;
     }
 
     return gptr() - eback();

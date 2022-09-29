@@ -102,7 +102,7 @@ void NotificationRenderer::onFocusChanged(FocusState newFocus, MixingBehavior be
 
     // If we reach here, we must have acquired focus (either background or
     // foreground).
-    m_executor.submit([this]() {
+    m_executor.execute([this]() {
         if (MediaPlayerInterface::ERROR == m_sourceId) {
             ACSDK_ERROR(LX("renderNotificationPreferredFailed").d("reason", "invalid sourceId"));
         } else if (m_mediaPlayer->play(m_sourceId)) {

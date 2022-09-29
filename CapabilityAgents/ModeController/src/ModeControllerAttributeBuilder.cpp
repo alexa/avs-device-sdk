@@ -27,7 +27,7 @@ using namespace avsCommon::sdkInterfaces::modeController;
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"ModeControllerAttributeBuilder"};
+#define TAG "ModeControllerAttributeBuilder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

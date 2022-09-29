@@ -23,6 +23,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include <acsdk/AudioEncoderInterfaces/AudioEncoderInterface.h>
 #include <AVSCommon/AVS/Attachment/InProcessAttachmentReader.h>
 #include <AVSCommon/AVS/CapabilityAgent.h>
 #include <AVSCommon/AVS/CapabilityConfiguration.h>
@@ -50,13 +51,13 @@
 #include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/Utils/AudioFormat.h>
+#include <AVSCommon/Utils/Metrics/DataPointDurationBuilder.h>
 #include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <AVSCommon/Utils/Threading/Executor.h>
 #include <AVSCommon/Utils/Timing/Timer.h>
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/SettingEventMetadata.h>
-#include <SpeechEncoder/SpeechEncoder.h>
 
 #include "AudioProvider.h"
 #include "Initiator.h"
@@ -149,7 +150,7 @@ public:
      *     configurations change.
      * @param wakeWordsSetting The setting that represents the enabled wake words. This parameter is required if this
      * device supports wake words.
-     * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
+     * @param audioEncoder The Audio Encoder used to encode audio inputs. This parameter is optional and
      *     defaults to nullptr, which disable the encoding feature.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c avsCommon::AudioProvider::alwaysReadable).  This parameter is optional and
@@ -175,7 +176,7 @@ public:
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
         const std::shared_ptr<avsCommon::avs::CapabilityChangeNotifierInterface>& capabilityChangeNotifier,
         std::shared_ptr<settings::WakeWordsSetting> wakeWordsSetting = nullptr,
-        std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder = nullptr,
+        std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface> audioEncoder = nullptr,
         AudioProvider defaultAudioProvider = AudioProvider::null(),
         std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface> powerResourceManager = nullptr,
         std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr,
@@ -396,7 +397,7 @@ private:
      * @param exceptionEncounteredSender The object to use for sending ExceptionEncountered messages.
      * @param userInactivityMonitor The object to use for resetting user inactivity.
      * @param systemSoundPlayer The instance of the system sound player.
-     * @param speechEncoder The Speech Encoder used to encode audio inputs. This parameter is optional and
+     * @param audioEncoder The Audio Encoder used to encode audio inputs. This parameter is optional and
      *     will disable the encoding feature if set to nullptr.
      * @param defaultAudioProvider A default @c avsCommon::AudioProvider to use for ExpectSpeech if the previous
      *     provider is not readable (@c AudioProvider::alwaysReadable).  This parameter is optional, and ignored if set
@@ -427,7 +428,7 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::UserInactivityMonitorInterface> userInactivityMonitor,
         std::shared_ptr<avsCommon::sdkInterfaces::SystemSoundPlayerInterface> systemSoundPlayer,
         const std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>& assetsManager,
-        std::shared_ptr<speechencoder::SpeechEncoder> speechEncoder,
+        std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface> audioEncoder,
         AudioProvider defaultAudioProvider,
         std::shared_ptr<settings::WakeWordConfirmationSetting> wakeWordConfirmation,
         std::shared_ptr<settings::SpeechConfirmationSetting> speechConfirmation,
@@ -766,7 +767,7 @@ private:
     avsCommon::utils::timing::Timer m_expectingSpeechTimer;
 
     /// The Speech Encoder to encode input stream.
-    const std::shared_ptr<speechencoder::SpeechEncoder> m_encoder;
+    const std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface> m_encoder;
 
     /**
      * @name Executor Thread Variables
@@ -956,6 +957,11 @@ private:
      * The name of the wake word upload metric.
      */
     std::string m_uploadMetricName;
+
+    /**
+     * The Duration Builder used to calculate the duration of the fetch context call.
+     */
+    avsCommon::utils::metrics::DataPointDurationBuilder m_fetchContextTimeMetricData;
 
     /// A @c PowerResourceId used for wakelock logic.
     std::shared_ptr<avsCommon::sdkInterfaces::PowerResourceManagerInterface::PowerResourceId> m_powerResourceId;

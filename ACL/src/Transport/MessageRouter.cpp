@@ -31,7 +31,7 @@ using namespace avsCommon::avs::attachment;
 using namespace avsCommon::avs;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MessageRouter");
+#define TAG "MessageRouter"
 
 /// String for logging purpose as the key for the size of m_transports.
 static constexpr const char* KEY_SIZEOF_TRANSPORTS = "sizeOf m_transports";
@@ -316,7 +316,7 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
             m_serverSideDisconnectNotificationPending = true;
             m_serverSideDisconnectTimer.start(m_serverSideReconnectGracePeriod, [this]() {
                 ACSDK_DEBUG0(LX("serverSideDisconectTimerPredicate"));
-                m_executor.submit([this]() {
+                m_executor.execute([this]() {
                     ACSDK_DEBUG0(
                         LX("serverSideDisconectTimerHandler")
                             .d("m_serverSideDisconnectNotificationPending", m_serverSideDisconnectNotificationPending));
@@ -335,7 +335,7 @@ void MessageRouter::notifyObserverOnConnectionStatusChanged(
             handleNotifyObserverOnConnectionStatusChanged(status, reason);
         }
     };
-    m_executor.submit(task);
+    m_executor.execute(task);
 }
 
 void MessageRouter::handleNotifyObserverOnConnectionStatusChanged(
@@ -360,7 +360,7 @@ void MessageRouter::notifyObserverOnReceive(const std::string& contextId, const 
             temp->receive(contextId, message);
         }
     };
-    m_executor.submit(task);
+    m_executor.execute(task);
 }
 
 void MessageRouter::createActiveTransportLocked() {
@@ -428,7 +428,7 @@ void MessageRouter::safelyResetActiveTransportLocked() {
 void MessageRouter::safelyReleaseTransport(std::shared_ptr<TransportInterface> transport) {
     if (transport) {
         auto task = [transport]() { transport->shutdown(); };
-        m_executor.submit(task);
+        m_executor.execute(task);
     }
 }
 

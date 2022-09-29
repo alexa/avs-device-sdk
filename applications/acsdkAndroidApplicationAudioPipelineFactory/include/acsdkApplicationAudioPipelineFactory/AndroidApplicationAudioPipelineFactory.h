@@ -22,7 +22,6 @@
 #include <acsdkEqualizerInterfaces/EqualizerRuntimeSetupInterface.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AndroidUtilities/AndroidSLESEngine.h>
-#include <AndroidUtilities/PlatformSpecificValues.h>
 #include <AVSCommon/SDKInterfaces/ApplicationMediaInterfaces.h>
 #include <AVSCommon/SDKInterfaces/ChannelVolumeFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/HTTPContentFetcherInterfaceFactoryInterface.h>
@@ -48,8 +47,7 @@ public:
      * @param equalizerRuntimeSetup The @c EqualizerRuntimeSetupInterface with which to register equalizers.
      * @param httpContentFetcherFactory The @c HTTPContentFetcherInterfaceFactoryInterface to fetch remote http content.
      * @param shutdownNotifier The @c ShutdownNotifierInterface to notify created media players of shutdown.
-     * @param platformSpecificValues This object contains the Android-specific openSLES engine to use to create
-     * media players.
+     * @param openSlEngine The @c AndroidSLESEngine with which to create media players and related interfaces.
      * @param captionManager The @c CaptionManagerInterface to add captionable media sources.
      * @return A new @c ApplicationAudioPipelineFactoryInterface for Android media players.
      */
@@ -61,7 +59,7 @@ public:
         const std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>&
             httpContentFetcherFactory,
         const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
-        const std::shared_ptr<applicationUtilities::androidUtilities::PlatformSpecificValues>& platformSpecificValues,
+        const std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine>& openSLEngine,
         const std::shared_ptr<captions::CaptionManagerInterface>& captionManager);
 
     /// @name ApplicationAudioPipelineFactoryInterface
@@ -93,7 +91,7 @@ private:
      * @param equalizerRuntimeSetup The @c EqualizerRuntimeSetupInterface with which to register equalizers.
      * @param httpContentFetcherFactory The @c HTTPContentFetcherInterfaceFactoryInterface to fetch remote http content.
      * @param shutdownNotifier The @c ShutdownNotifierInterface to notify created media players of shutdown.
-     * @param openSlengine The @c AndroidSLESEngine with which to create media players and related interfaces.
+     * @param openSlEngine The @c AndroidSLESEngine with which to create media players and related interfaces.
      * @param captionManager The @c CaptionManagerInterface to add captionable media sources.
      */
     AndroidApplicationAudioPipelineFactory(
@@ -103,7 +101,7 @@ private:
         const std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>&
             httpContentFetcherFactory,
         const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
-        const std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine>& openSlengine,
+        const std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine>& openSlEngine,
         const std::shared_ptr<captions::CaptionManagerInterface>& captionManager);
 
     /// The @c SpeakerManagerInterface with which to register speakers.

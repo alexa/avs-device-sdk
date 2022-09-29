@@ -21,7 +21,7 @@
 #include "AVSCommon/Utils/JSON/JSONUtils.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("JSONGenerator");
+#define TAG "JSONGenerator"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -40,7 +40,8 @@ JsonGenerator::JsonGenerator() : m_buffer{}, m_writer{m_buffer} {
 }
 
 bool JsonGenerator::startObject(const std::string& key) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.StartObject();
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.StartObject();
 }
 
 bool JsonGenerator::finishObject() {
@@ -48,35 +49,43 @@ bool JsonGenerator::finishObject() {
 }
 
 bool JsonGenerator::addMember(const std::string& key, const std::string& value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.String(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.String(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, uint64_t value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Uint64(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.Uint64(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, unsigned int value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Uint(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.Uint(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, int64_t value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Int64(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.Int64(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, int value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Int(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.Int(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, bool value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Bool(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.Bool(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, const char* value) {
-    return value && checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.String(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return value && checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.String(value);
 }
 
 bool JsonGenerator::addMember(const std::string& key, double value) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.Double(value);
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.Double(value);
 }
 
 bool JsonGenerator::addRawJsonMember(const std::string& key, const std::string& json, bool validate) {
@@ -88,12 +97,14 @@ bool JsonGenerator::addRawJsonMember(const std::string& key, const std::string& 
             return false;
         }
     }
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) &&
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) &&
            m_writer.RawValue(json.c_str(), json.length(), rapidjson::kStringType);
 }
 
 bool JsonGenerator::startArray(const std::string& key) {
-    return checkWriter() && m_writer.Key(key.c_str(), key.length()) && m_writer.StartArray();
+    auto keyLength = static_cast<rapidjson::SizeType>(key.length());
+    return checkWriter() && m_writer.Key(key.c_str(), keyLength) && m_writer.StartArray();
 }
 
 bool JsonGenerator::finishArray() {

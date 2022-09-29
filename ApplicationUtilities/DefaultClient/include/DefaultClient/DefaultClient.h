@@ -45,6 +45,7 @@
 #include <AVSCommon/SDKInterfaces/CallManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateInterface.h>
 #include <AVSCommon/SDKInterfaces/CapabilitiesDelegateObserverInterface.h>
+#include <AVSCommon/SDKInterfaces/ChannelVolumeFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/ConnectionStatusObserverInterface.h>
 #include <AVSCommon/SDKInterfaces/Diagnostics/DiagnosticsInterface.h>
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
@@ -60,8 +61,7 @@
 #include <AVSCommon/SDKInterfaces/SpeechInteractionHandlerInterface.h>
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemTimeZoneInterface.h>
-#include <AVSCommon/SDKInterfaces/TemplateRuntimeObserverInterface.h>
-#include <AVSCommon/SDKInterfaces/VisualFocusAnnotation.h>
+#include <acsdk/TemplateRuntimeInterfaces/TemplateRuntimeObserverInterface.h>
 #include <AVSCommon/Utils/DeviceInfo.h>
 #include <AVSCommon/Utils/LibcurlUtils/HTTPContentFetcherFactory.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerFactoryInterface.h>
@@ -94,16 +94,17 @@
 #include <InterruptModel/InterruptModel.h>
 
 #ifdef ENABLE_PCC
-#include <AVSCommon/SDKInterfaces/Phone/PhoneCallerInterface.h>
-#include <PhoneCallController/PhoneCallController.h>
+#include <acsdk/PhoneCallControllerInterfaces/Phone/PhoneCallerInterface.h>
+#include <acsdk/PhoneCallController/PhoneCallController.h>
 #endif
 
 #ifdef ENABLE_MCC
-#include <AVSCommon/SDKInterfaces/Calendar/CalendarClientInterface.h>
-#include <AVSCommon/SDKInterfaces/Meeting/MeetingClientInterface.h>
-#include <MeetingClientController/MeetingClientController.h>
+#include <acsdk/MeetingClientControllerInterfaces/Calendar/CalendarClientInterface.h>
+#include <acsdk/MeetingClientControllerInterfaces/Meeting/MeetingClientInterface.h>
+#include <acsdk/MeetingClientController/MeetingClientController.h>
 #endif
 
+#include <acsdk/AudioEncoderInterfaces/AudioEncoderInterface.h>
 #include <AVSCommon/SDKInterfaces/SystemSoundPlayerInterface.h>
 #include <AVSCommon/SDKInterfaces/Endpoints/EndpointInterface.h>
 #include <Endpoints/Endpoint.h>
@@ -115,13 +116,11 @@
 #include <Settings/DeviceSettingsManager.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
 #include <SoftwareComponentReporter/SoftwareComponentReporterCapabilityAgent.h>
-#include <SpeakerManager/DefaultChannelVolumeFactory.h>
-#include <SpeakerManager/SpeakerManager.h>
-#include <SpeechEncoder/SpeechEncoder.h>
+#include <acsdk/SDKClient/FeatureClientInterface.h>
+#include <acsdk/SpeakerManager/Factories.h>
 #include <SpeechSynthesizer/SpeechSynthesizer.h>
 #include <System/SoftwareInfoSender.h>
 #include <System/UserInactivityMonitor.h>
-#include <TemplateRuntime/TemplateRuntime.h>
 
 #ifdef ENABLE_REVOKE_AUTH
 #include <System/RevokeAuthorizationHandler.h>
@@ -138,7 +137,9 @@ namespace defaultClient {
  * This class serves to instantiate each default component with of the SDK with no specializations to provide an
  * "out-of-box" component that users may utilize for AVS interaction.
  */
-class DefaultClient : public avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface {
+class DefaultClient
+        : public avsCommon::sdkInterfaces::SpeechInteractionHandlerInterface
+        , public sdkClient::FeatureClientInterface {
 public:
     using DefaultClientSubsetManufactory = acsdkManufactory::Manufactory<
         std::shared_ptr<acsdkAlertsInterfaces::AlertsCapabilityAgentInterface>,
@@ -168,8 +169,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
         acsdkManufactory::
             Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
-        acsdkManufactory::
-            Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
@@ -197,7 +196,7 @@ public:
         std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
         std::shared_ptr<settings::DeviceSettingsManager>,
         std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
-        std::shared_ptr<speechencoder::SpeechEncoder>,
+        std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface>,
         std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>>;
 
     using DefaultClientManufactory = acsdkManufactory::Manufactory<
@@ -228,8 +227,6 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface>,
         acsdkManufactory::
             Annotated<avsCommon::sdkInterfaces::AudioFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
-        acsdkManufactory::
-            Annotated<avsCommon::sdkInterfaces::VisualFocusAnnotation, avsCommon::sdkInterfaces::FocusManagerInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::HTTPContentFetcherInterfaceFactoryInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface>,
         std::shared_ptr<avsCommon::sdkInterfaces::LocaleAssetsManagerInterface>,
@@ -257,7 +254,7 @@ public:
         std::shared_ptr<registrationManager::RegistrationNotifierInterface>,
         std::shared_ptr<settings::DeviceSettingsManager>,
         std::shared_ptr<settings::storage::DeviceSettingStorageInterface>,
-        std::shared_ptr<speechencoder::SpeechEncoder>,
+        std::shared_ptr<audioEncoderInterfaces::AudioEncoderInterface>,
         std::shared_ptr<acsdkDeviceSetupInterfaces::DeviceSetupInterface>>;
 
     /**
@@ -293,6 +290,7 @@ public:
      * @param externalCapabilitiesBuilder Optional object used to build capabilities that are not included in the SDK.
      * @param firstInteractionAudioProvider Optional object used in the first interaction started from
      * the alexa voice service
+     * @param sdkClientRegistry Optional object used when the @c SDKClientBuilder is used to construct DefaultClient
      * @return A @c std::unique_ptr to a DefaultClient if all went well or @c nullptr otherwise.
      */
     static std::unique_ptr<DefaultClient> create(
@@ -304,12 +302,12 @@ public:
             std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
 #ifdef ENABLE_PCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+        std::shared_ptr<phoneCallControllerInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
 #ifdef ENABLE_MCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
-        std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+        std::shared_ptr<meetingClientControllerInterfaces::meeting::MeetingClientInterface> meetingClient,
+        std::shared_ptr<meetingClientControllerInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -329,7 +327,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
         const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder = nullptr,
         capabilityAgents::aip::AudioProvider firstInteractionAudioProvider =
-            capabilityAgents::aip::AudioProvider::null());
+            capabilityAgents::aip::AudioProvider::null(),
+        const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry = nullptr);
 
     /**
      * Creates and initializes a default AVS SDK client. To connect the client to AVS, users should make a call to
@@ -405,6 +404,8 @@ of the @c ExpectSpeech directive's timeout. If provided, this function must rema
 AudioInputProcessor.
      * @param firstInteractionAudioProvider Optional object used in the first interaction started from
      * the alexa voice service
+     * @param cryptoFactory Optional Encryption facilities factory.
+     * @param sdkClientRegistry Optional object used when the @c SDKClientBuilder is used to construct DefaultClient
      * @return A @c std::unique_ptr to a DefaultClient if all went well or @c nullptr otherwise.
      */
     static std::unique_ptr<DefaultClient> create(
@@ -434,12 +435,12 @@ AudioInputProcessor.
             std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
 #ifdef ENABLE_PCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+        std::shared_ptr<phoneCallControllerInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
 #ifdef ENABLE_MCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
-        std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+        std::shared_ptr<meetingClientControllerInterfaces::meeting::MeetingClientInterface> meetingClient,
+        std::shared_ptr<meetingClientControllerInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -482,14 +483,22 @@ AudioInputProcessor.
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics = nullptr,
         const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder = nullptr,
         std::shared_ptr<avsCommon::sdkInterfaces::ChannelVolumeFactoryInterface> channelVolumeFactory =
-            std::make_shared<alexaClientSDK::capabilityAgents::speakerManager::DefaultChannelVolumeFactory>(),
+            speakerManager::createChannelVolumeFactory(),
         bool startAlertSchedulingOnInitialization = true,
         std::shared_ptr<alexaClientSDK::acl::MessageRouterFactoryInterface> messageRouterFactory =
             std::make_shared<alexaClientSDK::acl::MessageRouterFactory>(),
         const std::shared_ptr<avsCommon::sdkInterfaces::ExpectSpeechTimeoutHandlerInterface>&
             expectSpeechTimeoutHandler = nullptr,
         capabilityAgents::aip::AudioProvider firstInteractionAudioProvider =
-            capabilityAgents::aip::AudioProvider::null());
+            capabilityAgents::aip::AudioProvider::null(),
+        const std::shared_ptr<alexaClientSDK::cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory = nullptr,
+        const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry = nullptr);
+
+    /// @c FeatureClientInterface functions
+    /// @{
+    bool configure(const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry) override;
+    void doShutdown() override;
+    /// @}
 
     /**
      * Connects the client to AVS. After this call, users can observe the state of the connection asynchronously by
@@ -633,7 +642,7 @@ AudioInputProcessor.
      * @param observer The observer to add.
      */
     void addTemplateRuntimeObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer);
+        std::shared_ptr<templateRuntimeInterfaces::TemplateRuntimeObserverInterface> observer);
 
     /**
      * Removes an observer to be notified when a TemplateRuntime directive is received.
@@ -641,12 +650,7 @@ AudioInputProcessor.
      * @param observer The observer to remove.
      */
     void removeTemplateRuntimeObserver(
-        std::shared_ptr<avsCommon::sdkInterfaces::TemplateRuntimeObserverInterface> observer);
-
-    /**
-     * Notify the TemplateRuntime Capability Agent that the display card is cleared from the screen.
-     */
-    void TemplateRuntimeDisplayCardCleared();
+        std::shared_ptr<templateRuntimeInterfaces::TemplateRuntimeObserverInterface> observer);
 
     /**
      * Adds an observer to be notified of IndicatorState changes.
@@ -1094,7 +1098,29 @@ AudioInputProcessor.
      */
     std::shared_ptr<acsdkBluetoothInterfaces::BluetoothLocalInterface> getBluetoothLocal();
 
+    /**
+     * Stops any ongoing interaction with the SDK by resetting the state of the @c AudioInputProcessor.
+     *
+     * This method is intended for use when a device needs to stop the current user interaction with alexa, for example
+     * when the audio input state needs to be returned to idle as a result of an event such as a back or exit button
+     * press. Calling this method has no effect on ongoing Alexa speech, audio playback or visual state.
+     */
+    void stopInteraction();
+
+    /**
+     * Get a reference to the audio focus manager
+     *
+     * @return shared_ptr to the audio @c FocusManagerInterface, callers should perform a nullptr check as the returned
+     * pointer may be null
+     */
+    std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerInterface> getAudioFocusManager();
+
 private:
+    /**
+     * Constructor
+     */
+    DefaultClient();
+
     /**
      * Initializes the SDK and "glues" all the components together.
      *
@@ -1114,6 +1140,7 @@ private:
      * @param externalCapabilitiesBuilder Object used to build capabilities that are not included in the SDK.
      * @param firstInteractionAudioProvider Optional object used in the first interaction started from
      * the alexa voice service
+     * @param sdkClientRegistry Optional object used when the @c SDKClientBuilder is used to construct DefaultClient
      * @return Whether the SDK was initialized properly.
      */
     bool initialize(
@@ -1125,12 +1152,12 @@ private:
             std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface>> additionalSpeakers,
 #ifdef ENABLE_PCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> phoneSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::phone::PhoneCallerInterface> phoneCaller,
+        std::shared_ptr<phoneCallControllerInterfaces::phone::PhoneCallerInterface> phoneCaller,
 #endif
 #ifdef ENABLE_MCC
         std::shared_ptr<avsCommon::sdkInterfaces::SpeakerInterface> meetingSpeaker,
-        std::shared_ptr<avsCommon::sdkInterfaces::meeting::MeetingClientInterface> meetingClient,
-        std::shared_ptr<avsCommon::sdkInterfaces::calendar::CalendarClientInterface> calendarClient,
+        std::shared_ptr<meetingClientControllerInterfaces::meeting::MeetingClientInterface> meetingClient,
+        std::shared_ptr<meetingClientControllerInterfaces::calendar::CalendarClientInterface> calendarClient,
 #endif
 #ifdef ENABLE_COMMS_AUDIO_PROXY
         std::shared_ptr<avsCommon::utils::mediaPlayer::MediaPlayerInterface> commsMediaPlayer,
@@ -1147,7 +1174,8 @@ private:
         std::shared_ptr<avsCommon::sdkInterfaces::SoftwareInfoSenderObserverInterface> softwareInfoSenderObserver,
         std::shared_ptr<avsCommon::sdkInterfaces::diagnostics::DiagnosticsInterface> diagnostics,
         const std::shared_ptr<ExternalCapabilitiesBuilderInterface>& externalCapabilitiesBuilder,
-        capabilityAgents::aip::AudioProvider firstInteractionAudioProvider);
+        capabilityAgents::aip::AudioProvider firstInteractionAudioProvider,
+        const std::shared_ptr<sdkClient::SDKClientRegistry>& sdkClientRegistry = nullptr);
 
     /// The directive sequencer.
     std::shared_ptr<avsCommon::sdkInterfaces::DirectiveSequencerInterface> m_directiveSequencer;
@@ -1155,12 +1183,10 @@ private:
     /// The focus manager for audio channels.
     std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_audioFocusManager;
 
-    /// The focus manager for visual channels.
-    std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> m_visualFocusManager;
-
     /// The connection manager.
     std::shared_ptr<acl::AVSConnectionManagerInterface> m_connectionManager;
 
+    /// The internet connection monitor.
     std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> m_internetConnectionMonitor;
 
     /// The captions manager.
@@ -1207,13 +1233,12 @@ private:
 
 #ifdef ENABLE_PCC
     /// The phoneCallController capability agent.
-    std::shared_ptr<capabilityAgents::phoneCallController::PhoneCallController> m_phoneCallControllerCapabilityAgent;
+    std::shared_ptr<phoneCallController::PhoneCallController> m_phoneCallControllerCapabilityAgent;
 #endif
 
 #ifdef ENABLE_MCC
     /// The MeetingClientController capability agent.
-    std::shared_ptr<capabilityAgents::meetingClientController::MeetingClientController>
-        m_meetingClientControllerCapabilityAgent;
+    std::shared_ptr<meetingClientController::MeetingClientController> m_meetingClientControllerCapabilityAgent;
 #endif
 
     /// The call manager capability agent.
@@ -1229,7 +1254,7 @@ private:
     std::shared_ptr<avsCommon::sdkInterfaces::SpeakerManagerInterface> m_speakerManager;
 
     /// The TemplateRuntime capability agent.
-    std::shared_ptr<capabilityAgents::templateRuntime::TemplateRuntime> m_templateRuntime;
+    std::shared_ptr<templateRuntimeInterfaces::TemplateRuntimeInterface> m_templateRuntime;
 
     /// The Equalizer capability agent.
     std::shared_ptr<acsdkEqualizer::EqualizerCapabilityAgent> m_equalizerCapabilityAgent;

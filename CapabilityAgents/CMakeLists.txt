@@ -14,8 +14,7 @@ set(CAPABILITY_AGENTS
         "SoftwareComponentReporter"
         "SpeakerManager"
         "SpeechSynthesizer"
-        "System"
-        "TemplateRuntime")
+        "System")
 
 if (COMMS)
     list(APPEND CAPABILITY_AGENTS "CallManager")

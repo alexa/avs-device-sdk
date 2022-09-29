@@ -21,7 +21,7 @@ namespace alexaClientSDK {
 namespace acsdkAudioInputStream {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AudioInputStreamFactory");
+#define TAG "AudioInputStreamFactory"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

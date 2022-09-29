@@ -19,8 +19,8 @@
 #include <acsdkAuthorization/private/Logging.h>
 #include <acsdkAuthorization/private/LWA/LWAStorageConstants.h>
 #include <acsdkAuthorization/private/LWA/LWAStorageDataMigration.h>
-#include <acsdkProperties/EncryptedPropertiesFactories.h>
-#include <acsdkProperties/MiscStorageAdapter.h>
+#include <acsdk/Properties/EncryptedPropertiesFactories.h>
+#include <acsdk/Properties/MiscStorageAdapter.h>
 #include <AVSCommon/Utils/FileSystem/FileSystemUtils.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
 
@@ -30,14 +30,14 @@ namespace lwa {
 
 using namespace ::alexaClientSDK::acsdkAuthorizationInterfaces;
 using namespace ::alexaClientSDK::acsdkAuthorizationInterfaces::lwa;
-using namespace ::alexaClientSDK::acsdkProperties;
-using namespace ::alexaClientSDK::acsdkPropertiesInterfaces;
+using namespace ::alexaClientSDK::properties;
+using namespace ::alexaClientSDK::propertiesInterfaces;
 using namespace ::alexaClientSDK::avsCommon::utils::configuration;
 using namespace ::alexaClientSDK::avsCommon::utils::logger;
 using namespace ::alexaClientSDK::storage;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LWAAuthorizationStorage");
+#define TAG "LWAAuthorizationStorage"
 
 /// Name of default @c ConfigurationNode for LWA
 static const std::string CONFIG_KEY_LWA_AUTHORIZATION = "lwaAuthorization";
@@ -46,7 +46,7 @@ static const std::string CONFIG_KEY_LWA_AUTHORIZATION = "lwaAuthorization";
 static const std::string CONFIG_KEY_DB_FILE_PATH_KEY = "databaseFilePath";
 
 std::shared_ptr<LWAAuthorizationStorageInterface> LWAAuthorizationStorage::createStorage(
-    const std::shared_ptr<acsdkPropertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory) {
+    const std::shared_ptr<propertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory) {
     if (!propertiesFactory) {
         ACSDK_ERROR(LX("createStorageFailed").d("reason", "propertiesFactoryNull"));
         return nullptr;
@@ -126,8 +126,8 @@ std::shared_ptr<storage::sqliteStorage::SQLiteMiscStorage> LWAAuthorizationStora
 std::shared_ptr<LWAAuthorizationStorageInterface> LWAAuthorizationStorage::createLWAAuthorizationStorageInterface(
     const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
     const std::string& storageRootKey,
-    const std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
-    const std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>& keyStore) {
+    const std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
+    const std::shared_ptr<cryptoInterfaces::KeyStoreInterface>& keyStore) {
     ACSDK_DEBUG0(LX("createLWAAuthorizationStorageInterface"));
 
     bool useEncryptionAtRest = true;

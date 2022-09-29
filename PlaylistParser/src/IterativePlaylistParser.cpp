@@ -31,7 +31,7 @@ using namespace avsCommon::utils::playlistParser;
 using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("IterativePlaylistParser");
+#define TAG "IterativePlaylistParser"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -87,14 +87,14 @@ PlaylistEntry IterativePlaylistParser::next() {
             return playItem.playlistEntry;
         }
         auto playlistURL = playItem.playlistURL;
-        auto contentFetcher = m_contentFetcherFactory->create(playItem.playlistURL);
-        if (!contentFetcher) {
+        auto playlistContentFetcher = m_contentFetcherFactory->create(playItem.playlistURL);
+        if (!playlistContentFetcher) {
             ACSDK_ERROR(LX("nextFailed").d("reason", "createContentFetcherFailed").sensitive("url", playlistURL));
             return PlaylistEntry::createErrorEntry(playlistURL);
         }
 
-        contentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
-        auto header = contentFetcher->getHeader(&m_abort);
+        playlistContentFetcher->getContent(HTTPContentFetcherInterface::FetchOptions::ENTIRE_BODY);
+        auto header = playlistContentFetcher->getHeader(&m_abort);
         if (m_abort) {
             ACSDK_DEBUG9(LX("nextFailed").d("info", "aborting"));
             break;
@@ -155,13 +155,13 @@ PlaylistEntry IterativePlaylistParser::next() {
                         // recovery mechanism. This way, if we parse this so far into the future that all the URLs
                         // we had previously seen are gone, we'll still stream the latest URLs.
                         int startPointForNewURLsAdded = 0;
-                        for (int i = entries.size() - 1; i >= 0; --i) {
+                        for (int i = static_cast<int>(entries.size() - 1); i >= 0; --i) {
                             if (entries.at(i).url == m_lastUrl) {
                                 // We need to add the URLs past this point
                                 startPointForNewURLsAdded = i + 1;
                             }
                         }
-                        for (int i = entries.size() - 1; i >= startPointForNewURLsAdded; --i) {
+                        for (int i = static_cast<int>(entries.size() - 1); i >= startPointForNewURLsAdded; --i) {
                             ACSDK_DEBUG9(LX("foundNewURLInLivePlaylist"));
                             auto entry = entries.at(i);
                             m_playQueue.push_front(entry);

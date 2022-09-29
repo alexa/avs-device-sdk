@@ -20,7 +20,7 @@
 
 #include <acsdkNotificationsInterfaces/NotificationsNotifierInterface.h>
 #include <acsdkNotificationsInterfaces/NotificationsObserverInterface.h>
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkNotifications {
@@ -28,8 +28,7 @@ namespace acsdkNotifications {
 /**
  * Relays notifications related to Notifications.
  */
-class NotificationsNotifier
-        : public acsdkNotifier::Notifier<acsdkNotificationsInterfaces::NotificationsObserverInterface> {
+class NotificationsNotifier : public notifier::Notifier<acsdkNotificationsInterfaces::NotificationsObserverInterface> {
 public:
     /**
      * Factory method.

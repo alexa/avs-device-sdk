@@ -1,0 +1,39 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir = .
+default_days = 365
+default_crl_days = 30
+default_md = sha256
+preserve = no
+policy = policy_match
+database = $dir/index.txt
+serial = $dir/certs.seq
+
+[ policy_match ]
+countryName = match
+stateOrProvinceName = match
+organizationName = match
+location = match
+commonName = supplied
+
+[ req ]
+distinguished_name = req_distinguished_name
+prompt = no
+x509_extensions = v3_ca
+default_bits = 2048
+default_md = sha256
+
+[ req_distinguished_name ]
+C = US
+ST = WA
+L = Seattle
+O = Amazon
+CN = MMSDK CA
+
+[ v3_ca ]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+basicConstraints = CA:TRUE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign

@@ -113,6 +113,8 @@ void EndpointRegistrationManagerTest::SetUp() {
 void EndpointRegistrationManagerTest::TearDown() {
     m_manager.reset();
     m_capabilitiesDelegate.reset();
+    m_capabilitiesObserver.reset();
+    m_registrationObserver.reset();
 
     m_sequencer->shutdown();
     m_sequencer.reset();
@@ -214,13 +216,13 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointSucceeds) {
     EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
 
-    // Check that register endpoint was enqueued.
-    auto result = m_manager->registerEndpoint(endpoint);
-    ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
-
     // Expect that the observer will be notified that the endpoint was registered.
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
     EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+
+    // Check that register endpoint was enqueued.
+    auto result = m_manager->registerEndpoint(endpoint);
+    ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::SUCCESS,
@@ -251,11 +253,13 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointSucceeds) {
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, deleteEndpoint(_, configurations)).WillOnce(Return(true));
 
+    // set expectation
+    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
+    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+
     // Add an endpoint so we can test delete.
     auto addResult = m_manager->registerEndpoint(endpoint);
 
-    EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
-    EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::SUCCESS,
         CapabilitiesDelegateObserverInterface::Error::SUCCESS,
@@ -312,11 +316,13 @@ TEST_F(EndpointRegistrationManagerTest, test_updateEndpointSucceeds) {
     EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler1)).WillOnce(Return(true));
     EXPECT_CALL(*m_sequencer, addDirectiveHandler(handler2)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, _)).WillRepeatedly(Return(true));
-    // Add an endpoint so we can test update
-    auto addResult = m_manager->registerEndpoint(endpoint);
 
     EXPECT_CALL(*m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::SUCCEEDED));
     EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+
+    // Add an endpoint so we can test update
+    auto addResult = m_manager->registerEndpoint(endpoint);
+
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::SUCCESS,
         CapabilitiesDelegateObserverInterface::Error::SUCCESS,
@@ -330,9 +336,9 @@ TEST_F(EndpointRegistrationManagerTest, test_updateEndpointSucceeds) {
     EXPECT_CALL(*m_sequencer, addDirectiveHandler(addedHandler)).WillOnce(Return(true));
     EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler2)).WillOnce(Return(true));
     EXPECT_CALL(*endpoint, update(_)).WillOnce(Return(true));
-    auto updateResult = m_manager->updateEndpoint(endpointId, std::make_shared<EndpointModificationData>(updatedData));
     EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, UpdateResult::SUCCEEDED));
     EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+    auto updateResult = m_manager->updateEndpoint(endpointId, std::make_shared<EndpointModificationData>(updatedData));
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::SUCCESS,
         CapabilitiesDelegateObserverInterface::Error::SUCCESS,
@@ -417,14 +423,14 @@ TEST_F(EndpointRegistrationManagerTest, test_registerEndpointWhenCapabilityRegis
     EXPECT_CALL(*m_sequencer, removeDirectiveHandler(handler)).WillOnce(Return(true));
     EXPECT_CALL(*m_capabilitiesDelegate, addOrUpdateEndpoint(_, configurations)).WillOnce(Return(true));
 
-    // Check that register endpoint was enqueued.
-    auto result = m_manager->registerEndpoint(endpoint);
-    ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
-
     // Expect that the observer will be notified that the endpoint was registered.
     EXPECT_CALL(
         *m_registrationObserver, onEndpointRegistration(endpointId, _, RegistrationResult::CONFIGURATION_ERROR));
     EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _));
+
+    // Check that register endpoint was enqueued.
+    auto result = m_manager->registerEndpoint(endpoint);
+    ASSERT_EQ(result.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     m_capabilitiesObserver->onCapabilitiesStateChange(
         CapabilitiesDelegateObserverInterface::State::FATAL_ERROR,
@@ -716,9 +722,9 @@ TEST_F(EndpointRegistrationManagerTest, test_deregisterEndpointWhileUpdateInProg
     ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
     // Check that update endpoint enqueued.
-    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
     EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, _)).Times(1);
     EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    auto updateResult = m_manager->updateEndpoint(endpointId, updatedData);
     ASSERT_EQ(updateResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     // Check that the deregistration fails.
@@ -852,9 +858,9 @@ TEST_F(EndpointRegistrationManagerTest, test_updateEndpointWhileUpdateInProgress
     ASSERT_EQ(result.get(), RegistrationResult::SUCCEEDED);
 
     // Check that update endpoint enqueued.
-    auto deleteResult = m_manager->updateEndpoint(endpointId, updatedData);
     EXPECT_CALL(*m_registrationObserver, onEndpointUpdate(endpointId, _, _)).Times(1);
     EXPECT_CALL(*m_registrationObserver, onPendingEndpointRegistrationOrUpdate(endpointId, _, _)).Times(1);
+    auto deleteResult = m_manager->updateEndpoint(endpointId, updatedData);
     ASSERT_EQ(deleteResult.wait_for(std::chrono::milliseconds::zero()), std::future_status::timeout);
 
     // Check that the redundant update fails.

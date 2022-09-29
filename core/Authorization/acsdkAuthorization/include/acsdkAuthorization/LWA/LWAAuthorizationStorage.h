@@ -20,9 +20,9 @@
 #include <string>
 
 #include <acsdkAuthorizationInterfaces/LWA/LWAAuthorizationStorageInterface.h>
-#include <acsdkCryptoInterfaces/CryptoFactoryInterface.h>
-#include <acsdkCryptoInterfaces/KeyStoreInterface.h>
-#include <acsdkPropertiesInterfaces/PropertiesFactoryInterface.h>
+#include <acsdk/CryptoInterfaces/CryptoFactoryInterface.h>
+#include <acsdk/CryptoInterfaces/KeyStoreInterface.h>
+#include <acsdk/PropertiesInterfaces/PropertiesFactoryInterface.h>
 #include <AVSCommon/SDKInterfaces/Storage/MiscStorageInterface.h>
 #include <AVSCommon/Utils/Configuration/ConfigurationNode.h>
 #include <SQLiteStorage/SQLiteMiscStorage.h>
@@ -39,7 +39,7 @@ namespace lwa {
  * This implementation class adapts properties interface to domain-specific authorization storage interface. Depending
  * on
  *
- * @sa PropertiesAPI
+ * @sa Lib_acsdkPropertiesInterfaces
  */
 class LWAAuthorizationStorage : public acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface {
 public:
@@ -54,7 +54,7 @@ public:
      * @return Pointer to the LWAAuthorizationStorage object, nullptr if there's an error creating it.
      */
     static std::shared_ptr<LWAAuthorizationStorageInterface> createStorage(
-        const std::shared_ptr<acsdkPropertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory);
+        const std::shared_ptr<propertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory);
 
     /**
      * @brief Create storage interface backed by SQLite.
@@ -78,8 +78,8 @@ public:
     createLWAAuthorizationStorageInterface(
         const std::shared_ptr<avsCommon::utils::configuration::ConfigurationNode>& configurationRoot,
         const std::string& storageRootKey,
-        const std::shared_ptr<acsdkCryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
-        const std::shared_ptr<acsdkCryptoInterfaces::KeyStoreInterface>& keyStore);
+        const std::shared_ptr<cryptoInterfaces::CryptoFactoryInterface>& cryptoFactory,
+        const std::shared_ptr<cryptoInterfaces::KeyStoreInterface>& keyStore);
 
     /**
      * Destructor.
@@ -133,14 +133,13 @@ private:
      * Constructor.
      */
     LWAAuthorizationStorage(
-        const std::shared_ptr<alexaClientSDK::acsdkPropertiesInterfaces::PropertiesFactoryInterface>&
-            propertiesFactory);
+        const std::shared_ptr<alexaClientSDK::propertiesInterfaces::PropertiesFactoryInterface>& propertiesFactory);
 
     /// The underlying properties factory class;
-    std::shared_ptr<alexaClientSDK::acsdkPropertiesInterfaces::PropertiesFactoryInterface> m_propertiesFactory;
+    std::shared_ptr<alexaClientSDK::propertiesInterfaces::PropertiesFactoryInterface> m_propertiesFactory;
 
     /// The underlying properties class;
-    std::shared_ptr<alexaClientSDK::acsdkPropertiesInterfaces::PropertiesInterface> m_properties;
+    std::shared_ptr<alexaClientSDK::propertiesInterfaces::PropertiesInterface> m_properties;
 
     /// Friend class for member access.
     friend class LWAAuthorizationStorageTestHelper;

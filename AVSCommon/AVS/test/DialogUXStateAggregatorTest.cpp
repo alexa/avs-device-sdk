@@ -25,6 +25,7 @@ namespace test {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::mediaPlayer;
 using namespace std;
 
 /// Long time out for observers to wait for the state change callback (we should not reach this).
@@ -40,7 +41,7 @@ static const auto SHORT_TIMEOUT = std::chrono::milliseconds(50);
 static const auto TRANSITION_TIMEOUT = std::chrono::milliseconds(300);
 
 /// Dummy value for a media player source id
-static const avsCommon::utils::mediaPlayer::MediaPlayerInterface::SourceId TEST_SOURCE_ID = -1;
+static const MediaPlayerInterface::SourceId TEST_SOURCE_ID = static_cast<MediaPlayerInterface::SourceId>(-1);
 
 /// A test observer that mocks out the DialogUXStateObserverInterface##onDialogUXStateChanged() call.
 class TestObserver : public DialogUXStateObserverInterface {

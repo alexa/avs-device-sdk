@@ -349,7 +349,9 @@ void Alert::setFocusState(FocusState focusState, MixingBehavior behavior) {
             startRendererLocked();
         } else {
             m_startRendererAgainAfterFullStop = true;
-            m_renderer->stop();
+            if (m_renderer) {
+                m_renderer->stop();
+            }
         }
     }
 }
@@ -410,24 +412,22 @@ void Alert::activate() {
 
 void Alert::deactivate(StopReason reason) {
     ACSDK_DEBUG9(LX("deactivate").d("reason", reason));
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
 
     m_dynamicData.state = Alert::State::STOPPING;
     m_stopReason = reason;
     m_maxLengthTimer.stop();
 
-    if (isAlertPaused()) {
+    if (isAlertPausedLocked()) {
         m_dynamicData.state = Alert::State::STOPPED;
-        m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
-            getTokenLocked(),
-            getType(),
-            AlertObserverInterface::State::STOPPED,
-            getScheduledTime_Utc_TimePointLocked(),
-            getOriginalTimeLocked(),
-            getLabelLocked()));
+        lock.unlock();
+        notifyObserver(AlertObserverInterface::State::STOPPED);
+        lock.lock();
     }
 
-    m_renderer->stop();
+    if (m_renderer) {
+        m_renderer->stop();
+    }
 }
 
 void Alert::getAlertData(StaticData* staticData, DynamicData* dynamicData) const {
@@ -513,19 +513,20 @@ bool Alert::setAlertData(StaticData* staticData, DynamicData* dynamicData) {
 }
 
 void Alert::onRendererStateChange(RendererObserverInterface::State state, const std::string& reason) {
+    std::unique_lock<std::mutex> lock(m_mutex);
+
     ACSDK_INFO(LX("onRendererStateChange")
                    .d("state", state)
                    .d("reason", reason)
                    .d("m_hasTimerExpired", m_hasTimerExpired)
-                   .d("m_dynamicData.state", m_dynamicData.state));
-    ACSDK_DEBUG1(LX("onRendererStateChange").d("token", getToken()));
+                   .d("m_dynamicData.state", getStateLocked()));
+    ACSDK_DEBUG1(LX("onRendererStateChange").d("token", getTokenLocked()));
 
     bool shouldNotifyObserver = false;
     bool shouldRetryRendering = false;
     AlertObserverInterface::State notifyState = AlertObserverInterface::State::ERROR;
     std::string notifyReason;
 
-    std::unique_lock<std::mutex> lock(m_mutex);
     auto observerCopy = m_observer;
 
     switch (state) {
@@ -538,14 +539,18 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
                 // Having a Renderer start when our state is stopped means a runaway alarm.
                 // This shouldn't ever happen, but this will save us in the case it does.
                 ACSDK_ERROR(LX("onRendererStateChange").m("Renderer started but alert is STOPPED. Stop the Renderer"));
-                m_renderer->stop();
+                if (m_renderer) {
+                    m_renderer->stop();
+                }
             } else if (State::ACTIVATING == m_dynamicData.state) {
                 // a focus change can happen in the middle of alert activation. We don't want to stop a
                 // renderer during activation to avoid mediaplayer errors.
                 if (m_focusChangedDuringAlertActivation) {
                     m_focusChangedDuringAlertActivation = false;
                     shouldRetryRendering = true;
-                    m_renderer->stop();
+                    if (m_renderer) {
+                        m_renderer->stop();
+                    }
                 } else {
                     shouldNotifyObserver = true;
                     notifyState = AlertObserverInterface::State::STARTED;
@@ -624,14 +629,7 @@ void Alert::onRendererStateChange(RendererObserverInterface::State state, const 
     lock.unlock();
 
     if (shouldNotifyObserver && observerCopy) {
-        auto alertInfo = AlertObserverInterface::AlertInfo(
-            getToken(),
-            getType(),
-            notifyState,
-            getScheduledTime_Utc_TimePoint(),
-            getOriginalTime(),
-            getLabel(),
-            notifyReason);
+        auto alertInfo = createAlertInfo(notifyState, notifyReason);
         observerCopy->onAlertStateChange(alertInfo);
     }
 
@@ -701,6 +699,10 @@ avsCommon::utils::Optional<std::string> Alert::getLabelLocked() const {
 
 Alert::State Alert::getState() const {
     std::lock_guard<std::mutex> lock(m_mutex);
+    return getStateLocked();
+}
+
+Alert::State Alert::getStateLocked() const {
     return m_dynamicData.state;
 }
 
@@ -729,7 +731,7 @@ bool Alert::updateScheduledTime(const std::string& newScheduledTime) {
 }
 
 bool Alert::snooze(const std::string& updatedScheduledTime) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
 
     if (!m_dynamicData.timePoint.setTime_ISO_8601(updatedScheduledTime)) {
         ACSDK_ERROR(LX("snoozeFailed").d("reason", "setTimeFailed").d("updatedScheduledTime", updatedScheduledTime));
@@ -739,19 +741,16 @@ bool Alert::snooze(const std::string& updatedScheduledTime) {
     m_dynamicData.state = State::SNOOZING;
     m_maxLengthTimer.stop();
 
-    if (isAlertPaused()) {
+    if (isAlertPausedLocked()) {
         m_dynamicData.state = Alert::State::SNOOZED;
-        m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
-            getTokenLocked(),
-            getType(),
-            AlertObserverInterface::State::SNOOZED,
-            getScheduledTime_Utc_TimePointLocked(),
-            getOriginalTimeLocked(),
-            getLabelLocked()));
+        lock.unlock();
+        notifyObserver(AlertObserverInterface::State::SNOOZED);
+        lock.lock();
     }
 
-    m_renderer->stop();
-
+    if (m_renderer) {
+        m_renderer->stop();
+    }
     return true;
 }
 
@@ -799,7 +798,7 @@ void Alert::startRendererLocked() {
     ACSDK_DEBUG5(LX("startRenderer"));
     std::vector<std::string> urls;
 
-    if (isAlertPaused()) {
+    if (isAlertPausedLocked()) {
         ACSDK_INFO(
             LX("startRenderer early exit due to focus being in background, and mixing behavior being MUST_PAUSE"));
         return;
@@ -843,29 +842,29 @@ void Alert::startRendererLocked() {
             settings::types::isEnabled(alarmVolumeRampSetting) && (getTypeName() == Alarm::getTypeNameStatic());
     }
 
-    m_renderer->start(
-        shared_from_this(), audioFactory, alarmVolumeRampEnabled, urls, loopCount, loopPause, startWithPause);
+    if (m_renderer) {
+        m_renderer->start(
+            shared_from_this(), audioFactory, alarmVolumeRampEnabled, urls, loopCount, loopPause, startWithPause);
+    }
 }
 
 void Alert::onMaxTimerExpiration() {
     ACSDK_INFO(LX("onMaxTimerExpiration"));
-    ACSDK_DEBUG1(LX("expired token").d("token", getToken()));
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
+    ACSDK_DEBUG1(LX("expired token").d("token", getTokenLocked()));
     m_dynamicData.state = Alert::State::STOPPING;
     m_hasTimerExpired = true;
 
-    if (isAlertPaused()) {
+    if (isAlertPausedLocked()) {
         m_dynamicData.state = Alert::State::STOPPED;
-        m_observer->onAlertStateChange(AlertObserverInterface::AlertInfo(
-            getTokenLocked(),
-            getType(),
-            AlertObserverInterface::State::STOPPED,
-            getScheduledTime_Utc_TimePointLocked(),
-            getOriginalTimeLocked(),
-            getLabelLocked()));
+        lock.unlock();
+        notifyObserver(AlertObserverInterface::State::STOPPED);
+        lock.lock();
     }
 
-    m_renderer->stop();
+    if (m_renderer) {
+        m_renderer->stop();
+    }
 }
 
 bool Alert::isPastDue(int64_t currentUnixTime, std::chrono::seconds timeLimit) {
@@ -888,7 +887,27 @@ std::function<std::pair<std::unique_ptr<std::istream>, const avsCommon::utils::M
 Alert::ContextInfo Alert::getContextInfo() const {
     std::lock_guard<std::mutex> lock(m_mutex);
 
-    return ContextInfo(m_staticData.token, getTypeName(), getScheduledTime_ISO_8601Locked());
+    return ContextInfo(getTokenLocked(), getTypeName(), getScheduledTime_ISO_8601Locked());
+}
+
+acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo Alert::createAlertInfo(
+    acsdkAlertsInterfaces::AlertObserverInterface::State state,
+    const std::string& reason) const {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    return createAlertInfoLocked(state, reason);
+}
+
+acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo Alert::createAlertInfoLocked(
+    acsdkAlertsInterfaces::AlertObserverInterface::State state,
+    const std::string& reason) const {
+    return AlertObserverInterface::AlertInfo(
+        getTokenLocked(),
+        getType(),  // type name is static value
+        state,
+        getScheduledTime_Utc_TimePointLocked(),
+        getOriginalTimeLocked(),
+        getLabelLocked(),
+        reason);
 }
 
 AlertObserverInterface::Type Alert::getType() const {
@@ -904,9 +923,20 @@ AlertObserverInterface::Type Alert::getType() const {
     return AlertObserverInterface::Type::ALARM;
 }
 
-bool Alert::isAlertPaused() const {
+bool Alert::isAlertPausedLocked() const {
     return avsCommon::avs::FocusState::BACKGROUND == m_focusState &&
            avsCommon::avs::MixingBehavior::MUST_PAUSE == m_mixingBehavior;
+}
+
+void Alert::notifyObserver(acsdkAlertsInterfaces::AlertObserverInterface::State state, const std::string& reason)
+    const {
+    std::unique_lock<std::mutex> lock(m_mutex);
+    if (m_observer != nullptr) {
+        auto observerCopy = m_observer;
+        auto alertInfo = createAlertInfoLocked(state, reason);
+        lock.unlock();
+        observerCopy->onAlertStateChange(alertInfo);
+    }
 }
 
 avsCommon::utils::Optional<AlertObserverInterface::OriginalTime> Alert::validateOriginalTimeString(

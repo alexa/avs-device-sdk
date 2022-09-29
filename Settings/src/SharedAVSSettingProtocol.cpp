@@ -21,7 +21,7 @@
 #include "Settings/SharedAVSSettingProtocol.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SharedAVSSettingProtocol");
+#define TAG "SharedAVSSettingProtocol"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -150,7 +150,7 @@ SetSettingResult SharedAVSSettingProtocol::localChange(
     m_pendingRequest = std::unique_ptr<Request>(new Request(applyChange, revertChange, notifyObservers));
 
     if (executorReady) {
-        m_executor.submit([this]() {
+        m_executor.execute([this]() {
             std::unique_lock<std::mutex> lock(m_requestLock);
             auto request = std::move(m_pendingRequest);
             lock.unlock();
@@ -219,7 +219,7 @@ bool SharedAVSSettingProtocol::avsChange(
     m_pendingRequest = std::unique_ptr<Request>(new Request(applyChange, revertChange, notifyObservers));
 
     if (executorReady) {
-        m_executor.submit([this]() {
+        m_executor.execute([this]() {
             std::unique_lock<std::mutex> lock(m_requestLock);
             auto request = std::move(m_pendingRequest);
             lock.unlock();
@@ -368,7 +368,7 @@ void SharedAVSSettingProtocol::executeSynchronizeOnConnected() {
 
 void SharedAVSSettingProtocol::connectionStatusChangeCallback(bool isConnected) {
     if (isConnected) {
-        m_executor.submit(std::bind(&SharedAVSSettingProtocol::executeSynchronizeOnConnected, this));
+        m_executor.execute(std::bind(&SharedAVSSettingProtocol::executeSynchronizeOnConnected, this));
     }
 }
 

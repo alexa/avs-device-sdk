@@ -20,7 +20,7 @@ namespace applicationUtilities {
 namespace androidUtilities {
 
 /// The tag associated with log entries from this class.
-static const std::string TAG{"AndroidSLESObject"};
+#define TAG "AndroidSLESObject"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -21,6 +21,7 @@
 #include <memory>
 #include <string>
 
+#include <AIP/AudioInputProcessor.h>
 #include <AIP/AudioProvider.h>
 #include <AVSCommon/AVS/AudioInputStream.h>
 

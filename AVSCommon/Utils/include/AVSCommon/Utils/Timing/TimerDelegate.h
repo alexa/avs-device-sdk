@@ -57,13 +57,15 @@ private:
      * @param periodType The type of period to use when making subsequent task calls.
      * @param maxCount The desired number of times to call task.
      * @param task A callable type representing a task.
+     * @param moniker Moniker value to use for a new thread.
      */
     void timerLoop(
         std::chrono::nanoseconds delay,
         std::chrono::nanoseconds period,
         PeriodType periodType,
         size_t maxCount,
-        std::function<void()> task);
+        std::function<void()> task,
+        std::string moniker);
 
     /// Cleanup logic which waits for the thread to join if possible. @c m_callMutex must be held before calling.
     void cleanupLocked();

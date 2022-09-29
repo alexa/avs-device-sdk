@@ -68,7 +68,7 @@ using namespace registrationManager;
 using namespace synchronizeStateSender;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CoreComponent");
+#define TAG "CoreComponent"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

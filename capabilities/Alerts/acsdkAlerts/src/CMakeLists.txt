@@ -27,7 +27,7 @@ target_link_libraries(acsdkAlerts PRIVATE
         CertifiedSender
         SQLiteStorage
         RegistrationManager
-        SpeakerManager)
+        acsdkShutdownManagerInterfaces)
 
 # install target
 asdk_install()

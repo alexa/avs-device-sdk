@@ -30,7 +30,7 @@ using namespace alexaClientSDK::avsCommon::utils;
 using namespace alexaClientSDK::avsCommon::utils::memory;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AttachmentManager");
+#define TAG "AttachmentManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

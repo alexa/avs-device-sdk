@@ -94,6 +94,34 @@ public:
         const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder);
 
     /**
+     * Creates a new @c NotificationsCapabilityAgent instance
+     * @note This method does not depend on manufactory.
+     *
+     * @param notificationsStorage The storage interface to the NotificationIndicator database.
+     * @param renderer The instance of the @c NotificationRendererInterface used to play assets associated with
+     * notifications.
+     * @param contextManager The AVS Context manager used to generate system context for events.
+     * @param exceptionSender The object to use for sending AVS Exception messages.
+     * @param notificationsAudioFactory The audio factory object to produce the default notification sound.
+     * @param dataManager A dataManager object that will track the CustomerDataHandler.
+     * @param metricRecorder The metric recorder.
+     * @return A @c std::shared_ptr to the new @c NotificationsCapabilityAgent instance.
+     */
+    static std::shared_ptr<NotificationsCapabilityAgent> create(
+        std::shared_ptr<acsdkNotificationsInterfaces::NotificationsStorageInterface> notificationsStorage,
+        std::shared_ptr<acsdkNotificationsInterfaces::NotificationRendererInterface> renderer,
+        std::shared_ptr<avsCommon::sdkInterfaces::ContextManagerInterface> contextManager,
+        std::shared_ptr<avsCommon::sdkInterfaces::ExceptionEncounteredSenderInterface> exceptionSender,
+        std::shared_ptr<avsCommon::sdkInterfaces::audio::NotificationsAudioFactoryInterface> notificationsAudioFactory,
+        std::shared_ptr<registrationManager::CustomerDataManagerInterface> dataManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder = nullptr);
+
+    /**
+     * Destructor.
+     */
+    ~NotificationsCapabilityAgent() override;
+
+    /**
      * Gets the @c NotificationsNotifierInterface that can relay notification changes to observers.
      *
      * @return The @c NotificationsNotifierInterface that this capability agent will notify.

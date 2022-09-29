@@ -49,7 +49,7 @@ using namespace avsCommon::utils::configuration;
 using MediaPlayerState = avsCommon::utils::mediaPlayer::MediaPlayerState;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MediaPlayer");
+#define TAG "MediaPlayer"
 
 static const std::string MEDIAPLAYER_CONFIGURATION_ROOT_KEY = "gstreamerMediaPlayer";
 /// The key in our config file to set the audioSink.

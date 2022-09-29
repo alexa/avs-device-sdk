@@ -308,6 +308,17 @@ public:
      */
     Alert::ContextInfo getContextInfo() const;
 
+    /**
+     * Create AlertInfo object for this alert with the specified state and reason.
+     * @param state state of the alertInfo, which is of different type from Alert.state
+     * @param reason reason for alert state change
+     *
+     * @return AlertInfo object for the alert with the specified state
+     */
+    acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo createAlertInfo(
+        acsdkAlertsInterfaces::AlertObserverInterface::State state,
+        const std::string& reason = "") const;
+
     void onRendererStateChange(renderer::RendererObserverInterface::State state, const std::string& reason) override;
 
     /**
@@ -529,6 +540,13 @@ private:
     std::string getTokenLocked() const;
 
     /**
+     * Returns the state of the alert.
+     *
+     * @return The state of the alert.
+     */
+    Alert::State getStateLocked() const;
+
+    /**
      * Returns the alert's scheduled time in Unix.
      *
      * @return The alert's scheduled time in Unix.
@@ -565,6 +583,17 @@ private:
     avsCommon::utils::Optional<std::string> getLabelLocked() const;
 
     /**
+     * Returns the information of an alert with specified state
+     * @param state state of the alertInfo
+     * @param reason reason for alert state change
+     *
+     * @return AlertInfo object for the alert with the specified state
+     */
+    acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo createAlertInfoLocked(
+        acsdkAlertsInterfaces::AlertObserverInterface::State state,
+        const std::string& reason = "") const;
+
+    /**
      * Utility function to begin the alert's renderer in an unlocked context
      */
     void startRenderer();
@@ -584,7 +613,13 @@ private:
      *
      * @return Whether alert is paused
      */
-    bool isAlertPaused() const;
+    bool isAlertPausedLocked() const;
+
+    /**
+     * Function to notify observer on AlertInfo change
+     */
+    void notifyObserver(acsdkAlertsInterfaces::AlertObserverInterface::State state, const std::string& reason = "")
+        const;
 
     /// The mutex that enforces thread safety for all member variables.
     mutable std::mutex m_mutex;

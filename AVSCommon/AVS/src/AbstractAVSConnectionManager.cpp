@@ -23,7 +23,7 @@ namespace avs {
 using namespace avsCommon::sdkInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AbstractAVSConnectionManager");
+#define TAG "AbstractAVSConnectionManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

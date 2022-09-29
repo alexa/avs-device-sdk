@@ -24,7 +24,7 @@ using avsCommon::avs::AudioInputStream;
 using namespace avsCommon::utils::timing;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AudioInjectorMicrophone");
+#define TAG "AudioInjectorMicrophone"
 
 /// The timeout to use for writing to the SharedDataStream.
 static const std::chrono::milliseconds TIMEOUT_FOR_WRITING{500};

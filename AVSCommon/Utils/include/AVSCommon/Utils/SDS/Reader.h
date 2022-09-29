@@ -90,7 +90,7 @@ public:
      * @param bufferLayout The @c BufferLayout to use for reading stream data.
      * @param id The id of the reader, assigned by the @c SharedDataStream.
      */
-    Reader(Policy policy, std::shared_ptr<BufferLayout> bufferLayout, uint8_t id);
+    Reader(Policy policy, std::shared_ptr<BufferLayout> bufferLayout, size_t id);
 
     /// This destructor detaches the @c Reader from a @c BufferLayout.
     ~Reader();
@@ -245,7 +245,7 @@ private:
      * The index in @c BufferLayout::getReaderCursorArray() and @c BufferLayout::getReaderCloseIndexArray() assigned to
      * this @c Reader.
      */
-    uint8_t m_id;
+    size_t m_id;
 
     /// Pointer to this reader's cursor in BufferLayout::getReaderCursorArray().
     AtomicIndex* m_readerCursor;
@@ -258,7 +258,7 @@ template <typename T>
 const std::string SharedDataStream<T>::Reader::TAG = "SdsReader";
 
 template <typename T>
-SharedDataStream<T>::Reader::Reader(Policy policy, std::shared_ptr<BufferLayout> bufferLayout, uint8_t id) :
+SharedDataStream<T>::Reader::Reader(Policy policy, std::shared_ptr<BufferLayout> bufferLayout, size_t id) :
         m_policy{policy},
         m_bufferLayout{bufferLayout},
         m_id{id},

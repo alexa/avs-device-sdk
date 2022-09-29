@@ -17,7 +17,7 @@
 #include <acsdkAuthorization/private/Logging.h>
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"AuthorizationManagerStorage"};
+#define TAG "AuthorizationManagerStorage"
 
 namespace alexaClientSDK {
 namespace acsdkAuthorization {

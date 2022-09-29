@@ -19,6 +19,8 @@
 
 #include <AVSCommon/AVS/EventBuilder.h>
 #include <AVSCommon/Utils/Logger/Logger.h>
+#include <AVSCommon/Utils/Metrics/DataPointCounterBuilder.h>
+#include <AVSCommon/Utils/Metrics/MetricEventBuilder.h>
 #include <AVSCommon/Utils/RetryTimer.h>
 
 namespace alexaClientSDK {
@@ -26,9 +28,17 @@ namespace avsGatewayManager {
 
 using namespace avsCommon::avs;
 using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::utils::metrics;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PostConnectVerifyGatewaySender");
+#define TAG "PostConnectVerifyGatewaySender"
+
+/// Activity name for post-connect metric.
+/// This name is dependent on TAG value.
+#define POST_CONNECT_ACTIVITY_NAME TAG "-sendVerifyGateway"
+
+/// Prefix for post-connect data point with status value.
+#define POST_CONNECT_STATUS_PREFIX "STATUS-"
 
 /**
  * Create a LogEntry using the file's TAG and the specified event string.
@@ -60,12 +70,13 @@ static avsCommon::utils::RetryTimer RETRY_TIMER{RETRY_TABLE};
 
 std::shared_ptr<PostConnectVerifyGatewaySender> PostConnectVerifyGatewaySender::create(
     std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>& verifyGatewaySender)>
-        gatewayVerifiedCallback) {
+        gatewayVerifiedCallback,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) {
     if (!gatewayVerifiedCallback) {
         ACSDK_ERROR(LX("createFailed").d("reason", "invalid gatewayVerifiedCallback"));
     } else {
         return std::shared_ptr<PostConnectVerifyGatewaySender>(
-            new PostConnectVerifyGatewaySender(gatewayVerifiedCallback));
+            new PostConnectVerifyGatewaySender(gatewayVerifiedCallback, metricRecorder));
     }
 
     return nullptr;
@@ -73,9 +84,16 @@ std::shared_ptr<PostConnectVerifyGatewaySender> PostConnectVerifyGatewaySender::
 
 PostConnectVerifyGatewaySender::PostConnectVerifyGatewaySender(
     std::function<void(const std::shared_ptr<PostConnectVerifyGatewaySender>& verifyGatewaySender)>
-        gatewayVerifiedCallback) :
-        m_gatewayVerifiedCallback{gatewayVerifiedCallback},
+        gatewayVerifiedCallback,
+    std::shared_ptr<MetricRecorderInterface> metricRecorder) :
+        m_gatewayVerifiedCallback{std::move(gatewayVerifiedCallback)},
+        m_metricRecorder{std::move(metricRecorder)},
         m_isStopping{false} {
+    ACSDK_INFO(LX("init").p("this", this));
+}
+
+PostConnectVerifyGatewaySender::~PostConnectVerifyGatewaySender() {
+    ACSDK_INFO(LX("destroyed").p("this", this));
 }
 
 unsigned int PostConnectVerifyGatewaySender::getOperationPriority() {
@@ -83,7 +101,7 @@ unsigned int PostConnectVerifyGatewaySender::getOperationPriority() {
 }
 
 bool PostConnectVerifyGatewaySender::performOperation(const std::shared_ptr<MessageSenderInterface>& messageSender) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     if (!messageSender) {
         ACSDK_ERROR(LX("performOperationFailed").d("reason", "nullPostConnectSender"));
         return false;
@@ -126,7 +144,7 @@ void PostConnectVerifyGatewaySender::wakeOperation() {
 }
 
 void PostConnectVerifyGatewaySender::abortOperation() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     std::shared_ptr<WaitableMessageRequest> requestCopy;
     {
         std::lock_guard<std::mutex> lock{m_mutex};
@@ -156,6 +174,21 @@ PostConnectVerifyGatewaySender::VerifyGatewayReturnCode PostConnectVerifyGateway
 
     /// Wait for the response.
     auto status = m_postConnectRequest->waitForCompletion();
+
+#ifdef ACSDK_ENABLE_METRICS_RECORDING
+    if (m_metricRecorder) {
+        std::stringstream eventNameBuilder;
+        eventNameBuilder << POST_CONNECT_STATUS_PREFIX << status;
+        auto metricEvent =
+            MetricEventBuilder{}
+                .setActivityName(POST_CONNECT_ACTIVITY_NAME)
+                .addDataPoint(DataPointCounterBuilder{}.setName(eventNameBuilder.str()).increment(1).build())
+                .build();
+        if (metricEvent) {
+            m_metricRecorder->recordMetric(std::move(metricEvent));
+        }
+    }
+#endif
 
     switch (status) {
         /// 200 Response with a set gateway directive.

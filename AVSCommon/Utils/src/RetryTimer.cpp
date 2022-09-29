@@ -47,8 +47,8 @@ RetryTimer::RetryTimer(const std::vector<int>& retryTable, int decreasePercentag
 std::chrono::milliseconds RetryTimer::calculateTimeToRetry(int retryCount) const {
     if (retryCount < 0) {
         retryCount = 0;
-    } else if ((size_t)retryCount >= m_RetrySize) {
-        retryCount = m_RetrySize - 1;
+    } else if (static_cast<size_t>(retryCount) >= m_RetrySize) {
+        retryCount = static_cast<int>(m_RetrySize) - 1;
     }
 
     std::mt19937 generator(static_cast<unsigned>(std::time(nullptr)));

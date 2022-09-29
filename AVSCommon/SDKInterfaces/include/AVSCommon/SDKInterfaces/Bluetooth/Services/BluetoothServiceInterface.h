@@ -28,8 +28,8 @@ namespace services {
 
 /**
  * Interface representing a Bluetooth Service.
- * More Bluetooth Service information(e.g, UUID, NAME) could be found at
- * https://www.bluetooth.com/specifications/assigned-numbers/service-discovery/
+ * More Bluetooth Service information(e.g, UUID, NAME) could be found in the service discovery section at
+ * https://www.bluetooth.com/specifications/assigned-numbers/
  */
 class BluetoothServiceInterface {
 public:

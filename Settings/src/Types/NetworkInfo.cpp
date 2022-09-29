@@ -34,7 +34,7 @@ namespace settings {
 namespace types {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("NetworkInfo");
+#define TAG "NetworkInfo"
 
 /**
  * Create an error LogEntry using this file's TAG and use "functionNameFailed" as the event string.

@@ -644,7 +644,7 @@ TEST_F(HTTP2TransportTest, test_pauseSendWhenSDSEmpty) {
         // Number of chunks the attachment will be divided into
         const unsigned chunks = 4;
         // the size of each chunk in bytes, this is the ceiling of (attachment.size / chunks)
-        unsigned int chunkSize = (attachment.size() + chunks - 1) / chunks;
+        unsigned int chunkSize = static_cast<unsigned int>((attachment.size() + chunks - 1) / chunks);
         auto writer = attMgr.createWriter(TEST_ATTACHMENT_ID_STRING_ONE, avsCommon::utils::sds::WriterPolicy::BLOCKING);
         AttachmentWriter::WriteStatus writeStatus = AttachmentWriter::WriteStatus::OK;
         unsigned int lastChunkSize = (attachment.size() % chunks == 0) ? chunkSize : attachment.size() % chunks;
@@ -959,7 +959,7 @@ TEST_F(HTTP2TransportTest, test_onSendCompletedNotification) {
 
     // Send a message for each test case defined in the messageResponseMap.
     std::vector<std::shared_ptr<TestMessageRequestObserver>> messageObservers;
-    unsigned messagesCount = messageResponseMap.size();  // number of test messages to send
+    unsigned messagesCount = static_cast<unsigned>(messageResponseMap.size());  // number of test messages to send
     for (unsigned messageNum = 0; messageNum < messagesCount; messageNum++) {
         std::shared_ptr<MessageRequest> messageReq = std::make_shared<MessageRequest>(TEST_MESSAGE, "");
         auto messageObserver = std::make_shared<TestMessageRequestObserver>();

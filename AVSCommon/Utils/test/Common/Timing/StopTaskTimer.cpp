@@ -28,7 +28,7 @@ using namespace avsCommon::sdkInterfaces::timing;
 using namespace avsCommon::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("StopTaskTimer");
+#define TAG "StopTaskTimer"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -80,7 +80,7 @@ void StopTaskTimer::stop() {
     if (isActive()) {
         // Wait until any current executing tasked has finished.
         // The objective is to force the task to run from the beginning.
-        std::lock_guard<std::mutex> lock(m_taskMutex);
+        std::lock_guard<std::mutex> taskLock(m_taskMutex);
         m_task();
         m_delegate->stop();
     }

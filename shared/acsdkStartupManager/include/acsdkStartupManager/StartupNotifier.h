@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 
 #include "acsdkStartupManagerInterfaces/RequiresStartupInterface.h"
 #include "acsdkStartupManagerInterfaces/StartupNotifierInterface.h"
@@ -29,7 +29,7 @@ namespace acsdkStartupManager {
 /**
  * Relays the notification when it's time to start up.
  */
-class StartupNotifier : public acsdkNotifier::Notifier<acsdkStartupManagerInterfaces::RequiresStartupInterface> {
+class StartupNotifier : public notifier::Notifier<acsdkStartupManagerInterfaces::RequiresStartupInterface> {
 public:
     /**
      * Factory method.

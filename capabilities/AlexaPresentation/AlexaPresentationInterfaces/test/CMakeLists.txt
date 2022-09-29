@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.1)
+
+include(${AVS_CMAKE_BUILD}/BuildDefaults.cmake)
+
+add_library(acsdkAlexaPresentationInterfacesTestUtils INTERFACE)
+
+target_include_directories(acsdkAlexaPresentationInterfacesTestUtils INTERFACE include)
+
+target_link_libraries(acsdkAlexaPresentationInterfacesTestUtils INTERFACE acsdkAlexaPresentationInterfaces acsdkAPLCapabilityCommonInterfaces)

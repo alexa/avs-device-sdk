@@ -35,7 +35,7 @@ using namespace avsCommon::utils::playlistParser;
 using namespace avsCommon::utils::string;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PlaylistParser");
+#define TAG "PlaylistParser"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -79,7 +79,7 @@ int PlaylistParser::parsePlaylist(
 
     auto id = ++g_id;
 
-    m_executor.submit([this, id, observer, url, playlistTypesToNotBeParsed]() {
+    m_executor.execute([this, id, observer, url, playlistTypesToNotBeParsed]() {
         doDepthFirstSearch(id, observer, url, playlistTypesToNotBeParsed);
     });
     return id;
@@ -247,7 +247,7 @@ void PlaylistParser::doDepthFirstSearch(
                          * previously seen are gone, we'll still stream the latest URLs.
                          */
                         int startPointForNewURLsAdded = 0;
-                        for (int i = entries.size() - 1; i >= 0; --i) {
+                        for (int i = static_cast<int>(entries.size() - 1); i >= 0; --i) {
                             if (entries.at(i).url == lastUrlParsed) {
                                 // We need to add the URLs past this point
                                 startPointForNewURLsAdded = i + 1;
@@ -300,7 +300,7 @@ void PlaylistParser::doDepthFirstSearch(
                                                  .d("playlistMediaSequence", m3uContent.mediaSequence));
                             }
                             lastMediaSequence = m3uContent.mediaSequence;
-                            lastNumberOfFragments = entries.size();
+                            lastNumberOfFragments = static_cast<int>(entries.size());
                         }
 
                         /*

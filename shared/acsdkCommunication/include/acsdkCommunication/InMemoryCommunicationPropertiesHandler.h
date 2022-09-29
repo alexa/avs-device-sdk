@@ -26,7 +26,7 @@
 #include <acsdkCommunicationInterfaces/CommunicationPropertyChangeSubscriber.h>
 #include <acsdkCommunicationInterfaces/CommunicationPropertyValidatorInterface.h>
 #include <acsdkCommunicationInterfaces/CommunicationPropertiesHandlerInterface.h>
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 
 namespace alexaClientSDK {
 namespace acsdkCommunication {
@@ -57,7 +57,7 @@ public:
      */
     class WeakSubscriptionProxy
             : public acsdkCommunicationInterfaces::CommunicationPropertyChangeSubscriber<T>
-            , public acsdkNotifier::Notifier<acsdkCommunicationInterfaces::CommunicationPropertyChangeSubscriber<T>> {
+            , public notifier::Notifier<acsdkCommunicationInterfaces::CommunicationPropertyChangeSubscriber<T>> {
     public:
         /// @name CommunictionPropertyChangeSubscriber methods
         /// @{

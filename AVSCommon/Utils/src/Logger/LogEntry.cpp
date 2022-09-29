@@ -24,44 +24,53 @@ namespace utils {
 namespace logger {
 
 /// List of characters we need to escape.
-static const char* RESERVED_METADATA_CHARS = R"(\,=:)";
+static constexpr auto RESERVED_METADATA_CHARS = R"(\,=:)";
 
 /// Escape sequence for '%'.
-static const std::string ESCAPED_METADATA_ESCAPE = R"(\\)";
+static constexpr auto ESCAPED_METADATA_ESCAPE = R"(\\)";
 
 /// Escape sequence for ','.
-static const std::string ESCAPED_PAIR_SEPARATOR = R"(\,)";
+static constexpr auto ESCAPED_PAIR_SEPARATOR = R"(\,)";
 
 /// Escape sequence for ':'.
-static const std::string ESCAPED_SECTION_SEPARATOR = R"(\:)";
+static constexpr auto ESCAPED_SECTION_SEPARATOR = R"(\:)";
 
 /// Escape sequence for '='.
-static const std::string ESCAPED_KEY_VALUE_SEPARATOR = R"(\=)";
+static constexpr auto ESCAPED_KEY_VALUE_SEPARATOR = R"(\=)";
 
 /// Reserved in metadata sequences for escaping other reserved values.
-static const char METADATA_ESCAPE = '\\';
+static constexpr char METADATA_ESCAPE = '\\';
 
 /// Reserved in metadata sequences to separate key,value pairs.
-static const char PAIR_SEPARATOR = ',';
+static constexpr char PAIR_SEPARATOR = ',';
 
 /// Reserved in metadata sequences to separate them from a preceding event and an optional terminal message.
-static const char SECTION_SEPARATOR = ':';
+static constexpr char SECTION_SEPARATOR = ':';
 
 /// String for boolean TRUE
-static const std::string BOOL_TRUE = "true";
+static constexpr auto BOOL_TRUE = "true";
 
 /// String for boolean FALSE
-static const std::string BOOL_FALSE = "false";
+static constexpr auto BOOL_FALSE = "false";
 
-LogEntry::LogEntry(const std::string& source, const char* event) : m_hasMetadata(false) {
-    m_stream << source << SECTION_SEPARATOR;
+/// Array of strings for obfuscation.
+/// @see LogEntry::obfuscatePrivateData()
+static constexpr const char* const DENYLIST[] = {"ssid"};
+
+LogEntry::LogEntry(const char* source, const char* event) : m_hasMetadata(false) {
+    if (source) {
+        m_stream << source;
+    }
+    m_stream << SECTION_SEPARATOR;
     if (event) {
         m_stream << event;
     }
 }
 
-LogEntry::LogEntry(const std::string& source, const std::string& event) : m_hasMetadata(false) {
-    m_stream << source << SECTION_SEPARATOR << event;
+LogEntry::LogEntry(const std::string& source, const char* event) : LogEntry(source.c_str(), event) {
+}
+
+LogEntry::LogEntry(const std::string& source, const std::string& event) : LogEntry(source.c_str(), event.c_str()) {
 }
 
 LogEntry& LogEntry::d(const char* key, const char* value) {
@@ -151,6 +160,39 @@ void LogEntry::appendEscapedString(const char* in) {
             return;
         }
     }
+}
+
+LogEntry& LogEntry::obfuscatePrivateData(const char* key, const std::string& value) {
+    // if value contains any  private label, obfuscate the section after the label
+    // since it can (but shouldn't) contain multiple,  obfuscate from the earliest one found onward
+    auto firstPosition = value.length();
+
+    const size_t count = sizeof(DENYLIST) / sizeof(DENYLIST[0]);
+    for (size_t index = 0; index < count; ++index) {
+        const auto privateLabel = DENYLIST[index];
+        const auto privateLabelLen = std::strlen(privateLabel);
+        auto it = std::search(
+            value.begin(),
+            value.end(),
+            privateLabel,
+            privateLabel + privateLabelLen,
+            [](char valueChar, char denyListChar) { return std::tolower(valueChar) == std::tolower(denyListChar); });
+        if (it != value.end()) {
+            // capture the least value
+            auto thisPosition = std::distance(value.begin(), it) + privateLabelLen;
+            if (thisPosition < firstPosition) {
+                firstPosition = thisPosition;
+            }
+        }
+    }
+
+    if (firstPosition <= value.length()) {
+        // hash everything after the label itself
+        auto labelPart = value.substr(0, firstPosition);
+        auto obfuscatedPart = std::to_string(std::hash<std::string>{}(value.substr(firstPosition)));
+        return d(key, labelPart + obfuscatedPart);
+    }
+    return d(key, value);
 }
 
 }  // namespace logger

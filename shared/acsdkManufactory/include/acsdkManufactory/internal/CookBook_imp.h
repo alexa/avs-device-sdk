@@ -45,7 +45,7 @@ inline CookBook& CookBook::addUniqueFactory(std::function<std::unique_ptr<Type>(
 
     using ResultType = std::unique_ptr<Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -56,7 +56,7 @@ inline CookBook& CookBook::addUniqueFactory(std::function<std::unique_ptr<Type>(
         static_cast<void (*)(void*)>(deleteFunctionForUniqueRecipe),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addUniqueFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -71,7 +71,7 @@ inline CookBook& CookBook::addUniqueFactory(std::unique_ptr<Type> (*factory)(Dep
     }
 
     using ResultType = std::unique_ptr<Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -81,7 +81,7 @@ inline CookBook& CookBook::addUniqueFactory(std::unique_ptr<Type> (*factory)(Dep
             produceFromUniqueFactoryRecipe<Type, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForUniqueRecipe));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addUniqueFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -97,7 +97,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::function<std::shared_ptr<Type>
 
     using ResultType = std::shared_ptr<Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -108,7 +108,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::function<std::shared_ptr<Type>
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addPrimaryFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -127,7 +127,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::function<Annotated<Annotation,
 
     using ResultType = Annotated<Annotation, Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -138,7 +138,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::function<Annotated<Annotation,
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addPrimaryFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -156,7 +156,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::shared_ptr<Type> (*factory)(De
     }
 
     using ResultType = std::shared_ptr<Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -166,7 +166,7 @@ inline CookBook& CookBook::addPrimaryFactory(std::shared_ptr<Type> (*factory)(De
             produceFromSharedFactoryRecipe<Type, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addPrimaryFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -184,7 +184,7 @@ inline CookBook& CookBook::addPrimaryFactory(Annotated<Annotation, Type> (*facto
     }
 
     using ResultType = Annotated<Annotation, Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -194,7 +194,7 @@ inline CookBook& CookBook::addPrimaryFactory(Annotated<Annotation, Type> (*facto
             produceFromAnnotatedSharedFactoryRecipe<Type, Annotation, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addPrimaryFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -213,7 +213,7 @@ inline CookBook& CookBook::addRequiredFactory(std::function<std::shared_ptr<Type
 
     using ResultType = std::shared_ptr<Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -224,7 +224,7 @@ inline CookBook& CookBook::addRequiredFactory(std::function<std::shared_ptr<Type
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRequiredFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -243,7 +243,7 @@ inline CookBook& CookBook::addRequiredFactory(std::function<Annotated<Annotation
 
     using ResultType = Annotated<Annotation, Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -254,7 +254,7 @@ inline CookBook& CookBook::addRequiredFactory(std::function<Annotated<Annotation
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRequiredFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -272,7 +272,7 @@ inline CookBook& CookBook::addRequiredFactory(std::shared_ptr<Type> (*factory)(D
     }
 
     using ResultType = std::shared_ptr<Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -282,7 +282,7 @@ inline CookBook& CookBook::addRequiredFactory(std::shared_ptr<Type> (*factory)(D
             produceFromSharedFactoryRecipe<Type, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRequiredFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -300,7 +300,7 @@ inline CookBook& CookBook::addRequiredFactory(Annotated<Annotation, Type> (*fact
     }
 
     using ResultType = Annotated<Annotation, Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -310,7 +310,7 @@ inline CookBook& CookBook::addRequiredFactory(Annotated<Annotation, Type> (*fact
             produceFromAnnotatedSharedFactoryRecipe<Type, Annotation, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRequiredFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -329,7 +329,7 @@ inline CookBook& CookBook::addRetainedFactory(std::function<std::shared_ptr<Type
 
     using ResultType = std::shared_ptr<Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -340,7 +340,7 @@ inline CookBook& CookBook::addRetainedFactory(std::function<std::shared_ptr<Type
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRetainedFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -356,7 +356,7 @@ inline CookBook& CookBook::addRetainedFactory(std::function<Annotated<Annotation
 
     using ResultType = Annotated<Annotation, Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -367,7 +367,7 @@ inline CookBook& CookBook::addRetainedFactory(std::function<Annotated<Annotation
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRetainedFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -382,7 +382,7 @@ inline CookBook& CookBook::addRetainedFactory(std::shared_ptr<Type> (*factory)(D
     }
 
     using ResultType = std::shared_ptr<Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -392,7 +392,7 @@ inline CookBook& CookBook::addRetainedFactory(std::shared_ptr<Type> (*factory)(D
             produceFromSharedFactoryRecipe<Type, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRetainedFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -407,7 +407,7 @@ inline CookBook& CookBook::addRetainedFactory(Annotated<Annotation, Type> (*fact
     }
 
     using ResultType = Annotated<Annotation, Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -417,7 +417,7 @@ inline CookBook& CookBook::addRetainedFactory(Annotated<Annotation, Type> (*fact
             produceFromAnnotatedSharedFactoryRecipe<Type, Annotation, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addRetainedFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -433,7 +433,7 @@ inline CookBook& CookBook::addUnloadableFactory(std::function<std::shared_ptr<Ty
 
     using ResultType = std::shared_ptr<Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -444,7 +444,7 @@ inline CookBook& CookBook::addUnloadableFactory(std::function<std::shared_ptr<Ty
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addUnloadableFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -460,7 +460,7 @@ inline CookBook& CookBook::addUnloadableFactory(std::function<Annotated<Annotati
 
     using ResultType = Annotated<Annotation, Type>;
     auto funcPtr = new std::function<ResultType(Dependencies...)>(function);
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FunctionRecipe>(
         reinterpret_cast<void*>(funcPtr),
@@ -471,7 +471,7 @@ inline CookBook& CookBook::addUnloadableFactory(std::function<Annotated<Annotati
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>),
         static_cast<void (*)(void*)>(deleteFunctionForFunctionRecipeFunction<ResultType, Dependencies...>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addUnloadableFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -486,7 +486,7 @@ inline CookBook& CookBook::addUnloadableFactory(std::shared_ptr<Type> (*factory)
     }
 
     using ResultType = std::shared_ptr<Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -496,7 +496,7 @@ inline CookBook& CookBook::addUnloadableFactory(std::shared_ptr<Type> (*factory)
             produceFromSharedFactoryRecipe<Type, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addUnloadableFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -511,7 +511,7 @@ inline CookBook& CookBook::addUnloadableFactory(Annotated<Annotation, Type> (*fa
     }
 
     using ResultType = Annotated<Annotation, Type>;
-    std::vector<TypeIndex> dependencies = {getTypeIndex<Dependencies>()...};
+    std::vector<avsCommon::utils::TypeIndex> dependencies = {avsCommon::utils::getTypeIndex<Dependencies>()...};
 
     auto newRecipe = std::make_shared<FactoryRecipe>(
         reinterpret_cast<void* (*)()>(factory),
@@ -521,7 +521,7 @@ inline CookBook& CookBook::addUnloadableFactory(Annotated<Annotation, Type> (*fa
             produceFromAnnotatedSharedFactoryRecipe<Type, Annotation, Dependencies...>),
         static_cast<void (*)(void*)>(deleteFunctionForSharedRecipe<Type>));
 
-    TypeIndex type = getTypeIndex<ResultType>();
+    auto type = avsCommon::utils::getTypeIndex<ResultType>();
     if (!addRecipe(type, newRecipe)) {
         markInvalid("addUnloadableFactoryFailed", "non-isEquivalent recipe ", type.getName());
     }
@@ -540,7 +540,7 @@ inline CookBook& CookBook::addInstance(const Type& instance) {
         static_cast<void* (*)(std::shared_ptr<AbstractRecipe>, RuntimeManufactory&, void*)>(produceFromInstanceRecipe),
         static_cast<void (*)(void*)>(deleteFunctionForInstanceRecipe));
 
-    TypeIndex type = getTypeIndex<Type>();
+    auto type = avsCommon::utils::getTypeIndex<Type>();
     if (!addInstance(type, newRecipe)) {
         markInvalid("addInstanceFailed", "non-isEquivalent instance ", type.getName());
     }
@@ -548,7 +548,9 @@ inline CookBook& CookBook::addInstance(const Type& instance) {
     return *this;
 }
 
-inline bool CookBook::addInstance(TypeIndex type, const std::shared_ptr<AbstractRecipe>& newInstanceRecipe) {
+inline bool CookBook::addInstance(
+    avsCommon::utils::TypeIndex type,
+    const std::shared_ptr<AbstractRecipe>& newInstanceRecipe) {
     auto& RecipePtr = m_recipes[type];
     if (RecipePtr) {
         if (!RecipePtr->isEquivalent(newInstanceRecipe)) {
@@ -561,7 +563,7 @@ inline bool CookBook::addInstance(TypeIndex type, const std::shared_ptr<Abstract
     return true;
 }
 
-inline bool CookBook::addRecipe(TypeIndex type, const std::shared_ptr<AbstractRecipe>& newRecipe) {
+inline bool CookBook::addRecipe(avsCommon::utils::TypeIndex type, const std::shared_ptr<AbstractRecipe>& newRecipe) {
     auto& RecipePtr = m_recipes[type];
     if (RecipePtr) {
 /// Remove this check for Windows only.
@@ -630,7 +632,7 @@ inline std::unique_ptr<Type> CookBook::createUniquePointer(RuntimeManufactory& r
         return std::unique_ptr<Type>();
     }
 
-    auto type = getTypeIndex<std::unique_ptr<Type>>();
+    auto type = avsCommon::utils::getTypeIndex<std::unique_ptr<Type>>();
     auto it = m_recipes.find(type);
     if (it != m_recipes.end()) {
         if (it->second) {
@@ -670,7 +672,7 @@ inline std::unique_ptr<AbstractPointerCache> CookBook::createPointerCache() {
         return std::unique_ptr<SharedPointerCache>();
     }
 
-    auto type = getTypeIndex<Type>();
+    auto type = avsCommon::utils::getTypeIndex<Type>();
     auto it = m_recipes.find(type);
     if (it != m_recipes.end()) {
         if (it->second) {
@@ -908,7 +910,7 @@ inline void* CookBook::produceFromUniqueFunctionRecipe(
 
 template <typename Type>
 inline bool CookBook::GetWrapperCollection::append(GetWrapper getWrapper) {
-    auto typeIndex = getTypeIndex<Type>();
+    auto typeIndex = avsCommon::utils::getTypeIndex<Type>();
 
     if (m_types.end() == m_types.find(typeIndex)) {
         m_orderedGetWrappers.push_back(getWrapper);

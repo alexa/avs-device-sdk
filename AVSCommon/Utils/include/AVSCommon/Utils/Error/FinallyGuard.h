@@ -52,6 +52,13 @@ public:
     FinallyGuard(const std::function<void()>& finallyFunction);
 
     /**
+     * Constructor.
+     *
+     * @param finallyFunction The function to be executed when the object goes out of scope.
+     */
+    FinallyGuard(const std::function<void()>&& finallyFunction);
+
+    /**
      * Destructor. Runs @c m_function during destruction.
      */
     ~FinallyGuard();
@@ -62,6 +69,10 @@ private:
 };
 
 inline FinallyGuard::FinallyGuard(const std::function<void()>& finallyFunction) : m_function{finallyFunction} {
+}
+
+inline FinallyGuard::FinallyGuard(const std::function<void()>&& finallyFunction) :
+        m_function{std::move(finallyFunction)} {
 }
 
 inline FinallyGuard::~FinallyGuard() {

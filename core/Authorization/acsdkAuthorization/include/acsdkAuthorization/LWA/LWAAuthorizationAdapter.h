@@ -352,6 +352,12 @@ private:
     void stop();
 
     /**
+     * Stop the current auth attempt by resetting m_authMethod. This will force LWAAuthorizationAdapter to wait for a
+     * new Auth operation. The mutex should be locked before calling this method.
+     */
+    void resetAuthMethodLocked();
+
+    /**
      * A wrapper function that acquires the mutex and then calls @c setRefreshTokenResponseLocked().
      *
      * @param response The response to cache.

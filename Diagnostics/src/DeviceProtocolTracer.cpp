@@ -30,7 +30,7 @@ using namespace avsCommon::utils::json;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DeviceProtocolTracer");
+#define TAG "DeviceProtocolTracer"
 
 /// Maximum number of trace messages stored in the device protocol tracer.
 static const unsigned int DEFAULT_MAX_MESSAGES = 1;

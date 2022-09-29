@@ -16,7 +16,7 @@
 #ifndef ACSDKMANUFACTORY_INTERNAL_ABSTRACTRECIPE_H_
 #define ACSDKMANUFACTORY_INTERNAL_ABSTRACTRECIPE_H_
 
-#include "acsdkManufactory/internal/TypeIndex.h"
+#include <AVSCommon/Utils/TypeIndex.h>
 
 namespace alexaClientSDK {
 namespace acsdkManufactory {
@@ -129,18 +129,18 @@ public:
      *
      * @return The start of a vector enumerating the dependencies of the interface this Recipe creates.
      */
-    std::vector<TypeIndex>::const_iterator begin() const;
+    std::vector<avsCommon::utils::TypeIndex>::const_iterator begin() const;
 
     /**
      * Get the end of a vector enumerating the dependencies of the interface this Recipe creates.
      *
      * @return The end of a vector enumerating the dependencies of the interface this Recipe creates.
      */
-    std::vector<TypeIndex>::const_iterator end() const;
+    std::vector<avsCommon::utils::TypeIndex>::const_iterator end() const;
 
 protected:
     /// Vector enumerating the dependencies of the interface this @c AbstractRecipe creates.
-    std::vector<TypeIndex> m_dependencies;
+    std::vector<avsCommon::utils::TypeIndex> m_dependencies;
 
     /// Function pointer that can produce an instance of this type.
     ProduceInstanceFunction m_produceFunction;
@@ -171,11 +171,11 @@ inline AbstractRecipe::DeleteInstanceFunction AbstractRecipe::getDeleteInstanceF
     return m_deleteFunction;
 }
 
-inline std::vector<TypeIndex>::const_iterator AbstractRecipe::begin() const {
+inline std::vector<avsCommon::utils::TypeIndex>::const_iterator AbstractRecipe::begin() const {
     return m_dependencies.begin();
 }
 
-inline std::vector<TypeIndex>::const_iterator AbstractRecipe::end() const {
+inline std::vector<avsCommon::utils::TypeIndex>::const_iterator AbstractRecipe::end() const {
     return m_dependencies.end();
 }
 

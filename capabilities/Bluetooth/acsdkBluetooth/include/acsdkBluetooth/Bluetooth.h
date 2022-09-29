@@ -266,6 +266,7 @@ public:
     void unpair(const std::string& addr) override;
     void connect(const std::string& addr) override;
     void disconnect(const std::string& addr) override;
+    void setPairingPin(const std::string& addr, const std::string& pin) override;
     /// @}
 
     /// @name CapabilityConfigurationInterface Functions
@@ -534,6 +535,14 @@ private:
      * @param uuids The uuids associated with the devices.
      */
     void executeDisconnectDevices(const std::unordered_set<std::string>& uuids);
+
+    /**
+     * Sets the pairing pin for the current pairing attempt
+     *
+     * @param addr The MAC address associated with the device
+     * @param pin BT pairing pin
+     */
+    void executeSetPairingPin(const std::string& addr, const std::string& pin);
 
     /**
      * Helper function that encapsulates disconnect logic.

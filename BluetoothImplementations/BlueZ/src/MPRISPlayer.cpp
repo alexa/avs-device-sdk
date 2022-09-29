@@ -30,7 +30,7 @@ using namespace avsCommon::sdkInterfaces::bluetooth::services;
 using namespace avsCommon::utils::bluetooth;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"MPRISPlayer"};
+#define TAG "MPRISPlayer"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

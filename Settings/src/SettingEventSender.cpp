@@ -29,7 +29,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::json;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SettingEventSender");
+#define TAG "SettingEventSender"
 
 /**
  * A timeout for an HTTP response, for cases

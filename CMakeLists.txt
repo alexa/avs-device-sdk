@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 # Set project information
-project(AlexaClientSDK VERSION 1.26.0 LANGUAGES CXX)
+project(AlexaClientSDK VERSION 3.0.0 LANGUAGES CXX)
 set(PROJECT_BRIEF "A cross-platform, modular SDK for interacting with the Alexa Voice Service")
 
 # This variable should be used by extension packages to include cmake files from this project.
@@ -26,6 +26,9 @@ configure_file (
 	"${PROJECT_SOURCE_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKConfig.h.in"
 	"${PROJECT_BINARY_DIR}/AVSCommon/Utils/include/AVSCommon/Utils/SDKConfig.h"
 )
+
+# Create Integration directory in output
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Integration)
 
 # Add utils under ThirdParty first so extensions can also utilize them
 add_subdirectory("ThirdParty")
@@ -56,16 +59,12 @@ endif()
 add_subdirectory("InterruptModel")
 add_subdirectory("PlaylistParser")
 add_subdirectory("CapabilityAgents")
-if (NOT MSVC)
-    add_subdirectory("Integration")
-endif()
-add_subdirectory("SampleApp")
 add_subdirectory("ApplicationUtilities")
 add_subdirectory("MediaPlayer")
 add_subdirectory("shared")
-add_subdirectory("SpeechEncoder")
 add_subdirectory("Storage")
 add_subdirectory("SynchronizeStateSender")
+add_subdirectory("SampleApplications")
 add_subdirectory("doc")
 
 # Create .pc pkg-config file

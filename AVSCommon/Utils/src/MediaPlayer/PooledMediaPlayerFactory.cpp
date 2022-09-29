@@ -23,7 +23,7 @@ namespace mediaPlayer {
 
 using namespace avsCommon::utils::mediaPlayer;
 
-static const std::string TAG("PooledMediaPlayerFactory");
+#define TAG "PooledMediaPlayerFactory"
 
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 

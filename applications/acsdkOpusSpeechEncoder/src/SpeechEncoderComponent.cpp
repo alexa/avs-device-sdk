@@ -14,21 +14,33 @@
  */
 
 #include <acsdkManufactory/ComponentAccumulator.h>
-#include <SpeechEncoder/OpusEncoderContext.h>
-
-#include "acsdkSpeechEncoder/SpeechEncoderComponent.h"
+#include <acsdk/AudioEncoder/AudioEncoderFactory.h>
+#include <acsdk/AudioEncoderComponent/ComponentFactory.h>
+#include <acsdk/OpusAudioEncoder/AudioEncoderFactory.h>
 
 namespace alexaClientSDK {
-namespace acsdkSpeechEncoder {
+namespace audioEncoderComponent {
 
 using namespace acsdkManufactory;
-using namespace speechencoder;
+using namespace audioEncoder;
+using namespace audioEncoderInterfaces;
+using namespace opusAudioEncoder;
 
-SpeechEncoderComponent getComponent() {
-    return ComponentAccumulator<>()
-        .addRetainedFactory(SpeechEncoder::createSpeechEncoder)
-        .addRetainedFactory(OpusEncoderContext::createEncoderContext);
+/**
+ * Helper to create OPUS-based audio encoder with default parameters.
+ *
+ * @return Audio encoder instance or nullptr on error.
+ * @private
+ */
+static std::shared_ptr<AudioEncoderInterface> createAudioEncoderWithDefaultParams() {
+    auto blockEncoder = createOpusAudioEncoder();
+    auto encoder = createAudioEncoder(std::move(blockEncoder));
+    return std::move(encoder);
 }
 
-}  // namespace acsdkSpeechEncoder
+AudioEncoderComponent getComponent() {
+    return ComponentAccumulator<>().addRetainedFactory(createAudioEncoderWithDefaultParams);
+}
+
+}  // namespace audioEncoderComponent
 }  // namespace alexaClientSDK

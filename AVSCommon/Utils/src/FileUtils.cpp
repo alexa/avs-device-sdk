@@ -26,7 +26,7 @@ namespace utils {
 namespace file {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FileUtils");
+#define TAG "FileUtils"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

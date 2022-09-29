@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#include <cctype>
 #include <cstdio>
 #include <iomanip>
 #include <iostream>

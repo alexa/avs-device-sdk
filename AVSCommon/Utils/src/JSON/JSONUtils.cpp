@@ -28,7 +28,7 @@ namespace json {
 namespace jsonUtils {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("JsonUtils");
+#define TAG "JsonUtils"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

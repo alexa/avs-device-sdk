@@ -30,7 +30,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace capabilitiesDelegate::utils;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PostConnectCapabilitiesPublisher");
+#define TAG "PostConnectCapabilitiesPublisher"
 
 /**
  * Create a LogEntry using the file's TAG and the specified event string.
@@ -56,11 +56,13 @@ PostConnectCapabilitiesPublisher::PostConnectCapabilitiesPublisher(
     std::shared_ptr<DiscoveryEventSenderInterface> discoveryEventSender) :
         m_isPerformOperationInvoked{false},
         m_discoveryEventSender{std::move(discoveryEventSender)} {
+    ACSDK_INFO(LX("init").p("this", this));
 }
 
 PostConnectCapabilitiesPublisher::~PostConnectCapabilitiesPublisher() {
     ACSDK_DEBUG5(LX(__func__));
     m_discoveryEventSender->stop();
+    ACSDK_INFO(LX("destroyed").p("this", this));
 }
 
 unsigned int PostConnectCapabilitiesPublisher::getOperationPriority() {
@@ -68,7 +70,7 @@ unsigned int PostConnectCapabilitiesPublisher::getOperationPriority() {
 }
 
 bool PostConnectCapabilitiesPublisher::performOperation(const std::shared_ptr<MessageSenderInterface>& messageSender) {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     if (!messageSender) {
         ACSDK_ERROR(LX("performOperationFailed").d("reason", "nullPostConnectSender"));
         return false;
@@ -92,7 +94,7 @@ bool PostConnectCapabilitiesPublisher::performOperation(const std::shared_ptr<Me
 }
 
 void PostConnectCapabilitiesPublisher::abortOperation() {
-    ACSDK_DEBUG5(LX(__func__));
+    ACSDK_INFO(LX(__func__));
     m_discoveryEventSender->stop();
 }
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-#
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,12 +12,11 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
-#
 
 set -o errexit  # Exit the script if any statement fails.
 set -o nounset  # Exit the script if any uninitialized variable is used.
 
-CLONE_URL=${CLONE_URL:- 'git://github.com/alexa/avs-device-sdk.git'}
+CLONE_URL=${CLONE_URL:-'https://github.com/alexa/avs-device-sdk.git'}
 
 PORT_AUDIO_FILE="pa_stable_v190600_20161030.tgz"
 PORT_AUDIO_DOWNLOAD_URL="http://www.portaudio.com/archives/$PORT_AUDIO_FILE"
@@ -320,17 +318,16 @@ then
   cmake "$SOURCE_PATH/avs-device-sdk" \
       -DCMAKE_BUILD_TYPE=DEBUG \
       -DPKCS11=$ACSDK_PKCS11 \
+      -DINSTALL_COMMON_SAMPLE_LIBS=ON \
       "${CMAKE_PLATFORM_SPECIFIC[@]}"
 
   cd $BUILD_PATH
   make SampleApp -j2
-  make PreviewAlexaClient -j2
   make all -j2
 
 else
   cd $BUILD_PATH
   make SampleApp -j2
-  make PreviewAlexaClient -j2
   make all -j2
 fi
 
@@ -362,4 +359,3 @@ generate_start_script
 generate_test_script
 
 echo " **** Completed Configuration/Build ***"
-

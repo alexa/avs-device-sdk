@@ -830,9 +830,6 @@ TEST_F(SQLiteAlertStorageTest, test_clearDatabase) {
     setUpDatabase();
     alexaClientSDK::storage::sqliteStorage::SQLiteDatabase db(TEST_DATABASE_FILE_NAME);
     ASSERT_TRUE(db.open());
-    /// include legacy tables.
-    ASSERT_TRUE(db.performQuery(CREATE_ALERTS_V2_TABLE_SQL_STRING));
-    ASSERT_TRUE(db.performQuery(CREATE_OFFLINE_ALERTS_V1_TABLE_SQL_STRING));
 
     /// store alerts.
     const std::string offlineAlertToken = "token-offline";
@@ -842,15 +839,11 @@ TEST_F(SQLiteAlertStorageTest, test_clearDatabase) {
     ASSERT_TRUE(m_alertStorage->store(alarm));
 
     /// check alerts exist.
-    ASSERT_TRUE(alertExists(&db, OFFLINE_ALERTS_TABLE_NAME, offlineAlertToken));
     ASSERT_TRUE(alertExists(&db, OFFLINE_ALERTS_V2_TABLE_NAME, offlineAlertToken));
-    ASSERT_TRUE(alertExists(&db, ALERTS_V2_TABLE_NAME, TOKEN_ALARM));
     ASSERT_TRUE(alertExists(&db, ALERTS_V3_TABLE_NAME, TOKEN_ALARM));
     /// clear database.
     ASSERT_TRUE(m_alertStorage->clearDatabase());
-    ASSERT_TRUE(isTableEmpty(&db, ALERTS_V2_TABLE_NAME));
     ASSERT_TRUE(isTableEmpty(&db, ALERTS_V3_TABLE_NAME));
-    ASSERT_TRUE(isTableEmpty(&db, OFFLINE_ALERTS_TABLE_NAME));
     ASSERT_TRUE(isTableEmpty(&db, OFFLINE_ALERTS_V2_TABLE_NAME));
     db.close();
 }

@@ -80,6 +80,8 @@ public:
     std::future<bool> connect() override;
     std::future<bool> disconnect() override;
 
+    bool setPairingPin(const std::string& pin) override;
+
     std::vector<std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::SDPRecordInterface>>
     getSupportedServices() override;
     std::shared_ptr<avsCommon::sdkInterfaces::bluetooth::services::BluetoothServiceInterface> getService(

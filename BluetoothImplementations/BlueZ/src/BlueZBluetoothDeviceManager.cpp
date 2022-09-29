@@ -25,7 +25,7 @@ using namespace avsCommon::sdkInterfaces::bluetooth;
 using namespace avsCommon::utils::bluetooth;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG{"BlueZBluetoothDeviceManager"};
+#define TAG "BlueZBluetoothDeviceManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

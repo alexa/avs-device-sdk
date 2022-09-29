@@ -24,7 +24,7 @@ namespace alexaClientSDK {
 namespace avsCommon {
 namespace utils {
 
-static const std::string TAG("WavUtils");
+#define TAG "WavUtils"
 
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -233,9 +233,9 @@ bool readWAVFile(
 
     // Check if the file size is at least the size of a .wav file header.
     inputFile.seekg(0, std::ios::end);
-    int fileLengthInBytes = inputFile.tellg();
+    size_t fileLengthInBytes = static_cast<size_t>(inputFile.tellg());
 
-    const int headerSize = isPCM ? PCM_HEADER_SIZE : NON_PCM_HEADER_SIZE;
+    const size_t headerSize = isPCM ? PCM_HEADER_SIZE : NON_PCM_HEADER_SIZE;
     if (fileLengthInBytes <= headerSize) {
         ACSDK_ERROR(LX("readAudioFileFailed").d("reason", "file size less than RIFF header"));
         return false;
@@ -249,7 +249,7 @@ bool readWAVFile(
 
     char* pBuffer = buffer.data();
 
-    if (static_cast<size_t>(inputFile.gcount()) != static_cast<size_t>(headerSize)) {
+    if (static_cast<size_t>(inputFile.gcount()) != headerSize) {
         ACSDK_ERROR(LX("readAudioFileFailed").d("reason", "failed reading header"));
         return false;
     }
@@ -275,7 +275,7 @@ bool readWAVFile(
     wavHeader.dataSz = readLongFromHeader(pBuffer, DATA_SZ_OFFSET + (isPCM ? 0 : NON_PCM_OFFSET));
 
     // Read the remainder of the wav file (excluding header) into the audioBuffer.
-    int numSamples = (fileLengthInBytes - headerSize) / sizeof(uint16_t);
+    size_t numSamples = (fileLengthInBytes - headerSize) / sizeof(uint16_t);
 
     audioBuffer->resize(numSamples, 0);
     inputFile.read(reinterpret_cast<char*>(&(audioBuffer->at(0))), numSamples * sizeof(uint16_t));

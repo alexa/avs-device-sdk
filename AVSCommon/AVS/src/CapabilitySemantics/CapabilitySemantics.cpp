@@ -34,7 +34,7 @@ static const std::string STATE_MAPPINGS_KEY("stateMappings");
 static const std::string EMPTY_JSON("{}");
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("CapabilitySemantics");
+#define TAG "CapabilitySemantics"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

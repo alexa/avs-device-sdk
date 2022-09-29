@@ -1,13 +1,10 @@
 AVS Device SDK
-Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 ***************************
 AVS DEVICE SDK COMPONENTS
 ***************************
-
 The following AVS Device SDK components are licensed under the Apache
 License, Version 2.0 (the "License"):
-
 - Activity Focus Manager Library (AFML)
 - Alerts Capability Agent
 - Alexa Communications Library (ACL)
@@ -16,6 +13,7 @@ License, Version 2.0 (the "License"):
 - Certified Sender
 - Context Manager
 - Default Client
+- Feature Clients
 - ExternalMediaPlayer Capability Agent
 - Key Word Detector (KWD)
 - Media Player
@@ -23,72 +21,84 @@ License, Version 2.0 (the "License"):
 - Playback Controller Capability Agent
 - Playlist Parser
 - RegistrationManager
-- Sample App
+- Sample Applications
 - Settings Capability Agent
 - SpeakerManager Capability Agent
 - SpeechSynthesizer Capability Agent
 - Storage
 - System Capability Agent
 - Template Runtime Capability Agent
+- APLCapabilityCommon Capability Agent
+- AlexaPresentationAPL Capability Agent
+- AlexaPlaybackController Capability Agent
+- AlexaChannelController Capability Agent
+- AlexaKeypadController Capability Agent
+- AlexaLauncher Capability Agent
+- AlexaRecordController Capability Agent
+- AlexaRemoteVideoPlayer Capability Agent
+- AlexaSeekController Capability Agent
+- AlexaVideoCommon Capability Agent
+- AlexaVideoRecorder Capability Agent
+- LiveViewController Capability Agent
+- InputController Capability Agent
+- VisualCharacteristics Capability Agent
+- PresentationOrchestrator Capability Agent
 
 You may not use this file except in compliance with the License. A copy of
 the License is located at
-
     http://aws.amazon.com/apache2.0/
+or in the "license" file accompanying this file. This file is distributed on
+an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+or implied. See the License for the specific language governing permissions and
+limitations under the License.
+***************************
+AVS DEVICE SDK COMPONENTS
+***************************
+The following AVS Device SDK component is licensed under the Amazon Software License:
+- AudioPlayer Capability Agent
+- InterruptModel
+- AlexaPresentation Capability Agent
+You may not use this file except in compliance with the Amazon Software License. A copy
+of the Amazon Software License is located at:
+  http://aws.amazon.com/asl/
 
+The Alexa logo may only be used to represent the Alexa brand as described in the  AVS UX Logo and Brand guidance.
+You may not use the Alexa logo except in compliance with the AVS UX Logo and Brand guidance.
+A copy of this guidance is located at:
+  https://developer.amazon.com/docs/alexa-voice-service/logo-and-brand.html
+
+Components NOT listed above are licensed under the Apache License, Version 2.0 (the "License"):
+You may not use this file except in compliance with the License. A copy of
+the License is located at:
+  http://aws.amazon.com/apache2.0/
 or in the "license" file accompanying this file. This file is distributed on
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied. See the License for the specific language governing permissions and
 limitations under the License.
 
-***************************
-AVS DEVICE SDK COMPONENTS
-***************************
-
-The following AVS Device SDK component is licensed under the Amazon Software License:
-
-- AudioPlayer Capability Agent
-- InterruptModel
-
-You may not use this file except in compliance with the Amazon Software License. A copy
-of the Amazon Software License is located at:
-
-  http://aws.amazon.com/asl/
-
 ******************
 ALEXA AUDIO ASSETS
 ******************
-
-Copyright 2019-2022 Amazon.com, Inc. or its affiliates ("Amazon").
+Copyright Amazon.com, Inc. or its affiliates (“Amazon”).
 All Rights Reserved.
-
-These materials are licensed to you as “AVS Materials" under the Amazon
-Developer Services Agreement, which is currently available at
-https://developer.amazon.com/support/legal/da
-
+These materials are licensed to you as "Program Materials" under the Program
+Materials License Agreement, which is currently available at
+https://developer.amazon.com/support/legal/pml.
 **********************
 THIRD PARTY COMPONENTS
 **********************
-
 This software includes third party software subject to the following
 copyrights:
-
 - JSON parsing for C++ from RapidJSON - Copyright (C) 2015 THL A29 Limited,
 a Tencent company, and Milo Yip.
-
 - Multipart parsing for MIME messages from multipart-parser -
 Copyright (c) 2010 Hongli Lai
-
 - C++ test framework from Google Test - Copyright 2008, Google Inc.
-
 - Extension for writing and using C++ mock classes from Google Mock -
 Copyright 2008, Google Inc.
-
 - a2dp-rtp.h from BlueALSA - Copyright (c) 2016-2017 Arkadiusz Bokowy.
-
 - Part of the code in BluetoothImplementations/BlueZ/src/MediaEndpoint.cpp is based on
 BlueALSA project - Copyright (c) 2016-2017 Arkadiusz Bokowy.
-
 - Part of the code in shared/acsdkManufactory is based on fruit -
 Copyright 2014 Google Inc. All rights reserved, available at
 https://github.com/google/fruit.
@@ -98,16 +108,13 @@ contained within or distributed with the accompanying software if such terms
 are included in the directory containing the accompanying software. Such
 other license terms will then apply in lieu of the terms of the software
 license above.
-
 ***********
 PKCS#11 API
 ***********
 Copyright © OASIS Open 2015. All Rights Reserved.
-
 All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights
 Policy (the "OASIS IPR Policy"). The full Policy may be found at the OASIS website:
 [http://www.oasis-open.org/policies-guidelines/ipr]
-
 This document and translations of it may be copied and furnished to others, and derivative works that comment on or
 otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in
 part, without restriction of any kind, provided that the above copyright notice and this section are included on all such
@@ -115,26 +122,21 @@ copies and derivative works. However, this document itself may not be modified i
 copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable
 produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS
 IPR Policy, must be followed) or as required to translate it into languages other than English.
-
 The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.
-
 This document and the information contained herein is provided on an “AS IS” basis and OASIS DISCLAIMS ALL WARRANTIES,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE
 ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. OASIS AND ITS
 MEMBERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THIS
 DOCUMENT OR ANY PART THEREOF.
-
 [OASIS requests that any OASIS Party or any other party that believes it has patent claims that would necessarily be
 infringed by implementations of this OASIS Standards Final Deliverable, to notify OASIS TC Administrator and provide
 an indication of its willingness to grant patent licenses to such patent claims in a manner consistent with the IPR Mode
 of the OASIS Technical Committee that produced this deliverable.]
-
 [OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim of ownership of any patent
 claims that would necessarily be infringed by implementations of this OASIS Standards Final Deliverable by a patent
 holder that is not willing to provide a license to such patent claims in a manner consistent with the IPR Mode of the
 OASIS Technical Committee that produced this OASIS Standards Final Deliverable. OASIS may include such claims on its
 website, but disclaims any obligation to do so.]
-
 [OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be
 claimed to pertain to the implementation or use of the technology described in this OASIS Standards Final Deliverable or
 the extent to which any license under such rights might or might not be available; neither does it represent that it has
@@ -145,18 +147,14 @@ obtain a general license or permission for the use of such proprietary rights by
 Standards Final Deliverable, can be obtained from the OASIS TC Administrator. OASIS makes no representation that any
 information or list of intellectual property rights will at any time be complete, or that any claims in such list are,
 in fact, Essential Claims.]
-
 *********************************
 Important note on SoftHSM library
 *********************************
-
 This module is intended for experimentation purposes only. We strongly discourage the use of SoftHSM in a production
 environment because it might provide a false sense of additional security. The resulting configuration doesn't provide
 any actual security benefits. The keys stored in SoftHSM are not stored more securely.than any other means of secrets
 storage in the Greengrass environment.
-
 The purpose of this module it to allow you to learn about the PKCS#11 specification and do initial testing of your
 software if you plan to use a real hardware-based HSM in the future.
-
 You must test your future hardware implementation separately and completely before any production usage because there
 might be differences between PKCS#11 implementation provided in SoftHSM and a hardware-based implementation.

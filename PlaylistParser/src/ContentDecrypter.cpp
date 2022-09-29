@@ -47,7 +47,7 @@ struct EVP_CIPHER_CTX_Deleter {
 using EVP_CIPHER_CTX_free_ptr = std::unique_ptr<EVP_CIPHER_CTX, EVP_CIPHER_CTX_Deleter>;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("ContentDecrypter");
+#define TAG "ContentDecrypter"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -359,7 +359,7 @@ int ContentDecrypter::decryptAES(
 
     EVP_CIPHER_CTX_set_padding(ctx.get(), usePadding);
 
-    if (!EVP_DecryptUpdate(ctx.get(), output.data(), &len, encryptedContent.data(), inputSize)) {
+    if (!EVP_DecryptUpdate(ctx.get(), output.data(), &len, encryptedContent.data(), static_cast<int>(inputSize))) {
         logFailure("UnableToDecryptUpdate");
         return 0;
     }
@@ -475,7 +475,7 @@ bool ContentDecrypter::decryptSampleAES(
 #endif
 
     // find decoder for the stream
-    AVCodec* dec = avcodec_find_decoder(cid);
+    auto dec = avcodec_find_decoder(cid);
 
     // Allocate a codec context for the decoder
     AVCodecContextPtr decCtx(avcodec_alloc_context3(dec));

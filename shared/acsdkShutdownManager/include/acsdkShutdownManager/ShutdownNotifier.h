@@ -18,7 +18,7 @@
 
 #include <memory>
 
-#include <acsdkNotifier/internal/Notifier.h>
+#include <acsdk/Notifier/Notifier.h>
 #include <acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 
@@ -28,7 +28,7 @@ namespace acsdkShutdownManager {
 /**
  * Relays notification when it's time to shut down.
  */
-class ShutdownNotifier : public acsdkNotifier::Notifier<avsCommon::utils::RequiresShutdown> {
+class ShutdownNotifier : public notifier::Notifier<avsCommon::utils::RequiresShutdown> {
 public:
     /**
      * Factory method.

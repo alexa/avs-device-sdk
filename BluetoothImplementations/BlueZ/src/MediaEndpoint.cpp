@@ -96,7 +96,7 @@ constexpr size_t MAX_SANE_CODE_SIZE = MAX_SANE_FRAME_LENGTH * 32;
 constexpr size_t MIN_SANE_CODE_SIZE = 1;
 
 // Standard SDK per module logging constants
-static const std::string TAG{"MediaEndpoint"};
+#define TAG "MediaEndpoint"
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /**

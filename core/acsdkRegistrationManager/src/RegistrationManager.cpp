@@ -34,7 +34,7 @@ static const std::string METRIC_SOURCE_PREFIX = "REGISTRATION_MANAGER-";
 static const std::string LOGOUT_OCCURRED = "LOGOUT_OCCURRED";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("RegistrationManager");
+#define TAG "RegistrationManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

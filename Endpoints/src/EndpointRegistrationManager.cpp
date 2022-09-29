@@ -25,7 +25,7 @@ namespace alexaClientSDK {
 namespace endpoints {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("EndpointRegistrationManager");
+#define TAG "EndpointRegistrationManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -117,7 +117,7 @@ std::future<EndpointRegistrationManager::RegistrationResult> EndpointRegistratio
         return promise.get_future();
     }
 
-    m_executor.submit([this, endpoint]() { executeRegisterEndpoint(endpoint); });
+    m_executor.execute([this, endpoint]() { executeRegisterEndpoint(endpoint); });
 
     auto& pending = m_pendingRegistrations[endpointId];
     pending.first = std::move(endpoint);
@@ -160,7 +160,7 @@ std::future<EndpointRegistrationManager::UpdateResult> EndpointRegistrationManag
     }
 
     auto endpoint = m_endpoints[endpointId];
-    m_executor.submit(
+    m_executor.execute(
         [this, endpoint, endpointModificationData]() { executeUpdateEndpoint(endpoint, endpointModificationData); });
     auto& pending = m_pendingUpdates[endpointId];
     pending.first = std::move(endpoint);
@@ -219,7 +219,7 @@ std::future<EndpointRegistrationManager::DeregistrationResult> EndpointRegistrat
 
     auto endpoint = m_endpoints[endpointId];
 
-    m_executor.submit([this, endpoint]() { executeDeregisterEndpoint(endpoint); });
+    m_executor.execute([this, endpoint]() { executeDeregisterEndpoint(endpoint); });
 
     auto& pending = m_pendingDeregistrations[endpointId];
     pending.first = std::move(endpoint);
@@ -472,7 +472,7 @@ void EndpointRegistrationManager::onCapabilityRegistrationStatusChanged(
     const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& addedOrUpdatedEndpoints,
     const std::pair<CapabilityRegistrationProxy::State, std::vector<EndpointIdentifier>>& deletedEndpoints) {
     ACSDK_DEBUG5(LX(__func__));
-    m_executor.submit([this, addedOrUpdatedEndpoints, deletedEndpoints] {
+    m_executor.execute([this, addedOrUpdatedEndpoints, deletedEndpoints] {
         updateAddedOrUpdatedEndpoints(addedOrUpdatedEndpoints);
         removeDeletedEndpoints(deletedEndpoints);
     });

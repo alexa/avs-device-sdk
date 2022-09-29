@@ -15,6 +15,7 @@
 
 #include <algorithm>
 
+#include "AVSCommon/Utils/Logger/ConsoleLogger.h"
 #include "AVSCommon/Utils/Logger/LoggerSinkManager.h"
 
 namespace alexaClientSDK {
@@ -85,7 +86,7 @@ void LoggerSinkManager::initialize(const std::shared_ptr<Logger>& sink) {
     }
 }
 
-LoggerSinkManager::LoggerSinkManager() : m_sink{ACSDK_GET_SINK_LOGGER()}, m_level(Level::UNKNOWN) {
+LoggerSinkManager::LoggerSinkManager() : m_sink{getConsoleLogger()}, m_level(Level::UNKNOWN) {
 }
 
 }  // namespace logger

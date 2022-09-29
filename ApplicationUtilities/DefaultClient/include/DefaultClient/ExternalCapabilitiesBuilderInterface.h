@@ -38,15 +38,15 @@
 #include <AVSCommon/SDKInterfaces/SpeakerManagerInterface.h>
 #include <AVSCommon/SDKInterfaces/UserInactivityMonitorInterface.h>
 #include <AVSCommon/Utils/MediaPlayer/MediaPlayerInterface.h>
+#include <AVSCommon/Utils/Metrics/MetricRecorderInterface.h>
 #include <AVSCommon/Utils/Optional.h>
 #include <AVSCommon/Utils/RequiresShutdown.h>
 #include <CertifiedSender/CertifiedSender.h>
 #include <RegistrationManager/CustomerDataManagerInterface.h>
 #include <Settings/Storage/DeviceSettingStorageInterface.h>
 #include <SoftwareComponentReporter/SoftwareComponentReporterCapabilityAgent.h>
-#include <SpeakerManager/DefaultChannelVolumeFactory.h>
 #include <System/ReportStateHandler.h>
-#include <TemplateRuntime/TemplateRuntime.h>
+#include <acsdk/TemplateRuntimeInterfaces/TemplateRuntimeInterface.h>
 
 namespace alexaClientSDK {
 namespace defaultClient {
@@ -79,17 +79,6 @@ public:
     virtual ~ExternalCapabilitiesBuilderInterface() = default;
 
     /**
-     * This method sets the focus manager responsible for visual interactions.
-     *
-     * This method will only get called if GUI support has been enabled.
-     *
-     * @param visualFocusManager The focus manager object.
-     * @return A reference to this builder to allow nested function calls.
-     */
-    virtual ExternalCapabilitiesBuilderInterface& withVisualFocusManager(
-        std::shared_ptr<avsCommon::sdkInterfaces::FocusManagerInterface> visualFocusManager) = 0;
-
-    /**
      * This method sets the storage using for setting.
      *
      * @warning The settings storage is opened and closed by DefaultClient during creation and shutdown respectively.
@@ -107,7 +96,7 @@ public:
      * @param templateRuntime The TemplateRuntime object.
      */
     virtual ExternalCapabilitiesBuilderInterface& withTemplateRunTime(
-        std::shared_ptr<capabilityAgents::templateRuntime::TemplateRuntime> templateRuntime) = 0;
+        std::shared_ptr<templateRuntimeInterfaces::TemplateRuntimeInterface> templateRuntime) = 0;
 
     /**
      * Get the CallManager reference.
@@ -123,6 +112,15 @@ public:
      */
     virtual ExternalCapabilitiesBuilderInterface& withInternetConnectionMonitor(
         std::shared_ptr<avsCommon::sdkInterfaces::InternetConnectionMonitorInterface> internetConnectionMonitor) = 0;
+
+    /**
+     * This method sets the Alexa Interface Message Sender to send Alexa Interface response events.
+     *
+     * @param alexaMessageSender The AlexaInterfaceMessageSenderInterface object.
+     */
+    virtual ExternalCapabilitiesBuilderInterface& withAlexaInterfaceMessageSender(
+        std::shared_ptr<alexaClientSDK::avsCommon::sdkInterfaces::AlexaInterfaceMessageSenderInterface>
+            alexaMessageSender) = 0;
 
     /**
      * This method sets the DialogUXStateAggregator for CallManager.
@@ -161,6 +159,7 @@ public:
      * @param softwareComponentReporter Object to report adapters' versions.
      * @param playbackRouter Object to route local playback control command.
      * @param endpointRegistrationManager Object to manage endpoints.
+     * @param metricRecorder Object to manage AVS SDK metric reporting.
      * @return A list with all capabilities as well as objects that require explicit shutdown. Shutdown will be
      * performed in the reverse order of occurrence.
      */
@@ -192,7 +191,8 @@ public:
         std::shared_ptr<avsCommon::sdkInterfaces::ComponentReporterInterface> softwareComponentReporter,
         std::shared_ptr<avsCommon::sdkInterfaces::PlaybackRouterInterface> playbackRouter,
         std::shared_ptr<avsCommon::sdkInterfaces::endpoints::EndpointRegistrationManagerInterface>
-            endpointRegistrationManager) = 0;
+            endpointRegistrationManager,
+        std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> metricRecorder) = 0;
 };
 
 }  // namespace defaultClient

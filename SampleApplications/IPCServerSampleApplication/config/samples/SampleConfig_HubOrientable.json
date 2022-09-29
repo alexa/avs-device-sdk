@@ -1,0 +1,174 @@
+{
+  "version": "3.0",
+  "visualCharacteristics": [
+    {
+      "type": "AlexaInterface",
+      "interface": "Alexa.InteractionMode",
+      "version": "1.1",
+      "configurations": {
+        "interactionModes": [
+          {
+            "id": "hub_fullscreen",
+            "uiMode": "HUB",
+            "interactionDistance": {
+              "unit": "INCHES",
+              "value": 84
+            },
+            "touch": "SUPPORTED",
+            "keyboard": "UNSUPPORTED",
+            "video": "SUPPORTED",
+            "dialog": "SUPPORTED"
+          }
+        ]
+      }
+    },
+    {
+      "type": "AlexaInterface",
+      "interface": "Alexa.Display.Window",
+      "version": "1.0",
+      "configurations": {
+        "templates": [
+          {
+            "id": "hubFullscreen",
+            "type": "STANDARD",
+            "configuration": {
+              "sizes": [
+                {
+                  "type": "DISCRETE",
+                  "id": "fullscreenLandscape",
+                  "value": {
+                    "unit": "PIXEL",
+                    "value": {
+                      "width": 1920,
+                      "height": 1080
+                    }
+                  }
+                },
+                {
+                  "type": "DISCRETE",
+                  "id": "fullscreenPortrait",
+                  "value": {
+                    "unit": "PIXEL",
+                    "value": {
+                      "width": 1080,
+                      "height": 1920
+                    }
+                  }
+                }
+              ],
+              "interactionModes": [
+                "hub_fullscreen"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "AlexaInterface",
+      "interface": "Alexa.Display",
+      "version": "1.0",
+      "configurations": {
+        "display": {
+          "type": "PIXEL",
+          "touch": [
+            "SINGLE"
+          ],
+          "shape": "RECTANGLE",
+          "dimensions": {
+            "resolution": {
+              "unit": "PIXEL",
+              "value": {
+                "width": 1080,
+                "height": 1920
+              }
+            },
+            "physicalSize": {
+              "unit": "INCHES",
+              "value": {
+                "width": 7.6,
+                "height": 13.5
+              }
+            },
+            "pixelDensity": {
+              "unit": "DPI",
+              "value": 160
+            },
+            "densityIndependentResolution": {
+              "unit": "DP",
+              "value": {
+                "width": 1080,
+                "height": 1920
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "sampleClientConfig": {
+    "version": "1.0.0",
+    "description": "Hub Orientable Device",
+    "mode": "HUB",
+    "emulateDisplayDimensions": true,
+    "scaleToFill": true,
+    "audioInputInitiator": "TAP",
+    "displayMode": "ORIENTABLE",
+    "deviceKeys": {
+      "talkKey": {
+        "code": "KeyA",
+        "keyCode": 65,
+        "key": "a"
+      },
+      "backKey": {
+        "code": "KeyB",
+        "keyCode": 66,
+        "key": "b"
+      },
+      "exitKey": {
+        "code": "Escape",
+        "keyCode": 27,
+        "key": "Escape"
+      },
+      "toggleCaptionsKey": {
+        "code": "KeyC",
+        "keyCode": 67,
+        "key": "c"
+      },
+      "toggleDoNotDisturbKey": {
+        "code": "KeyD",
+        "keyCode": 68,
+        "key": "d"
+      }
+    },
+    "windows": [
+      {
+        "id": "hubOrientableFullscreen",
+        "displayWindowConfig": {
+          "templateId": "hubFullscreen",
+          "configurations": {
+            "landscape" : {
+              "sizeConfigurationId": "fullscreenLandscape",
+              "interactionMode": "hub_fullscreen"
+            },
+            "portrait" : {
+              "sizeConfigurationId": "fullscreenPortrait",
+              "interactionMode": "hub_fullscreen"
+            }
+          }
+        },
+        "aplRendererParameters": {
+          "supportedExtensions": [
+            "aplext:backstack:10"
+          ]
+        },
+        "supportedInterfaces": [
+          "Alexa.Presentation.APL",
+          "TemplateRuntime"
+        ],
+        "zOrderIndex": 0
+      }
+    ],
+    "defaultWindowId": "hubOrientableFullscreen"
+  }
+}

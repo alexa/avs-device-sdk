@@ -34,7 +34,7 @@ using namespace avsCommon::utils::json;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("UserInactivityMonitor");
+#define TAG "UserInactivityMonitor"
 
 /// Number of seconds in one hour.
 static const int SECONDS_IN_HOUR = 3600;
@@ -147,7 +147,7 @@ void UserInactivityMonitor::sendInactivityReport() {
         return;
     }
     Document inactivityPayload(kObjectType);
-    SizeType payloadKeySize = INACTIVITY_EVENT_PAYLOAD_KEY.length();
+    SizeType payloadKeySize = static_cast<SizeType>(INACTIVITY_EVENT_PAYLOAD_KEY.length());
     const Pointer::Token payloadKey[] = {{INACTIVITY_EVENT_PAYLOAD_KEY.c_str(), payloadKeySize, kPointerInvalidIndex}};
 
     // AVS requires inactivity time to be a multiple of 3600.

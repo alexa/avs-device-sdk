@@ -29,7 +29,7 @@ using namespace avsCommon::avs;
 using namespace interruptModel;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FocusManager");
+#define TAG "FocusManager"
 
 /// Key for @c FocusManager configurations in configuration node.
 static const std::string VIRTUAL_CHANNELS_CONFIG_KEY = "virtualChannels";
@@ -77,7 +77,7 @@ bool FocusManager::acquireChannel(
         return false;
     }
 
-    m_executor.submit(
+    m_executor.execute(
         [this, channelToAcquire, channelActivity]() { acquireChannelHelper(channelToAcquire, channelActivity); });
     return true;
 }
@@ -97,7 +97,7 @@ bool FocusManager::acquireChannel(
         return false;
     }
 
-    m_executor.submit(
+    m_executor.execute(
         [this, channelToAcquire, channelActivity]() { acquireChannelHelper(channelToAcquire, channelActivity); });
     return true;
 }
@@ -117,7 +117,7 @@ std::future<bool> FocusManager::releaseChannel(
         return returnValue;
     }
 
-    m_executor.submit([this, channelToRelease, channelObserver, releaseChannelSuccess, channelName]() {
+    m_executor.execute([this, channelToRelease, channelObserver, releaseChannelSuccess, channelName]() {
         releaseChannelHelper(channelToRelease, channelObserver, releaseChannelSuccess, channelName);
     });
 
@@ -379,9 +379,9 @@ void FocusManager::stopAllActivitiesHelper(const ChannelsToInterfaceNamesMap& ch
         // Only release and set entire channel focus to NONE if there are no active Activity remaining.
         if (!channel->isActive()) {
             // Lock here to update internal state which stopForegroundActivity may concurrently access.
-            std::unique_lock<std::mutex> lock(m_mutex);
+            std::unique_lock<std::mutex> activeChannelsLock(m_mutex);
             m_activeChannels.erase(channel);
-            lock.unlock();
+            activeChannelsLock.unlock();
             setChannelFocus(channel, FocusState::NONE, MixingBehavior::MUST_STOP);
         }
     }

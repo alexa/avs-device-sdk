@@ -23,7 +23,7 @@ namespace acsdkStartupManager {
 using namespace acsdkStartupManagerInterfaces;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("StartupManager");
+#define TAG "StartupManager"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

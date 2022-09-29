@@ -14,3 +14,5 @@ target_link_libraries(acsdkStartupManagerInterfaces INTERFACE
 
 # install interface
 asdk_install_interface()
+
+add_subdirectory("test")

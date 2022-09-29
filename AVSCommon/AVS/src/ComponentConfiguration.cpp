@@ -23,7 +23,7 @@ namespace avsCommon {
 namespace avs {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("ComponentConfiguration");
+#define TAG "ComponentConfiguration"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

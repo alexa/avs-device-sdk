@@ -32,6 +32,7 @@
 namespace alexaClientSDK {
 namespace acl {
 
+using namespace avsCommon::avs;
 using namespace avsCommon::avs::attachment;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::utils::http;
@@ -66,7 +67,7 @@ static const std::string ATTACHMENT_CONTENT_TYPE = "Content-Type: application/oc
 static const std::string MESSAGEREQUEST_ID_PREFIX = "AVSEvent-";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MessageRequestHandler");
+#define TAG "MessageRequestHandler"
 
 /// Prefix used to identify metrics published by this module.
 static const std::string ACL_METRIC_SOURCE_PREFIX = "ACL-";
@@ -92,8 +93,17 @@ static const std::string SEND_COMPLETED = "SEND_COMPLETED";
 /// Metric identifier for message send error.
 static const std::string MESSAGE_SEND_ERROR = "ERROR.MESSAGE_SEND_FAILED";
 
-// Key value separator for HTTP headers
+/// Key value separator for HTTP headers
 static const std::string HTTP_KEY_VALUE_SEPARATOR = ": ";
+
+/// Event header key for the namespace field.
+static const std::string EVENT_HEADER_NAMESPACE = "namespace";
+
+/// Event header key for the name field.
+static const std::string EVENT_HEADER_NAME = "name";
+
+/// Event header missing.
+static const std::string EVENT_HEADER_MISSING = "EVENT_HEADER_MISSING";
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -131,10 +141,12 @@ static void collectSendDataResultMetric(
  *
  * @param metricRecorder The metric recorder object.
  * @param status The @c MessageRequestObserverInterface::Status of the message.
+ * @param messageRequest The @c MessageRequest object.
  */
 static void submitMessageSendErrorMetric(
     const std::shared_ptr<MetricRecorderInterface>& metricRecorder,
-    MessageRequestObserverInterface::Status status) {
+    MessageRequestObserverInterface::Status status,
+    const std::shared_ptr<MessageRequest>& messageRequest) {
     if (!metricRecorder) {
         return;
     }
@@ -155,11 +167,27 @@ static void submitMessageSendErrorMetric(
             return;
     }
 
-    auto metricEvent = MetricEventBuilder{}
-                           .setActivityName(ACL_METRIC_SOURCE_PREFIX + MESSAGE_SEND_ERROR)
-                           .addDataPoint(DataPointCounterBuilder{}.setName(ss.str()).increment(1).build())
-                           .build();
-
+    auto metricEventBuilder = MetricEventBuilder{}
+                                  .setActivityName(ACL_METRIC_SOURCE_PREFIX + MESSAGE_SEND_ERROR)
+                                  .addDataPoint(DataPointCounterBuilder{}.setName(ss.str()).increment(1).build());
+    if (messageRequest) {
+        auto eventHeaders = messageRequest->retrieveEventHeaders();
+        if (!eventHeaders.eventNamespace.empty()) {
+            metricEventBuilder.addDataPoint(
+                DataPointStringBuilder{}.setName(EVENT_HEADER_NAMESPACE).setValue(eventHeaders.eventNamespace).build());
+        } else {
+            metricEventBuilder.addDataPoint(
+                DataPointStringBuilder{}.setName(EVENT_HEADER_NAMESPACE).setValue(EVENT_HEADER_MISSING).build());
+        }
+        if (!eventHeaders.eventName.empty()) {
+            metricEventBuilder.addDataPoint(
+                DataPointStringBuilder{}.setName(EVENT_HEADER_NAME).setValue(eventHeaders.eventName).build());
+        } else {
+            metricEventBuilder.addDataPoint(
+                DataPointStringBuilder{}.setName(EVENT_HEADER_NAME).setValue(EVENT_HEADER_MISSING).build());
+        }
+    }
+    auto metricEvent = metricEventBuilder.build();
     if (!metricEvent) {
         ACSDK_ERROR(LX("submitErrorMetricFailed").d("reason", "invalid metric event"));
         return;
@@ -168,7 +196,7 @@ static void submitMessageSendErrorMetric(
     recordMetric(metricRecorder, metricEvent);
 }
 
-void MessageRequestHandler::recordStreamMetric(int bytes) {
+void MessageRequestHandler::recordStreamMetric(std::size_t bytes) {
     if (m_messageRequest == nullptr) {
         return;
     }
@@ -506,7 +534,7 @@ void MessageRequestHandler::onResponseFinished(HTTP2ResponseFinishedStatus statu
 
     m_messageRequest->sendCompleted(m_resultStatus);
 
-    submitMessageSendErrorMetric(m_metricRecorder, m_resultStatus);
+    submitMessageSendErrorMetric(m_metricRecorder, m_resultStatus, m_messageRequest);
 }
 
 }  // namespace acl

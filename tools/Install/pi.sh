@@ -1,4 +1,3 @@
-#
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
@@ -11,7 +10,6 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
-#
 
 if [ -z "$PLATFORM" ]; then
 	echo "You should run the setup.sh script."
@@ -20,7 +18,6 @@ fi
 
 SOUND_CONFIG="$HOME/.asoundrc"
 START_SCRIPT="$INSTALL_BASE/startsample.sh"
-START_PREVIEW_SCRIPT="$INSTALL_BASE/startpreview.sh"
 CMAKE_PLATFORM_SPECIFIC=(-DGSTREAMER_MEDIA_PLAYER=ON \
     -DPORTAUDIO=ON \
     -DPORTAUDIO_LIB_PATH="$THIRD_PARTY_PATH/portaudio/lib/.libs/libportaudio.$LIB_SUFFIX" \
@@ -80,15 +77,9 @@ build_curl() {
 
 generate_start_script() {
   cat << EOF > "$START_SCRIPT"
-  cd "$BUILD_PATH/SampleApp/src"
+  cd "$BUILD_PATH/SampleApplications/ConsoleSampleApplication/src"
 
   PA_ALSA_PLUGHW=1 ./SampleApp "$OUTPUT_CONFIG_FILE" DEBUG9
-EOF
-
-  cat << EOF > "$START_PREVIEW_SCRIPT"
-  cd "$BUILD_PATH/applications/acsdkPreviewAlexaClient/src"
-
-  PA_ALSA_PLUGHW=1 ./PreviewAlexaClient "$OUTPUT_CONFIG_FILE" DEBUG9
 EOF
 }
 

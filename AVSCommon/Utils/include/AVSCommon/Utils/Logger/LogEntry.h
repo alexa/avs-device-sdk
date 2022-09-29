@@ -17,6 +17,7 @@
 #define ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGENTRY_H_
 
 #include <algorithm>
+#include <cctype>
 #include <functional>
 #include <sstream>
 #include <string>
@@ -34,24 +35,36 @@ public:
     /**
      * Constructor.
      *
-     * @param source The name of the source of this log entry.
-     * @param event The name of the event that this log entry describes.
+     * @param[in] source The name of the source of this log entry. If @a source is nullptr, it is treated as an empty
+     *                   string.
+     * @param[in] event  The name of the event that this log entry describes. If @a event is nullptr, it is treated as
+     *                   an empty string.
+     */
+    LogEntry(const char* source, const char* event);
+
+    /**
+     * Constructor.
+     *
+     * @param[in] source The name of the source of this log entry.
+     * @param[in] event  The name of the event that this log entry describes. If @a event is nullptr, it is treated as
+     *                   an empty string.
      */
     LogEntry(const std::string& source, const char* event);
 
     /**
      * Constructor.
      *
-     * @param source The name of the source of this log entry.
-     * @param event The name of the event that this log entry describes.
+     * @param[in] source The name of the source of this log entry.
+     * @param[in] event  The name of the event that this log entry describes.
      */
     LogEntry(const std::string& source, const std::string& event);
 
     /**
      * Add a @c key, @c value pair to the metadata of this log entry.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     template <typename ValueType>
@@ -59,17 +72,30 @@ public:
 
     /**
      * Add a @c key, @c value pair to the metadata of this log entry.
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
+     *
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry. If @a value is nullptr, it is treated as an empty string.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     LogEntry& d(const char* key, const char* value);
 
     /**
+     * Add a @c key, @c value pair to the metadata of this log entry.
+     *
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry. If @a value is nullptr, it is treated as an empty string.
+     *
+     * @return This instance to facilitate adding more information to this log entry.
+     */
+    LogEntry& d(const char* key, char* value);
+
+    /**
      * Add data (hence the name 'd') in the form of a @c key, @c value pair to the metadata of this log entry.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     LogEntry& d(const char* key, const std::string& value);
@@ -77,8 +103,9 @@ public:
     /**
      * Add data (hence the name 'd') in the form of a @c key, @c value pair to the metadata of this log entry.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The boolean value to add to this LogEntry.
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The boolean value to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     LogEntry& d(const char* key, bool value);
@@ -86,23 +113,25 @@ public:
     /**
      * Add data (hence the name 'd') in the form of a @c key, @c value pair to the metadata of this log entry.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     template <typename ValueType>
-    inline LogEntry& d(const char* key, const ValueType& value);
+    LogEntry& d(const char* key, const ValueType& value);
 
     /**
      * Add sensitive data in the form of a @c key, @c value pair to the metadata of this log entry.
      * Because the data is 'sensitive' it will only be emitted in DEBUG builds.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry.
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     template <typename ValueType>
-    inline LogEntry& sensitive(const char* key, const ValueType& value);
+    LogEntry& sensitive(const char* key, const ValueType& value);
 
     /**
      * Add data in the form of a @c key, @c value pair to the metadata of this log entry.
@@ -110,17 +139,20 @@ public:
      * This is done in a distinct method (instead of m or d)  to avoid the cost of always checking
      * against the denylist.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param value The value to add to this LogEntry, obfuscated if needed.
+     * @param[in] key   The key identifying the value to add to this LogEntry.
+     * @param[in] value The value to add to this LogEntry, obfuscated if needed.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
-    inline LogEntry& obfuscatePrivateData(const char* key, const std::string& value);
+    LogEntry& obfuscatePrivateData(const char* key, const std::string& value);
 
     /**
      * Add an arbitrary message to the end of the text of this LogEntry.  Once this has been called no other
      * additions should be made to this LogEntry.
      *
-     * @param message The message to add to the end of the text of this LogEntry.
+     * @param[in] message The message to add to the end of the text of this LogEntry. If @a message is a nullptr, it is
+     *                    treated as an empty string.
+     *
      * @return This instance to facilitate passing this instance on.
      */
     LogEntry& m(const char* message);
@@ -129,7 +161,8 @@ public:
      * Add an arbitrary message to the end of the text of this LogEntry.  Once this has been called no other
      * additions should be made to this LogEntry.
      *
-     * @param message The message to add to the end of the text of this LogEntry.
+     * @param[in] message The message to add to the end of the text of this LogEntry.
+     *
      * @return This instance to facilitate passing this instance on.
      */
     LogEntry& m(const std::string& message);
@@ -138,8 +171,10 @@ public:
      * Add pointer (hence the name 'p') in the form of a @c key, address of the object pointed to by the shared_ptr @c
      * ptr to the metadata of this log entry.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param ptr The shared_ptr of the object to add to this LogEntry.
+     * @param[in] key The key identifying the value to add to this LogEntry. If @a key is a nullptr, it is treated as an
+     *                empty string.
+     * @param[in] ptr The shared_ptr of the object to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     template <typename PtrType>
@@ -149,8 +184,10 @@ public:
      * Add pointer (hence the name 'p') in the form of a @c key, address of the raw @c ptr to the metadata of this
      * log entry.
      *
-     * @param key The key identifying the value to add to this LogEntry.
-     * @param ptr The raw pointer of the object to add to this LogEntry.
+     * @param[in] key The key identifying the value to add to this LogEntry. If @a key is a nullptr, it is treated as an
+     *                empty string.
+     * @param[in] ptr The raw pointer of the object to add to this LogEntry.
+     *
      * @return This instance to facilitate adding more information to this log entry.
      */
     LogEntry& p(const char* key, const void* ptr);
@@ -169,12 +206,6 @@ private:
 
     /// Add the appropriate prefix for an arbitrary message that is about to be appended to the text of this LogEntry.
     void prefixMessage();
-
-    /// Return a list of labels we will obfuscate if sent to obfuscatePrivateData
-    static std::vector<std::string> getPrivateLabelDenyList() {
-        static std::vector<std::string> privateLabelDenyList = {"ssid"};
-        return privateLabelDenyList;
-    }
 
     /**
      * Append an escaped string to m_stream.
@@ -202,14 +233,18 @@ inline LogEntry& LogEntry::d(const std::string& key, const ValueType& value) {
 }
 
 template <typename ValueType>
-LogEntry& LogEntry::d(const char* key, const ValueType& value) {
+inline LogEntry& LogEntry::d(const char* key, const ValueType& value) {
     prefixKeyValuePair();
     m_stream << key << KEY_VALUE_SEPARATOR << value;
     return *this;
 }
 
+inline LogEntry& LogEntry::d(const char* key, char* value) {
+    return d(key, const_cast<const char*>(value));
+}
+
 template <typename PtrType>
-LogEntry& LogEntry::p(const char* key, const std::shared_ptr<PtrType>& ptr) {
+inline LogEntry& LogEntry::p(const char* key, const std::shared_ptr<PtrType>& ptr) {
     return d(key, ptr.get());
 }
 
@@ -217,45 +252,15 @@ LogEntry& LogEntry::p(const char* key, const std::shared_ptr<PtrType>& ptr) {
 #ifdef ACSDK_EMIT_SENSITIVE_LOGS
 
 template <typename ValueType>
-LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
+inline LogEntry& LogEntry::sensitive(const char* key, const ValueType& value) {
     return d(key, value);
 }
 #else
 template <typename ValueType>
-LogEntry& LogEntry::sensitive(const char*, const ValueType&) {
+inline LogEntry& LogEntry::sensitive(const char*, const ValueType&) {
     return *this;
 }
 #endif
-
-LogEntry& LogEntry::obfuscatePrivateData(const char* key, const std::string& value) {
-    // if value contains any  private label, obfuscate the section after the label
-    // since it can (but shouldn't) contain multiple,  obfuscate from the earliest one found onward
-    auto firstPosition = value.length();
-
-    for (auto privateLabel : getPrivateLabelDenyList()) {
-        auto it = std::search(
-            value.begin(),
-            value.end(),
-            privateLabel.begin(),
-            privateLabel.end(),
-            [](char valueChar, char denyListChar) { return std::tolower(valueChar) == std::tolower(denyListChar); });
-        if (it != value.end()) {
-            // capture the least value
-            auto thisPosition = std::distance(value.begin(), it) + privateLabel.length();
-            if (thisPosition < firstPosition) {
-                firstPosition = thisPosition;
-            }
-        }
-    }
-
-    if (firstPosition <= value.length()) {
-        // hash everything after the label itself
-        auto labelPart = value.substr(0, firstPosition);
-        auto obfuscatedPart = std::to_string(std::hash<std::string>{}(value.substr(firstPosition)));
-        return d(key, labelPart + obfuscatedPart);
-    }
-    return d(key, value);
-}
 
 }  // namespace logger
 }  // namespace utils

@@ -14,20 +14,18 @@
  */
 
 #include <memory>
-#include <functional>
 
 #include "AVSCommon/Utils/Logger/Logger.h"
-#include "AVSCommon/Utils/Logger/ThreadMoniker.h"
 #include "AVSCommon/Utils/Memory/Memory.h"
 #include "AVSCommon/Utils/Threading/ThreadPool.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("ThreadPool");
+#define TAG "ThreadPool"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
  *
- * @param The event string for this @c LogEntry.
+ * @param event The event string for this @c LogEntry.
  */
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
@@ -38,8 +36,6 @@ namespace threading {
 
 using namespace std;
 using namespace logger;
-
-static ThreadPool SINGLETON_THREAD_POOL{};
 
 ThreadPool::ThreadPool(size_t maxThreads) :
         m_maxPoolThreads{maxThreads},
@@ -55,35 +51,18 @@ ThreadPool::~ThreadPool() {
     m_workerQueue.clear();
 }
 
-unique_ptr<WorkerThread> ThreadPool::obtainWorker(string optionalMoniker) {
+unique_ptr<WorkerThread> ThreadPool::obtainWorker() {
     std::lock_guard<mutex> lock(m_queueMutex);
-    ACSDK_DEBUG9(LX("obtainWorker")
-                     .d("created", m_created)
-                     .d("obtained", m_obtained)
-                     .d("releasedToPool", m_releasedToPool)
-                     .d("releasedFromPool", m_releasedFromPool)
-                     .d("outstanding", m_obtained - (m_releasedToPool + m_releasedFromPool)));
+
     m_obtained++;
     unique_ptr<WorkerThread> ret;
     if (m_workerQueue.empty()) {
         m_created++;
         ret = memory::make_unique<WorkerThread>();
     } else {
-#ifdef THREAD_AFFINITY
-        bool containsMoniker = false;
-        if (!optionalMoniker.empty()) {
-            containsMoniker = m_workerMap.count(optionalMoniker) > 0;
-        }
-        auto workerIterator = containsMoniker ? m_workerMap[optionalMoniker] : m_workerQueue.begin();
-#else
         auto workerIterator = m_workerQueue.begin();
-#endif
         ret = std::move(*workerIterator);
         m_workerQueue.erase(workerIterator);
-#ifdef THREAD_AFFINITY
-        std::string moniker = (*workerIterator)->getMoniker();
-        m_workerMap.erase(moniker);
-#endif
     }
 
     return ret;
@@ -91,7 +70,6 @@ unique_ptr<WorkerThread> ThreadPool::obtainWorker(string optionalMoniker) {
 
 void ThreadPool::releaseWorker(std::unique_ptr<WorkerThread> workerThread) {
     std::lock_guard<mutex> lock(m_queueMutex);
-
     if (m_workerQueue.size() >= m_maxPoolThreads) {
         // In order to allow this to be called from the thread being released,
         // we release the first thread in the queue when we want to stop growing.
@@ -101,10 +79,6 @@ void ThreadPool::releaseWorker(std::unique_ptr<WorkerThread> workerThread) {
         m_releasedToPool++;
     }
     m_workerQueue.push_back(std::move(workerThread));
-#ifdef THREAD_AFFINITY
-    std::string moniker = workerThread->getMoniker();
-    m_workerMap[moniker] = --m_workerQueue.end();
-#endif
 }
 
 void ThreadPool::setMaxThreads(size_t maxThreads) {
@@ -115,7 +89,7 @@ void ThreadPool::setMaxThreads(size_t maxThreads) {
     }
 }
 
-uint32_t ThreadPool::getMaxThreads() {
+size_t ThreadPool::getMaxThreads() {
     std::lock_guard<mutex> lock(m_queueMutex);
     return m_maxPoolThreads;
 }

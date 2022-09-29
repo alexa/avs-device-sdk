@@ -37,9 +37,9 @@ std::string createRandomAlphabetString(int stringSize) {
     std::vector<uint16_t> vec(stringSize);
     std::independent_bits_engine<std::default_random_engine, CHAR_BIT, uint16_t> engine;
     std::random_device rd;
-    engine.seed(
+    engine.seed(static_cast<uint16_t>(
         rd() + std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch())
-                   .count());
+                   .count()));
     std::generate(begin(vec), end(vec), std::ref(engine));
 
     std::vector<uint8_t> vec8(stringSize);

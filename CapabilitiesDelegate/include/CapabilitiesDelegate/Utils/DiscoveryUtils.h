@@ -110,6 +110,18 @@ std::string getDeleteReportEventJson(
     const std::vector<std::string>& endpointConfigurations,
     const std::string& authToken);
 
+/**
+ * Get the maximum number of supported endpoints.
+ * @return The maximum number of endpoints.
+ */
+size_t getMaxEndpoints();
+
+/**
+ * Get the maximum number of capabilities per endpoint.
+ * @return The maximum number of capabilities an endpoint can have.
+ */
+size_t getMaxCapabilitiesPerEndpoint();
+
 }  // namespace utils
 }  // namespace capabilitiesDelegate
 }  // namespace alexaClientSDK

@@ -176,43 +176,6 @@ bool buildDefaultPlayerState(rapidjson::Value* document, rapidjson::Document::Al
  */
 std::string getEmpContextString(acsdkExternalMediaPlayerInterfaces::AdapterState adapterState);
 
-#ifdef MEDIA_PORTABILITY_ENABLED
-/**
- * Media portability mode
- */
-enum class MpMode {
-    /// Legacy mode indicates that no media portability or media convergence is being used.
-    LEGACY,
-    /// Media convergence mode means all media playback is through one type of media player,
-    /// and media portability is not turned on
-    MEDIA_CONVERGENCE,
-    /// Media portability mode means both media convergence and media portability are turned on.
-    MEDIA_PORTABILITY
-};
-
-/**
- * Method to check if the given request type includes a mediaSessionId.
- *
- * @param type RequestType to check
- * @return Whether request type includes a mediaSessionId
- */
-bool requestTypeIncludesMediaSessionId(RequestType type);
-
-/**
- * Get the media portability mode.
- * @return Media portability mode
- */
-MpMode getMediaPortabilityMode();
-
-/**
- * Whether media portability is enabled
- *
- * @return True if media portability is enabled, false otherwise.
- */
-bool mediaPortabilityEnabled();
-
-#endif
-
 }  // namespace acsdkExternalMediaPlayerInterfaces
 }  // namespace alexaClientSDK
 

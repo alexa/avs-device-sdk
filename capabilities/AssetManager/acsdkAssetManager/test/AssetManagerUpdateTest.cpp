@@ -197,7 +197,7 @@ TEST_P(UpdateTest, CheckingForUpdateAtStartupAfterArtifactBecomesActive) {  // N
     ASSERT_EQ(artifact->updateEventCount, updateCount);
     artifact->resetCounts();
 }
-TEST_P(UpdateTest, UpdatingOneActiveArtifactViaPuffinDeviceArtifactNotification) {
+TEST_P(UpdateTest, UpdatingOneActiveArtifactViaDeviceArtifactNotification) {
     uploadArtifactAndSubscribeToChange(artifact, Priority::ACTIVE, updatedId);
 
     // Trigger update from JSON
@@ -205,7 +205,7 @@ TEST_P(UpdateTest, UpdatingOneActiveArtifactViaPuffinDeviceArtifactNotification)
 
     checkArtifactUpdatedOnce(artifact, updateAccepted, updateRejected, oldPath, newPath);
 }
-TEST_P(UpdateTest, UpdatingOneInactiveArtifactViaPuffinDeviceArtifactNotification) {
+TEST_P(UpdateTest, UpdatingOneInactiveArtifactViaDeviceArtifactNotification) {
     uploadArtifactAndSubscribeToChange(artifact, Priority::UNUSED, updatedId);
 
     // Trigger update from JSON
@@ -213,7 +213,7 @@ TEST_P(UpdateTest, UpdatingOneInactiveArtifactViaPuffinDeviceArtifactNotificatio
 
     ASSERT_FALSE(waitUntil([&] { return filesystem::exists(newPath); }, milliseconds(300)));
 }
-TEST_P(UpdateTest, UpdatingUnregisteredArtifactViaPuffinDeviceArtifactNotification) {
+TEST_P(UpdateTest, UpdatingUnregisteredArtifactViaDeviceArtifactNotification) {
     uploadArtifactAndSubscribeToChange(artifact, Priority::UNUSED, updatedId);
 
     // Trigger update from JSON

@@ -301,7 +301,7 @@ TEST_F(AggregatedPowerResourceManagerTest, test_closeCleanup) {
  * Test ensuring that acquirePowerResource calls the underlying application PowerResourceManagerInterface methods.
  */
 TEST_F(AggregatedPowerResourceManagerTest, test_acquirePowerResourceLegacy) {
-    EXPECT_CALL(*m_mockAppPowerManager, acquirePowerResource(TEST_ID, TEST_LEVEL));
+    EXPECT_CALL(*m_mockAppPowerManager, acquirePowerResource(TEST_ID, TEST_LEVEL)).Times(0);
     m_powerManager->acquirePowerResource(TEST_ID, TEST_LEVEL);
 }
 
@@ -309,7 +309,7 @@ TEST_F(AggregatedPowerResourceManagerTest, test_acquirePowerResourceLegacy) {
  * Test ensuring that releasePowerResource calls the underlying application PowerResourceManagerInterface methods.
  */
 TEST_F(AggregatedPowerResourceManagerTest, test_releasePowerResourceLegacy) {
-    EXPECT_CALL(*m_mockAppPowerManager, releasePowerResource(TEST_ID));
+    EXPECT_CALL(*m_mockAppPowerManager, releasePowerResource(TEST_ID)).Times(0);
     m_powerManager->releasePowerResource(TEST_ID);
 }
 
@@ -317,7 +317,7 @@ TEST_F(AggregatedPowerResourceManagerTest, test_releasePowerResourceLegacy) {
  * Test ensuring that isPowerResourceAcquired calls the underlying application PowerResourceManagerInterface methods.
  */
 TEST_F(AggregatedPowerResourceManagerTest, test_isPowerResourceAcquiredLegacy) {
-    EXPECT_CALL(*m_mockAppPowerManager, isPowerResourceAcquired(TEST_ID));
+    EXPECT_CALL(*m_mockAppPowerManager, isPowerResourceAcquired(TEST_ID)).Times(0);
     m_powerManager->isPowerResourceAcquired(TEST_ID);
 }
 

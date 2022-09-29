@@ -24,7 +24,7 @@
 #include "Settings/Types/LocaleWakeWordsSetting.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LocaleWakeWordsSetting");
+#define TAG "LocaleWakeWordsSetting"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -253,7 +253,7 @@ SetSettingResult LocaleWakeWordsSetting::setLocales(const DeviceLocales& locales
 
     RequestParameters request{requestType, locales, wakeWordsRequestType, wakeWords};
     m_pendingRequest.reset(new RequestParameters(request));
-    m_executor.submit([this, request] { executeChangeValue(request); });
+    m_executor.execute([this, request] { executeChangeValue(request); });
     return SetSettingResult::ENQUEUED;
 }
 
@@ -309,7 +309,7 @@ SetSettingResult LocaleWakeWordsSetting::setWakeWords(const WakeWords& wakeWords
 
     RequestParameters request{localeRequestType, locales, requestType, wakeWords};
     m_pendingRequest.reset(new RequestParameters(request));
-    m_executor.submit([this, request] { executeChangeValue(request); });
+    m_executor.execute([this, request] { executeChangeValue(request); });
     return SetSettingResult::ENQUEUED;
 }
 
@@ -415,9 +415,9 @@ void LocaleWakeWordsSetting::restoreInitialValue() {
         RequestType wakeWordsRequestType = toRequestType(m_wakeWordsStatus);
         auto pendingRequest = RequestParameters(localeRequestType, locales, wakeWordsRequestType, wakeWords);
         m_pendingRequest.reset(new RequestParameters(pendingRequest));
-        m_executor.submit([this, pendingRequest] { executeChangeValue(pendingRequest); });
+        m_executor.execute([this, pendingRequest] { executeChangeValue(pendingRequest); });
     } else {
-        m_executor.submit([this, locales, wakeWords] {
+        m_executor.execute([this, locales, wakeWords] {
             // Make sure assets manager is correctly initialized.
             if (!m_assetsManager->changeAssets(locales, wakeWords)) {
                 ACSDK_ERROR(LX("restoreInitialValueFailed")
@@ -667,7 +667,7 @@ void LocaleWakeWordsSetting::onConnectionStatusChanged(const Status status, cons
     if (Status::CONNECTED == status) {
         // Create a dummy request that doesn't interrupt any ongoing operation but that respect newer requests.
         RequestParameters request(RequestType::NONE, DeviceLocales(), RequestType::NONE, WakeWords());
-        m_executor.submit([this, request] { synchronize(request); });
+        m_executor.execute([this, request] { synchronize(request); });
     }
 }
 

@@ -16,7 +16,7 @@
 #ifndef ACSDKSYSTEMCLOCKMONITORINTERFACES_SYSTEMCLOCKNOTIFIERINTERFACE_H_
 #define ACSDKSYSTEMCLOCKMONITORINTERFACES_SYSTEMCLOCKNOTIFIERINTERFACE_H_
 
-#include <acsdkNotifierInterfaces/internal/NotifierInterface.h>
+#include <acsdk/NotifierInterfaces/NotifierInterface.h>
 
 #include "acsdkSystemClockMonitorInterfaces/SystemClockMonitorObserverInterface.h"
 
@@ -26,7 +26,7 @@ namespace acsdkSystemClockMonitorInterfaces {
 /**
  * Interface for registering to observe when the system clock is synchronized.
  */
-using SystemClockNotifierInterface = acsdkNotifierInterfaces::NotifierInterface<SystemClockMonitorObserverInterface>;
+using SystemClockNotifierInterface = notifierInterfaces::NotifierInterface<SystemClockMonitorObserverInterface>;
 
 }  // namespace acsdkSystemClockMonitorInterfaces
 }  // namespace alexaClientSDK

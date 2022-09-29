@@ -16,8 +16,8 @@
 
 #include <gtest/gtest.h>
 
-#include <acsdkPropertiesInterfaces/test/StubPropertiesFactory.h>
-#include <acsdkProperties/MiscStorageAdapter.h>
+#include <acsdk/PropertiesInterfaces/test/StubPropertiesFactory.h>
+#include <acsdk/Properties/MiscStorageAdapter.h>
 #include <acsdkAuthorization/private/LWA/LWAStorageDataMigration.h>
 #include <acsdkAuthorization/private/LWA/LWAStorageConstants.h>
 #include <acsdkAuthorization/private/Logging.h>
@@ -29,8 +29,8 @@ namespace acsdkAuthorization {
 namespace lwa {
 namespace test {
 
-using namespace ::alexaClientSDK::acsdkProperties;
-using namespace ::alexaClientSDK::acsdkPropertiesInterfaces::test;
+using namespace ::alexaClientSDK::properties;
+using namespace ::alexaClientSDK::propertiesInterfaces::test;
 using namespace ::alexaClientSDK::avsCommon::sdkInterfaces::storage;
 using namespace ::alexaClientSDK::avsCommon::utils::configuration;
 using namespace ::alexaClientSDK::storage::sqliteStorage;

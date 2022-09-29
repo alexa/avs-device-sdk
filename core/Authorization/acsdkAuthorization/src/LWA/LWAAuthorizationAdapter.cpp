@@ -44,7 +44,7 @@ using namespace avsCommon::utils::libcurlUtils;
 using namespace rapidjson;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LWAAuthorizationAdapter");
+#define TAG "LWAAuthorizationAdapter"
 
 /// Key for user_code values in JSON returned by @c LWA
 static const char JSON_KEY_USER_CODE[] = "user_code";
@@ -738,6 +738,11 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRequestingToke
                 updateStateAndNotifyManager(
                     AuthObserverInterface::State::UNINITIALIZED, AuthObserverInterface::Error::SUCCESS);
             } else {
+                {
+                    std::lock_guard<std::mutex> lock(m_mutex);
+                    resetAuthMethodLocked();
+                }
+
                 updateStateAndNotifyManager(AuthObserverInterface::State::UNRECOVERABLE_ERROR, result.value());
             }
 
@@ -750,6 +755,11 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRequestingToke
 
     ACSDK_ERROR(LX("handleRequestingTokenFailed").d("reason", "missingEnumHandler"));
     return FlowState::IDLE;
+}
+
+void LWAAuthorizationAdapter::resetAuthMethodLocked() {
+    ACSDK_DEBUG5(LX("resetAuthMethodLocked"));
+    m_authMethod = TokenExchangeMethod::NONE;
 }
 
 bool LWAAuthorizationAdapter::getCustomerProfile(const std::string& accessToken) {
@@ -913,6 +923,7 @@ LWAAuthorizationAdapter::FlowState LWAAuthorizationAdapter::handleRefreshingToke
                 case AuthObserverInterface::Error::INVALID_CODE_PAIR:
                 case AuthObserverInterface::Error::INTERNAL_ERROR:
                 case AuthObserverInterface::Error::INVALID_CBL_CLIENT_ID: {
+                    resetAuthMethodLocked();
                     updateStateAndNotifyManager(AuthObserverInterface::State::UNRECOVERABLE_ERROR, error);
                     return FlowState::IDLE;
                 }
@@ -1137,7 +1148,7 @@ void LWAAuthorizationAdapter::reset() {
     m_userCode.clear();
     m_tokenRequestInterval = std::chrono::seconds::zero();
     m_authFailureReported = false;
-    m_authMethod = TokenExchangeMethod::NONE;
+    resetAuthMethodLocked();
     m_isClearingData = true;
     m_wake.notify_one();
 }

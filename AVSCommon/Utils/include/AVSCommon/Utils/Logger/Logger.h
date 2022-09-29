@@ -85,7 +85,7 @@ namespace logger {
  * are passed to the @c LogEntry constructor.  Here is an example of the definitions that typically appear at
  * the start of a .cpp file:
  *
- *     static const std::string TAG = "MyClass";
+ *     #define TAG "MyClass"
  *     #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
  *
  * When an event is to be logged, a wrapper macro named @c ACSDK_<LEVEL> is invoked with an expression that starts
@@ -138,14 +138,11 @@ namespace logger {
  *
  *     add_definitions("-DACSDK_LOG_MODULE=foo")
  *
+ * For modules that does not have the @c ACSDK_LOG_MODULE definition, logs will be defaulted to use the
+ * ConsoleLogger module Logger.
+ *
  * All logs (module specific or not) are output to a @c Sink @c Logger.  By default, the @c Sink @c Logger
- * is @c ConsoleLogger.  This can be overridden by defining @c ACSDK_LOG_SINK.  The value of @c ACSDK_LOG_SINK
- * specifies a function name of the form:
- *
- *     Logger& get<ACSDK_LOG_SINK>Logger()
- *
- * That function to used to get the @c Sink @c Logger.  When @c ACSDK_LOG_SINK is overridden, it is necessary
- * to provide an implementation of that function that returns the desired @c Logger.
+ * is @c ConsoleLogger.  The sink logger can be changed by calling initialize in @c LoggerSinkManager.
  */
 class Logger {
 public:
@@ -169,7 +166,7 @@ public:
     /**
      * Return true of logs of a specified severity should be emitted by this Logger.
      *
-     * @param level The Level to check.
+     * @param[in] level The Level to check.
      * @return Returns true if logs of the specified Level should be emitted.
      */
     inline bool shouldLog(Level level) const;
@@ -177,8 +174,8 @@ public:
     /**
      * Send a log entry to this Logger.
      *
-     * @param level The severity Level to associate with this log entry.
-     * @param entry Object used to build the text of this log entry.
+     * @param[in] level The severity Level to associate with this log entry.
+     * @param[in] entry Object used to build the text of this log entry.
      */
     void log(Level level, const LogEntry& entry);
 
@@ -190,8 +187,8 @@ public:
      *
      * @note The user code should still ensure that the Logger object itself is valid.
      *
-     * @param level The severity Level to associate with this log entry.
-     * @param entry Object used to build the text of this log entry.
+     * @param[in] level The severity Level to associate with this log entry.
+     * @param[in] entry Object used to build the text of this log entry.
      */
     void logAtExit(Level level, const LogEntry& entry);
 
@@ -200,10 +197,10 @@ public:
      * NOTE: This method must be thread-safe.
      * NOTE: Delays in returning from this method may hold up calls to Logger::log().
      *
-     * @param level The severity Level of this log line.
-     * @param time The time that the event to log occurred.
-     * @param threadMoniker Moniker of the thread that generated the event.
-     * @param text The text of the entry to log.
+     * @param[in] level The severity Level of this log line.
+     * @param[in] time The time that the event to log occurred.
+     * @param[in] threadMoniker Moniker of the thread that generated the event.
+     * @param[in] text The text of the entry to log.
      */
     virtual void emit(
         Level level,
@@ -214,16 +211,14 @@ public:
     /**
      * Add an observer to this object.
      *
-     * @param An observer to this class, which will be notified when
-     * the logLevel changes.
+     * @param An observer to this class, which will be notified when the logLevel changes.
      */
     void addLogLevelObserver(LogLevelObserverInterface* observer);
 
     /**
      * Remove an observer to this object.
      *
-     * @param An observer to this class that will be removed from the
-     * notificaiton of logLevel changes.
+     * @param An observer to this class that will be removed from the notification of logLevel changes.
      */
     void removeLogLevelObserver(LogLevelObserverInterface* observer);
 
@@ -270,27 +265,21 @@ bool Logger::shouldLog(Level level) const {
  */
 #define ACSDK_GET_LOGGER_FUNCTION_NAME(type) ACSDK_CONCATENATE(ACSDK_CONCATENATE(get, type), Logger)
 
-// If @c ACSDK_LOG_SINK was not defined, default to logging to console.
-#ifndef ACSDK_LOG_SINK
-#define ACSDK_LOG_SINK Console
-#endif
-
-/// Build the get<type>Logger function name for whatever @c Logger logs will be sent to.
-#define ACSDK_GET_SINK_LOGGER ACSDK_GET_LOGGER_FUNCTION_NAME(ACSDK_LOG_SINK)
-
 /**
  * Get the @c Logger that logs should be sent to.
  *
  * @return The @c Logger that logs should be sent to.
  */
-std::shared_ptr<Logger> ACSDK_GET_SINK_LOGGER();
+std::shared_ptr<Logger> getConsoleLogger();
 
 }  // namespace logger
 }  // namespace utils
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#ifdef ACSDK_LOG_MODULE
+#ifndef ACSDK_LOG_MODULE
+#define ACSDK_LOG_MODULE ConsoleLogger
+#endif  // ACSDK_LOG_MODULE
 
 #include "AVSCommon/Utils/Logger/ModuleLogger.h"
 
@@ -320,38 +309,16 @@ inline std::shared_ptr<Logger> ACSDK_GET_LOGGER_FUNCTION() {
 }  // namespace avsCommon
 }  // namespace alexaClientSDK
 
-#else  // ACSDK_LOG_MODULE
-
-namespace alexaClientSDK {
-namespace avsCommon {
-namespace utils {
-namespace logger {
-
 /**
- * Inline method to get the function that ACSDK_<LEVEL> macros will send logs to.
- * In this case @c ACSDK_LOG_MODULE was not defined, so logs are sent to the @c Logger returned by
- * @c get<ACSDK_LOG_SINK>Logger().
- */
-inline std::shared_ptr<Logger> ACSDK_GET_LOGGER_FUNCTION() {
-    static std::shared_ptr<Logger> logger = ACSDK_GET_SINK_LOGGER();
-    return logger;
-}
-
-}  // namespace logger
-}  // namespace utils
-}  // namespace avsCommon
-}  // namespace alexaClientSDK
-
-#endif
-
-/// Define log macro if logging is enabled. Else do nothing with params to avoid unused variable error.
-#ifdef ACSDK_LOG_ENABLED
-/**
- * Common implementation for sending entries to the log.
+ * @def ACSDK_LOG
+ * @brief Common implementation for sending entries to the log.
  *
- * @param level The log level to associate with the log line.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] level The log level to associate with the log line.
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
+#ifdef ACSDK_LOG_ENABLED
 #define ACSDK_LOG(level, entry)                                                                      \
     do {                                                                                             \
         auto loggerInstance = alexaClientSDK::avsCommon::utils::logger::ACSDK_GET_LOGGER_FUNCTION(); \
@@ -359,231 +326,172 @@ inline std::shared_ptr<Logger> ACSDK_GET_LOGGER_FUNCTION() {
             loggerInstance->log(level, entry);                                                       \
         }                                                                                            \
     } while (false)
-#else
-   /**
-    * Null implementation for sending entries to the log.
-    *
-    * @param level Unused.
-    * @param entry Unused.
-    */
+#else  // ACSDK_LOG_ENABLED
 #define ACSDK_LOG(level, entry) \
     do {                        \
-        (void)level;            \
-        (void)entry;            \
+        (void)sizeof(level);    \
+        (void)sizeof(entry);    \
     } while (false)
-#endif
+#endif  // ACSDK_LOG_ENABLED
+
+/**
+ * @def ACSDK_DEBUG_LOG
+ * @brief Common implementation for sending debug entries to the log.
+ *
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] level The log level to associate with the log line.
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
+ */
 
 #ifdef ACSDK_DEBUG_LOG_ENABLED
+#define ACSDK_DEBUG_LOG(level, entry) ACSDK_LOG((level), (entry))
+#else  // ACSDK_DEBUG_LOG_ENABLED
+#define ACSDK_DEBUG_LOG(level, entry) \
+    do {                              \
+        (void)sizeof(level);          \
+        (void)sizeof(entry);          \
+    } while (false)
+#endif  // ACSDK_DEBUG_LOG_ENABLED
 
 /**
  * Send a DEBUG9 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG9(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG9, entry)
+#define ACSDK_DEBUG9(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG9, entry)
 
 /**
  * Send a DEBUG8 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG8(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG8, entry)
+#define ACSDK_DEBUG8(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG8, entry)
 
 /**
  * Send a DEBUG7 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG7(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG7, entry)
+#define ACSDK_DEBUG7(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG7, entry)
 
 /**
  * Send a DEBUG6 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG6(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG6, entry)
+#define ACSDK_DEBUG6(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG6, entry)
 
 /**
  * Send a DEBUG5 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG5(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG5, entry)
+#define ACSDK_DEBUG5(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG5, entry)
 
 /**
  * Send a DEBUG4 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG4(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG4, entry)
+#define ACSDK_DEBUG4(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG4, entry)
 
 /**
  * Send a DEBUG3 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG3(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG3, entry)
+#define ACSDK_DEBUG3(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG3, entry)
 
 /**
  * Send a DEBUG2 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG2(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG2, entry)
+#define ACSDK_DEBUG2(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG2, entry)
 
 /**
  * Send a DEBUG1 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG1(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG1, entry)
+#define ACSDK_DEBUG1(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG1, entry)
 
 /**
  * Send a DEBUG0 severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG0(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0, entry)
+#define ACSDK_DEBUG0(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0, entry)
 
 /**
  * Send a log line at the default debug level (DEBUG0).
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0, entry)
-
-#else  // ACSDK_DEBUG_LOG_ENABLED
-
-/**
- * Compile out a DEBUG9 severity log line.
+ * @note If @c ACSDK_DEBUG_LOG_ENABLED is set to OFF, then logging is disabled.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
-#define ACSDK_DEBUG9(entry)
-
-/**
- * Compile out a DEBUG8 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG8(entry)
-
-/**
- * Compile out a DEBUG7 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG7(entry)
-
-/**
- * Compile out a DEBUG6 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG6(entry)
-
-/**
- * Compile out a DEBUG5 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG5(entry)
-
-/**
- * Compile out a DEBUG4 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG4(entry)
-
-/**
- * Compile out a DEBUG3 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG3(entry)
-
-/**
- * Compile out a DEBUG2 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG2(entry)
-
-/**
- * Compile out a DEBUG1 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG1(entry)
-
-/**
- * Compile out a DEBUG0 severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG0(entry)
-
-/**
- * Compile out a DEBUG severity log line.
- *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
- */
-#define ACSDK_DEBUG(entry)
-
-#endif  // ACSDK_DEBUG_LOG_ENABLED
+#define ACSDK_DEBUG(entry) ACSDK_DEBUG_LOG(alexaClientSDK::avsCommon::utils::logger::Level::DEBUG0, entry)
 
 /**
  * Send a INFO severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
 #define ACSDK_INFO(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::INFO, entry)
 
 /**
  * Send a WARN severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
 #define ACSDK_WARN(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::WARN, entry)
 
 /**
  * Send a ERROR severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
 #define ACSDK_ERROR(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::ERROR, entry)
 /**
  * Send a CRITICAL severity log line.
  *
- * @param loggerArg The Logger to send the line to.
- * @param entry The text (or builder of the text) for the log entry.
+ * @note If @c ACSDK_LOG_ENABLED is set to OFF, then logging is disabled.
+ *
+ * @param[in] entry A constructed @a LogEntry object with the log message text.
  */
 #define ACSDK_CRITICAL(entry) ACSDK_LOG(alexaClientSDK::avsCommon::utils::logger::Level::CRITICAL, entry)
+
+#ifndef ACSDK_LOGS_KEEP_FUNC_MACRO
+// In older Android releases __func__ is redefined as __PRETTY_FUNCTION__ making log messages difficult to read and
+// analyse. We undefine this macro if it is defined. See Logger.cmake for details on how to keep the macro intact.
+#undef __func__
+#endif  // ACSDK_LOGS_KEEP_FUNC_MACRO
 
 #endif  // ALEXA_CLIENT_SDK_AVSCOMMON_UTILS_INCLUDE_AVSCOMMON_UTILS_LOGGER_LOGGER_H_

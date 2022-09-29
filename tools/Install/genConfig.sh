@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-#
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License").
@@ -13,7 +12,6 @@
 # on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied. See the License for the specific language governing
 # permissions and limitations under the License.
-#
 
 set -o errexit  # Exit the script if any statement fails.
 set -o nounset  # Exit the script if any uninitialized variable is used.
@@ -25,14 +23,17 @@ LOCALE=${LOCALE:-'en-US'}
 INDEX_MANUFACTURER_NAME=0
 # The device description.
 INDEX_DEVICE_DESCRIPTION=1
-# The path to sensory model file.
-INDEX_SENSORY_MODEL_FILE_PATH=2
 
 # Defaults for PKCS11
 PKCS11_MODULE_PATH="__undefined__"
 PKCS11_TOKEN_NAME="__undefined__"
 PKCS11_USER_PIN="__undefined__"
 PKCS11_KEY_NAME="__undefined__"
+
+# DAVS root directory path
+DAVS_ARTIFACT_ROOT_DIR="__undefined__"
+# DAVS segment id
+DAVS_SEGMENT_ID="__undefined__"
 
 function printUsageAndExit() {
     echo  'Usage: genConfig.sh <config.json file> <device_serial_number> <db path> <SDK Source Directory>'
@@ -48,12 +49,12 @@ function printUsageAndExit() {
     'Avaiable variables are:'
     echo  '   "SDK_CONFIG_MANUFACTURER_NAME": The name of the device manufacturer. This variable is required.'
     echo  '   "SDK_CONFIG_DEVICE_DESCRIPTION": The description of the device. This variable is required.'
-    echo  '   "SDK_SENSORY_MODEL_FILE_PATH": The path to the sensory KWD model. This variable is optional for Sensory KWD.\n' \
-    '   Please see https://github.com/Sensory/alexa-rpi#model-selection for more information.'
     echo  '   "PKCS11_MODULE_PATH": PKCS11 Module Path. This variable is required if PKCS11 is enabled.'
     echo  '   "PKCS11_TOKEN_NAME": PKCS11 Token Name. This variable is required if PKCS11 is enabled.'
     echo  '   "PKCS11_USER_PIN": PKCS11 User PIN. This variable is required if PKCS11 is enabled.'
     echo  '   "PKCS11_KEY_NAME": PKCS11 Key Object Name. This variable is required if PKCS11 is enabled.'
+    echo  '   "DAVS_ARTIFACT_ROOT_DIR": Specifies device artifact vending service (DAVS) root directory. This variable is required if ASSET_MANAGER is enabled.'
+    echo  '   "DAVS_SEGMENT_ID": Specifies device artifact vending service (DAVS) segment id. This variable is required if ASSET_MANAGER is enabled.'
     exit 1
 }
 
@@ -110,9 +111,6 @@ for variable in "$@"; do
     SDK_CONFIG_MANUFACTURER_NAME )
       extra_variables[${INDEX_MANUFACTURER_NAME}]=${variable_value}
       ;;
-    SDK_SENSORY_MODEL_FILE_PATH )
-      extra_variables[${INDEX_SENSORY_MODEL_FILE_PATH}]=${variable_value}
-      ;;
     PKCS11_MODULE_PATH )
       PKCS11_MODULE_PATH="${variable_value}"
       ;;
@@ -124,6 +122,12 @@ for variable in "$@"; do
       ;;
     PKCS11_KEY_NAME )
       PKCS11_KEY_NAME="${variable_value}"
+      ;;
+    DAVS_ARTIFACT_ROOT_DIR )
+      DAVS_ARTIFACT_ROOT_DIR="${variable_value}"
+      ;;
+    DAVS_SEGMENT_ID )
+      DAVS_SEGMENT_ID="${variable_value}"
       ;;
     * )
       echo "[ERROR] Unknown configuration variable ${variable_name}"
@@ -178,8 +182,6 @@ fi
 set -a
 
 # Set variables for configuration file
-# Variables for cblAuthDelegate
-SDK_CBL_AUTH_DELEGATE_DATABASE_FILE_PATH=$CONFIG_DB_PATH/cblAuthDelegate.db
 
 # Variables for deviceInfo
 SDK_CONFIG_DEVICE_SERIAL_NUMBER=$DEVICE_SERIAL_NUMBER
@@ -214,17 +216,14 @@ SDK_LWA_AUTHORIZATION_ADAPTER_DATABASE_FILE_PATH=$CONFIG_DB_PATH/lwaAuthorizatio
 SDK_CONFIG_MANUFACTURER_NAME=${extra_variables[${INDEX_MANUFACTURER_NAME}]}
 SDK_CONFIG_DEVICE_DESCRIPTION=${extra_variables[${INDEX_DEVICE_DESCRIPTION}]}
 
-# Variable for Sensory Keyword Detection
-if [[ ${extra_variables[${INDEX_SENSORY_MODEL_FILE_PATH}]+foobar} ]]
-then
-  SDK_SENSORY_MODEL_FILE_PATH=${extra_variables[${INDEX_SENSORY_MODEL_FILE_PATH}]}
-fi
-
 # Variables for HSM
 SDK_PKCS11_MODULE_PATH="$PKCS11_MODULE_PATH"
 SDK_PKCS11_TOKEN_NAME="$PKCS11_TOKEN_NAME"
 SDK_PKCS11_KEY_NAME="$PKCS11_KEY_NAME"
 SDK_PKCS11_USER_PIN="$PKCS11_USER_PIN"
+
+SDK_DAVS_ARTIFACT_DIR="$DAVS_ARTIFACT_ROOT_DIR"
+SDK_DAVS_SEGMENT_ID="$DAVS_SEGMENT_ID"
 
 ########################################################################################################################
 # End of setting variables for generating $OUTPUT_CONFIG_FILE

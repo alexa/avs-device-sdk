@@ -73,23 +73,27 @@ protected:
      *
      * @param keyWordObservers The observers to notify of keyword detections.
      * @param keyWordDetectorStateObservers The observers to notify of state changes in the engine.
+     * @param supportsDavs Boolean to indicate whether keyword detector supports Davs or not.
      */
     AbstractKeywordDetector(
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>> keyWordObservers =
             std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordObserverInterface>>(),
         std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>
             keyWordDetectorStateObservers =
-                std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>());
+                std::unordered_set<std::shared_ptr<avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface>>(),
+        bool supportsDavs = false);
 
     /**
      * Constructor.
      *
      * @param keyWordNotifier The object with which to notifiy observers of keyword detections.
      * @param KeyWordDetectorStateNotifier The object with which to notify observers of state changes in the engine.
+     * @param supportsDavs Boolean to indicate whether keyword detector supports Davs or not.
      */
     AbstractKeywordDetector(
         std::shared_ptr<acsdkKWDInterfaces::KeywordNotifierInterface> keywordNotifier,
-        std::shared_ptr<acsdkKWDInterfaces::KeywordDetectorStateNotifierInterface> keyWordDetectorStateNotifier);
+        std::shared_ptr<acsdkKWDInterfaces::KeywordDetectorStateNotifierInterface> keyWordDetectorStateNotifier,
+        bool supportsDavs = false);
 
     /**
      * Notifies all keyword observers of the keyword detection.
@@ -142,6 +146,13 @@ protected:
      */
     static bool isByteswappingRequired(avsCommon::utils::AudioFormat audioFormat);
 
+    /**
+     * Checks to see whether keyword detector is compatible with DAVS.
+     *
+     * @return @c true if Davs is supported @c false otherwise.
+     */
+    bool isDavsSupported();
+
 private:
     /**
      * The notifier to notify observers of key word detections.
@@ -162,6 +173,9 @@ private:
 
     /// Lock to protect m_detectorState.
     mutable std::mutex m_detectorStateMutex;
+
+    /// Boolean to indicate whether the keyword detector is compatible with DAVS.
+    bool m_supportsDavs;
 };
 
 }  // namespace acsdkKWDImplementations

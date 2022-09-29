@@ -59,7 +59,7 @@ static const std::string JSON_ENDPOINT_ID_KEY = "endpointId";
 static const std::string JSON_ENDPOINT_COOKIE_KEY = "cookie";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AvsDirective");
+#define TAG "AvsDirective"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

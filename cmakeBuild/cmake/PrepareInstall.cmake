@@ -18,6 +18,13 @@ function(asdk_install)
     install(DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")
 endfunction()
 
+# Function to install the sample target
+function(asdk_sample_install)
+    if (INSTALL_COMMON_SAMPLE_LIBS)
+        asdk_install()
+    endif()
+endfunction()
+
 # Function to install an interface library
 function(asdk_install_interface)
     install(DIRECTORY include DESTINATION "${ASDK_INCLUDE_INSTALL_DIR}")

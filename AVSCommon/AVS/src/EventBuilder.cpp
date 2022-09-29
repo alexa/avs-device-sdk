@@ -31,7 +31,7 @@ using namespace utils;
 using namespace avs::constants;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("EventBuilder");
+#define TAG "EventBuilder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

@@ -28,7 +28,7 @@ namespace metrics {
 namespace implementations {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("TtsUplCalculator");
+#define TAG "TtsUplCalculator"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

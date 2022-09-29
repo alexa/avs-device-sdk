@@ -59,6 +59,28 @@ public:
         std::shared_ptr<avsCommon::avs::attachment::AttachmentReader> reader;
     };
 
+    /// A struct to hold event namespace and name.
+    struct EventHeaders {
+        /**
+         * Constructor.
+         *
+         * @param eventNamespace The namespace of the event.
+         * @param eventName The name of the event.
+         */
+        EventHeaders(const std::string& eventNamespace, const std::string& eventName) :
+                eventNamespace{eventNamespace},
+                eventName{eventName} {
+        }
+
+        EventHeaders() = default;
+
+        /// The event namespace.
+        std::string eventNamespace;
+
+        /// The event name.
+        std::string eventName;
+    };
+
     /**
      * Function to resolve an editable message request based on the provided resolveKey by updating the MessageRequest.
      * @param[in,out] req Target editable request message that will be modified in place.
@@ -215,6 +237,13 @@ public:
      * @param observer The observer to be removed from the set.
      */
     void removeObserver(std::shared_ptr<avsCommon::sdkInterfaces::MessageRequestObserverInterface> observer);
+
+    /**
+     * Retrieve MessageRequest event headers (namespace and name).
+     *
+     * @return EventHeaders containing the namespace and name.
+     */
+    EventHeaders retrieveEventHeaders() const;
 
     /**
      * Get additional HTTP headers for this request

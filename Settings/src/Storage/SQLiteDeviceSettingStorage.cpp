@@ -24,7 +24,7 @@ namespace storage {
 using namespace avsCommon::utils::configuration;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SQLiteDeviceSettingStorage");
+#define TAG "SQLiteDeviceSettingStorage"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

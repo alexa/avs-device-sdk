@@ -225,15 +225,6 @@ private:
     bool migrateAlertsDbFromV2ToV3();
 
     /**
-     * Store an alert to alerts v2 table.
-     *
-     * @param id The alert id of the alert to be stored.
-     * @param alert The alert to be stored.
-     * @return Whether storing the alert to v2 table succeeds.
-     */
-    bool storeAlertToV2(const int id, std::shared_ptr<Alert> alert);
-
-    /**
      * Modify an alert in the databse.
      *
      * @param dbVersion The version of the alerts table.

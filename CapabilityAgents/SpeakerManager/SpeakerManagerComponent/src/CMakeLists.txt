@@ -1,0 +1,10 @@
+add_definitions("-DACSDK_LOG_MODULE=acsdkSpeakerManagerComponent")
+
+add_library(acsdkSpeakerManagerComponent ChannelVolumeFactoryComponent.cpp SpeakerManagerComponent.cpp)
+
+target_include_directories(acsdkSpeakerManagerComponent PUBLIC "${acsdkSpeakerManagerComponent_SOURCE_DIR}/include")
+
+target_link_libraries(acsdkSpeakerManagerComponent acsdkSpeakerManager acsdkManufactory)
+
+# install target
+asdk_install()

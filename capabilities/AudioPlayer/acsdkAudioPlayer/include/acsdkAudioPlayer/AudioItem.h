@@ -98,6 +98,7 @@ struct AudioItem {
 
         /// An opaque token that represents the expected previous stream.
         std::string expectedPreviousToken;
+
     } stream;
 
     /// The caption content that goes with the audio.

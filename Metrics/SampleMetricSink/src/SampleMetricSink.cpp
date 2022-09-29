@@ -36,7 +36,7 @@ using namespace alexaClientSDK::avsCommon::utils::configuration;
 using namespace alexaClientSDK::avsCommon::utils::metrics;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("SampleMetricSink");
+#define TAG "SampleMetricSink"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

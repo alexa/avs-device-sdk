@@ -29,7 +29,7 @@ using namespace avsCommon::sdkInterfaces;
 using namespace captions;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("AndroidApplicationAudioPipelineFactory");
+#define TAG "AndroidApplicationAudioPipelineFactory"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -45,24 +45,18 @@ AndroidApplicationAudioPipelineFactory::createApplicationAudioPipelineFactoryInt
     const std::shared_ptr<acsdkEqualizerInterfaces::EqualizerRuntimeSetupInterface>& equalizerRuntimeSetup,
     const std::shared_ptr<HTTPContentFetcherInterfaceFactoryInterface>& httpContentFetcherFactory,
     const std::shared_ptr<ShutdownNotifierInterface>& shutdownNotifier,
-    const std::shared_ptr<applicationUtilities::androidUtilities::PlatformSpecificValues>& platformSpecificValues,
+    const std::shared_ptr<applicationUtilities::androidUtilities::AndroidSLESEngine>& openSlEngine,
     const std::shared_ptr<CaptionManagerInterface>& captionManager) {
     ACSDK_DEBUG5(LX(__func__));
     if (!channelVolumeFactory || !speakerManager || !equalizerRuntimeSetup || !httpContentFetcherFactory ||
-        !shutdownNotifier || !platformSpecificValues) {
+        !shutdownNotifier || !openSlEngine) {
         ACSDK_ERROR(LX("createFailed")
                         .d("isChannelVolumeFactoryNull", !channelVolumeFactory)
                         .d("isSpeakerManagerNull", !speakerManager)
                         .d("isEqualizerRuntimeSetupNull", !equalizerRuntimeSetup)
                         .d("isHttpContentFetcherFactoryNull", !httpContentFetcherFactory)
                         .d("isShutdownNotifierNull", !shutdownNotifier)
-                        .d("isPlatformSpecificValuesNull", !platformSpecificValues));
-        return nullptr;
-    }
-
-    auto openSlEngine = platformSpecificValues->openSlEngine;
-    if (!openSlEngine) {
-        ACSDK_ERROR(LX("createApplicationAudioPipelineFactoryInterfaceFailed").m("openSlEngine is null"));
+                        .d("isOpenSlEngineNull", !openSlEngine));
         return nullptr;
     }
 

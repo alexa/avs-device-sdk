@@ -1,0 +1,216 @@
+/*
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * You may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the "license" file accompanying this file. This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+#include <memory>
+
+#include <acsdk/SpeakerManager/private/ChannelVolumeManager.h>
+#include <AVSCommon/Utils/Logger/Logger.h>
+
+namespace alexaClientSDK {
+namespace speakerManager {
+
+using namespace avsCommon::sdkInterfaces;
+using namespace avsCommon::avs::speakerConstants;
+
+/// @addtogroup Lib_acsdkSpeakerManager
+/// @{
+
+/// @brief Logging tag
+/// @private
+#define TAG "ChannelVolumeManager"
+
+/**
+ * Create a LogEntry using this file's TAG and the specified event string.
+ *
+ * @param event The event string for this @c LogEntry.
+ * @private
+ */
+#define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
+
+/// The fraction of maximum volume used for the upper threshold in the default volume curve.
+/// @private
+static constexpr float UPPER_VOLUME_CURVE_FRACTION = 0.40f;
+
+/// The fraction of maximum volume used for the lower threshold in the default volume curve.
+/// @private
+static constexpr float LOWER_VOLUME_CURVE_FRACTION = 0.20f;
+
+/**
+ * Checks whether a value is within the bounds.
+ *
+ * @param value The value to check.
+ * @param min The minimum value.
+ * @param max The maximum value.
+ *
+ * @private
+ */
+static bool withinBounds(std::int64_t value, std::int64_t min, std::int64_t max) noexcept {
+    if (value < min || value > max) {
+        ACSDK_ERROR(LX("checkBoundsFailed").d("value", value).d("min", min).d("max", max));
+        return false;
+    }
+    return true;
+}
+
+/// @}
+
+std::shared_ptr<ChannelVolumeManager> ChannelVolumeManager::create(
+    std::shared_ptr<SpeakerInterface> speaker,
+    ChannelVolumeInterface::Type type,
+    VolumeCurveFunction volumeCurve) noexcept {
+    if (!speaker) {
+        ACSDK_ERROR(LX(__func__).d("reason", "Null SpeakerInterface").m("createFailed"));
+        return nullptr;
+    }
+
+    auto channelVolumeManager =
+        std::shared_ptr<ChannelVolumeManager>(new ChannelVolumeManager(speaker, type, volumeCurve));
+
+    /// Retrieve initial volume setting from underlying speakers
+    SpeakerInterface::SpeakerSettings settings;
+    if (!channelVolumeManager->getSpeakerSettings(&settings)) {
+        ACSDK_ERROR(LX(__func__).m("createFailed").d("reason", "Unable To Retrieve Speaker Settings"));
+        return nullptr;
+    }
+    channelVolumeManager->m_unduckedVolume = settings.volume;
+
+    return channelVolumeManager;
+}
+
+ChannelVolumeManager::ChannelVolumeManager(
+    std::shared_ptr<SpeakerInterface> speaker,
+    ChannelVolumeInterface::Type type,
+    VolumeCurveFunction volumeCurve) noexcept :
+        ChannelVolumeInterface{},
+        m_speaker{speaker},
+        m_isDucked{false},
+        m_unduckedVolume{AVS_SET_VOLUME_MIN},
+        m_volumeCurveFunction{volumeCurve ? volumeCurve : defaultVolumeAttenuateFunction},
+        m_type{type} {
+}
+
+ChannelVolumeInterface::Type ChannelVolumeManager::getSpeakerType() const {
+    std::lock_guard<std::mutex> locker{m_mutex};
+    return m_type;
+}
+
+size_t ChannelVolumeManager::getId() const {
+    return (size_t)m_speaker.get();
+}
+
+bool ChannelVolumeManager::startDucking() {
+    std::lock_guard<std::mutex> locker{m_mutex};
+    ACSDK_DEBUG5(LX(__func__));
+    if (m_isDucked) {
+        ACSDK_WARN(LX(__func__).m("Channel is Already Attenuated"));
+        return true;
+    }
+
+    // consult volume curve to determine the volume to duck to
+    auto desiredVolume = m_volumeCurveFunction(m_unduckedVolume);
+
+    ACSDK_DEBUG9(LX(__func__)
+                     .d("currentVolume", static_cast<int>(m_unduckedVolume))
+                     .d("desiredAttenuatedVolume", static_cast<int>(desiredVolume)));
+
+    if (!m_speaker->setVolume(desiredVolume)) {
+        ACSDK_WARN(LX(__func__).m("Failed to Attenuate Channel Volume"));
+        return false;
+    }
+
+    m_isDucked = true;
+    return true;
+}
+
+bool ChannelVolumeManager::stopDucking() {
+    std::lock_guard<std::mutex> locker{m_mutex};
+    ACSDK_DEBUG5(LX(__func__));
+
+    // exit early if the channel is not attenuated
+    if (!m_isDucked) {
+        return true;
+    }
+
+    // Restore the speaker volume
+    if (!m_speaker->setVolume(m_unduckedVolume)) {
+        return false;
+    }
+
+    ACSDK_DEBUG5(LX(__func__).d("Restored Channel Volume", static_cast<int>(m_unduckedVolume)));
+    m_isDucked = false;
+    return true;
+}
+
+bool ChannelVolumeManager::setUnduckedVolume(int8_t volume) {
+    ACSDK_DEBUG5(LX(__func__).d("volume", static_cast<int>(volume)));
+    if (!withinBounds(volume, AVS_SET_VOLUME_MIN, AVS_SET_VOLUME_MAX)) {
+        ACSDK_ERROR(LX(__func__).m("Invalid Volume"));
+        return false;
+    }
+
+    std::lock_guard<std::mutex> locker{m_mutex};
+    // store the volume
+    m_unduckedVolume = volume;
+    if (m_isDucked) {
+        ACSDK_WARN(LX(__func__).m("Channel is Attenuated, Deferring Operation"));
+        // New Volume shall be applied upon the next call to stopDucking()
+        return true;
+    }
+
+    ACSDK_DEBUG5(LX(__func__).d("Unducked Channel Volume", static_cast<int>(volume)));
+    return m_speaker->setVolume(m_unduckedVolume);
+}
+
+bool ChannelVolumeManager::setMute(bool mute) {
+    std::lock_guard<std::mutex> locker{m_mutex};
+    ACSDK_DEBUG5(LX(__func__).d("mute", static_cast<int>(mute)));
+    return m_speaker->setMute(mute);
+}
+
+bool ChannelVolumeManager::getSpeakerSettings(
+    avsCommon::sdkInterfaces::SpeakerInterface::SpeakerSettings* settings) const {
+    ACSDK_DEBUG(LX(__func__));
+    if (!settings) {
+        return false;
+    }
+
+    std::lock_guard<std::mutex> locker{m_mutex};
+    if (!m_speaker->getSpeakerSettings(settings)) {
+        ACSDK_ERROR(LX(__func__).m("Unable To Retrieve SpeakerSettings"));
+        return false;
+    }
+
+    // if the channel is ducked : return the cached latest unducked volume
+    if (m_isDucked) {
+        ACSDK_DEBUG5(LX(__func__).m("Channel is Already Attenuated"));
+        settings->volume = m_unduckedVolume;
+    }
+
+    return true;
+}
+
+int8_t ChannelVolumeManager::defaultVolumeAttenuateFunction(int8_t currentVolume) noexcept {
+    const int8_t lowerBreakPoint = static_cast<int8_t>(AVS_SET_VOLUME_MAX * LOWER_VOLUME_CURVE_FRACTION);
+    const int8_t upperBreakPoint = static_cast<int8_t>(AVS_SET_VOLUME_MAX * UPPER_VOLUME_CURVE_FRACTION);
+
+    if (currentVolume >= upperBreakPoint) {
+        return lowerBreakPoint;
+    } else if (currentVolume >= lowerBreakPoint && currentVolume <= upperBreakPoint) {
+        return (currentVolume - lowerBreakPoint);
+    } else {
+        return avsCommon::avs::speakerConstants::AVS_SET_VOLUME_MIN;
+    }
+}
+}  // namespace speakerManager
+}  // namespace alexaClientSDK

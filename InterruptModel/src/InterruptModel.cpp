@@ -24,7 +24,7 @@ namespace interruptModel {
 using namespace avsCommon::avs;
 using namespace avsCommon::utils::configuration;
 
-static const std::string TAG{"InterruptModel"};
+#define TAG "InterruptModel"
 #define LX(event) alexaClientSDK::avsCommon::utils::logger::LogEntry(TAG, event)
 
 /// Key for the interrupt model configuration

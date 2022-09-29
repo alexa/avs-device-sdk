@@ -59,6 +59,10 @@ public:
         std::string inboundCalleeName;
         /// Textual description of exact call provider type.
         std::string callProviderType;
+        /// Call provider image url.
+        /// This image url may be null. For the case the provider image is not provided by url,
+        /// the application should have local image to display instead of downloading from this url.
+        std::string callProviderImageUrl;
         /// Inbound ringtone url.
         std::string inboundRingtoneUrl;
         /// Outbound ringtone url.

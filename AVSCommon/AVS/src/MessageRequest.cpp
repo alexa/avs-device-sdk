@@ -15,16 +15,30 @@
 
 #include "AVSCommon/AVS/MessageRequest.h"
 #include "AVSCommon/AVS/EditableMessageRequest.h"
+#include <AVSCommon/Utils/JSON/JSONUtils.h>
 #include "AVSCommon/Utils/Logger/Logger.h"
 
 namespace alexaClientSDK {
 namespace avsCommon {
 namespace avs {
 
+using namespace avsCommon::utils::json::jsonUtils;
 using namespace sdkInterfaces;
 
+/// Event key.
+static const std::string EVENT{"event"};
+
+/// Header key.
+static const std::string EVENT_HEADER{"header"};
+
+/// Event header key for the namespace field.
+static const std::string EVENT_HEADER_NAMESPACE{"namespace"};
+
+/// Event header key for the name field.
+static const std::string EVENT_HEADER_NAME{"name"};
+
 /// String to identify log entries originating from this file.
-static const std::string TAG("MessageRequest");
+#define TAG "MessageRequest"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -110,7 +124,7 @@ std::string MessageRequest::getUriPathExtension() const {
 }
 
 int MessageRequest::attachmentReadersCount() const {
-    return m_readers.size();
+    return static_cast<int>(m_readers.size());
 }
 std::string MessageRequest::getStreamMetricName() const {
     return m_streamMetricName;
@@ -178,6 +192,48 @@ void MessageRequest::removeObserver(
 
     std::lock_guard<std::mutex> lock{m_observerMutex};
     m_observers.erase(observer);
+}
+
+MessageRequest::EventHeaders MessageRequest::retrieveEventHeaders() const {
+    // This could be more efficient if parsed in the constructor. However, if this optimization is done in the future
+    // EditableMessageRequest will need to also refresh the cache, and thready safety for both classes would need to be
+    // re-evaluated.
+    rapidjson::Document document;
+    auto eventHeaders = MessageRequest::EventHeaders();
+
+    auto eventExists = parseJSON(this->getJsonContent(), &document);
+    if (!eventExists) {
+        ACSDK_ERROR(LX("retrieveEventHeadersFailed").d("reason", "Parsing error"));
+        return eventHeaders;
+    }
+
+    auto event = document.FindMember(EVENT);
+    if (event == document.MemberEnd()) {
+        ACSDK_ERROR(LX("retrieveEventHeadersFailed").d("reason", "No event found in json"));
+        return eventHeaders;
+    }
+
+    auto headers = event->value.FindMember(EVENT_HEADER);
+    if (headers == event->value.MemberEnd()) {
+        ACSDK_ERROR(LX("retrieveEventHeadersFailed").d("reason", "No event headers found"));
+        return eventHeaders;
+    }
+
+    auto field = headers->value.FindMember(EVENT_HEADER_NAMESPACE);
+    if (field != headers->value.MemberEnd() && field->value.IsString()) {
+        eventHeaders.eventNamespace = field->value.GetString();
+    } else {
+        ACSDK_ERROR(LX("retrieveEventHeadersFailed").d("reason", "No event namespace found"));
+    }
+
+    field = headers->value.FindMember(EVENT_HEADER_NAME);
+    if (field != headers->value.MemberEnd() && field->value.IsString()) {
+        eventHeaders.eventName = field->value.GetString();
+    } else {
+        ACSDK_ERROR(LX("retrieveEventHeadersFailed").d("reason", "No event name found"));
+    }
+
+    return eventHeaders;
 }
 
 const std::vector<std::pair<std::string, std::string>>& MessageRequest::getHeaders() const {

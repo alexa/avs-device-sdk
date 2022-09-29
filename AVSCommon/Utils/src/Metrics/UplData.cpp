@@ -23,7 +23,7 @@ namespace utils {
 namespace metrics {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("UplData");
+#define TAG "UplData"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

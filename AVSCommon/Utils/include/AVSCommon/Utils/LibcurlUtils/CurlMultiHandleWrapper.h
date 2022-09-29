@@ -80,13 +80,29 @@ public:
     CURLMcode perform(int* runningHandles);
 
     /**
-     * Wait for actions to perform on the @c libcurl @c handles added to this @c libcurl @c multi @c handle.
+     * Poll for actions to perform on the @c libcurl @c handles added to this @c libcurl @c multi @c handle.  This can
+     * waken up by the @c wakeup() call.
+     *
+     * @note For Libcurl v7.68.0 or higher, this function will call curl_multi_poll(), this allows the polling thread to
+     * be woken up by the @c wakeup() call.  Otherwise for Libcurl v7.67.0 or lower, it will call curl_multi_wait() and
+     * the call to @c wakeup() will do nothing.
+     *
      *
      * @param timeout How long to wait for actions to perform.
      * @param[out] countHandlesUpdated The number of handles for which actions are ready to be performed.
      * @return @c libcurl code indicating the result of this operation.
      */
-    CURLMcode wait(std::chrono::milliseconds timeout, int* countHandlesUpdated);
+    CURLMcode poll(std::chrono::milliseconds timeout, int* countHandlesUpdated);
+
+    /**
+     * This function can be called from any thread to wake up a sleeping @c poll().
+     *
+     * @note For Libcurl v7.68.0 or higher, this function will call curl_multi_wakeup().  Otherwise, this is a no-op
+     * operation.
+     *
+     * @return @c true if the call succeeded, or @c false otherwise.
+     */
+    bool wakeup();
 
     /**
      * Receive the next messages about the @c libcurl @c handles added to this @c libcurl @c multi @c handle.

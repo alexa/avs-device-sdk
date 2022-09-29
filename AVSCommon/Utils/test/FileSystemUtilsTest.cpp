@@ -41,7 +41,7 @@ public:
         createDirectory(WORKING_DIR);
         ASSERT_TRUE(exists(WORKING_DIR));
 
-#if defined(__linux__) or defined(__APPLE__)
+#if defined(__linux__) || defined(__APPLE__)
         // on some OS, the temp path is symbolically linked, which can cause issues for prefix tests
         // to accommodate this, get the realpath of the temp directory
         char resolved_path[PATH_MAX + 1];

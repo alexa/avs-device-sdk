@@ -23,7 +23,7 @@
 #include "AndroidSLESMediaPlayer/PlaybackConfiguration.h"
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("PlaybackConfiguration");
+#define TAG "PlaybackConfiguration"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

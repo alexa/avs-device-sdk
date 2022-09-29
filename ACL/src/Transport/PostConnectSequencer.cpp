@@ -27,7 +27,7 @@ using namespace avsCommon::utils::error;
 using namespace avsCommon::utils::power;
 
 /// String to identify log entries originating form this file.
-static const std::string TAG("PostConnectSequencer");
+#define TAG "PostConnectSequencer"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -50,9 +50,9 @@ std::shared_ptr<PostConnectSequencer> PostConnectSequencer::create(
 PostConnectSequencer::PostConnectSequencer(const PostConnectOperationsSet& postConnectOperations) :
         m_isStopping{false},
         m_postConnectOperations{postConnectOperations} {
-    ACSDK_DEBUG5(LX("init"));
+    ACSDK_INFO(LX("init"));
 
-    m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG + "_mainLoop");
+    m_mainLoopPowerResource = PowerMonitor::getInstance()->createLocalPowerResource(TAG "_mainLoop");
 
     if (m_mainLoopPowerResource) {
         m_mainLoopPowerResource->acquire();
@@ -60,14 +60,14 @@ PostConnectSequencer::PostConnectSequencer(const PostConnectOperationsSet& postC
 }
 
 PostConnectSequencer::~PostConnectSequencer() {
-    ACSDK_DEBUG5(LX("destroy"));
+    ACSDK_INFO(LX("destroy"));
     stop();
 }
 
 bool PostConnectSequencer::doPostConnect(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
-    ACSDK_DEBUG5(LX("doPostConnect"));
+    ACSDK_INFO(LX("doPostConnect"));
 
     if (!postConnectSender) {
         ACSDK_ERROR(LX("doPostConnectFailed").d("reason", "nullPostConnectSender"));
@@ -94,7 +94,7 @@ bool PostConnectSequencer::doPostConnect(
 void PostConnectSequencer::mainLoop(
     std::shared_ptr<avsCommon::sdkInterfaces::MessageSenderInterface> postConnectSender,
     std::shared_ptr<PostConnectObserverInterface> postConnectObserver) {
-    ACSDK_DEBUG5(LX("mainLoop"));
+    ACSDK_INFO(LX("mainLoop"));
 
     PowerMonitor::getInstance()->assignThreadPowerResource(m_mainLoopPowerResource);
 
@@ -144,11 +144,11 @@ void PostConnectSequencer::mainLoop(
         postConnectObserver->onPostConnected();
     }
 
-    ACSDK_DEBUG5(LX("mainLoopReturning"));
+    ACSDK_INFO(LX("mainLoopReturning"));
 }
 
 void PostConnectSequencer::onDisconnect() {
-    ACSDK_DEBUG5(LX("onDisconnect"));
+    ACSDK_INFO(LX("onDisconnect"));
     stop();
 }
 
@@ -163,7 +163,7 @@ bool PostConnectSequencer::isStopping() {
 }
 
 void PostConnectSequencer::stop() {
-    ACSDK_DEBUG5(LX("stop"));
+    ACSDK_INFO(LX("stop"));
     {
         std::lock_guard<std::mutex> lock{m_mutex};
         if (m_isStopping) {

@@ -22,7 +22,7 @@ namespace metrics {
 namespace implementations {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("MetricRecorder");
+#define TAG "MetricRecorder"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -62,7 +62,7 @@ void MetricRecorder::recordMetric(std::shared_ptr<alexaClientSDK::avsCommon::uti
         return;
     }
 
-    m_executor.submit([this, metricEvent]() {
+    m_executor.execute([this, metricEvent]() {
         for (const auto& sink : m_sinks) {
             sink->consumeMetric(metricEvent);
         }

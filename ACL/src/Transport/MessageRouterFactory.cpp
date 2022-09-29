@@ -20,7 +20,6 @@
 namespace alexaClientSDK {
 namespace acl {
 
-using namespace alexaClientSDK::acl;
 using namespace avsCommon::sdkInterfaces;
 using namespace avsCommon::avs::attachment;
 

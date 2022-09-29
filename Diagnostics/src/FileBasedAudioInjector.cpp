@@ -25,7 +25,7 @@ namespace alexaClientSDK {
 namespace diagnostics {
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("FileBasedAudioInjector");
+#define TAG "FileBasedAudioInjector"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

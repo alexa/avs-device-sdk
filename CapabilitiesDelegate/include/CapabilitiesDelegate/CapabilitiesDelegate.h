@@ -60,6 +60,15 @@ struct InProcessEndpointsToConfigMapStruct {
 /**
  * CapabilitiesDelegate provides an implementation of the CapabilitiesDelegateInterface. It allows clients to register
  * capabilities implemented by agents and publish them so that Alexa is aware of the device's capabilities.
+ *
+ * While updating capabilities for an endpoint, the device will also send the cached capabilities of all endpoints that
+ * share the same registration information. Such endpoints are referred to as deduplicated endpoints.
+ *
+ * @note: The following restrictions apply to deduplicated endpoints:
+ * 1. We can only have one set of deduplicated endpoints, and this set will include the default endpoint.
+ * 2. All capabilities of the deduplicated endpoints will need to fit into one discovery event.
+ * 3. Deleting a deduplicated endpoint is not permitted.
+ *
  */
 class CapabilitiesDelegate
         : public avsCommon::sdkInterfaces::CapabilitiesDelegateInterface
@@ -78,6 +87,7 @@ public:
      * @param providerRegistrar Object with which to register the new instance as a post connect operation provider.
      * @param shutdownNotifier The object to register with to be notified when it is time to shut down.
      * @param alexaEventProcessedNotifier The object to register with to be notified of AlexaEventProcessed directives.
+     * @param metricRecorder Optional reference to metric recorder.
      * @return If successful, returns a new CapabilitiesDelegate, otherwise @c nullptr.
      */
     static std::shared_ptr<CapabilitiesDelegateInterface> createCapabilitiesDelegateInterface(
@@ -89,7 +99,8 @@ public:
             providerRegistrar,
         const std::shared_ptr<acsdkShutdownManagerInterfaces::ShutdownNotifierInterface>& shutdownNotifier,
         const std::shared_ptr<acsdkAlexaEventProcessedNotifierInterfaces::AlexaEventProcessedNotifierInterface>&
-            alexaEventProcessedNotifier);
+            alexaEventProcessedNotifier,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr);
 
     /**
      * Create an CapabilitiesDelegate.
@@ -103,7 +114,8 @@ public:
     static std::shared_ptr<CapabilitiesDelegate> create(
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& storage,
-        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager);
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricRecorder = nullptr);
 
     /// @name CapabilitiesDelegateInterface method overrides.
     /// @{
@@ -181,7 +193,8 @@ private:
     CapabilitiesDelegate(
         const std::shared_ptr<avsCommon::sdkInterfaces::AuthDelegateInterface>& authDelegate,
         const std::shared_ptr<storage::CapabilitiesDelegateStorageInterface>& storage,
-        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager);
+        const std::shared_ptr<registrationManager::CustomerDataManagerInterface>& customerDataManager,
+        const std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface>& metricsRecorder);
 
     /**
      * Perform initialization after construction but before returning the
@@ -285,6 +298,26 @@ private:
      */
     void moveInFlightEndpointsToRegisteredEndpoints();
 
+    /**
+     * Invoke the DiscoveryEventSender to send endpoints.
+     * @param addOrUpdateEndpointsToSend map of endpoints to be added or updated.
+     * @param deleteEndpointsToSend map of endpoints to be deleted.
+     * @return false if the DiscoveryEventSender was not successfully created, true otherwise.
+     */
+    bool executeSendDiscoveryEvents(
+        const std::unordered_map<std::string, std::string>& addOrUpdateEndpointsToSend,
+        const std::unordered_map<std::string, std::string>& deleteEndpointsToSend);
+
+    /**
+     * Determine whether an endpoint is deduplicated.
+     * @param endpointId Identifier of the endpoint.
+     * @return true if the endpoint is deduplicated, false otherwise.
+     */
+    bool isEndpointDeduplicated(const avsCommon::sdkInterfaces::endpoints::EndpointIdentifier& endpointId);
+
+    /// Optional (may be nullptr) interface for metrics.
+    std::shared_ptr<avsCommon::utils::metrics::MetricRecorderInterface> m_metricRecorder;
+
     /// Mutex used to serialize access to Capabilities state and Capabilities state observers.
     std::mutex m_observerMutex;
 
@@ -322,6 +355,13 @@ private:
 
     /// A map of endpointId to configuration for currently registered endpoints.
     std::unordered_map<std::string, std::string> m_endpoints;
+
+    /// A map of endpointId to Registration for currently pending/in-flight/registered endpoints.
+    /// @note these endpoint(s) are the device maintaining the HTTP/2 connection.
+    std::unordered_map<
+        avsCommon::sdkInterfaces::endpoints::EndpointIdentifier,
+        avsCommon::utils::Optional<avsCommon::avs::AVSDiscoveryEndpointAttributes::Registration>>
+        m_endpointRegistrations;
 
     /// The mutex to serialize operations related to @c m_currentDiscoveryEventSender.
     std::mutex m_currentDiscoveryEventSenderMutex;

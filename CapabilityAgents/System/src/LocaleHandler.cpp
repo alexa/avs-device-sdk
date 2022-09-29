@@ -36,7 +36,7 @@ using namespace avsCommon::utils::logger;
 using namespace settings;
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("LocaleHandler");
+#define TAG "LocaleHandler"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.
@@ -115,7 +115,7 @@ void LocaleHandler::handleDirective(std::shared_ptr<CapabilityAgent::DirectiveIn
         ACSDK_ERROR(LX("handleDirectiveFailed").d("reason", "nullDirective"));
         return;
     }
-    m_executor.submit([this, info]() { executeHandleDirective(info); });
+    m_executor.execute([this, info]() { executeHandleDirective(info); });
 }
 
 void LocaleHandler::cancelDirective(std::shared_ptr<CapabilityAgent::DirectiveInfo> info) {

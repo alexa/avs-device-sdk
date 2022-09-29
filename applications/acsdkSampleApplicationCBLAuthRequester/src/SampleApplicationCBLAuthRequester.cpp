@@ -17,52 +17,67 @@
 #include <sstream>
 
 #include "acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h"
+#include <acsdkAuthorizationInterfaces/AuthorizationManagerInterface.h>
 
 namespace alexaClientSDK {
 namespace acsdkSampleApplicationCBLAuthRequester {
 
-std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface> SampleApplicationCBLAuthRequester::
-    createCBLAuthRequesterInterface(
+using namespace acsdkSampleApplicationInterfaces;
+using namespace acsdkAuthorizationInterfaces::lwa;
+
+std::shared_ptr<CBLAuthorizationObserverInterface> SampleApplicationCBLAuthRequester::
+    createCBLAuthorizationObserverInterface(
         const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager) {
     if (!uiManager) {
         return nullptr;
     }
 
-    return std::shared_ptr<authorization::cblAuthDelegate::CBLAuthRequesterInterface>(
-        new SampleApplicationCBLAuthRequester(uiManager));
-}
-
-std::shared_ptr<acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface>
-SampleApplicationCBLAuthRequester::createCBLAuthorizationObserverInterface(
-    const std::shared_ptr<acsdkSampleApplicationInterfaces::UIManagerInterface>& uiManager) {
-    if (!uiManager) {
-        return nullptr;
-    }
-
-    return std::shared_ptr<acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface>(
-        new SampleApplicationCBLAuthRequester(uiManager));
+    return std::shared_ptr<CBLAuthorizationObserverInterface>(new SampleApplicationCBLAuthRequester(uiManager));
 }
 
 void SampleApplicationCBLAuthRequester::onRequestAuthorization(const std::string& url, const std::string& code) {
-    m_authCheckCounter = 0;
     m_uiManager->printMessage("NOT YET AUTHORIZED");
     std::ostringstream oss;
     oss << "To authorize, browse to: '" << url << "' and enter the code: " << code;
     m_uiManager->printMessage(oss.str());
+
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_authCheckCounter = 0;
+    m_authCode = code;
+    m_authUrl = url;
+    lock.unlock();
+
+    if (m_uiAuthNotifier) {
+        m_uiAuthNotifier->notifyAuthorizationRequest(url, code);
+    }
 }
 
 void SampleApplicationCBLAuthRequester::onCheckingForAuthorization() {
     std::ostringstream oss;
+
+    std::unique_lock<std::mutex> lock(m_mutex);
     oss << "Checking for authorization (" << ++m_authCheckCounter << ")...";
+    auto code = m_authCode;
+    auto url = m_authUrl;
+    lock.unlock();
+
     m_uiManager->printMessage(oss.str());
+    if (m_uiAuthNotifier) {
+        m_uiAuthNotifier->notifyAuthorizationRequest(url, code);
+    }
 }
 
 void SampleApplicationCBLAuthRequester::onCustomerProfileAvailable(
-    const acsdkAuthorizationInterfaces::lwa::CBLAuthorizationObserverInterface::CustomerProfile& customerProfile) {
+    const CBLAuthorizationObserverInterface::CustomerProfile& customerProfile) {
     std::ostringstream oss;
     oss << "Name: " << customerProfile.name << " "
         << " Email: " << customerProfile.email;
     m_uiManager->printMessage(oss.str());
+}
+
+void SampleApplicationCBLAuthRequester::setUIAuthNotifier(
+    std::shared_ptr<acsdkSampleApplicationInterfaces::UIAuthNotifierInterface> uiAuthNotifier) {
+    m_uiAuthNotifier = std::move(uiAuthNotifier);
 }
 
 SampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester(

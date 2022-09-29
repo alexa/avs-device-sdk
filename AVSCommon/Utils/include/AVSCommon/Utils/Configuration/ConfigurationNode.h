@@ -195,6 +195,15 @@ public:
     ConfigurationNode operator[](const std::string& key) const;
 
     /**
+     * Get @c ConfigurationNode value for @c key from this @c ConfigurationNode.
+     *
+     * @param key The key of the @c ConfigurationNode value to get.
+     * @return The @c ConfigurationNode value, or an empty node if this @c ConfigurationNode does not have
+     * a @c ConfigurationNode value for @c key.
+     */
+    ConfigurationNode getChildNode(const char* key) const;
+
+    /**
      * operator bool(). Indicates of the @c ConfigurationNode references a valid object.
      *
      * @return Whether the @c ConfigurationNode references a valid object.

@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+project(acsdkAudioEncoderComponent LANGUAGES CXX)
+
+add_library(acsdkAudioEncoderComponent INTERFACE)
+target_include_directories(acsdkAudioEncoderComponent INTERFACE ${acsdkAudioEncoderComponent_SOURCE_DIR}/include)
+target_link_libraries(acsdkAudioEncoderComponent INTERFACE acsdkManufactory acsdkAudioEncoderInterfaces)
+
+# install target
+asdk_install_interface()

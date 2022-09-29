@@ -190,8 +190,8 @@ TEST_F(SettingEventSenderTest, testSlow_blockingSend) {
  * Test retries will give up after N attempts
  */
 TEST_F(SettingEventSenderTest, testSlow_maxRetries) {
-    std::atomic<unsigned long> attempts;
-    unsigned long maxAttempts = RETRY_TABLE.size();
+    std::atomic<std::size_t> attempts;
+    auto maxAttempts = RETRY_TABLE.size();
     PromiseFuturePair<void> retryDone;
 
     attempts = 0;
@@ -213,8 +213,8 @@ TEST_F(SettingEventSenderTest, testSlow_maxRetries) {
  * Test retry on server internal error HTTP response
  */
 TEST_F(SettingEventSenderTest, testSlow_retryOnInternalError) {
-    std::atomic<unsigned long> attempts;
-    unsigned long maxAttempts = RETRY_TABLE.size();
+    std::atomic<std::size_t> attempts;
+    auto maxAttempts = RETRY_TABLE.size();
     PromiseFuturePair<void> retryDone;
 
     attempts = 0;
@@ -236,8 +236,8 @@ TEST_F(SettingEventSenderTest, testSlow_retryOnInternalError) {
  * Test retry on server internal error HTTP response and will stop after success
  */
 TEST_F(SettingEventSenderTest, testSlow_retryStopAfterSuccess) {
-    std::atomic<unsigned long> attempts;
-    unsigned long maxAttempts = RETRY_TABLE.size();
+    std::atomic<std::size_t> attempts;
+    auto maxAttempts = RETRY_TABLE.size();
     PromiseFuturePair<void> retryDone;
 
     attempts = 0;
@@ -271,8 +271,8 @@ TEST_F(SettingEventSenderTest, testSlow_retryStopAfterSuccess) {
  * Test no retry on non-connected HTTP response
  */
 TEST_F(SettingEventSenderTest, testSlow_noRetryOnNonConnected) {
-    std::atomic<unsigned long> attempts;
-    unsigned long maxAttempts = RETRY_TABLE.size();
+    std::atomic<std::size_t> attempts;
+    auto maxAttempts = RETRY_TABLE.size();
     PromiseFuturePair<void> retryDone;
 
     attempts = 0;
@@ -294,8 +294,8 @@ TEST_F(SettingEventSenderTest, testSlow_noRetryOnNonConnected) {
  * Test cancellation of retries
  */
 TEST_F(SettingEventSenderTest, testSlow_cancelRetry) {
-    std::atomic<unsigned long> attempts;
-    unsigned long maxAttempts = RETRY_TABLE.size();
+    std::atomic<std::size_t> attempts;
+    auto maxAttempts = RETRY_TABLE.size();
     PromiseFuturePair<void> retryDone;
 
     attempts = 0;

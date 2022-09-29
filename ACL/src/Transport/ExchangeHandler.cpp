@@ -27,7 +27,7 @@ namespace acl {
 static const std::string AUTHORIZATION_HEADER = "Authorization: Bearer ";
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("ExchangeHandler");
+#define TAG "ExchangeHandler"
 
 /**
  * Create a LogEntry using this file's TAG and the specified event string.

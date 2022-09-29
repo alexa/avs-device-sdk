@@ -293,7 +293,7 @@ TEST_F(JSONUtilTest, test_parseJSONInvalidJSON) {
  */
 TEST_F(JSONUtilTest, test_convertToStringValueWithString) {
     rapidjson::Value expected;
-    expected.SetString(STRING_VALUE.c_str(), STRING_VALUE.length());
+    expected.SetString(STRING_VALUE.c_str(), static_cast<rapidjson::SizeType>(STRING_VALUE.length()));
     std::string actual;
     ASSERT_TRUE(convertToValue(expected, &actual));
     ASSERT_EQ(expected.GetString(), actual);
@@ -326,7 +326,7 @@ TEST_F(JSONUtilTest, test_convertToStringValueWithInvalidValue) {
  */
 TEST_F(JSONUtilTest, test_convertToStringValueWithNullOutputParam) {
     rapidjson::Value node;
-    node.SetString(STRING_VALUE.c_str(), STRING_VALUE.length());
+    node.SetString(STRING_VALUE.c_str(), static_cast<rapidjson::SizeType>(STRING_VALUE.length()));
     std::string* value = nullptr;
     ASSERT_FALSE(convertToValue(node, value));
 }

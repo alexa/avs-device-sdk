@@ -43,7 +43,7 @@ static const std::string DOWNCHANNEL_ID_PREFIX = "AVSDownChannel-";
 static const std::chrono::seconds ESTABLISH_CONNECTION_TIMEOUT = std::chrono::seconds(60);
 
 /// String to identify log entries originating from this file.
-static const std::string TAG("DownchannelHandler");
+#define TAG "DownchannelHandler"
 
 /// String to identify the metric source prefix for @c DownChannelHandler.
 static const std::string METRIC_SOURCE_PREFIX = "DOWNCHANNEL_HANDLER-";
