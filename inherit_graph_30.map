@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_interfaces_1_1_bluetooth_storage_interface.html" title="A storage interface used for Bluetooth that should provide UUID to MAC mappings and maintain insertio..." alt="" coords="5,5,244,47"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_bluetooth_1_1_s_q_lite_bluetooth_storage.html" title="A concrete implementation of BluetoothStorageInterface using SQLite. " alt="" coords="292,5,505,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_alexa_playback_controller_interfaces_1_1_alexa_playback_controller_interface.html" title="alexaClientSDK::acsdkAlexa\lPlaybackControllerInterfaces\l::AlexaPlaybackControllerInterface" alt="" coords="5,45,229,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alexa_playback_controller_1_1test_1_1_mock_alexa_playback_controller_interface.html" title="alexaClientSDK::acsdkAlexa\lPlaybackController::test\l::MockAlexaPlaybackControllerInterface" alt="" coords="291,5,547,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1common_1_1_endpoint_alexa_playback_controller_handler.html" title="alexaClientSDK::sampleApplications\l::common::EndpointAlexaPlaybackController\lHandler" alt="" coords="277,85,560,141"/>
 </map>

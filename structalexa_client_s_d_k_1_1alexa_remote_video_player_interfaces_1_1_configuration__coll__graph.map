@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::alexaRemoteVideoPlayerInterfaces::Configuration" name="alexaClientSDK::alexaRemoteVideoPlayerInterfaces::Configuration">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::set\&lt; acsdkAlexaVideoCommon\l::VideoEntity::EntityType \&gt; \&gt;" alt="" coords="5,5,220,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::set\&lt; SupportedOperations \&gt; \&gt;" alt="" coords="9,101,216,157"/>
+</map>

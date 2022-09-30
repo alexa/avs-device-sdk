@@ -1,0 +1,21 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Endpoint/include/acsdk/Sample/Endpoint/EndpointFocusAdapter.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Endpoint/include/acsdk/Sample/Endpoint/EndpointFocusAdapter.h">
+<area shape="rect" id="node5" href="$_presentation_orchestrator_interface_8h.html" title="acsdk/PresentationOrchestrator\lInterfaces/PresentationOrchestrator\lInterface.h" alt="" coords="1029,139,1259,195"/>
+<area shape="rect" id="node6" href="$_presentation_orchestrator_state_tracker_interface_8h.html" title="acsdk/PresentationOrchestrator\lInterfaces/PresentationOrchestrator\lStateTrackerInterface.h" alt="" coords="265,139,495,195"/>
+<area shape="rect" id="node12" href="$_channel_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ChannelObserverInterface.h" alt="" coords="896,332,1088,373"/>
+<area shape="rect" id="node16" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="1128,243,1320,284"/>
+<area shape="rect" id="node21" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2239,146,2433,187"/>
+<area shape="rect" id="node8" href="$_presentation_orchestrator_state_observer_interface_8h.html" title="PresentationOrchestrator\lStateObserverInterface.h" alt="" coords="81,243,249,284"/>
+<area shape="rect" id="node11" href="$_presentation_orchestrator_window_observer_interface_8h.html" title="PresentationOrchestrator\lWindowObserverInterface.h" alt="" coords="273,243,457,284"/>
+<area shape="rect" id="node9" href="$_presentation_orchestrator_types_8h.html" title="PresentationOrchestrator\lTypes.h" alt="" coords="118,332,285,373"/>
+<area shape="rect" id="node10" href="$_visual_characteristics_interface_8h.html" title="acsdk/VisualCharacteristics\lInterfaces/VisualCharacteristics\lInterface.h" alt="" coords="97,421,305,477"/>
+<area shape="rect" id="node13" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1141,436,1355,463"/>
+<area shape="rect" id="node15" href="$_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_mixing_behavior_8h.html" title="AVSCommon/AVS/MixingBehavior.h" alt="" coords="879,436,1116,463"/>
+<area shape="rect" id="node19" href="$_content_type_8h.html" title="AVSCommon/AVS/ContentType.h" alt="" coords="582,436,805,463"/>
+<area shape="rect" id="node20" href="$_focus_manager_observer_interface_8h.html" title="FocusManagerObserverInterface.h" alt="" coords="1113,339,1335,366"/>
+<area shape="rect" id="node27" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="2788,243,2983,284"/>
+<area shape="rect" id="node29" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1655,243,1849,284"/>
+<area shape="rect" id="node34" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="2249,243,2423,284"/>
+<area shape="rect" id="node31" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="1591,339,1689,366"/>
+<area shape="rect" id="node33" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="1735,436,1849,463"/>
+<area shape="rect" id="node35" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2221,332,2451,373"/>
+</map>

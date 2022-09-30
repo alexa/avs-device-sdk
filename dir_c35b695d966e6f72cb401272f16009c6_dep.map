@@ -1,25 +1,30 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/AudioPlayer/acsdkAudioPlayer/include" name="/workplace/avs&#45;device&#45;sdk/capabilities/AudioPlayer/acsdkAudioPlayer/include">
-<area shape="rect" id="node2" href="dir_f7cfa55606f9ce5accc713b7332046d2.html" title="acsdkAudioPlayer" alt="" coords="38,87,165,135"/>
-<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="191,279,263,327"/>
-<area shape="rect" id="edge10-headlabel" href="dir_000271_000588.html" title="6" alt="" coords="202,251,210,266"/>
-<area shape="rect" id="node4" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html" title="applications" alt="" coords="293,87,384,135"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000271_000028.html" title="1" alt="" coords="323,59,331,74"/>
-<area shape="rect" id="node5" href="dir_de0e77330fd0ab33359e90b501923c8e.html" title="Captions" alt="" coords="189,183,264,231"/>
-<area shape="rect" id="edge12-headlabel" href="dir_000271_000431.html" title="3" alt="" coords="182,157,190,172"/>
-<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="138,375,241,423"/>
-<area shape="rect" id="edge13-headlabel" href="dir_000271_000017.html" title="49" alt="" coords="177,347,192,362"/>
-<area shape="rect" id="node7" href="dir_3fddb67373d44b7570953fd85440f300.html" title="acsdkAudioPlayerInterfaces" alt="" coords="97,471,282,519"/>
-<area shape="rect" id="edge14-headlabel" href="dir_000271_000274.html" title="2" alt="" coords="150,444,158,459"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000588_000017.html" title="14" alt="" coords="197,352,212,367"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000028_000271.html" title="1" alt="" coords="129,69,137,84"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000028_000588.html" title="60" alt="" coords="254,261,269,276"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000028_000431.html" title="7" alt="" coords="270,170,278,184"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000028_000017.html" title="115" alt="" coords="235,363,256,378"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000431_000588.html" title="4" alt="" coords="231,253,239,267"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000431_000017.html" title="24" alt="" coords="179,347,193,362"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000017_000588.html" title="2" alt="" coords="208,334,216,349"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000017_000274.html" title="1" alt="" coords="185,444,193,459"/>
-<area shape="rect" id="edge15-headlabel" href="dir_000274_000017.html" title="2" alt="" coords="186,434,194,449"/>
-<area shape="rect" id="clust2" href="dir_c35b695d966e6f72cb401272f16009c6.html" alt="" coords="27,76,272,145"/>
-<area shape="rect" id="clust1" href="dir_a2d3ccdd87c0e112b606df9d2c974581.html" title="acsdkAudioPlayer" alt="" coords="16,40,283,156"/>
+<area shape="rect" id="node2" href="dir_f7cfa55606f9ce5accc713b7332046d2.html" title="acsdkAudioPlayer" alt="" coords="177,63,303,111"/>
+<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="121,351,193,399"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000366_000810.html" title="6" alt="" coords="146,323,154,338"/>
+<area shape="rect" id="node4" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html" title="applications" alt="" coords="153,159,244,207"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000366_000024.html" title="1" alt="" coords="220,137,228,152"/>
+<area shape="rect" id="node5" href="dir_de0e77330fd0ab33359e90b501923c8e.html" title="Captions" alt="" coords="73,543,148,591"/>
+<area shape="rect" id="edge15-headlabel" href="dir_000366_000561.html" title="3" alt="" coords="77,516,85,530"/>
+<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="179,447,282,495"/>
+<area shape="rect" id="edge16-headlabel" href="dir_000366_000014.html" title="49" alt="" coords="261,430,276,445"/>
+<area shape="rect" id="node7" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="245,255,317,303"/>
+<area shape="rect" id="edge17-headlabel" href="dir_000366_000582.html" title="3" alt="" coords="277,227,285,242"/>
+<area shape="rect" id="node8" href="dir_3fddb67373d44b7570953fd85440f300.html" title="acsdkAudioPlayerInterfaces" alt="" coords="173,543,358,591"/>
+<area shape="rect" id="edge18-headlabel" href="dir_000366_000368.html" title="2" alt="" coords="314,530,322,545"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000810_000014.html" title="57" alt="" coords="191,419,206,434"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000024_000810.html" title="62" alt="" coords="167,327,182,342"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000024_000561.html" title="6" alt="" coords="109,516,117,530"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000024_000014.html" title="92" alt="" coords="227,420,242,435"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000024_000582.html" title="4" alt="" coords="251,228,259,242"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000561_000810.html" title="3" alt="" coords="135,407,143,422"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000561_000014.html" title="14" alt="" coords="182,493,196,508"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000014_000810.html" title="2" alt="" coords="185,411,193,426"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000014_000561.html" title="1" alt="" coords="148,530,156,544"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000014_000368.html" title="1" alt="" coords="245,515,253,529"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000582_000810.html" title="10" alt="" coords="201,339,215,353"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000582_000014.html" title="95" alt="" coords="242,424,257,439"/>
+<area shape="rect" id="edge19-headlabel" href="dir_000368_000014.html" title="2" alt="" coords="243,508,251,522"/>
+<area shape="rect" id="clust2" href="dir_c35b695d966e6f72cb401272f16009c6.html" alt="" coords="165,52,411,121"/>
+<area shape="rect" id="clust1" href="dir_a2d3ccdd87c0e112b606df9d2c974581.html" title="acsdkAudioPlayer" alt="" coords="155,16,421,132"/>
 </map>

@@ -1,3 +1,5 @@
-<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkNotifier/include/acsdkNotifier/Notifier.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkNotifier/include/acsdkNotifier/Notifier.h">
-<area shape="rect" id="node6" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="320,109,477,151"/>
+<map id="/workplace/avs&#45;device&#45;sdk/shared/Notifier/include/acsdk/Notifier/Notifier.h" name="/workplace/avs&#45;device&#45;sdk/shared/Notifier/include/acsdk/Notifier/Notifier.h">
+<area shape="rect" id="node3" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="279,213,440,255"/>
+<area shape="rect" id="node5" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="29,124,178,165"/>
+<area shape="rect" id="node6" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="54,213,203,255"/>
 </map>

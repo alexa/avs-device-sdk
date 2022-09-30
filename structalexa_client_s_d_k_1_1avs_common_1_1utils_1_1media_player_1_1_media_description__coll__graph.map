@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaDescription" name="alexaClientSDK::avsCommon::utils::mediaPlayer::MediaDescription">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::vector\&lt; alexaClientSDK\l::avsCommon::utils::audioAnalyzer\l::AudioAnalyzerState \&gt; \&gt;" alt="" coords="5,5,232,91"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; alexaClient\lSDK::captions::CaptionData \&gt;" alt="" coords="19,115,219,171"/>
+</map>

@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['helloenum_23987',['HelloEnum',['../namespacealexa_client_s_d_k_1_1settings_1_1test.html#a8f18a008780343a6d497782368a2a642',1,'alexaClientSDK::settings::test']]],
-  ['http2connectionstatus_23988',['HTTP2ConnectionStatus',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2.html#ac89fc7dd179ea2cfca7cbbe38b99c34e',1,'alexaClientSDK::avsCommon::utils::http2']]],
-  ['http2receivedatastatus_23989',['HTTP2ReceiveDataStatus',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2.html#a39abd31bf23bf92ff2e646bb2f385d95',1,'alexaClientSDK::avsCommon::utils::http2']]],
-  ['http2requesttype_23990',['HTTP2RequestType',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2.html#adac37956726cfc5067118c2366d25918',1,'alexaClientSDK::avsCommon::utils::http2']]],
-  ['http2responsefinishedstatus_23991',['HTTP2ResponseFinishedStatus',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2.html#a31cdf3a4381c8885296ba2097263282e',1,'alexaClientSDK::avsCommon::utils::http2']]],
-  ['http2sendstatus_23992',['HTTP2SendStatus',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2.html#ad3c6d434b19587fa69b7d36d1fd08ba2',1,'alexaClientSDK::avsCommon::utils::http2']]],
-  ['httpresponsecode_23993',['HTTPResponseCode',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1http.html#ac0bd21aabffbf134eb81295b65839893',1,'alexaClientSDK::avsCommon::utils::http::HTTPResponseCode()'],['../_http_response_codes_8h.html#a7c7e2e35af1fc43c26bd735151de06ea',1,'HTTPResponseCode():&#160;HttpResponseCodes.h']]]
+  ['gtestlogseverity',['GTestLogSeverity',['../namespacetesting_1_1internal.html#aa6255ef3b023c5b4e1a2198d887fb977',1,'testing::internal']]],
+  ['guiactivityevent',['GUIActivityEvent',['../namespacealexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces.html#a77a18aa7337d0e73acadf0c2570bceae',1,'alexaClientSDK::avsCommon::sdkInterfaces']]]
 ];

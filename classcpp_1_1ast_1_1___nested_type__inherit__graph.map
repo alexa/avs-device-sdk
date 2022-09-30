@@ -1,0 +1,6 @@
+<map id="cpp.ast._NestedType" name="cpp.ast._NestedType">
+<area shape="rect" id="node5" href="$classcpp_1_1ast_1_1_enum.html" title="cpp.ast.Enum" alt="" coords="5,304,108,331"/>
+<area shape="rect" id="node6" href="$classcpp_1_1ast_1_1_union.html" title="cpp.ast.Union" alt="" coords="132,304,235,331"/>
+<area shape="rect" id="node2" href="$classcpp_1_1ast_1_1___generic_declaration.html" title="cpp.ast._GenericDeclaration" alt="" coords="26,155,213,181"/>
+<area shape="rect" id="node3" href="$classcpp_1_1ast_1_1_node.html" title="cpp.ast.Node" alt="" coords="69,80,169,107"/>
+</map>

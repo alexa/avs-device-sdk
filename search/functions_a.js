@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['kbitsinbyte_17391',['kBitsInByte',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ac56433e9cefab2acfa96c2a3e815a987',1,'alexaClientSDK::acsdkAudioPlayer']]],
-  ['kbitsinhex_17392',['kBitsInHex',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#aa0585bbad435438351c9b43603a9cbfb',1,'alexaClientSDK::acsdkAudioPlayer']]],
-  ['key_17393',['KEY',['../namespacealexa_client_s_d_k_1_1playlist_parser_1_1test.html#a7d5a72a5726e876161d49b107db60d8e',1,'alexaClientSDK::playlistParser::test']]],
-  ['keywordobserver_17394',['KeywordObserver',['../classalexa_client_s_d_k_1_1sample_app_1_1_keyword_observer.html#ae178d55cc1c8b5bd122e6ab8d5ed6bd4',1,'alexaClientSDK::sampleApp::KeywordObserver']]],
-  ['khexinbyte_17395',['kHexInByte',['../namespacealexa_client_s_d_k_1_1acsdk_audio_player.html#ad4c40543631424e2ec8e97118b91fa6f',1,'alexaClientSDK::acsdkAudioPlayer']]],
-  ['kwdregistration_17396',['KWDRegistration',['../classalexa_client_s_d_k_1_1kwd_1_1_keyword_detector_provider_1_1_k_w_d_registration.html#ac93b21754c7e1a141dcb6a471514b83f',1,'alexaClientSDK::kwd::KeywordDetectorProvider::KWDRegistration']]]
+  ['jitter',['jitter',['../namespacealexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1jitter_util.html#aea541fca9ffe1fe25a60031051aee073',1,'alexaClientSDK::acsdkAssets::common::jitterUtil']]],
+  ['join',['join',['../classtesting_1_1internal_1_1linked__ptr__internal.html#acd5a341459f7e81b10b4112d8c764e2a',1,'testing::internal::linked_ptr_internal']]],
+  ['join_5fnew',['join_new',['../classtesting_1_1internal_1_1linked__ptr__internal.html#a742af1f65df2d5e2b7198a1b74264a83',1,'testing::internal::linked_ptr_internal']]],
+  ['joinastuple',['JoinAsTuple',['../namespacetesting_1_1internal.html#a61d60981533cb0875bad9025e0d98b74',1,'testing::internal']]],
+  ['jsonarrayexists',['jsonArrayExists',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1json_utils.html#a64a4d58e058d6eeed808fed28bda5ef9',1,'alexaClientSDK::avsCommon::utils::json::jsonUtils']]],
+  ['jsonequals',['jsonEquals',['../class_check_artifact_test.html#abfe6dbbde89ef80ccc02bdb0d66f0dd3',1,'CheckArtifactTest']]],
+  ['jsongenerator',['JsonGenerator',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1json_1_1_json_generator.html#abfdbb64969ef839ec8cbe1fd5b3f0399',1,'alexaClientSDK::avsCommon::utils::json::JsonGenerator']]]
 ];

@@ -1,19 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectFactoryInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PostConnectFactoryInterface.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="703,131,896,187"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_transport_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2TransportFactory.h" alt="" coords="1569,131,1806,187"/>
-<area shape="rect" id="node15" href="$_post_connect_sequencer_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/PostConnectSequencer\lFactory.h" alt="" coords="1992,124,2215,195"/>
-<area shape="rect" id="node18" href="$_mock_post_connect_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockPostConnectFactory.h" alt="" coords="1019,131,1209,187"/>
-<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="188,250,363,306"/>
-<area shape="rect" id="node4" href="$_exchange_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="387,250,545,306"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="569,250,728,306"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="1174,250,1366,306"/>
-<area shape="rect" id="node7" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="752,250,951,306"/>
-<area shape="rect" id="node8" href="$_ping_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="5,250,164,306"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="975,250,1149,306"/>
-<area shape="rect" id="node11" href="$_alexa_communications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/src/AlexaCommunications\lComponent.cpp" alt="" coords="1692,243,2003,313"/>
-<area shape="rect" id="node12" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="2027,250,2179,306"/>
-<area shape="rect" id="node13" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="2204,243,2395,313"/>
-<area shape="rect" id="node14" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1390,257,1667,299"/>
-<area shape="rect" id="node16" href="$_post_connect_sequencer_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PostConnectSequencerFactory.cpp" alt="" coords="2703,250,2936,306"/>
-<area shape="rect" id="node17" href="$_post_connect_sequencer_factory_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/PostConnectSequencerFactoryTest.cpp" alt="" coords="2419,250,2678,306"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="5,131,199,187"/>
+<area shape="rect" id="node4" href="$_h_t_t_p2_transport_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2TransportFactory.h" alt="" coords="223,131,461,187"/>
+<area shape="rect" id="node5" href="$_post_connect_sequencer_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/PostConnectSequencer\lFactory.h" alt="" coords="699,124,921,195"/>
+<area shape="rect" id="node7" href="$_mock_post_connect_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockPostConnectFactory.h" alt="" coords="485,131,674,187"/>
+<area shape="rect" id="node3" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="248,243,423,299"/>
+<area shape="rect" id="node6" href="$_post_connect_sequencer_factory_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/PostConnectSequencerFactoryTest.cpp" alt="" coords="681,243,939,299"/>
 </map>

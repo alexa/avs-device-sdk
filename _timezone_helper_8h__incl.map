@@ -1,0 +1,29 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/TimezoneHelper.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/TimezoneHelper.h">
+<area shape="rect" id="node4" href="$_device_settings_manager_8h.html" title="Settings/DeviceSettingsManager.h" alt="" coords="1105,139,1329,165"/>
+<area shape="rect" id="node8" href="$_setting_interface_8h.html" title="Settings/SettingInterface.h" alt="" coords="1447,385,1624,411"/>
+<area shape="rect" id="node35" href="$_settings_manager_8h.html" title="Settings/SettingsManager.h" alt="" coords="2246,213,2428,240"/>
+<area shape="rect" id="node46" href="$_speech_confirmation_setting_type_8h.html" title="Settings/SpeechConfirmation\lSettingType.h" alt="" coords="45,735,237,776"/>
+<area shape="rect" id="node48" href="$_wake_word_confirmation_setting_type_8h.html" title="Settings/WakeWordConfirmation\lSettingType.h" alt="" coords="261,735,474,776"/>
+<area shape="rect" id="node49" href="$_alarm_volume_ramp_types_8h.html" title="Settings/Types/AlarmVolume\lRampTypes.h" alt="" coords="498,735,690,776"/>
+<area shape="rect" id="node50" href="$_network_info_8h.html" title="Settings/Types/NetworkInfo.h" alt="" coords="675,295,871,322"/>
+<area shape="rect" id="node14" href="$_guarded_value_8h.html" title="AVSCommon/Utils/GuardedValue.h" alt="" coords="1818,563,2048,590"/>
+<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1768,645,1944,687"/>
+<area shape="rect" id="node24" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2098,467,2274,508"/>
+<area shape="rect" id="node33" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1112,563,1296,590"/>
+<area shape="rect" id="node34" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1069,645,1237,687"/>
+<area shape="rect" id="node20" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1933,735,2109,776"/>
+<area shape="rect" id="node22" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2618,824,2794,865"/>
+<area shape="rect" id="node25" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2073,556,2249,597"/>
+<area shape="rect" id="node26" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2472,645,2687,687"/>
+<area shape="rect" id="node29" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1498,735,1674,776"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1499,645,1692,687"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1820,824,1996,865"/>
+<area shape="rect" id="node32" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="2120,645,2296,687"/>
+<area shape="rect" id="node37" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1648,385,1844,411"/>
+<area shape="rect" id="node38" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2426,288,2592,329"/>
+<area shape="rect" id="node41" href="$_setting_event_metadata_8h.html" title="Settings/SettingEventMetadata.h" alt="" coords="872,563,1087,590"/>
+<area shape="rect" id="node42" href="$_setting_string_conversion_8h.html" title="Settings/SettingStringConversion.h" alt="" coords="2985,295,3212,322"/>
+<area shape="rect" id="node39" href="$_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="2496,467,2714,508"/>
+<area shape="rect" id="node40" href="$_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="2526,377,2748,419"/>
+<area shape="rect" id="node44" href="$_j_s_o_n_utils_8h.html" title="AVSCommon/Utils/JSON\l/JSONUtils.h" alt="" coords="2974,377,3148,419"/>
+</map>

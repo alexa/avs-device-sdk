@@ -1,0 +1,37 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/TemplateRuntime/TemplateRuntime/include/acsdk/TemplateRuntime/TemplateRuntimeFactory.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/TemplateRuntime/TemplateRuntime/include/acsdk/TemplateRuntime/TemplateRuntimeFactory.h">
+<area shape="rect" id="node3" href="$_template_runtime_interface_8h.html" title="acsdk/TemplateRuntimeInterfaces\l/TemplateRuntimeInterface.h" alt="" coords="245,764,467,805"/>
+<area shape="rect" id="node13" href="$_render_player_info_cards_provider_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lRegistrarInterface.h" alt="" coords="423,481,633,537"/>
+<area shape="rect" id="node15" href="$_endpoint_capabilities_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lRegistrarInterface.h" alt="" coords="766,124,973,180"/>
+<area shape="rect" id="node21" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1482,682,1678,709"/>
+<area shape="rect" id="node48" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="3805,228,4065,269"/>
+<area shape="rect" id="node50" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2709,965,2899,1006"/>
+<area shape="rect" id="node4" href="$_render_player_info_cards_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lInterface.h" alt="" coords="392,853,603,909"/>
+<area shape="rect" id="node12" href="$_template_runtime_observer_interface_8h.html" title="TemplateRuntimeObserverInterface.h" alt="" coords="21,972,261,999"/>
+<area shape="rect" id="node5" href="$_render_player_info_cards_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserver\lInterface.h" alt="" coords="286,957,501,1013"/>
+<area shape="rect" id="node8" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="5,1069,235,1095"/>
+<area shape="rect" id="node11" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="309,1061,501,1103"/>
+<area shape="rect" id="node16" href="$_capability_configuration_interface_8h.html" title="AVSCommon/SDKInterfaces\l/CapabilityConfigurationInterface.h" alt="" coords="758,489,981,530"/>
+<area shape="rect" id="node34" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="1120,228,1312,269"/>
+<area shape="rect" id="node17" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1140,585,1335,627"/>
+<area shape="rect" id="node22" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1492,764,1668,805"/>
+<area shape="rect" id="node23" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2243,861,2419,902"/>
+<area shape="rect" id="node27" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2419,965,2634,1006"/>
+<area shape="rect" id="node29" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3012,1061,3188,1103"/>
+<area shape="rect" id="node30" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1867,965,2043,1006"/>
+<area shape="rect" id="node31" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2974,965,3167,1006"/>
+<area shape="rect" id="node32" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1285,965,1461,1006"/>
+<area shape="rect" id="node33" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="2117,965,2293,1006"/>
+<area shape="rect" id="node35" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="1217,407,1444,433"/>
+<area shape="rect" id="node44" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="3385,585,3620,627"/>
+<area shape="rect" id="node47" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="1105,317,1327,359"/>
+<area shape="rect" id="node37" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="1032,861,1243,902"/>
+<area shape="rect" id="node41" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="1634,496,1747,523"/>
+<area shape="rect" id="node38" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1587,965,1791,1006"/>
+<area shape="rect" id="node39" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="801,1061,1005,1103"/>
+<area shape="rect" id="node40" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="1029,1061,1233,1103"/>
+<area shape="rect" id="node42" href="$_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="1410,585,1627,627"/>
+<area shape="rect" id="node43" href="$_a_v_s_message_header_8h.html" title="AVSCommon/AVS/AVSMessage\lHeader.h" alt="" coords="3153,764,3370,805"/>
+<area shape="rect" id="node45" href="$_blocking_policy_8h.html" title="AVSCommon/AVS/BlockingPolicy.h" alt="" coords="3496,771,3731,798"/>
+<area shape="rect" id="node46" href="$_directive_routing_rule_8h.html" title="AVSCommon/AVS/DirectiveRouting\lRule.h" alt="" coords="3445,675,3680,716"/>
+<area shape="rect" id="node49" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="3814,317,4037,359"/>
+</map>

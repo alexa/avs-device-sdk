@@ -1,10 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/Bluetooth/Services/AVRCPControllerInterface.h">
-<area shape="rect" id="node2" href="$_s_d_p_records_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Bluetooth/SDPRecords.cpp" alt="" coords="18,131,227,187"/>
-<area shape="rect" id="node3" href="$_blue_z_a_v_r_c_p_controller_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZAVRCPController.h" alt="" coords="251,131,546,187"/>
-<area shape="rect" id="node7" href="$_basic_device_connection_rule_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BasicDeviceConnection\lRule.cpp" alt="" coords="571,124,853,195"/>
-<area shape="rect" id="node8" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="877,131,1099,187"/>
-<area shape="rect" id="node9" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="1123,131,1375,187"/>
-<area shape="rect" id="node4" href="$_blue_z_a_v_r_c_p_controller_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZAVRCPController.cpp" alt="" coords="5,243,253,299"/>
-<area shape="rect" id="node5" href="$_blue_z_bluetooth_device_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZBluetoothDevice.cpp" alt="" coords="278,243,519,299"/>
-<area shape="rect" id="node6" href="$_blue_z_a_v_r_c_p_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/test/BlueZAVRCPControllerTest.cpp" alt="" coords="543,243,822,299"/>
+<area shape="rect" id="node2" href="$_blue_z_a_v_r_c_p_controller_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/include/BlueZ/BlueZAVRCPController.h" alt="" coords="5,124,300,180"/>
+<area shape="rect" id="node4" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="324,124,576,180"/>
+<area shape="rect" id="node3" href="$_blue_z_a_v_r_c_p_controller_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/test/BlueZAVRCPControllerTest.cpp" alt="" coords="13,228,292,284"/>
 </map>

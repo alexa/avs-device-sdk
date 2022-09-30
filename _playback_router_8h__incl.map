@@ -1,9 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackRouter.h" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/PlaybackController/include/PlaybackController/PlaybackRouter.h">
-<area shape="rect" id="node2" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="114,124,337,165"/>
-<area shape="rect" id="node6" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="288,213,477,255"/>
-<area shape="rect" id="node10" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="501,213,693,255"/>
-<area shape="rect" id="node13" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="501,124,693,165"/>
-<area shape="rect" id="node4" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="5,213,163,255"/>
-<area shape="rect" id="node11" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="562,303,809,329"/>
-<area shape="rect" id="node14" href="$_local_playback_handler_interface_8h.html" title="LocalPlaybackHandlerInterface.h" alt="" coords="718,221,933,247"/>
+<area shape="rect" id="node2" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="119,124,341,165"/>
+<area shape="rect" id="node6" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="293,213,482,255"/>
+<area shape="rect" id="node10" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="506,213,698,255"/>
+<area shape="rect" id="node13" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="506,124,698,165"/>
+<area shape="rect" id="node4" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="5,213,167,255"/>
+<area shape="rect" id="node11" href="$_playback_buttons_8h.html" title="AVSCommon/AVS/PlaybackButtons.h" alt="" coords="567,303,813,329"/>
+<area shape="rect" id="node14" href="$_local_playback_handler_interface_8h.html" title="LocalPlaybackHandlerInterface.h" alt="" coords="723,221,937,247"/>
 </map>

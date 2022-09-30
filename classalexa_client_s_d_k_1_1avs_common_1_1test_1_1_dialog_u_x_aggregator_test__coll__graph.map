@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::test::DialogUXAggregatorTest" name="alexaClientSDK::avsCommon::test::DialogUXAggregatorTest">
+<area shape="rect" id="node2" href="$classtesting_1_1_test.html" title="testing::Test" alt="" coords="549,5,643,32"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1test_1_1_state_change_manager.html" title="Manages testing state changes. " alt="" coords="497,57,695,98"/>
 <area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayerState" alt="" coords="473,122,719,163"/>
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::string \&gt;" alt="" coords="49,71,246,127"/>

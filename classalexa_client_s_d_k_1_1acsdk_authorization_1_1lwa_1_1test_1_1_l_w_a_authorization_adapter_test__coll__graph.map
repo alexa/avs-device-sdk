@@ -1,0 +1,8 @@
+<map id="alexaClientSDK::acsdkAuthorization::lwa::test::LWAAuthorizationAdapterTest" name="alexaClientSDK::acsdkAuthorization::lwa::test::LWAAuthorizationAdapterTest">
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1test_1_1_mock_http_post.html" title="A mock object that implements the HttpPostInterface. " alt="" coords="252,71,449,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html" title="Minimal interface for making Http POST requests. " alt="" coords="5,71,203,127"/>
+<area shape="rect" id="node5" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_h_t_t_p_response.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lHTTPResponse" alt="" coords="252,151,449,207"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1test_1_1_mock_http_get.html" title="A mock object that implements the HttpGetInterface. " alt="" coords="252,231,449,287"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_get_interface.html" title="Minimal interface for making HTTP GET requests. " alt="" coords="5,231,203,287"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_wait_event.html" title="alexaClientSDK::avsCommon\l::utils::WaitEvent" alt="" coords="252,312,449,353"/>
+</map>

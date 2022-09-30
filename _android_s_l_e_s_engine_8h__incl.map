@@ -1,16 +1,17 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/AndroidSLESEngine.h" name="/workplace/avs&#45;device&#45;sdk/ApplicationUtilities/AndroidUtilities/include/AndroidUtilities/AndroidSLESEngine.h">
-<area shape="rect" id="node4" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="535,124,734,165"/>
-<area shape="rect" id="node32" href="$_android_s_l_e_s_object_8h.html" title="AndroidUtilities/Android\lSLESObject.h" alt="" coords="1431,303,1590,344"/>
-<area shape="rect" id="node5" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="552,303,717,344"/>
-<area shape="rect" id="node30" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="181,213,347,255"/>
-<area shape="rect" id="node8" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="888,392,1064,433"/>
-<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="823,481,999,523"/>
-<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="550,571,765,612"/>
-<area shape="rect" id="node20" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="235,660,411,701"/>
-<area shape="rect" id="node21" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1137,571,1313,612"/>
-<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="281,571,474,612"/>
-<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1437,749,1613,791"/>
-<area shape="rect" id="node24" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1184,660,1360,701"/>
-<area shape="rect" id="node26" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="621,749,797,791"/>
-<area shape="rect" id="node33" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="1692,392,1876,433"/>
+<area shape="rect" id="node4" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="1687,124,1886,165"/>
+<area shape="rect" id="node34" href="$_android_s_l_e_s_object_8h.html" title="AndroidUtilities/Android\lSLESObject.h" alt="" coords="307,303,466,344"/>
+<area shape="rect" id="node5" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="1704,303,1869,344"/>
+<area shape="rect" id="node32" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1925,213,2091,255"/>
+<area shape="rect" id="node8" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1416,392,1592,433"/>
+<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1324,481,1500,523"/>
+<area shape="rect" id="node15" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1518,571,1733,612"/>
+<area shape="rect" id="node20" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1204,660,1380,701"/>
+<area shape="rect" id="node21" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="760,571,936,612"/>
+<area shape="rect" id="node29" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1249,571,1442,612"/>
+<area shape="rect" id="node30" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="500,749,676,791"/>
+<area shape="rect" id="node31" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1048,571,1224,612"/>
+<area shape="rect" id="node25" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="903,660,1079,701"/>
+<area shape="rect" id="node27" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1505,749,1681,791"/>
+<area shape="rect" id="node35" href="$_memory_8h.html" title="AVSCommon/Utils/Memory\l/Memory.h" alt="" coords="165,392,349,433"/>
 </map>

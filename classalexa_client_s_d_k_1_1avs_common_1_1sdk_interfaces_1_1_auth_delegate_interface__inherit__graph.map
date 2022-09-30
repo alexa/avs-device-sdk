@@ -1,5 +1,9 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AuthDelegateInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::acl\l::test::MockAuthDelegate" alt="" coords="334,5,505,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthDelegate" alt="" coords="300,71,539,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::capabilities\lDelegate::test::MockAuthDelegate" alt="" coords="308,136,531,177"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::acl\l::test::MockAuthDelegate" alt="" coords="348,5,519,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_assets_1_1common_1_1_auth_delegate_mock.html" title="alexaClientSDK::acsdkAssets\l::common::AuthDelegateMock" alt="" coords="334,71,533,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_authority_interface.html" title="alexaClientSDK::acsdkAuthorization\lInterfaces::AuthorizationAuthorityInterface" alt="" coords="300,136,567,177"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_delegate.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthDelegate" alt="" coords="314,201,553,243"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1avs_gateway_manager_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::avsGateway\lManager::test::MockAuthDelegate" alt="" coords="323,267,544,308"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1capabilities_delegate_1_1test_1_1_mock_auth_delegate.html" title="alexaClientSDK::capabilities\lDelegate::test::MockAuthDelegate" alt="" coords="322,332,545,373"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager.html" title="alexaClientSDK::acsdkAuthorization\l::AuthorizationManager" alt="" coords="615,136,849,177"/>
 </map>

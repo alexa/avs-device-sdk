@@ -1,22 +1,32 @@
 <map id="/workplace/avs&#45;device&#45;sdk/MediaPlayer" name="/workplace/avs&#45;device&#45;sdk/MediaPlayer">
-<area shape="rect" id="node2" href="dir_b97c8a12362aabf73b92afdea21f65db.html" title="AndroidSLESMediaPlayer" alt="" coords="96,27,268,75"/>
-<area shape="rect" id="node4" href="dir_748b5abbb33df61eda67007924a1a0cb.html" title="ApplicationUtilities" alt="" coords="25,123,156,171"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000539_000109.html" title="15" alt="" coords="125,108,140,122"/>
-<area shape="rect" id="node5" href="dir_655fbec917b1f23289d3ed8ec9803bf1.html" title="PlaylistParser" alt="" coords="231,123,334,171"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000539_000562.html" title="4" alt="" coords="246,96,254,111"/>
-<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="138,219,240,267"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000539_000017.html" title="49" alt="" coords="189,193,203,207"/>
-<area shape="rect" id="node7" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="146,315,232,363"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000539_000145.html" title="3" alt="" coords="133,290,141,305"/>
-<area shape="rect" id="node3" href="dir_e1f7d5df1447213cfb529aad5fa2c859.html" title="GStreamerMediaPlayer" alt="" coords="293,27,450,75"/>
-<area shape="rect" id="edge10-headlabel" href="dir_000544_000562.html" title="4" alt="" coords="320,107,328,122"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000544_000017.html" title="29" alt="" coords="253,227,267,242"/>
-<area shape="rect" id="edge12-headlabel" href="dir_000544_000145.html" title="1" alt="" coords="248,305,256,319"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000109_000017.html" title="145" alt="" coords="138,193,159,207"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000109_000145.html" title="47" alt="" coords="148,288,163,303"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000562_000017.html" title="43" alt="" coords="224,204,239,218"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000017_000109.html" title="1" alt="" coords="127,182,135,197"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000017_000145.html" title="4" alt="" coords="184,288,192,303"/>
-<area shape="rect" id="edge13-headlabel" href="dir_000145_000017.html" title="528" alt="" coords="179,278,200,293"/>
-<area shape="rect" id="clust1" href="dir_9d34932954f3d83257e5e12e3f421a72.html" alt="" coords="85,16,581,85"/>
+<area shape="rect" id="node2" href="dir_b97c8a12362aabf73b92afdea21f65db.html" title="AndroidSLESMediaPlayer" alt="" coords="209,27,381,75"/>
+<area shape="rect" id="node4" href="dir_748b5abbb33df61eda67007924a1a0cb.html" title="ApplicationUtilities" alt="" coords="372,123,503,171"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000700_000099.html" title="15" alt="" coords="384,98,398,113"/>
+<area shape="rect" id="node5" href="dir_655fbec917b1f23289d3ed8ec9803bf1.html" title="PlaylistParser" alt="" coords="143,123,246,171"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000700_000718.html" title="3" alt="" coords="235,109,243,123"/>
+<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="283,219,386,267"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000700_000014.html" title="31" alt="" coords="327,192,342,206"/>
+<area shape="rect" id="node7" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="239,411,377,459"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000700_000341.html" title="13" alt="" coords="297,383,312,398"/>
+<area shape="rect" id="node8" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="358,315,445,363"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000700_000127.html" title="2" alt="" coords="446,301,454,316"/>
+<area shape="rect" id="node3" href="dir_e1f7d5df1447213cfb529aad5fa2c859.html" title="GStreamerMediaPlayer" alt="" coords="27,27,184,75"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000704_000718.html" title="2" alt="" coords="162,96,170,110"/>
+<area shape="rect" id="edge15-headlabel" href="dir_000704_000014.html" title="17" alt="" coords="260,210,275,225"/>
+<area shape="rect" id="edge16-headlabel" href="dir_000704_000341.html" title="5" alt="" coords="249,386,257,401"/>
+<area shape="rect" id="edge17-headlabel" href="dir_000704_000127.html" title="1" alt="" coords="338,309,346,323"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000099_000014.html" title="139" alt="" coords="361,204,382,219"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000099_000341.html" title="6" alt="" coords="393,408,401,422"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000099_000127.html" title="45" alt="" coords="410,291,425,306"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000718_000014.html" title="27" alt="" coords="282,194,297,209"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000718_000341.html" title="7" alt="" coords="258,385,266,400"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000014_000099.html" title="1" alt="" coords="397,170,405,185"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000014_000341.html" title="138" alt="" coords="304,386,325,400"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000014_000127.html" title="4" alt="" coords="368,287,376,302"/>
+<area shape="rect" id="edge18-headlabel" href="dir_000341_000099.html" title="13" alt="" coords="449,184,463,198"/>
+<area shape="rect" id="edge19-headlabel" href="dir_000341_000014.html" title="165" alt="" coords="317,277,339,292"/>
+<area shape="rect" id="edge20-headlabel" href="dir_000341_000127.html" title="60" alt="" coords="360,363,375,378"/>
+<area shape="rect" id="edge21-headlabel" href="dir_000127_000014.html" title="724" alt="" coords="353,279,374,294"/>
+<area shape="rect" id="edge22-headlabel" href="dir_000127_000341.html" title="115" alt="" coords="332,395,353,410"/>
+<area shape="rect" id="clust1" href="dir_9d34932954f3d83257e5e12e3f421a72.html" alt="" coords="16,16,511,85"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::diagnostics::DevicePropertyAggregatorInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::diagnostics::DevicePropertyAggregatorInterface">
-<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="601,305,791,347"/>
+<area shape="rect" id="node12" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="601,343,791,384"/>
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_interfaces_1_1_alert_observer_interface.html" title="alexaClientSDK::acsdkAlerts\lInterfaces::AlertObserverInterface" alt="" coords="29,5,247,47"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html" title="alexaClientSDK::acsdkAudio\lPlayerInterfaces::AudioPlayerObserver\lInterface" alt="" coords="14,71,262,127"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_auth_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AuthObserverInterface" alt="" coords="14,152,262,193"/>
@@ -9,4 +9,5 @@
 <area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_manager_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerManager\lObserverInterface" alt="" coords="31,445,245,501"/>
 <area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="36,525,240,581"/>
 <area shape="rect" id="node10" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1range_controller_1_1_range_controller_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::rangeController\l::RangeControllerObserverInterface" alt="" coords="24,605,252,661"/>
+<area shape="rect" id="node11" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1power_controller_1_1_power_controller_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::powerController\l::PowerControllerObserverInterface" alt="" coords="25,685,251,741"/>
 </map>

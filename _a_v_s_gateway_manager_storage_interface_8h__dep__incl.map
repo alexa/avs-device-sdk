@@ -1,12 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/Storage/AVSGatewayManagerStorageInterface.h">
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/AVSGatewayManager.h" alt="" coords="770,124,970,195"/>
-<area shape="rect" id="node9" href="$_a_v_s_gateway_manager_storage_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/Storage/AVSGatewayManagerStorage.h" alt="" coords="1093,124,1353,195"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,250,260,306"/>
-<area shape="rect" id="node4" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="768,243,972,313"/>
-<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/AVSGatewayManager.cpp" alt="" coords="285,250,487,306"/>
-<area shape="rect" id="node6" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/AVSGatewayManagerTest.cpp" alt="" coords="511,250,743,306"/>
-<area shape="rect" id="node7" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="997,250,1162,306"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1186,257,1463,299"/>
-<area shape="rect" id="node10" href="$_a_v_s_gateway_manager_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/Storage/AVSGatewayManager\lStorage.cpp" alt="" coords="1487,243,1714,313"/>
-<area shape="rect" id="node11" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/Storage/AVSGatewayManager\lStorageTest.cpp" alt="" coords="1739,243,1969,313"/>
+<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/AVSGatewayManager.h" alt="" coords="23,124,223,195"/>
+<area shape="rect" id="node4" href="$_a_v_s_gateway_manager_storage_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/Storage/AVSGatewayManagerStorage.h" alt="" coords="246,124,506,195"/>
+<area shape="rect" id="node3" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/AVSGatewayManagerTest.cpp" alt="" coords="5,250,237,306"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_storage_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/Storage/AVSGatewayManager\lStorageTest.cpp" alt="" coords="262,243,493,313"/>
 </map>

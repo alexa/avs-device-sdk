@@ -1,14 +1,17 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test">
-<area shape="rect" id="node2" href="dir_779cd95c25bfd22c62255d2dc75909ee.html" title="AVSCommon" alt="" coords="102,159,205,207"/>
-<area shape="rect" id="node4" href="dir_80711c2a226d5fced33fce22558d3784.html" title="AVS" alt="" coords="237,159,309,207"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000020_000139.html" title="2" alt="" coords="215,167,223,182"/>
-<area shape="rect" id="node5" href="dir_17341252d14ec499eb3e1f7903ffcdf5.html" title="include" alt="" coords="237,255,309,303"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000020_000151.html" title="44" alt="" coords="227,229,242,244"/>
-<area shape="rect" id="node3" href="dir_41c14136e2c42f4a8504a542a2713701.html" title="src" alt="" coords="37,63,109,111"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000187_000020.html" title="1" alt="" coords="124,131,132,146"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000139_000020.html" title="2" alt="" coords="219,184,227,198"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000139_000151.html" title="28" alt="" coords="265,228,280,243"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000151_000139.html" title="59" alt="" coords="267,218,281,233"/>
-<area shape="rect" id="clust2" href="dir_1ddd86bfa39359b35ed671234e3560e0.html" alt="" coords="27,52,216,217"/>
-<area shape="rect" id="clust1" href="dir_97afc8111b754cf401b73024f872f45d.html" title="SDKInterfaces" alt="" coords="16,16,227,228"/>
+<area shape="rect" id="node2" href="dir_779cd95c25bfd22c62255d2dc75909ee.html" title="AVSCommon" alt="" coords="38,87,141,135"/>
+<area shape="rect" id="node3" href="dir_80711c2a226d5fced33fce22558d3784.html" title="AVS" alt="" coords="269,87,341,135"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000017_000121.html" title="2" alt="" coords="293,60,301,75"/>
+<area shape="rect" id="node4" href="dir_17341252d14ec499eb3e1f7903ffcdf5.html" title="include" alt="" coords="213,279,285,327"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000017_000133.html" title="48" alt="" coords="191,273,206,288"/>
+<area shape="rect" id="node5" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="122,183,259,231"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000017_000341.html" title="47" alt="" coords="150,157,165,172"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000121_000017.html" title="3" alt="" coords="113,68,121,83"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000121_000133.html" title="28" alt="" coords="252,256,267,271"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000121_000341.html" title="39" alt="" coords="221,171,236,186"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000133_000121.html" title="57" alt="" coords="289,145,304,160"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000341_000121.html" title="19" alt="" coords="263,134,278,149"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000341_000133.html" title="78" alt="" coords="225,252,239,266"/>
+<area shape="rect" id="clust2" href="dir_1ddd86bfa39359b35ed671234e3560e0.html" alt="" coords="27,77,248,146"/>
+<area shape="rect" id="clust1" href="dir_97afc8111b754cf401b73024f872f45d.html" title="SDKInterfaces" alt="" coords="16,41,259,157"/>
 </map>

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['wakewordconfirmationsettingtype_24073',['WakeWordConfirmationSettingType',['../namespacealexa_client_s_d_k_1_1settings.html#aafdb86e339c9e35ac892f8976feeb926',1,'alexaClientSDK::settings']]],
-  ['writerpolicy_24074',['WriterPolicy',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds.html#a7b17d768f16a6f5da766df780d94bbd5',1,'alexaClientSDK::avsCommon::utils::sds']]],
-  ['writestatus_24075',['WriteStatus',['../classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1attachment_1_1_attachment_writer.html#a81b93cbd38af8b85c587c72e69cd0d86',1,'alexaClientSDK::avsCommon::avs::attachment::AttachmentWriter']]]
+  ['validationmethod',['ValidationMethod',['../namespacealexa_client_s_d_k_1_1acsdk_external_media_player_interfaces.html#a4dda723d8586af6aac4ec430aa7f3ee1',1,'alexaClientSDK::acsdkExternalMediaPlayerInterfaces']]],
+  ['valuetype',['ValueType',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html#ab18544389e7b78a72b7a073d52410990',1,'alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface']]],
+  ['viewerstate',['ViewerState',['../structalexa_client_s_d_k_1_1alexa_live_view_controller_interfaces_1_1_viewer.html#a6904660b83b3cc80f4c3346948431291',1,'alexaClientSDK::alexaLiveViewControllerInterfaces::Viewer']]],
+  ['visualfocusbehavior',['VisualFocusBehavior',['../namespacealexa_client_s_d_k_1_1acsdk_alexa_presentation_interfaces.html#a6031f4d1770124de8d889424bc27653d',1,'alexaClientSDK::acsdkAlexaPresentationInterfaces']]]
 ];

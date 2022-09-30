@@ -1,0 +1,31 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/AssetManager/acsdkAssetManager/test/AssetManagerTest.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/AssetManager/acsdkAssetManager/test/AssetManagerTest.h">
+<area shape="rect" id="node2" href="$_artifact_under_test_8h.html" title="ArtifactUnderTest.h" alt="" coords="2109,124,2245,151"/>
+<area shape="rect" id="node16" href="$_test_util_8h.html" title="TestUtil.h" alt="" coords="1745,228,1823,255"/>
+<area shape="rect" id="node39" href="$_auth_delegate_mock_8h.html" title="AuthDelegateMock.h" alt="" coords="644,124,788,151"/>
+<area shape="rect" id="node43" href="$_internet_connection_monitor_mock_8h.html" title="InternetConnectionMonitor\lMock.h" alt="" coords="178,117,353,158"/>
+<area shape="rect" id="node46" href="$_in_memory_amd_communication_handler_8h.html" title="acsdkAssetsInterfaces\l/Communication/InMemoryAmdCommunication\lHandler.h" alt="" coords="1289,109,1586,165"/>
+<area shape="rect" id="node3" href="$hash_8h.html" title="AVSCommon/Utils/functional\l/hash.h" alt="" coords="2985,221,3178,262"/>
+<area shape="rect" id="node7" href="$_curl_wrapper_mock_8h.html" title="CurlWrapperMock.h" alt="" coords="2041,421,2180,448"/>
+<area shape="rect" id="node9" href="$_davs_service_mock_8h.html" title="DavsServiceMock.h" alt="" coords="3202,228,3342,255"/>
+<area shape="rect" id="node18" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="3403,228,3517,255"/>
+<area shape="rect" id="node22" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="3810,496,3905,523"/>
+<area shape="rect" id="node32" href="$_asset_manager_8h.html" title="acsdkAssetManager/AssetManager.h" alt="" coords="880,228,1120,255"/>
+<area shape="rect" id="node34" href="$_amd_communication_interface_8h.html" title="acsdkAssetsInterfaces\l/Communication/AmdCommunication\lInterface.h" alt="" coords="1038,317,1277,373"/>
+<area shape="rect" id="node35" href="$_a_m_d_8h.html" title="acsdkAssetManagerClient\l/AMD.h" alt="" coords="2090,221,2265,262"/>
+<area shape="rect" id="node36" href="$capabilities_2_davs_client_2acsdk_assets_interfaces_2include_2acsdk_assets_interfaces_2_priority_8h.html" title="acsdkAssetsInterfaces\l/Priority.h" alt="" coords="2391,221,2547,262"/>
+<area shape="rect" id="node37" href="$_state_8h.html" title="acsdkAssetsInterfaces\l/State.h" alt="" coords="2571,221,2727,262"/>
+<area shape="rect" id="node38" href="$_davs_endpoint_handler_v3_8h.html" title="acsdkDavsClient/DavsEndpoint\lHandlerV3.h" alt="" coords="2752,221,2960,262"/>
+<area shape="rect" id="node15" href="$_davs_request_8h.html" title="acsdkAssetsInterfaces\l/DavsRequest.h" alt="" coords="2662,325,2818,366"/>
+<area shape="rect" id="node19" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="2986,421,3147,448"/>
+<area shape="rect" id="node20" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="3895,421,4083,448"/>
+<area shape="rect" id="node24" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="2984,325,3149,366"/>
+<area shape="rect" id="node25" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="3224,325,3389,366"/>
+<area shape="rect" id="node26" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="3413,325,3579,366"/>
+<area shape="rect" id="node27" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="3603,325,3768,366"/>
+<area shape="rect" id="node28" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="3647,421,3820,448"/>
+<area shape="rect" id="node41" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="411,221,603,262"/>
+<area shape="rect" id="node42" href="$_internet_connection_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionObserverInterface.h" alt="" coords="43,325,293,366"/>
+<area shape="rect" id="node44" href="$_internet_connection_monitor_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionMonitorInterface.h" alt="" coords="145,221,386,262"/>
+<area shape="rect" id="node47" href="$_in_memory_communication_invoke_handler_8h.html" title="acsdkCommunication\l/InMemoryCommunicationInvoke\lHandler.h" alt="" coords="1454,213,1669,269"/>
+<area shape="rect" id="node48" href="$_in_memory_communication_properties_handler_8h.html" title="acsdkCommunication\l/InMemoryCommunicationProperties\lHandler.h" alt="" coords="1195,213,1429,269"/>
+</map>

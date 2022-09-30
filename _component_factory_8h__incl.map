@@ -1,0 +1,28 @@
+<map id="/workplace/avs&#45;device&#45;sdk/core/AudioEncoder/AudioEncoderComponent/include/acsdk/AudioEncoderComponent/ComponentFactory.h" name="/workplace/avs&#45;device&#45;sdk/core/AudioEncoder/AudioEncoderComponent/include/acsdk/AudioEncoderComponent/ComponentFactory.h">
+<area shape="rect" id="node3" href="$_audio_encoder_interface_8h.html" title="acsdk/AudioEncoderInterfaces\l/AudioEncoderInterface.h" alt="" coords="535,213,735,255"/>
+<area shape="rect" id="node24" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="2371,139,2581,165"/>
+<area shape="rect" id="node4" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="261,303,459,344"/>
+<area shape="rect" id="node21" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="413,399,635,426"/>
+<area shape="rect" id="node23" href="$_block_audio_encoder_interface_8h.html" title="acsdk/AudioEncoderInterfaces\l/BlockAudioEncoderInterface.h" alt="" coords="533,303,736,344"/>
+<area shape="rect" id="node5" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="376,481,541,523"/>
+<area shape="rect" id="node19" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="155,392,320,433"/>
+<area shape="rect" id="node8" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1240,660,1416,701"/>
+<area shape="rect" id="node10" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1240,749,1416,791"/>
+<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1541,839,1717,880"/>
+<area shape="rect" id="node25" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="2290,213,2465,255"/>
+<area shape="rect" id="node50" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="2489,213,2663,255"/>
+<area shape="rect" id="node29" href="$_type_index_8h.html" title="AVSCommon/Utils/TypeIndex.h" alt="" coords="1450,578,1659,605"/>
+<area shape="rect" id="node32" href="$acsdk_manufactory_2include_2acsdk_manufactory_2_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="912,489,1115,515"/>
+<area shape="rect" id="node33" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="1730,481,1905,523"/>
+<area shape="rect" id="node34" href="$_abstract_recipe_8h.html" title="acsdkManufactory/internal\l/AbstractRecipe.h" alt="" coords="2063,481,2238,523"/>
+<area shape="rect" id="node35" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="1777,303,1951,344"/>
+<area shape="rect" id="node31" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1592,660,1779,701"/>
+<area shape="rect" id="node42" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="2239,571,2414,612"/>
+<area shape="rect" id="node43" href="$_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="1291,392,1466,433"/>
+<area shape="rect" id="node44" href="$_shared_pointer_cache_8h.html" title="acsdkManufactory/internal\l/SharedPointerCache.h" alt="" coords="1915,392,2090,433"/>
+<area shape="rect" id="node45" href="$_weak_pointer_cache_8h.html" title="acsdkManufactory/internal\l/WeakPointerCache.h" alt="" coords="2114,392,2289,433"/>
+<area shape="rect" id="node46" href="$acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="2567,392,2742,433"/>
+<area shape="rect" id="node47" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="2689,489,2871,515"/>
+<area shape="rect" id="node48" href="$_optional_import_8h.html" title="acsdkManufactory/Optional\lImport.h" alt="" coords="2895,481,3076,523"/>
+<area shape="rect" id="node49" href="$_make_optional_8h.html" title="acsdkManufactory/internal\l/MakeOptional.h" alt="" coords="2439,481,2614,523"/>
+</map>

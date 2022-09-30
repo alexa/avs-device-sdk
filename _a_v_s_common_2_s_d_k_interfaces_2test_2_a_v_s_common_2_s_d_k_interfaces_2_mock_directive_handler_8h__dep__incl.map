@@ -2,5 +2,8 @@
 <area shape="rect" id="node2" href="$_directive_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/test/DirectiveProcessor\lTest.cpp" alt="" coords="5,124,232,180"/>
 <area shape="rect" id="node3" href="$_directive_router_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/test/DirectiveRouter\lTest.cpp" alt="" coords="257,124,463,180"/>
 <area shape="rect" id="node4" href="$_directive_sequencer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ADSL/test/DirectiveSequencer\lTest.cpp" alt="" coords="487,124,718,180"/>
-<area shape="rect" id="node5" href="$_endpoint_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lRegistrationManagerTest.cpp" alt="" coords="742,124,935,180"/>
+<area shape="rect" id="node5" href="$_default_endpoint_builder_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Default\lEndpointBuilderTest.cpp" alt="" coords="743,124,924,180"/>
+<area shape="rect" id="node6" href="$_endpoint_builder_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lBuilderTest.cpp" alt="" coords="949,124,1139,180"/>
+<area shape="rect" id="node7" href="$_endpoint_registration_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lRegistrationManagerTest.cpp" alt="" coords="1163,124,1357,180"/>
+<area shape="rect" id="node8" href="$_endpoint_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Endpoints/test/Endpoint\lTest.cpp" alt="" coords="1381,124,1571,180"/>
 </map>

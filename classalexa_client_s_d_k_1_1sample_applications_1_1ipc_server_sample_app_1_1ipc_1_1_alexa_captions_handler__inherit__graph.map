@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::sampleApplications::ipcServerSampleApp::ipc::AlexaCaptionsHandler" name="alexaClientSDK::sampleApplications::ipcServerSampleApp::ipc::AlexaCaptionsHandler">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1ipc_1_1_i_p_c_handler_base.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::ipc::IPCHandlerBase" alt="" coords="5,5,288,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_render_captions_interface.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::RenderCaptions\lInterface" alt="" coords="19,71,274,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="48,152,245,193"/>
+</map>

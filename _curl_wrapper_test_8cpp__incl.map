@@ -1,0 +1,30 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/test/CurlWrapperTest.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/test/CurlWrapperTest.cpp">
+<area shape="rect" id="node2" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1215,124,1310,151"/>
+<area shape="rect" id="node33" href="$_curl_wrapper_8h.html" title="acsdkAssetsCommon/CurlWrapper.h" alt="" coords="2554,281,2793,307"/>
+<area shape="rect" id="node6" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="897,541,1028,583"/>
+<area shape="rect" id="node17" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="296,638,448,665"/>
+<area shape="rect" id="node18" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1053,720,1184,761"/>
+<area shape="rect" id="node21" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="856,199,1013,225"/>
+<area shape="rect" id="node23" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="1241,199,1402,225"/>
+<area shape="rect" id="node25" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1666,459,1809,486"/>
+<area shape="rect" id="node28" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1426,199,1553,225"/>
+<area shape="rect" id="node29" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="412,459,559,486"/>
+<area shape="rect" id="node31" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="1493,549,1651,575"/>
+<area shape="rect" id="node32" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1707,199,1866,225"/>
+<area shape="rect" id="node7" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="1341,809,1472,851"/>
+<area shape="rect" id="node19" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="920,631,1051,672"/>
+<area shape="rect" id="node20" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="1443,631,1573,672"/>
+<area shape="rect" id="node22" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="868,273,1009,315"/>
+<area shape="rect" id="node24" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="1240,363,1371,404"/>
+<area shape="rect" id="node27" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="1315,273,1469,315"/>
+<area shape="rect" id="node26" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="1776,541,1920,583"/>
+<area shape="rect" id="node34" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="2019,363,2211,404"/>
+<area shape="rect" id="node37" href="$_result_8h.html" title="AVSCommon/Utils/Error\l/Result.h" alt="" coords="2235,363,2400,404"/>
+<area shape="rect" id="node41" href="$_download_chunk_queue_8h.html" title="DownloadChunkQueue.h" alt="" coords="2783,459,2950,486"/>
+<area shape="rect" id="node46" href="$_download_stream_8h.html" title="DownloadStream.h" alt="" coords="3007,459,3140,486"/>
+<area shape="rect" id="node48" href="$_response_sink_8h.html" title="ResponseSink.h" alt="" coords="2795,370,2914,397"/>
+<area shape="rect" id="node49" href="$acsdk_assets_common_2include_2acsdk_assets_common_2_curl_progress_callback_interface_8h.html" title="acsdkAssetsCommon/CurlProgress\lCallbackInterface.h" alt="" coords="2938,363,3169,404"/>
+<area shape="rect" id="node50" href="$_result_code_8h.html" title="acsdkAssetsInterfaces\l/ResultCode.h" alt="" coords="3193,363,3349,404"/>
+<area shape="rect" id="node36" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="2021,452,2213,493"/>
+<area shape="rect" id="node45" href="$_data_chunk_8h.html" title="DataChunk.h" alt="" coords="2912,549,3011,575"/>
+</map>

@@ -1,8 +1,28 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/test/Storage/AVSGatewayManagerStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/test/Storage/AVSGatewayManagerStorageTest.cpp">
-<area shape="rect" id="node3" href="$_stub_misc_storage_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/StubMiscStorage.h" alt="" coords="151,124,343,165"/>
-<area shape="rect" id="node9" href="$_a_v_s_gateway_manager_storage_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorage.h" alt="" coords="516,124,727,165"/>
-<area shape="rect" id="node7" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="323,213,533,255"/>
-<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="982,213,1197,255"/>
-<area shape="rect" id="node18" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorageInterface.h" alt="" coords="659,213,922,255"/>
-<area shape="rect" id="node19" href="$_gateway_verify_state_8h.html" title="AVSGatewayManager/Gateway\lVerifyState.h" alt="" coords="630,303,837,344"/>
+<area shape="rect" id="node2" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="919,213,1033,240"/>
+<area shape="rect" id="node38" href="$_stub_misc_storage_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/StubMiscStorage.h" alt="" coords="2623,124,2815,165"/>
+<area shape="rect" id="node44" href="$_a_v_s_gateway_manager_storage_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorage.h" alt="" coords="2421,288,2632,329"/>
+<area shape="rect" id="node3" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="354,474,515,501"/>
+<area shape="rect" id="node7" href="$gmock-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;internal&#45;utils.h" alt="" coords="673,556,823,597"/>
+<area shape="rect" id="node23" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="950,563,1138,590"/>
+<area shape="rect" id="node25" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="181,377,347,419"/>
+<area shape="rect" id="node27" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="825,288,991,329"/>
+<area shape="rect" id="node30" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="1317,474,1491,501"/>
+<area shape="rect" id="node34" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="472,288,637,329"/>
+<area shape="rect" id="node35" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="1904,377,2069,419"/>
+<area shape="rect" id="node36" href="$gmock-more-actions_8h.html" title="gmock/gmock&#45;more&#45;actions.h" alt="" coords="152,295,347,322"/>
+<area shape="rect" id="node37" href="$gmock-more-matchers_8h.html" title="gmock/gmock&#45;more&#45;matchers.h" alt="" coords="1513,295,1719,322"/>
+<area shape="rect" id="node11" href="$gmock-port_8h.html" title="gmock/internal/gmock\l&#45;port.h" alt="" coords="458,735,609,776"/>
+<area shape="rect" id="node10" href="$gmock-generated-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;generated&#45;internal&#45;utils.h" alt="" coords="504,645,672,687"/>
+<area shape="rect" id="node21" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1001,653,1095,679"/>
+<area shape="rect" id="node15" href="$gtest-linked__ptr_8h.html" title="gtest/internal/gtest\l&#45;linked_ptr.h" alt="" coords="632,824,763,865"/>
+<area shape="rect" id="node16" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="735,913,865,955"/>
+<area shape="rect" id="node20" href="$custom_2gmock-port_8h.html" title="gmock/internal/custom\l/gmock&#45;port.h" alt="" coords="403,824,557,865"/>
+<area shape="rect" id="node26" href="$internal_2custom_2gmock-generated-actions_8h.html" title="gmock/internal/custom\l/gmock&#45;generated&#45;actions.h" alt="" coords="43,467,226,508"/>
+<area shape="rect" id="node28" href="$gmock-spec-builders_8h.html" title="gmock/gmock&#45;spec&#45;builders.h" alt="" coords="810,385,1006,411"/>
+<area shape="rect" id="node33" href="$internal_2custom_2gmock-matchers_8h.html" title="gmock/internal/custom\l/gmock&#45;matchers.h" alt="" coords="1605,556,1760,597"/>
+<area shape="rect" id="node43" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="2807,377,3017,419"/>
+<area shape="rect" id="node45" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2406,377,2621,419"/>
+<area shape="rect" id="node49" href="$_a_v_s_gateway_manager_storage_interface_8h.html" title="AVSGatewayManager/Storage\l/AVSGatewayManagerStorageInterface.h" alt="" coords="2106,377,2369,419"/>
+<area shape="rect" id="node50" href="$_gateway_verify_state_8h.html" title="AVSGatewayManager/Gateway\lVerifyState.h" alt="" coords="2267,824,2474,865"/>
 </map>

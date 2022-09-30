@@ -1,5 +1,25 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/test/SQLiteDatabaseTest.cpp" name="/workplace/avs&#45;device&#45;sdk/Storage/SQLiteStorage/test/SQLiteDatabaseTest.cpp">
-<area shape="rect" id="node5" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="671,184,830,225"/>
-<area shape="rect" id="node7" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="295,109,513,136"/>
-<area shape="rect" id="node11" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="374,191,597,218"/>
+<area shape="rect" id="node4" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1481,109,1575,136"/>
+<area shape="rect" id="node45" href="$_file_utils_8h.html" title="AVSCommon/Utils/File\l/FileUtils.h" alt="" coords="2190,259,2349,300"/>
+<area shape="rect" id="node46" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="2300,713,2519,739"/>
+<area shape="rect" id="node8" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="829,527,960,568"/>
+<area shape="rect" id="node29" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="461,623,613,650"/>
+<area shape="rect" id="node30" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1392,705,1523,747"/>
+<area shape="rect" id="node33" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="1379,266,1536,293"/>
+<area shape="rect" id="node35" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="209,184,370,211"/>
+<area shape="rect" id="node37" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1522,445,1665,471"/>
+<area shape="rect" id="node40" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1313,184,1439,211"/>
+<area shape="rect" id="node41" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="1952,445,2099,471"/>
+<area shape="rect" id="node43" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="1205,534,1363,561"/>
+<area shape="rect" id="node44" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1566,184,1725,211"/>
+<area shape="rect" id="node9" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="1015,795,1145,836"/>
+<area shape="rect" id="node31" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1187,616,1317,657"/>
+<area shape="rect" id="node32" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="1392,616,1523,657"/>
+<area shape="rect" id="node22" href="$gtest-port-arch_8h.html" title="gtest/internal/gtest\l&#45;port&#45;arch.h" alt="" coords="723,884,853,925"/>
+<area shape="rect" id="node23" href="$custom_2gtest-port_8h.html" title="gtest/internal/custom\l/gtest&#45;port.h" alt="" coords="877,884,1021,925"/>
+<area shape="rect" id="node34" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="1329,437,1471,479"/>
+<area shape="rect" id="node36" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="281,348,412,389"/>
+<area shape="rect" id="node39" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="155,259,309,300"/>
+<area shape="rect" id="node38" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="1437,527,1581,568"/>
+<area shape="rect" id="node49" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="2306,802,2529,829"/>
 </map>

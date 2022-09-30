@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPostInterface" name="alexaClientSDK::avsCommon::utils::libcurlUtils::HttpPostInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html" title="LIBCURL based implementation of HttpPostInterface. " alt="" coords="5,109,203,165"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html" title="LIBCURL based implementation of HttpPostInterface. " alt="" coords="251,5,448,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1test_1_1_mock_http_post.html" title="A mock object that implements the HttpPostInterface. " alt="" coords="251,85,448,141"/>
 </map>

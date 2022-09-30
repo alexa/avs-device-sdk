@@ -1,15 +1,9 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/ExchangeHandlerContextInterface.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/ExchangeHandlerContextInterface.h">
-<area shape="rect" id="node2" href="$_exchange_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/ExchangeHandler.h" alt="" coords="766,124,965,180"/>
-<area shape="rect" id="node3" href="$_downchannel_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/DownchannelHandler.h" alt="" coords="614,332,834,388"/>
-<area shape="rect" id="node6" href="$_message_request_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestHandler.h" alt="" coords="233,332,476,388"/>
-<area shape="rect" id="node9" href="$_ping_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/PingHandler.h" alt="" coords="817,228,983,284"/>
-<area shape="rect" id="node11" href="$_exchange_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="1457,436,1615,492"/>
-<area shape="rect" id="node4" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="659,436,834,492"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="254,436,413,492"/>
-<area shape="rect" id="node7" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="437,436,635,492"/>
-<area shape="rect" id="node8" href="$_message_request_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MessageRequestHandlerTest.cpp" alt="" coords="5,436,229,492"/>
-<area shape="rect" id="node10" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="858,332,1051,388"/>
-<area shape="rect" id="node13" href="$_ping_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="1274,436,1433,492"/>
-<area shape="rect" id="node12" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="859,436,1051,492"/>
-<area shape="rect" id="node14" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1075,436,1250,492"/>
+<area shape="rect" id="node2" href="$_exchange_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/ExchangeHandler.h" alt="" coords="272,124,471,180"/>
+<area shape="rect" id="node3" href="$_downchannel_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/DownchannelHandler.h" alt="" coords="5,228,225,284"/>
+<area shape="rect" id="node4" href="$_message_request_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/MessageRequestHandler.h" alt="" coords="250,228,493,284"/>
+<area shape="rect" id="node6" href="$_ping_handler_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/PingHandler.h" alt="" coords="519,228,685,284"/>
+<area shape="rect" id="node5" href="$_message_request_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MessageRequestHandlerTest.cpp" alt="" coords="258,332,482,388"/>
+<area shape="rect" id="node7" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="507,332,700,388"/>
+<area shape="rect" id="node8" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="516,436,691,492"/>
 </map>

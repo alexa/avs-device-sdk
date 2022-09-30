@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::acsdkAssets::commonInterfaces::AmdCommunicationInterface" name="alexaClientSDK::acsdkAssets::commonInterfaces::AmdCommunicationInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_properties_handler_interface.html" title="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationProperties\lHandlerInterface\&lt; int \&gt;" alt="" coords="12,5,261,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_properties_handler_interface.html" title="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationProperties\lHandlerInterface\&lt; std::string \&gt;" alt="" coords="12,85,261,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_invoke_handler_interface.html" title="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationInvokeHandler\lInterface\&lt; std::string \&gt;" alt="" coords="5,165,268,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_invoke_handler_interface.html" title="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationInvokeHandler\lInterface\&lt; bool, std::string \&gt;" alt="" coords="5,245,268,301"/>
+</map>

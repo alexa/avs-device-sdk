@@ -1,3 +1,5 @@
 <map id="alexaClientSDK::registrationManager::RegistrationManagerInterface" name="alexaClientSDK::registrationManager::RegistrationManagerInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_registration_manager.html" title="alexaClientSDK::registration\lManager::RegistrationManager" alt="" coords="31,95,231,136"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_mock_registration_manager.html" title="Mock class implementing RegistrationManagerInterface. " alt="" coords="320,5,555,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1_authorization_authority_interface.html" title="alexaClientSDK::acsdkAuthorization\lInterfaces::AuthorizationAuthorityInterface" alt="" coords="304,71,571,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1_authorization_manager.html" title="alexaClientSDK::acsdkAuthorization\l::AuthorizationManager" alt="" coords="619,71,853,112"/>
 </map>

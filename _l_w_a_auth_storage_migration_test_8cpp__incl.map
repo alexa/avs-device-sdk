@@ -1,0 +1,29 @@
+<map id="/workplace/avs&#45;device&#45;sdk/core/Authorization/acsdkAuthorization/test/LWAAuthStorageMigrationTest.cpp" name="/workplace/avs&#45;device&#45;sdk/core/Authorization/acsdkAuthorization/test/LWAAuthStorageMigrationTest.cpp">
+<area shape="rect" id="node3" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1191,139,1286,165"/>
+<area shape="rect" id="node34" href="$_stub_properties_factory_8h.html" title="acsdk/PropertiesInterfaces\l/test/StubPropertiesFactory.h" alt="" coords="2826,645,3019,687"/>
+<area shape="rect" id="node40" href="$_misc_storage_adapter_8h.html" title="acsdk/Properties/MiscStorage\lAdapter.h" alt="" coords="2591,645,2788,687"/>
+<area shape="rect" id="node45" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="3269,742,3488,769"/>
+<area shape="rect" id="node48" href="$_s_q_lite_misc_storage_8h.html" title="SQLiteStorage/SQLiteMisc\lStorage.h" alt="" coords="2388,645,2567,687"/>
+<area shape="rect" id="node7" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="1007,556,1137,597"/>
+<area shape="rect" id="node18" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="755,653,907,679"/>
+<area shape="rect" id="node19" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1133,735,1264,776"/>
+<area shape="rect" id="node22" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="993,310,1151,337"/>
+<area shape="rect" id="node24" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="473,228,634,255"/>
+<area shape="rect" id="node26" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1113,481,1255,508"/>
+<area shape="rect" id="node29" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1327,228,1454,255"/>
+<area shape="rect" id="node30" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="1685,481,1832,508"/>
+<area shape="rect" id="node32" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="296,563,453,590"/>
+<area shape="rect" id="node33" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1478,228,1637,255"/>
+<area shape="rect" id="node8" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="524,824,655,865"/>
+<area shape="rect" id="node20" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1133,645,1264,687"/>
+<area shape="rect" id="node21" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="448,645,579,687"/>
+<area shape="rect" id="node23" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="1001,392,1143,433"/>
+<area shape="rect" id="node25" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="545,392,676,433"/>
+<area shape="rect" id="node28" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="419,303,573,344"/>
+<area shape="rect" id="node27" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="1161,556,1305,597"/>
+<area shape="rect" id="node38" href="$_properties_factory_interface_8h.html" title="acsdk/PropertiesInterfaces\l/PropertiesFactoryInterface.h" alt="" coords="2718,735,2909,776"/>
+<area shape="rect" id="node39" href="$_gmock_extensions_8h.html" title="acsdk/Test/GmockExtensions.h" alt="" coords="2985,742,3194,769"/>
+<area shape="rect" id="node41" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="2381,735,2592,776"/>
+<area shape="rect" id="node47" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="3119,831,3342,858"/>
+<area shape="rect" id="node50" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2091,735,2306,776"/>
+</map>

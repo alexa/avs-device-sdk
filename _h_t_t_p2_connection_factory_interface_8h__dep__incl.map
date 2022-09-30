@@ -1,10 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2ConnectionFactoryInterface.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2TransportFactory.h" alt="" coords="480,139,717,195"/>
-<area shape="rect" id="node8" href="$_libcurl_h_t_t_p2_connection_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/LibcurlHTTP2Connection\lFactory.h" alt="" coords="742,124,983,209"/>
-<area shape="rect" id="node3" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="5,265,197,321"/>
-<area shape="rect" id="node4" href="$_alexa_communications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkLibcurl\lAlexaCommunications/src/AlexaCommunications\lComponent.cpp" alt="" coords="222,257,533,328"/>
-<area shape="rect" id="node5" href="$_a_c_l_test_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/src\l/ACLTestContext.cpp" alt="" coords="557,265,709,321"/>
-<area shape="rect" id="node6" href="$_server_disconnect_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/ServerDisconnectIntegration\lTest.cpp" alt="" coords="734,257,925,328"/>
-<area shape="rect" id="node7" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="949,272,1227,313"/>
-<area shape="rect" id="node9" href="$_libcurl_h_t_t_p2_connection_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/LibcurlUtils/LibcurlHTTP2\lConnectionFactory.cpp" alt="" coords="1251,257,1448,328"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2TransportFactory.h" alt="" coords="5,139,243,195"/>
+<area shape="rect" id="node3" href="$_libcurl_h_t_t_p2_connection_factory_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/LibcurlUtils/LibcurlHTTP2Connection\lFactory.h" alt="" coords="267,124,509,209"/>
 </map>

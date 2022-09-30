@@ -1,9 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockSpeakerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockSpeakerInterface.h">
-<area shape="rect" id="node2" href="$_mock_channel_volume_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockChannelVolumeInterface.h" alt="" coords="656,124,879,195"/>
-<area shape="rect" id="node6" href="$_speaker_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/test/Speaker\lManagerTest.cpp" alt="" coords="1015,243,1218,313"/>
-<area shape="rect" id="node8" href="$_channel_volume_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/test/Channel\lVolumeManagerTest.cpp" alt="" coords="1053,124,1255,195"/>
+<area shape="rect" id="node2" href="$_mock_channel_volume_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/SDKInterfaces\l/test/AVSCommon/SDKInterfaces\l/MockChannelVolumeInterface.h" alt="" coords="536,124,759,195"/>
+<area shape="rect" id="node6" href="$_speaker_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/SpeakerManager\l/test/SpeakerManagerTest.cpp" alt="" coords="783,243,1010,313"/>
+<area shape="rect" id="node7" href="$_channel_volume_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeakerManager/SpeakerManager\l/test/ChannelVolumeManagerTest.cpp" alt="" coords="883,124,1129,195"/>
 <area shape="rect" id="node3" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="5,243,236,313"/>
 <area shape="rect" id="node4" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="260,250,512,306"/>
 <area shape="rect" id="node5" href="$_external_media_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/ExternalMedia\lPlayer/acsdkExternalMediaPlayer\l/test/ExternalMediaPlayerTest.cpp" alt="" coords="536,243,759,313"/>
-<area shape="rect" id="node7" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="783,250,991,306"/>
 </map>

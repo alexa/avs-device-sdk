@@ -1,19 +1,20 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ModeController/ModeControllerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/ModeController/ModeControllerInterface.h">
-<area shape="rect" id="node2" href="$_alexa_response_type_8h.html" title="AVSCommon/AVS/AlexaResponse\lType.h" alt="" coords="1592,481,1821,523"/>
-<area shape="rect" id="node5" href="$_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="1195,303,1408,344"/>
-<area shape="rect" id="node6" href="$_mode_controller_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ModeController/ModeController\lObserverInterface.h" alt="" coords="1062,199,1269,255"/>
-<area shape="rect" id="node16" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="926,124,1122,151"/>
-<area shape="rect" id="node7" href="$_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="671,303,847,344"/>
-<area shape="rect" id="node8" href="$_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="340,392,516,433"/>
-<area shape="rect" id="node11" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="115,489,328,515"/>
-<area shape="rect" id="node13" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="403,481,579,523"/>
-<area shape="rect" id="node17" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="861,206,1037,247"/>
-<area shape="rect" id="node18" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="871,303,1047,344"/>
-<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="654,481,869,523"/>
-<area shape="rect" id="node26" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="995,481,1171,523"/>
-<area shape="rect" id="node27" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1339,392,1515,433"/>
-<area shape="rect" id="node33" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1017,392,1210,433"/>
-<area shape="rect" id="node34" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1539,392,1715,433"/>
-<area shape="rect" id="node30" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1845,481,2021,523"/>
-<area shape="rect" id="node31" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1765,571,1941,612"/>
+<area shape="rect" id="node2" href="$_alexa_response_type_8h.html" title="AVSCommon/AVS/AlexaResponse\lType.h" alt="" coords="1713,481,1943,523"/>
+<area shape="rect" id="node5" href="$_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="697,303,911,344"/>
+<area shape="rect" id="node6" href="$_mode_controller_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ModeController/ModeController\lObserverInterface.h" alt="" coords="525,199,731,255"/>
+<area shape="rect" id="node16" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="741,124,937,151"/>
+<area shape="rect" id="node7" href="$_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="337,303,513,344"/>
+<area shape="rect" id="node8" href="$_time_utils_8h.html" title="AVSCommon/Utils/Timing\l/TimeUtils.h" alt="" coords="303,392,479,433"/>
+<area shape="rect" id="node11" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="249,489,463,515"/>
+<area shape="rect" id="node13" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="49,481,225,523"/>
+<area shape="rect" id="node17" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="756,206,932,247"/>
+<area shape="rect" id="node18" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="987,303,1163,344"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1186,481,1401,523"/>
+<area shape="rect" id="node26" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="841,481,1017,523"/>
+<area shape="rect" id="node27" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1497,392,1673,433"/>
+<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="978,392,1171,433"/>
+<area shape="rect" id="node35" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="5,392,181,433"/>
+<area shape="rect" id="node36" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1297,392,1473,433"/>
+<area shape="rect" id="node31" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1967,481,2143,523"/>
+<area shape="rect" id="node32" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1887,571,2063,612"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::acsdkBluetooth::BluetoothNotifier" name="alexaClientSDK::acsdkBluetooth::BluetoothNotifier">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; acsdkBluetoothInterfaces\l::BluetoothDeviceObserverInterface \&gt;" alt="" coords="288,13,531,69"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; acsdkBluetoothInterfaces::\lBluetoothDeviceObserverInterface \&gt;" alt="" coords="5,5,240,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1notifier_1_1_notifier.html" title="alexaClientSDK::notifier\l::Notifier\&lt; acsdkBluetoothInterfaces\l::BluetoothDeviceObserverInterface \&gt;" alt="" coords="296,13,539,69"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::notifier\lInterfaces::NotifierInterface\l\&lt; acsdkBluetoothInterfaces\l::BluetoothDeviceObserverInterface \&gt;" alt="" coords="5,5,248,76"/>
 </map>

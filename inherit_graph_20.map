@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_audio_player_1_1_audio_item.html" title="Struct which contains all the fields which define an audio item for a Play directive. " alt="" coords="5,5,196,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_alexa_keypad_controller_interfaces_1_1_alexa_keypad_controller_interface.html" title="alexaClientSDK::acsdkAlexa\lKeypadControllerInterfaces\l::AlexaKeypadControllerInterface" alt="" coords="5,45,220,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alexa_keypad_controller_1_1test_1_1_mock_alexa_keypad_controller_interface.html" title="alexaClientSDK::acsdkAlexa\lKeypadController::test\l::MockAlexaKeypadControllerInterface" alt="" coords="281,5,527,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1common_1_1_endpoint_alexa_keypad_controller_handler.html" title="alexaClientSDK::sampleApplications\l::common::EndpointAlexaKeypadController\lHandler" alt="" coords="268,85,540,141"/>
 </map>

@@ -1,6 +1,7 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::AudioInputProcessorObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="293,5,502,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html" title="Mock class that implements the Observer. " alt="" coords="292,71,503,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1default_client_1_1_connection_retry_trigger.html" title="alexaClientSDK::defaultClient\l::ConnectionRetryTrigger" alt="" coords="299,136,495,177"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1integration_1_1_aip_state_observer.html" title="alexaClientSDK::integration\l::AipStateObserver" alt="" coords="306,201,489,243"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1avs_1_1_dialog_u_x_state_aggregator.html" title="alexaClientSDK::avsCommon\l::avs::DialogUXStateAggregator" alt="" coords="320,5,529,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_observer.html" title="Mock class that implements the Observer. " alt="" coords="319,71,530,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1default_client_1_1_connection_retry_trigger.html" title="alexaClientSDK::defaultClient\l::ConnectionRetryTrigger" alt="" coords="327,136,523,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1gui_1_1_g_u_i_manager.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::gui::GUIManager" alt="" coords="295,201,554,243"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1live_view_controller_eee3fbdd1e69fe6e011e4a424711cf8f.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::liveViewController\l::LiveViewControllerPresentationAdapter" alt="" coords="292,267,557,323"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post_interface.html" title="Minimal interface for making Http POST requests. " alt="" coords="5,5,203,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_http_post.html" title="LIBCURL based implementation of HttpPostInterface. " alt="" coords="251,5,448,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1_a_p_l_runtime_interface.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::APLRuntimeInterface" alt="" coords="5,39,272,80"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1test_1_1_mock_a_p_l_runtime.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::test::MockAPLRuntime" alt="" coords="337,5,614,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_a_p_l_runtime_interface_impl.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::APLRuntimeInterfaceImpl" alt="" coords="320,71,631,112"/>
 </map>

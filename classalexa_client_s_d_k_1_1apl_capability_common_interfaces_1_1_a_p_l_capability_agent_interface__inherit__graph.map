@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::aplCapabilityCommonInterfaces::APLCapabilityAgentInterface" name="alexaClientSDK::aplCapabilityCommonInterfaces::APLCapabilityAgentInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1apl_capability_common_1_1_base_a_p_l_capability_agent.html" title="alexaClientSDK::aplCapability\lCommon::BaseAPLCapabilityAgent" alt="" coords="357,5,587,47"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1test_1_1_mock_a_p_l_capability_agent.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::test::MockAPLCapabilityAgent" alt="" coords="312,71,632,112"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_i_p_c_a_p_l_agent.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::IPCAPLAgent" alt="" coords="351,136,593,177"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1apl_capability_common_1_1test_1_1_a_p_l_c_a_test.html" title="alexaClientSDK::aplCapability\lCommon::test::APLCATest" alt="" coords="680,5,879,47"/>
+</map>

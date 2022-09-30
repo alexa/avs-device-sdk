@@ -1,0 +1,30 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkDavsClient/include/acsdkDavsClient/DavsHandler.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkDavsClient/include/acsdkDavsClient/DavsHandler.h">
+<area shape="rect" id="node2" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="188,399,380,441"/>
+<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1385,303,1561,344"/>
+<area shape="rect" id="node27" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1857,399,2031,441"/>
+<area shape="rect" id="node31" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_timing_2_timer_8h.html" title="AVSCommon/Utils/Timing\l/Timer.h" alt="" coords="2915,213,3091,255"/>
+<area shape="rect" id="node39" href="$_amd_metric_wrapper_8h.html" title="acsdkAssetsCommon/AmdMetric\lWrapper.h" alt="" coords="3131,496,3349,537"/>
+<area shape="rect" id="node42" href="$acsdk_assets_common_2include_2acsdk_assets_common_2_curl_progress_callback_interface_8h.html" title="acsdkAssetsCommon/CurlProgress\lCallbackInterface.h" alt="" coords="3398,124,3629,165"/>
+<area shape="rect" id="node43" href="$_vendable_artifact_8h.html" title="acsdkAssetsInterfaces\l/VendableArtifact.h" alt="" coords="2251,303,2407,344"/>
+<area shape="rect" id="node47" href="$_artifact_handler_interface_8h.html" title="acsdkDavsClientInterfaces\l/ArtifactHandlerInterface.h" alt="" coords="2163,124,2343,165"/>
+<area shape="rect" id="node50" href="$_davs_endpoint_handler_interface_8h.html" title="acsdkDavsClientInterfaces\l/DavsEndpointHandlerInterface.h" alt="" coords="1691,303,1906,344"/>
+<area shape="rect" id="node5" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="43,496,235,537"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1146,399,1361,441"/>
+<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="360,496,536,537"/>
+<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="895,399,1071,441"/>
+<area shape="rect" id="node24" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="417,399,610,441"/>
+<area shape="rect" id="node25" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1585,399,1761,441"/>
+<area shape="rect" id="node26" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1385,399,1561,441"/>
+<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="653,496,829,537"/>
+<area shape="rect" id="node29" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1654,496,1885,537"/>
+<area shape="rect" id="node35" href="$_s_d_k_primitives_provider_8h.html" title="AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="2558,303,2765,344"/>
+<area shape="rect" id="node38" href="$_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="2915,303,3091,344"/>
+<area shape="rect" id="node36" href="$_timer_delegate_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateFactory\lInterface.h" alt="" coords="2634,392,2833,448"/>
+<area shape="rect" id="node37" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="2840,496,3056,537"/>
+<area shape="rect" id="node40" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3115,585,3295,627"/>
+<area shape="rect" id="node41" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="2110,675,2290,716"/>
+<area shape="rect" id="node44" href="$_davs_request_8h.html" title="DavsRequest.h" alt="" coords="2158,407,2271,433"/>
+<area shape="rect" id="node46" href="$_artifact_request_8h.html" title="ArtifactRequest.h" alt="" coords="2254,503,2378,530"/>
+<area shape="rect" id="node48" href="$_davs_check_callback_interface_8h.html" title="DavsCheckCallbackInterface.h" alt="" coords="2033,221,2237,247"/>
+<area shape="rect" id="node49" href="$_davs_download_callback_interface_8h.html" title="DavsDownloadCallbackInterface.h" alt="" coords="2261,221,2485,247"/>
+</map>

@@ -1,3 +1,24 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/StopwatchTest.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/StopwatchTest.cpp">
-<area shape="rect" id="node5" href="$_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="52,109,228,151"/>
+<area shape="rect" id="node4" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1034,117,1129,143"/>
+<area shape="rect" id="node49" href="$_stopwatch_8h.html" title="AVSCommon/Utils/Timing\l/Stopwatch.h" alt="" coords="53,109,229,151"/>
+<area shape="rect" id="node8" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="1228,541,1359,583"/>
+<area shape="rect" id="node33" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="520,638,672,665"/>
+<area shape="rect" id="node34" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1013,720,1144,761"/>
+<area shape="rect" id="node37" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="735,281,892,307"/>
+<area shape="rect" id="node39" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="1219,199,1381,225"/>
+<area shape="rect" id="node41" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1929,459,2071,486"/>
+<area shape="rect" id="node44" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1069,199,1195,225"/>
+<area shape="rect" id="node45" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="2188,459,2335,486"/>
+<area shape="rect" id="node47" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="633,549,791,575"/>
+<area shape="rect" id="node48" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1635,199,1794,225"/>
+<area shape="rect" id="node9" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="1013,809,1144,851"/>
+<area shape="rect" id="node35" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1053,631,1184,672"/>
+<area shape="rect" id="node36" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="696,631,827,672"/>
+<area shape="rect" id="node22" href="$gtest-port-arch_8h.html" title="gtest/internal/gtest\l&#45;port&#45;arch.h" alt="" coords="1407,899,1537,940"/>
+<area shape="rect" id="node23" href="$custom_2gtest-port_8h.html" title="gtest/internal/custom\l/gtest&#45;port.h" alt="" coords="1561,899,1705,940"/>
+<area shape="rect" id="node28" href="$gtest-tuple_8h.html" title="gtest/internal/gtest\l&#45;tuple.h" alt="" coords="1729,899,1860,940"/>
+<area shape="rect" id="node38" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="736,452,877,493"/>
+<area shape="rect" id="node40" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="1664,363,1795,404"/>
+<area shape="rect" id="node43" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="1509,273,1664,315"/>
+<area shape="rect" id="node42" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="1979,541,2123,583"/>
 </map>

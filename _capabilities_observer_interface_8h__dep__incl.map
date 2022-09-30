@@ -1,49 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/CapabilitiesObserverInterface.h">
-<area shape="rect" id="node1" title=" " alt="" coords="3454,5,3693,76"/>
-<area shape="rect" id="node2" href="$_default_client_8h.html" title=" " alt="" coords="3051,383,3277,454"/>
-<area shape="rect" id="node17" href="$_capabilities_delegate_interface_8h.html" title=" " alt="" coords="2699,124,2938,195"/>
-<area shape="rect" id="node22" href="$_endpoint_registration_manager_test_8cpp.html" title=" " alt="" coords="3512,391,3704,447"/>
-<area shape="rect" id="node35" href="$_capabilities_delegate_8h.html" title=" " alt="" coords="3709,250,3899,321"/>
-<area shape="rect" id="node37" href="$_capabilities_delegate_test_8cpp.html" title=" " alt="" coords="4150,391,4373,447"/>
-<area shape="rect" id="node41" href="$_endpoint_registration_manager_8h.html" title=" " alt="" coords="3179,250,3389,321"/>
-<area shape="rect" id="node43" href="$_mock_capabilities_observer_8h.html" title=" " alt="" coords="4094,131,4309,187"/>
-<area shape="rect" id="node44" href="$_u_i_manager_8h.html" title=" " alt="" coords="571,517,741,573"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title=" " alt="" coords="2836,517,3065,573"/>
-<area shape="rect" id="node4" href="$_interaction_manager_8h.html" title=" " alt="" coords="3055,628,3273,684"/>
-<area shape="rect" id="node15" href="$_keyword_observer_8h.html" title=" " alt="" coords="3289,517,3500,573"/>
-<area shape="rect" id="node5" href="$_user_input_manager_8h.html" title=" " alt="" coords="2862,747,3077,803"/>
-<area shape="rect" id="node14" href="$_interaction_manager_8cpp.html" title=" " alt="" coords="3152,747,3357,803"/>
-<area shape="rect" id="node6" href="$_preview_alexa_client_8h.html" title=" " alt="" coords="2609,865,2863,936"/>
-<area shape="rect" id="node10" href="$_sample_application_8h.html" title=" " alt="" coords="3483,873,3699,929"/>
-<area shape="rect" id="node13" href="$_user_input_manager_8cpp.html" title=" " alt="" coords="2887,873,3089,929"/>
-<area shape="rect" id="node7" href="$_preview_alexa_client_8cpp.html" title=" " alt="" coords="3007,991,3262,1047"/>
-<area shape="rect" id="node8" href="$_preview_alexa_client_component_8cpp.html" title=" " alt="" coords="541,984,771,1055"/>
-<area shape="rect" id="node9" href="$preview_main_8cpp.html" title=" " alt="" coords="2629,991,2843,1047"/>
-<area shape="rect" id="node11" href="$main_8cpp.html" title=" " alt="" coords="3427,999,3624,1040"/>
-<area shape="rect" id="node12" href="$_sample_application_8cpp.html" title=" " alt="" coords="3648,999,3925,1040"/>
-<area shape="rect" id="node16" href="$_keyword_observer_8cpp.html" title=" " alt="" coords="3432,635,3704,677"/>
-<area shape="rect" id="node18" href="$_preview_alexa_client_component_8h.html" title=" " alt="" coords="840,865,1093,936"/>
-<area shape="rect" id="node19" href="$_default_client_component_8h.html" title=" " alt="" coords="2283,383,2509,454"/>
-<area shape="rect" id="node21" href="$_mock_capabilities_delegate_8h.html" title=" " alt="" coords="3413,250,3633,321"/>
-<area shape="rect" id="node23" href="$_do_not_disturb_capability_agent_8h.html" title=" " alt="" coords="1855,243,2137,328"/>
-<area shape="rect" id="node32" href="$_equalizer_capability_agent_8h.html" title=" " alt="" coords="2773,250,3027,321"/>
-<area shape="rect" id="node34" href="$_equalizer_component_8h.html" title=" " alt="" coords="5,732,261,817"/>
-<area shape="rect" id="node39" href="$_core_component_8h.html" title=" " alt="" coords="471,257,670,313"/>
-<area shape="rect" id="node20" href="$_default_client_component_8cpp.html" title=" " alt="" coords="1985,509,2189,580"/>
-<area shape="rect" id="node24" href="$_device_settings_manager_builder_8h.html" title=" " alt="" coords="1101,376,1395,461"/>
-<area shape="rect" id="node27" href="$_device_settings_manager_component_8h.html" title=" " alt="" coords="1419,376,1712,461"/>
-<area shape="rect" id="node28" href="$_do_not_disturb_component_8h.html" title=" " alt="" coords="774,383,1077,454"/>
-<area shape="rect" id="node30" href="$_do_not_disturb_capability_agent_8cpp.html" title=" " alt="" coords="1737,383,1983,454"/>
-<area shape="rect" id="node31" href="$_do_not_disturb_capability_agent_test_8cpp.html" title=" " alt="" coords="2008,383,2259,454"/>
-<area shape="rect" id="node25" href="$_device_settings_manager_builder_8cpp.html" title=" " alt="" coords="1088,509,1317,580"/>
-<area shape="rect" id="node26" href="$_device_settings_manager_component_8cpp.html" title=" " alt="" coords="1342,509,1599,580"/>
-<area shape="rect" id="node29" href="$_do_not_disturb_component_8cpp.html" title=" " alt="" coords="817,509,1063,580"/>
-<area shape="rect" id="node33" href="$_equalizer_capability_agent_8cpp.html" title=" " alt="" coords="2773,383,3027,454"/>
-<area shape="rect" id="node36" href="$_capabilities_delegate_8cpp.html" title=" " alt="" coords="3830,391,4023,447"/>
-<area shape="rect" id="node38" href="$_core_component_8cpp.html" title=" " alt="" coords="2533,391,2699,447"/>
-<area shape="rect" id="node40" href="$_alexa_communications_component_8cpp.html" title=" " alt="" coords="387,383,698,454"/>
-<area shape="rect" id="node42" href="$_endpoint_registration_manager_8cpp.html" title=" " alt="" coords="3301,391,3488,447"/>
-<area shape="rect" id="node45" href="$_sample_application_component_8h.html" title=" " alt="" coords="795,628,1077,684"/>
-<area shape="rect" id="node46" href="$_sample_application_component_8cpp.html" title=" " alt="" coords="777,747,1029,803"/>
-<area shape="rect" id="node47" href="$_u_i_manager_8cpp.html" title=" " alt="" coords="387,635,619,677"/>
+<area shape="rect" id="node2" href="$_g_u_i_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/GUI/GUIManager.h" alt="" coords="368,124,639,209"/>
+<area shape="rect" id="node3" href="$_apl_client_bridge_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/AlexaPresentation\l/AplClientBridge.h" alt="" coords="286,257,550,357"/>
+<area shape="rect" id="node5" href="$_i_p_c_server_sample_application_2_lib_i_p_c_server_sample_app_2include_2_i_p_c_server_sample_app_2_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/SampleApplication.h" alt="" coords="222,553,499,639"/>
+<area shape="rect" id="node4" href="$_g_u_i_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/GUI/GUIClient.h" alt="" coords="5,413,260,498"/>
+<area shape="rect" id="node6" href="$_live_view_controller_presentation_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/LiveViewController\l/LiveViewControllerPresentationAdapter.h" alt="" coords="285,405,551,505"/>
 </map>

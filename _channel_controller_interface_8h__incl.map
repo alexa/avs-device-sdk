@@ -1,0 +1,15 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/AlexaChannelController/AlexaChannelControllerInterfaces/include/acsdk/AlexaChannelControllerInterfaces/ChannelControllerInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/AlexaChannelController/AlexaChannelControllerInterfaces/include/acsdk/AlexaChannelControllerInterfaces/ChannelControllerInterface.h">
+<area shape="rect" id="node4" href="$_channel_controller_observer_interface_8h.html" title="ChannelControllerObserver\lInterface.h" alt="" coords="1276,139,1454,180"/>
+<area shape="rect" id="node5" href="$_channel_type_8h.html" title="ChannelType.h" alt="" coords="488,228,599,255"/>
+<area shape="rect" id="node6" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="456,377,632,419"/>
+<area shape="rect" id="node30" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="378,303,574,329"/>
+<area shape="rect" id="node8" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="792,467,968,508"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="467,556,682,597"/>
+<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="856,645,1032,687"/>
+<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1102,556,1278,597"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="783,556,976,597"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="45,735,221,776"/>
+<area shape="rect" id="node29" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1302,556,1478,597"/>
+<area shape="rect" id="node23" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1389,645,1565,687"/>
+<area shape="rect" id="node25" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1538,735,1714,776"/>
+</map>

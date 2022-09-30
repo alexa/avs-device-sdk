@@ -1,0 +1,29 @@
+<map id="/workplace/avs&#45;device&#45;sdk/shared/KWD/acsdkKWD/include/acsdkKWD/KWDComponent.h" name="/workplace/avs&#45;device&#45;sdk/shared/KWD/acsdkKWD/include/acsdkKWD/KWDComponent.h">
+<area shape="rect" id="node3" href="$_abstract_keyword_detector_8h.html" title="acsdkKWDImplementations\l/AbstractKeywordDetector.h" alt="" coords="405,109,592,151"/>
+<area shape="rect" id="node6" href="$_keyword_detector_state_notifier_interface_8h.html" title="acsdkKWDInterfaces\l/KeywordDetectorStateNotifier\lInterface.h" alt="" coords="25,199,225,255"/>
+<area shape="rect" id="node10" href="$_keyword_notifier_interface_8h.html" title="acsdkKWDInterfaces\l/KeywordNotifierInterface.h" alt="" coords="589,206,770,247"/>
+<area shape="rect" id="node14" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="147,407,346,448"/>
+<area shape="rect" id="node23" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="895,213,1118,240"/>
+<area shape="rect" id="node25" href="$acsdk_manufactory_2include_2acsdk_manufactory_2_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1009,503,1212,530"/>
+<area shape="rect" id="node26" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="2602,117,2813,143"/>
+<area shape="rect" id="node48" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="2678,503,2860,530"/>
+<area shape="rect" id="node49" href="$_optional_import_8h.html" title="acsdkManufactory/Optional\lImport.h" alt="" coords="2884,496,3065,537"/>
+<area shape="rect" id="node9" href="$_key_word_detector_state_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordDetectorStateObserver\lInterface.h" alt="" coords="60,303,275,359"/>
+<area shape="rect" id="node11" href="$_key_word_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/KeyWordObserverInterface.h" alt="" coords="401,310,596,351"/>
+<area shape="rect" id="node7" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="620,310,782,351"/>
+<area shape="rect" id="node15" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="60,585,225,627"/>
+<area shape="rect" id="node19" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="180,496,345,537"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1222,675,1398,716"/>
+<area shape="rect" id="node27" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="2007,206,2182,247"/>
+<area shape="rect" id="node50" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="2620,206,2795,247"/>
+<area shape="rect" id="node30" href="$_type_index_8h.html" title="AVSCommon/Utils/TypeIndex.h" alt="" coords="1667,593,1876,619"/>
+<area shape="rect" id="node35" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="1952,496,2127,537"/>
+<area shape="rect" id="node36" href="$_abstract_recipe_8h.html" title="acsdkManufactory/internal\l/AbstractRecipe.h" alt="" coords="2151,496,2326,537"/>
+<area shape="rect" id="node37" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="1824,310,1999,351"/>
+<area shape="rect" id="node33" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1684,675,1860,716"/>
+<area shape="rect" id="node34" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="1473,675,1660,716"/>
+<area shape="rect" id="node44" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="2378,585,2552,627"/>
+<area shape="rect" id="node45" href="$_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="1324,407,1499,448"/>
+<area shape="rect" id="node46" href="$_shared_pointer_cache_8h.html" title="acsdkManufactory/internal\l/SharedPointerCache.h" alt="" coords="1999,407,2174,448"/>
+<area shape="rect" id="node47" href="$acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="2554,407,2728,448"/>
+</map>

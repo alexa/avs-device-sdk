@@ -1,6 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/Timer.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Alerts/acsdkAlerts/include/acsdkAlerts/Timer.h">
-<area shape="rect" id="node2" href="$_alerts_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/AlertsCapability\lAgent.cpp" alt="" coords="5,124,219,195"/>
-<area shape="rect" id="node3" href="$_s_q_lite_alert_storage_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Storage\l/SQLiteAlertStorage.cpp" alt="" coords="243,124,410,195"/>
-<area shape="rect" id="node4" href="$capabilities_2_alerts_2acsdk_alerts_2src_2_timer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/src/Timer.cpp" alt="" coords="435,131,613,187"/>
-<area shape="rect" id="node5" href="$_timer_alert_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/TimerAlertTest.cpp" alt="" coords="638,131,874,187"/>
+<area shape="rect" id="node2" href="$_timer_alert_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Alerts\l/acsdkAlerts/test/TimerAlertTest.cpp" alt="" coords="5,124,241,180"/>
 </map>

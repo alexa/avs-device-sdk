@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1hold_to_talk_button.html" title="alexaClientSDK::integration\l::test::holdToTalkButton" alt="" coords="5,5,188,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1_h_t_t_p2_request_interface.html" title="alexaClientSDK::avsCommon\l::utils::http2::HTTP2RequestInterface" alt="" coords="5,93,247,134"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1transport_1_1test_1_1_mock_exchange_handler_context_1_1_h_t_t_p2_request.html" title="alexaClientSDK::acl\l::transport::test::MockExchange\lHandlerContext::HTTP2Request" alt="" coords="295,5,507,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1http2_1_1test_1_1_mock_h_t_t_p2_request.html" title="alexaClientSDK::avsCommon\l::utils::http2::test::MockHTTP2\lRequest" alt="" coords="299,85,502,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1libcurl_utils_1_1_libcurl_h_t_t_p2_request.html" title="alexaClientSDK::avsCommon\l::utils::libcurlUtils::\lLibcurlHTTP2Request" alt="" coords="302,165,499,221"/>
 </map>

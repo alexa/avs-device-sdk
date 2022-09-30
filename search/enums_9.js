@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['layout_24000',['Layout',['../structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_audio_format.html#adb010268af911ce6cb96b3172030f679',1,'alexaClientSDK::avsCommon::utils::AudioFormat']]],
-  ['level_24001',['Level',['../namespacealexa_client_s_d_k_1_1avs_common_1_1utils_1_1logger.html#a4707ccb25a60922c47a5d8ee257b85e6',1,'alexaClientSDK::avsCommon::utils::logger']]],
-  ['location_24002',['Location',['../classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_metrics.html#a8c28be1da20606a37e7a56d54ad1bb63',1,'alexaClientSDK::avsCommon::utils::Metrics']]]
+  ['keystroke',['Keystroke',['../namespacealexa_client_s_d_k_1_1acsdk_alexa_keypad_controller_interfaces.html#a5f1abeb9f91f740030d4feb926c31114',1,'alexaClientSDK::acsdkAlexaKeypadControllerInterfaces']]],
+  ['keytype',['KeyType',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html#a8dba8c0444a0cc2aaed5b8353c513eea',1,'alexaClientSDK::avsCommon::sdkInterfaces::storage::MiscStorageInterface']]],
+  ['keyworddetectorstate',['KeyWordDetectorState',['../classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_key_word_detector_state_observer_interface.html#a21803055867165b26a00c12c65aa04b9',1,'alexaClientSDK::avsCommon::sdkInterfaces::KeyWordDetectorStateObserverInterface']]]
 ];

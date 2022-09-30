@@ -1,0 +1,16 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/include/acsdkAssetsCommon/CurlWrapper.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/include/acsdkAssetsCommon/CurlWrapper.h">
+<area shape="rect" id="node2" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1107,124,1299,165"/>
+<area shape="rect" id="node7" href="$_result_8h.html" title="AVSCommon/Utils/Error\l/Result.h" alt="" coords="1373,124,1539,165"/>
+<area shape="rect" id="node11" href="$_download_chunk_queue_8h.html" title="DownloadChunkQueue.h" alt="" coords="291,221,458,247"/>
+<area shape="rect" id="node17" href="$_download_stream_8h.html" title="DownloadStream.h" alt="" coords="848,221,981,247"/>
+<area shape="rect" id="node19" href="$_response_sink_8h.html" title="ResponseSink.h" alt="" coords="701,131,819,158"/>
+<area shape="rect" id="node29" href="$acsdk_assets_common_2include_2acsdk_assets_common_2_curl_progress_callback_interface_8h.html" title="acsdkAssetsCommon/CurlProgress\lCallbackInterface.h" alt="" coords="1831,124,2062,165"/>
+<area shape="rect" id="node30" href="$_result_code_8h.html" title="acsdkAssetsInterfaces\l/ResultCode.h" alt="" coords="2086,124,2242,165"/>
+<area shape="rect" id="node5" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="1208,213,1400,255"/>
+<area shape="rect" id="node15" href="$_data_chunk_8h.html" title="DataChunk.h" alt="" coords="5,310,104,337"/>
+<area shape="rect" id="node20" href="$_davs_request_8h.html" title="acsdkAssetsInterfaces\l/DavsRequest.h" alt="" coords="495,303,651,344"/>
+<area shape="rect" id="node27" href="$_vendable_artifact_8h.html" title="acsdkAssetsInterfaces\l/VendableArtifact.h" alt="" coords="566,213,722,255"/>
+<area shape="rect" id="node23" href="$_artifact_request_8h.html" title="ArtifactRequest.h" alt="" coords="413,392,537,419"/>
+<area shape="rect" id="node26" href="$_region_8h.html" title="Region.h" alt="" coords="625,392,700,419"/>
+<area shape="rect" id="node25" href="$_type_8h.html" title="Type.h" alt="" coords="389,467,451,493"/>
+</map>

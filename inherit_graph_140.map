@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1afml_1_1interrupt_model_1_1_interrupt_model_configuration.html" title="alexaClientSDK::afml\l::interruptModel::Interrupt\lModelConfiguration" alt="" coords="5,5,173,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1_abstract_keyword_detector.html" title="alexaClientSDK::acsdkKWDImplementations\l::AbstractKeywordDetector" alt="" coords="5,5,292,47"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_k_w_d_implementations_1_1test_1_1_mock_key_word_detector.html" title="alexaClientSDK::acsdkKWDImplementations\l::test::MockKeyWordDetector" alt="" coords="340,5,627,47"/>
 </map>

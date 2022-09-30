@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo" name="alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface::AlertInfo">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::string \&gt;" alt="" coords="34,5,231,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; alexaClient\lSDK::acsdkAlertsInterfaces\l::AlertObserverInterface::OriginalTime \&gt;" alt="" coords="5,86,260,157"/>
+</map>

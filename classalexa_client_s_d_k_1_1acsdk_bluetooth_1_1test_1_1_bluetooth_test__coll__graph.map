@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::acsdkBluetooth::test::BluetoothTest" name="alexaClientSDK::acsdkBluetooth::test::BluetoothTest">
+<area shape="rect" id="node2" href="$classtesting_1_1_test.html" title="testing::Test" alt="" coords="132,5,227,32"/>
 <area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html" title="alexaClientSDK::acsdkManufactory\l::Annotated\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::\lendpoints::DefaultEndpointAnnotation,\l alexaClientSDK::avsCommon::sdkInterfaces\l::endpoints::EndpointCapabilitiesRegistrarInterface \&gt;" alt="" coords="15,57,344,157"/>
 <area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1_annotated.html" title="alexaClientSDK::acsdkManufactory\l::Annotated\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::\lAudioFocusAnnotation, alexaClientSDK\l::avsCommon::sdkInterfaces::FocusManagerInterface \&gt;" alt="" coords="5,181,353,267"/>
 </map>

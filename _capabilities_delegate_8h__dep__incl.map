@@ -1,10 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/CapabilitiesDelegate.h">
-<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,131,260,187"/>
-<area shape="rect" id="node3" href="$_default_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient\lComponent.cpp" alt="" coords="284,124,488,195"/>
-<area shape="rect" id="node4" href="$_capabilities_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="512,131,705,187"/>
-<area shape="rect" id="node5" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="729,131,952,187"/>
-<area shape="rect" id="node6" href="$_core_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/core/acsdkCore/src\l/CoreComponent.cpp" alt="" coords="975,131,1141,187"/>
-<area shape="rect" id="node7" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="1165,131,1381,187"/>
-<area shape="rect" id="node9" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1279,243,1557,284"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="1058,243,1255,284"/>
+<area shape="rect" id="node2" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="5,139,228,195"/>
+<area shape="rect" id="node3" href="$_common_2_lib_sample_app_2include_2_sample_app_2_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/Common/LibSampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="253,131,469,202"/>
+<area shape="rect" id="node4" href="$_i_p_c_server_sample_application_2_lib_i_p_c_server_sample_app_2include_2_i_p_c_server_sample_app_2_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/SampleApplication.h" alt="" coords="493,124,770,209"/>
 </map>

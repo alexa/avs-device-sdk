@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::CallStateObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::CallStateObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="277,5,507,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_app_1_1_interaction_manager.html" title="alexaClientSDK::sampleApp\l::InteractionManager" alt="" coords="298,71,486,112"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1mrm_1_1_m_r_m_capability_agent.html" title="alexaClientSDK::capability\lAgents::mrm::MRMCapabilityAgent" alt="" coords="281,5,510,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1common_1_1_interaction_manager.html" title="alexaClientSDK::sampleApplications\l::common::InteractionManager" alt="" coords="277,71,513,112"/>
 </map>

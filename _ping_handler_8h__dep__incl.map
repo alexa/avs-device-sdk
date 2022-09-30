@@ -1,10 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h" name="/workplace/avs&#45;device&#45;sdk/ACL/include/ACL/Transport/PingHandler.h">
-<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="569,109,763,165"/>
-<area shape="rect" id="node5" href="$_h_t_t_p2_transport_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2Transport.cpp" alt="" coords="5,213,164,269"/>
-<area shape="rect" id="node8" href="$_ping_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/PingHandler.cpp" alt="" coords="1208,213,1367,269"/>
-<area shape="rect" id="node3" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="188,213,363,269"/>
-<area shape="rect" id="node4" href="$_exchange_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/ExchangeHandler.cpp" alt="" coords="387,213,545,269"/>
-<area shape="rect" id="node6" href="$_h_t_t_p2_transport_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/HTTP2TransportFactory.cpp" alt="" coords="570,213,762,269"/>
-<area shape="rect" id="node7" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="787,213,985,269"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="1009,213,1184,269"/>
+<area shape="rect" id="node2" href="$_h_t_t_p2_transport_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/include/ACL\l/Transport/HTTP2Transport.h" alt="" coords="5,109,199,165"/>
+<area shape="rect" id="node3" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="15,213,189,269"/>
 </map>

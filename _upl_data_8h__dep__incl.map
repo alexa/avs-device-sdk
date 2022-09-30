@@ -1,12 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/UplData.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics/UplData.h">
-<area shape="rect" id="node2" href="$_upl_calculator_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Metrics/UplCalculatorInterface.h" alt="" coords="556,124,771,195"/>
-<area shape="rect" id="node3" href="$_base_upl_calculator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/BaseUplCalculator.h" alt="" coords="28,243,267,299"/>
-<area shape="rect" id="node7" href="$_upl_metric_sink_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/UplMetricSink.cpp" alt="" coords="625,347,803,403"/>
-<area shape="rect" id="node8" href="$_media_upl_calculator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/MediaUplCalculator.h" alt="" coords="291,243,534,299"/>
-<area shape="rect" id="node9" href="$_tts_upl_calculator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/TtsUplCalculator.h" alt="" coords="793,243,1019,299"/>
-<area shape="rect" id="node11" href="$_upl_data_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Metrics/UplData.cpp" alt="" coords="1094,131,1262,187"/>
-<area shape="rect" id="node10" href="$_upl_metric_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/UplMetricSink.h" alt="" coords="558,243,769,299"/>
-<area shape="rect" id="node4" href="$_base_upl_calculator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/BaseUplCalculator.cpp" alt="" coords="5,347,188,403"/>
-<area shape="rect" id="node5" href="$_media_upl_calculator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/MediaUplCalculator.cpp" alt="" coords="213,347,399,403"/>
-<area shape="rect" id="node6" href="$_tts_upl_calculator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/src/TtsUplCalculator.cpp" alt="" coords="424,347,601,403"/>
+<area shape="rect" id="node2" href="$_upl_calculator_interface_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/include/AVSCommon/Utils\l/Metrics/UplCalculatorInterface.h" alt="" coords="428,124,643,195"/>
+<area shape="rect" id="node3" href="$_base_upl_calculator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/BaseUplCalculator.h" alt="" coords="5,243,244,299"/>
+<area shape="rect" id="node4" href="$_media_upl_calculator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/MediaUplCalculator.h" alt="" coords="269,243,511,299"/>
+<area shape="rect" id="node5" href="$_tts_upl_calculator_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/TtsUplCalculator.h" alt="" coords="770,243,997,299"/>
+<area shape="rect" id="node6" href="$_upl_metric_sink_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Metrics/UplCalculator\l/include/Metrics/UplMetricSink.h" alt="" coords="535,243,746,299"/>
 </map>

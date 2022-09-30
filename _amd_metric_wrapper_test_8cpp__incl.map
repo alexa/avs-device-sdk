@@ -1,0 +1,29 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/test/AmdMetricWrapperTest.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/test/AmdMetricWrapperTest.cpp">
+<area shape="rect" id="node2" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="2221,631,2401,672"/>
+<area shape="rect" id="node13" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1255,124,1350,151"/>
+<area shape="rect" id="node47" href="$_test_util_8h.html" title="TestUtil.h" alt="" coords="2206,817,2285,843"/>
+<area shape="rect" id="node49" href="$_amd_metric_wrapper_8h.html" title="acsdkAssetsCommon/AmdMetric\lWrapper.h" alt="" coords="2520,541,2739,583"/>
+<area shape="rect" id="node3" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="2351,720,2531,761"/>
+<area shape="rect" id="node6" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="2647,809,2827,851"/>
+<area shape="rect" id="node9" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_metrics_2_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="2443,809,2623,851"/>
+<area shape="rect" id="node10" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2903,817,3099,843"/>
+<area shape="rect" id="node8" href="$_data_type_8h.html" title="AVSCommon/Utils/Metrics\l/DataType.h" alt="" coords="2611,899,2791,940"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2919,899,3095,940"/>
+<area shape="rect" id="node16" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="1037,541,1168,583"/>
+<area shape="rect" id="node30" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="1523,638,1675,665"/>
+<area shape="rect" id="node31" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1011,720,1141,761"/>
+<area shape="rect" id="node34" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="1516,281,1673,307"/>
+<area shape="rect" id="node36" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="213,199,374,225"/>
+<area shape="rect" id="node38" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="702,459,845,486"/>
+<area shape="rect" id="node41" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1029,199,1155,225"/>
+<area shape="rect" id="node42" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="1311,459,1457,486"/>
+<area shape="rect" id="node44" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="520,549,677,575"/>
+<area shape="rect" id="node45" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1282,199,1441,225"/>
+<area shape="rect" id="node17" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="563,809,693,851"/>
+<area shape="rect" id="node32" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1011,631,1141,672"/>
+<area shape="rect" id="node33" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="563,631,693,672"/>
+<area shape="rect" id="node35" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="1532,452,1673,493"/>
+<area shape="rect" id="node37" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="285,363,416,404"/>
+<area shape="rect" id="node40" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="159,273,313,315"/>
+<area shape="rect" id="node39" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="701,541,845,583"/>
+</map>

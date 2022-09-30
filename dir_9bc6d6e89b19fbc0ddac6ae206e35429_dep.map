@@ -1,0 +1,10 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/InputController/AlexaInputController/test" name="/workplace/avs&#45;device&#45;sdk/capabilities/InputController/AlexaInputController/test">
+<area shape="rect" id="node1" href="dir_9bc6d6e89b19fbc0ddac6ae206e35429.html" title="test" alt="" coords="83,52,155,100"/>
+<area shape="rect" id="node2" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="23,148,125,196"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000442_000014.html" title="8" alt="" coords="97,127,105,142"/>
+<area shape="rect" id="node3" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="5,244,143,292"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000442_000341.html" title="2" alt="" coords="118,229,126,244"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000014_000341.html" title="138" alt="" coords="63,217,84,232"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000341_000014.html" title="165" alt="" coords="64,208,85,222"/>
+<area shape="rect" id="clust1" href="dir_e4dfb2f228bfd06fa020d0779779cedb.html" title="AlexaInputController" alt="" coords="50,16,190,111"/>
+</map>

@@ -1,16 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/UUIDGeneration/UUIDGeneration.h">
-<area shape="rect" id="node2" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,131,260,187"/>
-<area shape="rect" id="node3" href="$_a_v_s_message_header_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/AVSMessageHeader.cpp" alt="" coords="285,131,469,187"/>
-<area shape="rect" id="node4" href="$_capability_agent_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/CapabilityAgent.cpp" alt="" coords="493,131,677,187"/>
-<area shape="rect" id="node5" href="$_event_builder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/EventBuilder.cpp" alt="" coords="701,131,885,187"/>
-<area shape="rect" id="node6" href="$_exception_encountered_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/src\l/ExceptionEncounteredSender.cpp" alt="" coords="909,131,1132,187"/>
-<area shape="rect" id="node7" href="$_exception_encountered_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/ExceptionEncounteredSenderTest.cpp" alt="" coords="1156,131,1405,187"/>
-<area shape="rect" id="node8" href="$_u_u_i_d_generation_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/UUIDGeneration.cpp" alt="" coords="1430,131,1601,187"/>
-<area shape="rect" id="node9" href="$_u_u_i_d_generation_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/UUIDGenerationTest.cpp" alt="" coords="1625,131,1825,187"/>
-<area shape="rect" id="node10" href="$_blue_z_device_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/BluetoothImplementations\l/BlueZ/src/BlueZDeviceManager.cpp" alt="" coords="1848,131,2084,187"/>
-<area shape="rect" id="node11" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="2108,131,2331,187"/>
-<area shape="rect" id="node12" href="$_audio_input_processor_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/src/AudioInputProcessor.cpp" alt="" coords="2355,131,2575,187"/>
-<area shape="rect" id="node13" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="2599,124,2797,195"/>
-<area shape="rect" id="node14" href="$_software_info_send_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/src/SoftwareInfoSend\lRequest.cpp" alt="" coords="2821,124,3023,195"/>
-<area shape="rect" id="node15" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="3047,139,3325,180"/>
+<area shape="rect" id="node2" href="$_exception_encountered_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/AVS/test\l/ExceptionEncounteredSenderTest.cpp" alt="" coords="5,131,255,187"/>
+<area shape="rect" id="node3" href="$_u_u_i_d_generation_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/UUIDGenerationTest.cpp" alt="" coords="278,131,478,187"/>
+<area shape="rect" id="node4" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="501,124,700,195"/>
 </map>

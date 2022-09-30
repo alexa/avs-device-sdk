@@ -1,11 +1,28 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockSettingProtocol.h" name="/workplace/avs&#45;device&#45;sdk/Settings/test/Settings/MockSettingProtocol.h">
-<area shape="rect" id="node5" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="1269,109,1432,151"/>
-<area shape="rect" id="node8" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="661,199,856,240"/>
-<area shape="rect" id="node24" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1439,206,1623,233"/>
-<area shape="rect" id="node25" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1388,377,1556,419"/>
-<area shape="rect" id="node15" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="220,288,415,329"/>
-<area shape="rect" id="node20" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="830,288,1005,329"/>
-<area shape="rect" id="node17" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="241,385,340,411"/>
-<area shape="rect" id="node19" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="175,467,289,493"/>
-<area shape="rect" id="node21" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="802,377,1033,419"/>
+<area shape="rect" id="node4" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="3035,109,3149,136"/>
+<area shape="rect" id="node37" href="$_setting_protocol_interface_8h.html" title="Settings/SettingProtocol\lInterface.h" alt="" coords="1275,452,1437,493"/>
+<area shape="rect" id="node5" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="3483,370,3645,397"/>
+<area shape="rect" id="node8" href="$gmock-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;internal&#45;utils.h" alt="" coords="3099,452,3250,493"/>
+<area shape="rect" id="node23" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="2734,459,2922,486"/>
+<area shape="rect" id="node25" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="3603,273,3768,315"/>
+<area shape="rect" id="node27" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="3009,184,3175,225"/>
+<area shape="rect" id="node29" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="2293,370,2467,397"/>
+<area shape="rect" id="node33" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="3308,184,3473,225"/>
+<area shape="rect" id="node34" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="2427,273,2592,315"/>
+<area shape="rect" id="node35" href="$gmock-more-actions_8h.html" title="gmock/gmock&#45;more&#45;actions.h" alt="" coords="3599,191,3793,218"/>
+<area shape="rect" id="node36" href="$gmock-more-matchers_8h.html" title="gmock/gmock&#45;more&#45;matchers.h" alt="" coords="2547,191,2754,218"/>
+<area shape="rect" id="node12" href="$gmock-port_8h.html" title="gmock/internal/gmock\l&#45;port.h" alt="" coords="3306,631,3457,672"/>
+<area shape="rect" id="node11" href="$gmock-generated-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;generated&#45;internal&#45;utils.h" alt="" coords="3227,541,3395,583"/>
+<area shape="rect" id="node21" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="2353,549,2447,575"/>
+<area shape="rect" id="node16" href="$gtest-linked__ptr_8h.html" title="gtest/internal/gtest\l&#45;linked_ptr.h" alt="" coords="3213,720,3344,761"/>
+<area shape="rect" id="node17" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="3120,809,3251,851"/>
+<area shape="rect" id="node26" href="$internal_2custom_2gmock-generated-actions_8h.html" title="gmock/internal/custom\l/gmock&#45;generated&#45;actions.h" alt="" coords="3723,363,3906,404"/>
+<area shape="rect" id="node28" href="$gmock-spec-builders_8h.html" title="gmock/gmock&#45;spec&#45;builders.h" alt="" coords="2935,281,3131,307"/>
+<area shape="rect" id="node32" href="$internal_2custom_2gmock-matchers_8h.html" title="gmock/internal/custom\l/gmock&#45;matchers.h" alt="" coords="2301,452,2456,493"/>
+<area shape="rect" id="node39" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="507,541,701,583"/>
+<area shape="rect" id="node49" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1752,549,1936,575"/>
+<area shape="rect" id="node50" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1357,541,1525,583"/>
+<area shape="rect" id="node46" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="776,631,971,672"/>
+<area shape="rect" id="node47" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="507,631,701,672"/>
+<area shape="rect" id="node48" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1198,631,1373,672"/>
 </map>

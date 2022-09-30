@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::visualTimeoutManager::test::MockTimerFactory" name="alexaClientSDK::visualTimeoutManager::test::MockTimerFactory">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_factory_interface.html" title="A factory for creating TimerDelegateInterface. " alt="" coords="252,5,463,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1visual_timeout_manager_1_1test_1_1_warp_timer.html" title="alexaClientSDK::visualTimeout\lManager::test::WarpTimer" alt="" coords="255,86,459,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::timing\l::TimerDelegateInterface" alt="" coords="5,79,203,135"/>
+</map>

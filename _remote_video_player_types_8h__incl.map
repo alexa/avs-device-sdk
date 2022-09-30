@@ -1,0 +1,14 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/AlexaRemoteVideoPlayer/AlexaRemoteVideoPlayerInterfaces/include/acsdk/AlexaRemoteVideoPlayerInterfaces/RemoteVideoPlayerTypes.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/AlexaRemoteVideoPlayer/AlexaRemoteVideoPlayerInterfaces/include/acsdk/AlexaRemoteVideoPlayerInterfaces/RemoteVideoPlayerTypes.h">
+<area shape="rect" id="node5" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1485,228,1681,255"/>
+<area shape="rect" id="node29" href="$_video_entity_types_8h.html" title="acsdk/VideoContent\l/VideoEntityTypes.h" alt="" coords="1649,139,1789,180"/>
+<area shape="rect" id="node6" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1495,303,1671,344"/>
+<area shape="rect" id="node7" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="993,392,1169,433"/>
+<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="974,481,1189,523"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="827,571,1003,612"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="323,481,499,523"/>
+<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="705,481,898,523"/>
+<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="845,660,1021,701"/>
+<area shape="rect" id="node28" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1299,481,1475,523"/>
+<area shape="rect" id="node22" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="475,571,651,612"/>
+<area shape="rect" id="node24" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="645,660,821,701"/>
+</map>

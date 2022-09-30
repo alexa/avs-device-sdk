@@ -1,0 +1,34 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/APLCapabilityCommon/APLCapabilityCommonInterfaces/test/include/acsdk/APLCapabilityCommonInterfaces/MockAPLDocumentObserver.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/APLCapabilityCommon/APLCapabilityCommonInterfaces/test/include/acsdk/APLCapabilityCommonInterfaces/MockAPLDocumentObserver.h">
+<area shape="rect" id="node2" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="1321,139,1435,165"/>
+<area shape="rect" id="node37" href="$_a_p_l_command_execution_event_8h.html" title="acsdk/APLCapabilityCommon\lInterfaces/APLCommandExecution\lEvent.h" alt="" coords="3082,675,3309,731"/>
+<area shape="rect" id="node41" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capability7f200fc7fa76795749479b521a081aea.html" title="acsdk/APLCapabilityCommon\lInterfaces/APLDocumentObserver\lInterface.h" alt="" coords="2444,571,2667,627"/>
+<area shape="rect" id="node3" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="1756,399,1917,426"/>
+<area shape="rect" id="node7" href="$gmock-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;internal&#45;utils.h" alt="" coords="995,481,1145,523"/>
+<area shape="rect" id="node23" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="1323,489,1511,515"/>
+<area shape="rect" id="node25" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="1687,303,1853,344"/>
+<area shape="rect" id="node27" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="1106,213,1271,255"/>
+<area shape="rect" id="node29" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="555,399,729,426"/>
+<area shape="rect" id="node33" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="1295,213,1461,255"/>
+<area shape="rect" id="node34" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="559,303,725,344"/>
+<area shape="rect" id="node35" href="$gmock-more-actions_8h.html" title="gmock/gmock&#45;more&#45;actions.h" alt="" coords="1538,221,1733,247"/>
+<area shape="rect" id="node36" href="$gmock-more-matchers_8h.html" title="gmock/gmock&#45;more&#45;matchers.h" alt="" coords="676,221,883,247"/>
+<area shape="rect" id="node11" href="$gmock-port_8h.html" title="gmock/internal/gmock\l&#45;port.h" alt="" coords="1320,682,1471,723"/>
+<area shape="rect" id="node10" href="$gmock-generated-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;generated&#45;internal&#45;utils.h" alt="" coords="1107,578,1275,619"/>
+<area shape="rect" id="node21" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="684,585,779,612"/>
+<area shape="rect" id="node15" href="$gtest-linked__ptr_8h.html" title="gtest/internal/gtest\l&#45;linked_ptr.h" alt="" coords="1158,779,1289,820"/>
+<area shape="rect" id="node16" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="1006,868,1137,909"/>
+<area shape="rect" id="node20" href="$custom_2gmock-port_8h.html" title="gmock/internal/custom\l/gmock&#45;port.h" alt="" coords="1465,779,1619,820"/>
+<area shape="rect" id="node26" href="$internal_2custom_2gmock-generated-actions_8h.html" title="gmock/internal/custom\l/gmock&#45;generated&#45;actions.h" alt="" coords="2225,392,2408,433"/>
+<area shape="rect" id="node28" href="$gmock-spec-builders_8h.html" title="gmock/gmock&#45;spec&#45;builders.h" alt="" coords="1127,310,1323,337"/>
+<area shape="rect" id="node32" href="$internal_2custom_2gmock-matchers_8h.html" title="gmock/internal/custom\l/gmock&#45;matchers.h" alt="" coords="435,481,590,523"/>
+<area shape="rect" id="node39" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3185,786,3381,813"/>
+<area shape="rect" id="node40" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3195,868,3371,909"/>
+<area shape="rect" id="node43" href="$_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="2419,779,2611,820"/>
+<area shape="rect" id="node44" href="$_g_u_i_activity_event_8h.html" title="AVSCommon/SDKInterfaces\l/GUIActivityEvent.h" alt="" coords="2275,682,2467,723"/>
+<area shape="rect" id="node45" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capabilitye5ba0d6bd0951a303aa8f0c0ec68d873.html" title="APLDocumentSessionInterface.h" alt="" coords="2754,689,2970,716"/>
+<area shape="rect" id="node50" href="$_a_p_l_event_payload_8h.html" title="APLEventPayload.h" alt="" coords="2686,786,2825,813"/>
+<area shape="rect" id="node46" href="$_presentation_types_8h.html" title="acsdk/PresentationOrchestrator\lInterfaces/PresentationTypes.h" alt="" coords="2863,868,3069,909"/>
+<area shape="rect" id="node47" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capabilitye1a1935e14bed63e8e7b6cc49ab0bd8d.html" title="PresentationSession.h" alt="" coords="1996,875,2149,902"/>
+<area shape="rect" id="node48" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capability8d707dd15ff611737fe63975aa8c3c16.html" title="PresentationOptions.h" alt="" coords="2900,786,3051,813"/>
+<area shape="rect" id="node49" href="$_presentation_token_8h.html" title="PresentationToken.h" alt="" coords="2644,875,2787,902"/>
+</map>

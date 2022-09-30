@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['properties_20api_24734',['Properties API',['../group___properties_a_p_i.html',1,'']]],
-  ['properties_20implementation_24735',['Properties Implementation',['../group___properties_i_m_p_l.html',1,'']]]
+  ['initial_20values_20for_20each_20setting_20type_2e',['initial values for each setting type.',['../group___define.html',1,'']]]
 ];

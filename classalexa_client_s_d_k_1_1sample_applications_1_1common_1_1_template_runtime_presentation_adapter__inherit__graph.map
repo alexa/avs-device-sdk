@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::sampleApplications::common::TemplateRuntimePresentationAdapter" name="alexaClientSDK::sampleApplications::common::TemplateRuntimePresentationAdapter">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1presentation_orchestrator_interfaces_1_1_presentation_observer_interface.html" title="alexaClientSDK::presentation\lOrchestratorInterfaces::\lPresentationObserverInterface" alt="" coords="30,5,229,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1template_runtime_interfaces_1_1_template_runtime_observer_interface.html" title="alexaClientSDK::template\lRuntimeInterfaces::TemplateRuntime\lObserverInterface" alt="" coords="9,85,249,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_audio_player_interfaces_1_1_audio_player_observer_interface.html" title="alexaClientSDK::acsdkAudio\lPlayerInterfaces::AudioPlayerObserver\lInterface" alt="" coords="5,165,253,221"/>
+</map>

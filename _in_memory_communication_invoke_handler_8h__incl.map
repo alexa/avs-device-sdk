@@ -1,0 +1,15 @@
+<map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkCommunication/include/acsdkCommunication/InMemoryCommunicationInvokeHandler.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkCommunication/include/acsdkCommunication/InMemoryCommunicationInvokeHandler.h">
+<area shape="rect" id="node5" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="795,124,971,165"/>
+<area shape="rect" id="node28" href="$_communication_invoke_handler_interface_8h.html" title="acsdkCommunicationInterfaces\l/CommunicationInvokeHandlerInterface.h" alt="" coords="1538,124,1801,165"/>
+<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="420,213,634,255"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="26,303,202,344"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1164,213,1340,255"/>
+<area shape="rect" id="node25" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="169,213,362,255"/>
+<area shape="rect" id="node26" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1375,392,1551,433"/>
+<area shape="rect" id="node27" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="795,213,971,255"/>
+<area shape="rect" id="node21" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1015,303,1191,344"/>
+<area shape="rect" id="node23" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="452,392,628,433"/>
+<area shape="rect" id="node29" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="1750,213,1915,255"/>
+<area shape="rect" id="node31" href="$_function_invoker_interface_8h.html" title="FunctionInvokerInterface.h" alt="" coords="1497,221,1674,247"/>
+<area shape="rect" id="node30" href="$_result_8h.html" title="Result.h" alt="" coords="1797,310,1868,337"/>
+</map>

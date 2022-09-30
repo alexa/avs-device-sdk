@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilityChangeNotifier.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/CapabilityChangeNotifier.h">
-<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,117,235,173"/>
-<area shape="rect" id="node3" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="259,109,458,180"/>
-<area shape="rect" id="node4" href="$_system_capability_provider_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SystemCapability\lProviderTest.cpp" alt="" coords="482,109,686,180"/>
-<area shape="rect" id="node5" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="710,117,882,173"/>
-<area shape="rect" id="node6" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="907,109,1115,180"/>
-<area shape="rect" id="node7" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1139,117,1347,173"/>
+<area shape="rect" id="node2" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="5,109,204,180"/>
+<area shape="rect" id="node3" href="$_system_capability_provider_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/SystemCapability\lProviderTest.cpp" alt="" coords="228,109,432,180"/>
 </map>

@@ -1,16 +1,14 @@
-<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
-<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="1157,124,1349,165"/>
-<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="509,213,701,255"/>
-<area shape="rect" id="node12" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="776,213,991,255"/>
-<area shape="rect" id="node18" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="255,124,458,165"/>
-<area shape="rect" id="node21" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1375,131,1586,158"/>
-<area shape="rect" id="node23" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="42,221,255,247"/>
-<area shape="rect" id="node24" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2025,124,2192,165"/>
-<area shape="rect" id="node27" href="$_c_b_l_auth_delegate_configuration_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lConfiguration.h" alt="" coords="844,124,1080,165"/>
-<area shape="rect" id="node28" href="$_c_b_l_auth_delegate_storage_interface_8h.html" title="CBLAuthDelegate/CBLAuthDelegate\lStorageInterface.h" alt="" coords="1796,213,2032,255"/>
-<area shape="rect" id="node29" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="2107,213,2351,255"/>
-<area shape="rect" id="node20" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1168,221,1295,247"/>
-<area shape="rect" id="node22" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1522,213,1722,255"/>
-<area shape="rect" id="node25" href="$_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="2353,303,2571,344"/>
-<area shape="rect" id="node26" href="$_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="2425,213,2648,255"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Authorization/CBLAuthDelegate/include/CBLAuthDelegate/CBLAuthDelegate.h">
+<area shape="rect" id="node9" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="248,124,440,165"/>
+<area shape="rect" id="node10" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="80,213,272,255"/>
+<area shape="rect" id="node12" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="925,303,1139,344"/>
+<area shape="rect" id="node18" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1316,213,1519,255"/>
+<area shape="rect" id="node21" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="440,221,651,247"/>
+<area shape="rect" id="node23" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="1545,310,1759,337"/>
+<area shape="rect" id="node24" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="1645,124,1811,165"/>
+<area shape="rect" id="node27" href="$_l_w_a_authorization_configuration_8h.html" title="acsdkAuthorization\l/LWA/LWAAuthorizationConfiguration.h" alt="" coords="930,124,1182,165"/>
+<area shape="rect" id="node20" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="774,310,901,337"/>
+<area shape="rect" id="node22" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="448,303,648,344"/>
+<area shape="rect" id="node25" href="$_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="1833,303,2052,344"/>
+<area shape="rect" id="node26" href="$_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="1814,213,2037,255"/>
 </map>

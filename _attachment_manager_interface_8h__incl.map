@@ -1,18 +1,19 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentManagerInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Attachment/AttachmentManagerInterface.h">
-<area shape="rect" id="node5" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="527,124,731,165"/>
-<area shape="rect" id="node8" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="248,213,452,255"/>
-<area shape="rect" id="node12" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="45,571,249,612"/>
-<area shape="rect" id="node11" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="375,303,541,344"/>
-<area shape="rect" id="node13" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1411,213,1577,255"/>
-<area shape="rect" id="node34" href="$_writer_policy_8h.html" title="AVSCommon/Utils/SDS\l/WriterPolicy.h" alt="" coords="1651,213,1817,255"/>
-<area shape="rect" id="node16" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1119,310,1263,337"/>
-<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="717,392,893,433"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="911,481,1087,523"/>
-<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="664,571,879,612"/>
-<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="859,660,1035,701"/>
-<area shape="rect" id="node26" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1269,571,1445,612"/>
-<area shape="rect" id="node32" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="903,571,1096,612"/>
-<area shape="rect" id="node33" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1531,749,1707,791"/>
-<area shape="rect" id="node29" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1153,660,1329,701"/>
-<area shape="rect" id="node30" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1153,749,1329,791"/>
+<area shape="rect" id="node5" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1495,124,1699,165"/>
+<area shape="rect" id="node8" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="278,213,482,255"/>
+<area shape="rect" id="node12" href="$_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentWriter.h" alt="" coords="94,571,298,612"/>
+<area shape="rect" id="node11" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="373,303,539,344"/>
+<area shape="rect" id="node13" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1515,213,1680,255"/>
+<area shape="rect" id="node36" href="$_writer_policy_8h.html" title="AVSCommon/Utils/SDS\l/WriterPolicy.h" alt="" coords="1813,213,1979,255"/>
+<area shape="rect" id="node16" href="$_shared_data_stream_8h.html" title="SharedDataStream.h" alt="" coords="1517,310,1661,337"/>
+<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1195,392,1371,433"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1195,481,1371,523"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="678,571,893,612"/>
+<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1187,660,1363,701"/>
+<area shape="rect" id="node26" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1488,571,1664,612"/>
+<area shape="rect" id="node33" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1118,571,1311,612"/>
+<area shape="rect" id="node34" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1312,749,1488,791"/>
+<area shape="rect" id="node35" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="917,571,1093,612"/>
+<area shape="rect" id="node30" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="835,660,1011,701"/>
+<area shape="rect" id="node31" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="835,749,1011,791"/>
 </map>

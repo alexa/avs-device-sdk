@@ -1,3 +1,3 @@
 <map id="alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester" name="alexaClientSDK::acsdkSampleApplicationCBLAuthRequester::SampleApplicationCBLAuthRequester">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1authorization_1_1cbl_auth_delegate_1_1_c_b_l_auth_requester_interface.html" title="alexaClientSDK::authorization\l::cblAuthDelegate::CBLAuthRequester\lInterface" alt="" coords="7,5,254,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_c_b_l_authorization_observer_interface.html" title="An observer interface used for callbacks when authorizing using CBL in LWAAuthorizationAdapterInterfa..." alt="" coords="5,5,276,61"/>
 </map>

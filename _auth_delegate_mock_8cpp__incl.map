@@ -1,0 +1,15 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/test/mocks/AuthDelegateMock.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkAssetsCommon/test/mocks/AuthDelegateMock.cpp">
+<area shape="rect" id="node5" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1239,124,1415,165"/>
+<area shape="rect" id="node29" href="$_auth_delegate_mock_8h.html" title="AuthDelegateMock.h" alt="" coords="445,221,589,247"/>
+<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1147,213,1362,255"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1576,303,1752,344"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1869,213,2045,255"/>
+<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1438,213,1631,255"/>
+<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="543,392,719,433"/>
+<area shape="rect" id="node28" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="947,213,1123,255"/>
+<area shape="rect" id="node22" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2208,303,2384,344"/>
+<area shape="rect" id="node24" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2088,392,2264,433"/>
+<area shape="rect" id="node31" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="664,303,856,344"/>
+<area shape="rect" id="node33" href="$_internet_connection_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/InternetConnectionObserverInterface.h" alt="" coords="259,303,509,344"/>
+<area shape="rect" id="node32" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="793,392,985,433"/>
+</map>

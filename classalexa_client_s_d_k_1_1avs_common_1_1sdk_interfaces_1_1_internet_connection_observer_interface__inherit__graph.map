@@ -1,4 +1,6 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::InternetConnectionObserverInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acl_1_1_a_v_s_connection_manager.html" title="alexaClientSDK::acl\l::AVSConnectionManager" alt="" coords="302,5,475,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html" title="alexaClientSDK::capability\lAgents::aip::AudioInputProcessor" alt="" coords="280,71,497,112"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer.html" title="alexaClientSDK::acsdkAlerts\l::renderer::Renderer" alt="" coords="293,71,485,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_assets_1_1davs_1_1_davs_client.html" title="alexaClientSDK::acsdkAssets\l::davs::DavsClient" alt="" coords="289,136,488,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1_audio_input_processor.html" title="alexaClientSDK::capability\lAgents::aip::AudioInputProcessor" alt="" coords="280,201,497,243"/>
 </map>

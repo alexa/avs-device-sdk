@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface" name="alexaClientSDK::acsdkAuthorizationInterfaces::lwa::LWAAuthorizationStorageInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_storage.html" title="A SQLite based version of LWAAuthorizationStorageInterface. " alt="" coords="320,5,555,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_stub_storage.html" title="alexaClientSDK::acsdkAuthorization\l::lwa::test::StubStorage" alt="" coords="320,71,555,112"/>
+</map>

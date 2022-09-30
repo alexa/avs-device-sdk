@@ -4,5 +4,5 @@
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="12,86,209,127"/>
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1_transport_observer_interface.html" title="alexaClientSDK::acl\l::TransportObserverInterface" alt="" coords="270,114,459,155"/>
 <area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1_message_consumer_interface.html" title="alexaClientSDK::acl\l::MessageConsumerInterface" alt="" coords="267,179,462,221"/>
-<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html" title="alexaClientSDK::avsCommon\l::utils::threading::Executor" alt="" coords="266,310,463,351"/>
+<area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1threading_1_1_executor.html" title="Single&#45;thread executor implementation. " alt="" coords="266,310,463,351"/>
 </map>

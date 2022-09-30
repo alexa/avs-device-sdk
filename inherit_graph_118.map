@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_notifications_1_1_notification_indicator_1_1_asset.html" title="alexaClientSDK::acsdkNotifications\l::NotificationIndicator::Asset" alt="" coords="5,5,236,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_property_validator_interface.html" title="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationPropertyValidator\lInterface\&lt; T \&gt;" alt="" coords="5,5,284,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_communication_1_1_always_true_communication_validator.html" title="alexaClientSDK::acsdkCommunication\l::AlwaysTrueCommunicationValidator\&lt; T \&gt;" alt="" coords="332,13,605,54"/>
 </map>

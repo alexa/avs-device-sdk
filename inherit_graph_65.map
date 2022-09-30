@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_contains_types_3_01_container_00_05a38f6ec23ed73b678231e4a700b7d27.html" title="alexaClientSDK::acsdkManufactory\l::internal::ContainsTypes\&lt;\l Container, Types... \&gt;::BoolValues\l\&lt; InTypes \&gt;" alt="" coords="5,5,236,76"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_alexa_video_recorder_interfaces_1_1_video_recorder_interface.html" title="alexaClientSDK::acsdkAlexa\lVideoRecorderInterfaces\l::VideoRecorderInterface" alt="" coords="5,5,196,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1sample_applications_1_1common_1_1_endpoint_alexa_video_recorder_handler.html" title="alexaClientSDK::sampleApplications\l::common::EndpointAlexaVideoRecorder\lHandler" alt="" coords="244,5,503,61"/>
 </map>

@@ -1,0 +1,10 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkDavsClientInterfaces/include/acsdkDavsClientInterfaces/ArtifactHandlerInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/DavsClient/acsdkDavsClientInterfaces/include/acsdkDavsClientInterfaces/ArtifactHandlerInterface.h">
+<area shape="rect" id="node2" href="$_davs_check_callback_interface_8h.html" title="DavsCheckCallbackInterface.h" alt="" coords="254,139,458,165"/>
+<area shape="rect" id="node6" href="$_davs_request_8h.html" title="DavsRequest.h" alt="" coords="335,303,449,329"/>
+<area shape="rect" id="node15" href="$_davs_download_callback_interface_8h.html" title="DavsDownloadCallbackInterface.h" alt="" coords="5,139,229,165"/>
+<area shape="rect" id="node3" href="$_result_code_8h.html" title="acsdkAssetsInterfaces\l/ResultCode.h" alt="" coords="278,213,434,255"/>
+<area shape="rect" id="node4" href="$_vendable_artifact_8h.html" title="acsdkAssetsInterfaces\l/VendableArtifact.h" alt="" coords="98,213,254,255"/>
+<area shape="rect" id="node9" href="$_artifact_request_8h.html" title="ArtifactRequest.h" alt="" coords="383,377,507,404"/>
+<area shape="rect" id="node14" href="$_region_8h.html" title="Region.h" alt="" coords="532,377,607,404"/>
+<area shape="rect" id="node13" href="$_type_8h.html" title="Type.h" alt="" coords="578,452,641,479"/>
+</map>

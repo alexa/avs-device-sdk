@@ -1,6 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; ObserverType \&gt;" alt="" coords="5,63,205,119"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::test::MockStartupNotifier" alt="" coords="253,5,501,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; ObserverType \&gt;" alt="" coords="277,71,477,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_post_connect_operation_provider_registrar_1_1test_1_1_mock_startup_notifier.html" title="alexaClientSDK::acsdkPost\lConnectOperationProviderRegistrar\l::test::MockStartupNotifier" alt="" coords="263,137,491,193"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1_equalizer_storage_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::EqualizerStorageInterface" alt="" coords="5,43,244,84"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_1_1_misc_d_b_equalizer_storage.html" title="alexaClientSDK::acsdkEqualizer\l::MiscDBEqualizerStorage" alt="" coords="311,5,523,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1test_1_1_mock_equalizer_storage_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::test::MockEqualizerStorage\lInterface" alt="" coords="292,71,541,127"/>
 </map>

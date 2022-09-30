@@ -3,8 +3,5 @@
 <area shape="rect" id="node3" href="$_audio_input_processor_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/AIP/test/AudioInputProcessor\lTest.cpp" alt="" coords="247,109,445,180"/>
 <area shape="rect" id="node4" href="$_state_report_generator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/StateReportGenerator\lTest.cpp" alt="" coords="469,109,697,180"/>
 <area shape="rect" id="node5" href="$_time_zone_handler_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/System/test/TimeZoneHandler\lTest.cpp" alt="" coords="721,109,925,180"/>
-<area shape="rect" id="node6" href="$_alerts_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AlertsIntegrationTest.cpp" alt="" coords="949,117,1121,173"/>
-<area shape="rect" id="node7" href="$_audio_input_processor_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioInputProcessorIntegration\lTest.cpp" alt="" coords="1146,109,1354,180"/>
-<area shape="rect" id="node8" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1378,117,1586,173"/>
-<area shape="rect" id="node9" href="$_settings_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/Settings\lManagerTest.cpp" alt="" coords="1611,117,1788,173"/>
+<area shape="rect" id="node6" href="$_settings_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Settings/test/Settings\lManagerTest.cpp" alt="" coords="949,117,1127,173"/>
 </map>

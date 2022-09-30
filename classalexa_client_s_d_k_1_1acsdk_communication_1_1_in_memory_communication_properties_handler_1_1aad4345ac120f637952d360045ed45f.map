@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::acsdkCommunication::InMemoryCommunicationPropertiesHandler&lt; T &gt;::WeakSubscriptionProxy" name="alexaClientSDK::acsdkCommunication::InMemoryCommunicationPropertiesHandler&lt; T &gt;::WeakSubscriptionProxy">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_communication_interfaces_1_1_communication_property_change_subscriber.html" title="alexaClientSDK::acsdkCommunication\lInterfaces::CommunicationPropertyChange\lSubscriber\&lt; T \&gt;" alt="" coords="375,5,648,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1notifier_1_1_notifier.html" title="alexaClientSDK::notifier\l::Notifier\&lt; acsdkCommunication\lInterfaces::CommunicationPropertyChange\lSubscriber\&lt; T \&gt; \&gt;" alt="" coords="375,86,648,157"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::notifier\lInterfaces::NotifierInterface\l\&lt; acsdkCommunicationInterfaces\l::CommunicationPropertyChangeSubscriber\&lt; T \&gt; \&gt;" alt="" coords="5,86,327,157"/>
+</map>

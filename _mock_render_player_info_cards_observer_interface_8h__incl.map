@@ -1,5 +1,33 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockRenderPlayerInfoCardsObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/SDKInterfaces/test/AVSCommon/SDKInterfaces/MockRenderPlayerInfoCardsObserverInterface.h">
-<area shape="rect" id="node2" href="$_render_player_info_cards_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserver\lInterface.h" alt="" coords="39,124,253,180"/>
-<area shape="rect" id="node6" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="414,235,643,262"/>
-<area shape="rect" id="node9" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="198,228,390,269"/>
+<area shape="rect" id="node2" href="$_render_player_info_cards_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserver\lInterface.h" alt="" coords="177,556,391,612"/>
+<area shape="rect" id="node10" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="2141,124,2256,151"/>
+<area shape="rect" id="node6" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="517,667,747,694"/>
+<area shape="rect" id="node9" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="5,660,197,701"/>
+<area shape="rect" id="node11" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="2745,385,2906,411"/>
+<area shape="rect" id="node14" href="$gmock-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;internal&#45;utils.h" alt="" coords="2394,467,2545,508"/>
+<area shape="rect" id="node37" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="1129,474,1317,501"/>
+<area shape="rect" id="node39" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="2929,288,3095,329"/>
+<area shape="rect" id="node41" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="2116,199,2281,240"/>
+<area shape="rect" id="node43" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="1528,385,1701,411"/>
+<area shape="rect" id="node47" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="2305,199,2471,240"/>
+<area shape="rect" id="node48" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="692,288,857,329"/>
+<area shape="rect" id="node49" href="$gmock-more-actions_8h.html" title="gmock/gmock&#45;more&#45;actions.h" alt="" coords="2915,206,3109,233"/>
+<area shape="rect" id="node50" href="$gmock-more-matchers_8h.html" title="gmock/gmock&#45;more&#45;matchers.h" alt="" coords="671,206,878,233"/>
+<area shape="rect" id="node17" href="$gmock-port_8h.html" title="gmock/internal/gmock\l&#45;port.h" alt="" coords="2677,660,2827,701"/>
+<area shape="rect" id="node16" href="$gmock-generated-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;generated&#45;internal&#45;utils.h" alt="" coords="2507,563,2675,605"/>
+<area shape="rect" id="node27" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1787,571,1882,597"/>
+<area shape="rect" id="node21" href="$gtest-linked__ptr_8h.html" title="gtest/internal/gtest\l&#45;linked_ptr.h" alt="" coords="2915,749,3045,791"/>
+<area shape="rect" id="node22" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="2328,928,2459,969"/>
+<area shape="rect" id="node26" href="$custom_2gmock-port_8h.html" title="gmock/internal/custom\l/gmock&#45;port.h" alt="" coords="2635,749,2789,791"/>
+<area shape="rect" id="node29" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="1835,749,1965,791"/>
+<area shape="rect" id="node30" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="1899,846,2051,873"/>
+<area shape="rect" id="node31" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="2075,839,2205,880"/>
+<area shape="rect" id="node32" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="1531,667,1688,694"/>
+<area shape="rect" id="node33" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="2305,667,2466,694"/>
+<area shape="rect" id="node34" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1763,667,1906,694"/>
+<area shape="rect" id="node35" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1379,667,1506,694"/>
+<area shape="rect" id="node36" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="1981,667,2128,694"/>
+<area shape="rect" id="node40" href="$internal_2custom_2gmock-generated-actions_8h.html" title="gmock/internal/custom\l/gmock&#45;generated&#45;actions.h" alt="" coords="2930,377,3113,419"/>
+<area shape="rect" id="node42" href="$gmock-spec-builders_8h.html" title="gmock/gmock&#45;spec&#45;builders.h" alt="" coords="2103,295,2299,322"/>
+<area shape="rect" id="node46" href="$internal_2custom_2gmock-matchers_8h.html" title="gmock/internal/custom\l/gmock&#45;matchers.h" alt="" coords="1480,467,1635,508"/>
 </map>

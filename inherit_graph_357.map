@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1sds_1_1_shared_data_stream_1_1_reader.html" title="alexaClientSDK::avsCommon\l::utils::sds::SharedDataStream\l::Reader\&lt; T \&gt;" alt="" coords="5,5,208,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_diagnostics_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DiagnosticsInterface" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1sample_app_1_1_s_d_k_diagnostics.html" title="alexaClientSDK::sampleApp\l::SDKDiagnostics" alt="" coords="251,13,439,54"/>
 </map>

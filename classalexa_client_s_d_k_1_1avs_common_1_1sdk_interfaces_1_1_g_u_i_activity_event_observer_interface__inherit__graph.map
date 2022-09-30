@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::avsCommon::sdkInterfaces::GUIActivityEventObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::GUIActivityEventObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1presentation_orchestrator_interfaces_1_1_visual_timeout_manager_interface.html" title="alexaClientSDK::presentation\lOrchestratorInterfaces::\lVisualTimeoutManagerInterface" alt="" coords="322,5,529,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_a_p_l_runtime_presentation_adapter.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::APLRuntimePresentation\lAdapter" alt="" coords="272,85,579,141"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1presentation_orchestrator_interfaces_1_1test_1_1_mock_visual_timeout_manager.html" title="alexaClientSDK::presentation\lOrchestratorInterfaces::\ltest::MockVisualTimeoutManager" alt="" coords="627,5,844,61"/>
+</map>

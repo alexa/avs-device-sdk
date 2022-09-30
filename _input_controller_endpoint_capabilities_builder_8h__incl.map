@@ -1,0 +1,37 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Endpoint/include/acsdk/Sample/Endpoint/InputControllerEndpointCapabilitiesBuilder.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Endpoint/include/acsdk/Sample/Endpoint/InputControllerEndpointCapabilitiesBuilder.h">
+<area shape="rect" id="node2" href="$_endpoint_capabilities_builder_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointCapabilities\lBuilderInterface.h" alt="" coords="1209,139,1416,195"/>
+<area shape="rect" id="node6" href="$_capability_configuration_8h.html" title="AVSCommon/AVS/Capability\lConfiguration.h" alt="" coords="1034,615,1229,656"/>
+<area shape="rect" id="node22" href="$_alexa_interface_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaInterfaceMessageSender\lInterface.h" alt="" coords="1376,511,1580,567"/>
+<area shape="rect" id="node26" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="1939,332,2131,373"/>
+<area shape="rect" id="node37" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="3202,518,3402,559"/>
+<area shape="rect" id="node40" href="$_directive_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerInterface.h" alt="" coords="687,243,879,284"/>
+<area shape="rect" id="node48" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="93,332,353,373"/>
+<area shape="rect" id="node50" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1850,957,2039,999"/>
+<area shape="rect" id="node11" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1427,704,1623,731"/>
+<area shape="rect" id="node12" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1389,779,1565,820"/>
+<area shape="rect" id="node14" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1541,868,1717,909"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1509,957,1724,999"/>
+<area shape="rect" id="node20" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1309,957,1485,999"/>
+<area shape="rect" id="node21" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3045,957,3221,999"/>
+<area shape="rect" id="node23" href="$_alexa_response_type_8h.html" title="AVSCommon/AVS/AlexaResponse\lType.h" alt="" coords="1805,615,2034,656"/>
+<area shape="rect" id="node25" href="$_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="1253,615,1471,656"/>
+<area shape="rect" id="node27" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="2058,615,2253,656"/>
+<area shape="rect" id="node28" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="1757,421,1972,463"/>
+<area shape="rect" id="node29" href="$_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="2906,615,3119,656"/>
+<area shape="rect" id="node30" href="$_context_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerObserverInterface.h" alt="" coords="1757,518,1994,559"/>
+<area shape="rect" id="node34" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="2803,421,2998,463"/>
+<area shape="rect" id="node38" href="$_state_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/StateProviderInterface.h" alt="" coords="2118,421,2310,463"/>
+<area shape="rect" id="node31" href="$_capability_state_8h.html" title="AVSCommon/AVS/Capability\lState.h" alt="" coords="2586,615,2781,656"/>
+<area shape="rect" id="node33" href="$_time_point_8h.html" title="AVSCommon/Utils/Timing\l/TimePoint.h" alt="" coords="2519,779,2695,820"/>
+<area shape="rect" id="node35" href="$_a_v_s_context_8h.html" title="AVSCommon/AVS/AVSContext.h" alt="" coords="2591,525,2813,552"/>
+<area shape="rect" id="node36" href="$_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="2375,518,2567,559"/>
+<area shape="rect" id="node39" href="$_namespace_and_name_8h.html" title="AVSCommon/AVS/NamespaceAnd\lName.h" alt="" coords="2120,518,2351,559"/>
+<area shape="rect" id="node41" href="$_a_v_s_directive_8h.html" title="AVSCommon/AVS/AVSDirective.h" alt="" coords="805,429,1031,455"/>
+<area shape="rect" id="node44" href="$_directive_handler_configuration_8h.html" title="AVSCommon/AVS/DirectiveHandler\lConfiguration.h" alt="" coords="546,421,781,463"/>
+<area shape="rect" id="node47" href="$_directive_handler_result_interface_8h.html" title="AVSCommon/SDKInterfaces\l/DirectiveHandlerResultInterface.h" alt="" coords="524,332,747,373"/>
+<area shape="rect" id="node42" href="$_attachment_manager_interface_8h.html" title="Attachment/AttachmentManager\lInterface.h" alt="" coords="871,957,1082,999"/>
+<area shape="rect" id="node43" href="$_a_v_s_message_8h.html" title="AVSMessage.h" alt="" coords="851,525,964,552"/>
+<area shape="rect" id="node45" href="$_blocking_policy_8h.html" title="AVSCommon/AVS/BlockingPolicy.h" alt="" coords="135,875,370,902"/>
+<area shape="rect" id="node46" href="$_directive_routing_rule_8h.html" title="AVSCommon/AVS/DirectiveRouting\lRule.h" alt="" coords="989,518,1223,559"/>
+<area shape="rect" id="node49" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="5,779,228,820"/>
+</map>

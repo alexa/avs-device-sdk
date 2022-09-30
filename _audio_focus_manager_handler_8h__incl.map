@@ -1,0 +1,15 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/AudioFocusManagerHandler.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/AudioFocusManagerHandler.h">
+<area shape="rect" id="node3" href="$_focus_state_8h.html" title="AVSCommon/AVS/FocusState.h" alt="" coords="1850,168,2065,195"/>
+<area shape="rect" id="node5" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1495,451,1684,492"/>
+<area shape="rect" id="node9" href="$_i_p_c_handler_registration_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerRegistration\lInterface.h" alt="" coords="1559,153,1750,209"/>
+<area shape="rect" id="node31" href="$_audio_focus_manager_handler_interface_8h.html" title="IPCServerSampleApp\l/IPC/HandlerInterfaces\l/AudioFocusManagerHandlerInterface.h" alt="" coords="2055,257,2307,313"/>
+<area shape="rect" id="node10" href="$_i_p_c_dispatcher_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCDispatcherInterface.h" alt="" coords="1826,361,2027,403"/>
+<area shape="rect" id="node11" href="$_i_p_c_handler_base_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerBase.h" alt="" coords="1376,265,1539,306"/>
+<area shape="rect" id="node13" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="805,361,1000,403"/>
+<area shape="rect" id="node20" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="40,451,235,492"/>
+<area shape="rect" id="node22" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="333,451,528,492"/>
+<area shape="rect" id="node27" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="990,451,1165,492"/>
+<area shape="rect" id="node24" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="429,547,528,574"/>
+<area shape="rect" id="node26" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="363,629,477,656"/>
+<area shape="rect" id="node28" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1086,540,1317,581"/>
+</map>

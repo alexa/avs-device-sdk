@@ -1,0 +1,9 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/GUI/GUIActivityEventNotifier.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/GUI/GUIActivityEventNotifier.h">
+<area shape="rect" id="node3" href="$_g_u_i_activity_event_8h.html" title="AVSCommon/SDKInterfaces\l/GUIActivityEvent.h" alt="" coords="303,257,495,299"/>
+<area shape="rect" id="node5" href="$_g_u_i_activity_event_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/GUIActivityEventObserverInterface.h" alt="" coords="5,161,248,202"/>
+<area shape="rect" id="node6" href="$_g_u_i_activity_event_notifier_interface_8h.html" title="IPCServerSampleApp\l/GUI/GUIActivityEventNotifier\lInterface.h" alt="" coords="273,153,471,209"/>
+<area shape="rect" id="node7" href="$_notifier_8h.html" title="acsdk/Notifier/Notifier.h" alt="" coords="648,168,808,195"/>
+<area shape="rect" id="node8" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="647,347,809,388"/>
+<area shape="rect" id="node10" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="889,257,1039,299"/>
+<area shape="rect" id="node11" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="833,347,983,388"/>
+</map>

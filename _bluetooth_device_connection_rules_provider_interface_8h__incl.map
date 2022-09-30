@@ -1,19 +1,20 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/include/acsdkBluetoothInterfaces/BluetoothDeviceConnectionRulesProviderInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetoothInterfaces/include/acsdkBluetoothInterfaces/BluetoothDeviceConnectionRulesProviderInterface.h">
-<area shape="rect" id="node3" href="$_bluetooth_device_observer_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceObserverInterface.h" alt="" coords="1795,146,2032,187"/>
-<area shape="rect" id="node6" href="$_bluetooth_device_connection_rule_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceConnection\lRuleInterface.h" alt="" coords="1355,139,1602,195"/>
-<area shape="rect" id="node9" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="1357,243,1600,284"/>
-<area shape="rect" id="node36" href="$_device_category_8h.html" title="AVSCommon/Utils/Bluetooth\l/DeviceCategory.h" alt="" coords="1139,719,1331,760"/>
-<area shape="rect" id="node13" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="1720,332,1915,388"/>
-<area shape="rect" id="node14" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="1669,436,1880,492"/>
-<area shape="rect" id="node15" href="$_media_streaming_state_8h.html" title="AVSCommon/Utils/Bluetooth\l/MediaStreamingState.h" alt="" coords="1308,339,1500,381"/>
-<area shape="rect" id="node16" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1009,347,1205,373"/>
-<area shape="rect" id="node17" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="679,443,855,485"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="679,540,855,581"/>
-<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="298,629,513,671"/>
-<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="688,719,864,760"/>
-<area shape="rect" id="node28" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1376,629,1552,671"/>
-<area shape="rect" id="node34" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="603,629,797,671"/>
-<area shape="rect" id="node35" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1755,808,1931,849"/>
-<area shape="rect" id="node31" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="888,719,1064,760"/>
-<area shape="rect" id="node32" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="355,808,531,849"/>
+<area shape="rect" id="node3" href="$_bluetooth_device_observer_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothDeviceObserverInterface.h" alt="" coords="9,146,247,187"/>
+<area shape="rect" id="node6" href="$_bluetooth_device_connection_rule_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceConnection\lRuleInterface.h" alt="" coords="270,139,517,195"/>
+<area shape="rect" id="node9" href="$_bluetooth_device_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/BluetoothDeviceInterface.h" alt="" coords="481,243,724,284"/>
+<area shape="rect" id="node38" href="$_device_category_8h.html" title="AVSCommon/Utils/Bluetooth\l/DeviceCategory.h" alt="" coords="184,719,376,760"/>
+<area shape="rect" id="node13" href="$_bluetooth_service_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/Bluetooth\lServiceInterface.h" alt="" coords="763,332,957,388"/>
+<area shape="rect" id="node14" href="$_s_d_p_record_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Bluetooth/Services/SDPRecord\lInterface.h" alt="" coords="451,436,661,492"/>
+<area shape="rect" id="node15" href="$_media_streaming_state_8h.html" title="AVSCommon/Utils/Bluetooth\l/MediaStreamingState.h" alt="" coords="547,339,739,381"/>
+<area shape="rect" id="node16" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1066,347,1262,373"/>
+<area shape="rect" id="node17" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1160,443,1336,485"/>
+<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1160,540,1336,581"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1653,629,1867,671"/>
+<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1248,719,1424,760"/>
+<area shape="rect" id="node28" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="745,629,921,671"/>
+<area shape="rect" id="node35" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1349,629,1542,671"/>
+<area shape="rect" id="node36" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1963,808,2139,849"/>
+<area shape="rect" id="node37" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1097,629,1273,671"/>
+<area shape="rect" id="node32" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="603,719,779,760"/>
+<area shape="rect" id="node33" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1616,808,1792,849"/>
 </map>

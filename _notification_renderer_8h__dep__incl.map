@@ -1,6 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/NotificationRenderer.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotifications/include/acsdkNotifications/NotificationRenderer.h">
-<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,131,235,187"/>
-<area shape="rect" id="node3" href="$_notification_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notification\lRenderer.cpp" alt="" coords="259,124,485,195"/>
-<area shape="rect" id="node4" href="$_notifications_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/src/Notifications\lComponent.cpp" alt="" coords="510,124,743,195"/>
-<area shape="rect" id="node5" href="$_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="767,124,998,195"/>
+<area shape="rect" id="node2" href="$_notification_renderer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Notifications\l/acsdkNotifications/test/Notification\lRendererTest.cpp" alt="" coords="24,124,255,195"/>
 </map>

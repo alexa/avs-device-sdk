@@ -1,13 +1,14 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/AuthorizedSender.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayer/include/acsdkExternalMediaPlayer/AuthorizedSender.h">
-<area shape="rect" id="node5" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="621,139,813,180"/>
-<area shape="rect" id="node18" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1377,139,1572,180"/>
-<area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="580,235,831,262"/>
-<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="273,317,477,359"/>
-<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="5,317,248,359"/>
-<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="240,407,405,448"/>
-<area shape="rect" id="node24" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1761,228,1956,269"/>
-<area shape="rect" id="node29" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1154,228,1329,269"/>
-<area shape="rect" id="node26" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="1972,325,2071,351"/>
-<area shape="rect" id="node28" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="1921,414,2036,441"/>
-<area shape="rect" id="node30" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1234,317,1465,359"/>
+<area shape="rect" id="node5" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="667,139,859,180"/>
+<area shape="rect" id="node18" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1522,139,1716,180"/>
+<area shape="rect" id="node6" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="600,235,851,262"/>
+<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="44,317,248,359"/>
+<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="355,317,598,359"/>
+<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="52,407,218,448"/>
+<area shape="rect" id="node24" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="1656,228,1851,269"/>
+<area shape="rect" id="node26" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1904,228,2099,269"/>
+<area shape="rect" id="node31" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1210,228,1385,269"/>
+<area shape="rect" id="node28" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="1982,325,2080,351"/>
+<area shape="rect" id="node30" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="1995,414,2110,441"/>
+<area shape="rect" id="node32" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1222,317,1453,359"/>
 </map>

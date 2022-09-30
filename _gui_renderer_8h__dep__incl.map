@@ -1,14 +1,4 @@
-<map id="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/GuiRenderer.h" name="/workplace/avs&#45;device&#45;sdk/SampleApp/include/SampleApp/GuiRenderer.h">
-<area shape="rect" id="node2" href="$_preview_alexa_client_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/include/acsdkPreviewAlexa\lClient/PreviewAlexaClient.h" alt="" coords="273,317,526,388"/>
-<area shape="rect" id="node6" href="$_interaction_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/InteractionManager.h" alt="" coords="663,109,882,165"/>
-<area shape="rect" id="node8" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="794,325,1010,381"/>
-<area shape="rect" id="node13" href="$_gui_renderer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/GuiRenderer.cpp" alt="" coords="957,117,1199,158"/>
-<area shape="rect" id="node3" href="$_preview_alexa_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient.cpp" alt="" coords="5,443,260,499"/>
-<area shape="rect" id="node4" href="$_preview_alexa_client_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/PreviewAlexaClient\lComponent.cpp" alt="" coords="285,436,514,507"/>
-<area shape="rect" id="node5" href="$preview_main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/applications/acsdkPreview\lAlexaClient/src/previewMain.cpp" alt="" coords="538,443,751,499"/>
-<area shape="rect" id="node7" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="437,213,652,269"/>
-<area shape="rect" id="node12" href="$_interaction_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/Interaction\lManager.cpp" alt="" coords="677,213,882,269"/>
-<area shape="rect" id="node11" href="$_user_input_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/UserInput\lManager.cpp" alt="" coords="551,325,752,381"/>
-<area shape="rect" id="node9" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="790,451,987,492"/>
-<area shape="rect" id="node10" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1011,451,1289,492"/>
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/LibSampleApp/include/SampleApp/GuiRenderer.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/LibSampleApp/include/SampleApp/GuiRenderer.h">
+<area shape="rect" id="node2" href="$_common_2_lib_sample_app_2include_2_sample_app_2_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/Common/LibSampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="5,243,221,313"/>
+<area shape="rect" id="node3" href="$_user_input_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/Common/LibSampleApp/include\l/SampleApp/UserInputManager.h" alt="" coords="79,124,294,195"/>
 </map>

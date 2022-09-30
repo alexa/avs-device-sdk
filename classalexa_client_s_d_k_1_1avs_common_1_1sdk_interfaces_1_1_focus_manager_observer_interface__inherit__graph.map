@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::FocusManagerObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent" alt="" coords="312,5,504,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html" title="Mock class that implements the FocusManagerObserver. " alt="" coords="309,71,507,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent" alt="" coords="343,5,535,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_focus_manager_observer.html" title="Mock class that implements the FocusManagerObserver. " alt="" coords="340,71,537,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1gui_1_1_g_u_i_manager.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::gui::GUIManager" alt="" coords="309,152,568,193"/>
 </map>

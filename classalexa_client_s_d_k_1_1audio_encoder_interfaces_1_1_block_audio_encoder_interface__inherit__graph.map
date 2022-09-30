@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::audioEncoderInterfaces::BlockAudioEncoderInterface" name="alexaClientSDK::audioEncoderInterfaces::BlockAudioEncoderInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1audio_encoder_1_1test_1_1_mock_encoder_context.html" title="alexaClientSDK::audioEncoder\l::test::MockEncoderContext" alt="" coords="317,5,520,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_block_audio_encoder.html" title="Mock class that implements the BlockAudioEncoderInterface. " alt="" coords="307,71,531,127"/>
+</map>

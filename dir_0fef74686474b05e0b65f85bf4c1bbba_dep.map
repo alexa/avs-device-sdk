@@ -1,0 +1,37 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/AlexaPresentation" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/AlexaPresentation">
+<area shape="rect" id="node1" href="dir_0fef74686474b05e0b65f85bf4c1bbba.html" title="AlexaPresentation" alt="" coords="133,52,261,100"/>
+<area shape="rect" id="node2" href="dir_5a87c6289cf6c26b9c8f7b9cf5e6d014.html" title="GUI" alt="" coords="409,52,481,100"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000346_000767.html" title="4" alt="" coords="387,60,395,75"/>
+<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="144,340,216,388"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000346_000810.html" title="2" alt="" coords="181,313,189,328"/>
+<area shape="rect" id="node4" href="dir_d25dcddca9447949e4d84e698f5300ce.html" title="IPC" alt="" coords="285,148,357,196"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000346_000768.html" title="3" alt="" coords="277,123,285,137"/>
+<area shape="rect" id="node5" href="dir_c7cca3a33bad99ee1eb19b9839cc4db7.html" title="Common" alt="" coords="187,244,261,292"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000346_000723.html" title="1" alt="" coords="223,217,231,232"/>
+<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="202,436,305,484"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000346_000014.html" title="10" alt="" coords="182,421,196,435"/>
+<area shape="rect" id="node7" href="dir_8aff4ce808ed26ed90441ad7a524bd1b.html" title="Communication" alt="" coords="342,244,455,292"/>
+<area shape="rect" id="edge15-headlabel" href="dir_000346_000762.html" title="1" alt="" coords="402,218,410,233"/>
+<area shape="rect" id="node8" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="109,532,195,580"/>
+<area shape="rect" id="edge16-headlabel" href="dir_000346_000127.html" title="25" alt="" coords="100,507,115,522"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000767_000346.html" title="4" alt="" coords="276,77,284,92"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000767_000810.html" title="8" alt="" coords="232,359,240,374"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000767_000768.html" title="27" alt="" coords="365,136,379,151"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000767_000723.html" title="3" alt="" coords="237,221,245,235"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000767_000014.html" title="24" alt="" coords="317,434,332,448"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000767_000762.html" title="1" alt="" coords="413,221,421,236"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000767_000127.html" title="7" alt="" coords="211,544,219,559"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000810_000014.html" title="57" alt="" coords="214,409,229,423"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000810_000127.html" title="1" alt="" coords="155,507,163,522"/>
+<area shape="rect" id="edge17-headlabel" href="dir_000768_000723.html" title="1" alt="" coords="263,230,271,244"/>
+<area shape="rect" id="edge18-headlabel" href="dir_000768_000014.html" title="17" alt="" coords="264,413,279,427"/>
+<area shape="rect" id="edge19-headlabel" href="dir_000768_000762.html" title="2" alt="" coords="370,217,378,231"/>
+<area shape="rect" id="edge20-headlabel" href="dir_000723_000810.html" title="13" alt="" coords="199,319,214,334"/>
+<area shape="rect" id="edge21-headlabel" href="dir_000723_000014.html" title="77" alt="" coords="248,409,263,424"/>
+<area shape="rect" id="edge22-headlabel" href="dir_000723_000127.html" title="23" alt="" coords="136,505,151,519"/>
+<area shape="rect" id="edge23-headlabel" href="dir_000014_000810.html" title="2" alt="" coords="208,400,216,415"/>
+<area shape="rect" id="edge24-headlabel" href="dir_000014_000127.html" title="4" alt="" coords="185,517,193,532"/>
+<area shape="rect" id="edge25-headlabel" href="dir_000127_000810.html" title="67" alt="" coords="166,399,180,413"/>
+<area shape="rect" id="edge26-headlabel" href="dir_000127_000014.html" title="724" alt="" coords="206,484,228,499"/>
+<area shape="rect" id="clust1" href="dir_0752ce5d1b78d3cd0ce1c0fbc4294b57.html" title="IPCServerSampleApp" alt="" coords="123,16,273,111"/>
+</map>

@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::acsdkShutdownManager::ShutdownNotifier" name="alexaClientSDK::acsdkShutdownManager::ShutdownNotifier">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; avsCommon::utils\l::RequiresShutdown \&gt;" alt="" coords="324,5,524,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; avsCommon::utils::RequiresShutdown \&gt;" alt="" coords="5,5,276,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1notifier_1_1_notifier.html" title="alexaClientSDK::notifier\l::Notifier\&lt; avsCommon::\lutils::RequiresShutdown \&gt;" alt="" coords="324,5,500,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::notifier\lInterfaces::NotifierInterface\l\&lt; avsCommon::utils::RequiresShutdown \&gt;" alt="" coords="5,5,276,61"/>
 </map>

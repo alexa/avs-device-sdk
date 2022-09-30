@@ -1,0 +1,4 @@
+<map id="alexaClientSDK::acsdkAlexaVideoRecorderInterfaces::VideoRecorderRequest" name="alexaClientSDK::acsdkAlexaVideoRecorderInterfaces::VideoRecorderRequest">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; alexaClient\lSDK::acsdkAlexaVideoRecorderInterfaces\l::VideoRecorderRequest::TimeWindow \&gt;" alt="" coords="5,5,276,76"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; Quantifier \&gt;" alt="" coords="42,100,239,141"/>
+</map>

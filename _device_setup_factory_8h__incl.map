@@ -1,0 +1,8 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/DeviceSetup/acsdkDeviceSetup/include/acsdkDeviceSetup/DeviceSetupFactory.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/DeviceSetup/acsdkDeviceSetup/include/acsdkDeviceSetup/DeviceSetupFactory.h">
+<area shape="rect" id="node3" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="333,124,525,165"/>
+<area shape="rect" id="node18" href="$_device_setup_interface_8h.html" title="acsdkDeviceSetupInterfaces\l/DeviceSetupInterface.h" alt="" coords="39,213,229,255"/>
+<area shape="rect" id="node4" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="493,221,743,247"/>
+<area shape="rect" id="node11" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="392,303,596,344"/>
+<area shape="rect" id="node16" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="621,303,863,344"/>
+<area shape="rect" id="node15" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="411,392,577,433"/>
+</map>

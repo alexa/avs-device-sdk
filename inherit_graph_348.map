@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_promise_future_pair.html" title="alexaClientSDK::avsCommon\l::utils::PromiseFuturePair\l\&lt; std::shared_ptr\&lt; alexaClientSDK\l::avsCommon::sdkInterfaces::AuthObserver\lInterface \&gt; \&gt;" alt="" coords="5,5,284,91"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1_bluetooth_host_controller_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::bluetooth\l::BluetoothHostControllerInterface" alt="" coords="5,45,225,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1bluetooth_1_1test_1_1_mock_bluetooth_host_controller.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::bluetooth\l::test::MockBluetoothHostController" alt="" coords="273,5,504,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_blue_z_host_controller.html" title="An implementation of the BluetoothHostControllerInterface using BlueZ. " alt="" coords="301,85,477,141"/>
 </map>

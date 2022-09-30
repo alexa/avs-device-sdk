@@ -1,6 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownNotifier.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManager/include/acsdkShutdownManager/ShutdownNotifier.h">
-<area shape="rect" id="node3" href="$_notifier_8h.html" title="acsdkNotifier/Notifier.h" alt="" coords="91,131,247,158"/>
-<area shape="rect" id="node9" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="313,124,536,165"/>
-<area shape="rect" id="node10" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="510,213,699,255"/>
-<area shape="rect" id="node7" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="278,213,435,255"/>
+<area shape="rect" id="node3" href="$_notifier_8h.html" title="acsdk/Notifier/Notifier.h" alt="" coords="250,124,410,151"/>
+<area shape="rect" id="node8" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="536,199,759,240"/>
+<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="587,288,777,329"/>
+<area shape="rect" id="node4" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="249,288,411,329"/>
+<area shape="rect" id="node6" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="137,199,286,240"/>
+<area shape="rect" id="node7" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="25,288,174,329"/>
 </map>

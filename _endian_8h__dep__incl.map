@@ -1,6 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Endian.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Endian.h">
-<area shape="rect" id="node2" href="$_wav_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/WavUtils.cpp" alt="" coords="5,124,168,180"/>
-<area shape="rect" id="node3" href="$_endian_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/EndianTest.cpp" alt="" coords="192,124,355,180"/>
-<area shape="rect" id="node4" href="$_playback_configuration_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/MediaPlayer/AndroidSLESMedia\lPlayer/src/PlaybackConfiguration.cpp" alt="" coords="379,124,621,180"/>
-<area shape="rect" id="node5" href="$_opus_encoder_context_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SpeechEncoder/OpusEncoder\lContext/src/OpusEncoderContext.cpp" alt="" coords="645,124,889,180"/>
+<area shape="rect" id="node2" href="$_endian_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/EndianTest.cpp" alt="" coords="15,124,178,180"/>
 </map>

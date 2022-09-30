@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_state.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayerState" alt="" coords="5,5,251,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1audio_encoder_interfaces_1_1_block_audio_encoder_interface.html" title="Block audio encoder interface. " alt="" coords="5,43,259,84"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1audio_encoder_1_1test_1_1_mock_encoder_context.html" title="alexaClientSDK::audioEncoder\l::test::MockEncoderContext" alt="" coords="317,5,520,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1capability_agents_1_1aip_1_1test_1_1_mock_block_audio_encoder.html" title="Mock class that implements the BlockAudioEncoderInterface. " alt="" coords="307,71,531,127"/>
 </map>

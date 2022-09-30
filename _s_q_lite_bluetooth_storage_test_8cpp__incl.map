@@ -1,8 +1,31 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/test/SQLiteBluetoothStorageTest.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/test/SQLiteBluetoothStorageTest.cpp">
-<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1241,213,1455,255"/>
-<area shape="rect" id="node19" href="$_s_q_lite_bluetooth_storage_8h.html" title="acsdkBluetooth/SQLiteBluetooth\lStorage.h" alt="" coords="799,124,1009,165"/>
-<area shape="rect" id="node21" href="$_bluetooth_storage_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothStorageInterface.h" alt="" coords="353,213,541,255"/>
-<area shape="rect" id="node22" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="761,303,980,329"/>
-<area shape="rect" id="node24" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="545,377,767,404"/>
-<area shape="rect" id="node25" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="744,221,933,247"/>
+<area shape="rect" id="node9" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="1884,124,1999,151"/>
+<area shape="rect" id="node18" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1153,549,1247,575"/>
+<area shape="rect" id="node40" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2545,631,2759,672"/>
+<area shape="rect" id="node45" href="$_s_q_lite_bluetooth_storage_8h.html" title="acsdkBluetooth/SQLiteBluetooth\lStorage.h" alt="" coords="3024,541,3235,583"/>
+<area shape="rect" id="node10" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="2301,370,2462,397"/>
+<area shape="rect" id="node14" href="$gmock-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;internal&#45;utils.h" alt="" coords="1973,452,2123,493"/>
+<area shape="rect" id="node31" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="1709,459,1897,486"/>
+<area shape="rect" id="node33" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="2060,273,2225,315"/>
+<area shape="rect" id="node34" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="1769,273,1935,315"/>
+<area shape="rect" id="node35" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="2009,363,2175,404"/>
+<area shape="rect" id="node36" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="333,273,499,315"/>
+<area shape="rect" id="node37" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="1113,370,1287,397"/>
+<area shape="rect" id="node38" href="$gmock-more-actions_8h.html" title="gmock/gmock&#45;more&#45;actions.h" alt="" coords="2111,199,2305,225"/>
+<area shape="rect" id="node39" href="$gmock-more-matchers_8h.html" title="gmock/gmock&#45;more&#45;matchers.h" alt="" coords="313,199,519,225"/>
+<area shape="rect" id="node16" href="$gmock-port_8h.html" title="gmock/internal/gmock\l&#45;port.h" alt="" coords="2286,541,2437,583"/>
+<area shape="rect" id="node20" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="808,720,939,761"/>
+<area shape="rect" id="node22" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="453,817,605,843"/>
+<area shape="rect" id="node23" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="705,809,836,851"/>
+<area shape="rect" id="node24" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="1333,638,1491,665"/>
+<area shape="rect" id="node25" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="606,638,767,665"/>
+<area shape="rect" id="node26" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1166,638,1309,665"/>
+<area shape="rect" id="node27" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1515,638,1642,665"/>
+<area shape="rect" id="node28" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="843,638,989,665"/>
+<area shape="rect" id="node29" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="1667,638,1824,665"/>
+<area shape="rect" id="node30" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1849,638,2007,665"/>
+<area shape="rect" id="node47" href="$_bluetooth_storage_interface_8h.html" title="acsdkBluetoothInterfaces\l/BluetoothStorageInterface.h" alt="" coords="3411,631,3599,672"/>
+<area shape="rect" id="node48" href="$_s_q_lite_database_8h.html" title="SQLiteStorage/SQLiteDatabase.h" alt="" coords="3085,727,3304,754"/>
+<area shape="rect" id="node49" href="$_s_q_lite_statement_8h.html" title="SQLiteStorage/SQLiteStatement.h" alt="" coords="3183,817,3406,843"/>
+<area shape="rect" id="node50" href="$_s_q_lite_utils_8h.html" title="SQLiteStorage/SQLiteUtils.h" alt="" coords="2968,638,3157,665"/>
 </map>

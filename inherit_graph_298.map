@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_mac_address_string.html" title="alexaClientSDK::avsCommon\l::utils::MacAddressString" alt="" coords="5,5,203,47"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_microphone_interface.html" title="This acts as an interface to record audio input from a microphone. " alt="" coords="5,79,191,135"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1android_utilities_1_1_android_s_l_e_s_microphone.html" title="alexaClientSDK::application\lUtilities::androidUtilities\l::AndroidSLESMicrophone" alt="" coords="288,5,473,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_audio_injector_microphone.html" title="This represents a microphone which injects audio data into the shared data stream. " alt="" coords="286,86,475,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_port_audio_microphone_wrapper.html" title="This acts as a wrapper around PortAudio, a cross&#45;platform open&#45;source audio I/O library. " alt="" coords="239,152,523,208"/>
 </map>

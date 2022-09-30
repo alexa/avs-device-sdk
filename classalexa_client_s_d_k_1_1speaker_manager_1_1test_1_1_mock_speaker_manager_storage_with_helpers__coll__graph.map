@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::speakerManager::test::MockSpeakerManagerStorageWithHelpers" name="alexaClientSDK::speakerManager::test::MockSpeakerManagerStorageWithHelpers">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage.html" title="Mock object for SpeakerManagerStorageInterface. " alt="" coords="403,7,637,48"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1speaker_manager_1_1_speaker_manager_storage_interface.html" title="Speaker manager storage interface. " alt="" coords="5,5,229,47"/>
+<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1speaker_manager_1_1_speaker_manager_storage_state.html" title="Storage state for SpeakerManager. " alt="" coords="411,76,629,117"/>
+<area shape="rect" id="node5" href="$structalexa_client_s_d_k_1_1speaker_manager_1_1_speaker_manager_storage_state_1_1_channel_state.html" title="alexaClientSDK::speakerManager\l::SpeakerManagerStorageState\l::ChannelState" alt="" coords="8,71,227,127"/>
+</map>

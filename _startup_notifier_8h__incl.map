@@ -1,6 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManager/include/acsdkStartupManager/StartupNotifier.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManager/include/acsdkStartupManager/StartupNotifier.h">
-<area shape="rect" id="node3" href="$_notifier_8h.html" title="acsdkNotifier/Notifier.h" alt="" coords="170,131,326,158"/>
-<area shape="rect" id="node9" href="$_requires_startup_interface_8h.html" title="acsdkStartupManagerInterfaces\l/RequiresStartupInterface.h" alt="" coords="573,213,779,255"/>
-<area shape="rect" id="node10" href="$_startup_notifier_interface_8h.html" title="acsdkStartupManagerInterfaces\l/StartupNotifierInterface.h" alt="" coords="397,124,603,165"/>
-<area shape="rect" id="node7" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="340,213,497,255"/>
+<area shape="rect" id="node3" href="$_notifier_8h.html" title="acsdk/Notifier/Notifier.h" alt="" coords="203,131,363,158"/>
+<area shape="rect" id="node8" href="$_requires_startup_interface_8h.html" title="acsdkStartupManagerInterfaces\l/RequiresStartupInterface.h" alt="" coords="529,213,736,255"/>
+<area shape="rect" id="node9" href="$_startup_notifier_interface_8h.html" title="acsdkStartupManagerInterfaces\l/StartupNotifierInterface.h" alt="" coords="388,124,595,165"/>
+<area shape="rect" id="node4" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="241,303,403,344"/>
+<area shape="rect" id="node6" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="7,213,157,255"/>
+<area shape="rect" id="node7" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="67,303,217,344"/>
 </map>

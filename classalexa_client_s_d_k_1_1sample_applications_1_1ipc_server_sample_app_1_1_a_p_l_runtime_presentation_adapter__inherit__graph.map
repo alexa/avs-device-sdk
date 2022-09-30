@@ -1,0 +1,7 @@
+<map id="alexaClientSDK::sampleApplications::ipcServerSampleApp::APLRuntimePresentationAdapter" name="alexaClientSDK::sampleApplications::ipcServerSampleApp::APLRuntimePresentationAdapter">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1_a_p_l_capability_agent_observer_interface.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::APLCapabilityAgent\lObserverInterface" alt="" coords="15,5,274,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="43,85,247,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_g_u_i_activity_event_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::GUIActivityEvent\lObserverInterface" alt="" coords="35,165,254,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1_visual_state_provider_interface.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::VisualStateProvider\lInterface" alt="" coords="17,245,273,301"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1_a_p_l_document_observer_interface.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::APLDocumentObserver\lInterface" alt="" coords="5,325,284,381"/>
+</map>

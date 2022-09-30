@@ -1,0 +1,32 @@
+<map id="/workplace/avs&#45;device&#45;sdk/shared/KWD" name="/workplace/avs&#45;device&#45;sdk/shared/KWD">
+<area shape="rect" id="node2" href="dir_d1ddccfdf629c6ab811c2ba332cc285a.html" title="acsdkKWD" alt="" coords="199,63,289,111"/>
+<area shape="rect" id="node3" href="dir_e571f3a40729e98c18f677039f217076.html" title="acsdkKWDImplementations" alt="" coords="66,159,251,207"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000850_000853.html" title="1" alt="" coords="195,143,203,158"/>
+<area shape="rect" id="node4" href="dir_36e5af62bd5db895b52244933458ca30.html" title="acsdkKWDInterfaces" alt="" coords="196,255,343,303"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000850_000857.html" title="2" alt="" coords="274,229,282,244"/>
+<area shape="rect" id="node6" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="418,255,521,303"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000850_000014.html" title="2" alt="" coords="442,227,450,242"/>
+<area shape="rect" id="node7" href="dir_0ca348091c23ede3b6afd50c8666ff04.html" title="acsdkManufactory" alt="" coords="390,543,519,591"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000850_000818.html" title="4" alt="" coords="493,527,501,541"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000853_000857.html" title="6" alt="" coords="229,229,237,244"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000853_000014.html" title="8" alt="" coords="399,239,407,254"/>
+<area shape="rect" id="node8" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="333,447,470,495"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000853_000341.html" title="2" alt="" coords="312,443,320,457"/>
+<area shape="rect" id="node9" href="dir_4a0e07b8ac9c7e04dfc1e5f4eaf31c4d.html" title="NotifierInterfaces" alt="" coords="273,351,396,399"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000853_000870.html" title="1" alt="" coords="359,330,367,344"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000857_000014.html" title="2" alt="" coords="396,263,404,278"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000857_000870.html" title="2" alt="" coords="311,323,319,338"/>
+<area shape="rect" id="node5" href="dir_c437527fd62637636a68c5be7de238c6.html" title="acsdkKWDProvider" alt="" coords="38,63,175,111"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000860_000853.html" title="1" alt="" coords="140,131,148,145"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000860_000014.html" title="4" alt="" coords="416,230,424,245"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000014_000341.html" title="138" alt="" coords="406,424,427,439"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000014_000870.html" title="1" alt="" coords="384,339,392,354"/>
+<area shape="rect" id="edge15-headlabel" href="dir_000818_000014.html" title="6" alt="" coords="466,315,474,330"/>
+<area shape="rect" id="edge16-headlabel" href="dir_000818_000341.html" title="3" alt="" coords="421,507,429,522"/>
+<area shape="rect" id="edge17-headlabel" href="dir_000341_000853.html" title="3" alt="" coords="147,218,155,233"/>
+<area shape="rect" id="edge18-headlabel" href="dir_000341_000014.html" title="165" alt="" coords="443,311,465,326"/>
+<area shape="rect" id="edge19-headlabel" href="dir_000341_000818.html" title="2" alt="" coords="427,515,435,530"/>
+<area shape="rect" id="edge20-headlabel" href="dir_000870_000341.html" title="3" alt="" coords="377,419,385,434"/>
+<area shape="rect" id="clust2" href="dir_e410f0f5f1983efb71051e3794e71cfe.html" alt="" coords="27,52,396,313"/>
+<area shape="rect" id="clust1" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="16,16,407,324"/>
+</map>

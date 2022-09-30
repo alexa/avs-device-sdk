@@ -1,11 +1,8 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/HTTP2/HTTP2MimeResponseDecoder.h">
-<area shape="rect" id="node2" href="$_downchannel_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/DownchannelHandler.cpp" alt="" coords="5,131,180,187"/>
-<area shape="rect" id="node3" href="$_message_request_handler_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/src/Transport\l/MessageRequestHandler.cpp" alt="" coords="204,131,403,187"/>
-<area shape="rect" id="node4" href="$_mock_h_t_t_p2_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Request.h" alt="" coords="427,131,590,187"/>
-<area shape="rect" id="node9" href="$_h_t_t_p2_mime_response_decoder_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/HTTP2/HTTP2MimeResponse\lDecoder.cpp" alt="" coords="614,124,841,195"/>
-<area shape="rect" id="node10" href="$_m_i_m_e_parser_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/MIMEParserTest.cpp" alt="" coords="865,131,1041,187"/>
-<area shape="rect" id="node5" href="$_mock_h_t_t_p2_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Request.cpp" alt="" coords="165,243,396,299"/>
-<area shape="rect" id="node6" href="$_mock_h_t_t_p2_connection_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Connection.h" alt="" coords="420,243,597,299"/>
-<area shape="rect" id="node8" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="548,347,723,403"/>
-<area shape="rect" id="node7" href="$_mock_h_t_t_p2_connection_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Connection.cpp" alt="" coords="275,347,523,403"/>
+<area shape="rect" id="node2" href="$_mock_h_t_t_p2_request_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Request.h" alt="" coords="267,124,430,180"/>
+<area shape="rect" id="node7" href="$_m_i_m_e_parser_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/MIMEParserTest.cpp" alt="" coords="454,124,630,180"/>
+<area shape="rect" id="node3" href="$_mock_h_t_t_p2_request_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Request.cpp" alt="" coords="5,228,236,284"/>
+<area shape="rect" id="node4" href="$_mock_h_t_t_p2_connection_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/MockHTTP2Connection.h" alt="" coords="260,228,437,284"/>
+<area shape="rect" id="node6" href="$_h_t_t_p2_transport_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/HTTP2TransportTest.cpp" alt="" coords="388,332,563,388"/>
+<area shape="rect" id="node5" href="$_mock_h_t_t_p2_connection_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ACL/test/Transport\l/Common/MockHTTP2Connection.cpp" alt="" coords="115,332,363,388"/>
 </map>

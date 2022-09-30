@@ -1,15 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Metrics.h">
-<area shape="rect" id="node2" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="251,541,427,583"/>
-<area shape="rect" id="node13" href="$_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="1489,124,1717,151"/>
-<area shape="rect" id="node7" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="5,631,181,672"/>
-<area shape="rect" id="node9" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="301,720,477,761"/>
-<area shape="rect" id="node14" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="1287,288,1483,315"/>
-<area shape="rect" id="node28" href="$_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="1421,199,1638,240"/>
-<area shape="rect" id="node30" href="$_a_v_s_message_header_8h.html" title="AVSCommon/AVS/AVSMessage\lHeader.h" alt="" coords="1565,363,1782,404"/>
-<area shape="rect" id="node15" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1297,363,1473,404"/>
-<area shape="rect" id="node17" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="756,452,932,493"/>
-<area shape="rect" id="node20" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="965,541,1179,583"/>
-<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="653,631,829,672"/>
-<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="747,541,941,583"/>
-<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="659,720,835,761"/>
+<area shape="rect" id="node2" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="351,541,527,583"/>
+<area shape="rect" id="node14" href="$_a_v_s_message_8h.html" title="AVSCommon/AVS/AVSMessage.h" alt="" coords="461,124,689,151"/>
+<area shape="rect" id="node8" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="541,631,717,672"/>
+<area shape="rect" id="node10" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="685,720,861,761"/>
+<area shape="rect" id="node15" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="761,288,957,315"/>
+<area shape="rect" id="node30" href="$_a_v_s_message_endpoint_8h.html" title="AVSCommon/AVS/AVSMessage\lEndpoint.h" alt="" coords="567,199,784,240"/>
+<area shape="rect" id="node32" href="$_a_v_s_message_header_8h.html" title="AVSCommon/AVS/AVSMessage\lHeader.h" alt="" coords="5,363,223,404"/>
+<area shape="rect" id="node16" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1090,363,1266,404"/>
+<area shape="rect" id="node18" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1090,452,1266,493"/>
+<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1417,541,1632,583"/>
+<area shape="rect" id="node26" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="935,631,1111,672"/>
+<area shape="rect" id="node27" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1148,541,1341,583"/>
+<area shape="rect" id="node28" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1667,720,1843,761"/>
+<area shape="rect" id="node29" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="897,541,1073,583"/>
 </map>

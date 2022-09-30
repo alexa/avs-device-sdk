@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1capabilities_delegate_1_1_in_process_endpoints_to_config_map_struct.html" title="alexaClientSDK::capabilities\lDelegate::InProcessEndpointsToConfig\lMapStruct" alt="" coords="5,5,257,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1timing_1_1_timer_delegate_factory_interface.html" title="A factory for creating TimerDelegateInterface. " alt="" coords="5,125,216,181"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_timer_delegate_factory.html" title="A mock of TimerDelegateFactoryInterface. " alt="" coords="275,5,472,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer_delegate_factory.html" title="alexaClientSDK::avsCommon\l::utils::timing::test::\lStopTaskTimerDelegateFactory" alt="" coords="270,85,477,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate_factory.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimerDelegate\lFactory" alt="" coords="275,165,472,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1visual_timeout_manager_1_1test_1_1_mock_timer_factory.html" title="alexaClientSDK::visualTimeout\lManager::test::MockTimerFactory" alt="" coords="264,246,483,287"/>
 </map>

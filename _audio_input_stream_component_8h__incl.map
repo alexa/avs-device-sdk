@@ -1,0 +1,27 @@
+<map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkAudioInputStream/include/acsdkAudioInputStream/AudioInputStreamComponent.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkAudioInputStream/include/acsdkAudioInputStream/AudioInputStreamComponent.h">
+<area shape="rect" id="node4" href="$_component_8h.html" title="acsdkManufactory/Component.h" alt="" coords="1427,124,1638,151"/>
+<area shape="rect" id="node40" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="44,474,226,501"/>
+<area shape="rect" id="node44" href="$_audio_input_stream_8h.html" title="AVSCommon/AVS/AudioInput\lStream.h" alt="" coords="2325,288,2524,329"/>
+<area shape="rect" id="node50" href="$_audio_format_8h.html" title="AVSCommon/Utils/AudioFormat.h" alt="" coords="2224,742,2446,769"/>
+<area shape="rect" id="node5" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="1545,199,1720,240"/>
+<area shape="rect" id="node43" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="1346,199,1521,240"/>
+<area shape="rect" id="node11" href="$_type_index_8h.html" title="AVSCommon/Utils/TypeIndex.h" alt="" coords="748,563,957,590"/>
+<area shape="rect" id="node25" href="$acsdk_manufactory_2include_2acsdk_manufactory_2_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1795,474,1998,501"/>
+<area shape="rect" id="node26" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="933,467,1108,508"/>
+<area shape="rect" id="node27" href="$_abstract_recipe_8h.html" title="acsdkManufactory/internal\l/AbstractRecipe.h" alt="" coords="1132,467,1306,508"/>
+<area shape="rect" id="node28" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="1313,288,1488,329"/>
+<area shape="rect" id="node15" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1072,824,1248,865"/>
+<area shape="rect" id="node20" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1256,645,1432,687"/>
+<area shape="rect" id="node24" href="$_platform_definitions_8h.html" title="AVSCommon/Utils/Platform\lDefinitions.h" alt="" coords="890,645,1076,687"/>
+<area shape="rect" id="node18" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1000,913,1176,955"/>
+<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1256,735,1432,776"/>
+<area shape="rect" id="node35" href="$_type_traits_helper_8h.html" title="acsdkManufactory/internal\l/TypeTraitsHelper.h" alt="" coords="476,556,650,597"/>
+<area shape="rect" id="node36" href="$_runtime_manufactory_8h.html" title="acsdkManufactory/internal\l/RuntimeManufactory.h" alt="" coords="1670,377,1845,419"/>
+<area shape="rect" id="node37" href="$_shared_pointer_cache_8h.html" title="acsdkManufactory/internal\l/SharedPointerCache.h" alt="" coords="1125,377,1300,419"/>
+<area shape="rect" id="node38" href="$_weak_pointer_cache_8h.html" title="acsdkManufactory/internal\l/WeakPointerCache.h" alt="" coords="926,377,1101,419"/>
+<area shape="rect" id="node39" href="$acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="393,377,568,419"/>
+<area shape="rect" id="node41" href="$_optional_import_8h.html" title="acsdkManufactory/Optional\lImport.h" alt="" coords="300,467,482,508"/>
+<area shape="rect" id="node42" href="$_make_optional_8h.html" title="acsdkManufactory/internal\l/MakeOptional.h" alt="" coords="506,467,681,508"/>
+<area shape="rect" id="node45" href="$_shared_data_stream_8h.html" title="AVSCommon/Utils/SDS\l/SharedDataStream.h" alt="" coords="2326,467,2491,508"/>
+<area shape="rect" id="node48" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="2496,377,2662,419"/>
+</map>

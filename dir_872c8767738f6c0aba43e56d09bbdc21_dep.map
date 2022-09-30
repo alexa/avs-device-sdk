@@ -1,20 +1,19 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include">
-<area shape="rect" id="node2" href="dir_118307bc9c346d5babffb00d17eeffb2.html" title="CapabilitiesDelegate" alt="" coords="37,87,179,135"/>
-<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="141,183,213,231"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000345_000588.html" title="1" alt="" coords="152,155,160,170"/>
-<area shape="rect" id="node4" href="dir_d29c5f5a2915d6c5388c9daae4f109c7.html" title="Storage" alt="" coords="237,183,309,231"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000345_000633.html" title="1" alt="" coords="222,162,230,177"/>
-<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="126,279,229,327"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000345_000017.html" title="29" alt="" coords="146,251,161,266"/>
-<area shape="rect" id="node6" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="308,87,380,135"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000345_000457.html" title="4" alt="" coords="332,60,340,74"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000588_000017.html" title="14" alt="" coords="169,252,184,267"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000633_000017.html" title="12" alt="" coords="213,264,228,279"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000017_000588.html" title="2" alt="" coords="174,242,182,257"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000457_000345.html" title="2" alt="" coords="138,70,146,85"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000457_000588.html" title="13" alt="" coords="226,182,241,196"/>
-<area shape="rect" id="edge10-headlabel" href="dir_000457_000633.html" title="1" alt="" coords="305,165,313,180"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000457_000017.html" title="45" alt="" coords="241,284,256,299"/>
-<area shape="rect" id="clust2" href="dir_872c8767738f6c0aba43e56d09bbdc21.html" alt="" coords="27,76,287,146"/>
-<area shape="rect" id="clust1" href="dir_924a657fe36215a0159270de1b610651.html" title="CapabilitiesDelegate" alt="" coords="16,40,297,156"/>
+<area shape="rect" id="node2" href="dir_118307bc9c346d5babffb00d17eeffb2.html" title="CapabilitiesDelegate" alt="" coords="79,63,222,111"/>
+<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="5,255,77,303"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000487_000810.html" title="1" alt="" coords="48,230,56,244"/>
+<area shape="rect" id="node4" href="dir_d29c5f5a2915d6c5388c9daae4f109c7.html" title="Storage" alt="" coords="152,255,224,303"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000487_000903.html" title="1" alt="" coords="184,228,192,242"/>
+<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="63,351,166,399"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000487_000014.html" title="30" alt="" coords="179,351,194,365"/>
+<area shape="rect" id="node6" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="79,159,151,207"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000487_000582.html" title="4" alt="" coords="134,137,142,151"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000810_000014.html" title="57" alt="" coords="75,323,90,338"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000903_000014.html" title="5" alt="" coords="147,334,155,348"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000014_000810.html" title="2" alt="" coords="69,315,77,330"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000582_000810.html" title="10" alt="" coords="70,238,85,252"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000582_000903.html" title="4" alt="" coords="161,227,169,242"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000582_000014.html" title="95" alt="" coords="116,325,130,340"/>
+<area shape="rect" id="clust2" href="dir_872c8767738f6c0aba43e56d09bbdc21.html" alt="" coords="69,52,329,121"/>
+<area shape="rect" id="clust1" href="dir_924a657fe36215a0159270de1b610651.html" title="CapabilitiesDelegate" alt="" coords="59,16,340,132"/>
 </map>

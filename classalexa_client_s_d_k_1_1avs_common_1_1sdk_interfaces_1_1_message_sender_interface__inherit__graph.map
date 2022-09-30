@@ -5,7 +5,6 @@
 <area shape="rect" id="node8" href="$classalexa_client_s_d_k_1_1acsdk_external_media_player_1_1_authorized_sender.html" title="alexaClientSDK::acsdkExternal\lMediaPlayer::AuthorizedSender" alt="" coords="266,201,473,243"/>
 <area shape="rect" id="node9" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_a_v_s_connection_manager_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::AVSConnection\lManagerInterface" alt="" coords="264,267,475,323"/>
 <area shape="rect" id="node15" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_message_sender.html" title="Mock class that implements the MessageSender. " alt="" coords="271,347,468,403"/>
-<area shape="rect" id="node16" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_message_sender.html" title="alexaClientSDK::integration\l::test::TestMessageSender" alt="" coords="278,428,461,469"/>
 <area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acl_1_1_message_router.html" title="alexaClientSDK::acl\l::MessageRouter" alt="" coords="578,55,718,96"/>
 <area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_mock_message_router.html" title="alexaClientSDK::acl\l::test::MockMessageRouter" alt="" coords="556,120,740,161"/>
 <area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acl_1_1test_1_1_testable_message_router.html" title="alexaClientSDK::acl\l::test::TestableMessageRouter" alt="" coords="845,55,1048,96"/>

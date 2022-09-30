@@ -1,7 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaResourceProvider.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaResourceProvider.h">
-<area shape="rect" id="node2" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,146,235,202"/>
-<area shape="rect" id="node3" href="$_pooled_media_resource_provider_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lResourceProvider.cpp" alt="" coords="259,139,458,209"/>
-<area shape="rect" id="node4" href="$_audio_player_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/src/AudioPlayerComponent.cpp" alt="" coords="482,146,801,202"/>
-<area shape="rect" id="node5" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="825,139,1055,209"/>
-<area shape="rect" id="node6" href="$_audio_player_integration_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Integration/test\l/AudioPlayerIntegrationTest.cpp" alt="" coords="1080,146,1288,202"/>
+<area shape="rect" id="node2" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="7,139,237,209"/>
 </map>

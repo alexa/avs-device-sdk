@@ -1,0 +1,25 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/WindowManagerHandler.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/WindowManagerHandler.h">
+<area shape="rect" id="node3" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2150,168,2346,195"/>
+<area shape="rect" id="node29" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1645,525,1835,567"/>
+<area shape="rect" id="node30" href="$_i_p_c_handler_registration_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerRegistration\lInterface.h" alt="" coords="1822,153,2013,209"/>
+<area shape="rect" id="node49" href="$_window_manager_handler_interface_8h.html" title="IPCServerSampleApp\l/IPC/HandlerInterfaces\l/WindowManagerHandlerInterface.h" alt="" coords="1407,153,1638,209"/>
+<area shape="rect" id="node4" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2273,257,2449,299"/>
+<area shape="rect" id="node6" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="875,347,1051,388"/>
+<area shape="rect" id="node11" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="425,525,639,567"/>
+<area shape="rect" id="node17" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1141,525,1317,567"/>
+<area shape="rect" id="node18" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="875,436,1051,477"/>
+<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1075,436,1269,477"/>
+<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="373,436,549,477"/>
+<area shape="rect" id="node28" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="624,436,800,477"/>
+<area shape="rect" id="node22" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="941,525,1117,567"/>
+<area shape="rect" id="node24" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="72,615,248,656"/>
+<area shape="rect" id="node31" href="$_i_p_c_dispatcher_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCDispatcherInterface.h" alt="" coords="1861,257,2062,299"/>
+<area shape="rect" id="node32" href="$_i_p_c_handler_base_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerBase.h" alt="" coords="2087,257,2249,299"/>
+<area shape="rect" id="node34" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2699,347,2893,388"/>
+<area shape="rect" id="node39" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="2800,436,2995,477"/>
+<area shape="rect" id="node41" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="3019,436,3213,477"/>
+<area shape="rect" id="node46" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="2330,436,2505,477"/>
+<area shape="rect" id="node43" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="3277,533,3376,559"/>
+<area shape="rect" id="node45" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="3220,622,3335,649"/>
+<area shape="rect" id="node47" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2214,525,2445,567"/>
+</map>

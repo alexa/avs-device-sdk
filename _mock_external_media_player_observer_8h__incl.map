@@ -1,0 +1,26 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/test/acsdkExternalMediaPlayerInterfaces/MockExternalMediaPlayerObserver.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/test/acsdkExternalMediaPlayerInterfaces/MockExternalMediaPlayerObserver.h">
+<area shape="rect" id="node2" href="$_external_media_player_observer_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaPlayer\lObserverInterface.h" alt="" coords="378,467,582,523"/>
+<area shape="rect" id="node13" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1376,139,1470,165"/>
+<area shape="rect" id="node3" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="460,682,695,709"/>
+<area shape="rect" id="node5" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="236,571,448,627"/>
+<area shape="rect" id="node9" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="247,675,436,716"/>
+<area shape="rect" id="node17" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="1595,578,1726,619"/>
+<area shape="rect" id="node35" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="2044,682,2196,709"/>
+<area shape="rect" id="node36" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1339,764,1470,805"/>
+<area shape="rect" id="node39" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="2587,295,2744,322"/>
+<area shape="rect" id="node41" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="1646,213,1808,240"/>
+<area shape="rect" id="node43" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1141,481,1284,508"/>
+<area shape="rect" id="node46" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1410,213,1537,240"/>
+<area shape="rect" id="node47" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="716,481,863,508"/>
+<area shape="rect" id="node49" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="2498,585,2655,612"/>
+<area shape="rect" id="node50" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1832,213,1990,240"/>
+<area shape="rect" id="node18" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="2170,853,2300,895"/>
+<area shape="rect" id="node37" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1442,675,1572,716"/>
+<area shape="rect" id="node38" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="2372,675,2503,716"/>
+<area shape="rect" id="node30" href="$gtest-port-arch_8h.html" title="gtest/internal/gtest\l&#45;port&#45;arch.h" alt="" coords="2295,943,2426,984"/>
+<area shape="rect" id="node31" href="$custom_2gtest-port_8h.html" title="gtest/internal/custom\l/gtest&#45;port.h" alt="" coords="2450,943,2594,984"/>
+<area shape="rect" id="node40" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="2595,474,2736,515"/>
+<area shape="rect" id="node42" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="1698,377,1828,419"/>
+<area shape="rect" id="node45" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="1764,288,1919,329"/>
+<area shape="rect" id="node44" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="1140,578,1284,619"/>
+</map>

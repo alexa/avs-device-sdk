@@ -1,4 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_state_synchronizer_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::StateSynchronizer\lObserverInterface" alt="" coords="5,5,229,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1test_1_1_mock_state_synchronizer_observer.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::test::\lMockStateSynchronizerObserver" alt="" coords="277,5,492,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1alexa_channel_controller_interfaces_1_1_channel_controller_interface.html" title="alexaClientSDK::alexaChannel\lControllerInterfaces::ChannelController\lInterface" alt="" coords="5,45,253,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1alexa_channel_controller_1_1test_1_1_mock_alexa_channel_controller_interface.html" title="alexaClientSDK::alexaChannel\lController::test::MockAlexaChannel\lControllerInterface" alt="" coords="325,5,554,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1common_1_1_endpoint_alexa_channel_controller_handler.html" title="alexaClientSDK::sampleApplications\l::common::EndpointAlexaChannelController\lHandler" alt="" coords="301,85,577,141"/>
 </map>

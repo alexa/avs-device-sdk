@@ -1,5 +1,6 @@
 <map id="alexaClientSDK::acsdkAlerts::renderer::Renderer" name="alexaClientSDK::acsdkAlerts::renderer::Renderer">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface.html" title="alexaClientSDK::acsdkAlerts\l::renderer::RendererInterface" alt="" coords="17,5,209,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lObserverInterface" alt="" coords="5,71,220,127"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="14,152,211,193"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1renderer_1_1_renderer_interface.html" title="alexaClientSDK::acsdkAlerts\l::renderer::RendererInterface" alt="" coords="23,5,215,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_internet_connection_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::InternetConnection\lObserverInterface" alt="" coords="5,71,232,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_media_player_observer_interface.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::MediaPlayer\lObserverInterface" alt="" coords="11,151,226,207"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_requires_shutdown.html" title="alexaClientSDK::avsCommon\l::utils::RequiresShutdown" alt="" coords="20,232,217,273"/>
 </map>

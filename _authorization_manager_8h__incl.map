@@ -1,0 +1,22 @@
+<map id="/workplace/avs&#45;device&#45;sdk/core/Authorization/acsdkAuthorization/include/acsdkAuthorization/AuthorizationManager.h" name="/workplace/avs&#45;device&#45;sdk/core/Authorization/acsdkAuthorization/include/acsdkAuthorization/AuthorizationManager.h">
+<area shape="rect" id="node7" href="$_authorization_manager_storage_8h.html" title="acsdkAuthorization\l/AuthorizationManagerStorage.h" alt="" coords="1144,213,1352,255"/>
+<area shape="rect" id="node8" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="1347,303,1557,344"/>
+<area shape="rect" id="node9" href="$_authorization_authority_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationAuthorityInterface.h" alt="" coords="341,213,557,255"/>
+<area shape="rect" id="node10" href="$_auth_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthDelegateInterface.h" alt="" coords="5,303,197,344"/>
+<area shape="rect" id="node14" href="$_authorization_manager_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationManagerInterface.h" alt="" coords="702,213,917,255"/>
+<area shape="rect" id="node17" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1376,213,1565,255"/>
+<area shape="rect" id="node19" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2085,124,2280,165"/>
+<area shape="rect" id="node36" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2305,124,2471,165"/>
+<area shape="rect" id="node38" href="$_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="3119,213,3342,255"/>
+<area shape="rect" id="node11" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="288,392,480,433"/>
+<area shape="rect" id="node13" href="$_registration_manager_interface_8h.html" title="RegistrationManager\l/RegistrationManagerInterface.h" alt="" coords="272,303,480,344"/>
+<area shape="rect" id="node15" href="$_authorization_adapter_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationAdapterInterface.h" alt="" coords="606,303,815,344"/>
+<area shape="rect" id="node16" href="$_authorization_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationInterface.h" alt="" coords="675,392,866,433"/>
+<area shape="rect" id="node26" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="2800,213,2995,255"/>
+<area shape="rect" id="node28" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2429,213,2624,255"/>
+<area shape="rect" id="node33" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1843,213,2018,255"/>
+<area shape="rect" id="node30" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2504,310,2603,337"/>
+<area shape="rect" id="node32" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2555,399,2669,426"/>
+<area shape="rect" id="node34" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1817,303,2047,344"/>
+<area shape="rect" id="node37" href="$_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="3095,303,3313,344"/>
+</map>

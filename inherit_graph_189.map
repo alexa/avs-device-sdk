@@ -1,5 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1_alerts_audio_factory_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::audio\l::AlertsAudioFactoryInterface" alt="" coords="5,45,203,101"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1application_utilities_1_1resources_1_1audio_1_1_alerts_audio_factory.html" title="alexaClientSDK::application\lUtilities::resources::audio\l::AlertsAudioFactory" alt="" coords="259,5,445,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1audio_1_1test_1_1_mock_alerts_audio_factory.html" title="Mock class that implements AlertsAudioFactoryInterface. " alt="" coords="251,85,453,141"/>
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_get_imports_and_exports_1_1_get_ma5de9a0d95ac305a6c7567be459c13750.html" title="alexaClientSDK::acsdkManufactory\l::internal::GetImportsAndExports\l\&lt; Types \&gt;::GetMakeOptionalImportsOperation\l::Apply\&lt; std::tuple\&lt; ResultTypes... \&gt;,\l MakeOptional\&lt; Type \&gt; \&gt;" alt="" coords="5,5,296,91"/>
 </map>

@@ -1,0 +1,35 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/AssetManager/acsdkAssetManagerClient/include/acsdkAssetManagerClient/GenericInventory.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/AssetManager/acsdkAssetManagerClient/include/acsdkAssetManagerClient/GenericInventory.h">
+<area shape="rect" id="node5" href="$_artifact_wrapper_8h.html" title="acsdkAssetManagerClient\l/ArtifactWrapper.h" alt="" coords="3360,124,3535,165"/>
+<area shape="rect" id="node50" href="$_artifact_wrapper_factory_interface_8h.html" title="acsdkAssetManagerClientInterfaces\l/ArtifactWrapperFactoryInterface.h" alt="" coords="4409,124,4643,165"/>
+<area shape="rect" id="node6" href="$_notifier_8h.html" title="acsdk/Notifier/Notifier.h" alt="" coords="487,503,647,530"/>
+<area shape="rect" id="node15" href="$_artifact_update_validator_8h.html" title="acsdkAssetManagerClientInterfaces\l/ArtifactUpdateValidator.h" alt="" coords="4103,317,4336,359"/>
+<area shape="rect" id="node16" href="$_artifact_request_8h.html" title="acsdkAssetsInterfaces\l/ArtifactRequest.h" alt="" coords="4039,407,4195,448"/>
+<area shape="rect" id="node18" href="$_artifact_wrapper_interface_8h.html" title="acsdkAssetManagerClientInterfaces\l/ArtifactWrapperInterface.h" alt="" coords="3832,221,4065,262"/>
+<area shape="rect" id="node20" href="$_state_8h.html" title="acsdkAssetsInterfaces\l/State.h" alt="" coords="3583,407,3739,448"/>
+<area shape="rect" id="node21" href="$capabilities_2_davs_client_2acsdk_assets_interfaces_2include_2acsdk_assets_interfaces_2_priority_8h.html" title="acsdkAssetsInterfaces\l/Priority.h" alt="" coords="3561,317,3717,359"/>
+<area shape="rect" id="node22" href="$_amd_communication_interface_8h.html" title="acsdkAssetsInterfaces\l/Communication/AmdCommunication\lInterface.h" alt="" coords="2139,213,2377,269"/>
+<area shape="rect" id="node8" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="5,675,167,716"/>
+<area shape="rect" id="node10" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="381,585,530,627"/>
+<area shape="rect" id="node11" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="482,675,631,716"/>
+<area shape="rect" id="node17" href="$_type_8h.html" title="Type.h" alt="" coords="4085,503,4148,530"/>
+<area shape="rect" id="node19" href="$_artifact_change_observer_8h.html" title="acsdkAssetManagerClientInterfaces\l/ArtifactChangeObserver.h" alt="" coords="3793,317,4027,359"/>
+<area shape="rect" id="node23" href="$_communication_invoke_handler_interface_8h.html" title="acsdkCommunicationInterfaces\l/CommunicationInvokeHandlerInterface.h" alt="" coords="1027,585,1289,627"/>
+<area shape="rect" id="node27" href="$_communication_properties_handler_interface_8h.html" title="acsdkCommunicationInterfaces\l/CommunicationPropertiesHandlerInterface.h" alt="" coords="2117,317,2399,359"/>
+<area shape="rect" id="node24" href="$_success_result_8h.html" title="AVSCommon/Utils/Error\l/SuccessResult.h" alt="" coords="293,675,458,716"/>
+<area shape="rect" id="node26" href="$_function_invoker_interface_8h.html" title="FunctionInvokerInterface.h" alt="" coords="1069,682,1247,709"/>
+<area shape="rect" id="node25" href="$_result_8h.html" title="Result.h" alt="" coords="340,764,411,791"/>
+<area shape="rect" id="node28" href="$_communication_property_8h.html" title="CommunicationProperty.h" alt="" coords="1974,414,2147,441"/>
+<area shape="rect" id="node48" href="$_communication_property_change_subscriber_8h.html" title="acsdkCommunicationInterfaces\l/CommunicationPropertyChangeSubscriber.h" alt="" coords="3049,496,3333,537"/>
+<area shape="rect" id="node49" href="$_communication_property_validator_interface_8h.html" title="CommunicationPropertyValidator\lInterface.h" alt="" coords="2449,407,2662,448"/>
+<area shape="rect" id="node29" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2798,496,2974,537"/>
+<area shape="rect" id="node41" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1767,496,1962,537"/>
+<area shape="rect" id="node34" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="2601,585,2816,627"/>
+<area shape="rect" id="node36" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="3513,675,3689,716"/>
+<area shape="rect" id="node37" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3242,585,3418,627"/>
+<area shape="rect" id="node38" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="3493,585,3687,627"/>
+<area shape="rect" id="node39" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2401,585,2577,627"/>
+<area shape="rect" id="node40" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="2991,585,3167,627"/>
+<area shape="rect" id="node45" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="807,585,1002,627"/>
+<area shape="rect" id="node46" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2081,585,2275,627"/>
+<area shape="rect" id="node47" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1416,585,1591,627"/>
+</map>

@@ -1,0 +1,23 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/TemplateRuntimePresentationAdaptor/include/acsdk/Sample/TemplateRuntime/TemplateRuntimePresentationAdapter.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/TemplateRuntimePresentationAdaptor/include/acsdk/Sample/TemplateRuntime/TemplateRuntimePresentationAdapter.h">
+<area shape="rect" id="node6" href="$_audio_player_observer_interface_8h.html" title="acsdkAudioPlayerInterfaces\l/AudioPlayerObserverInterface.h" alt="" coords="619,332,830,373"/>
+<area shape="rect" id="node8" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="46,429,275,455"/>
+<area shape="rect" id="node12" href="$_notifier_8h.html" title="acsdk/Notifier/Notifier.h" alt="" coords="1510,153,1670,180"/>
+<area shape="rect" id="node18" href="$_presentation_orchestrator_client_interface_8h.html" title="acsdk/PresentationOrchestrator\lInterfaces/PresentationOrchestrator\lClientInterface.h" alt="" coords="905,139,1134,195"/>
+<area shape="rect" id="node21" href="$_presentation_types_8h.html" title="PresentationTypes.h" alt="" coords="1028,429,1171,455"/>
+<area shape="rect" id="node22" href="$_template_runtime_observer_interface_8h.html" title="acsdk/TemplateRuntimeInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="351,332,595,373"/>
+<area shape="rect" id="node24" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2578,146,2773,187"/>
+<area shape="rect" id="node40" href="$_template_runtime_presentation_adapter_observer_interface_8h.html" title="TemplateRuntimePresentation\lAdapterObserverInterface.h" alt="" coords="373,243,572,284"/>
+<area shape="rect" id="node11" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="667,429,902,455"/>
+<area shape="rect" id="node14" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="1340,332,1501,373"/>
+<area shape="rect" id="node16" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="1627,243,1777,284"/>
+<area shape="rect" id="node17" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="1678,332,1827,373"/>
+<area shape="rect" id="node19" href="$_presentation_observer_interface_8h.html" title="PresentationObserverInterface.h" alt="" coords="1006,250,1217,277"/>
+<area shape="rect" id="node20" href="$_presentation_interface_8h.html" title="PresentationInterface.h" alt="" coords="1107,339,1265,366"/>
+<area shape="rect" id="node23" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="451,421,643,463"/>
+<area shape="rect" id="node30" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="2443,243,2638,284"/>
+<area shape="rect" id="node32" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2713,243,2907,284"/>
+<area shape="rect" id="node37" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="2083,243,2257,284"/>
+<area shape="rect" id="node34" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2921,339,3019,366"/>
+<area shape="rect" id="node36" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2870,429,2985,455"/>
+<area shape="rect" id="node38" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2004,332,2235,373"/>
+</map>

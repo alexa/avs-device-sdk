@@ -1,0 +1,36 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/test/acsdkExternalMediaPlayerInterfaces/MockRenderPlayerInfoCardsProviderRegistrar.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/test/acsdkExternalMediaPlayerInterfaces/MockRenderPlayerInfoCardsProviderRegistrar.h">
+<area shape="rect" id="node2" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1131,139,1226,165"/>
+<area shape="rect" id="node33" href="$_external_media_player_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaPlayer\lInterface.h" alt="" coords="3039,541,3243,597"/>
+<area shape="rect" id="node6" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="735,549,865,590"/>
+<area shape="rect" id="node17" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="899,660,1051,687"/>
+<area shape="rect" id="node18" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="744,757,875,798"/>
+<area shape="rect" id="node21" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="711,295,868,322"/>
+<area shape="rect" id="node23" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="1175,213,1337,240"/>
+<area shape="rect" id="node25" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1751,467,1894,493"/>
+<area shape="rect" id="node28" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1545,213,1671,240"/>
+<area shape="rect" id="node29" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="121,467,268,493"/>
+<area shape="rect" id="node31" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="1493,556,1651,583"/>
+<area shape="rect" id="node32" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1695,213,1854,240"/>
+<area shape="rect" id="node7" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="1340,853,1471,895"/>
+<area shape="rect" id="node19" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="744,653,875,694"/>
+<area shape="rect" id="node20" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="1493,653,1624,694"/>
+<area shape="rect" id="node22" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="723,377,864,419"/>
+<area shape="rect" id="node24" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="1187,377,1317,419"/>
+<area shape="rect" id="node27" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="1213,288,1368,329"/>
+<area shape="rect" id="node26" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="1776,549,1920,590"/>
+<area shape="rect" id="node34" href="$_context_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerInterface.h" alt="" coords="3229,653,3421,694"/>
+<area shape="rect" id="node42" href="$_focus_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/FocusManagerInterface.h" alt="" coords="2477,757,2669,798"/>
+<area shape="rect" id="node43" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="3445,653,3637,694"/>
+<area shape="rect" id="node44" href="$_playback_handler_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackHandlerInterface.h" alt="" coords="2693,757,2885,798"/>
+<area shape="rect" id="node45" href="$_playback_router_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PlaybackRouterInterface.h" alt="" coords="2827,653,3019,694"/>
+<area shape="rect" id="node46" href="$_speaker_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerInterface.h" alt="" coords="3860,853,4052,895"/>
+<area shape="rect" id="node47" href="$_speaker_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/SpeakerManagerInterface.h" alt="" coords="3045,757,3237,798"/>
+<area shape="rect" id="node48" href="$_external_media_adapter_handler_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lHandlerInterface.h" alt="" coords="2245,645,2457,701"/>
+<area shape="rect" id="node49" href="$_external_media_player_common_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaPlayer\lCommon.h" alt="" coords="2249,749,2453,805"/>
+<area shape="rect" id="node50" href="$_external_media_player_observer_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaPlayer\lObserverInterface.h" alt="" coords="3662,645,3866,701"/>
+<area shape="rect" id="node37" href="$_capability_tag_8h.html" title="AVSCommon/AVS/Capability\lTag.h" alt="" coords="3423,853,3617,895"/>
+<area shape="rect" id="node38" href="$_state_refresh_policy_8h.html" title="AVSCommon/AVS/StateRefresh\lPolicy.h" alt="" coords="3777,757,3991,798"/>
+<area shape="rect" id="node39" href="$_alexa_state_change_cause_type_8h.html" title="AVSCommon/SDKInterfaces\l/AlexaStateChangeCauseType.h" alt="" coords="3185,853,3399,895"/>
+<area shape="rect" id="node40" href="$_context_manager_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextManagerObserverInterface.h" alt="" coords="3363,757,3600,798"/>
+<area shape="rect" id="node41" href="$_context_requester_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequesterInterface.h" alt="" coords="3641,853,3836,895"/>
+</map>

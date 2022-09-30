@@ -1,7 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/AudioInjectorMicrophone.h" name="/workplace/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/AudioInjectorMicrophone.h">
-<area shape="rect" id="node2" href="$_file_based_audio_injector_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/include\l/Diagnostics/FileBasedAudioInjector.h" alt="" coords="136,109,380,165"/>
-<area shape="rect" id="node3" href="$_file_based_audio_injector_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/src\l/FileBasedAudioInjector.cpp" alt="" coords="5,213,191,269"/>
-<area shape="rect" id="node6" href="$_audio_injector_microphone_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/src\l/AudioInjectorMicrophone.cpp" alt="" coords="405,109,599,165"/>
-<area shape="rect" id="node4" href="$_s_d_k_diagnostics_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SDKDiagnostics.h" alt="" coords="215,213,421,269"/>
-<area shape="rect" id="node5" href="$_s_d_k_diagnostics_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SDKDiagnostics.cpp" alt="" coords="185,317,451,359"/>
+<area shape="rect" id="node2" href="$_file_based_audio_injector_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/include\l/Diagnostics/FileBasedAudioInjector.h" alt="" coords="10,109,254,165"/>
+<area shape="rect" id="node3" href="$_s_d_k_diagnostics_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/Common/LibSampleApp/include\l/SampleApp/SDKDiagnostics.h" alt="" coords="26,213,238,284"/>
 </map>

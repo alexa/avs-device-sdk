@@ -1,0 +1,20 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Endpoint/include/acsdk/Sample/Endpoint/EndpointInputControllerHandler.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/Common/Endpoint/include/acsdk/Sample/Endpoint/EndpointInputControllerHandler.h">
+<area shape="rect" id="node5" href="$_input_controller_interface_8h.html" title="acsdk/AlexaInputController\lInterfaces/InputControllerInterface.h" alt="" coords="190,139,421,180"/>
+<area shape="rect" id="node33" href="$_notifier_8h.html" title="acsdk/Notifier/Notifier.h" alt="" coords="1968,638,2128,665"/>
+<area shape="rect" id="node7" href="$_input_controller_observer_interface_8h.html" title="InputControllerObserverInterface.h" alt="" coords="194,228,417,255"/>
+<area shape="rect" id="node8" href="$_input_type_8h.html" title="InputType.h" alt="" coords="335,303,425,329"/>
+<area shape="rect" id="node9" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="718,377,914,404"/>
+<area shape="rect" id="node10" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1103,452,1279,493"/>
+<area shape="rect" id="node12" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1103,541,1279,583"/>
+<area shape="rect" id="node16" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="801,631,1015,672"/>
+<area shape="rect" id="node21" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="347,720,523,761"/>
+<area shape="rect" id="node22" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1376,631,1552,672"/>
+<area shape="rect" id="node30" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="551,631,745,672"/>
+<area shape="rect" id="node31" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1616,809,1792,851"/>
+<area shape="rect" id="node32" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1040,631,1216,672"/>
+<area shape="rect" id="node26" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1392,720,1568,761"/>
+<area shape="rect" id="node28" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1024,809,1200,851"/>
+<area shape="rect" id="node34" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="2249,809,2410,851"/>
+<area shape="rect" id="node35" href="$_data_interface_8h.html" title="acsdk/Notifier/internal\l/DataInterface.h" alt="" coords="1973,720,2123,761"/>
+<area shape="rect" id="node36" href="$_notifier_traits_8h.html" title="acsdk/Notifier/internal\l/NotifierTraits.h" alt="" coords="2075,809,2224,851"/>
+</map>

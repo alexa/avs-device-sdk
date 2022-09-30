@@ -1,5 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotificationsInterfaces/include/acsdkNotificationsInterfaces/NotificationsNotifierInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Notifications/acsdkNotificationsInterfaces/include/acsdkNotificationsInterfaces/NotificationsNotifierInterface.h">
-<area shape="rect" id="node3" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="68,139,225,180"/>
-<area shape="rect" id="node5" href="$_notifications_observer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsObserverInterface.h" alt="" coords="250,139,465,180"/>
-<area shape="rect" id="node6" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="243,228,472,255"/>
+<area shape="rect" id="node3" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="67,139,229,180"/>
+<area shape="rect" id="node5" href="$_notifications_observer_interface_8h.html" title="acsdkNotificationsInterfaces\l/NotificationsObserverInterface.h" alt="" coords="253,139,467,180"/>
+<area shape="rect" id="node6" href="$_a_v_s_common_2_a_v_s_2include_2_a_v_s_common_2_a_v_s_2_indicator_state_8h.html" title="AVSCommon/AVS/IndicatorState.h" alt="" coords="245,228,475,255"/>
 </map>

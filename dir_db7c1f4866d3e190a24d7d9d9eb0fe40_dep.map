@@ -1,7 +1,12 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManagerInterfaces" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkStartupManagerInterfaces">
-<area shape="rect" id="node2" href="dir_5ebe73012e0b50c4004a537d2162c809.html" title="include" alt="" coords="48,63,120,111"/>
-<area shape="rect" id="node3" href="dir_d3cfb0f75dbe2fd43efeb9e5a78af15e.html" title="acsdkNotifierInterfaces" alt="" coords="5,159,163,207"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000622_000599.html" title="1" alt="" coords="88,133,96,147"/>
-<area shape="rect" id="clust2" href="dir_db7c1f4866d3e190a24d7d9d9eb0fe40.html" alt="" coords="37,52,363,121"/>
-<area shape="rect" id="clust1" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="27,16,373,132"/>
+<area shape="rect" id="node2" href="dir_5ebe73012e0b50c4004a537d2162c809.html" title="include" alt="" coords="43,159,115,207"/>
+<area shape="rect" id="node5" href="dir_4a0e07b8ac9c7e04dfc1e5f4eaf31c4d.html" title="NotifierInterfaces" alt="" coords="5,255,128,303"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000845_000870.html" title="1" alt="" coords="76,230,84,245"/>
+<area shape="rect" id="node3" href="dir_2467b1b65e536c79ee2e871d73257072.html" title="test" alt="" coords="43,63,115,111"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000847_000845.html" title="1" alt="" coords="83,133,91,147"/>
+<area shape="rect" id="node4" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="47,351,185,399"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000847_000341.html" title="1" alt="" coords="136,329,144,344"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000870_000341.html" title="3" alt="" coords="99,323,107,337"/>
+<area shape="rect" id="clust2" href="dir_db7c1f4866d3e190a24d7d9d9eb0fe40.html" alt="" coords="32,52,357,217"/>
+<area shape="rect" id="clust1" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="21,16,368,228"/>
 </map>

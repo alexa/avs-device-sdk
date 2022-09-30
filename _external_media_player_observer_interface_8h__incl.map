@@ -1,5 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerObserverInterface.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/ExternalMediaPlayer/acsdkExternalMediaPlayerInterfaces/include/acsdkExternalMediaPlayerInterfaces/ExternalMediaPlayerObserverInterface.h">
 <area shape="rect" id="node2" href="$_play_requestor_8h.html" title="AVSCommon/AVS/PlayRequestor.h" alt="" coords="5,250,240,277"/>
-<area shape="rect" id="node4" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="205,139,417,195"/>
-<area shape="rect" id="node7" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="464,243,653,284"/>
+<area shape="rect" id="node4" href="$_external_media_adapter_interface_8h.html" title="acsdkExternalMediaPlayer\lInterfaces/ExternalMediaAdapter\lInterface.h" alt="" coords="239,139,451,195"/>
+<area shape="rect" id="node8" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="600,243,789,284"/>
 </map>

@@ -1,0 +1,14 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/LiveViewCameraHandler.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/LiveViewCameraHandler.h">
+<area shape="rect" id="node4" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="832,436,1021,477"/>
+<area shape="rect" id="node7" href="$_i_p_c_handler_registration_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerRegistration\lInterface.h" alt="" coords="1754,153,1945,209"/>
+<area shape="rect" id="node29" href="$_live_view_camera_handler_interface_8h.html" title="IPCServerSampleApp\l/IPC/HandlerInterfaces\l/LiveViewCameraHandlerInterface.h" alt="" coords="1813,525,2045,581"/>
+<area shape="rect" id="node8" href="$_i_p_c_dispatcher_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCDispatcherInterface.h" alt="" coords="1945,257,2146,299"/>
+<area shape="rect" id="node9" href="$_i_p_c_handler_base_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerBase.h" alt="" coords="1624,257,1787,299"/>
+<area shape="rect" id="node11" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1027,347,1221,388"/>
+<area shape="rect" id="node18" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="41,436,236,477"/>
+<area shape="rect" id="node20" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="433,436,628,477"/>
+<area shape="rect" id="node25" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1227,436,1402,477"/>
+<area shape="rect" id="node22" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="557,540,656,567"/>
+<area shape="rect" id="node24" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="491,629,605,656"/>
+<area shape="rect" id="node26" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1126,533,1357,574"/>
+</map>

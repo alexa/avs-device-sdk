@@ -1,0 +1,29 @@
+<map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/TestTrace.cpp" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/test/Common/TestTrace.cpp">
+<area shape="rect" id="node2" href="$_test_trace_8h.html" title="AVSCommon/Utils/Logger\l/TestTrace.h" alt="" coords="785,512,961,553"/>
+<area shape="rect" id="node23" href="$_logger_sink_manager_8h.html" title="AVSCommon/Utils/Logger\l/LoggerSinkManager.h" alt="" coords="1122,512,1298,553"/>
+<area shape="rect" id="node24" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="2227,109,2321,136"/>
+<area shape="rect" id="node4" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="785,601,961,643"/>
+<area shape="rect" id="node10" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="545,691,760,732"/>
+<area shape="rect" id="node16" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="177,780,353,821"/>
+<area shape="rect" id="node17" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1153,780,1329,821"/>
+<area shape="rect" id="node20" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="25,691,219,732"/>
+<area shape="rect" id="node21" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="785,691,961,732"/>
+<area shape="rect" id="node22" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="243,691,419,732"/>
+<area shape="rect" id="node27" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="2179,512,2310,553"/>
+<area shape="rect" id="node35" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="2435,609,2587,635"/>
+<area shape="rect" id="node36" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1475,691,1606,732"/>
+<area shape="rect" id="node39" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="2054,266,2211,293"/>
+<area shape="rect" id="node41" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="2605,184,2767,211"/>
+<area shape="rect" id="node43" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="2512,437,2655,464"/>
+<area shape="rect" id="node46" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="2337,184,2464,211"/>
+<area shape="rect" id="node47" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="1898,437,2045,464"/>
+<area shape="rect" id="node49" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="1665,519,1822,546"/>
+<area shape="rect" id="node50" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="2791,184,2949,211"/>
+<area shape="rect" id="node28" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="2446,780,2577,821"/>
+<area shape="rect" id="node37" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1833,601,1963,643"/>
+<area shape="rect" id="node38" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="1678,601,1809,643"/>
+<area shape="rect" id="node40" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="2105,348,2246,389"/>
+<area shape="rect" id="node42" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="2813,348,2943,389"/>
+<area shape="rect" id="node45" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="2795,259,2950,300"/>
+<area shape="rect" id="node44" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="2646,512,2790,553"/>
+</map>

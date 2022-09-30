@@ -1,4 +1,30 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/test/ManufactoryUtilsTest.cpp" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkManufactory/test/ManufactoryUtilsTest.cpp">
-<area shape="rect" id="node4" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="113,199,295,225"/>
-<area shape="rect" id="node5" href="$_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="253,109,427,151"/>
+<area shape="rect" id="node5" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="1039,109,1134,136"/>
+<area shape="rect" id="node36" href="$_import_8h.html" title="acsdkManufactory/Import.h" alt="" coords="3229,445,3411,471"/>
+<area shape="rect" id="node37" href="$_optional_import_8h.html" title="acsdkManufactory/Optional\lImport.h" alt="" coords="3435,437,3616,479"/>
+<area shape="rect" id="node38" href="$acsdk_manufactory_2include_2acsdk_manufactory_2internal_2_utils_8h.html" title="acsdkManufactory/internal\l/Utils.h" alt="" coords="2919,348,3094,389"/>
+<area shape="rect" id="node9" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="1392,527,1523,568"/>
+<area shape="rect" id="node20" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="1117,623,1269,650"/>
+<area shape="rect" id="node21" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1885,705,2016,747"/>
+<area shape="rect" id="node24" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="1280,184,1437,211"/>
+<area shape="rect" id="node26" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="794,184,955,211"/>
+<area shape="rect" id="node28" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="390,445,533,471"/>
+<area shape="rect" id="node31" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="94,184,221,211"/>
+<area shape="rect" id="node32" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="1797,445,1944,471"/>
+<area shape="rect" id="node34" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="949,534,1107,561"/>
+<area shape="rect" id="node35" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="611,184,770,211"/>
+<area shape="rect" id="node10" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="963,795,1093,836"/>
+<area shape="rect" id="node22" href="$gtest-filepath_8h.html" title="gtest/internal/gtest\l&#45;filepath.h" alt="" coords="1579,616,1709,657"/>
+<area shape="rect" id="node23" href="$gtest-type-util_8h.html" title="gtest/internal/gtest\l&#45;type&#45;util.h" alt="" coords="963,616,1093,657"/>
+<area shape="rect" id="node25" href="$gtest-death-test-internal_8h.html" title="gtest/internal/gtest\l&#45;death&#45;test&#45;internal.h" alt="" coords="1319,259,1460,300"/>
+<area shape="rect" id="node27" href="$gtest-param-util_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util.h" alt="" coords="656,348,787,389"/>
+<area shape="rect" id="node30" href="$gtest-param-util-generated_8h.html" title="gtest/internal/gtest\l&#45;param&#45;util&#45;generated.h" alt="" coords="683,259,837,300"/>
+<area shape="rect" id="node29" href="$internal_2custom_2gtest-printers_8h.html" title="gtest/internal/custom\l/gtest&#45;printers.h" alt="" coords="237,527,381,568"/>
+<area shape="rect" id="node40" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="2831,437,3006,479"/>
+<area shape="rect" id="node50" href="$_make_optional_8h.html" title="acsdkManufactory/internal\l/MakeOptional.h" alt="" coords="3030,437,3205,479"/>
+<area shape="rect" id="node45" href="$_type_index_8h.html" title="AVSCommon/Utils/TypeIndex.h" alt="" coords="2629,623,2838,650"/>
+<area shape="rect" id="node46" href="$acsdk_manufactory_2include_2acsdk_manufactory_2_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="3535,534,3737,561"/>
+<area shape="rect" id="node47" href="$_abstract_pointer_cache_8h.html" title="acsdkManufactory/internal\l/AbstractPointerCache.h" alt="" coords="3285,527,3459,568"/>
+<area shape="rect" id="node48" href="$_abstract_recipe_8h.html" title="acsdkManufactory/internal\l/AbstractRecipe.h" alt="" coords="2667,527,2842,568"/>
+<area shape="rect" id="node49" href="$_cook_book__imp_8h.html" title="acsdkManufactory/internal\l/CookBook_imp.h" alt="" coords="2417,527,2591,568"/>
 </map>

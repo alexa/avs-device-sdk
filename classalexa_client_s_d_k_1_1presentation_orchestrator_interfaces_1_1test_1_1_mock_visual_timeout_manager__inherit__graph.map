@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::presentationOrchestratorInterfaces::test::MockVisualTimeoutManager" name="alexaClientSDK::presentationOrchestratorInterfaces::test::MockVisualTimeoutManager">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1presentation_orchestrator_interfaces_1_1_visual_timeout_manager_interface.html" title="alexaClientSDK::presentation\lOrchestratorInterfaces::\lVisualTimeoutManagerInterface" alt="" coords="272,45,479,101"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_dialog_u_x_state_observer_interface.html" title="A dialog specific UX state observer. " alt="" coords="13,5,217,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_g_u_i_activity_event_observer_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::GUIActivityEvent\lObserverInterface" alt="" coords="5,85,224,141"/>
+</map>

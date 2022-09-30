@@ -1,12 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Logger/ThreadMoniker.h">
-<area shape="rect" id="node2" href="$_console_logger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/ConsoleLogger.cpp" alt="" coords="5,124,208,180"/>
-<area shape="rect" id="node3" href="$_logger_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/Logger.cpp" alt="" coords="232,124,395,180"/>
-<area shape="rect" id="node4" href="$_thread_moniker_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/Logger/ThreadMoniker.cpp" alt="" coords="419,124,621,180"/>
-<area shape="rect" id="node5" href="$_task_thread_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/TaskThread.cpp" alt="" coords="645,124,808,180"/>
-<area shape="rect" id="node6" href="$_thread_pool_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/ThreadPool.cpp" alt="" coords="832,124,995,180"/>
-<area shape="rect" id="node7" href="$_worker_thread_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/WorkerThread.cpp" alt="" coords="1019,124,1181,180"/>
-<area shape="rect" id="node8" href="$_task_thread_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/TaskThreadTest.cpp" alt="" coords="1206,124,1378,180"/>
-<area shape="rect" id="node9" href="$_thread_pool_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/ThreadPoolTest.cpp" alt="" coords="1402,124,1571,180"/>
-<area shape="rect" id="node10" href="$_worker_thread_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/WorkerThreadTest.cpp" alt="" coords="1595,124,1781,180"/>
-<area shape="rect" id="node11" href="$_caption_timing_adapter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/CaptionTimingAdapter.cpp" alt="" coords="1805,124,2008,180"/>
+<area shape="rect" id="node2" href="$_task_thread_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/TaskThreadTest.cpp" alt="" coords="5,124,177,180"/>
+<area shape="rect" id="node3" href="$_thread_pool_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/ThreadPoolTest.cpp" alt="" coords="201,124,371,180"/>
+<area shape="rect" id="node4" href="$_worker_thread_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/WorkerThreadTest.cpp" alt="" coords="395,124,580,180"/>
 </map>

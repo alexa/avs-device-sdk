@@ -1,4 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerDelegateInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::timing::TimerDelegateInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html" title="alexaClientSDK::avsCommon\l::utils::timing::test::\lStopTaskTimer" alt="" coords="251,5,448,61"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimerDelegate" alt="" coords="251,86,448,127"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1test_1_1_stop_task_timer.html" title="alexaClientSDK::avsCommon\l::utils::timing::test::\lStopTaskTimer" alt="" coords="254,5,451,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1timing_1_1_timer_delegate.html" title="alexaClientSDK::avsCommon\l::utils::timing::TimerDelegate" alt="" coords="254,86,451,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1visual_timeout_manager_1_1test_1_1_warp_timer.html" title="alexaClientSDK::visualTimeout\lManager::test::WarpTimer" alt="" coords="251,151,455,193"/>
 </map>

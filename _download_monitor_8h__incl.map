@@ -1,0 +1,29 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/DownloadMonitor.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/DownloadMonitor.h">
+<area shape="rect" id="node3" href="$_caching_download_manager_8h.html" title="IPCServerSampleApp\l/CachingDownloadManager.h" alt="" coords="1523,139,1717,180"/>
+<area shape="rect" id="node6" href="$_h_t_t_p_content_fetcher_factory_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HTTPContentFetcherFactory.h" alt="" coords="734,228,941,269"/>
+<area shape="rect" id="node31" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="2521,511,2716,552"/>
+<area shape="rect" id="node46" href="$_misc_storage_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Storage/MiscStorageInterface.h" alt="" coords="2228,228,2439,269"/>
+<area shape="rect" id="node48" href="$_customer_data_handler_8h.html" title="RegistrationManager\l/CustomerDataHandler.h" alt="" coords="2566,228,2733,269"/>
+<area shape="rect" id="node8" href="$_h_t_t_p_content_fetcher_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface.h" alt="" coords="731,421,944,463"/>
+<area shape="rect" id="node28" href="$_h_t_t_p_content_fetcher_interface_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/HTTPContentFetcherInterface\lFactoryInterface.h" alt="" coords="805,317,1008,373"/>
+<area shape="rect" id="node29" href="$_libcurl_set_curl_options_callback_factory_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlSetCurlOptionsCallbackFactory\lInterface.h" alt="" coords="372,317,620,373"/>
+<area shape="rect" id="node9" href="$_http_response_code_8h.html" title="AVSCommon/Utils/HTTP\l/HttpResponseCode.h" alt="" coords="931,511,1103,552"/>
+<area shape="rect" id="node19" href="$_h_t_t_p_content_8h.html" title="AVSCommon/Utils/HTTPContent.h" alt="" coords="1128,518,1357,545"/>
+<area shape="rect" id="node11" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1069,600,1245,641"/>
+<area shape="rect" id="node13" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1069,689,1245,731"/>
+<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="990,779,1205,820"/>
+<area shape="rect" id="node21" href="$_in_process_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachment.h" alt="" coords="1663,600,1867,641"/>
+<area shape="rect" id="node22" href="$_attachment_8h.html" title="AVSCommon/AVS/Attachment\l/Attachment.h" alt="" coords="1523,689,1727,731"/>
+<area shape="rect" id="node23" href="$_in_process_s_d_s_8h.html" title="AVSCommon/Utils/SDS\l/InProcessSDS.h" alt="" coords="1808,779,1973,820"/>
+<area shape="rect" id="node25" href="$_in_process_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentReader.h" alt="" coords="1803,689,2008,731"/>
+<area shape="rect" id="node26" href="$_in_process_attachment_writer_8h.html" title="AVSCommon/AVS/Attachment\l/InProcessAttachmentWriter.h" alt="" coords="2033,689,2237,731"/>
+<area shape="rect" id="node30" href="$_libcurl_set_curl_options_callback_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/LibcurlSetCurlOptionsCallbackInterface.h" alt="" coords="192,421,459,463"/>
+<area shape="rect" id="node35" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="3257,600,3452,641"/>
+<area shape="rect" id="node37" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2821,600,3016,641"/>
+<area shape="rect" id="node42" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="2465,689,2639,731"/>
+<area shape="rect" id="node39" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="3040,697,3139,723"/>
+<area shape="rect" id="node41" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2989,786,3104,813"/>
+<area shape="rect" id="node43" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="2251,779,2482,820"/>
+<area shape="rect" id="node49" href="$_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="2627,421,2845,463"/>
+<area shape="rect" id="node50" href="$_customer_data_manager_interface_8h.html" title="RegistrationManager\l/CustomerDataManagerInterface.h" alt="" coords="2655,325,2878,366"/>
+</map>

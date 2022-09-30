@@ -1,9 +1,5 @@
 <map id="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/include/acsdkBluetooth/BluetoothMediaInputTransformer.h" name="/workplace/avs&#45;device&#45;sdk/capabilities/Bluetooth/acsdkBluetooth/include/acsdkBluetooth/BluetoothMediaInputTransformer.h">
-<area shape="rect" id="node2" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="383,124,638,195"/>
-<area shape="rect" id="node7" href="$_bluetooth_media_input_transformer_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothMedia\lInputTransformer.cpp" alt="" coords="663,124,895,195"/>
-<area shape="rect" id="node8" href="$_bluetooth_media_input_transformer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothMedia\lInputTransformerTest.cpp" alt="" coords="919,124,1155,195"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,243,235,299"/>
-<area shape="rect" id="node4" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="259,243,482,299"/>
-<area shape="rect" id="node5" href="$_bluetooth_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothComponent.cpp" alt="" coords="506,243,795,299"/>
-<area shape="rect" id="node6" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="819,243,1071,299"/>
+<area shape="rect" id="node2" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="5,124,260,195"/>
+<area shape="rect" id="node4" href="$_bluetooth_media_input_transformer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothMedia\lInputTransformerTest.cpp" alt="" coords="284,124,520,195"/>
+<area shape="rect" id="node3" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="7,243,259,299"/>
 </map>

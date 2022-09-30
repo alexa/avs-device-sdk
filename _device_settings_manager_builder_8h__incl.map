@@ -33,7 +33,7 @@
 <area shape="rect" id="node34" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="2737,533,2926,574"/>
 <area shape="rect" id="node35" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="3513,533,3707,574"/>
 <area shape="rect" id="node40" href="$_setting_event_sender_interface_8h.html" title="Settings/SettingEventSender\lInterface.h" alt="" coords="3544,325,3735,366"/>
-<area shape="rect" id="node42" href="$_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1937,540,2139,567"/>
+<area shape="rect" id="node42" href="$acsdk_manufactory_2include_2acsdk_manufactory_2_annotated_8h.html" title="acsdkManufactory/Annotated.h" alt="" coords="1937,540,2139,567"/>
 <area shape="rect" id="node43" href="$_shutdown_notifier_interface_8h.html" title="acsdkShutdownManagerInterfaces\l/ShutdownNotifierInterface.h" alt="" coords="1975,429,2197,470"/>
 <area shape="rect" id="node38" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="3486,436,3670,463"/>
 <area shape="rect" id="node45" href="$_customer_data_handler_interface_8h.html" title="RegistrationManager\l/CustomerDataHandlerInterface.h" alt="" coords="711,228,930,269"/>

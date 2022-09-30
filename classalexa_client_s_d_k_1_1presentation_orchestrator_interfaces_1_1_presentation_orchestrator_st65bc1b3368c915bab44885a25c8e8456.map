@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::presentationOrchestratorInterfaces::PresentationOrchestratorStateObserverInterface" name="alexaClientSDK::presentationOrchestratorInterfaces::PresentationOrchestratorStateObserverInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1presentation_orchestrator_state_tracker_1_1_mock_state_observer.html" title="alexaClientSDK::presentation\lOrchestratorStateTracker\l::MockStateObserver" alt="" coords="352,5,547,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1gui_1_1_g_u_i_manager.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::gui::GUIManager" alt="" coords="320,86,579,127"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1visual_characteristics_1_1_mock_presentation_orchestrator_state_observer.html" title="Mocked PresentationOrchestratorStateObserverInterface. " alt="" coords="304,151,595,193"/>
+</map>

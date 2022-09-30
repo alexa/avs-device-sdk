@@ -1,0 +1,30 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/AlexaPresentation/APLDocumentSession.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/AlexaPresentation/APLDocumentSession.h">
+<area shape="rect" id="node5" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="782,436,977,477"/>
+<area shape="rect" id="node25" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capabilitye5ba0d6bd0951a303aa8f0c0ec68d873.html" title="acsdk/APLCapabilityCommon\lInterfaces/APLDocumentSessionInterface.h" alt="" coords="1867,533,2145,574"/>
+<area shape="rect" id="node28" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capabilitye1a1935e14bed63e8e7b6cc49ab0bd8d.html" title="PresentationSession.h" alt="" coords="2512,637,2665,663"/>
+<area shape="rect" id="node30" href="$_a_p_l_capability_common_2_a_p_l_capability_common_interfaces_2include_2acsdk_2_a_p_l_capability8d707dd15ff611737fe63975aa8c3c16.html" title="PresentationOptions.h" alt="" coords="1867,637,2017,663"/>
+<area shape="rect" id="node32" href="$_a_p_l_timeout_type_8h.html" title="acsdk/APLCapabilityCommon\lInterfaces/APLTimeoutType.h" alt="" coords="1917,347,2114,388"/>
+<area shape="rect" id="node39" href="$_presentation_observer_interface_8h.html" title="acsdk/PresentationOrchestrator\lInterfaces/PresentationObserverInterface.h" alt="" coords="1469,533,1741,574"/>
+<area shape="rect" id="node41" href="$_a_p_l_viewhost_interface_8h.html" title="IPCServerSampleApp\l/AlexaPresentation/APLViewhost\lInterface.h" alt="" coords="2621,153,2836,209"/>
+<area shape="rect" id="node14" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="37,533,231,574"/>
+<area shape="rect" id="node16" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="405,533,599,574"/>
+<area shape="rect" id="node21" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="939,629,1113,671"/>
+<area shape="rect" id="node18" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="426,637,525,663"/>
+<area shape="rect" id="node20" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="359,726,474,753"/>
+<area shape="rect" id="node22" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="981,719,1212,760"/>
+<area shape="rect" id="node26" href="$_context_request_token_8h.html" title="AVSCommon/SDKInterfaces\l/ContextRequestToken.h" alt="" coords="2194,629,2386,671"/>
+<area shape="rect" id="node27" href="$_presentation_types_8h.html" title="acsdk/PresentationOrchestrator\lInterfaces/PresentationTypes.h" alt="" coords="1491,719,1697,760"/>
+<area shape="rect" id="node31" href="$_presentation_token_8h.html" title="PresentationToken.h" alt="" coords="1925,726,2068,753"/>
+<area shape="rect" id="node33" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="3047,443,3243,470"/>
+<area shape="rect" id="node34" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="3010,533,3186,574"/>
+<area shape="rect" id="node35" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="3010,629,3186,671"/>
+<area shape="rect" id="node37" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3136,719,3351,760"/>
+<area shape="rect" id="node40" href="$_presentation_interface_8h.html" title="PresentationInterface.h" alt="" coords="1415,637,1573,663"/>
+<area shape="rect" id="node42" href="$_visual_state_provider_interface_8h.html" title="acsdk/APLCapabilityCommon\lInterfaces/VisualStateProvider\lInterface.h" alt="" coords="2239,525,2437,581"/>
+<area shape="rect" id="node43" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="2791,257,2983,299"/>
+<area shape="rect" id="node44" href="$_metric_recorder_interface_8h.html" title="AVSCommon/Utils/Metrics\l/MetricRecorderInterface.h" alt="" coords="3319,257,3499,299"/>
+<area shape="rect" id="node49" href="$_a_p_l_viewhost_observer_interface_8h.html" title="APLViewhostObserverInterface.h" alt="" coords="2245,726,2461,753"/>
+<area shape="rect" id="node45" href="$_metric_event_8h.html" title="AVSCommon/Utils/Metrics\l/MetricEvent.h" alt="" coords="3319,347,3499,388"/>
+<area shape="rect" id="node47" href="$_data_point_8h.html" title="AVSCommon/Utils/Metrics\l/DataPoint.h" alt="" coords="2843,436,3023,477"/>
+<area shape="rect" id="node48" href="$_a_v_s_common_2_utils_2include_2_a_v_s_common_2_utils_2_metrics_2_priority_8h.html" title="AVSCommon/Utils/Metrics\l/Priority.h" alt="" coords="3464,436,3644,477"/>
+</map>

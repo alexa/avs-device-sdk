@@ -1,0 +1,18 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/TemplateRuntimeHandler.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/Components/TemplateRuntimeHandler.h">
+<area shape="rect" id="node3" href="$_template_runtime_presentation_adapter_observer_interface_8h.html" title="acsdk/Sample/TemplateRuntime\l/TemplateRuntimePresentationAdapter\lObserverInterface.h" alt="" coords="42,347,289,403"/>
+<area shape="rect" id="node11" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1679,451,1868,492"/>
+<area shape="rect" id="node14" href="$_i_p_c_handler_registration_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerRegistration\lInterface.h" alt="" coords="522,153,713,209"/>
+<area shape="rect" id="node34" href="$_template_runtime_handler_interface_8h.html" title="IPCServerSampleApp\l/IPC/HandlerInterfaces\l/TemplateRuntimeHandlerInterface.h" alt="" coords="207,153,443,209"/>
+<area shape="rect" id="node4" href="$_template_runtime_observer_interface_8h.html" title="acsdk/TemplateRuntimeInterfaces\l/TemplateRuntimeObserverInterface.h" alt="" coords="289,451,533,492"/>
+<area shape="rect" id="node6" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="304,547,533,574"/>
+<area shape="rect" id="node9" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="1275,540,1467,581"/>
+<area shape="rect" id="node15" href="$_i_p_c_dispatcher_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCDispatcherInterface.h" alt="" coords="517,257,718,299"/>
+<area shape="rect" id="node16" href="$_i_p_c_handler_base_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerBase.h" alt="" coords="743,257,905,299"/>
+<area shape="rect" id="node18" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1493,354,1688,395"/>
+<area shape="rect" id="node24" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="1892,451,2087,492"/>
+<area shape="rect" id="node26" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2229,451,2424,492"/>
+<area shape="rect" id="node31" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1327,451,1502,492"/>
+<area shape="rect" id="node28" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2229,547,2328,574"/>
+<area shape="rect" id="node30" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2280,629,2395,656"/>
+<area shape="rect" id="node32" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1019,540,1250,581"/>
+</map>

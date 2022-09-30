@@ -1,8 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/Utils/DiscoveryUtils.h" name="/workplace/avs&#45;device&#45;sdk/CapabilitiesDelegate/include/CapabilitiesDelegate/Utils/DiscoveryUtils.h">
-<area shape="rect" id="node2" href="$_capabilities_delegate_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/CapabilitiesDelegate.cpp" alt="" coords="5,124,199,180"/>
-<area shape="rect" id="node3" href="$_discovery_event_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/DiscoveryEventSender.cpp" alt="" coords="223,124,429,180"/>
-<area shape="rect" id="node4" href="$_post_connect_capabilities_publisher_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/PostConnectCapabilitiesPublisher.cpp" alt="" coords="453,124,724,180"/>
-<area shape="rect" id="node5" href="$_discovery_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/src/Utils/DiscoveryUtils.cpp" alt="" coords="748,124,939,180"/>
-<area shape="rect" id="node6" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="963,124,1185,180"/>
-<area shape="rect" id="node7" href="$_discovery_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Utils/DiscoveryUtilsTest.cpp" alt="" coords="1209,124,1429,180"/>
+<area shape="rect" id="node2" href="$_capabilities_delegate_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/CapabilitiesDelegateTest.cpp" alt="" coords="5,124,228,180"/>
+<area shape="rect" id="node3" href="$_discovery_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilitiesDelegate\l/test/Utils/DiscoveryUtilsTest.cpp" alt="" coords="252,124,472,180"/>
 </map>

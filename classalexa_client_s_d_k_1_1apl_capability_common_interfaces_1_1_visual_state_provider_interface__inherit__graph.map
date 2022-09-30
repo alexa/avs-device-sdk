@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::aplCapabilityCommonInterfaces::VisualStateProviderInterface" name="alexaClientSDK::aplCapabilityCommonInterfaces::VisualStateProviderInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1apl_capability_common_interfaces_1_1test_1_1_mock_visual_state_provider.html" title="alexaClientSDK::aplCapability\lCommonInterfaces::test::MockVisual\lStateProvider" alt="" coords="343,5,582,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_a_p_l_runtime_presentation_adapter.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::APLRuntimePresentation\lAdapter" alt="" coords="309,85,616,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_a_p_l_viewhost_interface.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::APLViewhostInterface" alt="" coords="317,166,608,207"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1_apl_client_bridge.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::AplClientBridge" alt="" coords="664,166,915,207"/>
+</map>

@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_remove_types_3_01std_1_1tuple_3_01e72f522da8ec3de49a4d30408e026989.html" title="alexaClientSDK::acsdkManufactory\l::internal::RemoveTypes\&lt; std\l::tuple\&lt; Types... \&gt;, std::tuple\l\&lt; Unwanted... \&gt; \&gt;::RemoveTypesOperation\l::Apply\&lt; std::tuple\&lt; ResultTypes... \&gt;, Type \&gt;" alt="" coords="5,5,293,91"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_storage_interface.html" title="alexaClientSDK::acsdkAuthorization\lInterfaces::lwa::LWAAuthorizationStorage\lInterface" alt="" coords="5,31,272,87"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_storage.html" title="A SQLite based version of LWAAuthorizationStorageInterface. " alt="" coords="320,5,555,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1test_1_1_stub_storage.html" title="alexaClientSDK::acsdkAuthorization\l::lwa::test::StubStorage" alt="" coords="320,71,555,112"/>
 </map>

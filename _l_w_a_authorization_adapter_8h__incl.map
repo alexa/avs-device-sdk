@@ -1,0 +1,27 @@
+<map id="/workplace/avs&#45;device&#45;sdk/core/Authorization/acsdkAuthorization/include/acsdkAuthorization/LWA/LWAAuthorizationAdapter.h" name="/workplace/avs&#45;device&#45;sdk/core/Authorization/acsdkAuthorization/include/acsdkAuthorization/LWA/LWAAuthorizationAdapter.h">
+<area shape="rect" id="node4" href="$_l_w_a_authorization_configuration_8h.html" title="acsdkAuthorization\l/LWA/LWAAuthorizationConfiguration.h" alt="" coords="1001,213,1253,255"/>
+<area shape="rect" id="node7" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="1476,392,1690,433"/>
+<area shape="rect" id="node15" href="$_device_info_8h.html" title="AVSCommon/Utils/DeviceInfo.h" alt="" coords="1022,310,1232,337"/>
+<area shape="rect" id="node17" href="$_authorization_adapter_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationAdapterInterface.h" alt="" coords="168,392,377,433"/>
+<area shape="rect" id="node22" href="$_l_w_a_authorization_interface_8h.html" title="acsdkAuthorizationInterfaces\l/LWA/LWAAuthorizationInterface.h" alt="" coords="438,392,664,433"/>
+<area shape="rect" id="node24" href="$_l_w_a_authorization_storage_interface_8h.html" title="acsdkAuthorizationInterfaces\l/LWA/LWAAuthorizationStorageInterface.h" alt="" coords="706,213,977,255"/>
+<area shape="rect" id="node25" href="$_http_get_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpGetInterface.h" alt="" coords="1248,392,1451,433"/>
+<area shape="rect" id="node27" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="2371,392,2574,433"/>
+<area shape="rect" id="node29" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2350,139,2546,165"/>
+<area shape="rect" id="node45" href="$_retry_timer_8h.html" title="AVSCommon/Utils/RetryTimer.h" alt="" coords="3116,399,3330,426"/>
+<area shape="rect" id="node16" href="$_endpoint_identifier_8h.html" title="AVSCommon/SDKInterfaces\l/Endpoints/EndpointIdentifier.h" alt="" coords="1024,392,1224,433"/>
+<area shape="rect" id="node18" href="$_authorization_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationInterface.h" alt="" coords="456,481,646,523"/>
+<area shape="rect" id="node19" href="$_authorization_manager_interface_8h.html" title="acsdkAuthorizationInterfaces\l/AuthorizationManagerInterface.h" alt="" coords="165,481,380,523"/>
+<area shape="rect" id="node20" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="146,571,338,612"/>
+<area shape="rect" id="node23" href="$_c_b_l_authorization_observer_interface_8h.html" title="CBLAuthorizationObserver\lInterface.h" alt="" coords="670,481,848,523"/>
+<area shape="rect" id="node26" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1177,489,1304,515"/>
+<area shape="rect" id="node30" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2360,213,2536,255"/>
+<area shape="rect" id="node31" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2099,303,2275,344"/>
+<area shape="rect" id="node34" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1939,481,2115,523"/>
+<area shape="rect" id="node35" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="2750,392,2926,433"/>
+<area shape="rect" id="node42" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1766,392,1960,433"/>
+<area shape="rect" id="node43" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="2010,571,2186,612"/>
+<area shape="rect" id="node44" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="2171,392,2347,433"/>
+<area shape="rect" id="node39" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="2602,481,2778,523"/>
+<area shape="rect" id="node40" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="2372,571,2548,612"/>
+</map>

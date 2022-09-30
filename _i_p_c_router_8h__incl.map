@@ -1,0 +1,27 @@
+<map id="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/IPCRouter.h" name="/workplace/avs&#45;device&#45;sdk/SampleApplications/IPCServerSampleApplication/LibIPCServerSampleApp/include/IPCServerSampleApp/IPC/IPCRouter.h">
+<area shape="rect" id="node6" href="$_optional_8h.html" title="AVSCommon/Utils/Optional.h" alt="" coords="2299,153,2495,180"/>
+<area shape="rect" id="node26" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1951,332,2145,373"/>
+<area shape="rect" id="node42" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="1336,511,1525,552"/>
+<area shape="rect" id="node43" href="$_message_listener_interface_8h.html" title="Communication/MessageListener\lInterface.h" alt="" coords="333,600,549,641"/>
+<area shape="rect" id="node44" href="$_messaging_server_interface_8h.html" title="Communication/MessagingServer\lInterface.h" alt="" coords="335,421,553,463"/>
+<area shape="rect" id="node47" href="$_i_p_c_dispatcher_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCDispatcherInterface.h" alt="" coords="505,243,706,284"/>
+<area shape="rect" id="node48" href="$_i_p_c_handler_registration_interface_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerRegistration\lInterface.h" alt="" coords="649,139,839,195"/>
+<area shape="rect" id="node49" href="$_i_p_c_handler_base_8h.html" title="IPCServerSampleApp\l/IPC/IPCHandlerBase.h" alt="" coords="915,243,1077,284"/>
+<area shape="rect" id="node50" href="$_i_p_c_version_manager_8h.html" title="IPCServerSampleApp\l/IPC/IPCVersionManager.h" alt="" coords="2903,243,3084,284"/>
+<area shape="rect" id="node7" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="2809,332,2985,373"/>
+<area shape="rect" id="node9" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="2999,421,3175,463"/>
+<area shape="rect" id="node13" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="3409,511,3623,552"/>
+<area shape="rect" id="node18" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="2931,600,3107,641"/>
+<area shape="rect" id="node19" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="3851,511,4027,552"/>
+<area shape="rect" id="node23" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="2990,511,3183,552"/>
+<area shape="rect" id="node24" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="1085,511,1261,552"/>
+<area shape="rect" id="node25" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="3208,511,3384,552"/>
+<area shape="rect" id="node31" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="2665,421,2860,463"/>
+<area shape="rect" id="node33" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2237,421,2432,463"/>
+<area shape="rect" id="node38" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1641,421,1815,463"/>
+<area shape="rect" id="node35" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2389,518,2488,545"/>
+<area shape="rect" id="node37" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2381,607,2496,634"/>
+<area shape="rect" id="node39" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1601,511,1831,552"/>
+<area shape="rect" id="node45" href="$_messaging_interface_8h.html" title="MessagingInterface.h" alt="" coords="459,518,605,545"/>
+<area shape="rect" id="node46" href="$_messaging_server_observer_interface_8h.html" title="MessagingServerObserverInterface.h" alt="" coords="145,518,383,545"/>
+</map>

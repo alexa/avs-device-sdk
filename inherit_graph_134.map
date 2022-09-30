@@ -1,4 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_system_clock_monitor_interfaces_1_1_system_clock_monitor_interface.html" title="alexaClientSDK::acsdkSystem\lClockMonitorInterfaces::\lSystemClockMonitorInterface" alt="" coords="5,5,208,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_system_clock_monitor_1_1_system_clock_monitor.html" title="alexaClientSDK::acsdkSystem\lClockMonitor::SystemClockMonitor" alt="" coords="256,13,485,54"/>
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_external_media_player_interfaces_1_1_external_media_adapter_handler_interface_1_1_play_params.html" title="PlayParams is a struct that contains the parameters for the play method. " alt="" coords="5,5,248,61"/>
 </map>

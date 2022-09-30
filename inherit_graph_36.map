@@ -1,4 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_equalizer_interfaces_1_1_equalizer_runtime_setup_interface.html" title="alexaClientSDK::acsdkEqualizer\lInterfaces::EqualizerRuntimeSetup\lInterface" alt="" coords="5,5,231,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1default_client_1_1_equalizer_runtime_setup.html" title="alexaClientSDK::defaultClient\l::EqualizerRuntimeSetup" alt="" coords="279,13,475,54"/>
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_alexa_presentation_interfaces_1_1_auto_initialized_extension.html" title="alexaClientSDK::acsdkAlexa\lPresentationInterfaces\l::AutoInitializedExtension" alt="" coords="5,5,196,61"/>
 </map>

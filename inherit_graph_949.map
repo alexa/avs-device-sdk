@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structtesting_1_1internal_1_1bool__constant.html" title="testing::internal::\lbool_constant\&lt; ImplicitlyConvertible\l\&lt; const T *, const ::ProtocolMessage\l *\&gt;::value\|\|ImplicitlyConvertible\l\&lt; const T *, const ::proto2::Message\l *\&gt;::value \&gt;" alt="" coords="5,5,245,105"/>
+<area shape="rect" id="node2" href="$structtesting_1_1internal_1_1_is_a_protocol_message.html" title="testing::internal::\lIsAProtocolMessage\&lt; T \&gt;" alt="" coords="293,35,468,76"/>
+</map>

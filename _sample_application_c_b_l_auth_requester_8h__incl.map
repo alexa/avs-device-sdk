@@ -1,4 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkSampleApplicationCBLAuthRequester/include/acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkSampleApplicationCBLAuthRequester/include/acsdkSampleApplicationCBLAuthRequester/SampleApplicationCBLAuthRequester.h">
-<area shape="rect" id="node3" href="$_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="98,139,321,180"/>
-<area shape="rect" id="node5" href="$_c_b_l_auth_requester_interface_8h.html" title="CBLAuthDelegate/CBLAuthRequester\lInterface.h" alt="" coords="345,139,589,180"/>
+<area shape="rect" id="node5" href="$_c_b_l_authorization_observer_interface_8h.html" title="acsdkAuthorizationInterfaces\l/LWA/CBLAuthorizationObserverInterface.h" alt="" coords="233,139,509,180"/>
+<area shape="rect" id="node6" href="$_u_i_auth_notifier_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIAuthNotifierInterface.h" alt="" coords="779,139,1002,180"/>
+<area shape="rect" id="node9" href="$_u_i_manager_interface_8h.html" title="acsdkSampleApplicationInterfaces\l/UIManagerInterface.h" alt="" coords="533,139,755,180"/>
+<area shape="rect" id="node7" href="$_auth_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/AuthObserverInterface.h" alt="" coords="795,228,987,269"/>
 </map>

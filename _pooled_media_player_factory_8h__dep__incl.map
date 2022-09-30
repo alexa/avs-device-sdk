@@ -1,9 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/MediaPlayer/PooledMediaPlayerFactory.h">
-<area shape="rect" id="node2" href="$_pooled_media_player_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lPlayerFactory.cpp" alt="" coords="5,124,204,195"/>
-<area shape="rect" id="node3" href="$_pooled_media_resource_provider_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/src/MediaPlayer/PooledMedia\lResourceProvider.cpp" alt="" coords="228,124,427,195"/>
-<area shape="rect" id="node4" href="$_pooled_media_player_factory_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/PooledMediaPlayerFactory\lTest.cpp" alt="" coords="451,124,659,195"/>
-<area shape="rect" id="node5" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="684,124,915,195"/>
-<area shape="rect" id="node6" href="$_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="939,131,1155,187"/>
-<area shape="rect" id="node7" href="$main_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/main.cpp" alt="" coords="818,243,1015,284"/>
-<area shape="rect" id="node8" href="$_sample_application_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SampleApplication.cpp" alt="" coords="1039,243,1317,284"/>
+<area shape="rect" id="node2" href="$_pooled_media_player_factory_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSCommon/Utils\l/test/PooledMediaPlayerFactory\lTest.cpp" alt="" coords="5,131,213,202"/>
+<area shape="rect" id="node3" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="238,131,469,202"/>
+<area shape="rect" id="node4" href="$_common_2_lib_sample_app_2include_2_sample_app_2_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/Common/LibSampleApp/include\l/SampleApp/SampleApplication.h" alt="" coords="493,131,709,202"/>
+<area shape="rect" id="node5" href="$_i_p_c_server_sample_application_2_lib_i_p_c_server_sample_app_2include_2_i_p_c_server_sample_app_2_sample_application_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/IPCServerSampleApplication\l/LibIPCServerSampleApp/include\l/IPCServerSampleApp/SampleApplication.h" alt="" coords="733,124,1011,209"/>
 </map>

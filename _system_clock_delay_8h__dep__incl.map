@@ -1,14 +1,10 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/include/Captions/SystemClockDelay.h" name="/workplace/avs&#45;device&#45;sdk/Captions/Implementation/include/Captions/SystemClockDelay.h">
-<area shape="rect" id="node2" href="$_caption_timing_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionTimingAdapter.h" alt="" coords="417,109,683,165"/>
-<area shape="rect" id="node13" href="$_system_clock_delay_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/SystemClockDelay.cpp" alt="" coords="708,109,904,165"/>
-<area shape="rect" id="node3" href="$_caption_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionManager.h" alt="" coords="191,213,424,269"/>
-<area shape="rect" id="node4" href="$_caption_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/CaptionManager.cpp" alt="" coords="5,317,201,373"/>
-<area shape="rect" id="node10" href="$_caption_timing_adapter_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/CaptionTimingAdapter.cpp" alt="" coords="449,213,651,269"/>
-<area shape="rect" id="node11" href="$_timing_adapter_factory_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/src/TimingAdapterFactory.cpp" alt="" coords="676,213,877,269"/>
-<area shape="rect" id="node12" href="$_caption_timing_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/CaptionTimingAdapterTest.cpp" alt="" coords="902,213,1134,269"/>
-<area shape="rect" id="node5" href="$_caption_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/CaptionManagerTest.cpp" alt="" coords="225,317,424,373"/>
-<area shape="rect" id="node6" href="$_mock_caption_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionManager.h" alt="" coords="448,317,644,373"/>
-<area shape="rect" id="node7" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="196,421,427,492"/>
-<area shape="rect" id="node8" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="451,421,641,492"/>
-<area shape="rect" id="node9" href="$_libwebvtt_parser_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/LibwebvttParserAdapterTest.cpp" alt="" coords="666,429,909,485"/>
+<area shape="rect" id="node2" href="$_caption_timing_adapter_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionTimingAdapter.h" alt="" coords="239,109,506,165"/>
+<area shape="rect" id="node3" href="$_caption_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/include/Captions/CaptionManager.h" alt="" coords="128,213,361,269"/>
+<area shape="rect" id="node9" href="$_caption_timing_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/CaptionTimingAdapterTest.cpp" alt="" coords="386,213,618,269"/>
+<area shape="rect" id="node4" href="$_caption_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/CaptionManagerTest.cpp" alt="" coords="35,317,233,373"/>
+<area shape="rect" id="node5" href="$_mock_caption_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/MockCaptionManager.h" alt="" coords="257,317,453,373"/>
+<area shape="rect" id="node6" href="$_audio_player_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AudioPlayer\l/acsdkAudioPlayer/test/AudioPlayer\lTest.cpp" alt="" coords="5,421,236,492"/>
+<area shape="rect" id="node7" href="$_speech_synthesizer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/CapabilityAgents\l/SpeechSynthesizer/test\l/SpeechSynthesizerTest.cpp" alt="" coords="260,421,451,492"/>
+<area shape="rect" id="node8" href="$_libwebvtt_parser_adapter_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Captions/Implementation\l/test/LibwebvttParserAdapterTest.cpp" alt="" coords="475,429,718,485"/>
 </map>

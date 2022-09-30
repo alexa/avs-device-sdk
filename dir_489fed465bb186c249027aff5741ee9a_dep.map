@@ -1,27 +1,28 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkDefaultDeviceSettingsManager/include" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkDefaultDeviceSettingsManager/include">
-<area shape="rect" id="node2" href="dir_dc2b1baf1f6270780cc36d35c800fdff.html" title="acsdkDeviceSettingsManager" alt="" coords="42,63,238,111"/>
-<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="177,159,249,207"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000060_000588.html" title="2" alt="" coords="186,131,194,146"/>
-<area shape="rect" id="node4" href="dir_8ae0dd75af039a94f4269584fb8eef13.html" title="Settings" alt="" coords="72,447,144,495"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000060_000578.html" title="12" alt="" coords="108,421,123,436"/>
-<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="126,255,229,303"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000060_000017.html" title="10" alt="" coords="170,228,185,242"/>
-<area shape="rect" id="node6" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="145,543,217,591"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000060_000457.html" title="2" alt="" coords="128,529,136,544"/>
-<area shape="rect" id="node7" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="219,351,306,399"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000060_000145.html" title="2" alt="" coords="278,328,286,342"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000588_000017.html" title="14" alt="" coords="185,232,199,247"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000578_000017.html" title="61" alt="" coords="154,311,169,326"/>
-<area shape="rect" id="edge8-headlabel" href="dir_000578_000457.html" title="4" alt="" coords="154,515,162,530"/>
-<area shape="rect" id="edge9-headlabel" href="dir_000017_000588.html" title="2" alt="" coords="195,214,203,229"/>
-<area shape="rect" id="edge10-headlabel" href="dir_000017_000578.html" title="1" alt="" coords="120,424,128,439"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000017_000145.html" title="4" alt="" coords="222,324,230,339"/>
-<area shape="rect" id="edge12-headlabel" href="dir_000457_000588.html" title="13" alt="" coords="239,219,254,233"/>
-<area shape="rect" id="edge13-headlabel" href="dir_000457_000017.html" title="45" alt="" coords="162,314,177,328"/>
-<area shape="rect" id="edge14-headlabel" href="dir_000145_000588.html" title="65" alt="" coords="216,220,230,234"/>
-<area shape="rect" id="edge15-headlabel" href="dir_000145_000578.html" title="33" alt="" coords="157,438,172,453"/>
-<area shape="rect" id="edge16-headlabel" href="dir_000145_000017.html" title="528" alt="" coords="203,314,224,329"/>
-<area shape="rect" id="edge17-headlabel" href="dir_000145_000457.html" title="16" alt="" coords="199,522,214,536"/>
-<area shape="rect" id="clust2" href="dir_489fed465bb186c249027aff5741ee9a.html" alt="" coords="31,52,345,121"/>
-<area shape="rect" id="clust1" href="dir_71f5bfcd0a5bab77daf39416ebe479fc.html" title="acsdkDefaultDeviceSettingsManager" alt="" coords="20,16,356,132"/>
+<area shape="rect" id="node2" href="dir_dc2b1baf1f6270780cc36d35c800fdff.html" title="acsdkDeviceSettingsManager" alt="" coords="81,63,277,111"/>
+<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="143,159,215,207"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000050_000810.html" title="2" alt="" coords="183,133,191,147"/>
+<area shape="rect" id="node4" href="dir_8ae0dd75af039a94f4269584fb8eef13.html" title="Settings" alt="" coords="52,447,124,495"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000050_000803.html" title="12" alt="" coords="57,419,72,434"/>
+<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="26,255,129,303"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000050_000014.html" title="10" alt="" coords="94,234,108,248"/>
+<area shape="rect" id="node6" href="dir_4270bfced15e0e73154b13468c7c9ad9.html" title="core" alt="" coords="135,543,207,591"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000050_000582.html" title="2" alt="" coords="223,538,231,553"/>
+<area shape="rect" id="node7" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="127,351,214,399"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000050_000127.html" title="2" alt="" coords="198,331,206,346"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000810_000014.html" title="57" alt="" coords="107,240,121,254"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000810_000127.html" title="1" alt="" coords="169,325,177,339"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000803_000014.html" title="45" alt="" coords="72,315,86,329"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000803_000582.html" title="4" alt="" coords="140,516,148,530"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000014_000810.html" title="2" alt="" coords="138,207,146,221"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000014_000803.html" title="1" alt="" coords="82,420,90,435"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000014_000127.html" title="4" alt="" coords="128,324,136,339"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000582_000810.html" title="10" alt="" coords="182,220,196,234"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000582_000014.html" title="95" alt="" coords="40,308,55,323"/>
+<area shape="rect" id="edge15-headlabel" href="dir_000127_000810.html" title="67" alt="" coords="169,218,183,233"/>
+<area shape="rect" id="edge16-headlabel" href="dir_000127_000803.html" title="26" alt="" coords="120,431,135,445"/>
+<area shape="rect" id="edge17-headlabel" href="dir_000127_000014.html" title="724" alt="" coords="105,314,127,329"/>
+<area shape="rect" id="edge18-headlabel" href="dir_000127_000582.html" title="22" alt="" coords="172,517,186,532"/>
+<area shape="rect" id="clust2" href="dir_489fed465bb186c249027aff5741ee9a.html" alt="" coords="69,52,384,121"/>
+<area shape="rect" id="clust1" href="dir_71f5bfcd0a5bab77daf39416ebe479fc.html" title="acsdkDefaultDeviceSettingsManager" alt="" coords="59,16,395,132"/>
 </map>

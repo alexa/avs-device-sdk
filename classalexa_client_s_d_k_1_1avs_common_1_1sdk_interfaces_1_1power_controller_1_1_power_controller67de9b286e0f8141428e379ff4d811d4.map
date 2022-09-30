@@ -1,3 +1,5 @@
 <map id="alexaClientSDK::avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface" name="alexaClientSDK::avsCommon::sdkInterfaces::powerController::PowerControllerObserverInterface">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1_power_controller_capability_agent.html" title="alexaClientSDK::capability\lAgents::powerController\l::PowerControllerCapabilityAgent" alt="" coords="280,5,495,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="280,5,515,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1capability_agents_1_1power_controller_1_1_power_controller_capability_agent.html" title="alexaClientSDK::capability\lAgents::powerController\l::PowerControllerCapabilityAgent" alt="" coords="290,85,505,141"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="563,13,752,54"/>
 </map>

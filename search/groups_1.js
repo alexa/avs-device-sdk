@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['cryptography_20api_24730',['Cryptography API',['../group___crypto_a_p_i.html',1,'']]],
-  ['cryptographic_20functions_20implementation_24731',['Cryptographic Functions Implementation',['../group___crypto_i_m_p_l.html',1,'']]]
+  ['cryptographic_20functions_20implementation',['Cryptographic Functions Implementation',['../group___lib__acsdk_crypto.html',1,'']]],
+  ['cryptography_20api',['Cryptography API',['../group___lib__acsdk_crypto_interfaces.html',1,'']]],
+  ['capability_20agent_20for_20avs_20speaker_201_2e0_20interface',['Capability Agent for AVS Speaker 1.0 Interface',['../group___lib__acsdk_speaker_manager.html',1,'']]]
 ];

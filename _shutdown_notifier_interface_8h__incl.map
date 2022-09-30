@@ -1,4 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManagerInterfaces/include/acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h" name="/workplace/avs&#45;device&#45;sdk/shared/acsdkShutdownManagerInterfaces/include/acsdkShutdownManagerInterfaces/ShutdownNotifierInterface.h">
-<area shape="rect" id="node3" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="5,124,163,165"/>
-<area shape="rect" id="node5" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="237,124,427,165"/>
+<area shape="rect" id="node3" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="5,124,167,165"/>
+<area shape="rect" id="node5" href="$_requires_shutdown_8h.html" title="AVSCommon/Utils/Requires\lShutdown.h" alt="" coords="242,124,431,165"/>
 </map>

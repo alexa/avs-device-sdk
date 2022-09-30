@@ -1,5 +1,7 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/PostConnectVerifyGatewaySender.h" name="/workplace/avs&#45;device&#45;sdk/AVSGatewayManager/include/AVSGatewayManager/PostConnectVerifyGatewaySender.h">
-<area shape="rect" id="node2" href="$_a_v_s_gateway_manager_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/AVSGatewayManager.cpp" alt="" coords="5,131,208,187"/>
-<area shape="rect" id="node3" href="$_post_connect_verify_gateway_sender_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/src/PostConnectVerifyGatewaySender.cpp" alt="" coords="233,131,509,187"/>
-<area shape="rect" id="node4" href="$_post_connect_verify_gateway_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/PostConnectVerifyGateway\lSenderTest.cpp" alt="" coords="533,124,747,195"/>
+<area shape="rect" id="node2" href="$_auth_refreshed_observer_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/AuthRefreshedObserver.h" alt="" coords="64,124,264,195"/>
+<area shape="rect" id="node5" href="$_a_v_s_gateway_manager_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/include/AVSGatewayManager\l/AVSGatewayManager.h" alt="" coords="288,124,488,195"/>
+<area shape="rect" id="node6" href="$_post_connect_verify_gateway_sender_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/PostConnectVerifyGateway\lSenderTest.cpp" alt="" coords="513,124,727,195"/>
+<area shape="rect" id="node3" href="$_auth_refreshed_observer_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/AuthRefreshedObserverTest.cpp" alt="" coords="5,243,248,299"/>
+<area shape="rect" id="node4" href="$_a_v_s_gateway_manager_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/AVSGatewayManager\l/test/AVSGatewayManagerTest.cpp" alt="" coords="272,243,504,299"/>
 </map>

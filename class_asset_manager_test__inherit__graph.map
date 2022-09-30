@@ -1,0 +1,6 @@
+<map id="AssetManagerTest" name="AssetManagerTest">
+<area shape="rect" id="node3" href="$class_eviction_test.html" title="EvictionTest" alt="" coords="5,155,100,181"/>
+<area shape="rect" id="node4" href="$class_init_test.html" title="InitTest" alt="" coords="125,155,191,181"/>
+<area shape="rect" id="node5" href="$class_shared_resource_test.html" title="SharedResourceTest" alt="" coords="216,155,361,181"/>
+<area shape="rect" id="node6" href="$class_update_test.html" title="UpdateTest" alt="" coords="386,155,477,181"/>
+</map>

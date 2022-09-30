@@ -1,8 +1,8 @@
 <map id="alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface" name="alexaClientSDK::acsdkAlertsInterfaces::AlertObserverInterface">
 <area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alerts_capability_agent.html" title="alexaClientSDK::acsdkAlerts\l::AlertsCapabilityAgent" alt="" coords="293,5,485,47"/>
 <area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1_alert_scheduler.html" title="alexaClientSDK::acsdkAlerts\l::AlertScheduler" alt="" coords="293,71,485,112"/>
-<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert_observer.html" title="alexaClientSDK::acsdkAlerts\l::test::TestAlertObserver" alt="" coords="293,136,485,177"/>
-<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="272,202,507,258"/>
-<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1integration_1_1test_1_1_test_alert_observer.html" title="alexaClientSDK::integration\l::test::TestAlertObserver" alt="" coords="298,283,481,324"/>
-<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="555,209,744,251"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_mock_alert_observer_interface.html" title="alexaClientSDK::acsdkAlerts\l::test::MockAlertObserverInterface" alt="" coords="278,136,501,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_alerts_1_1test_1_1_test_alert_observer.html" title="alexaClientSDK::acsdkAlerts\l::test::TestAlertObserver" alt="" coords="293,201,485,243"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_device_property_aggregator_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::DevicePropertyAggregatorInterface" alt="" coords="272,267,507,323"/>
+<area shape="rect" id="node7" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_device_property_aggregator.html" title="alexaClientSDK::diagnostics\l::DevicePropertyAggregator" alt="" coords="555,275,744,316"/>
 </map>

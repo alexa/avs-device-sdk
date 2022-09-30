@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1diagnostics_1_1_audio_injector_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::diagnostics\l::AudioInjectorInterface" alt="" coords="5,5,203,61"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1diagnostics_1_1_file_based_audio_injector.html" title="alexaClientSDK::diagnostics\l::FileBasedAudioInjector" alt="" coords="251,13,440,54"/>
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_import_3_01_import_3_01_type_01_4_01_4.html" title="alexaClientSDK::acsdkManufactory\l::internal::IsImport\&lt; Import\l\&lt; Type \&gt; \&gt;" alt="" coords="129,5,360,61"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_import_3_01_optional_import_3_01_type_01_4_01_4.html" title="alexaClientSDK::acsdkManufactory\l::internal::IsImport\&lt; OptionalImport\l\&lt; Type \&gt; \&gt;" alt="" coords="129,85,360,141"/>
+<area shape="rect" id="node4" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_is_required_import_3_01_import_3_01_type_01_4_01_4.html" title="alexaClientSDK::acsdkManufactory\l::internal::IsRequiredImport\l\&lt; Import\&lt; Type \&gt; \&gt;" alt="" coords="129,165,360,221"/>
+<area shape="rect" id="node5" href="$structalexa_client_s_d_k_1_1sdk_client_1_1internal_1_1_is_shared_ptr_3_01std_1_1shared__ptr_3_01_t_01_4_01_4.html" title="alexaClientSDK::sdkClient\l::internal::IsSharedPtr\l\&lt; std::shared_ptr\&lt; T \&gt; \&gt;" alt="" coords="155,245,334,301"/>
 </map>

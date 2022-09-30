@@ -1,0 +1,24 @@
+<map id="/workplace/avs&#45;device&#45;sdk/shared/KWD/acsdkKWDImplementations" name="/workplace/avs&#45;device&#45;sdk/shared/KWD/acsdkKWDImplementations">
+<area shape="rect" id="node2" href="dir_312253303e0e463f7bae115b1083ed5c.html" title="include" alt="" coords="205,159,277,207"/>
+<area shape="rect" id="node4" href="dir_36e5af62bd5db895b52244933458ca30.html" title="acsdkKWDInterfaces" alt="" coords="352,159,499,207"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000854_000857.html" title="4" alt="" coords="329,167,337,182"/>
+<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="279,255,382,303"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000854_000014.html" title="4" alt="" coords="298,228,306,242"/>
+<area shape="rect" id="node3" href="dir_f089f13e7cc32ee8223f1a27604dae8d.html" title="test" alt="" coords="37,63,109,111"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000856_000854.html" title="1" alt="" coords="189,138,197,153"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000856_000857.html" title="2" alt="" coords="332,143,340,157"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000856_000014.html" title="4" alt="" coords="331,228,339,243"/>
+<area shape="rect" id="node6" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="262,447,399,495"/>
+<area shape="rect" id="edge13-headlabel" href="dir_000856_000341.html" title="2" alt="" coords="415,458,423,472"/>
+<area shape="rect" id="node7" href="dir_4a0e07b8ac9c7e04dfc1e5f4eaf31c4d.html" title="NotifierInterfaces" alt="" coords="380,351,503,399"/>
+<area shape="rect" id="edge14-headlabel" href="dir_000856_000870.html" title="1" alt="" coords="476,334,484,349"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000857_000014.html" title="2" alt="" coords="370,240,378,254"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000857_000870.html" title="2" alt="" coords="442,324,450,339"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000014_000341.html" title="138" alt="" coords="321,420,342,435"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000014_000870.html" title="1" alt="" coords="401,325,409,340"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000341_000854.html" title="3" alt="" coords="237,219,245,234"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000341_000014.html" title="165" alt="" coords="319,314,341,329"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000870_000341.html" title="3" alt="" coords="374,434,382,448"/>
+<area shape="rect" id="clust2" href="dir_e571f3a40729e98c18f677039f217076.html" alt="" coords="27,52,331,217"/>
+<area shape="rect" id="clust1" href="dir_e410f0f5f1983efb71051e3794e71cfe.html" title="KWD" alt="" coords="16,16,341,228"/>
+</map>

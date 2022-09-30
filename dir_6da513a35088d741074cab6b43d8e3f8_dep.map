@@ -1,16 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/applications/acsdkBlueZBluetoothImplementation" name="/workplace/avs&#45;device&#45;sdk/applications/acsdkBlueZBluetoothImplementation">
-<area shape="rect" id="node2" href="dir_9ee5b7f5aec8117a8c99ec8af0e3eefd.html" title="include" alt="" coords="37,63,109,111"/>
-<area shape="rect" id="node4" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="73,159,145,207"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000047_000588.html" title="2" alt="" coords="98,131,106,146"/>
-<area shape="rect" id="node5" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="58,255,161,303"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000047_000017.html" title="2" alt="" coords="80,228,88,242"/>
-<area shape="rect" id="node3" href="dir_edace95a09a670a8b247484c4a3fdb00.html" title="src" alt="" coords="133,63,205,111"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000052_000588.html" title="2" alt="" coords="137,140,145,155"/>
-<area shape="rect" id="node6" href="dir_27114e8c504df5f4609f20f7d28eb6fc.html" title="BluetoothImplementations" alt="" coords="169,159,343,207"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000052_000251.html" title="2" alt="" coords="224,132,232,146"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000588_000017.html" title="14" alt="" coords="101,228,116,243"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000017_000588.html" title="2" alt="" coords="106,218,114,233"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000251_000017.html" title="67" alt="" coords="159,244,173,259"/>
-<area shape="rect" id="clust2" href="dir_6da513a35088d741074cab6b43d8e3f8.html" alt="" coords="27,52,475,121"/>
-<area shape="rect" id="clust1" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html" title="applications" alt="" coords="16,16,485,132"/>
+<area shape="rect" id="node2" href="dir_9ee5b7f5aec8117a8c99ec8af0e3eefd.html" title="include" alt="" coords="58,63,130,111"/>
+<area shape="rect" id="node3" href="dir_9982052f7ce695d12571567315b2fafa.html" title="shared" alt="" coords="21,159,93,207"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000043_000810.html" title="2" alt="" coords="77,137,85,152"/>
+<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="5,255,108,303"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000043_000014.html" title="2" alt="" coords="92,238,100,252"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000810_000014.html" title="57" alt="" coords="49,228,63,243"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000014_000810.html" title="2" alt="" coords="53,218,61,233"/>
+<area shape="rect" id="clust2" href="dir_6da513a35088d741074cab6b43d8e3f8.html" alt="" coords="47,52,399,121"/>
+<area shape="rect" id="clust1" href="dir_a6e4fee11f07c3b70486e88fe92cbbdc.html" title="applications" alt="" coords="37,16,410,132"/>
 </map>

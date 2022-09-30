@@ -1,16 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/Timer.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/Timing/Timer.h">
-<area shape="rect" id="node8" href="$_finally_guard_8h.html" title="AVSCommon/Utils/Error\l/FinallyGuard.h" alt="" coords="1921,221,2086,262"/>
-<area shape="rect" id="node9" href="$_s_d_k_primitives_provider_8h.html" title="AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="63,124,270,165"/>
-<area shape="rect" id="node13" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1334,124,1510,165"/>
-<area shape="rect" id="node33" href="$_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="1585,124,1761,165"/>
-<area shape="rect" id="node11" href="$_timer_delegate_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateFactory\lInterface.h" alt="" coords="44,213,243,269"/>
-<area shape="rect" id="node12" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="1585,317,1801,359"/>
-<area shape="rect" id="node14" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="1057,221,1233,262"/>
-<area shape="rect" id="node18" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="608,317,823,359"/>
-<area shape="rect" id="node24" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="910,407,1086,448"/>
-<area shape="rect" id="node25" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1182,317,1358,359"/>
-<area shape="rect" id="node31" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="863,317,1056,359"/>
-<area shape="rect" id="node32" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="182,496,358,537"/>
-<area shape="rect" id="node27" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1254,407,1430,448"/>
-<area shape="rect" id="node29" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1078,496,1254,537"/>
+<area shape="rect" id="node8" href="$_s_d_k_primitives_provider_8h.html" title="AVSCommon/AVS/Initialization\l/SDKPrimitivesProvider.h" alt="" coords="479,124,685,165"/>
+<area shape="rect" id="node12" href="$_timer_delegate_8h.html" title="AVSCommon/Utils/Timing\l/TimerDelegate.h" alt="" coords="97,124,273,165"/>
+<area shape="rect" id="node10" href="$_timer_delegate_factory_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateFactory\lInterface.h" alt="" coords="477,213,676,269"/>
+<area shape="rect" id="node11" href="$_timer_delegate_interface_8h.html" title="AVSCommon/SDKInterfaces\l/Timing/TimerDelegateInterface.h" alt="" coords="221,317,437,359"/>
 </map>

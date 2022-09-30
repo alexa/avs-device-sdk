@@ -1,5 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager_interface.html" title="alexaClientSDK::registration\lManager::CustomerDataManagerInterface" alt="" coords="5,39,272,80"/>
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_customer_data_manager.html" title="alexaClientSDK::registration\lManager::CustomerDataManager" alt="" coords="336,5,551,47"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1registration_manager_1_1_mock_customer_data_manager.html" title="alexaClientSDK::registration\lManager::MockCustomerDataManager" alt="" coords="320,71,567,112"/>
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1avs_common_1_1utils_1_1media_player_1_1_playback_attributes.html" title="alexaClientSDK::avsCommon\l::utils::mediaPlayer::Playback\lAttributes" alt="" coords="5,5,203,61"/>
 </map>

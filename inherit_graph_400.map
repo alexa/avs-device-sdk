@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1bluetooth_implementations_1_1blue_z_1_1_media_context.html" title="alexaClientSDK::bluetooth\lImplementations::blueZ\l::MediaContext" alt="" coords="5,5,181,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1_misc_storage_interface.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::storage\l::MiscStorageInterface" alt="" coords="5,165,203,221"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_mock_misc_storage.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::storage\l::test::MockMiscStorage" alt="" coords="270,5,467,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1storage_1_1test_1_1_stub_misc_storage.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::storage\l::test::StubMiscStorage" alt="" coords="270,85,467,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1sample_applications_1_1ipc_server_sample_app_1_1test_1_1_mock_misc_storage.html" title="alexaClientSDK::sampleApplications\l::ipcServerSampleApp::test::\lMockMiscStorage" alt="" coords="251,165,487,221"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1speaker_manager_1_1test_1_1_mock_misc_storage.html" title="alexaClientSDK::speakerManager\l::test::MockMiscStorage" alt="" coords="259,246,478,287"/>
+<area shape="rect" id="node6" href="$classalexa_client_s_d_k_1_1storage_1_1sqlite_storage_1_1_s_q_lite_misc_storage.html" title="alexaClientSDK::storage\l::sqliteStorage::SQLiteMiscStorage" alt="" coords="255,311,482,353"/>
 </map>

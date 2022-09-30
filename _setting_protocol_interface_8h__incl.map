@@ -1,10 +1,11 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h" name="/workplace/avs&#45;device&#45;sdk/Settings/include/Settings/SettingProtocolInterface.h">
-<area shape="rect" id="node6" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="641,109,836,151"/>
-<area shape="rect" id="node22" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1543,117,1727,143"/>
-<area shape="rect" id="node23" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1445,288,1613,329"/>
-<area shape="rect" id="node13" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="456,199,651,240"/>
-<area shape="rect" id="node18" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="871,199,1046,240"/>
-<area shape="rect" id="node15" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="240,295,339,322"/>
-<area shape="rect" id="node17" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="232,377,347,404"/>
-<area shape="rect" id="node19" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="827,288,1058,329"/>
+<area shape="rect" id="node6" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="664,109,858,151"/>
+<area shape="rect" id="node24" href="$_set_setting_result_8h.html" title="Settings/SetSettingResult.h" alt="" coords="1569,117,1753,143"/>
+<area shape="rect" id="node25" href="$_setting_observer_interface_8h.html" title="Settings/SettingObserver\lInterface.h" alt="" coords="1518,288,1686,329"/>
+<area shape="rect" id="node13" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="65,199,260,240"/>
+<area shape="rect" id="node15" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="445,199,640,240"/>
+<area shape="rect" id="node20" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1012,199,1187,240"/>
+<area shape="rect" id="node17" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="372,295,470,322"/>
+<area shape="rect" id="node19" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="254,377,369,404"/>
+<area shape="rect" id="node21" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="932,288,1163,329"/>
 </map>

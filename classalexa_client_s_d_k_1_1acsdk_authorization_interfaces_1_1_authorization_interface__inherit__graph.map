@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::acsdkAuthorizationInterfaces::AuthorizationInterface" name="alexaClientSDK::acsdkAuthorizationInterfaces::AuthorizationInterface">
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_mock_authorization_adapter.html" title="Mock class implementing the adapter. " alt="" coords="307,5,541,47"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1test_1_1_stub_authorization.html" title="Class to implement AuthorizationInterface, which is used to retrieve the id. " alt="" coords="307,71,541,112"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1acsdk_authorization_interfaces_1_1lwa_1_1_l_w_a_authorization_interface.html" title="alexaClientSDK::acsdkAuthorization\lInterfaces::lwa::LWAAuthorizationInterface" alt="" coords="288,136,560,177"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1acsdk_authorization_1_1lwa_1_1_l_w_a_authorization_adapter.html" title="alexaClientSDK::acsdkAuthorization\l::lwa::LWAAuthorizationAdapter" alt="" coords="608,136,843,177"/>
+</map>

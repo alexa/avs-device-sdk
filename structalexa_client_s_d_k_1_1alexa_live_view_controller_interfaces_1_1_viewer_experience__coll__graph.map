@@ -1,0 +1,6 @@
+<map id="alexaClientSDK::alexaLiveViewControllerInterfaces::ViewerExperience" name="alexaClientSDK::alexaLiveViewControllerInterfaces::ViewerExperience">
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1alexa_live_view_controller_interfaces_1_1_audio_properties.html" title="alexaClientSDK::alexaLive\lViewControllerInterfaces\l::AudioProperties" alt="" coords="373,5,552,61"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1alexa_live_view_controller_interfaces_1_1_display_properties.html" title="alexaClientSDK::alexaLive\lViewControllerInterfaces\l::DisplayProperties" alt="" coords="373,85,552,141"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; OverlayPosition \&gt;" alt="" coords="5,59,232,101"/>
+<area shape="rect" id="node5" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; OverlayType \&gt;" alt="" coords="15,125,223,166"/>
+</map>

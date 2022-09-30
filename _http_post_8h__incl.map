@@ -1,14 +1,17 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPost.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/Utils/include/AVSCommon/Utils/LibcurlUtils/HttpPost.h">
-<area shape="rect" id="node8" href="$_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="843,124,1045,165"/>
-<area shape="rect" id="node28" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="1777,392,1980,433"/>
-<area shape="rect" id="node9" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="387,392,563,433"/>
-<area shape="rect" id="node18" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="935,213,1111,255"/>
-<area shape="rect" id="node13" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="43,481,219,523"/>
-<area shape="rect" id="node15" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="365,571,541,612"/>
-<area shape="rect" id="node19" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="935,303,1111,344"/>
-<area shape="rect" id="node21" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="790,392,1005,433"/>
-<area shape="rect" id="node25" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="1301,481,1477,523"/>
-<area shape="rect" id="node26" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="1166,392,1359,433"/>
-<area shape="rect" id="node27" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="565,571,741,612"/>
-<area shape="rect" id="node30" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="1739,489,1866,515"/>
+<area shape="rect" id="node8" href="$_curl_easy_handle_wrapper_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/CurlEasyHandleWrapper.h" alt="" coords="1207,124,1409,165"/>
+<area shape="rect" id="node34" href="$_http_post_interface_8h.html" title="AVSCommon/Utils/LibcurlUtils\l/HttpPostInterface.h" alt="" coords="2049,392,2252,433"/>
+<area shape="rect" id="node10" href="$_log_entry_8h.html" title="AVSCommon/Utils/Logger\l/LogEntry.h" alt="" coords="1595,392,1771,433"/>
+<area shape="rect" id="node20" href="$_log_string_formatter_8h.html" title="AVSCommon/Utils/Logger\l/LogStringFormatter.h" alt="" coords="1000,213,1176,255"/>
+<area shape="rect" id="node33" href="$_logger_utils_8h.html" title="AVSCommon/Utils/Logger\l/LoggerUtils.h" alt="" coords="1292,213,1468,255"/>
+<area shape="rect" id="node15" href="$_log_entry_stream_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryStream.h" alt="" coords="1592,481,1768,523"/>
+<area shape="rect" id="node17" href="$_log_entry_buffer_8h.html" title="AVSCommon/Utils/Logger\l/LogEntryBuffer.h" alt="" coords="1455,571,1631,612"/>
+<area shape="rect" id="node21" href="$_logger_8h.html" title="AVSCommon/Utils/Logger\l/Logger.h" alt="" coords="999,303,1175,344"/>
+<area shape="rect" id="node31" href="$_safe_c_time_access_8h.html" title="AVSCommon/Utils/Timing\l/SafeCTimeAccess.h" alt="" coords="93,392,269,433"/>
+<area shape="rect" id="node23" href="$_configuration_node_8h.html" title="AVSCommon/Utils/Configuration\l/ConfigurationNode.h" alt="" coords="446,392,661,433"/>
+<area shape="rect" id="node27" href="$_level_8h.html" title="AVSCommon/Utils/Logger\l/Level.h" alt="" coords="969,481,1145,523"/>
+<area shape="rect" id="node28" href="$_log_level_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/LogLevelObserverInterface.h" alt="" coords="787,392,981,433"/>
+<area shape="rect" id="node29" href="$_sink_observer_interface_8h.html" title="AVSCommon/Utils/Logger\l/SinkObserverInterface.h" alt="" coords="260,571,436,612"/>
+<area shape="rect" id="node30" href="$_module_logger_8h.html" title="AVSCommon/Utils/Logger\l/ModuleLogger.h" alt="" coords="1141,392,1317,433"/>
+<area shape="rect" id="node36" href="$_h_t_t_p_response_8h.html" title="HTTPResponse.h" alt="" coords="2094,489,2221,515"/>
 </map>

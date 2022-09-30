@@ -1,4 +1,4 @@
 <map id="alexaClientSDK::acsdkSystemClockMonitor::SystemClockNotifier" name="alexaClientSDK::acsdkSystemClockMonitor::SystemClockNotifier">
-<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_notifier_1_1_notifier.html" title="alexaClientSDK::acsdkNotifier\l::Notifier\&lt; acsdkSystemClockMonitor\lInterfaces::SystemClockMonitorObserverInterface \&gt;" alt="" coords="321,13,648,69"/>
-<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1acsdk_notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::acsdkNotifier\lInterfaces::NotifierInterface\l\&lt; acsdkSystemClockMonitorInterfaces\l::SystemClockMonitorObserverInterface \&gt;" alt="" coords="5,5,273,76"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1notifier_1_1_notifier.html" title="alexaClientSDK::notifier\l::Notifier\&lt; acsdkSystemClockMonitor\lInterfaces::SystemClockMonitorObserverInterface \&gt;" alt="" coords="321,13,648,69"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1notifier_interfaces_1_1_notifier_interface.html" title="alexaClientSDK::notifier\lInterfaces::NotifierInterface\l\&lt; acsdkSystemClockMonitorInterfaces\l::SystemClockMonitorObserverInterface \&gt;" alt="" coords="5,5,273,76"/>
 </map>

@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structtesting_1_1internal_1_1bool__constant.html" title="testing::internal::\lbool_constant\&lt;((sizeof\l(From)\&lt; sizeof(To)) &amp;&amp;\l(!GMOCK_IS_SIGNED_(From)\l\|\|GMOCK_IS_SIGNED_(To)))\l\|\|((sizeof(From)==sizeof\l(To)) &amp;&amp;(GMOCK_IS_SIGNED_\l(From)==GMOCK_IS_SIGNED_(To)))\&gt;" alt="" coords="5,5,256,135"/>
+<area shape="rect" id="node2" href="$structtesting_1_1internal_1_1_lossless_arithmetic_convertible_impl_3_01k_integer_00_01_from_00_01k_integer_00_01_to_01_4.html" title="testing::internal::\lLosslessArithmeticConvertible\lImpl\&lt; kInteger, From, kInteger, To \&gt;" alt="" coords="304,42,539,98"/>
+</map>

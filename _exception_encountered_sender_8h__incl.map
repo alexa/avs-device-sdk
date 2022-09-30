@@ -1,15 +1,16 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/ExceptionEncounteredSender.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/ExceptionEncounteredSender.h">
-<area shape="rect" id="node4" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="45,213,268,255"/>
-<area shape="rect" id="node6" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="475,124,667,165"/>
-<area shape="rect" id="node19" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="27,124,287,165"/>
-<area shape="rect" id="node20" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1751,124,1946,165"/>
-<area shape="rect" id="node7" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="735,221,986,247"/>
-<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="829,303,1033,344"/>
-<area shape="rect" id="node18" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="511,303,754,344"/>
-<area shape="rect" id="node17" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="935,392,1101,433"/>
-<area shape="rect" id="node26" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="2005,213,2199,255"/>
-<area shape="rect" id="node31" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="1535,213,1709,255"/>
-<area shape="rect" id="node28" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="2215,310,2314,337"/>
-<area shape="rect" id="node30" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="2121,399,2235,426"/>
-<area shape="rect" id="node32" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="1528,303,1759,344"/>
+<area shape="rect" id="node4" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="2222,213,2445,255"/>
+<area shape="rect" id="node6" href="$_message_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageSenderInterface.h" alt="" coords="437,124,629,165"/>
+<area shape="rect" id="node19" href="$_exception_encountered_sender_interface_8h.html" title="AVSCommon/SDKInterfaces\l/ExceptionEncounteredSenderInterface.h" alt="" coords="1981,124,2241,165"/>
+<area shape="rect" id="node20" href="$_executor_8h.html" title="AVSCommon/Utils/Threading\l/Executor.h" alt="" coords="1152,124,1347,165"/>
+<area shape="rect" id="node7" href="$_message_request_8h.html" title="AVSCommon/AVS/MessageRequest.h" alt="" coords="393,221,644,247"/>
+<area shape="rect" id="node13" href="$_attachment_reader_8h.html" title="AVSCommon/AVS/Attachment\l/AttachmentReader.h" alt="" coords="94,303,298,344"/>
+<area shape="rect" id="node18" href="$_message_request_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MessageRequestObserverInterface.h" alt="" coords="1967,303,2209,344"/>
+<area shape="rect" id="node17" href="$_reader_policy_8h.html" title="AVSCommon/Utils/SDS\l/ReaderPolicy.h" alt="" coords="219,392,384,433"/>
+<area shape="rect" id="node26" href="$_executor_interface_8h.html" title="AVSCommon/Utils/Threading\l/ExecutorInterface.h" alt="" coords="2003,213,2197,255"/>
+<area shape="rect" id="node28" href="$_task_thread_8h.html" title="AVSCommon/Utils/Threading\l/TaskThread.h" alt="" coords="1399,213,1593,255"/>
+<area shape="rect" id="node33" href="$_power_resource_8h.html" title="AVSCommon/Utils/Power\l/PowerResource.h" alt="" coords="826,213,1001,255"/>
+<area shape="rect" id="node30" href="$_thread_pool_8h.html" title="ThreadPool.h" alt="" coords="1489,310,1588,337"/>
+<area shape="rect" id="node32" href="$_worker_thread_8h.html" title="WorkerThread.h" alt="" coords="1524,399,1639,426"/>
+<area shape="rect" id="node34" href="$_power_resource_manager_interface_8h.html" title="AVSCommon/SDKInterfaces\l/PowerResourceManagerInterface.h" alt="" coords="903,303,1134,344"/>
 </map>

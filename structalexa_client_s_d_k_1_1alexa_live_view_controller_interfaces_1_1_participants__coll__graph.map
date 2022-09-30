@@ -1,0 +1,5 @@
+<map id="alexaClientSDK::alexaLiveViewControllerInterfaces::Participants" name="alexaClientSDK::alexaLiveViewControllerInterfaces::Participants">
+<area shape="rect" id="node2" href="$structalexa_client_s_d_k_1_1alexa_live_view_controller_interfaces_1_1_camera.html" title="alexaClientSDK::alexaLive\lViewControllerInterfaces\l::Camera" alt="" coords="320,45,499,101"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::set\&lt; MotionCapability \&gt; \&gt;" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node4" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1_optional.html" title="alexaClientSDK::avsCommon\l::utils::Optional\&lt; std\l::string \&gt;" alt="" coords="5,85,203,141"/>
+</map>

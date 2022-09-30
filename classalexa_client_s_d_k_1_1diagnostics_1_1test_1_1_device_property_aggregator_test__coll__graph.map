@@ -1,3 +1,4 @@
 <map id="alexaClientSDK::diagnostics::test::DevicePropertyAggregatorTest" name="alexaClientSDK::diagnostics::test::DevicePropertyAggregatorTest">
-<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface_1_1_speaker_settings.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface\l::SpeakerSettings" alt="" coords="95,5,311,61"/>
+<area shape="rect" id="node2" href="$classtesting_1_1_test.html" title="testing::Test" alt="" coords="66,5,161,32"/>
+<area shape="rect" id="node3" href="$structalexa_client_s_d_k_1_1avs_common_1_1sdk_interfaces_1_1_speaker_interface_1_1_speaker_settings.html" title="alexaClientSDK::avsCommon\l::sdkInterfaces::SpeakerInterface\l::SpeakerSettings" alt="" coords="5,56,221,112"/>
 </map>

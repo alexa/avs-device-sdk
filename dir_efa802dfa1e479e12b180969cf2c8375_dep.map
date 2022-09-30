@@ -1,0 +1,14 @@
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/AlexaSeekController" name="/workplace/avs&#45;device&#45;sdk/capabilities/AlexaSeekController">
+<area shape="rect" id="node2" href="dir_e72d10897f8de41d05cd4401deae170e.html" title="acsdkAlexaSeekController" alt="" coords="37,94,213,142"/>
+<area shape="rect" id="node3" href="dir_6eb3e8639804a7fe0c07a0041da08ea2.html" title="acsdkAlexaSeekControllerInterfaces" alt="" coords="91,190,325,238"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000316_000320.html" title="2" alt="" coords="177,162,185,177"/>
+<area shape="rect" id="node4" href="dir_13e65effb2bde530b17b3d5eefcd0266.html" title="AVSCommon" alt="" coords="429,94,531,142"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000316_000014.html" title="15" alt="" coords="452,66,467,81"/>
+<area shape="rect" id="node5" href="dir_b5476d1fcad0fea94f721db1a83a1d3b.html" title="SampleApplications" alt="" coords="411,190,549,238"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000316_000341.html" title="2" alt="" coords="392,174,400,188"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000014_000341.html" title="138" alt="" coords="469,163,490,178"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000341_000320.html" title="1" alt="" coords="340,215,348,229"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000341_000014.html" title="165" alt="" coords="470,153,491,168"/>
+<area shape="rect" id="clust2" href="dir_efa802dfa1e479e12b180969cf2c8375.html" alt="" coords="27,83,389,248"/>
+<area shape="rect" id="clust1" href="dir_55f1e16e469d547c636a522dac21b8a1.html" title="capabilities" alt="" coords="16,47,400,259"/>
+</map>

@@ -1,6 +1,4 @@
 <map id="/workplace/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/DevicePropertyAggregator.h" name="/workplace/avs&#45;device&#45;sdk/Diagnostics/include/Diagnostics/DevicePropertyAggregator.h">
-<area shape="rect" id="node2" href="$_device_property_aggregator_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/src\l/DevicePropertyAggregator.cpp" alt="" coords="5,109,209,165"/>
-<area shape="rect" id="node3" href="$_device_property_aggregator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/test\l/DevicePropertyAggregatorTest.cpp" alt="" coords="233,109,464,165"/>
-<area shape="rect" id="node4" href="$_s_d_k_diagnostics_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/include\l/SampleApp/SDKDiagnostics.h" alt="" coords="489,109,694,165"/>
-<area shape="rect" id="node5" href="$_s_d_k_diagnostics_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApp/src/SDKDiagnostics.cpp" alt="" coords="458,213,725,255"/>
+<area shape="rect" id="node2" href="$_device_property_aggregator_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/Diagnostics/test\l/DevicePropertyAggregatorTest.cpp" alt="" coords="5,117,236,173"/>
+<area shape="rect" id="node3" href="$_s_d_k_diagnostics_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/SampleApplications\l/Common/LibSampleApp/include\l/SampleApp/SDKDiagnostics.h" alt="" coords="260,109,472,180"/>
 </map>

@@ -1,7 +1,3 @@
 <map id="/workplace/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistUtils.h" name="/workplace/avs&#45;device&#45;sdk/PlaylistParser/include/PlaylistParser/PlaylistUtils.h">
-<area shape="rect" id="node2" href="$_iterative_playlist_parser_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/IterativePlaylistParser.cpp" alt="" coords="5,109,184,165"/>
-<area shape="rect" id="node3" href="$_m3_u_parser_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/M3UParser.cpp" alt="" coords="208,109,363,165"/>
-<area shape="rect" id="node4" href="$_playlist_parser_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/PlaylistParser.cpp" alt="" coords="387,109,541,165"/>
-<area shape="rect" id="node5" href="$_playlist_utils_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/src\l/PlaylistUtils.cpp" alt="" coords="565,109,720,165"/>
-<area shape="rect" id="node6" href="$_playlist_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/test\l/PlaylistUtilsTest.cpp" alt="" coords="745,109,903,165"/>
+<area shape="rect" id="node2" href="$_playlist_utils_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/PlaylistParser/test\l/PlaylistUtilsTest.cpp" alt="" coords="22,109,181,165"/>
 </map>

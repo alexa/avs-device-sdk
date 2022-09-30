@@ -39,6 +39,6 @@
 <area shape="rect" id="node31" href="$_local_playback_handler_interface_8h.html" title="LocalPlaybackHandlerInterface.h" alt="" coords="3128,465,3343,492"/>
 <area shape="rect" id="node37" href="$_cook_book_8h.html" title="acsdkManufactory/internal\l/CookBook.h" alt="" coords="204,458,379,499"/>
 <area shape="rect" id="node38" href="$_component__imp_8h.html" title="acsdkManufactory/internal\l/Component_imp.h" alt="" coords="5,458,180,499"/>
-<area shape="rect" id="node41" href="$_notifier_interface_8h.html" title="acsdkNotifierInterfaces\l/NotifierInterface.h" alt="" coords="3903,562,4061,603"/>
+<area shape="rect" id="node41" href="$_notifier_interface_8h.html" title="acsdk/NotifierInterfaces\l/NotifierInterface.h" alt="" coords="3901,562,4063,603"/>
 <area shape="rect" id="node45" href="$_exception_error_type_8h.html" title="AVSCommon/AVS/ExceptionError\lType.h" alt="" coords="3907,250,4129,291"/>
 </map>

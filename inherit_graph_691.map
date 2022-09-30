@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1speaker_manager_1_1_speaker_manager_storage_interface.html" title="Speaker manager storage interface. " alt="" coords="5,13,229,54"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage.html" title="Mock object for SpeakerManagerStorageInterface. " alt="" coords="277,13,512,54"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1speaker_manager_1_1test_1_1_mock_speaker_manager_storage_with_helpers.html" title="Extend MockSpeakerManagerStorage with helpers. " alt="" coords="560,5,823,61"/>
+</map>

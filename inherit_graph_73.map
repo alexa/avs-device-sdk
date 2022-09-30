@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structalexa_client_s_d_k_1_1acsdk_manufactory_1_1internal_1_1_dedup_types_1_1_dedup_operation_1_1_apply.html" title="alexaClientSDK::acsdkManufactory\l::internal::DedupTypes\&lt; Types\l \&gt;::DedupOperation::Apply\&lt;... \&gt;" alt="" coords="5,5,236,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1acsdk_assets_1_1client_interfaces_1_1_artifact_wrapper_factory_interface.html" title="alexaClientSDK::acsdkAssets\l::clientInterfaces::ArtifactWrapper\lFactoryInterface" alt="" coords="5,5,224,61"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1acsdk_assets_1_1client_1_1_artifact_wrapper_factory.html" title="alexaClientSDK::acsdkAssets\l::client::ArtifactWrapperFactory" alt="" coords="272,13,476,54"/>
 </map>

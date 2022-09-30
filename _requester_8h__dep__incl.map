@@ -1,9 +1,6 @@
 <map id="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Requester.h" name="/workplace/avs&#45;device&#45;sdk/AVSCommon/AVS/include/AVSCommon/AVS/Requester.h">
-<area shape="rect" id="node2" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="383,228,638,299"/>
-<area shape="rect" id="node7" href="$_bluetooth_event_state_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BluetoothEventState.h" alt="" coords="549,109,803,180"/>
-<area shape="rect" id="node3" href="$_default_client_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/ApplicationUtilities\l/DefaultClient/src/DefaultClient.cpp" alt="" coords="5,347,235,403"/>
-<area shape="rect" id="node4" href="$_bluetooth_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/Bluetooth.cpp" alt="" coords="259,347,482,403"/>
-<area shape="rect" id="node5" href="$_bluetooth_component_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothComponent.cpp" alt="" coords="506,347,795,403"/>
-<area shape="rect" id="node6" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="819,347,1071,403"/>
-<area shape="rect" id="node8" href="$_bluetooth_event_state_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/src/BluetoothEvent\lState.cpp" alt="" coords="662,228,893,299"/>
+<area shape="rect" id="node2" href="$_artifact_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/AssetManager\l/acsdkAssetManager/test/ArtifactTest.cpp" alt="" coords="5,117,273,173"/>
+<area shape="rect" id="node3" href="$_bluetooth_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/Bluetooth.h" alt="" coords="267,228,521,299"/>
+<area shape="rect" id="node5" href="$_bluetooth_event_state_8h.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/include/acsdkBluetooth\l/BluetoothEventState.h" alt="" coords="349,109,604,180"/>
+<area shape="rect" id="node4" href="$_bluetooth_test_8cpp.html" title="/workplace/avs&#45;device\l&#45;sdk/capabilities/Bluetooth\l/acsdkBluetooth/test/BluetoothTest.cpp" alt="" coords="268,347,520,403"/>
 </map>

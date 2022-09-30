@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1avs_common_1_1utils_1_1error_1_1_result.html" title="alexaClientSDK::avsCommon\l::utils::error::Result\l\&lt; TStatus, TValue \&gt;" alt="" coords="5,5,203,61"/>
+<area shape="rect" id="node1" href="$classalexa_client_s_d_k_1_1alexa_record_controller_interfaces_1_1_record_controller_interface.html" title="alexaClientSDK::alexaRecord\lControllerInterfaces::RecordController\lInterface" alt="" coords="5,45,248,101"/>
+<area shape="rect" id="node2" href="$classalexa_client_s_d_k_1_1alexa_record_controller_1_1test_1_1_mock_record_controller_handler_interface.html" title="alexaClientSDK::alexaRecord\lController::test::MockRecordController\lHandlerInterface" alt="" coords="308,5,555,61"/>
+<area shape="rect" id="node3" href="$classalexa_client_s_d_k_1_1sample_applications_1_1common_1_1_endpoint_alexa_record_controller_handler.html" title="alexaClientSDK::sampleApplications\l::common::EndpointAlexaRecordController\lHandler" alt="" coords="296,85,567,141"/>
 </map>

@@ -1,8 +1,34 @@
-<map id="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/test/RenderPlayerInfoCardsProviderRegistrarTest.cpp" name="/workplace/avs&#45;device&#45;sdk/CapabilityAgents/TemplateRuntime/test/RenderPlayerInfoCardsProviderRegistrarTest.cpp">
-<area shape="rect" id="node5" href="$_render_player_info_cards_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lInterface.h" alt="" coords="321,332,531,388"/>
-<area shape="rect" id="node13" href="$_render_player_info_cards_provider_registrar_8h.html" title="TemplateRuntime/RenderPlayer\lInfoCardsProviderRegistrar.h" alt="" coords="303,139,511,180"/>
-<area shape="rect" id="node6" href="$_render_player_info_cards_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserver\lInterface.h" alt="" coords="300,436,515,492"/>
-<area shape="rect" id="node9" href="$_player_activity_8h.html" title="AVSCommon/AVS/PlayerActivity.h" alt="" coords="621,547,850,574"/>
-<area shape="rect" id="node12" href="$_media_properties_interface_8h.html" title="AVSCommon/SDKInterfaces\l/MediaPropertiesInterface.h" alt="" coords="405,540,597,581"/>
-<area shape="rect" id="node15" href="$_render_player_info_cards_provider_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lRegistrarInterface.h" alt="" coords="150,228,361,284"/>
+<map id="/workplace/avs&#45;device&#45;sdk/capabilities/TemplateRuntime/TemplateRuntime/test/RenderPlayerInfoCardsProviderRegistrarTest.cpp" name="/workplace/avs&#45;device&#45;sdk/capabilities/TemplateRuntime/TemplateRuntime/test/RenderPlayerInfoCardsProviderRegistrarTest.cpp">
+<area shape="rect" id="node3" href="$gmock_8h.html" title="gmock/gmock.h" alt="" coords="1033,139,1148,165"/>
+<area shape="rect" id="node19" href="$gtest_8h.html" title="gtest/gtest.h" alt="" coords="2053,637,2147,663"/>
+<area shape="rect" id="node47" href="$_render_player_info_cards_provider_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lInterface.h" alt="" coords="171,332,381,388"/>
+<area shape="rect" id="node49" href="$_render_player_info_cards_provider_registrar_factory_8h.html" title="acsdk/TemplateRuntime\l/RenderPlayerInfoCardsProvider\lRegistrarFactory.h" alt="" coords="93,124,304,180"/>
+<area shape="rect" id="node4" href="$gmock-actions_8h.html" title="gmock/gmock&#45;actions.h" alt="" coords="738,451,899,477"/>
+<area shape="rect" id="node8" href="$gmock-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;internal&#45;utils.h" alt="" coords="1039,540,1190,581"/>
+<area shape="rect" id="node33" href="$gmock-cardinalities_8h.html" title="gmock/gmock&#45;cardinalities.h" alt="" coords="1317,547,1505,574"/>
+<area shape="rect" id="node35" href="$gmock-generated-actions_8h.html" title="gmock/gmock&#45;generated\l&#45;actions.h" alt="" coords="736,339,901,381"/>
+<area shape="rect" id="node37" href="$gmock-generated-function-mockers_8h.html" title="gmock/gmock&#45;generated\l&#45;function&#45;mockers.h" alt="" coords="1128,235,1293,277"/>
+<area shape="rect" id="node39" href="$gmock-matchers_8h.html" title="gmock/gmock&#45;matchers.h" alt="" coords="1812,451,1985,477"/>
+<area shape="rect" id="node43" href="$gmock-generated-nice-strict_8h.html" title="gmock/gmock&#45;generated\l&#45;nice&#45;strict.h" alt="" coords="1352,235,1517,277"/>
+<area shape="rect" id="node44" href="$gmock-generated-matchers_8h.html" title="gmock/gmock&#45;generated\l&#45;matchers.h" alt="" coords="1844,339,2009,381"/>
+<area shape="rect" id="node45" href="$gmock-more-actions_8h.html" title="gmock/gmock&#45;more&#45;actions.h" alt="" coords="707,243,901,269"/>
+<area shape="rect" id="node46" href="$gmock-more-matchers_8h.html" title="gmock/gmock&#45;more&#45;matchers.h" alt="" coords="1682,243,1889,269"/>
+<area shape="rect" id="node12" href="$gmock-port_8h.html" title="gmock/internal/gmock\l&#45;port.h" alt="" coords="1098,719,1249,760"/>
+<area shape="rect" id="node11" href="$gmock-generated-internal-utils_8h.html" title="gmock/internal/gmock\l&#45;generated&#45;internal&#45;utils.h" alt="" coords="1097,629,1265,671"/>
+<area shape="rect" id="node13" href="$gtest-port_8h.html" title="gtest/internal/gtest\l&#45;port.h" alt="" coords="1729,987,1860,1028"/>
+<area shape="rect" id="node21" href="$gtest-internal_8h.html" title="gtest/internal/gtest\l&#45;internal.h" alt="" coords="2259,808,2389,849"/>
+<area shape="rect" id="node24" href="$gtest-message_8h.html" title="gtest/gtest&#45;message.h" alt="" coords="2412,905,2564,931"/>
+<area shape="rect" id="node25" href="$gtest-string_8h.html" title="gtest/internal/gtest\l&#45;string.h" alt="" coords="1881,897,2012,939"/>
+<area shape="rect" id="node26" href="$gtest-death-test_8h.html" title="gtest/gtest&#45;death&#45;test.h" alt="" coords="1425,726,1583,753"/>
+<area shape="rect" id="node27" href="$gtest-param-test_8h.html" title="gtest/gtest&#45;param&#45;test.h" alt="" coords="2107,726,2269,753"/>
+<area shape="rect" id="node28" href="$gtest-printers_8h.html" title="gtest/gtest&#45;printers.h" alt="" coords="1941,726,2083,753"/>
+<area shape="rect" id="node29" href="$gtest__prod_8h.html" title="gtest/gtest_prod.h" alt="" coords="1607,726,1734,753"/>
+<area shape="rect" id="node30" href="$gtest-test-part_8h.html" title="gtest/gtest&#45;test&#45;part.h" alt="" coords="2395,726,2541,753"/>
+<area shape="rect" id="node31" href="$gtest-typed-test_8h.html" title="gtest/gtest&#45;typed&#45;test.h" alt="" coords="1879,815,2036,842"/>
+<area shape="rect" id="node32" href="$gtest__pred__impl_8h.html" title="gtest/gtest_pred_impl.h" alt="" coords="1758,726,1917,753"/>
+<area shape="rect" id="node36" href="$internal_2custom_2gmock-generated-actions_8h.html" title="gmock/internal/custom\l/gmock&#45;generated&#45;actions.h" alt="" coords="531,443,714,485"/>
+<area shape="rect" id="node38" href="$gmock-spec-builders_8h.html" title="gmock/gmock&#45;spec&#45;builders.h" alt="" coords="1337,347,1533,373"/>
+<area shape="rect" id="node42" href="$internal_2custom_2gmock-matchers_8h.html" title="gmock/internal/custom\l/gmock&#45;matchers.h" alt="" coords="2676,540,2831,581"/>
+<area shape="rect" id="node48" href="$_render_player_info_cards_observer_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsObserver\lInterface.h" alt="" coords="195,436,410,492"/>
+<area shape="rect" id="node50" href="$_render_player_info_cards_provider_registrar_interface_8h.html" title="AVSCommon/SDKInterfaces\l/RenderPlayerInfoCardsProvider\lRegistrarInterface.h" alt="" coords="93,228,304,284"/>
 </map>
