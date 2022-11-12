@@ -3,5 +3,7 @@
 #config file required for SDK integration tests.  Each user will configure this differently, so it is preferable that git not show this file as
 #'untracked' when printing the status. 
 Integration/AuthDelegate.config
+#config file with the secret client id (required for the device authorization)
+tools/Install/config.json
 #macOS specific files
 .DS_Store
