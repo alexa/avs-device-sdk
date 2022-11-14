@@ -10,7 +10,14 @@ target_link_libraries(KeywordDetectorProvider AVSCommon acsdkKWDImplementations)
 if(TARGET_KWD_LIB)
     target_link_libraries(KeywordDetectorProvider ${TARGET_KWD_LIB})
 else()
-    message(FATAL_ERROR "No KWD Target set")
+    message(FATAL_ERROR "No KWD Target lib set")
+endif()
+
+if(TARGET_KWD_INCLUDE)
+    target_include_directories(KeywordDetectorProvider PUBLIC
+        "${TARGET_KWD_INCLUDE}")
+else()
+    message(FATAL_ERROR "No KWD Target include set")
 endif()
 
 # install target

@@ -34,3 +34,17 @@ View the [C++ API References](https://alexa.github.io/avs-device-sdk/) for detai
 ### Security Requirements
 
 All Alexa products must meet the [AVS Security Requirements](https://developer.amazon.com/en-US/docs/alexa/alexa-voice-service/avs-security-reqs.html). In addition, when building the AVS Device SDK, you are required to adhere to the [following security principles](https://developer.amazon.com/en-US/docs/alexa/avs-device-sdk/overview.html#security-requirements).
+
+### This fork
+
+Configure with the following command.
+```
+cmake ~/sdk-folder/sdk-source/avs-device-sdk  -DGSTREAMER_MEDIA_PLAYER=ON  -DPORTAUDIO=ON  -DPKCS11=OFF  -DPORTAUDIO_LIB_PATH=$PORTAUDIO_LIB_PATH  -DPORTAUDIO_INCLUDE_DIR=/usr/include  -DCMAKE_BUILD_TYPE=DEBUG -DPORCUPINE_KEY_WORD_DETECTOR=ON -DPORCUPINE_KEY_WORD_DETECTOR_LIB_PATH=/path/to/porcupine/libpv_porcupine.so -DPORCUPINE_KEY_WORD_DETECTOR_INCLUDE_DIR=/path/to/porcupine/include/
+```
+
+Before running, set these environment variables.
+```
+PORCUPINE_ACCESS_KEY
+PORCUPINE_MODEL_PATH
+PORCUPINE_KEYWORD_PATH
+```
