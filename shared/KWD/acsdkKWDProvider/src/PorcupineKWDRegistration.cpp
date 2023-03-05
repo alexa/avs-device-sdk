@@ -55,41 +55,43 @@ class PorcupineKeywordDetector : public acsdkKWDImplementations::AbstractKeyword
             }
 
             ssize_t nWords = pv_porcupine_frame_length(); // number of samples per frame
-            int16_t *buf = new int16_t[nWords]; // word size must be 2 bytes, so we use int16.
-            static constexpr std::chrono::milliseconds timeout{16};
+            ssize_t nWordsToRead = nWords * 20;
+            int16_t *buf = new int16_t[nWordsToRead]; // word size must be 2 bytes, so we use int16.
+            static constexpr std::chrono::milliseconds timeout{1000};
             bool errorOccurred = false;
             ssize_t nWordsRead = 0;
 
             int32_t keyword_index = -1;
             pv_status_t status;
             while (true) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(16));
                 nWordsRead += this->readFromStream2(
                     reader,
                     stream,
                     buf + nWordsRead,
-                    nWords - nWordsRead,
+                    nWordsToRead - nWordsRead,
                     timeout,
                     &errorOccurred
                 );
                 if (errorOccurred) {
                     std::cout << "error occurred" << std::endl;
                 }
-                if (nWordsRead == nWords) {
+                if (nWordsRead == nWordsToRead) {
                     nWordsRead = 0;
 
-                    status = pv_porcupine_process(handle, buf, &keyword_index);
-                    if (status != PV_STATUS_SUCCESS) {
-                        // error handling logic
-                        std::cout << "pv error" << std::endl;
-                        // TODO: on any kind of error, change the  state of the detector to "ERROR" and notify the KeyWordDetectorStateObservers.
-                    }
-                    if (keyword_index != -1) {
-                        // Insert detection event callback
-                        std::cout << "keyword detected!" << std::endl;
+		    for (ssize_t pos = 0; pos < nWordsToRead; pos += nWords) {
+                        status = pv_porcupine_process(handle, buf + pos, &keyword_index);
+                        if (status != PV_STATUS_SUCCESS) {
+                            // error handling logic
+                            std::cout << "pv error" << std::endl;
+                            // TODO: on any kind of error, change the  state of the detector to "ERROR" and notify the KeyWordDetectorStateObservers.
+                        }
+                        if (keyword_index != -1) {
+                            // Insert detection event callback
+                            std::cout << "keyword detected!" << std::endl;
 
-                        endIndex = reader->tell();
-                        this->notifyKeyWordObservers2(stream, "porcupine", beginIndex, endIndex);
+                            endIndex = reader->tell();
+                            this->notifyKeyWordObservers2(stream, "alexa", beginIndex, endIndex);
+			}
                     }
                 }
             }
