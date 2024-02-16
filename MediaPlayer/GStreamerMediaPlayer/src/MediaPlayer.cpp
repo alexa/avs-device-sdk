@@ -200,13 +200,13 @@ MediaPlayer::SourceId MediaPlayer::setSource(
     const avsCommon::utils::AudioFormat* audioFormat,
     const SourceConfig& config) {
     ACSDK_DEBUG9(LX("setSourceCalled").d("name", RequiresShutdown::name()).d("sourceType", "AttachmentReader"));
-    std::promise<MediaPlayer::SourceId> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &reader, &promise, &config, audioFormat]() {
-        handleSetAttachmentReaderSource(std::move(reader), config, &promise, audioFormat);
+    auto promise = std::make_shared<std::promise<MediaPlayer::SourceId>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, &reader, promise, &config, audioFormat]() {
+        handleSetAttachmentReaderSource(std::move(reader), config, promise.get(), audioFormat);
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         auto sourceId = future.get();
         // Assume that the Attachment is fully buffered - not ideal, revisit if needed.  Should be fine for file streams
         // and resources.
@@ -232,13 +232,13 @@ MediaPlayer::SourceId MediaPlayer::setSource(
     avsCommon::utils::MediaType format) {
     ACSDK_DEBUG9(
         LX("setSourceCalled").d("name", RequiresShutdown::name()).d("sourceType", "istream").d("format", format));
-    std::promise<MediaPlayer::SourceId> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &stream, repeat, &config, &promise]() {
-        handleSetIStreamSource(stream, repeat, config, &promise);
+    auto promise = std::make_shared<std::promise<MediaPlayer::SourceId>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, &stream, repeat, &config, promise]() {
+        handleSetIStreamSource(stream, repeat, config, promise.get());
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         auto sourceId = future.get();
         // Assume that the Attachment is fully buffered - not ideal, revisit if needed.  Should be fine for file streams
         // and resources.
@@ -255,13 +255,13 @@ MediaPlayer::SourceId MediaPlayer::setSource(
     bool repeat,
     const PlaybackContext& playbackContext) {
     ACSDK_DEBUG9(LX("setSourceForUrlCalled").d("name", RequiresShutdown::name()).sensitive("url", url));
-    std::promise<MediaPlayer::SourceId> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, url, offset, &config, &promise, repeat]() {
-        handleSetUrlSource(url, offset, config, &promise, repeat);
+    auto promise = std::make_shared<std::promise<MediaPlayer::SourceId>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, url, offset, &config, promise, repeat]() {
+        handleSetUrlSource(url, offset, config, promise.get(), repeat);
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return ERROR_SOURCE_ID;
@@ -290,14 +290,14 @@ bool MediaPlayer::play(MediaPlayer::SourceId id) {
 
     m_source->preprocess();
 
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, id, &promise]() {
-        handlePlay(id, &promise);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, id, promise]() {
+        handlePlay(id, promise.get());
         return false;
     };
 
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -305,13 +305,13 @@ bool MediaPlayer::play(MediaPlayer::SourceId id) {
 
 bool MediaPlayer::stop(MediaPlayer::SourceId id) {
     ACSDK_DEBUG9(LX("stopCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, id, &promise]() {
-        handleStop(id, &promise);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, id, promise]() {
+        handleStop(id, promise.get());
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -319,13 +319,13 @@ bool MediaPlayer::stop(MediaPlayer::SourceId id) {
 
 bool MediaPlayer::pause(MediaPlayer::SourceId id) {
     ACSDK_DEBUG9(LX("pausedCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, id, &promise]() {
-        handlePause(id, &promise);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, id, promise]() {
+        handlePause(id, promise.get());
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -333,13 +333,13 @@ bool MediaPlayer::pause(MediaPlayer::SourceId id) {
 
 bool MediaPlayer::resume(MediaPlayer::SourceId id) {
     ACSDK_DEBUG9(LX("resumeCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, id, &promise]() {
-        handleResume(id, &promise);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, id, promise]() {
+        handleResume(id, promise.get());
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -347,14 +347,14 @@ bool MediaPlayer::resume(MediaPlayer::SourceId id) {
 
 std::chrono::milliseconds MediaPlayer::getOffset(MediaPlayer::SourceId id) {
     ACSDK_DEBUG9(LX("getOffsetCalled").d("name", RequiresShutdown::name()));
-    std::promise<std::chrono::milliseconds> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, id, &promise]() {
-        handleGetOffset(id, &promise);
+    auto promise = std::make_shared<std::promise<std::chrono::milliseconds>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, id, promise]() {
+        handleGetOffset(id, promise.get());
         return false;
     };
 
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return MEDIA_PLAYER_INVALID_OFFSET;
@@ -372,14 +372,14 @@ void MediaPlayer::addObserver(std::shared_ptr<MediaPlayerObserverInterface> obse
     }
 
     ACSDK_DEBUG9(LX("addObserverCalled").d("name", RequiresShutdown::name()));
-    std::promise<void> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, &observer]() {
-        handleAddObserver(&promise, observer);
+    auto promise = std::make_shared<std::promise<void>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, promise, &observer]() {
+        handleAddObserver(promise.get(), observer);
         return false;
     };
 
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         future.wait();
     }
 }
@@ -391,27 +391,27 @@ void MediaPlayer::removeObserver(std::shared_ptr<MediaPlayerObserverInterface> o
     }
 
     ACSDK_DEBUG9(LX("removeObserverCalled").d("name", RequiresShutdown::name()));
-    std::promise<void> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, &observer]() {
-        handleRemoveObserver(&promise, observer);
+    auto promise = std::make_shared<std::promise<void>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, promise, &observer]() {
+        handleRemoveObserver(promise.get(), observer);
         return false;
     };
 
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         future.wait();
     }
 }
 
 bool MediaPlayer::setVolume(int8_t volume) {
     ACSDK_DEBUG9(LX("setVolumeCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, volume]() {
-        handleSetVolume(&promise, volume);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, promise, volume]() {
+        handleSetVolume(promise.get(), volume);
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -464,13 +464,13 @@ void MediaPlayer::handleSetVolume(std::promise<bool>* promise, int8_t volume) {
 
 bool MediaPlayer::setMute(bool mute) {
     ACSDK_DEBUG9(LX("setMuteCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, mute]() {
-        handleSetMute(&promise, mute);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, promise, mute]() {
+        handleSetMute(promise.get(), mute);
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -492,13 +492,13 @@ void MediaPlayer::handleSetMute(std::promise<bool>* promise, bool mute) {
 
 bool MediaPlayer::getSpeakerSettings(SpeakerInterface::SpeakerSettings* settings) {
     ACSDK_DEBUG9(LX("getSpeakerSettingsCalled").d("name", RequiresShutdown::name()));
-    std::promise<bool> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, settings]() {
-        handleGetSpeakerSettings(&promise, settings);
+    auto promise = std::make_shared<std::promise<bool>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, promise, settings]() {
+        handleGetSpeakerSettings(promise.get(), settings);
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         return future.get();
     }
     return false;
@@ -934,13 +934,16 @@ bool MediaPlayer::seek() {
     return seekSuccessful;
 }
 
-guint MediaPlayer::queueCallback(const std::function<gboolean()>* callback) {
+guint MediaPlayer::queueCallback(std::function<gboolean()>&& callback) {
     if (isShutdown()) {
         return UNQUEUED_CALLBACK;
     }
     auto source = g_idle_source_new();
     g_source_set_callback(
-        source, reinterpret_cast<GSourceFunc>(&onCallback), const_cast<std::function<gboolean()>*>(callback), nullptr);
+        source, reinterpret_cast<GSourceFunc>(&onCallback), new std::function<gboolean()>(std::move(callback)),
+        [](gpointer data) {
+            delete reinterpret_cast<std::function<gboolean()>*>(data);
+        });
     auto sourceId = g_source_attach(source, m_workerContext);
     g_source_unref(source);
     return sourceId;
@@ -1006,13 +1009,13 @@ gboolean MediaPlayer::onCallback(const std::function<gboolean()>* callback) {
 void MediaPlayer::onPadAdded(GstElement* decoder, GstPad* pad, gpointer pointer) {
     auto mediaPlayer = static_cast<MediaPlayer*>(pointer);
     ACSDK_DEBUG9(LX("onPadAddedCalled").d("name", mediaPlayer->name()));
-    std::promise<void> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [mediaPlayer, &promise, decoder, pad]() {
-        mediaPlayer->handlePadAdded(&promise, decoder, pad);
+    auto promise = std::make_shared<std::promise<void>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [mediaPlayer, promise, decoder, pad]() {
+        mediaPlayer->handlePadAdded(promise.get(), decoder, pad);
         return false;
     };
-    if (mediaPlayer->queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (mediaPlayer->queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         future.wait();
     }
 }
@@ -1942,9 +1945,9 @@ void MediaPlayer::setEqualizerBandLevels(EqualizerBandLevelMap bandLevelMap) {
     if (!m_equalizerEnabled) {
         return;
     }
-    std::promise<void> promise;
-    auto future = promise.get_future();
-    std::function<gboolean()> callback = [this, &promise, bandLevelMap]() {
+    auto promise = std::make_shared<std::promise<void>>();
+    auto future = promise->get_future();
+    std::function<gboolean()> callback = [this, promise, bandLevelMap]() {
         auto it = bandLevelMap.find(EqualizerBand::BASS);
         if (bandLevelMap.end() != it) {
             g_object_set(
@@ -1969,10 +1972,10 @@ void MediaPlayer::setEqualizerBandLevels(EqualizerBandLevelMap bandLevelMap) {
                 static_cast<gdouble>(clampEqualizerLevel(it->second)),
                 NULL);
         }
-        promise.set_value();
+        promise->set_value();
         return false;
     };
-    if (queueCallback(&callback) != UNQUEUED_CALLBACK) {
+    if (queueCallback(std::move(callback)) != UNQUEUED_CALLBACK) {
         future.get();
     }
 }

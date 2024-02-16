@@ -89,8 +89,6 @@ BaseStreamSource::BaseStreamSource(PipelineInterface* pipeline, const std::strin
         m_sourceId{0},
         m_hasReadData{false},
         m_sourceRetryCount{0},
-        m_handleNeedDataFunction{[this]() { return handleNeedData(); }},
-        m_handleEnoughDataFunction{[this]() { return handleEnoughData(); }},
         m_needDataHandlerId{0},
         m_enoughDataHandlerId{0},
         m_seekDataHandlerId{0},
@@ -311,7 +309,7 @@ void BaseStreamSource::onNeedData(GstElement* pipeline, guint size, gpointer poi
         ACSDK_DEBUG9(LX("m_needDataCallbackId already set"));
         return;
     }
-    source->m_needDataCallbackId = source->m_pipeline->queueCallback(&source->m_handleNeedDataFunction);
+    source->m_needDataCallbackId = source->m_pipeline->queueCallback([source]() { return source->handleNeedData(); });
 }
 
 gboolean BaseStreamSource::handleNeedData() {
@@ -330,7 +328,7 @@ void BaseStreamSource::onEnoughData(GstElement* pipeline, gpointer pointer) {
         ACSDK_DEBUG9(LX("m_enoughDataCallbackId already set"));
         return;
     }
-    source->m_enoughDataCallbackId = source->m_pipeline->queueCallback(&source->m_handleEnoughDataFunction);
+    source->m_enoughDataCallbackId = source->m_pipeline->queueCallback([source]() { return source->handleEnoughData(); });
 }
 
 gboolean BaseStreamSource::handleEnoughData() {
