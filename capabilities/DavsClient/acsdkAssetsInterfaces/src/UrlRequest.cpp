@@ -63,12 +63,12 @@ shared_ptr<UrlRequest> UrlRequest::create(string url, string filename, bool unpa
         ACSDK_INFO(LX("create").m("Using custom cert from path").d("path", certPath));
     }
 
-    return unique_ptr<UrlRequest>(new UrlRequest(move(url), move(filename), unpack, move(certPath)));
+    return unique_ptr<UrlRequest>(new UrlRequest(std::move(url), std::move(filename), unpack, std::move(certPath)));
 }
 
 UrlRequest::UrlRequest(string url, string filename, bool unpack, string certPath) :
-        m_url(move(url)),
-        m_filename(move(filename)),
+        m_url(std::move(url)),
+        m_filename(std::move(filename)),
         m_unpack(unpack),
         m_certPath(certPath),
         m_certHash(certPath.empty() ? "" : getHash(certPath)) {
